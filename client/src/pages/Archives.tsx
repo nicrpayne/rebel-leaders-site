@@ -22,10 +22,10 @@ export default function Archives() {
     <PageLayout>
       {/* Hero */}
       <section className="relative py-20 md:py-28">
-        <div className="absolute inset-0 opacity-15">
+        <div className="absolute inset-0 opacity-45">
           <img src={RPG_BANNER} alt="" className="w-full h-full object-cover pixel-render" loading="lazy" />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-background/80 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/55 to-background" />
 
         <div className="relative z-10 container text-center">
           <FadeIn>

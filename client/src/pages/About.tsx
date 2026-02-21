@@ -18,10 +18,10 @@ export default function About() {
     <PageLayout>
       {/* Hero */}
       <section className="relative py-20 md:py-28">
-        <div className="absolute inset-0 opacity-15">
+        <div className="absolute inset-0 opacity-45">
           <img src={RPG_BOOKSHELF} alt="" className="w-full h-full object-cover pixel-render" loading="lazy" />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-background/80 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/55 to-background" />
 
         <div className="relative z-10 container">
           <div className="max-w-3xl mx-auto flex flex-col md:flex-row items-center gap-8 md:gap-12">

@@ -21,10 +21,10 @@ export default function Manifesto() {
     <PageLayout>
       {/* Hero */}
       <section className="relative min-h-[60vh] flex items-center justify-center py-20 md:py-32">
-        <div className="absolute inset-0 opacity-20">
+        <div className="absolute inset-0 opacity-45">
           <img src={SCROLL_MAP} alt="" className="w-full h-full object-cover pixel-render" loading="lazy" />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-background/70 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/55 to-background" />
 
         <div className="relative z-10 container text-center">
           <FadeIn>
