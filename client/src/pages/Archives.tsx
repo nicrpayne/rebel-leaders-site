@@ -9,6 +9,7 @@ import { useState } from "react";
 import PageLayout from "@/components/PageLayout";
 import FadeIn from "@/components/FadeIn";
 import PixelDivider from "@/components/PixelDivider";
+import { trpc } from "@/lib/trpc";
 
 const RPG_BANNER = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/NOhnYtwgYOzpzngc.png";
 
@@ -58,6 +59,113 @@ const SHORTS = [
     title: "Modifying Leader's Behavior?",
   },
 ];
+
+/* ─── Scrolls Tab (auto-populated from Substack RSS) ─── */
+function ScrollsTab() {
+  const { data: articles, isLoading, error } = trpc.substack.articles.useQuery();
+
+  const formatDate = (dateStr: string) => {
+    try {
+      const d = new Date(dateStr);
+      return d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+    } catch {
+      return "";
+    }
+  };
+
+  return (
+    <div className="max-w-3xl mx-auto">
+      <FadeIn>
+        <p className="font-pixel text-[8px] tracking-[0.3em] text-gold/50 mb-8 text-center">
+          LATEST SCROLLS
+        </p>
+      </FadeIn>
+
+      <FadeIn delay={0.15}>
+        <div className="text-center mb-10">
+          <p className="font-display text-lg text-parchment-dim/70 mb-6">
+            Long-form essays, frameworks, and reflections published on Substack.
+            New posts appear here automatically.
+          </p>
+          <a
+            href="https://leaderrebellion.substack.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-3 font-pixel text-[9px] text-gold/70 hover:text-gold border-2 border-gold/30 hover:border-gold/60 px-6 py-3 transition-all duration-200"
+          >
+            SUBSCRIBE ON SUBSTACK
+            <span className="text-xs">{">"}  </span>
+          </a>
+        </div>
+      </FadeIn>
+
+      {/* Loading state */}
+      {isLoading && (
+        <div className="space-y-4">
+          {[1, 2, 3, 4, 5].map((i) => (
+            <div key={i} className="quest-card p-6 animate-pulse">
+              <div className="h-3 bg-gold/10 rounded w-16 mb-3" />
+              <div className="h-5 bg-parchment/10 rounded w-3/4 mb-2" />
+              <div className="h-3 bg-parchment-dim/10 rounded w-full" />
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Error state */}
+      {error && (
+        <div className="dialogue-box text-center">
+          <p className="font-pixel text-[8px] text-gold/50 mb-2">CONNECTION LOST</p>
+          <p className="font-display text-parchment-dim/70">
+            Unable to fetch the latest scrolls. Visit{" "}
+            <a href="https://leaderrebellion.substack.com" target="_blank" rel="noopener noreferrer" className="text-gold hover:underline">
+              Substack directly
+            </a>.
+          </p>
+        </div>
+      )}
+
+      {/* Articles from RSS */}
+      {articles && articles.length > 0 && (
+        <FadeIn delay={0.3}>
+          <div className="space-y-4">
+            {articles.map((article, i) => (
+              <a
+                key={i}
+                href={article.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="quest-card p-6 block group"
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-3 mb-1">
+                      <span className="font-pixel text-[7px] text-gold/40 tracking-wider">SCROLL</span>
+                      {article.pubDate && (
+                        <span className="font-pixel text-[6px] text-parchment-dim/30 tracking-wider">
+                          {formatDate(article.pubDate)}
+                        </span>
+                      )}
+                    </div>
+                    <h3 className="font-display text-xl font-semibold text-parchment mt-1 mb-2 group-hover:text-gold transition-colors">
+                      {article.title}
+                    </h3>
+                    <p className="text-parchment-dim/50 text-sm font-display leading-relaxed line-clamp-2">
+                      {article.description}
+                    </p>
+                  </div>
+                  <span className="font-pixel text-[10px] text-parchment-dim/30 group-hover:text-gold transition-colors shrink-0 mt-2">
+                    {">"}  
+                  </span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </FadeIn>
+      )}
+    </div>
+  );
+}
 
 export default function Archives() {
   const [activeTab, setActiveTab] = useState<Tab>("visions");
@@ -278,94 +386,7 @@ export default function Archives() {
           )}
 
           {/* ─── SCROLLS TAB ─── */}
-          {activeTab === "scrolls" && (
-            <div className="max-w-3xl mx-auto">
-              <FadeIn>
-                <p className="font-pixel text-[8px] tracking-[0.3em] text-gold/50 mb-8 text-center">
-                  LATEST SCROLLS
-                </p>
-              </FadeIn>
-
-              <FadeIn delay={0.15}>
-                <div className="text-center mb-10">
-                  <p className="font-display text-lg text-parchment-dim/70 mb-6">
-                    Long-form essays, frameworks, and reflections published on Substack.
-                    Subscribe to receive new scrolls directly.
-                  </p>
-                  <a
-                    href="https://leaderrebellion.substack.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-3 font-pixel text-[9px] text-gold/70 hover:text-gold border-2 border-gold/30 hover:border-gold/60 px-6 py-3 transition-all duration-200"
-                  >
-                    SUBSCRIBE ON SUBSTACK
-                    <span className="text-xs">{">"}</span>
-                  </a>
-                </div>
-              </FadeIn>
-
-              {/* Article previews */}
-              <FadeIn delay={0.3}>
-                <div className="space-y-4">
-                  {[
-                    {
-                      title: "The Hollow Crown",
-                      preview: "Why our leadership stories are failing us — a personal reckoning with the industry.",
-                      tag: "ESSAY",
-                      url: "https://leaderrebellion.substack.com/p/the-hollow-crown-why-our-leadership",
-                    },
-                    {
-                      title: "Servant Leadership Is Dead. Long Live Leader-as-a-Service.",
-                      preview: "A shift from leader-as-hero to leadership as invisible infrastructure.",
-                      tag: "FRAMEWORK",
-                      url: "https://leaderrebellion.substack.com/p/the-magic-of-mr-greenleaf-a-servant",
-                    },
-                    {
-                      title: "The Great Transfer",
-                      preview: "Why the collapse of formative institutions created an impossible burden on the modern workplace.",
-                      tag: "DIAGNOSIS",
-                      url: "https://leaderrebellion.substack.com",
-                    },
-                    {
-                      title: "The Bowl and the Flow",
-                      preview: "Stop obsessing over the work. Start tending to the container that holds it.",
-                      tag: "METAPHOR",
-                      url: "https://leaderrebellion.substack.com",
-                    },
-                    {
-                      title: "Humanity Is Not a Liability",
-                      preview: "The leadership industry spent $366 billion trying to fix people. What if people aren't the problem?",
-                      tag: "MANIFESTO",
-                      url: "https://leaderrebellion.substack.com",
-                    },
-                  ].map((article, i) => (
-                    <a
-                      key={i}
-                      href={article.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="quest-card p-6 block group"
-                    >
-                      <div className="flex items-start justify-between gap-4">
-                        <div>
-                          <span className="font-pixel text-[7px] text-gold/40 tracking-wider">{article.tag}</span>
-                          <h3 className="font-display text-xl font-semibold text-parchment mt-1 mb-2 group-hover:text-gold transition-colors">
-                            {article.title}
-                          </h3>
-                          <p className="text-parchment-dim/50 text-sm font-display leading-relaxed">
-                            {article.preview}
-                          </p>
-                        </div>
-                        <span className="font-pixel text-[10px] text-parchment-dim/30 group-hover:text-gold transition-colors shrink-0 mt-2">
-                          {">"}
-                        </span>
-                      </div>
-                    </a>
-                  ))}
-                </div>
-              </FadeIn>
-            </div>
-          )}
+          {activeTab === "scrolls" && <ScrollsTab />}
 
         </div>
       </section>

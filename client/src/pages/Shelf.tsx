@@ -8,7 +8,7 @@ import PageLayout from "@/components/PageLayout";
 import FadeIn from "@/components/FadeIn";
 import PixelDivider from "@/components/PixelDivider";
 
-const BOOKSHELF_IMG = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/yIOHdhgRJwHhvBLy.png";
+const BOOKSHELF_IMG = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/fHPXctuxSsjvwkhg.png";
 
 interface BookEntry {
   title: string;

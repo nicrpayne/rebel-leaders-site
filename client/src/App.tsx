@@ -16,8 +16,8 @@ import Book from "./pages/Book";
 import Community from "./pages/Community";
 import Mirror from "./pages/Mirror";
 import Armory from "./pages/Armory";
-
 function Router() {
+  // make sure to consider if you need authentication for certain routes
   return (
     <Switch>
       <Route path="/" component={Home} />

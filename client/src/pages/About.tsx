@@ -11,7 +11,7 @@ import PixelDivider from "@/components/PixelDivider";
 import RebelLogo from "@/components/RebelLogo";
 
 const RPG_SPRITE = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/pfwFyCunhFIKzKut.png";
-const RPG_BOOKSHELF = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/fHPXctuxSsjvwkhg.png";
+const RPG_BOOKSHELF = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/yIOHdhgRJwHhvBLy.png";
 
 export default function About() {
   return (

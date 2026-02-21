@@ -29,3 +29,12 @@
 - [ ] Test all pages and navigation
 - [ ] Mobile responsiveness check
 - [ ] Checkpoint and deliver
+
+## Phase 6: Full-Stack Upgrade & Integrations
+- [x] Resolve web-db-user upgrade conflicts (Home.tsx)
+- [x] Run pnpm db:push to sync database schema
+- [x] Swap Shelf and About hero images
+- [x] Build backend RSS endpoint for Substack feed auto-population
+- [x] Update Scrolls tab to auto-fetch from RSS instead of hardcoded articles
+- [x] Verify full-stack upgrade works end-to-end
+- [x] Write vitest tests for RSS integration (4/4 passing)
