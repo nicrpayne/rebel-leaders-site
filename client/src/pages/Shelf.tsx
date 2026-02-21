@@ -118,10 +118,10 @@ export default function Shelf() {
     <PageLayout>
       {/* Hero */}
       <section className="relative py-20 md:py-28">
-        <div className="absolute inset-0 opacity-25">
+        <div className="absolute inset-0 opacity-50">
           <img src={BOOKSHELF_IMG} alt="" className="w-full h-full object-cover pixel-render" loading="lazy" />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-background/75 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/55 to-background" />
 
         <div className="relative z-10 container text-center">
           <FadeIn>
