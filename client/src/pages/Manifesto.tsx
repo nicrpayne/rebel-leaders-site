@@ -462,6 +462,34 @@ export default function Manifesto() {
           loading="lazy"
         />
         <div className="absolute inset-0 bg-background/30" />
+
+        {/* Spray-painted Rebel Leaders logo — bottom-right like a graffiti tag */}
+        <div className="absolute bottom-4 right-6 md:bottom-8 md:right-12 z-10">
+          <svg
+            width="100"
+            height="58"
+            viewBox="0 0 120 70"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="drop-shadow-[0_2px_6px_rgba(0,0,0,0.8)]"
+            style={{ filter: 'url(#spraypaint)' }}
+          >
+            <defs>
+              <filter id="spraypaint" x="-10%" y="-10%" width="120%" height="120%">
+                <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="5" result="noise" />
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.5" xChannelSelector="R" yChannelSelector="G" />
+              </filter>
+            </defs>
+            {/* Arch */}
+            <path
+              d="M 32 45 A 28 28 0 0 1 88 45 L 78 45 A 18 18 0 0 0 42 45 Z"
+              fill="#c8a84e"
+              opacity="0.85"
+            />
+            {/* Horizon line */}
+            <rect x="16" y="51" width="88" height="7" fill="#c8a84e" opacity="0.85" />
+          </svg>
+        </div>
       </section>
 
       <PixelDivider />
