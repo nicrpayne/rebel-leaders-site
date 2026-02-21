@@ -38,7 +38,7 @@ export default function RebelLogo({ size = 32, className = "", withText = false 
         fill="currentColor"
       />
       {/* Horizon line — wider than arch, with gap below */}
-      <rect x="0" y="51" width="120" height="7" fill="currentColor" />
+      <rect x="10" y="51" width="100" height="7" fill="currentColor" />
     </svg>
   );
 
