@@ -10,8 +10,8 @@ import DialogueBox from "@/components/DialogueBox";
 import PixelDivider from "@/components/PixelDivider";
 import RebelLogo from "@/components/RebelLogo";
 
-const RPG_SPRITE = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/ItPGFmjOWJPnlXQR.png";
-const RPG_BOOKSHELF = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/2jPWTJqJuqHFPJBP.png";
+const RPG_SPRITE = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/pfwFyCunhFIKzKut.png";
+const RPG_BOOKSHELF = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/fHPXctuxSsjvwkhg.png";
 
 export default function About() {
   return (
