@@ -1,334 +1,407 @@
 /*
- * DESIGN: "The Scriptorium" — Medieval Manuscript Meets Digital Monastery
- * Dark warm palette, stained glass accents, Cormorant Garamond display,
- * Source Serif 4 body, Outfit UI. Asymmetric manuscript layout.
- * Content unfolds like turning pages. Slow, reverent animations.
+ * DESIGN: "The Quest-Giver's Study" — 16-bit RPG meets Philosophical Depth
+ * Deep forest green palette from the actual office. Pixel art hero scene.
+ * RPG dialogue boxes for key quotes. Press Start 2P for UI, Cormorant Garamond
+ * for body text. The dissonance IS the brand.
+ * Logo icon (rising sun/horizon) used as section dividers and accent marks.
  */
 
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowDown, BookOpen, Flame, Users, Pen, Mail } from "lucide-react";
 import { toast } from "sonner";
 import Navigation from "@/components/Navigation";
 import FadeIn from "@/components/FadeIn";
-import StainedGlassDivider from "@/components/StainedGlassDivider";
+import DialogueBox from "@/components/DialogueBox";
+import TypewriterText from "@/components/TypewriterText";
+import PixelDivider from "@/components/PixelDivider";
+import RebelLogo from "@/components/RebelLogo";
 import Footer from "@/components/Footer";
 
-/* ─── Image URLs ─── */
-const HERO_IMG = "https://private-us-east-1.manuscdn.com/sessionFile/xhIF6cqEZNRR3ezVrvcq6V/sandbox/cLlPwzBL30WhHHj2soLbdt-img-1_1771637264000_na1fn_aGVyby1zdGFpbmVkLWdsYXNz.png?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUveGhJRjZjcUVaTlJSM2V6VnJ2Y3E2Vi9zYW5kYm94L2NMbFB3ekJMMzBXaEhIajJzb0xiZHQtaW1nLTFfMTc3MTYzNzI2NDAwMF9uYTFmbl9hR1Z5YnkxemRHRnBibVZrTFdkc1lYTnoucG5nP3gtb3NzLXByb2Nlc3M9aW1hZ2UvcmVzaXplLHdfMTkyMCxoXzE5MjAvZm9ybWF0LHdlYnAvcXVhbGl0eSxxXzgwIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk4NzYxNjAwfX19XX0_&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=TN4KnZvqfQEgxrEO7eCZsCGziPeiWSlF25RE~UmmhsxG4DlIOk0GWjFKy1wptamS7wL5rB~bJf76YPhlqvaiBSBuknjw9VQntUI73X8qC424g8iQJpI-r~LFz0k31l6JJ6Osz9uqzBZkOVjz-WjeK2QrHPLMtXWGyKIol~lTJk70KUW07kO99urHwyqd-VjbaUi0zgUYh3tDgXFSUETPiKNVZSiaz65M7rUhK7wb-6bDHFXR4IsJ1UI3AUzCtOAhAPykB1wWgNUSvFOi~gd6HyZLabqpMZWq66DWlWlmxSaNDGkEXCJ-jKLP~uHvh2wWLi7fjXSzQNDA-hLHJilhnQ__";
-
+/* ─── CDN Image URLs ─── */
+const RPG_OFFICE = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/zlNQJQinSxaqyYjB.png";
+const RPG_BOOKSHELF = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/ytcCyobGtInvqMUp.png";
+const RPG_BANNER = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/wovXMRQGUNlUpQiu.png";
 const EMBER_IMG = "https://private-us-east-1.manuscdn.com/sessionFile/xhIF6cqEZNRR3ezVrvcq6V/sandbox/cLlPwzBL30WhHHj2soLbdt-img-2_1771637252000_na1fn_c2VjdGlvbi1lbWJlci10ZXh0dXJl.png?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUveGhJRjZjcUVaTlJSM2V6VnJ2Y3E2Vi9zYW5kYm94L2NMbFB3ekJMMzBXaEhIajJzb0xiZHQtaW1nLTJfMTc3MTYzNzI1MjAwMF9uYTFmbl9jMlZqZEdsdmJpMWxiV0psY2kxMFpYaDBkWEpsLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSx3XzE5MjAsaF8xOTIwL2Zvcm1hdCx3ZWJwL3F1YWxpdHkscV84MCIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5ODc2MTYwMH19fV19&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=M4WZy1Lubw4lUZg-xkYa~3KnlMQoGJlZcqOujMhLv-HZHaL3oWFqAgMHgwZFQS~uvVL-uAX4opiGGBzwFXqZlaKDMyYmbKfbzwZy9X4UiX-LIZy~ymHGGhW8mAFRQk1zNs-ROgt8ftpo~5yP~DVqQFXqN3tM7pjR6ZKorjnOj61QGAhF-El0hjRIRFC30KZW1f7X7TQPADPpcb5PtstkU4yxTflVp1wZci9ho0t5UQL90u~yfcpxBV-6H9wJaYbxrs2YRRgAiCQ7bCEZVJ6e~4SE7Zl5Tx2J5q6pjLM4H62p~4CEX8T-47eqdNCVuNUsleO8w~IpN-axBxa09K12YQ__";
 
-const LANDSCAPE_IMG = "https://private-us-east-1.manuscdn.com/sessionFile/xhIF6cqEZNRR3ezVrvcq6V/sandbox/cLlPwzBL30WhHHj2soLbdt-img-3_1771637262000_na1fn_YWJvdXQtcG9ydHJhaXQtYmc.png?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUveGhJRjZjcUVaTlJSM2V6VnJ2Y3E2Vi9zYW5kYm94L2NMbFB3ekJMMzBXaEhIajJzb0xiZHQtaW1nLTNfMTc3MTYzNzI2MjAwMF9uYTFmbl9ZV0p2ZFhRdGNHOXlkSEpoYVhRdFltYy5wbmc~eC1vc3MtcHJvY2Vzcz1pbWFnZS9yZXNpemUsd18xOTIwLGhfMTkyMC9mb3JtYXQsd2VicC9xdWFsaXR5LHFfODAiLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3OTg3NjE2MDB9fX1dfQ__&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=pob9I06EkGaMNTBuivge-pozIIpQjbETKJQoF1O5lSWtaCRcace3ZxR3VAy0Fm7Pl6Pbso7zbgFplQqN5eWj6qhQZl58nYqG6eB1T7pwbsJZAzKymIXxp-MDOnYWFhama5tT0wTIutYWEnN92LkdG6eAWI1s9HqilY62yXR81l~0mhcwQguv6~BkCJy0pUcCcP2U~SpdlePmLcNjABsP73ruChXRQ-AV7aVf-vHeMa4MGZ9CXo5iAeIjbb7hyMz~nTh9mLZsMr-S0WOz1x1Y5FSTal9sW65wwWUkn5CNIF2tOxOUnL5BWnU6Pqvs3C7tYYWfnuMD86JDTKXussl5NQ__";
-
-const MANIFESTO_BG = "https://private-us-east-1.manuscdn.com/sessionFile/xhIF6cqEZNRR3ezVrvcq6V/sandbox/cLlPwzBL30WhHHj2soLbdt-img-5_1771637258000_na1fn_bWFuaWZlc3RvLWJn.png?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUveGhJRjZjcUVaTlJSM2V6VnJ2Y3E2Vi9zYW5kYm94L2NMbFB3ekJMMzBXaEhIajJzb0xiZHQtaW1nLTVfMTc3MTYzNzI1ODAwMF9uYTFmbl9iV0Z1YVdabGMzUnZMV0puLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSx3XzE5MjAsaF8xOTIwL2Zvcm1hdCx3ZWJwL3F1YWxpdHkscV84MCIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5ODc2MTYwMH19fV19&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=Z-AIBawOGkcL2-g74xwtQGfhUliCSt8D6kSUG8bk13CkjMQPwK4iynaFZ2CRZXekFOMoUamr1y4Ljbp5EK7elGtsZoNvWG7p-v3QQZ0KcYQb-D2oMDlPUrODZxmdwoyj5jHThV0WYnq~Oj0i~p-1BRz~pF43WOgQDCFbQF1m-PRqgNt9q8WnIxlNonLXHQ1ptAxhIRNqJD9u-7rAihutCP8RO6ixIoQEPAkqYgN76ihmRYvAEzaG~4A3CHyNWC96e470s3ZVnNTwUTvxeinuyQ8eC9pDjZRQfywdXrnVoWL2hdjoK3mARdJED7eQmmlztY4y9lTUlgHd8x7Cqwl~2A__";
-
-
 export default function Home() {
+  const [heroReady, setHeroReady] = useState(false);
+
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <Navigation />
 
       {/* ═══════════════════════════════════════════════════════════
-          SECTION 1: HERO — The Rose Window
+          SECTION 1: HERO — The Quest-Giver's Study
+          Pixel art office scene with RPG title overlay
       ═══════════════════════════════════════════════════════════ */}
       <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
-        {/* Background image */}
+        {/* Pixel art background */}
         <div className="absolute inset-0">
           <img
-            src={HERO_IMG}
-            alt=""
-            className="w-full h-full object-cover opacity-40"
+            src={RPG_OFFICE}
+            alt="Pixel art scholar's study"
+            className="w-full h-full object-cover pixel-render opacity-50 md:opacity-60"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/40 to-background" />
+          <div className="absolute inset-0 bg-gradient-to-b from-forest-deep/70 via-forest-deep/40 to-forest-deep" />
+          {/* Subtle scanline overlay */}
+          <div
+            className="absolute inset-0 opacity-[0.03] pointer-events-none"
+            style={{
+              backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.3) 2px, rgba(0,0,0,0.3) 4px)",
+            }}
+          />
         </div>
 
         {/* Content */}
         <div className="relative z-10 container text-center px-6">
+          {/* Logo icon above title */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, delay: 0.3 }}
+            className="flex justify-center mb-6"
+          >
+            <RebelLogo size={48} className="text-gold" />
+          </motion.div>
+
+          {/* Pixel font title */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 2, delay: 0.3 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
           >
-            <p className="font-ui text-xs md:text-sm tracking-[0.3em] uppercase text-gold mb-6 md:mb-8">
-              A Quiet Rebellion
+            <h1 className="font-pixel text-lg sm:text-xl md:text-2xl lg:text-3xl text-gold mb-4 leading-relaxed tracking-wider">
+              REBEL LEADERS
+            </h1>
+          </motion.div>
+
+          {/* Serif subtitle — the hook */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 1.0 }}
+          >
+            <p className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-parchment font-semibold leading-tight mb-3 max-w-3xl mx-auto">
+              You've been playing
+              <br />
+              <span className="italic font-normal text-gold">the wrong game.</span>
             </p>
           </motion.div>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.4, delay: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
-            className="font-display text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.05] text-parchment mb-6 md:mb-8 max-w-5xl mx-auto"
-          >
-            The system wasn't built
-            <br />
-            <span className="italic font-normal text-gold">for humans.</span>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1.2, delay: 1.2 }}
-            className="font-body text-lg md:text-xl text-parchment-dim max-w-2xl mx-auto mb-12 leading-relaxed"
-          >
-            But you were built for more than surviving it.
-          </motion.p>
-
+          {/* Dialogue box prompt */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 1.8 }}
-            className="flex justify-center"
+            transition={{ duration: 0.6, delay: 1.8 }}
+            className="max-w-xl mx-auto mt-8"
           >
-            <button
-              onClick={() => document.querySelector("#diagnosis")?.scrollIntoView({ behavior: "smooth" })}
-              className="text-parchment-dim hover:text-gold transition-colors duration-500"
-              aria-label="Scroll down"
-            >
-              <motion.div
-                animate={{ y: [0, 8, 0] }}
-                transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-              >
-                <ArrowDown size={24} strokeWidth={1} />
-              </motion.div>
-            </button>
+            <div className="dialogue-box text-left">
+              <p className="font-pixel text-[9px] md:text-[10px] text-gold/70 mb-2 tracking-wider">NARRATOR</p>
+              <p className="font-display text-base md:text-lg text-parchment leading-relaxed">
+                <TypewriterText
+                  text="The leadership industry spent $366 billion teaching people to manage. Nobody taught them to be human. Until now."
+                  speed={30}
+                  delay={2200}
+                  onComplete={() => setHeroReady(true)}
+                />
+              </p>
+            </div>
           </motion.div>
+
+          {/* Press Start prompt */}
+          {heroReady && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+              className="mt-8"
+            >
+              <button
+                onClick={() => document.querySelector("#diagnosis")?.scrollIntoView({ behavior: "smooth" })}
+                className="font-pixel text-[10px] text-gold/60 hover:text-gold transition-colors tracking-widest"
+              >
+                <motion.span
+                  animate={{ opacity: [1, 0.3, 1] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                >
+                  ▼ SCROLL TO BEGIN ▼
+                </motion.span>
+              </button>
+            </motion.div>
+          )}
         </div>
       </section>
+
+      <PixelDivider />
 
       {/* ═══════════════════════════════════════════════════════════
           SECTION 2: THE DIAGNOSIS — What We See
       ═══════════════════════════════════════════════════════════ */}
-      <section id="diagnosis" className="relative py-24 md:py-36">
+      <section id="diagnosis" className="relative py-20 md:py-32">
         <div className="container">
-          <div className="max-w-3xl mx-auto md:ml-[10%] lg:ml-[15%]">
+          <div className="max-w-3xl mx-auto md:ml-[8%] lg:ml-[12%]">
             <FadeIn>
-              <p className="font-ui text-xs tracking-[0.3em] uppercase text-gold/70 mb-6">
-                The Diagnosis
+              <p className="font-pixel text-[9px] tracking-[0.3em] text-gold/60 mb-6">
+                CHAPTER I: THE DIAGNOSIS
               </p>
             </FadeIn>
 
             <FadeIn delay={0.15}>
               <h2 className="font-display text-3xl md:text-5xl font-semibold text-parchment mb-8 leading-tight">
-                Something is deeply wrong<br />
+                Something is deeply wrong
+                <br />
                 <span className="italic font-normal text-parchment-dim">and everyone can feel it.</span>
               </h2>
             </FadeIn>
 
             <FadeIn delay={0.3}>
-              <div className="space-y-6 text-parchment-dim/90 text-base md:text-lg leading-relaxed">
+              <div className="space-y-6 text-parchment-dim/90 text-base md:text-lg leading-relaxed font-display">
                 <p className="drop-cap">
-                  The institutions that once formed us — families, churches, civic organizations, neighborhoods — have
-                  hollowed out. What remains is a $366 billion leadership industry selling competency models to a world
-                  dying of loneliness. We call this <em className="text-gold/80">The Great Transfer</em>: the impossible
+                  The institutions that once formed us — families, churches, civic organizations,
+                  neighborhoods — have hollowed out. What remains is a $366 billion leadership industry
+                  selling competency models to a world dying of loneliness. We call this{" "}
+                  <em className="text-gold/80 not-italic font-semibold">The Great Transfer</em>: the impossible
                   burden placed on the transactional workplace to do what formative communities once did.
                 </p>
                 <p>
-                  The result is what we name <em className="text-gold/80">Vulture Culture</em> — organizations that
-                  extract human energy without replenishing the soul. Leaders wearing the <em className="text-gold/80">Hollow Crown</em>,
-                  performing authority while hemorrhaging meaning. A machine that optimizes for everything except the
-                  one thing that matters: human flourishing.
+                  The result is what we name{" "}
+                  <em className="text-gold/80 not-italic font-semibold">Vulture Culture</em> — organizations that
+                  extract human energy without replenishing the soul. Leaders wearing the{" "}
+                  <em className="text-gold/80 not-italic font-semibold">Hollow Crown</em>, performing authority
+                  while hemorrhaging meaning. A machine that optimizes for everything except the one thing
+                  that matters: human flourishing.
                 </p>
+              </div>
+            </FadeIn>
+
+            {/* RPG-style stat box */}
+            <FadeIn delay={0.5}>
+              <div className="mt-10 dialogue-box">
+                <p className="font-pixel text-[8px] text-gold/50 mb-4 tracking-wider">STATUS REPORT</p>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  {[
+                    { stat: "$366B", label: "Spent on leadership training", sublabel: "annually" },
+                    { stat: "77%", label: "Workers disengaged", sublabel: "globally" },
+                    { stat: "0", label: "Addressing the real crisis", sublabel: "the soul gap" },
+                  ].map((item, i) => (
+                    <div key={i} className="text-center py-2">
+                      <p className="font-pixel text-sm md:text-base text-gold">{item.stat}</p>
+                      <p className="font-display text-sm text-parchment-dim mt-1">{item.label}</p>
+                      <p className="font-pixel text-[7px] text-parchment-dim/40 mt-1">{item.sublabel}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
             </FadeIn>
           </div>
         </div>
       </section>
 
-      <StainedGlassDivider variant="full" />
+      <PixelDivider />
 
       {/* ═══════════════════════════════════════════════════════════
           SECTION 3: THE BELIEF — What We Stand For
       ═══════════════════════════════════════════════════════════ */}
-      <section className="relative py-24 md:py-36 overflow-hidden">
-        {/* Subtle background texture */}
-        <div className="absolute inset-0 opacity-20">
-          <img src={MANIFESTO_BG} alt="" className="w-full h-full object-cover" loading="lazy" />
+      <section className="relative py-20 md:py-32 overflow-hidden">
+        {/* Subtle pixel bookshelf background */}
+        <div className="absolute inset-0 opacity-10">
+          <img src={RPG_BOOKSHELF} alt="" className="w-full h-full object-cover pixel-render" loading="lazy" />
         </div>
-        <div className="absolute inset-0 bg-background/80" />
+        <div className="absolute inset-0 bg-background/90" />
 
         <div className="relative z-10 container">
-          <div className="max-w-3xl mx-auto md:mr-[10%] lg:mr-[15%] md:ml-auto">
+          <div className="max-w-3xl mx-auto md:mr-[8%] lg:mr-[12%] md:ml-auto">
             <FadeIn>
-              <p className="font-ui text-xs tracking-[0.3em] uppercase text-gold/70 mb-6">
-                The Belief
+              <p className="font-pixel text-[9px] tracking-[0.3em] text-gold/60 mb-6">
+                CHAPTER II: THE BELIEF
               </p>
             </FadeIn>
 
             <FadeIn delay={0.15}>
               <h2 className="font-display text-3xl md:text-5xl font-semibold text-parchment mb-10 leading-tight">
-                We believe the rebellion<br />
+                We believe the rebellion
+                <br />
                 <span className="italic font-normal text-parchment-dim">is one of remembering.</span>
               </h2>
             </FadeIn>
 
-            <div className="space-y-8">
-              <FadeIn delay={0.3}>
-                <blockquote className="border-l-2 border-gold/40 pl-6 py-2">
-                  <p className="font-display text-xl md:text-2xl italic text-parchment leading-relaxed">
-                    "Human flourishing is the point. Not profit. Not productivity. Not performance metrics.
-                    The point is that people become more fully alive."
-                  </p>
-                </blockquote>
-              </FadeIn>
-
-              <FadeIn delay={0.45}>
-                <p className="text-parchment-dim/90 text-base md:text-lg leading-relaxed">
-                  We believe that every human being carries an irreducible dignity that no system can grant or revoke.
-                  That leadership is not a position but a posture — the posture of one who has done their own inner work
-                  and now creates conditions for others to grow. That the crisis under every crisis is not economic or
-                  political but <em className="text-gold/80">existential</em>: a disconnection from self, from others,
-                  and from purpose.
+            <FadeIn delay={0.3}>
+              <DialogueBox speaker="THE REBEL CREED">
+                <p className="italic">
+                  "Human flourishing is the point. Not profit. Not productivity. Not performance metrics.
+                  The point is that people become more fully alive."
                 </p>
-              </FadeIn>
+              </DialogueBox>
+            </FadeIn>
 
-              <FadeIn delay={0.55}>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-10">
-                  {[
-                    { text: "Humanity is not a liability.", icon: Flame },
-                    { text: "Character cannot be outsourced.", icon: BookOpen },
-                    { text: "Hope is an act of rebellion.", icon: Users },
-                  ].map((item, i) => (
-                    <div
-                      key={i}
-                      className="border border-gold/15 bg-stone/30 p-6 text-center group hover:border-gold/30 transition-colors duration-500"
-                    >
-                      <item.icon
-                        size={20}
-                        className="mx-auto mb-3 text-gold/50 group-hover:text-gold/80 transition-colors duration-500"
-                        strokeWidth={1.2}
-                      />
-                      <p className="font-display text-base md:text-lg italic text-parchment">
-                        {item.text}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </FadeIn>
-            </div>
+            <FadeIn delay={0.45}>
+              <p className="text-parchment-dim/90 text-base md:text-lg leading-relaxed font-display mt-8">
+                We believe that every human being carries an irreducible dignity that no system can grant
+                or revoke. That leadership is not a position but a posture — the posture of one who has
+                done their own inner work and now creates conditions for others to grow. That the crisis
+                under every crisis is not economic or political but{" "}
+                <em className="text-gold/80">existential</em>: a disconnection from self, from others,
+                and from purpose.
+              </p>
+            </FadeIn>
+
+            {/* Three beliefs as quest items */}
+            <FadeIn delay={0.55}>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-10">
+                {[
+                  { text: "Humanity is not a liability." },
+                  { text: "Character cannot be outsourced." },
+                  { text: "Hope is rebellious." },
+                ].map((item, i) => (
+                  <div
+                    key={i}
+                    className="quest-card p-5 text-center group"
+                  >
+                    <RebelLogo
+                      size={16}
+                      className="mx-auto mb-3 text-gold/30 group-hover:text-gold/60 transition-colors duration-300"
+                    />
+                    <p className="font-display text-base md:text-lg italic text-parchment">
+                      {item.text}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </FadeIn>
           </div>
         </div>
       </section>
 
-      <StainedGlassDivider />
+      <PixelDivider />
 
       {/* ═══════════════════════════════════════════════════════════
-          SECTION 4: THE WORK — What We're Building
+          SECTION 4: THE WORK — The Rebel OS
       ═══════════════════════════════════════════════════════════ */}
-      <section id="the-work" className="relative py-24 md:py-36">
+      <section id="the-work" className="relative py-20 md:py-32">
         <div className="container">
           <div className="max-w-4xl mx-auto">
             <FadeIn>
-              <p className="font-ui text-xs tracking-[0.3em] uppercase text-gold/70 mb-6">
-                The Work
+              <p className="font-pixel text-[9px] tracking-[0.3em] text-gold/60 mb-6">
+                CHAPTER III: QUEST LOG
               </p>
             </FadeIn>
 
             <FadeIn delay={0.15}>
-              <h2 className="font-display text-3xl md:text-5xl font-semibold text-parchment mb-6 leading-tight">
+              <h2 className="font-display text-3xl md:text-5xl font-semibold text-parchment mb-3 leading-tight">
                 The Rebel OS
               </h2>
-              <p className="font-display text-xl md:text-2xl italic text-parchment-dim mb-10">
-                An operating system for the soul of an organization.
+              <p className="font-pixel text-[9px] text-gold/50 mb-8 tracking-wider">
+                AN OPERATING SYSTEM FOR THE SOUL OF AN ORGANIZATION
               </p>
             </FadeIn>
 
             <FadeIn delay={0.3}>
-              <p className="text-parchment-dim/90 text-base md:text-lg leading-relaxed mb-10">
-                Built on the philosophy of <strong className="text-parchment font-medium">Holistic Shaping</strong>,
-                the Rebel OS is our framework for transforming organizations from extraction machines into formation
-                communities. It doesn't add another layer of training. It rewires the operating system — from the
-                leader's inner life outward to the culture they steward.
+              <p className="text-parchment-dim/90 text-base md:text-lg leading-relaxed font-display mb-10">
+                Built on the philosophy of{" "}
+                <strong className="text-parchment font-semibold">Holistic Shaping</strong>, the Rebel OS
+                is our framework for transforming organizations from extraction machines into formation
+                communities. It doesn't add another layer of training. It rewires the operating system —
+                from the leader's inner life outward to the culture they steward.
               </p>
             </FadeIn>
 
-            {/* The Flywheel */}
+            {/* The Flywheel — styled as RPG skill tree */}
             <FadeIn delay={0.4}>
-              <div className="relative border border-gold/15 bg-[oklch(0.12_0.008_60)] p-8 md:p-12 mb-12">
-                <p className="font-ui text-xs tracking-[0.3em] uppercase text-gold/50 mb-8 text-center">
-                  The Flywheel
+              <div className="dialogue-box mb-10">
+                <p className="font-pixel text-[9px] text-gold/60 mb-6 tracking-wider text-center">
+                  ◆ THE FLYWHEEL ◆
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                   {[
                     {
-                      title: "Identity",
+                      title: "IDENTITY",
                       subtitle: "Know who you are",
                       desc: "The inner work of self-awareness through Maps, Mirrors, and Moves. Enneagram, Spiral Dynamics, and the True Self.",
+                      level: "LVL 1",
                     },
                     {
-                      title: "Relationship",
+                      title: "RELATIONSHIP",
                       subtitle: "Connect with depth",
                       desc: "From transactional to covenantal. Building trust, vulnerability, and the bonding agent of authentic community.",
+                      level: "LVL 2",
                     },
                     {
-                      title: "Vision",
+                      title: "VISION",
                       subtitle: "See what could be",
                       desc: "Not strategic planning but prophetic imagination. The ability to name reality and call forth possibility.",
+                      level: "LVL 3",
                     },
                     {
-                      title: "Culture",
+                      title: "CULTURE",
                       subtitle: "Steward the conditions",
                       desc: "The Bowl and the Flow. Leaders don't fill cups — they hold the bowl. Culture is the soil, not the crop.",
+                      level: "LVL 4",
                     },
                   ].map((item, i) => (
                     <div key={i} className="group">
-                      <div className="flex items-baseline gap-3 mb-2">
-                        <span className="font-display text-2xl md:text-3xl font-semibold text-gold">
+                      <div className="flex items-center gap-3 mb-2">
+                        <span className="font-pixel text-[7px] text-forest-light bg-gold/15 px-2 py-1 tracking-wider">
+                          {item.level}
+                        </span>
+                        <span className="font-pixel text-[10px] text-gold tracking-wider">
                           {item.title}
                         </span>
                       </div>
                       <p className="font-display text-sm italic text-parchment-dim mb-2">
                         {item.subtitle}
                       </p>
-                      <p className="text-parchment-dim/70 text-sm leading-relaxed">
+                      <p className="text-parchment-dim/60 text-sm leading-relaxed font-display">
                         {item.desc}
                       </p>
                     </div>
                   ))}
                 </div>
 
-                {/* Connecting arrows (CSS) */}
-                <div className="hidden sm:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16">
-                  <div className="w-full h-full border border-gold/20 rounded-full flex items-center justify-center">
-                    <div className="w-2 h-2 bg-gold/40 rounded-full" />
+                {/* Center connector */}
+                <div className="hidden sm:flex justify-center mt-6">
+                  <div className="flex items-center gap-2 text-gold/30">
+                    <div className="w-8 h-[1px] bg-gold/20" />
+                    <RebelLogo size={16} />
+                    <div className="w-8 h-[1px] bg-gold/20" />
                   </div>
                 </div>
               </div>
             </FadeIn>
 
-            {/* Maps, Mirrors, Moves */}
+            {/* Maps, Mirrors, Moves — as inventory items */}
             <FadeIn delay={0.5}>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <p className="font-pixel text-[9px] text-gold/50 mb-4 tracking-wider text-center">
+                INVENTORY
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {[
                   {
-                    title: "Maps",
+                    title: "MAPS",
+                    emoji: "🗺",
                     desc: "Frameworks that show you where you are: Enneagram, Spiral Dynamics, the Divided Brain. Not to label, but to liberate.",
-                    icon: BookOpen,
                   },
                   {
-                    title: "Mirrors",
+                    title: "MIRRORS",
+                    emoji: "🪞",
                     desc: "Honest reflection from trusted others. The courage to see your False Self patterns and choose the True Self instead.",
-                    icon: Users,
                   },
                   {
-                    title: "Moves",
+                    title: "MOVES",
+                    emoji: "⚔",
                     desc: "Practical disciplines and daily practices. Small acts of rebellion against the machine. The work of becoming.",
-                    icon: Flame,
                   },
                 ].map((item, i) => (
                   <div
                     key={i}
-                    className="border border-gold/10 bg-[oklch(0.12_0.008_60)] p-6 md:p-8 hover:border-gold/25 transition-all duration-500 group"
+                    className="quest-card p-5 md:p-6 group"
                   >
-                    <item.icon
-                      size={20}
-                      className="text-gold/40 mb-4 group-hover:text-gold/70 transition-colors duration-500"
-                      strokeWidth={1.2}
-                    />
-                    <h3 className="font-display text-xl font-semibold text-parchment mb-3">
-                      {item.title}
-                    </h3>
-                    <p className="text-parchment-dim/70 text-sm leading-relaxed">
+                    <div className="flex items-center gap-3 mb-3">
+                      <span className="text-xl">{item.emoji}</span>
+                      <h3 className="font-pixel text-[10px] text-gold tracking-wider">
+                        {item.title}
+                      </h3>
+                    </div>
+                    <p className="text-parchment-dim/60 text-sm leading-relaxed font-display">
                       {item.desc}
                     </p>
                   </div>
@@ -339,61 +412,77 @@ export default function Home() {
         </div>
       </section>
 
-      <StainedGlassDivider />
+      <PixelDivider />
 
       {/* ═══════════════════════════════════════════════════════════
-          SECTION 5: WRITING — Featured Content
+          SECTION 5: LORE — Writing / Content
       ═══════════════════════════════════════════════════════════ */}
-      <section id="writing" className="relative py-24 md:py-36">
+      <section id="writing" className="relative py-20 md:py-32">
         <div className="container">
           <div className="max-w-4xl mx-auto">
             <FadeIn>
-              <p className="font-ui text-xs tracking-[0.3em] uppercase text-gold/70 mb-6">
-                Writing
+              <p className="font-pixel text-[9px] tracking-[0.3em] text-gold/60 mb-6">
+                CHAPTER IV: LORE
               </p>
             </FadeIn>
 
             <FadeIn delay={0.15}>
-              <h2 className="font-display text-3xl md:text-5xl font-semibold text-parchment mb-12 leading-tight">
+              <h2 className="font-display text-3xl md:text-5xl font-semibold text-parchment mb-4 leading-tight">
                 Ideas worth sitting with.
               </h2>
+              <p className="font-pixel text-[8px] text-parchment-dim/40 mb-10 tracking-wider">
+                ESSAYS, FRAMEWORKS, AND FIELD NOTES FROM THE REBELLION
+              </p>
             </FadeIn>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {[
                 {
                   title: "The Great Transfer",
                   subtitle: "Why the workplace can't save us — and what can",
-                  tag: "Essay",
+                  tag: "ESSAY",
+                  xp: "+200 XP",
                 },
                 {
                   title: "The Hollow Crown",
                   subtitle: "On the loneliness of leading without a soul",
-                  tag: "Essay",
+                  tag: "ESSAY",
+                  xp: "+150 XP",
                 },
                 {
                   title: "Maps, Mirrors, and Moves",
                   subtitle: "A practical guide to the inner work of leadership",
-                  tag: "Framework",
+                  tag: "FRAMEWORK",
+                  xp: "+300 XP",
                 },
                 {
                   title: "The Bowl and the Flow",
                   subtitle: "Why culture is a container, not a program",
-                  tag: "Metaphor",
+                  tag: "METAPHOR",
+                  xp: "+250 XP",
                 },
               ].map((item, i) => (
                 <FadeIn key={i} delay={0.2 + i * 0.1}>
                   <button
-                    onClick={() => toast("Coming soon", { description: "This essay is being prepared for publication." })}
-                    className="w-full text-left border border-gold/10 bg-[oklch(0.12_0.008_60)] p-6 md:p-8 hover:border-gold/25 transition-all duration-500 group"
+                    onClick={() =>
+                      toast("Coming soon", {
+                        description: "This quest will be available soon.",
+                      })
+                    }
+                    className="w-full text-left quest-card p-5 md:p-6 group"
                   >
-                    <span className="font-ui text-[10px] tracking-[0.2em] uppercase text-gold/40 mb-3 block">
-                      {item.tag}
-                    </span>
-                    <h3 className="font-display text-xl md:text-2xl font-semibold text-parchment mb-2 group-hover:text-gold transition-colors duration-500">
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="font-pixel text-[7px] text-forest-light bg-gold/10 px-2 py-1 tracking-wider">
+                        {item.tag}
+                      </span>
+                      <span className="font-pixel text-[7px] text-gold/30 tracking-wider">
+                        {item.xp}
+                      </span>
+                    </div>
+                    <h3 className="font-display text-xl md:text-2xl font-semibold text-parchment mb-2 group-hover:text-gold transition-colors duration-300">
                       {item.title}
                     </h3>
-                    <p className="text-parchment-dim/60 text-sm leading-relaxed">
+                    <p className="text-parchment-dim/50 text-sm leading-relaxed font-display">
                       {item.subtitle}
                     </p>
                   </button>
@@ -404,187 +493,221 @@ export default function Home() {
         </div>
       </section>
 
+      <PixelDivider />
+
       {/* ═══════════════════════════════════════════════════════════
-          SECTION 6: ABOUT — The Story
+          SECTION 6: THE PARTY — About
       ═══════════════════════════════════════════════════════════ */}
-      <section id="about" className="relative py-24 md:py-36 overflow-hidden">
-        {/* Background landscape */}
-        <div className="absolute inset-0">
+      <section id="about" className="relative py-20 md:py-32 overflow-hidden">
+        {/* Banner background */}
+        <div className="absolute inset-0 opacity-15">
           <img
-            src={LANDSCAPE_IMG}
+            src={RPG_BANNER}
             alt=""
-            className="w-full h-full object-cover opacity-25"
+            className="w-full h-full object-cover pixel-render"
             loading="lazy"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/90 to-background/70" />
-          <div className="absolute inset-0 bg-gradient-to-b from-background/50 via-transparent to-background" />
         </div>
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/95 to-background/80" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-transparent to-background" />
 
         <div className="relative z-10 container">
           <div className="max-w-3xl mx-auto md:ml-[5%]">
             <FadeIn>
-              <p className="font-ui text-xs tracking-[0.3em] uppercase text-gold/70 mb-6">
-                About
+              <p className="font-pixel text-[9px] tracking-[0.3em] text-gold/60 mb-6">
+                CHAPTER V: THE PARTY
               </p>
             </FadeIn>
 
             <FadeIn delay={0.15}>
               <h2 className="font-display text-3xl md:text-5xl font-semibold text-parchment mb-8 leading-tight">
-                Trained where leadership<br />
+                Trained where leadership
+                <br />
                 <span className="italic font-normal text-parchment-dim">had to work without leverage.</span>
               </h2>
             </FadeIn>
 
             <FadeIn delay={0.3}>
-              <div className="space-y-6 text-parchment-dim/90 text-base md:text-lg leading-relaxed">
+              <div className="space-y-6 text-parchment-dim/90 text-base md:text-lg leading-relaxed font-display">
                 <p className="drop-cap">
-                  Nic spent years in environments where you couldn't fire anyone, couldn't offer a raise, and couldn't
-                  promise a promotion. The only currency was trust. The only authority was character. In those crucibles —
-                  military service, ministry, frontline leadership — he learned that the conventional leadership playbook
-                  was not just insufficient. It was upside down.
+                  Nic spent years in environments where you couldn't fire anyone, couldn't offer a raise,
+                  and couldn't promise a promotion. The only currency was trust. The only authority was
+                  character. In those crucibles — military service, ministry, frontline leadership — he
+                  learned that the conventional leadership playbook was not just insufficient. It was
+                  upside down.
                 </p>
                 <p>
-                  What emerged was a conviction: that the deepest crisis in organizations is not a skills gap but a
-                  <em className="text-gold/80"> soul gap</em>. That we don't need better managers — we need transformed
-                  teachers. People who have done their own inner work and can now hold space for others to do theirs.
+                  What emerged was a conviction: that the deepest crisis in organizations is not a skills
+                  gap but a <em className="text-gold/80 not-italic font-semibold">soul gap</em>. That we
+                  don't need better managers — we need transformed teachers. People who have done their own
+                  inner work and can now hold space for others to do theirs.
                 </p>
-                <p>
-                  Rebel Leaders is the expression of that conviction. It's not a consulting firm. It's not a training
-                  company. It's a movement to reclaim leadership as a human art — and to build the infrastructure that
-                  makes character formation scalable without making it shallow.
-                </p>
+              </div>
+            </FadeIn>
+
+            {/* Character card */}
+            <FadeIn delay={0.5}>
+              <div className="dialogue-box mt-10">
+                <p className="font-pixel text-[8px] text-gold/50 mb-4 tracking-wider">CHARACTER SHEET</p>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+                  {[
+                    { stat: "CLASS", value: "Rebel Leader" },
+                    { stat: "ORIGIN", value: "Military / Ministry" },
+                    { stat: "WEAPON", value: "Holistic Shaping" },
+                    { stat: "QUEST", value: "Reclaim the Soul" },
+                  ].map((item, i) => (
+                    <div key={i}>
+                      <p className="font-pixel text-[7px] text-gold/40 tracking-wider mb-1">{item.stat}</p>
+                      <p className="font-display text-sm text-parchment">{item.value}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
             </FadeIn>
           </div>
         </div>
       </section>
 
-      <StainedGlassDivider variant="full" />
+      <PixelDivider showIcon={false} />
 
       {/* ═══════════════════════════════════════════════════════════
           SECTION 7: THE VISION — The Cosmic "So That"
       ═══════════════════════════════════════════════════════════ */}
-      <section className="relative py-24 md:py-36">
-        <div className="absolute inset-0 opacity-15">
+      <section className="relative py-20 md:py-32">
+        <div className="absolute inset-0 opacity-10">
           <img src={EMBER_IMG} alt="" className="w-full h-full object-cover" loading="lazy" />
         </div>
-        <div className="absolute inset-0 bg-background/85" />
+        <div className="absolute inset-0 bg-background/90" />
 
         <div className="relative z-10 container">
           <div className="max-w-3xl mx-auto text-center">
             <FadeIn>
-              <p className="font-ui text-xs tracking-[0.3em] uppercase text-gold/70 mb-6">
-                The Vision
+              <RebelLogo size={40} className="mx-auto text-gold/50 mb-6" />
+            </FadeIn>
+
+            <FadeIn delay={0.1}>
+              <p className="font-pixel text-[9px] tracking-[0.3em] text-gold/60 mb-6">
+                CHAPTER VI: THE VISION
               </p>
             </FadeIn>
 
-            <FadeIn delay={0.15}>
+            <FadeIn delay={0.2}>
               <h2 className="font-display text-3xl md:text-5xl lg:text-6xl font-semibold text-parchment mb-10 leading-tight">
-                Millions of organizations,<br />
+                Millions of organizations,
+                <br />
                 <span className="italic font-normal text-gold">
-                  repurposed as a distributed<br />
+                  repurposed as a distributed
+                  <br />
                   formation network.
                 </span>
               </h2>
             </FadeIn>
 
-            <FadeIn delay={0.3}>
-              <p className="text-parchment-dim/90 text-base md:text-lg leading-relaxed max-w-2xl mx-auto mb-12">
+            <FadeIn delay={0.35}>
+              <p className="text-parchment-dim/90 text-base md:text-lg leading-relaxed font-display max-w-2xl mx-auto mb-10">
                 Producing leaders of character equipped to live with hope and courage in the modern world.
-                Not better managers. Not more efficient systems. <strong className="text-parchment font-medium">Whole
-                humans</strong> — formed in community, tested by reality, and sent back into the world as agents of
-                repair.
+                Not better managers. Not more efficient systems.{" "}
+                <strong className="text-parchment font-semibold">Whole humans</strong> — formed in
+                community, tested by reality, and sent back into the world as agents of repair.
               </p>
             </FadeIn>
 
-            <FadeIn delay={0.45}>
-              <blockquote className="max-w-xl mx-auto">
-                <p className="font-display text-xl md:text-2xl italic text-gold/80 leading-relaxed">
-                  "It's not my job to fill your cup,<br />
+            <FadeIn delay={0.5}>
+              <DialogueBox speaker="THE REBEL OATH" className="max-w-xl mx-auto text-center">
+                <p className="italic text-xl md:text-2xl text-gold/80">
+                  "It's not my job to fill your cup,
+                  <br />
                   but it is to empty mine."
                 </p>
-              </blockquote>
+              </DialogueBox>
             </FadeIn>
           </div>
         </div>
       </section>
 
-      <StainedGlassDivider />
+      <PixelDivider />
 
       {/* ═══════════════════════════════════════════════════════════
-          SECTION 8: JOIN THE REBELLION
+          SECTION 8: JOIN THE PARTY — Newsletter / CTA
       ═══════════════════════════════════════════════════════════ */}
-      <section id="join" className="relative py-24 md:py-36">
+      <section id="join" className="relative py-20 md:py-32">
         <div className="container">
           <div className="max-w-3xl mx-auto text-center">
             <FadeIn>
-              <p className="font-ui text-xs tracking-[0.3em] uppercase text-gold/70 mb-6">
-                Join the Rebellion
+              <p className="font-pixel text-[9px] tracking-[0.3em] text-gold/60 mb-6">
+                CHAPTER VII: JOIN THE PARTY
               </p>
             </FadeIn>
 
             <FadeIn delay={0.15}>
               <h2 className="font-display text-3xl md:text-5xl font-semibold text-parchment mb-6 leading-tight">
-                You're not crazy.<br />
+                You're not crazy.
+                <br />
                 <span className="italic font-normal text-parchment-dim">You're not alone.</span>
               </h2>
             </FadeIn>
 
             <FadeIn delay={0.3}>
-              <p className="text-parchment-dim/90 text-base md:text-lg leading-relaxed mb-10 max-w-xl mx-auto">
-                There's a language for what you feel. A community of people who refuse to accept that this is all there
-                is. Join us and receive essays, frameworks, and invitations to go deeper.
+              <p className="text-parchment-dim/90 text-base md:text-lg leading-relaxed font-display mb-10 max-w-xl mx-auto">
+                There's a language for what you feel. A community of people who refuse to accept that
+                this is all there is. Join the party and receive essays, frameworks, and invitations to
+                go deeper.
               </p>
             </FadeIn>
 
+            {/* Newsletter signup — RPG dialogue box style */}
             <FadeIn delay={0.45}>
-              <div className="max-w-md mx-auto">
+              <div className="dialogue-box max-w-md mx-auto">
+                <p className="font-pixel text-[8px] text-gold/50 mb-4 tracking-wider">NEW QUEST AVAILABLE</p>
                 <div className="flex flex-col sm:flex-row gap-3">
                   <input
                     type="email"
-                    placeholder="Your email address"
-                    className="flex-1 bg-[oklch(0.14_0.008_60)] border border-gold/15 px-5 py-3.5 text-parchment placeholder:text-parchment-dim/40 font-ui text-sm focus:outline-none focus:border-gold/40 transition-colors duration-300"
+                    placeholder="Enter your email..."
+                    className="flex-1 bg-forest-deep/60 border-2 border-wood/30 px-4 py-3 text-parchment placeholder:text-parchment-dim/30 font-ui text-sm focus:outline-none focus:border-gold/50 transition-colors duration-300"
                   />
                   <button
-                    onClick={() => toast("Welcome to the rebellion", { description: "Newsletter signup coming soon." })}
-                    className="bg-gold/15 border border-gold/30 px-6 py-3.5 font-ui text-sm tracking-wider uppercase text-gold hover:bg-gold/25 hover:border-gold/50 transition-all duration-300 flex items-center justify-center gap-2"
+                    onClick={() =>
+                      toast("Welcome, rebel.", {
+                        description: "Newsletter signup coming soon.",
+                      })
+                    }
+                    className="bg-gold/15 border-2 border-gold/40 px-6 py-3 font-pixel text-[9px] tracking-wider text-gold hover:bg-gold/25 hover:border-gold/60 transition-all duration-300"
                   >
-                    <Mail size={14} strokeWidth={1.5} />
-                    Join
+                    JOIN
                   </button>
                 </div>
-                <p className="font-ui text-[10px] text-parchment-dim/30 mt-3 tracking-wider">
-                  No spam. No hustle. Just ideas worth sitting with.
+                <p className="font-pixel text-[6px] text-parchment-dim/25 mt-3 tracking-wider">
+                  NO SPAM. NO HUSTLE. JUST IDEAS WORTH SITTING WITH.
                 </p>
               </div>
             </FadeIn>
 
-            {/* Three invitations */}
+            {/* Three steps — quest objectives */}
             <FadeIn delay={0.6}>
-              <div className="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-6 text-left">
+              <div className="mt-14 grid grid-cols-1 sm:grid-cols-3 gap-4 text-left">
                 {[
                   {
-                    step: "01",
+                    step: "STEP 01",
                     title: "Notice",
                     desc: "Pay attention to the ache. The sense that something is missing. That's not weakness — it's wisdom.",
                   },
                   {
-                    step: "02",
+                    step: "STEP 02",
                     title: "Name",
-                    desc: "Give language to what you see. The Great Transfer. The Hollow Crown. Vulture Culture. Naming is the first act of resistance.",
+                    desc: "Give language to what you see. The Great Transfer. The Hollow Crown. Naming is the first act of resistance.",
                   },
                   {
-                    step: "03",
+                    step: "STEP 03",
                     title: "Take One Step",
-                    desc: "Start the inner work. Find your people. Hold the bowl. You don't have to save the world. Just steward your corner of it.",
+                    desc: "Start the inner work. Find your people. Hold the bowl. Just steward your corner of it.",
                   },
                 ].map((item, i) => (
-                  <div key={i} className="border-t border-gold/15 pt-6">
-                    <span className="font-ui text-xs text-gold/40 tracking-wider">{item.step}</span>
+                  <div key={i} className="quest-card p-5">
+                    <span className="font-pixel text-[7px] text-gold/40 tracking-wider">{item.step}</span>
                     <h3 className="font-display text-xl font-semibold text-parchment mt-2 mb-2">
                       {item.title}
                     </h3>
-                    <p className="text-parchment-dim/60 text-sm leading-relaxed">
+                    <p className="text-parchment-dim/50 text-sm leading-relaxed font-display">
                       {item.desc}
                     </p>
                   </div>

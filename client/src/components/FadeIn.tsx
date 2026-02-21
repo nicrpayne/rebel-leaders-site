@@ -12,7 +12,7 @@ interface FadeInProps {
 export default function FadeIn({
   children,
   delay = 0,
-  duration = 0.9,
+  duration = 0.6,
   className = "",
   once = true,
 }: FadeInProps) {
@@ -22,12 +22,12 @@ export default function FadeIn({
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 24 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
       transition={{
         duration,
         delay,
-        ease: [0.25, 0.1, 0.25, 1],
+        ease: [0.33, 0, 0.67, 1],
       }}
       className={className}
     >

@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import RebelLogo from "./RebelLogo";
 
 const navItems = [
-  { label: "The Work", href: "#the-work" },
-  { label: "Writing", href: "#writing" },
-  { label: "About", href: "#about" },
-  { label: "Join the Rebellion", href: "#join" },
+  { label: "Quest Log", href: "#the-work" },
+  { label: "Lore", href: "#writing" },
+  { label: "Party", href: "#about" },
+  { label: "Join", href: "#join" },
 ];
 
 export default function Navigation() {
@@ -30,24 +30,24 @@ export default function Navigation() {
       <motion.nav
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 0.5 }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        transition={{ duration: 0.8, delay: 0.5 }}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
-            ? "bg-[oklch(0.1_0.008_60/0.92)] backdrop-blur-md border-b border-[oklch(0.25_0.01_60/0.5)]"
+            ? "bg-forest-deep/95 backdrop-blur-sm border-b-2 border-wood/30"
             : "bg-transparent"
         }`}
       >
-        <div className="container flex items-center justify-between h-16 md:h-20">
-          {/* Logo */}
+        <div className="container flex items-center justify-between h-14 md:h-16">
+          {/* Logo icon + text */}
           <a
             href="#"
             onClick={(e) => {
               e.preventDefault();
               window.scrollTo({ top: 0, behavior: "smooth" });
             }}
-            className="font-display text-xl md:text-2xl font-semibold tracking-wide text-parchment hover:text-gold transition-colors duration-300"
+            className="text-gold hover:text-parchment transition-colors duration-300"
           >
-            Rebel Leaders
+            <RebelLogo size={28} withText />
           </a>
 
           {/* Desktop Nav */}
@@ -56,10 +56,10 @@ export default function Navigation() {
               <button
                 key={item.label}
                 onClick={() => scrollTo(item.href)}
-                className="font-ui text-sm tracking-widest uppercase text-parchment-dim hover:text-gold transition-colors duration-300 relative group"
+                className="font-pixel text-[8px] text-parchment-dim hover:text-gold transition-colors relative group"
               >
-                {item.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-px bg-gold group-hover:w-full transition-all duration-300" />
+                {item.label.toUpperCase()}
+                <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-gold group-hover:w-full transition-all duration-200" />
               </button>
             ))}
           </div>
@@ -67,10 +67,10 @@ export default function Navigation() {
           {/* Mobile Hamburger */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden text-parchment hover:text-gold transition-colors"
+            className="md:hidden text-parchment hover:text-gold transition-colors font-pixel text-[8px]"
             aria-label="Toggle menu"
           >
-            {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+            {mobileOpen ? "[X]" : "[=]"}
           </button>
         </div>
       </motion.nav>
@@ -79,22 +79,27 @@ export default function Navigation() {
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 bg-[oklch(0.1_0.008_60/0.97)] backdrop-blur-lg flex flex-col items-center justify-center gap-8"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-40 bg-forest-deep/98 flex flex-col items-center justify-center gap-8"
           >
+            {/* Logo in mobile menu */}
+            <div className="text-gold mb-4">
+              <RebelLogo size={48} />
+            </div>
+
             {navItems.map((item, i) => (
               <motion.button
                 key={item.label}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 + 0.1 }}
+                transition={{ delay: i * 0.08 + 0.1 }}
                 onClick={() => scrollTo(item.href)}
-                className="font-display text-3xl text-parchment hover:text-gold transition-colors duration-300"
+                className="font-pixel text-sm text-parchment hover:text-gold transition-colors"
               >
-                {item.label}
+                {">"} {item.label.toUpperCase()}
               </motion.button>
             ))}
           </motion.div>

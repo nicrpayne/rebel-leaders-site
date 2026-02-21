@@ -1,17 +1,24 @@
+import RebelLogo from "./RebelLogo";
+
 export default function Footer() {
   return (
-    <footer className="relative border-t border-[oklch(0.25_0.01_60/0.5)] py-16 md:py-20">
+    <footer className="relative border-t-2 border-wood/20 py-12 md:py-16 bg-forest-deep">
       <div className="container">
-        <div className="max-w-4xl mx-auto text-center">
-          <p className="font-display text-2xl md:text-3xl italic text-gold mb-8">
-            "Hope is an act of rebellion."
+        <div className="max-w-3xl mx-auto text-center">
+          {/* Logo icon */}
+          <div className="flex justify-center mb-6">
+            <RebelLogo size={36} className="text-gold/40" />
+          </div>
+
+          <p className="font-pixel text-[8px] md:text-[10px] text-gold/50 mb-6 leading-loose tracking-wider">
+            "HOPE IS REBELLIOUS."
           </p>
 
-          <div className="flex flex-wrap justify-center gap-6 md:gap-10 mb-10">
+          <div className="flex flex-wrap justify-center gap-6 md:gap-8 mb-8">
             {[
-              { label: "The Work", href: "#the-work" },
-              { label: "Writing", href: "#writing" },
-              { label: "About", href: "#about" },
+              { label: "Quest Log", href: "#the-work" },
+              { label: "Lore", href: "#writing" },
+              { label: "Party", href: "#about" },
               { label: "Join", href: "#join" },
             ].map((item) => (
               <a
@@ -21,19 +28,20 @@ export default function Footer() {
                   e.preventDefault();
                   document.querySelector(item.href)?.scrollIntoView({ behavior: "smooth" });
                 }}
-                className="font-ui text-xs tracking-widest uppercase text-parchment-dim hover:text-gold transition-colors duration-300"
+                className="font-pixel text-[7px] text-parchment-dim/40 hover:text-gold transition-colors"
               >
-                {item.label}
+                {item.label.toUpperCase()}
               </a>
             ))}
           </div>
 
-          <div className="w-16 h-px mx-auto mb-8" style={{
-            background: "linear-gradient(90deg, transparent, oklch(0.78 0.12 75 / 0.4), transparent)",
-          }} />
+          <div className="w-24 h-[2px] mx-auto mb-6 bg-wood/15" />
 
-          <p className="font-ui text-xs text-parchment-dim/50 tracking-wider">
-            &copy; {new Date().getFullYear()} Rebel Leaders. All rights reserved.
+          <p className="font-pixel text-[6px] text-parchment-dim/25 tracking-wider">
+            &copy; {new Date().getFullYear()} REBEL LEADERS
+          </p>
+          <p className="font-pixel text-[6px] text-parchment-dim/15 mt-2 tracking-wider">
+            SAVE POINT REACHED. PROGRESS SAVED.
           </p>
         </div>
       </div>
