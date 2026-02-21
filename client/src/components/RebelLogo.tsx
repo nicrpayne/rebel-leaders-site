@@ -1,6 +1,10 @@
 /**
  * Rebel Leaders Logo — the rising sun / horizon icon
- * An arch (half-circle) sitting on a horizontal line.
+ * Exact match to the brand logo:
+ * - Thick semicircle arch (filled, not stroked)
+ * - Visible gap between arch bottom and horizon line
+ * - Horizon line extends significantly wider than the arch on both sides
+ * - Horizon line is thinner than the arch thickness
  * Rendered as inline SVG so it can be colored via currentColor.
  */
 
@@ -11,28 +15,37 @@ interface RebelLogoProps {
 }
 
 export default function RebelLogo({ size = 32, className = "", withText = false }: RebelLogoProps) {
+  // The logo viewBox: 120 wide x 70 tall
+  // Arch: outer radius 28, inner radius 16 → thickness ~12
+  // Gap between arch bottom and horizon: ~5 units
+  // Horizon: full width (120), height ~7
+  const logoSvg = (
+    <svg
+      width={size}
+      height={size * (70 / 120)}
+      viewBox="0 0 120 70"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={withText ? "shrink-0" : className}
+    >
+      {/* Arch — thick filled semicircle (outer arc minus inner arc) */}
+      <path
+        d="M 32 45
+           A 28 28 0 0 1 88 45
+           L 78 45
+           A 18 18 0 0 0 42 45
+           Z"
+        fill="currentColor"
+      />
+      {/* Horizon line — wider than arch, with gap below */}
+      <rect x="0" y="51" width="120" height="7" fill="currentColor" />
+    </svg>
+  );
+
   if (withText) {
     return (
       <div className={`flex items-center gap-3 ${className}`}>
-        <svg
-          width={size}
-          height={size}
-          viewBox="0 0 100 80"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="shrink-0"
-        >
-          {/* Arch */}
-          <path
-            d="M20 52 A30 30 0 0 1 80 52"
-            stroke="currentColor"
-            strokeWidth="10"
-            fill="none"
-            strokeLinecap="butt"
-          />
-          {/* Horizontal line */}
-          <rect x="8" y="52" width="84" height="8" rx="0" fill="currentColor" />
-        </svg>
+        {logoSvg}
         <span className="font-pixel text-[10px] md:text-xs tracking-wider">
           REBEL LEADERS
         </span>
@@ -40,25 +53,5 @@ export default function RebelLogo({ size = 32, className = "", withText = false 
     );
   }
 
-  return (
-    <svg
-      width={size}
-      height={size * 0.8}
-      viewBox="0 0 100 80"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-    >
-      {/* Arch */}
-      <path
-        d="M20 52 A30 30 0 0 1 80 52"
-        stroke="currentColor"
-        strokeWidth="10"
-        fill="none"
-        strokeLinecap="butt"
-      />
-      {/* Horizontal line */}
-      <rect x="8" y="52" width="84" height="8" rx="0" fill="currentColor" />
-    </svg>
-  );
+  return logoSvg;
 }
