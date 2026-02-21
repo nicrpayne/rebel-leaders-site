@@ -8,7 +8,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { toast } from "sonner";
+// toast handled by SubstackSignup component
 import { Link } from "wouter";
 import Navigation from "@/components/Navigation";
 import FadeIn from "@/components/FadeIn";
@@ -17,6 +17,7 @@ import TypewriterText from "@/components/TypewriterText";
 import PixelDivider from "@/components/PixelDivider";
 import RebelLogo from "@/components/RebelLogo";
 import Footer from "@/components/Footer";
+import SubstackSignup from "@/components/SubstackSignup";
 
 /* ─── CDN Image URLs ─── */
 const RPG_OFFICE = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/zlNQJQinSxaqyYjB.png";
@@ -656,31 +657,9 @@ export default function Home() {
               </p>
             </FadeIn>
 
-            {/* Newsletter signup — RPG dialogue box style */}
+            {/* Newsletter signup — Substack integration */}
             <FadeIn delay={0.45}>
-              <div className="dialogue-box max-w-md mx-auto">
-                <p className="font-pixel text-[8px] text-gold/50 mb-4 tracking-wider">NEW QUEST AVAILABLE</p>
-                <div className="flex flex-col sm:flex-row gap-3">
-                  <input
-                    type="email"
-                    placeholder="Enter your email..."
-                    className="flex-1 bg-forest-deep/60 border-2 border-wood/30 px-4 py-3 text-parchment placeholder:text-parchment-dim/30 font-ui text-sm focus:outline-none focus:border-gold/50 transition-colors duration-300"
-                  />
-                  <button
-                    onClick={() =>
-                      toast("Welcome, rebel.", {
-                        description: "Newsletter signup coming soon.",
-                      })
-                    }
-                    className="bg-gold/15 border-2 border-gold/40 px-6 py-3 font-pixel text-[9px] tracking-wider text-gold hover:bg-gold/25 hover:border-gold/60 transition-all duration-300"
-                  >
-                    JOIN
-                  </button>
-                </div>
-                <p className="font-pixel text-[6px] text-parchment-dim/25 mt-3 tracking-wider">
-                  NO SPAM. NO HUSTLE. JUST IDEAS WORTH SITTING WITH.
-                </p>
-              </div>
+              <SubstackSignup variant="featured" />
             </FadeIn>
 
             {/* Three steps — quest objectives */}

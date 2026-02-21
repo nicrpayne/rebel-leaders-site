@@ -10,6 +10,7 @@ import FadeIn from "@/components/FadeIn";
 import DialogueBox from "@/components/DialogueBox";
 import PixelDivider from "@/components/PixelDivider";
 import RebelLogo from "@/components/RebelLogo";
+import SubstackSignup from "@/components/SubstackSignup";
 
 const RPG_OFFICE = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/zlNQJQinSxaqyYjB.png";
 const RPG_SPRITE = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/ItPGFmjOWJPnlXQR.png";
@@ -244,6 +245,12 @@ export default function StartHere() {
                 </p>
                 <p className="text-gold/70 mt-4 italic">Welcome to the rebellion.</p>
               </DialogueBox>
+            </FadeIn>
+
+            <FadeIn delay={0.3}>
+              <div className="mt-10">
+                <SubstackSignup variant="featured" />
+              </div>
             </FadeIn>
           </div>
         </div>

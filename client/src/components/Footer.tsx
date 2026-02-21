@@ -1,5 +1,6 @@
 import { Link } from "wouter";
 import RebelLogo from "./RebelLogo";
+import SubstackSignup from "./SubstackSignup";
 
 export default function Footer() {
   return (
@@ -14,6 +15,12 @@ export default function Footer() {
           <p className="font-pixel text-[8px] md:text-[10px] text-gold/50 mb-6 leading-loose tracking-wider">
             "HOPE IS REBELLIOUS."
           </p>
+
+          {/* Substack signup — compact inline */}
+          <div className="max-w-xs mx-auto mb-8">
+            <p className="font-pixel text-[6px] text-parchment-dim/30 tracking-wider mb-2">JOIN THE REBELLION</p>
+            <SubstackSignup variant="inline" />
+          </div>
 
           {/* Main nav links */}
           <div className="flex flex-wrap justify-center gap-6 md:gap-8 mb-6">
