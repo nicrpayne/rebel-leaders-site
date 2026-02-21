@@ -9,6 +9,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
+import { Link } from "wouter";
 import Navigation from "@/components/Navigation";
 import FadeIn from "@/components/FadeIn";
 import DialogueBox from "@/components/DialogueBox";
@@ -379,32 +380,36 @@ export default function Home() {
                     title: "MAPS",
                     emoji: "🗺",
                     desc: "Frameworks that show you where you are: Enneagram, Spiral Dynamics, the Divided Brain. Not to label, but to liberate.",
+                    href: "/manifesto",
                   },
                   {
                     title: "MIRRORS",
                     emoji: "🪞",
                     desc: "Honest reflection from trusted others. The courage to see your False Self patterns and choose the True Self instead.",
+                    href: "/mirror",
                   },
                   {
                     title: "MOVES",
                     emoji: "⚔",
                     desc: "Practical disciplines and daily practices. Small acts of rebellion against the machine. The work of becoming.",
+                    href: "/armory",
                   },
                 ].map((item, i) => (
-                  <div
+                  <Link
                     key={i}
-                    className="quest-card p-5 md:p-6 group"
+                    href={item.href}
+                    className="quest-card p-5 md:p-6 group block"
                   >
                     <div className="flex items-center gap-3 mb-3">
                       <span className="text-xl">{item.emoji}</span>
-                      <h3 className="font-pixel text-[10px] text-gold tracking-wider">
+                      <h3 className="font-pixel text-[10px] text-gold tracking-wider group-hover:text-parchment transition-colors">
                         {item.title}
                       </h3>
                     </div>
                     <p className="text-parchment-dim/60 text-sm leading-relaxed font-display">
                       {item.desc}
                     </p>
-                  </div>
+                  </Link>
                 ))}
               </div>
             </FadeIn>
@@ -463,13 +468,9 @@ export default function Home() {
                 },
               ].map((item, i) => (
                 <FadeIn key={i} delay={0.2 + i * 0.1}>
-                  <button
-                    onClick={() =>
-                      toast("Coming soon", {
-                        description: "This quest will be available soon.",
-                      })
-                    }
-                    className="w-full text-left quest-card p-5 md:p-6 group"
+                  <Link
+                    href="/archives"
+                    className="w-full text-left quest-card p-5 md:p-6 group block"
                   >
                     <div className="flex items-center justify-between mb-3">
                       <span className="font-pixel text-[7px] text-forest-light bg-gold/10 px-2 py-1 tracking-wider">
@@ -485,7 +486,7 @@ export default function Home() {
                     <p className="text-parchment-dim/50 text-sm leading-relaxed font-display">
                       {item.subtitle}
                     </p>
-                  </button>
+                  </Link>
                 </FadeIn>
               ))}
             </div>

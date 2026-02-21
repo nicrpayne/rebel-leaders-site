@@ -1,3 +1,4 @@
+import { Link } from "wouter";
 import RebelLogo from "./RebelLogo";
 
 export default function Footer() {
@@ -14,25 +15,64 @@ export default function Footer() {
             "HOPE IS REBELLIOUS."
           </p>
 
-          <div className="flex flex-wrap justify-center gap-6 md:gap-8 mb-8">
+          {/* Main nav links */}
+          <div className="flex flex-wrap justify-center gap-6 md:gap-8 mb-6">
             {[
-              { label: "Quest Log", href: "#the-work" },
-              { label: "Lore", href: "#writing" },
-              { label: "Party", href: "#about" },
-              { label: "Join", href: "#join" },
+              { label: "The Study", href: "/" },
+              { label: "The Map", href: "/manifesto" },
+              { label: "Archives", href: "/archives" },
+              { label: "The Shelf", href: "/shelf" },
+              { label: "Residency", href: "/residency" },
+              { label: "About", href: "/about" },
             ].map((item) => (
-              <a
+              <Link
                 key={item.label}
                 href={item.href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  document.querySelector(item.href)?.scrollIntoView({ behavior: "smooth" });
-                }}
                 className="font-pixel text-[7px] text-parchment-dim/40 hover:text-gold transition-colors"
               >
                 {item.label.toUpperCase()}
-              </a>
+              </Link>
             ))}
+          </div>
+
+          {/* Secondary links */}
+          <div className="flex flex-wrap justify-center gap-4 md:gap-6 mb-8">
+            {[
+              { label: "Start Here", href: "/start" },
+              { label: "The Game", href: "/game" },
+              { label: "The Mirror", href: "/mirror" },
+              { label: "The Armory", href: "/armory" },
+              { label: "Community", href: "/community" },
+              { label: "The Manuscript", href: "/book" },
+            ].map((item) => (
+              <Link
+                key={item.label}
+                href={item.href}
+                className="font-pixel text-[6px] text-parchment-dim/25 hover:text-gold/60 transition-colors"
+              >
+                {item.label.toUpperCase()}
+              </Link>
+            ))}
+          </div>
+
+          {/* Social links */}
+          <div className="flex justify-center gap-6 mb-8">
+            <a
+              href="https://www.youtube.com/@LeaderRebellion"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-pixel text-[7px] text-parchment-dim/30 hover:text-gold transition-colors"
+            >
+              YOUTUBE
+            </a>
+            <a
+              href="https://substack.com/@leaderrebellion"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-pixel text-[7px] text-parchment-dim/30 hover:text-gold transition-colors"
+            >
+              SUBSTACK
+            </a>
           </div>
 
           <div className="w-24 h-[2px] mx-auto mb-6 bg-wood/15" />
