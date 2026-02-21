@@ -13,7 +13,7 @@ import RebelLogo from "@/components/RebelLogo";
 import SubstackSignup from "@/components/SubstackSignup";
 
 const RPG_OFFICE = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/zlNQJQinSxaqyYjB.png";
-const RPG_SPRITE = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/pfwFyCunhFIKzKut.png";
+const RPG_SPRITE = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/GivLpGILaMTgVTZp.png";
 
 export default function StartHere() {
   return (
