@@ -80,3 +80,10 @@
 - [x] StartHere: McGilchrist (hemisphere drift), Maté (collective trauma), Rohr (everything belongs), Sutherland + Boyatzis in Rebel OS
 - [x] About Skill Tree: Added Rory Sutherland, Paul Tillich, Nassim Taleb; renamed category to "Behavioral Science & Culture"
 - [x] Balance achieved: subtitle updated to "Ancient wisdom recovered. Modern science confirmed."
+
+## Phase 13: Slim Down Home Page Chapters I & II
+- [x] Remove Tao Te Ching quote from Chapter I
+- [x] Remove Rory Sutherland line from Chapter I
+- [x] Remove Meister Eckhart + Richard Rohr + non-dualism sentences from Chapter II
+- [x] Remove Rumi quote from Chapter II
+- [x] Add "a formation crisis" to the existential line in Chapter II

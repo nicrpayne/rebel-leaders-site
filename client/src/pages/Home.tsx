@@ -175,7 +175,7 @@ export default function Home() {
                     The Great Transfer
                   </a>
                   : the impossible burden placed on the transactional workplace to do what formative
-                  communities once did. The Tao Te Ching warned us: <em className="text-gold/70">"When the great Tao is forgotten, goodness and piety appear."</em> We forgot. And now we're buying it back at retail.
+                  communities once did.
                 </p>
                 <p>
                   The result is what we name{" "}
@@ -187,7 +187,7 @@ export default function Home() {
                   >
                     Vulture Culture
                   </a>
-                  {" "}— organizations that extract human energy without replenishing the soul. Rory Sutherland would note the irony: we've optimized for metrics that don't measure anything that matters. Leaders
+                  {" "}— organizations that extract human energy without replenishing the soul. Leaders
                   wearing the{" "}
                   <a
                     href={SUBSTACK_HOLLOW_CROWN}
@@ -267,12 +267,10 @@ export default function Home() {
               <p className="text-parchment-dim/90 text-base md:text-lg leading-relaxed font-display mt-8">
                 We believe that every human being carries an irreducible dignity that no system can grant
                 or revoke. That leadership is not a position but a posture — the posture of one who has
-                done their own inner work and now creates conditions for others to grow. Meister Eckhart
-                said it in the 13th century: <em className="text-gold/70">"The outward work will never be puny if the inward work is great."</em>{" "}
-                Richard Rohr says it now: <em className="text-gold/70">everything belongs</em> — the shadow and the light, the failure and the flourishing. Non-dualism isn't a theology; it's the operating system of reality.
+                done their own inner work and now creates conditions for others to grow.
                 The crisis under every crisis is not economic or political but{" "}
-                <em className="text-gold/80">existential</em>: a disconnection from self, from others,
-                and from purpose. Rumi named it eight centuries ago — <em className="text-gold/70">"Your task is not to seek for love, but merely to seek and find all the barriers within yourself that you have built against it."</em>
+                <em className="text-gold/80">existential</em>: a formation crisis, a disconnection from self, from others,
+                and from purpose.
               </p>
             </FadeIn>
 
