@@ -97,6 +97,7 @@ export default function StartHere() {
                   "You care more about who your people are becoming than what they're producing.",
                   "You've done inner work and you're wondering why no one talks about it at work.",
                   "You feel like you're the only one who sees it.",
+                  "The word 'leadership' makes you cringe — because everything you've seen called leadership is just power hoarding in a polo shirt.",
                 ].map((line, i) => (
                   <div key={i} className="flex items-start gap-3">
                     <span className="font-pixel text-[8px] text-gold/40 mt-1.5 shrink-0">{">"}</span>

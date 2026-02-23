@@ -147,3 +147,6 @@
 - [x] Remove all content that duplicates Home page (Great Transfer, akrasia, Rebel OS details, Maps/Mirrors/Moves all removed)
 - [x] Keep it under 30 seconds of reading (262 lines → 190 lines, ~60% less text)
 - [x] Choose-your-path section with descriptions for future gamification hook
+
+## Phase 27: Add Younger Audience Line to New Player
+- [x] Add resonance line for younger people who find "leadership" cringe
