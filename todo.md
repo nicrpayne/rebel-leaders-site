@@ -130,3 +130,10 @@
 
 ## Phase 23: Manifesto Chapter IV — Ethos Rewrite
 - [x] Rewrite ethos quotes with new 4-line format (quote + parenthetical explanation)
+
+## Phase 24: Build Out The Shelf Page
+- [x] Read current Shelf.tsx to understand existing structure
+- [x] Populate with all books from user's list, organized into 7 categories (60+ books)
+- [x] Add "Start Here" section with 5 essential reads (McGilchrist, Rohr, Frankl, Maté, Buber)
+- [x] Add placeholder "Voices" section for Substackers / bloggers
+- [x] Category tab navigation with RPG visual style, ★ START HERE badges
