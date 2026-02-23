@@ -50,7 +50,7 @@ export default function Manifesto() {
             <FadeIn>
               <DialogueBox speaker="NARRATOR">
                 <p className="italic">
-                  This is not a leadership model. It is a rebellion and a remembering.
+                  This is not a leadership model. It is a rebellion and a remembering. As the Tao Te Ching says: "The further one goes, the less one knows."
                 </p>
               </DialogueBox>
             </FadeIn>
@@ -160,7 +160,7 @@ export default function Manifesto() {
                 <strong className="text-parchment">But we believe a different world is not only possible,
                 but is already emerging.</strong> We believe that the ache you feel is not a sign of your
                 weakness, but a signal of your sanity. It is your soul refusing to go numb. It is the
-                memory of a more ancient and truer way of being.
+                memory of a more ancient and truer way of being. The Stoics called it <em className="text-gold/70">oikeiosis</em> — the innate orientation toward wholeness.
               </p>
             </FadeIn>
 
@@ -177,7 +177,7 @@ export default function Manifesto() {
               <DialogueBox speaker="CORE BELIEF" className="mt-8">
                 <p className="italic text-lg md:text-xl">
                   Leadership is not a role to perform, but a way of being to cultivate. It is not about
-                  having the right answers, but about holding the right questions.
+                  having the right answers, but about holding the right questions. As Rilke wrote: "Live the questions now."
                 </p>
               </DialogueBox>
             </FadeIn>
@@ -200,7 +200,8 @@ export default function Manifesto() {
 
             <FadeIn delay={0.15}>
               <p className="text-parchment-dim/90 text-base md:text-lg leading-relaxed font-display mb-8">
-                Our purpose is to solve the crisis under every other crisis: <strong className="text-parchment">existential loneliness.</strong>
+                Our purpose is to solve the crisis under every other crisis: <strong className="text-parchment">existential loneliness.</strong>{" "}
+                The Ubuntu philosophy names it plainly: <em className="text-gold/70">"I am because we are."</em> Separation was always the illusion.
               </p>
             </FadeIn>
 
@@ -243,7 +244,8 @@ export default function Manifesto() {
 
             <FadeIn delay={0.15}>
               <p className="text-parchment-dim/90 text-base md:text-lg leading-relaxed font-display drop-cap">
-                <strong className="text-parchment">Our vision is cosmic.</strong> We see a world where millions
+                <strong className="text-parchment">Our vision is cosmic.</strong> The Stoics called it <em className="text-gold/70">cosmopolis</em>.
+                The Hebrew prophets called it <em className="text-gold/70">shalom</em>. We see a world where millions
                 of companies, organizations, and institutions are no longer sites of extraction, but have been
                 mobilized into a <strong className="text-gold/80">distributed character formation network</strong> — a
                 global ecosystem of schools for the soul, producing generations of leaders equipped to live

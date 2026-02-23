@@ -165,7 +165,7 @@ export default function Home() {
                 <p className="drop-cap">
                   The institutions that once formed us — families, churches, civic organizations,
                   neighborhoods — have hollowed out. What remains is a $366 billion leadership industry
-                  selling competency models to a world dying of loneliness. This is{" "}
+                  selling competency models to a world dying of loneliness. Aristotle called it <em className="text-gold/70">akrasia</em> — knowing the good but being unable to do it. This is{" "}
                   <a
                     href={SUBSTACK_GREAT_TRANSFER}
                     target="_blank"
@@ -175,7 +175,7 @@ export default function Home() {
                     The Great Transfer
                   </a>
                   : the impossible burden placed on the transactional workplace to do what formative
-                  communities once did.
+                  communities once did. The Tao Te Ching warned us: <em className="text-gold/70">"When the great Tao is forgotten, goodness and piety appear."</em> We forgot. And now we're buying it back at retail.
                 </p>
                 <p>
                   The result is what we name{" "}
@@ -198,7 +198,7 @@ export default function Home() {
                     Hollow Crown
                   </a>
                   , performing authority while hemorrhaging meaning. A machine that optimizes for
-                  everything except the one thing that matters: human flourishing.
+                  everything except the one thing that matters: what the Greeks called <em className="text-gold/70">eudaimonia</em> — human flourishing.
                 </p>
               </div>
             </FadeIn>
@@ -267,10 +267,11 @@ export default function Home() {
               <p className="text-parchment-dim/90 text-base md:text-lg leading-relaxed font-display mt-8">
                 We believe that every human being carries an irreducible dignity that no system can grant
                 or revoke. That leadership is not a position but a posture — the posture of one who has
-                done their own inner work and now creates conditions for others to grow. That the crisis
-                under every crisis is not economic or political but{" "}
+                done their own inner work and now creates conditions for others to grow. Meister Eckhart
+                said it in the 13th century: <em className="text-gold/70">"The outward work will never be puny if the inward work is great."</em>{" "}
+                The crisis under every crisis is not economic or political but{" "}
                 <em className="text-gold/80">existential</em>: a disconnection from self, from others,
-                and from purpose.
+                and from purpose. Rumi named it eight centuries ago — <em className="text-gold/70">"Your task is not to seek for love, but merely to seek and find all the barriers within yourself that you have built against it."</em>
               </p>
             </FadeIn>
 
@@ -278,9 +279,9 @@ export default function Home() {
             <FadeIn delay={0.55}>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-10">
                 {[
-                  { text: "Humanity is not a liability." },
-                  { text: "Character cannot be outsourced." },
-                  { text: "Hope is rebellious." },
+                  { text: "Humanity is not a liability.", source: "— contra the Machine" },
+                  { text: "Character cannot be outsourced.", source: "— Aristotle, Nicomachean Ethics" },
+                  { text: "Hope is rebellious.", source: "— Václav Havel" },
                 ].map((item, i) => (
                   <div
                     key={i}
@@ -292,6 +293,9 @@ export default function Home() {
                     />
                     <p className="font-display text-base md:text-lg italic text-parchment">
                       {item.text}
+                    </p>
+                    <p className="font-pixel text-[6px] text-gold/30 mt-2 tracking-wider">
+                      {item.source}
                     </p>
                   </div>
                 ))}
@@ -329,8 +333,10 @@ export default function Home() {
                 Built on the philosophy of{" "}
                 <strong className="text-parchment font-semibold">Holistic Shaping</strong>, the Rebel OS
                 is our orbital system for transforming organizations from extraction machines into formation
-                communities. It doesn't add another layer of training. It rewires the operating system —
-                from the leader's inner life outward to the culture they steward.
+                communities. It recovers what the ancients already knew — from Aristotle's <em className="text-gold/70">phronesis</em>{" "}
+                (practical wisdom) to the Desert Fathers' <em className="text-gold/70">kenosis</em> (self-emptying) to the Buddhist concept of{" "}
+                <em className="text-gold/70">beginner's mind</em> — and translates it through modern neuroscience, psychology, and sociology
+                into a living system for today's leaders.
               </p>
             </FadeIn>
 
@@ -464,7 +470,7 @@ export default function Home() {
                 Ideas worth sitting with.
               </h2>
               <p className="font-pixel text-[8px] text-parchment-dim/40 mb-10 tracking-wider">
-                ESSAYS, LENSES, AND FIELD NOTES FROM THE REBELLION
+                ANCIENT WISDOM RECOVERED · CROSS-DISCIPLINE SECRETS UNCOVERED
               </p>
             </FadeIn>
 
@@ -593,10 +599,12 @@ export default function Home() {
 
             <FadeIn delay={0.35}>
               <p className="text-parchment-dim/90 text-base md:text-lg leading-relaxed font-display max-w-2xl mx-auto mb-10">
-                Producing leaders of character equipped to live with hope and courage in the modern world.
-                Not better managers. Not more efficient systems.{" "}
+                The Stoics called it <em className="text-gold/70">cosmopolis</em> — the universal city. The Hebrew prophets called it <em className="text-gold/70">shalom</em> — the
+                wholeness of all things. We're building toward it: leaders of character equipped to live with hope
+                and courage in the modern world. Not better managers. Not more efficient systems.{" "}
                 <strong className="text-parchment font-semibold">Whole humans</strong> — formed in
-                community, tested by reality, and sent back into the world as agents of repair.
+                community, tested by reality, and sent back into the world as what the Japanese call{" "}
+                <em className="text-gold/70">ikigai</em> in motion: agents of repair.
               </p>
             </FadeIn>
 
@@ -606,6 +614,8 @@ export default function Home() {
                   "It's not my job to fill your cup,
                   <br />
                   but it is to empty mine."
+                  <br />
+                  <span className="text-sm text-gold/40 not-italic font-display block mt-3">echoing the kenosis of Philippians 2:7</span>
                 </p>
               </DialogueBox>
             </FadeIn>
@@ -638,8 +648,8 @@ export default function Home() {
             <FadeIn delay={0.3}>
               <p className="text-parchment-dim/90 text-base md:text-lg leading-relaxed font-display mb-10 max-w-xl mx-auto">
                 There's a language for what you feel. A community of people who refuse to accept that
-                this is all there is. Join the party and receive essays, lenses, and invitations to
-                go deeper.
+                this is all there is. The Ubuntu philosophy says <em className="text-gold/70">"I am because we are."</em>{" "}
+                Join the party and receive essays, lenses, and invitations to go deeper.
               </p>
             </FadeIn>
 
@@ -655,7 +665,7 @@ export default function Home() {
                   {
                     step: "STEP 01",
                     title: "Notice",
-                    desc: "Pay attention to the ache. The sense that something is missing. That's not weakness — it's wisdom.",
+                    desc: "Pay attention to the ache. The Buddhists call it dukkha. McGilchrist calls it the left hemisphere's betrayal. Either way — that's not weakness. It's wisdom.",
                   },
                   {
                     step: "STEP 02",
@@ -665,7 +675,7 @@ export default function Home() {
                   {
                     step: "STEP 03",
                     title: "Take One Step",
-                    desc: "Start the inner work. Find your people. Hold the bowl. Just steward your corner of it.",
+                    desc: "Start the inner work. Find your people. Hold the bowl. As Lao Tzu said: 'A journey of a thousand miles begins beneath your feet.'",
                   },
                 ].map((item, i) => (
                   <div key={i} className="quest-card p-5">

@@ -164,31 +164,59 @@ export default function About() {
           <div className="max-w-2xl mx-auto md:ml-[10%]">
             <FadeIn>
               <p className="font-pixel text-[8px] tracking-[0.3em] text-gold/50 mb-4">SKILL TREE</p>
-              <h2 className="font-display text-3xl md:text-4xl font-semibold text-parchment mb-8">
+              <h2 className="font-display text-3xl md:text-4xl font-semibold text-parchment mb-4">
                 The thinkers who shaped this work.
               </h2>
+              <p className="text-parchment-dim/60 text-sm font-display mb-8">
+                Ancient wisdom recovered. Cross-discipline secrets uncovered. The answers were always there — scattered across centuries, cultures, and disciplines.
+              </p>
             </FadeIn>
 
             <FadeIn delay={0.15}>
               <div className="space-y-3">
                 {[
-                  { name: "Iain McGilchrist", contribution: "The divided brain — why attention shapes reality" },
-                  { name: "Richard Rohr", contribution: "True Self / False Self — the inner work of leadership" },
-                  { name: "Robert Greenleaf", contribution: "Servant leadership — the original rebel lens" },
-                  { name: "Viktor Frankl", contribution: "Logotherapy — meaning as the primary human drive" },
-                  { name: "Gabor Maté", contribution: "Trauma and disconnection — why our systems make us sick" },
-                  { name: "Richard Boyatzis", contribution: "Resonant leadership — the neuroscience of renewal" },
-                  { name: "Robert Putnam", contribution: "Social capital — the data behind The Great Transfer" },
-                  { name: "Beck & Cowan", contribution: "Spiral Dynamics — mapping consciousness development" },
-                  { name: "J.R.R. Tolkien", contribution: "Story — the deepest truths are always told, never explained" },
-                ].map((person, i) => (
-                  <div key={i} className="flex items-start gap-4 border-l-2 border-gold/15 pl-5 py-2">
-                    <div>
-                      <p className="font-display text-base font-semibold text-parchment">{person.name}</p>
-                      <p className="text-parchment-dim/50 text-sm font-display">{person.contribution}</p>
-                    </div>
+                  { category: "ANCIENT WISDOM", entries: [
+                    { name: "Lao Tzu", contribution: "The Tao — leading by not-forcing, the power of emptiness" },
+                    { name: "Aristotle", contribution: "Eudaimonia & phronesis — flourishing through practical wisdom" },
+                    { name: "The Stoics", contribution: "Marcus Aurelius, Epictetus — inner freedom as the foundation of outer leadership" },
+                    { name: "The Desert Fathers", contribution: "Kenosis — self-emptying as the path to fullness" },
+                  ]},
+                  { category: "MYSTICS & POETS", entries: [
+                    { name: "Rumi", contribution: "The wound is where the light enters — transformation through surrender" },
+                    { name: "Meister Eckhart", contribution: "Detachment & the God beyond God — the inward work that makes the outward work great" },
+                    { name: "Howard Thurman", contribution: "The deep ocean within — the inner life as the wellspring of justice" },
+                    { name: "Richard Rohr", contribution: "True Self / False Self — the inner work of leadership" },
+                  ]},
+                  { category: "PHILOSOPHY & THEOLOGY", entries: [
+                    { name: "Martin Buber", contribution: "I/Thou — the sacred encounter that transforms both parties" },
+                    { name: "Viktor Frankl", contribution: "Logotherapy — meaning as the primary human drive" },
+                    { name: "Václav Havel", contribution: "Living in truth — hope as an orientation of the spirit" },
+                    { name: "Robert Greenleaf", contribution: "Servant leadership — the original rebel lens" },
+                  ]},
+                  { category: "NEUROSCIENCE & PSYCHOLOGY", entries: [
+                    { name: "Iain McGilchrist", contribution: "The divided brain — why attention shapes reality" },
+                    { name: "Gabor Maté", contribution: "Trauma and disconnection — why our systems make us sick" },
+                    { name: "Richard Boyatzis", contribution: "Resonant leadership — the neuroscience of renewal" },
+                    { name: "Beck & Cowan", contribution: "Spiral Dynamics — mapping consciousness development" },
+                  ]},
+                  { category: "SOCIOLOGY & STORY", entries: [
+                    { name: "Robert Putnam", contribution: "Social capital — the data behind The Great Transfer" },
+                    { name: "J.R.R. Tolkien", contribution: "Story — the deepest truths are always told, never explained" },
+                  ]},
+                ].map((group, gi) => (
+                  <div key={gi} className="mb-8 last:mb-0">
+                    <p className="font-pixel text-[7px] text-gold/40 tracking-[0.2em] mb-3">{group.category}</p>
+                    {group.entries.map((person, i) => (
+                      <div key={i} className="flex items-start gap-4 border-l-2 border-gold/15 pl-5 py-2">
+                        <div>
+                          <p className="font-display text-base font-semibold text-parchment">{person.name}</p>
+                          <p className="text-parchment-dim/50 text-sm font-display">{person.contribution}</p>
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                ))}
+                ))
+                }
               </div>
             </FadeIn>
           </div>

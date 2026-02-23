@@ -62,3 +62,14 @@
 ## Phase 10: Minor Content Tweaks
 - [x] Change "THE REBEL CREED" speaker label to "THE REBEL PHILOSOPHY" in Chapter II dialogue box
 - [x] Update first sentence to "Eudaimonia — human flourishing is the point."
+
+## Phase 11: Ancient Wisdom & Cross-Discipline Integration
+- [x] Home Chapter I: Aristotle's akrasia, Tao Te Ching quote, eudaimonia
+- [x] Home Chapter II: Meister Eckhart, Rumi quotes; attribution on belief cards (Aristotle, Havel)
+- [x] Home Chapter III: Phronesis, kenosis, beginner's mind — cross-discipline origins
+- [x] Home Chapter IV Lore: "Ancient wisdom recovered · Cross-discipline secrets uncovered"
+- [x] Home Chapter V Vision: Cosmopolis, shalom, ikigai; kenosis reference on Rebel Oath
+- [x] Home Chapter VI Join: Ubuntu philosophy; Buddhist dukkha; Lao Tzu quote
+- [x] About page: Skill Tree reorganized into 5 categories with Lao Tzu, Aristotle, Stoics, Desert Fathers, Rumi, Eckhart, Thurman, Buber, Havel added
+- [x] Manifesto: Tao Te Ching, oikeiosis, Rilke, Ubuntu, cosmopolis/shalom woven in
+- [x] StartHere: Aristotle's akrasia, eudaimonia, Rumi, phronesis/kenosis/wu wei added

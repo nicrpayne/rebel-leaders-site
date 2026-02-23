@@ -63,8 +63,8 @@ export default function StartHere() {
                 <p className="text-base md:text-lg">
                   The leadership industry is a $366 billion machine that produces hollow leaders.
                   It teaches skills but ignores the soul. It optimizes performance but destroys
-                  the person. It has been running the same operating system since 1986 and wondering
-                  why people are burning out.
+                  the person. Aristotle warned about this 2,400 years ago — he called it akrasia:
+                  knowing the good but being unable to do it. We've been running that bug ever since.
                 </p>
               </DialogueBox>
             </FadeIn>
@@ -93,10 +93,10 @@ export default function StartHere() {
 
             <FadeIn delay={0.15}>
               <p className="text-parchment-dim/90 text-base md:text-lg leading-relaxed font-display">
-                We believe the ache you feel is not weakness — it's sanity. We believe
-                <strong className="text-gold/80"> human flourishing is the point</strong>, not
-                productivity. We believe leadership is not a role to perform but a way of being
-                to cultivate. And we believe the 90,000 hours you spend at work can be an engine
+                We believe the ache you feel is not weakness — it's sanity. The Greeks called the goal <em className="text-gold/70">eudaimonia</em>.
+                We believe <strong className="text-gold/80">human flourishing is the point</strong>, not
+                productivity. Rumi said it: <em className="text-gold/70">"Your task is not to seek for love, but merely to find all the barriers you have built against it."</em>{" "}
+                We believe the 90,000 hours you spend at work can be an engine
                 of deep transformation, not just a paycheck.
               </p>
             </FadeIn>
@@ -118,8 +118,9 @@ export default function StartHere() {
             <FadeIn delay={0.15}>
               <p className="text-parchment-dim/90 text-base md:text-lg leading-relaxed font-display mb-6">
                 The <strong className="text-parchment">Rebel OS</strong> — an open-source operating
-                system for human flourishing. Built on ancient wisdom, modern neuroscience, and
-                spiritual formation. Translated into practical language for today's leaders.
+                system for human flourishing. It recovers what the ancients already knew — from Aristotle's <em className="text-gold/70">phronesis</em>{" "}
+                to the Desert Fathers' <em className="text-gold/70">kenosis</em> to the Tao's <em className="text-gold/70">wu wei</em> — and translates it through
+                modern neuroscience, psychology, and sociology into a living system for today's leaders.
               </p>
             </FadeIn>
 
