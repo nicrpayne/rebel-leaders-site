@@ -64,7 +64,7 @@ export default function StartHere() {
                   The leadership industry is a $366 billion machine that produces hollow leaders.
                   It teaches skills but ignores the soul. It optimizes performance but destroys
                   the person. Aristotle warned about this 2,400 years ago — he called it akrasia:
-                  knowing the good but being unable to do it. We've been running that bug ever since.
+                  knowing the good but being unable to do it. McGilchrist's hemisphere research shows we've drifted so far into left-brain thinking that we've lost contact with the very capacities leadership requires. Maté calls it collective trauma in a business suit. We've been running that bug ever since.
                 </p>
               </DialogueBox>
             </FadeIn>
@@ -96,6 +96,7 @@ export default function StartHere() {
                 We believe the ache you feel is not weakness — it's sanity. The Greeks called the goal <em className="text-gold/70">eudaimonia</em>.
                 We believe <strong className="text-gold/80">human flourishing is the point</strong>, not
                 productivity. Rumi said it: <em className="text-gold/70">"Your task is not to seek for love, but merely to find all the barriers you have built against it."</em>{" "}
+                Rohr says the same thing in modern language: <em className="text-gold/70">everything belongs</em> — the shadow work is the real work.
                 We believe the 90,000 hours you spend at work can be an engine
                 of deep transformation, not just a paycheck.
               </p>
@@ -119,8 +120,7 @@ export default function StartHere() {
               <p className="text-parchment-dim/90 text-base md:text-lg leading-relaxed font-display mb-6">
                 The <strong className="text-parchment">Rebel OS</strong> — an open-source operating
                 system for human flourishing. It recovers what the ancients already knew — from Aristotle's <em className="text-gold/70">phronesis</em>{" "}
-                to the Desert Fathers' <em className="text-gold/70">kenosis</em> to the Tao's <em className="text-gold/70">wu wei</em> — and translates it through
-                modern neuroscience, psychology, and sociology into a living system for today's leaders.
+                to the Desert Fathers' <em className="text-gold/70">kenosis</em> to the Tao's <em className="text-gold/70">wu wei</em>. Then it confirms those truths through modern science: McGilchrist on attention, Boyatzis on resonant leadership, Maté on trauma, Sutherland on the irrational power of perception. Ancient and modern, converging on the same answer.
               </p>
             </FadeIn>
 

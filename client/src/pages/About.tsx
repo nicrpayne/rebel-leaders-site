@@ -168,7 +168,7 @@ export default function About() {
                 The thinkers who shaped this work.
               </h2>
               <p className="text-parchment-dim/60 text-sm font-display mb-8">
-                Ancient wisdom recovered. Cross-discipline secrets uncovered. The answers were always there — scattered across centuries, cultures, and disciplines.
+                 Ancient wisdom recovered. Modern science confirmed. The answers were always there — scattered across centuries, cultures, and disciplines. The mystics and the neuroscientists are saying the same thing.
               </p>
             </FadeIn>
 
@@ -189,6 +189,7 @@ export default function About() {
                   ]},
                   { category: "PHILOSOPHY & THEOLOGY", entries: [
                     { name: "Martin Buber", contribution: "I/Thou — the sacred encounter that transforms both parties" },
+                    { name: "Paul Tillich", contribution: "The Ground of Being — the God beyond God, reality that precedes all things" },
                     { name: "Viktor Frankl", contribution: "Logotherapy — meaning as the primary human drive" },
                     { name: "Václav Havel", contribution: "Living in truth — hope as an orientation of the spirit" },
                     { name: "Robert Greenleaf", contribution: "Servant leadership — the original rebel lens" },
@@ -199,8 +200,10 @@ export default function About() {
                     { name: "Richard Boyatzis", contribution: "Resonant leadership — the neuroscience of renewal" },
                     { name: "Beck & Cowan", contribution: "Spiral Dynamics — mapping consciousness development" },
                   ]},
-                  { category: "SOCIOLOGY & STORY", entries: [
+                  { category: "BEHAVIORAL SCIENCE & CULTURE", entries: [
+                    { name: "Rory Sutherland", contribution: "Behavioral economics — why the irrational is often more powerful than the rational" },
                     { name: "Robert Putnam", contribution: "Social capital — the data behind The Great Transfer" },
+                    { name: "Nassim Taleb", contribution: "Antifragility — systems that grow stronger under stress" },
                     { name: "J.R.R. Tolkien", contribution: "Story — the deepest truths are always told, never explained" },
                   ]},
                 ].map((group, gi) => (

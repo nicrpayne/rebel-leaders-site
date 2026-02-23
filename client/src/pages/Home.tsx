@@ -165,7 +165,7 @@ export default function Home() {
                 <p className="drop-cap">
                   The institutions that once formed us — families, churches, civic organizations,
                   neighborhoods — have hollowed out. What remains is a $366 billion leadership industry
-                  selling competency models to a world dying of loneliness. Aristotle called it <em className="text-gold/70">akrasia</em> — knowing the good but being unable to do it. This is{" "}
+                  selling competency models to a world dying of loneliness. Aristotle called it <em className="text-gold/70">akrasia</em> — knowing the good but being unable to do it. Gabor Maté calls it something else: collective trauma wearing a lanyard. This is{" "}
                   <a
                     href={SUBSTACK_GREAT_TRANSFER}
                     target="_blank"
@@ -187,7 +187,7 @@ export default function Home() {
                   >
                     Vulture Culture
                   </a>
-                  {" "}— organizations that extract human energy without replenishing the soul. Leaders
+                  {" "}— organizations that extract human energy without replenishing the soul. Rory Sutherland would note the irony: we've optimized for metrics that don't measure anything that matters. Leaders
                   wearing the{" "}
                   <a
                     href={SUBSTACK_HOLLOW_CROWN}
@@ -269,6 +269,7 @@ export default function Home() {
                 or revoke. That leadership is not a position but a posture — the posture of one who has
                 done their own inner work and now creates conditions for others to grow. Meister Eckhart
                 said it in the 13th century: <em className="text-gold/70">"The outward work will never be puny if the inward work is great."</em>{" "}
+                Richard Rohr says it now: <em className="text-gold/70">everything belongs</em> — the shadow and the light, the failure and the flourishing. Non-dualism isn't a theology; it's the operating system of reality.
                 The crisis under every crisis is not economic or political but{" "}
                 <em className="text-gold/80">existential</em>: a disconnection from self, from others,
                 and from purpose. Rumi named it eight centuries ago — <em className="text-gold/70">"Your task is not to seek for love, but merely to seek and find all the barriers within yourself that you have built against it."</em>
@@ -335,8 +336,7 @@ export default function Home() {
                 is our orbital system for transforming organizations from extraction machines into formation
                 communities. It recovers what the ancients already knew — from Aristotle's <em className="text-gold/70">phronesis</em>{" "}
                 (practical wisdom) to the Desert Fathers' <em className="text-gold/70">kenosis</em> (self-emptying) to the Buddhist concept of{" "}
-                <em className="text-gold/70">beginner's mind</em> — and translates it through modern neuroscience, psychology, and sociology
-                into a living system for today's leaders.
+                <em className="text-gold/70">beginner's mind</em>. Then it confirms those truths through modern science: McGilchrist's hemisphere research shows why our left-brain institutions killed what the right brain always knew. Boyatzis's resonant leadership research proves that renewal, not relentless drive, is what sustains performance. Maté's trauma work reveals why organizations keep reproducing the very wounds they claim to heal. Ancient wisdom and modern evidence, converging on the same answer.
               </p>
             </FadeIn>
 
@@ -599,8 +599,9 @@ export default function Home() {
 
             <FadeIn delay={0.35}>
               <p className="text-parchment-dim/90 text-base md:text-lg leading-relaxed font-display max-w-2xl mx-auto mb-10">
-                The Stoics called it <em className="text-gold/70">cosmopolis</em> — the universal city. The Hebrew prophets called it <em className="text-gold/70">shalom</em> — the
-                wholeness of all things. We're building toward it: leaders of character equipped to live with hope
+                The Stoics called it <em className="text-gold/70">cosmopolis</em>. The Hebrew prophets called it <em className="text-gold/70">shalom</em>.
+                Rohr calls it <em className="text-gold/70">the second half of life</em> — when you stop building your container and start filling it with meaning.
+                We're building toward it: leaders of character equipped to live with hope
                 and courage in the modern world. Not better managers. Not more efficient systems.{" "}
                 <strong className="text-parchment font-semibold">Whole humans</strong> — formed in
                 community, tested by reality, and sent back into the world as what the Japanese call{" "}
@@ -670,7 +671,7 @@ export default function Home() {
                   {
                     step: "STEP 02",
                     title: "Name",
-                    desc: "Give language to what you see. The Great Transfer. The Hollow Crown. Naming is the first act of resistance.",
+                    desc: "Give language to what you see. The Great Transfer. The Hollow Crown. Rohr calls it 'naming the shadow.' Naming is the first act of resistance.",
                   },
                   {
                     step: "STEP 03",

@@ -98,7 +98,7 @@ export default function Manifesto() {
                 <strong className="text-parchment">There is a problem.</strong> We are living through a
                 crisis of disconnection. We are lonely, anxious, and adrift in systems that were built
                 for efficiency, not for meaning. Our institutions — the very places where we spend
-                90,000 hours of our lives — are hollowing people out. This is not a bug; it is a
+                90,000 hours of our lives — are hollowing people out. Maté would call it institutional trauma; McGilchrist would call it the tyranny of the left hemisphere. Either way, this is not a bug; it is a
                 feature of the current operating system.
               </p>
             </FadeIn>
@@ -167,7 +167,7 @@ export default function Manifesto() {
             <FadeIn delay={0.25}>
               <p className="text-parchment-dim/80 text-base md:text-lg leading-relaxed font-display mt-6">
                 We believe that <strong className="text-gold/80">human flourishing is the point.</strong> Not
-                profit, not productivity, not performance. The ultimate purpose of any organization should
+                profit, not productivity, not performance. Rohr would say we've been living in the first half of life — building the container — when the real work is filling it. The ultimate purpose of any organization should
                 be to grow people. We believe that your 90,000 hours can be an engine of deep transformation,
                 not just a paycheck and some KPIs.
               </p>
@@ -208,13 +208,13 @@ export default function Manifesto() {
             <FadeIn delay={0.25}>
               <div className="space-y-4 ml-4 border-l-2 border-gold/20 pl-6">
                 <p className="text-parchment-dim/80 text-base font-display">
-                  Disconnection from <strong className="text-parchment">self</strong> leads to a loss of identity.
+                  Disconnection from <strong className="text-parchment">self</strong> leads to a loss of identity. (Rohr's False Self takes over.)
                 </p>
                 <p className="text-parchment-dim/80 text-base font-display">
-                  Disconnection from <strong className="text-parchment">others</strong> leads to a loss of community.
+                  Disconnection from <strong className="text-parchment">others</strong> leads to a loss of community. (Putnam's data confirms it.)
                 </p>
                 <p className="text-parchment-dim/80 text-base font-display">
-                  Disconnection from <strong className="text-parchment">purpose</strong> leads to a loss of meaning.
+                  Disconnection from <strong className="text-parchment">purpose</strong> leads to a loss of meaning. (Frankl warned us.)
                 </p>
               </div>
             </FadeIn>
@@ -305,7 +305,7 @@ export default function Manifesto() {
                 {[
                   {
                     title: "The Rebel OS",
-                    desc: "An open-source operating system for human flourishing, translated from ancient wisdom, modern science, and spiritual formation into a practical language for today's leaders.",
+                    desc: "An open-source operating system for human flourishing. Ancient wisdom (Aristotle, Rumi, the Desert Fathers) confirmed by modern science (McGilchrist, Maté, Boyatzis) and translated into practical language for today's leaders.",
                   },
                   {
                     title: "Maps, Mirrors & Moves",

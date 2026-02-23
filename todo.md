@@ -73,3 +73,10 @@
 - [x] About page: Skill Tree reorganized into 5 categories with Lao Tzu, Aristotle, Stoics, Desert Fathers, Rumi, Eckhart, Thurman, Buber, Havel added
 - [x] Manifesto: Tao Te Ching, oikeiosis, Rilke, Ubuntu, cosmopolis/shalom woven in
 - [x] StartHere: Aristotle's akrasia, eudaimonia, Rumi, phronesis/kenosis/wu wei added
+
+## Phase 12: Modern Cross-Discipline Thinkers Integration
+- [x] Home: Maté (collective trauma), Sutherland (metrics irony), Rohr (everything belongs, non-dualism, second half of life, naming the shadow), McGilchrist (hemisphere research), Boyatzis (resonant leadership)
+- [x] Manifesto: Maté (institutional trauma), McGilchrist (left hemisphere tyranny), Rohr (first/second half of life, False Self), Putnam, Frankl
+- [x] StartHere: McGilchrist (hemisphere drift), Maté (collective trauma), Rohr (everything belongs), Sutherland + Boyatzis in Rebel OS
+- [x] About Skill Tree: Added Rory Sutherland, Paul Tillich, Nassim Taleb; renamed category to "Behavioral Science & Culture"
+- [x] Balance achieved: subtitle updated to "Ancient wisdom recovered. Modern science confirmed."
