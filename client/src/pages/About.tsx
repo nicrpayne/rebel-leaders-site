@@ -30,7 +30,7 @@ export default function About() {
                 <img
                   src={RPG_SPRITE}
                   alt="Nic - 8-bit pixel art portrait"
-                  className="w-48 md:w-64 pixel-render drop-shadow-[0_4px_24px_rgba(0,0,0,0.5)]"
+                  className="w-48 md:w-64 pixel-render rounded-lg border-2 border-gold/30 drop-shadow-[0_4px_24px_rgba(0,0,0,0.5)]"
                   loading="lazy"
                 />
               </div>
