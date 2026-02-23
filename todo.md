@@ -150,3 +150,6 @@
 
 ## Phase 27: Add Younger Audience Line to New Player
 - [x] Add resonance line for younger people who find "leadership" cringe
+
+## Phase 28: Manifesto Opening Cleanup
+- [x] Remove meta-reference to Home page from Manifesto opening paragraph

@@ -78,8 +78,8 @@ export default function Manifesto() {
 
             <FadeIn delay={0.4}>
               <p className="text-parchment-dim/70 text-base md:text-lg leading-relaxed font-display mt-6">
-                The Home page told you what we see and what we believe. This manifesto goes deeper — into
-                the roots, the philosophy, and the path forward.
+                This is the deeper story. The roots beneath the rebellion, the philosophy that holds it together,
+                and the path forward for anyone willing to walk it.
               </p>
             </FadeIn>
           </div>
