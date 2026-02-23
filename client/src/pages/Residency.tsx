@@ -51,7 +51,7 @@ export default function Residency() {
             <FadeIn>
               <DialogueBox speaker="QUEST-GIVER">
                 <p className="text-base md:text-lg">
-                  You've read the books. You've been to the conferences. You know the frameworks.
+                  You've read the books. You've been to the conferences. You know the models.
                   And yet something is still missing. The gap isn't in your knowledge — it's in your
                   formation. You don't need more information. You need a different kind of space.
                 </p>
@@ -83,7 +83,7 @@ export default function Residency() {
 
             <FadeIn delay={0.25}>
               <p className="text-parchment-dim/70 text-base md:text-lg leading-relaxed font-display mb-8">
-                We work across all five dimensions of the Holistic Impact Depth framework — Spiritual,
+                We work across all five dimensions of the Holistic Impact Depth orbital system — Spiritual,
                 Emotional, Leading, Physical, and Technical — because you cannot lead from a place
                 you have not been. The work is integrated because you are integrated.
               </p>
@@ -101,7 +101,7 @@ export default function Residency() {
                     value: "3-6 months (flexible)",
                   },
                   {
-                    label: "FRAMEWORK",
+                    label: "SYSTEM",
                     value: "Rebel OS + Holistic Shaping",
                   },
                   {
@@ -153,7 +153,7 @@ export default function Residency() {
                   },
                   {
                     title: "Language",
-                    desc: "Developing the vocabulary to name what you see. Learning to talk about Vulture Culture, The Great Transfer, and the Bowl and the Flow in your own context.",
+                    desc: "Developing the vocabulary to name what you see. Learning to talk about Vulture Culture, The Great Transfer, and the Bowl, Water, and Current in your own context.",
                     icon: "04",
                   },
                   {
@@ -197,7 +197,7 @@ export default function Residency() {
                   "You lead people and feel the weight of it in your bones.",
                   "You're tired of performing leadership and want to actually become a leader.",
                   "You sense that the problem isn't your team — it's something deeper.",
-                  "You've outgrown the frameworks but haven't found what comes next.",
+                  "You've outgrown the models but haven't found what comes next.",
                   "You're willing to do the uncomfortable inner work, not just learn new techniques.",
                   "You want a guide, not a guru. A companion, not a consultant.",
                 ].map((item, i) => (

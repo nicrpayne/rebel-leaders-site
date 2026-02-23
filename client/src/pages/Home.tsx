@@ -22,8 +22,12 @@ import SubstackSignup from "@/components/SubstackSignup";
 /* ─── CDN Image URLs ─── */
 const RPG_OFFICE = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/zlNQJQinSxaqyYjB.png";
 const RPG_BOOKSHELF = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/ytcCyobGtInvqMUp.png";
-const RPG_BANNER = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/wovXMRQGUNlUpQiu.png";
 const EMBER_IMG = "https://private-us-east-1.manuscdn.com/sessionFile/xhIF6cqEZNRR3ezVrvcq6V/sandbox/cLlPwzBL30WhHHj2soLbdt-img-2_1771637252000_na1fn_c2VjdGlvbi1lbWJlci10ZXh0dXJl.png?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUveGhJRjZjcUVaTlJSM2V6VnJ2Y3E2Vi9zYW5kYm94L2NMbFB3ekJMMzBXaEhIajJzb0xiZHQtaW1nLTJfMTc3MTYzNzI1MjAwMF9uYTFmbl9jMlZqZEdsdmJpMWxiV0psY2kxMFpYaDBkWEpsLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSx3XzE5MjAsaF8xOTIwL2Zvcm1hdCx3ZWJwL3F1YWxpdHkscV84MCIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5ODc2MTYwMH19fV19&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=M4WZy1Lubw4lUZg-xkYa~3KnlMQoGJlZcqOujMhLv-HZHaL3oWFqAgMHgwZFQS~uvVL-uAX4opiGGBzwFXqZlaKDMyYmbKfbzwZy9X4UiX-LIZy~ymHGGhW8mAFRQk1zNs-ROgt8ftpo~5yP~DVqQFXqN3tM7pjR6ZKorjnOj61QGAhF-El0hjRIRFC30KZW1f7X7TQPADPpcb5PtstkU4yxTflVp1wZci9ho0t5UQL90u~yfcpxBV-6H9wJaYbxrs2YRRgAiCQ7bCEZVJ6e~4SE7Zl5Tx2J5q6pjLM4H62p~4CEX8T-47eqdNCVuNUsleO8w~IpN-axBxa09K12YQ__";
+
+/* ─── Substack Article URLs ─── */
+const SUBSTACK_GREAT_TRANSFER = "https://open.substack.com/pub/leaderrebellion/p/why-work-cant-be-your-church?r=5ubsq&utm_campaign=post&utm_medium=web&showWelcomeOnShare=true";
+const SUBSTACK_VULTURE_CULTURE = "https://open.substack.com/pub/leaderrebellion/p/culture-vulture?r=5ubsq&utm_campaign=post&utm_medium=web&showWelcomeOnShare=true";
+const SUBSTACK_HOLLOW_CROWN = "https://open.substack.com/pub/leaderrebellion/p/the-hollow-crown-why-our-leadership?r=5ubsq&utm_campaign=post&utm_medium=web&showWelcomeOnShare=true";
 
 export default function Home() {
   const [heroReady, setHeroReady] = useState(false);
@@ -137,7 +141,7 @@ export default function Home() {
       <PixelDivider />
 
       {/* ═══════════════════════════════════════════════════════════
-          SECTION 2: THE DIAGNOSIS — What We See
+          CHAPTER I: THE DIAGNOSIS — What We See
       ═══════════════════════════════════════════════════════════ */}
       <section id="diagnosis" className="relative py-20 md:py-32">
         <div className="container">
@@ -161,17 +165,40 @@ export default function Home() {
                 <p className="drop-cap">
                   The institutions that once formed us — families, churches, civic organizations,
                   neighborhoods — have hollowed out. What remains is a $366 billion leadership industry
-                  selling competency models to a world dying of loneliness. We call this{" "}
-                  <em className="text-gold/80 not-italic font-semibold">The Great Transfer</em>: the impossible
-                  burden placed on the transactional workplace to do what formative communities once did.
+                  selling competency models to a world dying of loneliness. This is{" "}
+                  <a
+                    href={SUBSTACK_GREAT_TRANSFER}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gold font-semibold not-italic hover:text-gold/80 underline decoration-gold/30 hover:decoration-gold/60 transition-colors"
+                  >
+                    The Great Transfer
+                  </a>
+                  : the impossible burden placed on the transactional workplace to do what formative
+                  communities once did.
                 </p>
                 <p>
                   The result is what we name{" "}
-                  <em className="text-gold/80 not-italic font-semibold">Vulture Culture</em> — organizations that
-                  extract human energy without replenishing the soul. Leaders wearing the{" "}
-                  <em className="text-gold/80 not-italic font-semibold">Hollow Crown</em>, performing authority
-                  while hemorrhaging meaning. A machine that optimizes for everything except the one thing
-                  that matters: human flourishing.
+                  <a
+                    href={SUBSTACK_VULTURE_CULTURE}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gold font-semibold not-italic hover:text-gold/80 underline decoration-gold/30 hover:decoration-gold/60 transition-colors"
+                  >
+                    Vulture Culture
+                  </a>
+                  {" "}— organizations that extract human energy without replenishing the soul. Leaders
+                  wearing the{" "}
+                  <a
+                    href={SUBSTACK_HOLLOW_CROWN}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gold font-semibold not-italic hover:text-gold/80 underline decoration-gold/30 hover:decoration-gold/60 transition-colors"
+                  >
+                    Hollow Crown
+                  </a>
+                  , performing authority while hemorrhaging meaning. A machine that optimizes for
+                  everything except the one thing that matters: human flourishing.
                 </p>
               </div>
             </FadeIn>
@@ -202,7 +229,7 @@ export default function Home() {
       <PixelDivider />
 
       {/* ═══════════════════════════════════════════════════════════
-          SECTION 3: THE BELIEF — What We Stand For
+          CHAPTER II: THE BELIEF — What We Stand For
       ═══════════════════════════════════════════════════════════ */}
       <section className="relative py-20 md:py-32 overflow-hidden">
         {/* Subtle pixel bookshelf background */}
@@ -277,7 +304,7 @@ export default function Home() {
       <PixelDivider />
 
       {/* ═══════════════════════════════════════════════════════════
-          SECTION 4: THE WORK — The Rebel OS
+          CHAPTER III: THE WORK — The Rebel OS
       ═══════════════════════════════════════════════════════════ */}
       <section id="the-work" className="relative py-20 md:py-32">
         <div className="container">
@@ -301,7 +328,7 @@ export default function Home() {
               <p className="text-parchment-dim/90 text-base md:text-lg leading-relaxed font-display mb-10">
                 Built on the philosophy of{" "}
                 <strong className="text-parchment font-semibold">Holistic Shaping</strong>, the Rebel OS
-                is our framework for transforming organizations from extraction machines into formation
+                is our orbital system for transforming organizations from extraction machines into formation
                 communities. It doesn't add another layer of training. It rewires the operating system —
                 from the leader's inner life outward to the culture they steward.
               </p>
@@ -318,25 +345,25 @@ export default function Home() {
                     {
                       title: "IDENTITY",
                       subtitle: "Know who you are",
-                      desc: "The inner work of self-awareness through Maps, Mirrors, and Moves. Enneagram, Spiral Dynamics, and the True Self.",
+                      desc: "Rediscovering our unchanging essence of being and its connection to the universe. Requires relationship to be developed.",
                       level: "LVL 1",
                     },
                     {
                       title: "RELATIONSHIP",
                       subtitle: "Connect with depth",
-                      desc: "From transactional to covenantal. Building trust, vulnerability, and the bonding agent of authentic community.",
+                      desc: "Separation is an illusion. We only truly exist in relation to everything else, as does the rest of reality.",
                       level: "LVL 2",
                     },
                     {
                       title: "VISION",
                       subtitle: "See what could be",
-                      desc: "Not strategic planning but prophetic imagination. The ability to name reality and call forth possibility.",
+                      desc: "What happens when connection and relationship give birth to a potential new future. Always bottoms up, co-created — 'hey, wouldn't it be cool if…?'",
                       level: "LVL 3",
                     },
                     {
                       title: "CULTURE",
                       subtitle: "Steward the conditions",
-                      desc: "The Bowl and the Flow. Leaders don't fill cups — they hold the bowl. Culture is the soil, not the crop.",
+                      desc: "The Bowl, Water, and Current. The Bowl is attention and intention (Iain McGilchrist). The Water is Howard Thurman's 'deep ocean within.' The Current is Martin Buber's I/Thou philosophy. Leaders don't fill cups — they hold the bowl.",
                       level: "LVL 4",
                     },
                   ].map((item, i) => (
@@ -380,19 +407,19 @@ export default function Home() {
                   {
                     title: "MAPS",
                     emoji: "🗺",
-                    desc: "Frameworks that show you where you are: Enneagram, Spiral Dynamics, the Divided Brain. Not to label, but to liberate.",
+                    desc: "Lenses that reveal the terrain you're standing in. Not to label you — to liberate you.",
                     href: "/manifesto",
                   },
                   {
                     title: "MIRRORS",
                     emoji: "🪞",
-                    desc: "Honest reflection from trusted others. The courage to see your False Self patterns and choose the True Self instead.",
+                    desc: "Tools for honest self-seeing. Spot the patterns. Choose the truer path.",
                     href: "/mirror",
                   },
                   {
                     title: "MOVES",
                     emoji: "⚔",
-                    desc: "Practical disciplines and daily practices. Small acts of rebellion against the machine. The work of becoming.",
+                    desc: "Small experiments you can actually do. Daily practices that shift the relational field.",
                     href: "/armory",
                   },
                 ].map((item, i) => (
@@ -421,7 +448,7 @@ export default function Home() {
       <PixelDivider />
 
       {/* ═══════════════════════════════════════════════════════════
-          SECTION 5: LORE — Writing / Content
+          CHAPTER IV: LORE — Writing / Content
       ═══════════════════════════════════════════════════════════ */}
       <section id="writing" className="relative py-20 md:py-32">
         <div className="container">
@@ -437,7 +464,7 @@ export default function Home() {
                 Ideas worth sitting with.
               </h2>
               <p className="font-pixel text-[8px] text-parchment-dim/40 mb-10 tracking-wider">
-                ESSAYS, FRAMEWORKS, AND FIELD NOTES FROM THE REBELLION
+                ESSAYS, LENSES, AND FIELD NOTES FROM THE REBELLION
               </p>
             </FadeIn>
 
@@ -448,46 +475,78 @@ export default function Home() {
                   subtitle: "Why the workplace can't save us — and what can",
                   tag: "ESSAY",
                   xp: "+200 XP",
+                  href: SUBSTACK_GREAT_TRANSFER,
+                  external: true,
                 },
                 {
                   title: "The Hollow Crown",
                   subtitle: "On the loneliness of leading without a soul",
                   tag: "ESSAY",
                   xp: "+150 XP",
+                  href: SUBSTACK_HOLLOW_CROWN,
+                  external: true,
                 },
                 {
                   title: "Maps, Mirrors, and Moves",
                   subtitle: "A practical guide to the inner work of leadership",
-                  tag: "FRAMEWORK",
+                  tag: "LENS",
                   xp: "+300 XP",
+                  href: "/archives",
+                  external: false,
                 },
                 {
-                  title: "The Bowl and the Flow",
+                  title: "Bowl, Water, and Current",
                   subtitle: "Why culture is a container, not a program",
                   tag: "METAPHOR",
                   xp: "+250 XP",
+                  href: "/archives",
+                  external: false,
                 },
               ].map((item, i) => (
                 <FadeIn key={i} delay={0.2 + i * 0.1}>
-                  <Link
-                    href="/archives"
-                    className="w-full text-left quest-card p-5 md:p-6 group block"
-                  >
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="font-pixel text-[7px] text-forest-light bg-gold/10 px-2 py-1 tracking-wider">
-                        {item.tag}
-                      </span>
-                      <span className="font-pixel text-[7px] text-gold/30 tracking-wider">
-                        {item.xp}
-                      </span>
-                    </div>
-                    <h3 className="font-display text-xl md:text-2xl font-semibold text-parchment mb-2 group-hover:text-gold transition-colors duration-300">
-                      {item.title}
-                    </h3>
-                    <p className="text-parchment-dim/50 text-sm leading-relaxed font-display">
-                      {item.subtitle}
-                    </p>
-                  </Link>
+                  {item.external ? (
+                    <a
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full text-left quest-card p-5 md:p-6 group block"
+                    >
+                      <div className="flex items-center justify-between mb-3">
+                        <span className="font-pixel text-[7px] text-forest-light bg-gold/10 px-2 py-1 tracking-wider">
+                          {item.tag}
+                        </span>
+                        <span className="font-pixel text-[7px] text-gold/30 tracking-wider">
+                          {item.xp}
+                        </span>
+                      </div>
+                      <h3 className="font-display text-xl md:text-2xl font-semibold text-parchment mb-2 group-hover:text-gold transition-colors duration-300">
+                        {item.title}
+                      </h3>
+                      <p className="text-parchment-dim/50 text-sm leading-relaxed font-display">
+                        {item.subtitle}
+                      </p>
+                    </a>
+                  ) : (
+                    <Link
+                      href={item.href}
+                      className="w-full text-left quest-card p-5 md:p-6 group block"
+                    >
+                      <div className="flex items-center justify-between mb-3">
+                        <span className="font-pixel text-[7px] text-forest-light bg-gold/10 px-2 py-1 tracking-wider">
+                          {item.tag}
+                        </span>
+                        <span className="font-pixel text-[7px] text-gold/30 tracking-wider">
+                          {item.xp}
+                        </span>
+                      </div>
+                      <h3 className="font-display text-xl md:text-2xl font-semibold text-parchment mb-2 group-hover:text-gold transition-colors duration-300">
+                        {item.title}
+                      </h3>
+                      <p className="text-parchment-dim/50 text-sm leading-relaxed font-display">
+                        {item.subtitle}
+                      </p>
+                    </Link>
+                  )}
                 </FadeIn>
               ))}
             </div>
@@ -495,85 +554,12 @@ export default function Home() {
         </div>
       </section>
 
-      <PixelDivider />
-
-      {/* ═══════════════════════════════════════════════════════════
-          SECTION 6: THE PARTY — About
-      ═══════════════════════════════════════════════════════════ */}
-      <section id="about" className="relative py-20 md:py-32 overflow-hidden">
-        {/* Banner background */}
-        <div className="absolute inset-0 opacity-15">
-          <img
-            src={RPG_BANNER}
-            alt=""
-            className="w-full h-full object-cover pixel-render"
-            loading="lazy"
-          />
-        </div>
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/95 to-background/80" />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-transparent to-background" />
-
-        <div className="relative z-10 container">
-          <div className="max-w-3xl mx-auto md:ml-[5%]">
-            <FadeIn>
-              <p className="font-pixel text-[9px] tracking-[0.3em] text-gold/60 mb-6">
-                CHAPTER V: THE PARTY
-              </p>
-            </FadeIn>
-
-            <FadeIn delay={0.15}>
-              <h2 className="font-display text-3xl md:text-5xl font-semibold text-parchment mb-8 leading-tight">
-                Trained where leadership
-                <br />
-                <span className="italic font-normal text-parchment-dim">had to work without leverage.</span>
-              </h2>
-            </FadeIn>
-
-            <FadeIn delay={0.3}>
-              <div className="space-y-6 text-parchment-dim/90 text-base md:text-lg leading-relaxed font-display">
-                <p className="drop-cap">
-                  Nic spent years in environments where you couldn't fire anyone, couldn't offer a raise,
-                  and couldn't promise a promotion. The only currency was trust. The only authority was
-                  character. In those crucibles — military service, ministry, frontline leadership — he
-                  learned that the conventional leadership playbook was not just insufficient. It was
-                  upside down.
-                </p>
-                <p>
-                  What emerged was a conviction: that the deepest crisis in organizations is not a skills
-                  gap but a <em className="text-gold/80 not-italic font-semibold">soul gap</em>. That we
-                  don't need better managers — we need transformed teachers. People who have done their own
-                  inner work and can now hold space for others to do theirs.
-                </p>
-              </div>
-            </FadeIn>
-
-            {/* Character card */}
-            <FadeIn delay={0.5}>
-              <div className="dialogue-box mt-10">
-                <p className="font-pixel text-[8px] text-gold/50 mb-4 tracking-wider">CHARACTER SHEET</p>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
-                  {[
-                    { stat: "CLASS", value: "Rebel Leader" },
-                    { stat: "ORIGIN", value: "Military / Ministry" },
-                    { stat: "WEAPON", value: "Holistic Shaping" },
-                    { stat: "QUEST", value: "Reclaim the Soul" },
-                  ].map((item, i) => (
-                    <div key={i}>
-                      <p className="font-pixel text-[7px] text-gold/40 tracking-wider mb-1">{item.stat}</p>
-                      <p className="font-display text-sm text-parchment">{item.value}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </FadeIn>
-          </div>
-        </div>
-      </section>
-
       <PixelDivider showIcon={false} />
 
       {/* ═══════════════════════════════════════════════════════════
-          SECTION 7: THE VISION — The Cosmic "So That"
+          CHAPTER V: THE VISION — The Cosmic "So That"
+          (Chapter V was previously "The Party" / About — now removed;
+           renumbered from old Chapter VI)
       ═══════════════════════════════════════════════════════════ */}
       <section className="relative py-20 md:py-32">
         <div className="absolute inset-0 opacity-10">
@@ -589,7 +575,7 @@ export default function Home() {
 
             <FadeIn delay={0.1}>
               <p className="font-pixel text-[9px] tracking-[0.3em] text-gold/60 mb-6">
-                CHAPTER VI: THE VISION
+                CHAPTER V: THE VISION
               </p>
             </FadeIn>
 
@@ -598,7 +584,7 @@ export default function Home() {
                 Millions of organizations,
                 <br />
                 <span className="italic font-normal text-gold">
-                  repurposed as a distributed
+                  mobilized as a distributed
                   <br />
                   formation network.
                 </span>
@@ -630,14 +616,14 @@ export default function Home() {
       <PixelDivider />
 
       {/* ═══════════════════════════════════════════════════════════
-          SECTION 8: JOIN THE PARTY — Newsletter / CTA
+          CHAPTER VI: JOIN THE PARTY — Newsletter / CTA
       ═══════════════════════════════════════════════════════════ */}
       <section id="join" className="relative py-20 md:py-32">
         <div className="container">
           <div className="max-w-3xl mx-auto text-center">
             <FadeIn>
               <p className="font-pixel text-[9px] tracking-[0.3em] text-gold/60 mb-6">
-                CHAPTER VII: JOIN THE PARTY
+                CHAPTER VI: JOIN THE PARTY
               </p>
             </FadeIn>
 
@@ -652,7 +638,7 @@ export default function Home() {
             <FadeIn delay={0.3}>
               <p className="text-parchment-dim/90 text-base md:text-lg leading-relaxed font-display mb-10 max-w-xl mx-auto">
                 There's a language for what you feel. A community of people who refuse to accept that
-                this is all there is. Join the party and receive essays, frameworks, and invitations to
+                this is all there is. Join the party and receive essays, lenses, and invitations to
                 go deeper.
               </p>
             </FadeIn>

@@ -73,7 +73,7 @@ export default function StartHere() {
               <p className="text-parchment-dim/70 text-base font-display mt-6 leading-relaxed">
                 Meanwhile, the institutions that used to form human character — family, faith
                 communities, civic organizations — have collapsed. All that unmet need for meaning,
-                belonging, and identity got dumped onto the workplace. We call this <strong className="text-parchment">The Great Transfer</strong>.
+                belonging, and identity got dumped onto the workplace. This is <strong className="text-parchment">The Great Transfer</strong>.
               </p>
             </FadeIn>
           </div>
@@ -151,7 +151,7 @@ export default function StartHere() {
                     Moves
                   </h3>
                   <p className="text-parchment-dim/50 text-sm font-display">
-                    Take action. Downloads, frameworks, and micro-experiments in courage.
+                    Take action. Downloads, lenses, and micro-experiments in courage.
                   </p>
                 </Link>
               </div>

@@ -8,7 +8,7 @@ export default function Armory() {
       chapter="THE ARMORY"
       title="Digital Downloads"
       subtitle="Equip yourself."
-      description="Frameworks, guides, worksheets, and micro-experiments in courage. Free to download, with an optional 'pay what it's worth' model. Because the best tools should be accessible to everyone, and generosity is its own rebellion."
+      description="Lenses, guides, worksheets, and micro-experiments in courage. Free to download, with an optional 'pay what it's worth' model. Because the best tools should be accessible to everyone, and generosity is its own rebellion."
       teaser="The armory is being stocked. Subscribe to be notified when it opens."
       bgImage={BOOKSHELF}
     />

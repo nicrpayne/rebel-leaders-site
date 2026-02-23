@@ -270,7 +270,7 @@ function ScrollsTab() {
       <FadeIn delay={0.15}>
         <div className="text-center mb-10">
           <p className="font-display text-lg text-parchment-dim/70 mb-6">
-            Long-form essays, frameworks, and reflections published on Substack.
+            Long-form essays, lenses, and reflections published on Substack.
             New posts appear here automatically.
           </p>
           <a

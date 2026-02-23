@@ -76,7 +76,7 @@ export default function About() {
             <FadeIn delay={0.25}>
               <p className="text-parchment-dim/80 text-base md:text-lg leading-relaxed font-display mt-6">
                 I watched the leadership industry pour $366 billion into fixing the symptoms while
-                ignoring the disease. More frameworks, more assessments, more "leadership development"
+                ignoring the disease. More models, more assessments, more "leadership development"
                 that developed everything except the actual human being doing the leading.
               </p>
             </FadeIn>
@@ -130,7 +130,7 @@ export default function About() {
                 {[
                   {
                     title: "Writing & Teaching",
-                    desc: "Essays, frameworks, and video content that translate ancient wisdom into modern leadership language.",
+                    desc: "Essays, lenses, and video content that translate ancient wisdom into modern leadership language.",
                   },
                   {
                     title: "The Residency",
@@ -174,7 +174,7 @@ export default function About() {
                 {[
                   { name: "Iain McGilchrist", contribution: "The divided brain — why attention shapes reality" },
                   { name: "Richard Rohr", contribution: "True Self / False Self — the inner work of leadership" },
-                  { name: "Robert Greenleaf", contribution: "Servant leadership — the original rebel framework" },
+                  { name: "Robert Greenleaf", contribution: "Servant leadership — the original rebel lens" },
                   { name: "Viktor Frankl", contribution: "Logotherapy — meaning as the primary human drive" },
                   { name: "Gabor Maté", contribution: "Trauma and disconnection — why our systems make us sick" },
                   { name: "Richard Boyatzis", contribution: "Resonant leadership — the neuroscience of renewal" },

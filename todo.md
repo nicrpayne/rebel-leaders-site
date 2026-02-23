@@ -47,3 +47,14 @@
 - [x] Write vitest tests for YouTube RSS integration (5/5 passing, 9/9 total)
 ## Phase 8: Portrait Update
 - [x] Replace About page portrait with new transparent-background pixel art (v3)
+
+## Phase 9: Home Page Content Updates
+- [x] Change "We call this the Great Transfer" to "This is the Great Transfer"
+- [x] Make Great Transfer, Vulture Culture, Hollow Crown gold hyperlinks to Substack articles
+- [x] Update flywheel definitions (Vision, Relationship, Identity) from Substack article
+- [x] Replace 'framework' with 'orbital system' across entire site
+- [x] Update Maps/Mirrors/Moves box descriptions
+- [x] Replace 'Bowl and the Flow' with 'Bowl, Water, and Current' across entire site
+- [x] Combine Chapter V into About section (remove from Home)
+- [x] Remove military service reference from About (was in Chapter V, now removed)
+- [x] Replace 'repurposed' with 'mobilized'

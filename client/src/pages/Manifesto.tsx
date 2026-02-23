@@ -50,7 +50,7 @@ export default function Manifesto() {
             <FadeIn>
               <DialogueBox speaker="NARRATOR">
                 <p className="italic">
-                  This is not a leadership framework. It is a rebellion and a remembering.
+                  This is not a leadership model. It is a rebellion and a remembering.
                 </p>
               </DialogueBox>
             </FadeIn>
@@ -245,7 +245,7 @@ export default function Manifesto() {
               <p className="text-parchment-dim/90 text-base md:text-lg leading-relaxed font-display drop-cap">
                 <strong className="text-parchment">Our vision is cosmic.</strong> We see a world where millions
                 of companies, organizations, and institutions are no longer sites of extraction, but have been
-                repurposed into a <strong className="text-gold/80">distributed character formation network</strong> — a
+                mobilized into a <strong className="text-gold/80">distributed character formation network</strong> — a
                 global ecosystem of schools for the soul, producing generations of leaders equipped to live
                 with hope and courage in the modern world.
               </p>
@@ -359,8 +359,8 @@ export default function Manifesto() {
                     desc: "Integrating the five key areas of a leader's health: Spiritual, Emotional, Leading, Physical, and Technical.",
                   },
                   {
-                    name: "The Bowl and the Flow",
-                    desc: "Conventional leadership obsesses over the Flow (the work). The Rebel Leader focuses on the Bowl (the cultural container), knowing a strong container is what enables a powerful flow.",
+                    name: "Bowl, Water, and Current",
+                    desc: "The Bowl is attention and intention (Iain McGilchrist). The Water is Howard Thurman's 'deep ocean within.' The Current is Martin Buber's I/Thou philosophy. Leaders don't fill cups — they hold the bowl.",
                   },
                 ].map((item, i) => (
                   <div key={i} className="border-l-2 border-gold/30 pl-6 py-2">
@@ -517,7 +517,7 @@ export default function Manifesto() {
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-12">
                 {[
                   { step: "Notice", desc: "Pay attention to the systems around you. Where do you see Vulture Culture?" },
-                  { step: "Name it", desc: "Use the language. Talk about the Bowl and the Flow." },
+                  { step: "Name it", desc: "Use the language. Talk about the Bowl, Water, and Current." },
                   { step: "Take one step", desc: "Choose one micro-practice of courage. Listen instead of command." },
                 ].map((item, i) => (
                   <div key={i} className="quest-card p-5 text-left">
