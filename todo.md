@@ -127,3 +127,6 @@
 ## Phase 22: Manifesto Tweaks — Transaction/Transformation + YOUR MISSION Rewrite
 - [x] Change "transaction, not formation" to "transaction, not transformation" in Chapter II
 - [x] Rewrite YOUR MISSION dialogue box with new 3-step content (Notice/Reclaim/Tend)
+
+## Phase 23: Manifesto Chapter IV — Ethos Rewrite
+- [x] Rewrite ethos quotes with new 4-line format (quote + parenthetical explanation)

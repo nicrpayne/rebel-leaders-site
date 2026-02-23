@@ -295,19 +295,39 @@ export default function Manifesto() {
             </FadeIn>
 
             <FadeIn delay={0.15}>
-              <div className="space-y-4">
-                {[
-                  "Leadership is not about climbing higher — it's about digging deeper.",
-                  "We measure success by depth, not just scale.",
-                  "We are stewards of conditions, not heroes of outcomes.",
-                  "The work is not to become something you are not, but to finally become the person you have always been.",
-                ].map((quote, i) => (
-                  <div key={i} className="border-l-2 border-gold/20 pl-6 py-1">
-                    <p className="font-display text-lg md:text-xl italic text-parchment-dim/80">
-                      "{quote}"
-                    </p>
-                  </div>
-                ))}
+              <div className="space-y-8">
+                <div className="border-l-2 border-gold/20 pl-6 py-1">
+                  <p className="font-display text-lg md:text-xl italic text-parchment-dim/90">
+                    "Leadership isn't a ladder. It's a return."
+                  </p>
+                  <p className="text-parchment-dim/50 text-sm font-display mt-2">
+                    Not climbing higher — remembering what's real.
+                  </p>
+                </div>
+                <div className="border-l-2 border-gold/20 pl-6 py-1">
+                  <p className="font-display text-lg md:text-xl italic text-parchment-dim/90">
+                    "We measure impact by what changes in people."
+                  </p>
+                  <p className="text-parchment-dim/50 text-sm font-display mt-2">
+                    Not just what ships. Not just what scales. Who becomes more whole?
+                  </p>
+                </div>
+                <div className="border-l-2 border-gold/20 pl-6 py-1">
+                  <p className="font-display text-lg md:text-xl italic text-parchment-dim/90">
+                    "We don't 'influence' humans. We tend conditions."
+                  </p>
+                  <p className="text-parchment-dim/50 text-sm font-display mt-2">
+                    Trust. Meaning. Belonging. Agency. That's the real infrastructure.
+                  </p>
+                </div>
+                <div className="border-l-2 border-gold/20 pl-6 py-1">
+                  <p className="font-display text-lg md:text-xl italic text-parchment-dim/90">
+                    "The work isn't self-improvement. It's unlearning the False Self."
+                  </p>
+                  <p className="text-parchment-dim/50 text-sm font-display mt-2">
+                    So you can finally lead from wholeness, not performance.
+                  </p>
+                </div>
               </div>
             </FadeIn>
           </div>
