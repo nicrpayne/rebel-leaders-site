@@ -156,7 +156,7 @@ export default function Manifesto() {
                   <p className="text-parchment-dim/80 text-base font-display">
                     <strong className="text-parchment">Disconnection from self.</strong>{" "}
                     Since the Industrial Revolution, workplaces have been designed for transaction, not
-                    formation. They were never meant to be environments for healthy human development.
+                    transformation. They were never meant to be environments for healthy human development.
                     Gabor Maté's trauma research reveals the cost: in these systems, we are forced to
                     choose between authenticity and attachment. We always choose attachment. We adapt who
                     we are to survive. Rohr calls the result the False Self — the persona we construct
@@ -226,22 +226,30 @@ export default function Manifesto() {
 
             <FadeIn delay={0.25}>
               <DialogueBox speaker="YOUR MISSION" className="mb-8">
-                <div className="space-y-4 text-base">
-                  <p>
-                    <strong className="text-gold/80">1. Do your own inner work first.</strong>{" "}
-                    You cannot give what you do not have. The journey begins with dismantling the
-                    False Self — the persona the system taught you to wear — to lead from a place of wholeness.
-                  </p>
-                  <p>
-                    <strong className="text-gold/80">2. Become a steward of the conditions around you.</strong>{" "}
-                    Tend to the soil of your team's culture. Create psychological safety. Hold the space
-                    for others to become more themselves.
-                  </p>
-                  <p>
-                    <strong className="text-gold/80">3. Become a teacher.</strong>{" "}
-                    Carry this into your world. Use the language. Live the principles. Become a
-                    living cell of the new organism.
-                  </p>
+                <div className="space-y-6 text-base">
+                  <div>
+                    <p className="font-semibold text-gold/80 mb-1">1. Notice the game you've been playing.</p>
+                    <p>
+                      Name the invisible rules shaping you — performance-as-worth, control-as-safety,
+                      image-as-survival. See the scripts without shame.
+                    </p>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-gold/80 mb-1">2. Reclaim your center.</p>
+                    <p className="text-parchment-dim/60 text-xs font-pixel tracking-wider mb-2">IDENTITY + RELATIONSHIP</p>
+                    <p>
+                      Return to what's true underneath the persona. Reconnect to yourself and one
+                      other person as a human — not a role. This is the first turn of the flywheel:
+                      becoming real again.
+                    </p>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-gold/80 mb-1">3. Tend the soil.</p>
+                    <p>
+                      Now you can shape conditions instead of managing people: trust, clarity, belonging,
+                      agency. You don't force fruit — you build the environment where it grows.
+                    </p>
+                  </div>
                 </div>
               </DialogueBox>
             </FadeIn>

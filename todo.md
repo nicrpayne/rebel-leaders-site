@@ -123,3 +123,7 @@
 
 ## Phase 21: Manifesto Chapter I — Core Belief Box Rewrite
 - [x] Replace Core Belief box with "redefine leadership as relational infrastructure that forms humans" line
+
+## Phase 22: Manifesto Tweaks — Transaction/Transformation + YOUR MISSION Rewrite
+- [x] Change "transaction, not formation" to "transaction, not transformation" in Chapter II
+- [x] Rewrite YOUR MISSION dialogue box with new 3-step content (Notice/Reclaim/Tend)
