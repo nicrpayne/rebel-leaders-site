@@ -111,3 +111,6 @@
 - [x] Move "you cannot change behavior directly; you must first shape the environment" to Chapter I Core Belief box
 - [x] Remove Chapter III (The Deeper Architecture / HID) entirely
 - [x] Renumber remaining chapters (IV→III, V→IV)
+
+## Phase 19: Manifesto Narrator Box Update
+- [x] Change Narrator dialogue box to "We don't teach leadership..." line

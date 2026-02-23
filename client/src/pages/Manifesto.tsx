@@ -55,7 +55,7 @@ export default function Manifesto() {
             <FadeIn>
               <DialogueBox speaker="NARRATOR">
                 <p className="italic">
-                  This is not a leadership model. It is a rebellion and a remembering. As the Tao Te Ching says: "The further one goes, the less one knows."
+                  We don't teach leadership — there are plenty of coaches for that. But your leadership and your life are about to change forever.
                 </p>
               </DialogueBox>
             </FadeIn>
