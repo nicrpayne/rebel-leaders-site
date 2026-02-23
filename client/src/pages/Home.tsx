@@ -255,9 +255,9 @@ export default function Home() {
             </FadeIn>
 
             <FadeIn delay={0.3}>
-              <DialogueBox speaker="THE REBEL CREED">
+              <DialogueBox speaker="THE REBEL PHILOSOPHY">
                 <p className="italic">
-                  "Human flourishing is the point. Not profit. Not productivity. Not performance metrics.
+                  "Eudaimonia — human flourishing is the point. Not profit. Not productivity. Not performance metrics.
                   The point is that people become more fully alive."
                 </p>
               </DialogueBox>

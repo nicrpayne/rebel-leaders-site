@@ -58,3 +58,7 @@
 - [x] Combine Chapter V into About section (remove from Home)
 - [x] Remove military service reference from About (was in Chapter V, now removed)
 - [x] Replace 'repurposed' with 'mobilized'
+
+## Phase 10: Minor Content Tweaks
+- [x] Change "THE REBEL CREED" speaker label to "THE REBEL PHILOSOPHY" in Chapter II dialogue box
+- [x] Update first sentence to "Eudaimonia — human flourishing is the point."
