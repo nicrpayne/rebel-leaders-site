@@ -10,7 +10,7 @@ import DialogueBox from "@/components/DialogueBox";
 import PixelDivider from "@/components/PixelDivider";
 import RebelLogo from "@/components/RebelLogo";
 
-const RPG_SPRITE = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/GivLpGILaMTgVTZp.png";
+const RPG_SPRITE = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/oCdVePFazaeRgvNO.png";
 const RPG_BOOKSHELF = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/yIOHdhgRJwHhvBLy.png";
 
 export default function About() {
@@ -30,7 +30,7 @@ export default function About() {
                 <img
                   src={RPG_SPRITE}
                   alt="Nic - 8-bit pixel art portrait"
-                  className="w-40 md:w-52 pixel-render rounded-lg border-2 border-gold/30"
+                  className="w-48 md:w-64 pixel-render drop-shadow-[0_4px_24px_rgba(0,0,0,0.5)]"
                   loading="lazy"
                 />
               </div>

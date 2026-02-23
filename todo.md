@@ -45,3 +45,5 @@
 - [x] Update Visions tab to auto-fetch videos from RSS
 - [x] Update Quick Strikes tab to auto-fetch Shorts from RSS
 - [x] Write vitest tests for YouTube RSS integration (5/5 passing, 9/9 total)
+## Phase 8: Portrait Update
+- [x] Replace About page portrait with new transparent-background pixel art (v3)
