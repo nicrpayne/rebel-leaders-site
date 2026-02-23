@@ -114,3 +114,9 @@
 
 ## Phase 19: Manifesto Narrator Box Update
 - [x] Change Narrator dialogue box to "We don't teach leadership..." line
+
+## Phase 20: Rewrite Manifesto Chapter II — Three Disconnections as Causal Chain
+- [x] Self: Maté authenticity vs attachment, Industrial Revolution, False Self, "most deformed get promoted"
+- [x] Others: Bowling Alone stats, civic institutions collapsed, unmet need flooded into workplace
+- [x] Purpose: Ontology before Why, how purpose is practiced reveals beliefs, wrong container = wrong Why
+- [x] Connected as causal chain: "a single fracture... each break causing the next"

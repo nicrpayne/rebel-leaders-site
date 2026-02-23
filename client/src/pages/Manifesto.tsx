@@ -146,35 +146,58 @@ export default function Manifesto() {
 
             <FadeIn delay={0.15}>
               <p className="text-parchment-dim/90 text-base md:text-lg leading-relaxed font-display mb-8">
-                The Home page named the crisis as existential — a formation crisis, a disconnection from
-                self, from others, and from purpose. Here is what that looks like when you trace it to its roots:
+                These are not three separate problems. They are a single fracture that runs through
+                modern life, each break causing the next.
               </p>
             </FadeIn>
 
-            <FadeIn delay={0.25}>
-              <div className="space-y-4 ml-4 border-l-2 border-gold/20 pl-6">
-                <p className="text-parchment-dim/80 text-base font-display">
-                  Disconnection from <strong className="text-parchment">self</strong> leads to a loss of identity.
-                  Rohr calls it the False Self — the persona we construct to survive the system. We perform
-                  competence while our inner life atrophies. The leader with the title but no soul.
-                </p>
-                <p className="text-parchment-dim/80 text-base font-display">
-                  Disconnection from <strong className="text-parchment">others</strong> leads to a loss of community.
-                  Putnam's research confirms what we already feel: social capital has collapsed. We have
-                  colleagues but not companions. Networks but not neighbors.
-                </p>
-                <p className="text-parchment-dim/80 text-base font-display">
-                  Disconnection from <strong className="text-parchment">purpose</strong> leads to a loss of meaning.
-                  Frankl warned us that a person can endure almost any <em className="text-gold/70">how</em> if they
-                  have a <em className="text-gold/70">why</em>. The modern workplace offers neither.
-                </p>
+            <FadeIn delay={0.2}>
+              <div className="space-y-6 ml-4 border-l-2 border-gold/20 pl-6">
+                <div>
+                  <p className="text-parchment-dim/80 text-base font-display">
+                    <strong className="text-parchment">Disconnection from self.</strong>{" "}
+                    Since the Industrial Revolution, workplaces have been designed for transaction, not
+                    formation. They were never meant to be environments for healthy human development.
+                    Gabor Maté's trauma research reveals the cost: in these systems, we are forced to
+                    choose between authenticity and attachment. We always choose attachment. We adapt who
+                    we are to survive. Rohr calls the result the False Self — the persona we construct
+                    to make it through the day. Those who adapt most completely get promoted fastest.
+                    We call them leaders. They are often the most deformed.
+                  </p>
+                </div>
+                <div>
+                  <p className="text-parchment-dim/80 text-base font-display">
+                    <strong className="text-parchment">Disconnection from others.</strong>{" "}
+                    For most of human history, the need for connection, formation, and purpose was held
+                    by civic institutions — churches, lodges, neighborhood associations, extended families.
+                    Robert Putnam documented their collapse in <em className="text-gold/70">Bowling Alone</em>:
+                    between 1960 and 2000, participation in community organizations fell by more than half.
+                    When those structures disappeared, all that unmet human need didn't vanish. It floated
+                    like a spirit looking for a body to inhabit. And it landed in the only institution left
+                    standing: the workplace.
+                  </p>
+                </div>
+                <div>
+                  <p className="text-parchment-dim/80 text-base font-display">
+                    <strong className="text-parchment">Disconnection from purpose.</strong>{" "}
+                    Suddenly workplaces had to address symptoms they didn't understand — disengagement,
+                    turnover, suffering relationships with customers and each other. So they reached for
+                    purpose statements and engagement surveys. But here is what almost nobody sees:
+                    how purpose is practiced in a team reveals what that team actually believes about
+                    leadership. Command-and-control leaders practice purpose differently than servant
+                    leaders. The ontology of leadership — what we believe it <em className="text-gold/70">is</em> —
+                    comes before Why. Purpose rests on that foundation. Wrong container means wrong
+                    identity means wrong application of Why. This is why so many organizations "Start
+                    With Why" and can't understand why it's not getting them anywhere.
+                  </p>
+                </div>
               </div>
             </FadeIn>
 
             <FadeIn delay={0.35}>
               <p className="text-parchment-dim/80 text-base md:text-lg leading-relaxed font-display mt-8">
-                When people are disconnected at all three levels, they are hollowed out. We exist to
-                help people become whole while they lead, right where they are.
+                When people are disconnected at all three levels, what you get is exactly what we're
+                seeing in society. We exist to help people become whole while they lead, right where they are.
               </p>
             </FadeIn>
           </div>
