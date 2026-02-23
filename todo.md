@@ -137,3 +137,6 @@
 - [x] Add "Start Here" section with 5 essential reads (McGilchrist, Rohr, Frankl, Maté, Buber)
 - [x] Add placeholder "Voices" section for Substackers / bloggers
 - [x] Category tab navigation with RPG visual style, ★ START HERE badges
+
+## Phase 25: Replace Bottom Image on Start Here / New Player Page
+- [x] Replace bottom-of-page photo with the same image used at the top of the page
