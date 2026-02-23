@@ -106,3 +106,8 @@
 
 ## Phase 17: Restore "SO THAT..." Outcomes List
 - [x] Add the "SO THAT..." outcomes list back into the Manifesto (Chapter IV: The Path)
+
+## Phase 18: Remove Manifesto Chapter III, Move Core Insight
+- [x] Move "you cannot change behavior directly; you must first shape the environment" to Chapter I Core Belief box
+- [x] Remove Chapter III (The Deeper Architecture / HID) entirely
+- [x] Renumber remaining chapters (IV→III, V→IV)

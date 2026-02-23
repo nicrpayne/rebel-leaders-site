@@ -121,8 +121,9 @@ export default function Manifesto() {
             <FadeIn delay={0.35}>
               <DialogueBox speaker="CORE BELIEF" className="mt-8">
                 <p className="italic text-lg md:text-xl">
-                  Leadership is not a role to perform, but a way of being to cultivate. It is not about
-                  having the right answers, but about holding the right questions. As Rilke wrote: "Live the questions now."
+                  Leadership is not a role to perform, but a way of being to cultivate. You cannot change
+                  behavior directly; you must first shape the environment that forms the person. As Rilke
+                  wrote: "Live the questions now."
                 </p>
               </DialogueBox>
             </FadeIn>
@@ -182,68 +183,12 @@ export default function Manifesto() {
 
       <PixelDivider />
 
-      {/* Chapter III: The Deeper Architecture — HID and environment-shaping */}
+      {/* Chapter III: The Path — the three-step journey of a Rebel Leader */}
       <section className="py-12 md:py-20">
         <div className="container">
           <div className="max-w-2xl mx-auto md:ml-[10%]">
             <FadeIn>
               <p className="font-pixel text-[8px] tracking-[0.3em] text-gold/50 mb-4">CHAPTER III</p>
-              <h2 className="font-display text-3xl md:text-4xl font-semibold text-parchment mb-8">
-                The Deeper Architecture
-              </h2>
-            </FadeIn>
-
-            <FadeIn delay={0.15}>
-              <p className="text-parchment-dim/90 text-base md:text-lg leading-relaxed font-display mb-8">
-                The Home page introduced the Rebel OS — the Flywheel, the Bowl, Maps, Mirrors, and Moves.
-                But underneath those tools is a foundational insight: <strong className="text-gold/80">you
-                cannot change behavior directly; you must first shape the environment that forms the person.</strong>{" "}
-                This is the philosophy of Holistic Shaping.
-              </p>
-            </FadeIn>
-
-            <FadeIn delay={0.25}>
-              <div className="quest-card p-6">
-                <p className="font-pixel text-[7px] text-gold/40 tracking-wider mb-4">HOLISTIC IMPACT DEPTH (HID)</p>
-                <p className="text-parchment-dim/80 text-sm font-display leading-relaxed mb-6">
-                  A leader is not just a set of competencies. They are a whole person. HID integrates
-                  the five dimensions of a leader's health:
-                </p>
-                <div className="grid grid-cols-1 sm:grid-cols-5 gap-4">
-                  {[
-                    { name: "Spiritual", desc: "Connection to meaning and transcendence" },
-                    { name: "Emotional", desc: "Self-awareness, regulation, and empathy" },
-                    { name: "Leading", desc: "The craft of stewarding others' growth" },
-                    { name: "Physical", desc: "The body as the instrument of presence" },
-                    { name: "Technical", desc: "The skills that serve the mission" },
-                  ].map((item, i) => (
-                    <div key={i} className="text-center">
-                      <p className="font-display text-sm font-semibold text-parchment mb-1">{item.name}</p>
-                      <p className="text-parchment-dim/50 text-xs font-display leading-relaxed">{item.desc}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </FadeIn>
-
-            <FadeIn delay={0.35}>
-              <p className="text-parchment-dim/80 text-base md:text-lg leading-relaxed font-display mt-8">
-                Most leadership development touches only the last two — Leading and Technical. The Rebel OS
-                starts with the first three. That is the difference between training and formation.
-              </p>
-            </FadeIn>
-          </div>
-        </div>
-      </section>
-
-      <PixelDivider showIcon={false} />
-
-      {/* Chapter IV: The Path — the three-step journey of a Rebel Leader */}
-      <section className="py-12 md:py-20">
-        <div className="container">
-          <div className="max-w-2xl mx-auto md:ml-[10%]">
-            <FadeIn>
-              <p className="font-pixel text-[8px] tracking-[0.3em] text-gold/50 mb-4">CHAPTER IV</p>
               <h2 className="font-display text-3xl md:text-4xl font-semibold text-parchment mb-8">
                 The Path: From Formed to Former
               </h2>
@@ -308,12 +253,12 @@ export default function Manifesto() {
 
       <PixelDivider />
 
-      {/* Chapter V: The Ethos — unique lines that define the feel */}
+      {/* Chapter IV: The Ethos — unique lines that define the feel */}
       <section className="py-12 md:py-20">
         <div className="container">
           <div className="max-w-2xl mx-auto md:ml-[10%]">
             <FadeIn>
-              <p className="font-pixel text-[8px] tracking-[0.3em] text-gold/50 mb-4">CHAPTER V</p>
+              <p className="font-pixel text-[8px] tracking-[0.3em] text-gold/50 mb-4">CHAPTER IV</p>
               <h2 className="font-display text-3xl md:text-4xl font-semibold text-parchment mb-8">
                 The Ethos: How It Feels to Be a Rebel
               </h2>
