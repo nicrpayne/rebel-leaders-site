@@ -140,3 +140,10 @@
 
 ## Phase 25: Replace Bottom Image on Start Here / New Player Page
 - [x] Replace bottom-of-page photo with the same image used at the top of the page
+
+## Phase 26: Rewrite New Player Page as 30-Second Orientation
+- [x] Read current StartHere.tsx and identify duplicates with Home page
+- [x] Rewrite as tight orientation: What is this? Is this for me? What do I do?
+- [x] Remove all content that duplicates Home page (Great Transfer, akrasia, Rebel OS details, Maps/Mirrors/Moves all removed)
+- [x] Keep it under 30 seconds of reading (262 lines → 190 lines, ~60% less text)
+- [x] Choose-your-path section with descriptions for future gamification hook
