@@ -4,6 +4,8 @@ import NotFound from "@/pages/NotFound";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import { GameProvider } from "./contexts/GameContext";
+import GameHud from "./components/GameHud";
 import Home from "./pages/Home";
 import Manifesto from "./pages/Manifesto";
 import Archives from "./pages/Archives";
@@ -42,10 +44,13 @@ function App() {
   return (
     <ErrorBoundary>
       <ThemeProvider defaultTheme="dark">
-        <TooltipProvider>
-          <Toaster />
-          <Router />
-        </TooltipProvider>
+        <GameProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Router />
+            <GameHud />
+          </TooltipProvider>
+        </GameProvider>
       </ThemeProvider>
     </ErrorBoundary>
   );

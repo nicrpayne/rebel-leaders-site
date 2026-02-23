@@ -1,8 +1,11 @@
 import ComingSoon from "@/components/ComingSoon";
 
+import { usePageTracker } from "@/hooks/usePageTracker";
+
 const RPG_OFFICE = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/zlNQJQinSxaqyYjB.png";
 
 export default function Mirror() {
+  usePageTracker("mirror");
   return (
     <ComingSoon
       chapter="THE MIRROR"

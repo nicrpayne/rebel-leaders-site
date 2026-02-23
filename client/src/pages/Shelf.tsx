@@ -7,6 +7,7 @@
 import { useState } from "react";
 import PageLayout from "@/components/PageLayout";
 import FadeIn from "@/components/FadeIn";
+import { usePageTracker } from "@/hooks/usePageTracker";
 import PixelDivider from "@/components/PixelDivider";
 import DialogueBox from "@/components/DialogueBox";
 
@@ -408,6 +409,7 @@ const podcasts = [
 ];
 
 export default function Shelf() {
+  usePageTracker("shelf");
   const [activeCategory, setActiveCategory] = useState<string>("start-here");
 
   const activeSection = categories.find((c) => c.id === activeCategory) || categories[0];

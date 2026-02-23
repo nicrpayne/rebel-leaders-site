@@ -153,3 +153,16 @@
 
 ## Phase 28: Manifesto Opening Cleanup
 - [x] Remove meta-reference to Home page from Manifesto opening paragraph
+
+## Phase 29: Gamification Layer — Phase 1
+- [x] Build XP engine context (React context + localStorage persistence)
+- [x] Define XP rewards: page visits (5 XP each), scroll completion (10 XP for long pages), Easter eggs (reserved, 15% of total)
+- [x] Build pixel-art HUD component (XP bar bottom-right, time counter, minimizable)
+- [x] Build achievement toast system (pixel-art pop-ups for milestones)
+- [x] Define achievements: first visit each page, scroll-complete Home, scroll-complete Map, subscribe, total XP milestones
+- [x] Integrate page-visit tracking into all 9 major pages
+- [x] Integrate scroll-completion tracking into Home, Map, and About pages
+- [x] Add time-played counter (localStorage, updates every minute)
+- [x] Ensure XP bar can't reach 100% without Easter eggs (cap at ~85%)
+- [x] Wire HUD + GameProvider into App.tsx so it's always visible
+- [x] Test all XP awards and achievement triggers (9/9 existing tests passing, gamification is client-side only)

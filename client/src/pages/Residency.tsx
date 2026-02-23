@@ -6,6 +6,7 @@
 
 import PageLayout from "@/components/PageLayout";
 import FadeIn from "@/components/FadeIn";
+import { usePageTracker } from "@/hooks/usePageTracker";
 import DialogueBox from "@/components/DialogueBox";
 import PixelDivider from "@/components/PixelDivider";
 import RebelLogo from "@/components/RebelLogo";
@@ -13,6 +14,7 @@ import RebelLogo from "@/components/RebelLogo";
 const RPG_OFFICE = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/zlNQJQinSxaqyYjB.png";
 
 export default function Residency() {
+  usePageTracker("residency");
   return (
     <PageLayout>
       {/* Hero */}

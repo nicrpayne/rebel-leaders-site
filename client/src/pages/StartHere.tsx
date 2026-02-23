@@ -7,6 +7,7 @@
 import { Link } from "wouter";
 import PageLayout from "@/components/PageLayout";
 import FadeIn from "@/components/FadeIn";
+import { usePageTracker } from "@/hooks/usePageTracker";
 import DialogueBox from "@/components/DialogueBox";
 import PixelDivider from "@/components/PixelDivider";
 import SubstackSignup from "@/components/SubstackSignup";
@@ -15,6 +16,7 @@ const RPG_OFFICE = "https://files.manuscdn.com/user_upload_by_module/session_fil
 const RPG_SPRITE = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/oCdVePFazaeRgvNO.png";
 
 export default function StartHere() {
+  usePageTracker("start");
   return (
     <PageLayout>
       {/* Hero */}

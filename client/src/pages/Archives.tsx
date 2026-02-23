@@ -8,6 +8,7 @@
 import { useState } from "react";
 import PageLayout from "@/components/PageLayout";
 import FadeIn from "@/components/FadeIn";
+import { usePageTracker } from "@/hooks/usePageTracker";
 import PixelDivider from "@/components/PixelDivider";
 import { trpc } from "@/lib/trpc";
 
@@ -354,6 +355,7 @@ function ScrollsTab() {
 }
 
 export default function Archives() {
+  usePageTracker("archives");
   const [activeTab, setActiveTab] = useState<Tab>("visions");
 
   return (

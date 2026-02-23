@@ -18,6 +18,7 @@ import PixelDivider from "@/components/PixelDivider";
 import RebelLogo from "@/components/RebelLogo";
 import Footer from "@/components/Footer";
 import SubstackSignup from "@/components/SubstackSignup";
+import { usePageTracker } from "@/hooks/usePageTracker";
 
 /* ─── CDN Image URLs ─── */
 const RPG_OFFICE = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/zlNQJQinSxaqyYjB.png";
@@ -30,6 +31,7 @@ const SUBSTACK_VULTURE_CULTURE = "https://open.substack.com/pub/leaderrebellion/
 const SUBSTACK_HOLLOW_CROWN = "https://open.substack.com/pub/leaderrebellion/p/the-hollow-crown-why-our-leadership?r=5ubsq&utm_campaign=post&utm_medium=web&showWelcomeOnShare=true";
 
 export default function Home() {
+  usePageTracker("home", true); // track visit + scroll completion
   const [heroReady, setHeroReady] = useState(false);
 
   return (

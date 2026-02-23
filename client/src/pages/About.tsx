@@ -6,6 +6,7 @@
 
 import PageLayout from "@/components/PageLayout";
 import FadeIn from "@/components/FadeIn";
+import { usePageTracker } from "@/hooks/usePageTracker";
 import DialogueBox from "@/components/DialogueBox";
 import PixelDivider from "@/components/PixelDivider";
 import RebelLogo from "@/components/RebelLogo";
@@ -14,6 +15,7 @@ const RPG_SPRITE = "https://files.manuscdn.com/user_upload_by_module/session_fil
 const RPG_BOOKSHELF = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/yIOHdhgRJwHhvBLy.png";
 
 export default function About() {
+  usePageTracker("about", true);
   return (
     <PageLayout>
       {/* Hero */}
