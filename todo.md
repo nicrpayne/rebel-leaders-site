@@ -97,3 +97,9 @@
 ## Phase 15: Chapter VI — Remove Ubuntu, Add Hope as Rebellion
 - [x] Remove Ubuntu sentence from Chapter VI
 - [x] Rewrite closing line with "hope is an act of rebellion" framing
+
+## Phase 16: Manifesto (The Map) — Deduplicate Against Home Page
+- [x] Read and document all ideas in Home page
+- [x] Read and document all ideas in Manifesto
+- [x] Identify duplicates and unique-to-Manifesto ideas (see /home/ubuntu/manifesto-analysis.md)
+- [x] Rewrite Manifesto: 9 chapters → 5 chapters + opening + closing. Removed all duplicate diagnosis/belief/flywheel/invitation content. Kept: oikeiosis, Rohr's two halves, Rilke, three disconnections (Rohr/Putnam/Frankl), HID, Transformed Teachers, three-step mission, unique ethos lines, Hope Is Rebellious image.

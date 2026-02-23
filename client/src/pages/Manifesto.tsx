@@ -3,6 +3,12 @@
  * The full Rebel Manifesto rendered as a long-form RPG scroll.
  * Uses the scroll/map pixel art as the hero backdrop.
  * Design: Scriptorium-style, deep green, gold accents, drop caps.
+ *
+ * DEDUPLICATED: Only ideas that expand on the Home page remain.
+ * Home covers: the diagnosis, Great Transfer, Vulture Culture, Hollow Crown,
+ * the Flywheel, Bowl/Water/Current, Maps/Mirrors/Moves, and the invitation.
+ * This page goes deeper: the philosophical roots, the three disconnections,
+ * Holistic Impact Depth, the Transformed Teachers concept, and the ethos.
  */
 
 import PageLayout from "@/components/PageLayout";
@@ -14,7 +20,6 @@ import SubstackSignup from "@/components/SubstackSignup";
 
 const SCROLL_MAP = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/LJSaRbdurtjnmgoI.png";
 const HOPE_IMG = "https://private-us-east-1.manuscdn.com/sessionFile/xhIF6cqEZNRR3ezVrvcq6V/sandbox/XEp7JhlUZSYOHCylU47BD6-img-1_1771697605000_na1fn_aG9wZS1pcy1yZWJlbGxpb3VzLThiaXQ.png?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUveGhJRjZjcUVaTlJSM2V6VnJ2Y3E2Vi9zYW5kYm94L1hFcDdKaGxVWlNZT0hDeWxVNDdCRDYtaW1nLTFfMTc3MTY5NzYwNTAwMF9uYTFmbl9hRzl3WlMxcGN5MXlaV0psYkd4cGIzVnpMVGhpYVhRLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSx3XzE5MjAsaF8xOTIwL2Zvcm1hdCx3ZWJwL3F1YWxpdHkscV84MCIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5ODc2MTYwMH19fV19&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=lH4pj8IuTDz9V4l5t11urTdwZmR9CfGvggQo5mmZXCFAeXukFYnVCXDtB4E7K1CWCC76~MxTT5rGi0NzR7ufrH9pxayb0hJp6zip4w2dBiiNoT5Zc3F~dCOlXbHLzZcg6UpUdhlhNStkT~5xZPi2lMfh0QDdG~9ZVio6KKd4GFHhm-GVgFyVBQ6LpN6cMQhseN72xgKBnWS-6nCfL0CXECfXkRqAPDxZXb2LZA7YAbEs7ng06wDxJ6MpWHXoz6spI1XkCUXDObZftbQgOrl2AJ6BaG2zIdpRZcaH-4h4rLFjrwRz97YZucLplxgPuYjRipSt0cB3oZkzSWpTDJKIoA__";
-const HOPE_IMG_ORIGINAL = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/mcnYBUpLpZAnHhkQ.jpg";
 
 export default function Manifesto() {
   return (
@@ -43,7 +48,7 @@ export default function Manifesto() {
         </div>
       </section>
 
-      {/* Opening */}
+      {/* Opening — the voice that draws you in */}
       <section className="py-12 md:py-20">
         <div className="container">
           <div className="max-w-2xl mx-auto md:ml-[10%]">
@@ -72,8 +77,9 @@ export default function Manifesto() {
             </FadeIn>
 
             <FadeIn delay={0.4}>
-              <p className="text-gold/80 text-lg md:text-xl font-display mt-6 italic">
-                If you are one of us, then you are not crazy for seeing what you see. And you are not alone.
+              <p className="text-parchment-dim/70 text-base md:text-lg leading-relaxed font-display mt-6">
+                The Home page told you what we see and what we believe. This manifesto goes deeper — into
+                the roots, the philosophy, and the path forward.
               </p>
             </FadeIn>
           </div>
@@ -82,94 +88,33 @@ export default function Manifesto() {
 
       <PixelDivider />
 
-      {/* Chapter 1: The Diagnosis */}
+      {/* Chapter I: The Roots — Philosophical grounding not covered on Home */}
       <section className="py-12 md:py-20">
         <div className="container">
           <div className="max-w-2xl mx-auto md:ml-[10%]">
             <FadeIn>
               <p className="font-pixel text-[8px] tracking-[0.3em] text-gold/50 mb-4">CHAPTER I</p>
               <h2 className="font-display text-3xl md:text-4xl font-semibold text-parchment mb-8">
-                The Diagnosis: A World of Hollow Crowns
+                The Roots: Why This Rebellion Is Ancient
               </h2>
             </FadeIn>
 
             <FadeIn delay={0.15}>
               <p className="text-parchment-dim/90 text-base md:text-lg leading-relaxed font-display drop-cap">
-                <strong className="text-parchment">There is a problem.</strong> We are living through a
-                crisis of disconnection. We are lonely, anxious, and adrift in systems that were built
-                for efficiency, not for meaning. Our institutions — the very places where we spend
-                90,000 hours of our lives — are hollowing people out. Maté would call it institutional trauma; McGilchrist would call it the tyranny of the left hemisphere. Either way, this is not a bug; it is a
-                feature of the current operating system.
+                The ache you feel is not new. The Stoics had a word for it: <em className="text-gold/70">oikeiosis</em> — the
+                innate orientation toward wholeness that every living thing carries. It is the pull toward
+                becoming what you already are. Your soul refusing to go numb is not weakness; it is this
+                ancient instinct doing its work.
               </p>
             </FadeIn>
 
             <FadeIn delay={0.25}>
               <p className="text-parchment-dim/80 text-base md:text-lg leading-relaxed font-display mt-6">
-                <strong className="text-parchment">This problem exists because of The Great Transfer.</strong>{" "}
-                The traditional institutions that once provided formation, meaning, and belonging — family,
-                church, civic groups — have collapsed. That profound human need did not disappear; it was
-                unconsciously transferred onto the transactional structures of the workplace. We are asking
-                our jobs to be our village, our purpose, and our identity, and the weight is crushing us.
-              </p>
-            </FadeIn>
-
-            <FadeIn delay={0.35}>
-              <div className="quest-card p-6 mt-8">
-                <p className="font-pixel text-[7px] text-gold/40 tracking-wider mb-3">ENEMY IDENTIFIED</p>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <div>
-                    <p className="font-display text-lg font-semibold text-parchment">Vulture Culture</p>
-                    <p className="text-parchment-dim/50 text-sm font-display mt-1">
-                      A system that only loves you when you're producing.
-                    </p>
-                  </div>
-                  <div>
-                    <p className="font-display text-lg font-semibold text-parchment">The Machine</p>
-                    <p className="text-parchment-dim/50 text-sm font-display mt-1">
-                      An outdated OS from 1986 that treats humanity as a liability.
-                    </p>
-                  </div>
-                  <div>
-                    <p className="font-display text-lg font-semibold text-parchment">The Hollow Crown</p>
-                    <p className="text-parchment-dim/50 text-sm font-display mt-1">
-                      The leader with the title but disconnected from their soul.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </FadeIn>
-          </div>
-        </div>
-      </section>
-
-      <PixelDivider showIcon={false} />
-
-      {/* Chapter 2: The Belief */}
-      <section className="py-12 md:py-20">
-        <div className="container">
-          <div className="max-w-2xl mx-auto md:ml-[10%]">
-            <FadeIn>
-              <p className="font-pixel text-[8px] tracking-[0.3em] text-gold/50 mb-4">CHAPTER II</p>
-              <h2 className="font-display text-3xl md:text-4xl font-semibold text-parchment mb-8">
-                The Belief: A Rebellion of Remembering
-              </h2>
-            </FadeIn>
-
-            <FadeIn delay={0.15}>
-              <p className="text-parchment-dim/90 text-base md:text-lg leading-relaxed font-display drop-cap">
-                <strong className="text-parchment">But we believe a different world is not only possible,
-                but is already emerging.</strong> We believe that the ache you feel is not a sign of your
-                weakness, but a signal of your sanity. It is your soul refusing to go numb. It is the
-                memory of a more ancient and truer way of being. The Stoics called it <em className="text-gold/70">oikeiosis</em> — the innate orientation toward wholeness.
-              </p>
-            </FadeIn>
-
-            <FadeIn delay={0.25}>
-              <p className="text-parchment-dim/80 text-base md:text-lg leading-relaxed font-display mt-6">
-                We believe that <strong className="text-gold/80">human flourishing is the point.</strong> Not
-                profit, not productivity, not performance. Rohr would say we've been living in the first half of life — building the container — when the real work is filling it. The ultimate purpose of any organization should
-                be to grow people. We believe that your 90,000 hours can be an engine of deep transformation,
-                not just a paycheck and some KPIs.
+                Richard Rohr describes two halves of life. The first half is about building the container — 
+                the career, the title, the competencies. The second half is about filling it with meaning.
+                Most of the leadership industry is stuck in the first half, endlessly optimizing the
+                container while the soul inside it starves. The rebellion is the shift from the first half
+                to the second.
               </p>
             </FadeIn>
 
@@ -185,43 +130,49 @@ export default function Manifesto() {
         </div>
       </section>
 
-      <PixelDivider />
+      <PixelDivider showIcon={false} />
 
-      {/* Chapter 3: The Purpose */}
+      {/* Chapter II: The Three Disconnections — expands on Home's "existential crisis" line */}
       <section className="py-12 md:py-20">
         <div className="container">
           <div className="max-w-2xl mx-auto md:ml-[10%]">
             <FadeIn>
-              <p className="font-pixel text-[8px] tracking-[0.3em] text-gold/50 mb-4">CHAPTER III</p>
+              <p className="font-pixel text-[8px] tracking-[0.3em] text-gold/50 mb-4">CHAPTER II</p>
               <h2 className="font-display text-3xl md:text-4xl font-semibold text-parchment mb-8">
-                The Purpose: To Solve for Loneliness
+                The Three Disconnections
               </h2>
             </FadeIn>
 
             <FadeIn delay={0.15}>
               <p className="text-parchment-dim/90 text-base md:text-lg leading-relaxed font-display mb-8">
-                Our purpose is to solve the crisis under every other crisis: <strong className="text-parchment">existential loneliness.</strong>{" "}
-                The Ubuntu philosophy names it plainly: <em className="text-gold/70">"I am because we are."</em> Separation was always the illusion.
+                The Home page named the crisis as existential — a formation crisis, a disconnection from
+                self, from others, and from purpose. Here is what that looks like when you trace it to its roots:
               </p>
             </FadeIn>
 
             <FadeIn delay={0.25}>
               <div className="space-y-4 ml-4 border-l-2 border-gold/20 pl-6">
                 <p className="text-parchment-dim/80 text-base font-display">
-                  Disconnection from <strong className="text-parchment">self</strong> leads to a loss of identity. (Rohr's False Self takes over.)
+                  Disconnection from <strong className="text-parchment">self</strong> leads to a loss of identity.
+                  Rohr calls it the False Self — the persona we construct to survive the system. We perform
+                  competence while our inner life atrophies. The leader with the title but no soul.
                 </p>
                 <p className="text-parchment-dim/80 text-base font-display">
-                  Disconnection from <strong className="text-parchment">others</strong> leads to a loss of community. (Putnam's data confirms it.)
+                  Disconnection from <strong className="text-parchment">others</strong> leads to a loss of community.
+                  Putnam's research confirms what we already feel: social capital has collapsed. We have
+                  colleagues but not companions. Networks but not neighbors.
                 </p>
                 <p className="text-parchment-dim/80 text-base font-display">
-                  Disconnection from <strong className="text-parchment">purpose</strong> leads to a loss of meaning. (Frankl warned us.)
+                  Disconnection from <strong className="text-parchment">purpose</strong> leads to a loss of meaning.
+                  Frankl warned us that a person can endure almost any <em className="text-gold/70">how</em> if they
+                  have a <em className="text-gold/70">why</em>. The modern workplace offers neither.
                 </p>
               </div>
             </FadeIn>
 
             <FadeIn delay={0.35}>
               <p className="text-parchment-dim/80 text-base md:text-lg leading-relaxed font-display mt-8">
-                When people feel disconnected at all three levels, they are hollowed out. We exist to
+                When people are disconnected at all three levels, they are hollowed out. We exist to
                 help people become whole while they lead, right where they are.
               </p>
             </FadeIn>
@@ -229,170 +180,80 @@ export default function Manifesto() {
         </div>
       </section>
 
+      <PixelDivider />
+
+      {/* Chapter III: The Deeper Architecture — HID and environment-shaping */}
+      <section className="py-12 md:py-20">
+        <div className="container">
+          <div className="max-w-2xl mx-auto md:ml-[10%]">
+            <FadeIn>
+              <p className="font-pixel text-[8px] tracking-[0.3em] text-gold/50 mb-4">CHAPTER III</p>
+              <h2 className="font-display text-3xl md:text-4xl font-semibold text-parchment mb-8">
+                The Deeper Architecture
+              </h2>
+            </FadeIn>
+
+            <FadeIn delay={0.15}>
+              <p className="text-parchment-dim/90 text-base md:text-lg leading-relaxed font-display mb-8">
+                The Home page introduced the Rebel OS — the Flywheel, the Bowl, Maps, Mirrors, and Moves.
+                But underneath those tools is a foundational insight: <strong className="text-gold/80">you
+                cannot change behavior directly; you must first shape the environment that forms the person.</strong>{" "}
+                This is the philosophy of Holistic Shaping.
+              </p>
+            </FadeIn>
+
+            <FadeIn delay={0.25}>
+              <div className="quest-card p-6">
+                <p className="font-pixel text-[7px] text-gold/40 tracking-wider mb-4">HOLISTIC IMPACT DEPTH (HID)</p>
+                <p className="text-parchment-dim/80 text-sm font-display leading-relaxed mb-6">
+                  A leader is not just a set of competencies. They are a whole person. HID integrates
+                  the five dimensions of a leader's health:
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-5 gap-4">
+                  {[
+                    { name: "Spiritual", desc: "Connection to meaning and transcendence" },
+                    { name: "Emotional", desc: "Self-awareness, regulation, and empathy" },
+                    { name: "Leading", desc: "The craft of stewarding others' growth" },
+                    { name: "Physical", desc: "The body as the instrument of presence" },
+                    { name: "Technical", desc: "The skills that serve the mission" },
+                  ].map((item, i) => (
+                    <div key={i} className="text-center">
+                      <p className="font-display text-sm font-semibold text-parchment mb-1">{item.name}</p>
+                      <p className="text-parchment-dim/50 text-xs font-display leading-relaxed">{item.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </FadeIn>
+
+            <FadeIn delay={0.35}>
+              <p className="text-parchment-dim/80 text-base md:text-lg leading-relaxed font-display mt-8">
+                Most leadership development touches only the last two — Leading and Technical. The Rebel OS
+                starts with the first three. That is the difference between training and formation.
+              </p>
+            </FadeIn>
+          </div>
+        </div>
+      </section>
+
       <PixelDivider showIcon={false} />
 
-      {/* Chapter 4: The Vision */}
+      {/* Chapter IV: The Path — the three-step journey of a Rebel Leader */}
       <section className="py-12 md:py-20">
         <div className="container">
           <div className="max-w-2xl mx-auto md:ml-[10%]">
             <FadeIn>
               <p className="font-pixel text-[8px] tracking-[0.3em] text-gold/50 mb-4">CHAPTER IV</p>
               <h2 className="font-display text-3xl md:text-4xl font-semibold text-parchment mb-8">
-                The Vision: A Distributed Formation Network
-              </h2>
-            </FadeIn>
-
-            <FadeIn delay={0.15}>
-              <p className="text-parchment-dim/90 text-base md:text-lg leading-relaxed font-display drop-cap">
-                <strong className="text-parchment">Our vision is cosmic.</strong> The Stoics called it <em className="text-gold/70">cosmopolis</em>.
-                The Hebrew prophets called it <em className="text-gold/70">shalom</em>. We see a world where millions
-                of companies, organizations, and institutions are no longer sites of extraction, but have been
-                mobilized into a <strong className="text-gold/80">distributed character formation network</strong> — a
-                global ecosystem of schools for the soul, producing generations of leaders equipped to live
-                with hope and courage in the modern world.
-              </p>
-            </FadeIn>
-
-            <FadeIn delay={0.25}>
-              <div className="quest-card p-6 mt-8">
-                <p className="font-pixel text-[7px] text-gold/40 tracking-wider mb-4">SO THAT...</p>
-                <ul className="space-y-3 text-parchment-dim/80 text-sm md:text-base font-display">
-                  <li className="flex gap-3">
-                    <span className="text-gold/60 shrink-0">{">"}</span>
-                    Loneliness lessens, character deepens, and courage spreads.
-                  </li>
-                  <li className="flex gap-3">
-                    <span className="text-gold/60 shrink-0">{">"}</span>
-                    Humanity flourishes and people begin to hope again.
-                  </li>
-                  <li className="flex gap-3">
-                    <span className="text-gold/60 shrink-0">{">"}</span>
-                    The world is marked by cultures of trust, leadership that is deeply human, and people operating in full alignment.
-                  </li>
-                  <li className="flex gap-3">
-                    <span className="text-gold/60 shrink-0">{">"}</span>
-                    We midwife a new species of organization by awakening the humans inside them.
-                  </li>
-                </ul>
-              </div>
-            </FadeIn>
-          </div>
-        </div>
-      </section>
-
-      <PixelDivider />
-
-      {/* Chapter 5: The Mission */}
-      <section className="py-12 md:py-20">
-        <div className="container">
-          <div className="max-w-2xl mx-auto md:ml-[10%]">
-            <FadeIn>
-              <p className="font-pixel text-[8px] tracking-[0.3em] text-gold/50 mb-4">CHAPTER V</p>
-              <h2 className="font-display text-3xl md:text-4xl font-semibold text-parchment mb-8">
-                The Mission: Midwifing the New World
+                The Path: From Formed to Former
               </h2>
             </FadeIn>
 
             <FadeIn delay={0.15}>
               <p className="text-parchment-dim/90 text-base md:text-lg leading-relaxed font-display mb-8">
-                Our mission is to awaken and equip the midwives of this new world. We do not build it;
-                we create the sacred space for it to be born.
-              </p>
-            </FadeIn>
-
-            <FadeIn delay={0.25}>
-              <div className="grid grid-cols-1 gap-4">
-                {[
-                  {
-                    title: "The Rebel OS",
-                    desc: "An open-source operating system for human flourishing. Ancient wisdom (Aristotle, Rumi, the Desert Fathers) confirmed by modern science (McGilchrist, Maté, Boyatzis) and translated into practical language for today's leaders.",
-                  },
-                  {
-                    title: "Maps, Mirrors & Moves",
-                    desc: "Maps to understand the terrain of consciousness. Mirrors to give language for what you're already experiencing. Moves — tiny experiments in courage — to help you participate in reality differently.",
-                  },
-                  {
-                    title: "Transformed Teachers",
-                    desc: "Our goal is not to create better managers, but to form multipliers — leaders who become carriers of this new OS into their own corner of the world.",
-                  },
-                ].map((item, i) => (
-                  <div key={i} className="quest-card p-5">
-                    <h3 className="font-display text-lg font-semibold text-parchment mb-2">{item.title}</h3>
-                    <p className="text-parchment-dim/60 text-sm font-display leading-relaxed">{item.desc}</p>
-                  </div>
-                ))}
-              </div>
-            </FadeIn>
-          </div>
-        </div>
-      </section>
-
-      <PixelDivider showIcon={false} />
-
-      {/* Chapter 6: The Artifact */}
-      <section className="py-12 md:py-20">
-        <div className="container">
-          <div className="max-w-2xl mx-auto md:ml-[10%]">
-            <FadeIn>
-              <p className="font-pixel text-[8px] tracking-[0.3em] text-gold/50 mb-4">CHAPTER VI</p>
-              <h2 className="font-display text-3xl md:text-4xl font-semibold text-parchment mb-8">
-                The Artifact: The Rebel OS & Holistic Shaping
-              </h2>
-            </FadeIn>
-
-            <FadeIn delay={0.15}>
-              <p className="text-parchment-dim/90 text-base md:text-lg leading-relaxed font-display mb-8">
-                The Rebel OS is an operating system for leadership that treats work as spiritual formation.
-                It is built on the philosophy of <strong className="text-gold/80">Holistic Shaping</strong>,
-                which understands that you cannot change behavior directly; you must first shape the
-                environment that forms the person.
-              </p>
-            </FadeIn>
-
-            <FadeIn delay={0.25}>
-              <div className="space-y-4">
-                {[
-                  {
-                    name: "The Flywheel",
-                    desc: "Culture is attracted to Vision, Vision rests on Relationship, and Relationship is fostered in Identity.",
-                  },
-                  {
-                    name: "Holistic Impact Depth (HID)",
-                    desc: "Integrating the five key areas of a leader's health: Spiritual, Emotional, Leading, Physical, and Technical.",
-                  },
-                  {
-                    name: "Bowl, Water, and Current",
-                    desc: "The Bowl is attention and intention (Iain McGilchrist). The Water is Howard Thurman's 'deep ocean within.' The Current is Martin Buber's I/Thou philosophy. Leaders don't fill cups — they hold the bowl.",
-                  },
-                ].map((item, i) => (
-                  <div key={i} className="border-l-2 border-gold/30 pl-6 py-2">
-                    <h3 className="font-display text-lg font-semibold text-parchment mb-1">{item.name}</h3>
-                    <p className="text-parchment-dim/60 text-sm font-display leading-relaxed">{item.desc}</p>
-                  </div>
-                ))}
-              </div>
-            </FadeIn>
-          </div>
-        </div>
-      </section>
-
-      <PixelDivider />
-
-      {/* Chapter 7: The Mobilization */}
-      <section className="py-12 md:py-20">
-        <div className="container">
-          <div className="max-w-2xl mx-auto md:ml-[10%]">
-            <FadeIn>
-              <p className="font-pixel text-[8px] tracking-[0.3em] text-gold/50 mb-4">CHAPTER VII</p>
-              <h2 className="font-display text-3xl md:text-4xl font-semibold text-parchment mb-8">
-                The Mobilization: A Call to the Courageous
-              </h2>
-            </FadeIn>
-
-            <FadeIn delay={0.15}>
-              <p className="text-parchment-dim/90 text-base md:text-lg leading-relaxed font-display mb-8">
-                We are mobilizing the leaders-in-the-making. The ones who feel the ache of the world.
-                The ones who refuse to harden their hearts. The ones who are ready to remember who they are.
+                The goal is not to create better managers. It is to form <strong className="text-gold/80">Transformed
+                Teachers</strong> — leaders who become carriers of this new way of being into their own
+                corner of the world. We do not build the new world; we create the sacred space for it to be born.
               </p>
             </FadeIn>
 
@@ -401,8 +262,8 @@ export default function Manifesto() {
                 <div className="space-y-4 text-base">
                   <p>
                     <strong className="text-gold/80">1. Do your own inner work first.</strong>{" "}
-                    You cannot give what you do not have. The journey begins with dismantling your own
-                    False Self to lead from a place of wholeness.
+                    You cannot give what you do not have. The journey begins with dismantling the
+                    False Self — the persona the system taught you to wear — to lead from a place of wholeness.
                   </p>
                   <p>
                     <strong className="text-gold/80">2. Become a steward of the conditions around you.</strong>{" "}
@@ -411,7 +272,7 @@ export default function Manifesto() {
                   </p>
                   <p>
                     <strong className="text-gold/80">3. Become a teacher.</strong>{" "}
-                    Carry this new OS into your world. Use the language. Live the principles. Become a
+                    Carry this into your world. Use the language. Live the principles. Become a
                     living cell of the new organism.
                   </p>
                 </div>
@@ -421,14 +282,14 @@ export default function Manifesto() {
         </div>
       </section>
 
-      <PixelDivider showIcon={false} />
+      <PixelDivider />
 
-      {/* Chapter 8: The Ethos */}
+      {/* Chapter V: The Ethos — unique lines that define the feel */}
       <section className="py-12 md:py-20">
         <div className="container">
           <div className="max-w-2xl mx-auto md:ml-[10%]">
             <FadeIn>
-              <p className="font-pixel text-[8px] tracking-[0.3em] text-gold/50 mb-4">CHAPTER VIII</p>
+              <p className="font-pixel text-[8px] tracking-[0.3em] text-gold/50 mb-4">CHAPTER V</p>
               <h2 className="font-display text-3xl md:text-4xl font-semibold text-parchment mb-8">
                 The Ethos: How It Feels to Be a Rebel
               </h2>
@@ -437,12 +298,10 @@ export default function Manifesto() {
             <FadeIn delay={0.15}>
               <div className="space-y-4">
                 {[
-                  "It's not my job to fill your cup, but it is to empty mine.",
                   "Leadership is not about climbing higher — it's about digging deeper.",
                   "We measure success by depth, not just scale.",
                   "We are stewards of conditions, not heroes of outcomes.",
-                  "Humanity is not a liability.",
-                  "Hope is an act of rebellion.",
+                  "The work is not to become something you are not, but to finally become the person you have always been.",
                 ].map((quote, i) => (
                   <div key={i} className="border-l-2 border-gold/20 pl-6 py-1">
                     <p className="font-display text-lg md:text-xl italic text-parchment-dim/80">
@@ -497,51 +356,32 @@ export default function Manifesto() {
 
       <PixelDivider />
 
-      {/* Chapter 9: The Invitation */}
+      {/* Closing — the invitation, stripped to essentials */}
       <section className="py-16 md:py-24">
         <div className="container">
           <div className="max-w-2xl mx-auto text-center">
             <FadeIn>
-              <p className="font-pixel text-[8px] tracking-[0.3em] text-gold/50 mb-4">CHAPTER IX</p>
+              <p className="font-pixel text-[8px] tracking-[0.3em] text-gold/50 mb-4">THE INVITATION</p>
               <h2 className="font-display text-3xl md:text-5xl font-semibold text-parchment mb-8">
-                The Invitation
+                Welcome Home
               </h2>
             </FadeIn>
 
             <FadeIn delay={0.15}>
-              <p className="text-parchment-dim/90 text-base md:text-lg leading-relaxed font-display mb-8">
+              <p className="text-parchment-dim/90 text-base md:text-lg leading-relaxed font-display mb-10">
                 If this manifesto resonates in your bones, you are already one of us. The work is not
                 to become something you are not, but to finally become the person you have always been.
               </p>
             </FadeIn>
 
             <FadeIn delay={0.3}>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-12">
-                {[
-                  { step: "Notice", desc: "Pay attention to the systems around you. Where do you see Vulture Culture?" },
-                  { step: "Name it", desc: "Use the language. Talk about the Bowl, Water, and Current." },
-                  { step: "Take one step", desc: "Choose one micro-practice of courage. Listen instead of command." },
-                ].map((item, i) => (
-                  <div key={i} className="quest-card p-5 text-left">
-                    <span className="font-pixel text-[7px] text-gold/40 tracking-wider">STEP {String(i + 1).padStart(2, "0")}</span>
-                    <h3 className="font-display text-xl font-semibold text-parchment mt-2 mb-2">{item.step}</h3>
-                    <p className="text-parchment-dim/50 text-sm leading-relaxed font-display">{item.desc}</p>
-                  </div>
-                ))}
-              </div>
-            </FadeIn>
-
-            <FadeIn delay={0.45}>
               <div className="mb-10">
                 <SubstackSignup variant="featured" />
               </div>
             </FadeIn>
 
-            <FadeIn delay={0.6}>
-              <RebelLogo size={48} className="mx-auto text-gold/50 mb-6" />
-              <p className="font-display text-2xl md:text-3xl italic text-gold/80">
-                Welcome home.
-              </p>
+            <FadeIn delay={0.45}>
+              <RebelLogo size={48} className="mx-auto text-gold/50" />
             </FadeIn>
           </div>
         </div>
