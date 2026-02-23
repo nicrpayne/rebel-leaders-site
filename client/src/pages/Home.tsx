@@ -646,7 +646,7 @@ export default function Home() {
             <FadeIn delay={0.3}>
               <p className="text-parchment-dim/90 text-base md:text-lg leading-relaxed font-display mb-10 max-w-xl mx-auto">
                 There's a language for what you feel. A community of people who refuse to accept that
-                this is all there is. The Ubuntu philosophy says <em className="text-gold/70">"I am because we are."</em>{" "}
+                this is just how things are. These days, being hopeful is an act of rebellion.
                 Join the party and receive essays, lenses, and invitations to go deeper.
               </p>
             </FadeIn>

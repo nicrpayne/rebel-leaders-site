@@ -93,3 +93,7 @@
 - [x] Chapter V: Remove Stoics/prophets/Rohr opening lines
 - [x] Chapter V: Replace ikigai ending with boss fights (loneliness epidemic, leadership crisis, climate change)
 - [x] Rebel Oath: Remove kenosis reference
+
+## Phase 15: Chapter VI — Remove Ubuntu, Add Hope as Rebellion
+- [x] Remove Ubuntu sentence from Chapter VI
+- [x] Rewrite closing line with "hope is an act of rebellion" framing
