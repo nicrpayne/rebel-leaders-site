@@ -146,10 +146,10 @@ export default function GameHud() {
                   </span>
                   <button
                     onClick={toggleHud}
-                    className="font-pixel text-[8px] text-parchment-dim/40 hover:text-gold/70 transition-colors"
-                    title="Minimize"
+                    className="font-pixel text-[10px] text-parchment-dim/50 hover:text-gold hover:bg-gold/10 transition-all px-1.5 py-0.5 rounded-sm border border-transparent hover:border-gold/30"
+                    title="Minimize HUD"
                   >
-                    ─
+                    ▾
                   </button>
                 </div>
 

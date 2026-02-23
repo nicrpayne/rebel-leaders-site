@@ -166,3 +166,6 @@
 - [x] Ensure XP bar can't reach 100% without Easter eggs (cap at ~85%)
 - [x] Wire HUD + GameProvider into App.tsx so it's always visible
 - [x] Test all XP awards and achievement triggers (9/9 existing tests passing, gamification is client-side only)
+
+## Phase 30: HUD Minimize Button Visibility
+- [x] Make the HUD minimize/expand button more obvious and clickable (larger hit area, ▾ icon, hover border/bg)
