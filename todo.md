@@ -103,3 +103,6 @@
 - [x] Read and document all ideas in Manifesto
 - [x] Identify duplicates and unique-to-Manifesto ideas (see /home/ubuntu/manifesto-analysis.md)
 - [x] Rewrite Manifesto: 9 chapters → 5 chapters + opening + closing. Removed all duplicate diagnosis/belief/flywheel/invitation content. Kept: oikeiosis, Rohr's two halves, Rilke, three disconnections (Rohr/Putnam/Frankl), HID, Transformed Teachers, three-step mission, unique ethos lines, Hope Is Rebellious image.
+
+## Phase 17: Restore "SO THAT..." Outcomes List
+- [x] Add the "SO THAT..." outcomes list back into the Manifesto (Chapter IV: The Path)

@@ -278,6 +278,30 @@ export default function Manifesto() {
                 </div>
               </DialogueBox>
             </FadeIn>
+
+            <FadeIn delay={0.35}>
+              <div className="quest-card p-6 mt-8">
+                <p className="font-pixel text-[7px] text-gold/40 tracking-wider mb-4">SO THAT...</p>
+                <ul className="space-y-3 text-parchment-dim/80 text-sm md:text-base font-display">
+                  <li className="flex gap-3">
+                    <span className="text-gold/60 shrink-0">{">"}</span>
+                    Loneliness lessens, character deepens, and courage spreads.
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="text-gold/60 shrink-0">{">"}</span>
+                    Humanity flourishes and people begin to hope again.
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="text-gold/60 shrink-0">{">"}</span>
+                    The world is marked by cultures of trust, leadership that is deeply human, and people operating in full alignment.
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="text-gold/60 shrink-0">{">"}</span>
+                    We midwife a new species of organization by awakening the humans inside them.
+                  </li>
+                </ul>
+              </div>
+            </FadeIn>
           </div>
         </div>
       </section>
