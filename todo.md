@@ -120,3 +120,6 @@
 - [x] Others: Bowling Alone stats, civic institutions collapsed, unmet need flooded into workplace
 - [x] Purpose: Ontology before Why, how purpose is practiced reveals beliefs, wrong container = wrong Why
 - [x] Connected as causal chain: "a single fracture... each break causing the next"
+
+## Phase 21: Manifesto Chapter I — Core Belief Box Rewrite
+- [x] Replace Core Belief box with "redefine leadership as relational infrastructure that forms humans" line

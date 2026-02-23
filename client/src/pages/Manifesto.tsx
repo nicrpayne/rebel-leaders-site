@@ -121,9 +121,8 @@ export default function Manifesto() {
             <FadeIn delay={0.35}>
               <DialogueBox speaker="CORE BELIEF" className="mt-8">
                 <p className="italic text-lg md:text-xl">
-                  Leadership is not a role to perform, but a way of being to cultivate. You cannot change
-                  behavior directly; you must first shape the environment that forms the person. As Rilke
-                  wrote: "Live the questions now."
+                  To redefine leadership as relational infrastructure that forms humans — so that
+                  workplaces, where we spend the majority of our waking lives, stop hollowing us out.
                 </p>
               </DialogueBox>
             </FadeIn>
