@@ -87,3 +87,9 @@
 - [x] Remove Meister Eckhart + Richard Rohr + non-dualism sentences from Chapter II
 - [x] Remove Rumi quote from Chapter II
 - [x] Add "a formation crisis" to the existential line in Chapter II
+
+## Phase 14: Home Page Copy Tweaks (Chapters III, V, Rebel Oath)
+- [x] Chapter III: Change Maté sentence to "organizations keep producing traumatized leaders who reproduce traumatic systems"
+- [x] Chapter V: Remove Stoics/prophets/Rohr opening lines
+- [x] Chapter V: Replace ikigai ending with boss fights (loneliness epidemic, leadership crisis, climate change)
+- [x] Rebel Oath: Remove kenosis reference

@@ -334,7 +334,7 @@ export default function Home() {
                 is our orbital system for transforming organizations from extraction machines into formation
                 communities. It recovers what the ancients already knew — from Aristotle's <em className="text-gold/70">phronesis</em>{" "}
                 (practical wisdom) to the Desert Fathers' <em className="text-gold/70">kenosis</em> (self-emptying) to the Buddhist concept of{" "}
-                <em className="text-gold/70">beginner's mind</em>. Then it confirms those truths through modern science: McGilchrist's hemisphere research shows why our left-brain institutions killed what the right brain always knew. Boyatzis's resonant leadership research proves that renewal, not relentless drive, is what sustains performance. Maté's trauma work reveals why organizations keep reproducing the very wounds they claim to heal. Ancient wisdom and modern evidence, converging on the same answer.
+                <em className="text-gold/70">beginner's mind</em>. Then it confirms those truths through modern science: McGilchrist's hemisphere research shows why our left-brain institutions killed what the right brain always knew. Boyatzis's resonant leadership research proves that renewal, not relentless drive, is what sustains performance. Maté's trauma work reveals why organizations keep producing traumatized leaders who reproduce traumatic systems. Ancient wisdom and modern evidence, converging on the same answer.
               </p>
             </FadeIn>
 
@@ -597,13 +597,12 @@ export default function Home() {
 
             <FadeIn delay={0.35}>
               <p className="text-parchment-dim/90 text-base md:text-lg leading-relaxed font-display max-w-2xl mx-auto mb-10">
-                The Stoics called it <em className="text-gold/70">cosmopolis</em>. The Hebrew prophets called it <em className="text-gold/70">shalom</em>.
-                Rohr calls it <em className="text-gold/70">the second half of life</em> — when you stop building your container and start filling it with meaning.
                 We're building toward it: leaders of character equipped to live with hope
                 and courage in the modern world. Not better managers. Not more efficient systems.{" "}
                 <strong className="text-parchment font-semibold">Whole humans</strong> — formed in
-                community, tested by reality, and sent back into the world as what the Japanese call{" "}
-                <em className="text-gold/70">ikigai</em> in motion: agents of repair.
+                community, tested by reality, and sent back into the world to face the biggest
+                boss fights of our time: the loneliness epidemic, a crisis of leadership at every
+                level of society, and a planet that needs people who can think beyond the next quarter.
               </p>
             </FadeIn>
 
@@ -614,7 +613,7 @@ export default function Home() {
                   <br />
                   but it is to empty mine."
                   <br />
-                  <span className="text-sm text-gold/40 not-italic font-display block mt-3">echoing the kenosis of Philippians 2:7</span>
+
                 </p>
               </DialogueBox>
             </FadeIn>
