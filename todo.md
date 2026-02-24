@@ -354,3 +354,8 @@
 - [x] Added subtle screen-shake (2-4px random offset for 0.15s) triggered on enemy/block death
 - [x] Added "▼ SCROLL TO BEGIN ▼" pulsing arrow on Manifesto page (matches Home page style)
 - [x] All 9 tests passing
+
+## Phase 55: Fix Turtle Glitch and Victory Nic Size
+- [x] Fixed turtle animation: uses static frame 0 only (no more flip/glitch alternation)
+- [x] Fixed victory Nic: uses existing jump sprite frame 1 (sword raised) — same art style and size as running Nic
+- [x] All 9 tests passing

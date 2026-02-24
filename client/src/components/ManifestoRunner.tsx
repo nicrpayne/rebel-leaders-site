@@ -174,9 +174,9 @@ function drawNicSprite(
   let spriteFrame: number;
 
   if (isVictory) {
-    // Victory pose: front-facing with sword raised (dedicated sprite)
-    sheet = sheets.victory;
-    spriteFrame = frame % 2;
+    // Victory pose: use the jump sprite frame 1 (sword raised) — same art style/size as running Nic
+    sheet = sheets.jump;
+    spriteFrame = 1;
   } else if (isJumping) {
     sheet = sheets.jump;
     if (jumpT < 0.35) spriteFrame = 0;
@@ -809,7 +809,7 @@ export default function ManifestoRunner() {
               drawSprite(ctx, sprites.bat, frame % 2, 0, GROUND_Y - 16 - batBob, ENEMY_SIZE, ENEMY_SIZE);
               break;
             case "turtle":
-              drawSprite(ctx, sprites.turtle, frame % 2, 0, GROUND_Y, ENEMY_SIZE, ENEMY_SIZE);
+              drawSprite(ctx, sprites.turtle, 0, 0, GROUND_Y, ENEMY_SIZE, ENEMY_SIZE);
               break;
           }
           ctx.restore();
