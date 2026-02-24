@@ -322,3 +322,10 @@
 - [x] Verified alignment across all 4 zones in browser
 - [x] All 9 tests passing
 - [x] Keep sprite sizes at 64/48/32/64 (the larger sizes user likes)
+
+## Phase 50: Fix Nic's Visual Position Relative to Enemies
+- [x] Added LEAD_PX = 36 constant: Nic peaks 36 world-pixels BEFORE the enemy
+- [x] At peak, Nic's sword tip reaches the enemy's left edge (4px gap, consistent across all zones)
+- [x] Eliminated 32px overlap that caused Nic to phase through enemies
+- [x] Verified alignment in Zone 1 (goombas), Zone 2 (bats/turtles), Zone 3, and end-game flag
+- [x] All 9 tests passing

@@ -499,22 +499,25 @@ function worldXToScrollPct(worldX: number): number {
   return (worldX / LEVEL_LEN) * (1 - WORLD_FADE_END) + WORLD_FADE_END;
 }
 
-// Jump timing: symmetric around the peak so Nic is at EXACT peak height
-// when his worldX matches the enemy's worldX. Math-guaranteed alignment.
+// Jump timing: symmetric around the peak.
+// LEAD_PX shifts the peak so Nic is just IN FRONT of the enemy at peak
+// (sword reaching) rather than overlapping through it.
 const JUMP_HALF = 0.009;   // scroll % from jump start to peak (and peak to land)
+const LEAD_PX = 36;        // Nic peaks this many world-px BEFORE the enemy
 
 function makeEvent(
   worldX: number, type: EventType, label: string,
   opts?: { enemyType?: "goomba" | "bat" | "turtle"; rebelWord?: string; blockY?: number }
 ): TimelineEvent {
-  // The scroll % when Nic's worldX equals this enemy's worldX
-  const atEnemyPct = worldXToScrollPct(worldX);
+  // Peak when Nic is LEAD_PX world-pixels before the enemy,
+  // so his sword reaches the target instead of his body overlapping it.
+  const peakPct = worldXToScrollPct(worldX - LEAD_PX);
   return {
     type,
-    approachAt: atEnemyPct - JUMP_HALF - 0.005,  // visual approach cue
-    jumpStartAt: atEnemyPct - JUMP_HALF,          // jump begins
-    peakAt: atEnemyPct,                           // PEAK = exactly at enemy (0px error)
-    landAt: atEnemyPct + JUMP_HALF,               // symmetric landing
+    approachAt: peakPct - JUMP_HALF - 0.005,  // visual approach cue
+    jumpStartAt: peakPct - JUMP_HALF,          // jump begins
+    peakAt: peakPct,                           // PEAK = sword-reach distance before enemy
+    landAt: peakPct + JUMP_HALF,               // symmetric landing
     label, worldX,
     enemyType: opts?.enemyType,
     rebelWord: opts?.rebelWord,
