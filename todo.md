@@ -264,3 +264,21 @@
 - [x] World (city, ground, enemies, bricks) melts into view only after landing
 - [x] Nic drops through pure darkness (#0a0a0a), no hints of world until touchdown
 - [x] Longer world fade (0.025-0.045) for dramatic reveal
+
+## Phase 40: Gather-Quality Sprite Upgrade
+- [x] Generate Nic sprite sheets (run 4-frame, jump 3-frame, idle 2-frame) with dark hair, green shirt, lightsaber
+- [x] Generate enemy sprite sheets (Quick Meeting goomba 2-frame, Slack Ping bat 2-frame, Policy Turtle 2-frame)
+- [x] Generate brick and flag sprites
+- [x] Process all sprites: extract frames, remove backgrounds, create transparent PNG strips
+- [x] Upload 8 processed sprite strips to CDN
+- [x] Rebuild ManifestoRunner to render sprite sheet images instead of fillRect shapes
+- [x] Increase game strip height to 200px for better visibility
+- [x] Maintain all cinematic features (fade-in, Nic drop, world materialize, zone transitions)
+- [x] Sprite-based drawSprite() system with frame cycling from sprite sheets
+- [x] All enemy types rendered from sprite sheets with animation frames
+
+## Phase 41: CORS Fix & Full-Stack Upgrade
+- [x] Fix sprite CORS issue: remove crossOrigin="anonymous" that caused 0x0 image loading
+- [x] Complete web-db-user upgrade (db, server, user features)
+- [x] Run pnpm db:push to sync database schema
+- [x] Verify all 9 existing tests pass after upgrade
