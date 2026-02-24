@@ -303,3 +303,7 @@
 ## Phase 46: Offset Bump + Flag Celebration
 - [x] Bumped event worldX offset from +70 to +85
 - [x] Enhanced flag celebration: "REBELLION COMPLETE" banner with golden glow, bigger sparkles (50 particles), Nic stops and goes idle at flag
+
+## Phase 47: Offset +95 & Taller Strip
+- [x] Bumped event worldX offset from +85 to +95
+- [x] Increased game strip height from 200px to 240px (GROUND_Y adjusted to 212)

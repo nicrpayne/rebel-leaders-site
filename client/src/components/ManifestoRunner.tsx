@@ -45,8 +45,8 @@ const SPRITES = {
    CONSTANTS
    ═══════════════════════════════════════════════════════════════ */
 
-const CANVAS_H = 200;
-const GROUND_Y = CANVAS_H - 24;
+const CANVAS_H = 240;
+const GROUND_Y = CANVAS_H - 28;
 const LEVEL_LEN = 4000;
 
 // Sprite render sizes (CSS pixels on canvas)
@@ -503,7 +503,7 @@ function makeEvent(
   approachPct: number, type: EventType, label: string,
   opts?: { enemyType?: "goomba" | "bat" | "turtle"; rebelWord?: string; blockY?: number }
 ): TimelineEvent {
-  const worldX = pctToWorldX(approachPct) + 85; // enemy ahead of Nic — offset accounts for Nic's forward movement during jump
+  const worldX = pctToWorldX(approachPct) + 95; // enemy ahead of Nic — offset accounts for Nic's forward movement during jump
   return {
     type, approachAt: approachPct,
     jumpStartAt: approachPct + 0.005,
@@ -547,7 +547,7 @@ const TIMELINE: TimelineEvent[] = [
   makeEvent(0.88, "enemy", "Policy", { enemyType: "turtle" }),
 ];
 
-const FLAG_X = pctToWorldX(0.95) + 85;
+const FLAG_X = pctToWorldX(0.95) + 95;
 const ZONE_TRANSITIONS = [0.25, 0.50, 0.75];
 
 /* ═══════════════════════════════════════════════════════════════
