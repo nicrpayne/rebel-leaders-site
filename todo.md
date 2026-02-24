@@ -296,3 +296,6 @@
 - [x] Fix Nic not moving forward: auto-calculate worldX from approachPct via makeEvent helper
 - [x] Ensure camera follows Nic and events trigger relative to his actual position
 - [x] Ensure box hit (+1) only shows when Nic is actually near the box
+
+## Phase 45: Nudge Nic Position Back
+- [x] Increased event worldX offset from +30 to +55 to account for Nic's forward movement during jump arc
