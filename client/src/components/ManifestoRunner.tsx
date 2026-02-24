@@ -199,9 +199,8 @@ function drawNicSprite(
   ctx.fill();
   ctx.restore();
 
-  // Draw sprite — victory sprite is front-facing so needs to be drawn larger to match side-view visual weight
-  const renderSize = isVictory ? NIC_SIZE * 1.5 : NIC_SIZE;
-  drawSprite(ctx, sheet, spriteFrame, cx, bottomY, renderSize, renderSize, alpha);
+  // Draw sprite — all states render at NIC_SIZE for consistent proportions
+  drawSprite(ctx, sheet, spriteFrame, cx, bottomY, NIC_SIZE, NIC_SIZE, alpha);
 
   // Lightsaber glow aura
   if (alpha > 0.3) {

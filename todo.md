@@ -364,3 +364,9 @@
 - [x] Flip turtles to face LEFT toward Nic (removed special case that skipped flip; turtles now use same ctx.scale(-1,1) as goombas/bats)
 - [x] Increased victory Nic sprite from 1.25x (80px) to 1.5x (96px) for better visual weight matching with running Nic
 - [x] All 9 tests passing
+
+## Phase 57: Fix Victory Nic Proportions (Stretched/Too Big)
+- [x] Analyzed sprite dimensions: both victory and running sprites are 64x64 frames, but victory character is 38px wide vs running's 42-54px
+- [x] Removed the 1.5x scale multiplier that was causing horizontal stretching/bloating
+- [x] Victory Nic now renders at exactly NIC_SIZE (64x64) — same as running Nic, no distortion
+- [x] All 9 tests passing
