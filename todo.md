@@ -329,3 +329,7 @@
 - [x] Eliminated 32px overlap that caused Nic to phase through enemies
 - [x] Verified alignment in Zone 1 (goombas), Zone 2 (bats/turtles), Zone 3, and end-game flag
 - [x] All 9 tests passing
+
+## Phase 51: Fix End-Game Flag Behavior
+- [x] Nic keeps running animation all the way to the flag (reachedFlag now based on worldX >= FLAG_STOP_X)
+- [x] Nic stops IN FRONT of the flag (FLAG_STOP_X = FLAG_X - 48px, clamped draw position)

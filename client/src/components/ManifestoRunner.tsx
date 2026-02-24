@@ -557,6 +557,7 @@ const TIMELINE: TimelineEvent[] = [
 ];
 
 const FLAG_X = 3850;  // near end of LEVEL_LEN (4000)
+const FLAG_STOP_X = FLAG_X - NIC_SIZE * 0.75;  // Nic stops 48px before flag (in front of it)
 const ZONE_TRANSITIONS = [0.25, 0.50, 0.75];
 
 /* ═══════════════════════════════════════════════════════════════
@@ -655,9 +656,14 @@ export default function ManifestoRunner() {
       // ── GAME PROGRESS ──
       const gameProgress = Math.max(0, progress - WORLD_FADE_END) / (1 - WORLD_FADE_END);
       const nicWorldX = gameProgress * LEVEL_LEN;
+      const reachedFlag = nicWorldX >= FLAG_STOP_X;
+      // Clamp Nic's world position so he stops in front of the flag
+      const nicDrawWorldX = reachedFlag ? FLAG_STOP_X : nicWorldX;
       const nicScreenFraction = lerp(0.20, 0.75, gameProgress);
       const nicScreenCX = w * nicScreenFraction;
       const camX = nicWorldX - nicScreenCX;
+      // Nic's actual screen X: if clamped, he drifts left relative to camera (natural stop)
+      const nicDrawScreenCX = nicDrawWorldX - camX;
 
       // ── JUMP ──
       let nicJumpY = 0;
@@ -792,8 +798,7 @@ export default function ManifestoRunner() {
       }
       ctx.restore();
 
-      // Victory celebration — Nic stops at flag, sparkles + banner
-      const reachedFlag = gameProgress > 0.93;
+      // Victory celebration — sparkles + banner
       if (gameProgress > 0.88) {
         const sparkleT = (gameProgress - 0.88) / 0.12;
         drawVictorySparkles(ctx, w, h, sparkleT);
@@ -803,7 +808,7 @@ export default function ManifestoRunner() {
         drawVictoryBanner(ctx, w, h, bannerT);
       }
 
-      // ── NIC (drawn independently of world) ──
+      // ── NIC (drawn at clamped position, stops in front of flag) ──
       const nicFeetY = GROUND_Y - nicJumpY + nicDropOffset;
       // Nic is idle during intro (before world scrolls) and at the flag
       const introComplete = progress > WORLD_FADE_END && gameProgress > 0.005;
@@ -812,7 +817,7 @@ export default function ManifestoRunner() {
       drawNicSprite(
         ctx,
         { run: sprites.nicRun, jump: sprites.nicJump, idle: sprites.nicIdle },
-        nicScreenCX,
+        nicDrawScreenCX,
         nicFeetY,
         frame,
         nicIsMoving,
@@ -823,7 +828,7 @@ export default function ManifestoRunner() {
 
       // Landing dust puff
       if (dustT >= 0 && dustT < 1) {
-        drawDustPuff(ctx, nicScreenCX, GROUND_Y, dustT);
+        drawDustPuff(ctx, nicDrawScreenCX, GROUND_Y, dustT);
       }
 
       // (Top fade handled by CSS mask-image on the container div)
