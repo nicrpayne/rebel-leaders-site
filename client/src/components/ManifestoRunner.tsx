@@ -39,6 +39,7 @@ const SPRITES = {
   turtle:   "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/slKsYBACRStroewa.png",
   brick:    "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/CZIKNFXWjzlvpjEI.png",
   flag:     "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/XErroFrcgEbnlBdi.png",
+  nicVictory: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/xyvhYLveOGauWSxQ.png",
 };
 
 /* ═══════════════════════════════════════════════════════════════
@@ -157,7 +158,7 @@ function drawSprite(
 
 function drawNicSprite(
   ctx: CanvasRenderingContext2D,
-  sheets: { run: SpriteSheet; jump: SpriteSheet; idle: SpriteSheet },
+  sheets: { run: SpriteSheet; jump: SpriteSheet; idle: SpriteSheet; victory: SpriteSheet },
   cx: number,
   bottomY: number,
   frame: number,
@@ -173,9 +174,9 @@ function drawNicSprite(
   let spriteFrame: number;
 
   if (isVictory) {
-    // Victory pose: use jump sprite frame 1 (sword raised high)
-    sheet = sheets.jump;
-    spriteFrame = 1;
+    // Victory pose: front-facing with sword raised (dedicated sprite)
+    sheet = sheets.victory;
+    spriteFrame = frame % 2;
   } else if (isJumping) {
     sheet = sheets.jump;
     if (jumpT < 0.35) spriteFrame = 0;
@@ -302,25 +303,29 @@ function drawSmash(ctx: CanvasRenderingContext2D, cx: number, cy: number, t: num
 
 function drawVictoryConfetti(ctx: CanvasRenderingContext2D, w: number, h: number, t: number) {
   if (t <= 0) return;
-  const alpha = Math.min(1, t * 2);
+  // All confetti releases at once from the top and falls together
+  const alpha = Math.min(1, t * 5); // quick fade-in
   ctx.save();
-  // Confetti pieces falling from the top
   const confettiColors = [C.gold, "#ff4444", "#44ff44", C.saber, "#ff88ff", "#ffdd44", "#ffffff", "#ff8844"];
-  for (let i = 0; i < 60; i++) {
-    // Each piece has a fixed x position and falls at different speeds
+  for (let i = 0; i < 80; i++) {
+    // Fixed x position spread across the canvas
     const cx = ((i * 137 + 42) % Math.floor(w));
-    const fallSpeed = 0.3 + (i % 7) * 0.15;
-    // Start above the canvas and fall down
-    const cy = -20 + t * fallSpeed * h * 2.5 + ((i * 73) % 60);
-    if (cy < -10 || cy > h + 10) continue;
+    // All pieces start at the top and fall at slightly different speeds
+    // but they ALL start at t=0 (burst effect)
+    const fallSpeed = 0.5 + (i % 5) * 0.12;
+    const startY = -10 - (i % 8) * 3; // slight stagger at top
+    const cy = startY + t * fallSpeed * h * 3;
+    if (cy > h + 10) continue; // off-screen
+    // Fade out as they reach the bottom
+    const fadeOut = cy > h * 0.7 ? Math.max(0, 1 - (cy - h * 0.7) / (h * 0.3)) : 1;
     // Gentle sway side to side
-    const sway = Math.sin(t * 4 + i * 0.7) * 8;
+    const sway = Math.sin(t * 5 + i * 0.7) * 10;
     // Rotation effect via width/height variation
-    const rotation = Math.sin(t * 6 + i * 1.3);
-    const pw = 3 + Math.abs(rotation) * 3;
-    const ph = 2 + (1 - Math.abs(rotation)) * 4;
+    const rotation = Math.sin(t * 8 + i * 1.3);
+    const pw = 3 + Math.abs(rotation) * 4;
+    const ph = 2 + (1 - Math.abs(rotation)) * 5;
     ctx.fillStyle = confettiColors[i % confettiColors.length];
-    ctx.globalAlpha = alpha * 0.85;
+    ctx.globalAlpha = alpha * fadeOut * 0.9;
     ctx.fillRect(cx + sway - pw / 2, cy - ph / 2, pw, ph);
   }
   ctx.restore();
@@ -591,6 +596,7 @@ export default function ManifestoRunner() {
     nicRun: SpriteSheet;
     nicJump: SpriteSheet;
     nicIdle: SpriteSheet;
+    nicVictory: SpriteSheet;
     goomba: SpriteSheet;
     bat: SpriteSheet;
     turtle: SpriteSheet;
@@ -603,6 +609,7 @@ export default function ManifestoRunner() {
       nicRun:  loadSpriteSheet(SPRITES.nicRun, 4),
       nicJump: loadSpriteSheet(SPRITES.nicJump, 3),
       nicIdle: loadSpriteSheet(SPRITES.nicIdle, 2),
+      nicVictory: loadSpriteSheet(SPRITES.nicVictory, 2),
       goomba:  loadSpriteSheet(SPRITES.goomba, 2),
       bat:     loadSpriteSheet(SPRITES.bat, 2),
       turtle:  loadSpriteSheet(SPRITES.turtle, 2),
@@ -774,17 +781,22 @@ export default function ManifestoRunner() {
           drawEnemyDeath(ctx, screenCX, deathY, deathT, deathColor);
         } else {
           const batBob = Math.sin(realTimeRef.current * 3 + evt.worldX * 0.1) * 4;
+          // Flip enemies horizontally so they face LEFT (toward Nic)
+          ctx.save();
+          ctx.translate(screenCX, 0);
+          ctx.scale(-1, 1);
           switch (evt.enemyType) {
             case "goomba":
-              drawSprite(ctx, sprites.goomba, frame % 2, screenCX, GROUND_Y, ENEMY_SIZE, ENEMY_SIZE);
+              drawSprite(ctx, sprites.goomba, frame % 2, 0, GROUND_Y, ENEMY_SIZE, ENEMY_SIZE);
               break;
             case "bat":
-              drawSprite(ctx, sprites.bat, frame % 2, screenCX, GROUND_Y - 16 - batBob, ENEMY_SIZE, ENEMY_SIZE);
+              drawSprite(ctx, sprites.bat, frame % 2, 0, GROUND_Y - 16 - batBob, ENEMY_SIZE, ENEMY_SIZE);
               break;
             case "turtle":
-              drawSprite(ctx, sprites.turtle, frame % 2, screenCX, GROUND_Y, ENEMY_SIZE, ENEMY_SIZE);
+              drawSprite(ctx, sprites.turtle, frame % 2, 0, GROUND_Y, ENEMY_SIZE, ENEMY_SIZE);
               break;
           }
+          ctx.restore();
           // Enemy label
           ctx.save();
           ctx.fillStyle = evt.enemyType === "goomba" ? C.meetingLabel :
@@ -831,7 +843,7 @@ export default function ManifestoRunner() {
       const nicIsJumping = reachedFlag ? false : isJumping;
       drawNicSprite(
         ctx,
-        { run: sprites.nicRun, jump: sprites.nicJump, idle: sprites.nicIdle },
+        { run: sprites.nicRun, jump: sprites.nicJump, idle: sprites.nicIdle, victory: sprites.nicVictory },
         nicDrawScreenCX,
         nicFeetY,
         frame,
