@@ -258,3 +258,9 @@
 - [x] CSS opacity + translateY on container div driven by scroll-state React state
 - [x] Nothing visible until user starts scrolling — verified at scroll 0
 - [x] Toggle button (HIDE/SHOW GAME) separated from container, always accessible
+
+## Phase 39: World Materializes Only After Nic Lands
+- [x] Everything invisible until Nic's first bounce lands (WORLD_FADE_START = 0.025 = NIC_DROP_END)
+- [x] World (city, ground, enemies, bricks) melts into view only after landing
+- [x] Nic drops through pure darkness (#0a0a0a), no hints of world until touchdown
+- [x] Longer world fade (0.025-0.045) for dramatic reveal

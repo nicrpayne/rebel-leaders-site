@@ -30,15 +30,15 @@ const GROUND_Y = CANVAS_H - 18;
 const LEVEL_LEN = 4000;
 
 // Intro timing (scroll percentages)
-// Phase 1: Canvas appears (dark void)
-const STRIP_FADE_START = 0.005;  // canvas starts to appear (just darkness)
-const STRIP_FADE_END = 0.012;    // canvas fully visible (still dark void)
-// Phase 2: Nic drops through the void
+// Phase 1: Canvas appears (pure darkness — just enough to see Nic drop)
+const STRIP_FADE_START = 0.005;  // canvas starts to appear (pure black)
+const STRIP_FADE_END = 0.012;    // canvas fully visible (still pure black)
+// Phase 2: Nic drops through the darkness
 const NIC_DROP_START = 0.012;
-const NIC_DROP_END = 0.025;       // Nic lands
-// Phase 3: World materializes on landing
-const WORLD_FADE_START = 0.023;  // world starts appearing (just before landing)
-const WORLD_FADE_END = 0.04;     // world fully materialized
+const NIC_DROP_END = 0.025;       // Nic lands (first bounce)
+// Phase 3: World materializes AFTER Nic lands
+const WORLD_FADE_START = 0.025;  // world starts appearing exactly when Nic touches down
+const WORLD_FADE_END = 0.045;    // world fully materialized (slightly longer fade for drama)
 
 /* ═══════════════════════════════════════════════════════════════
    COLORS
@@ -631,14 +631,9 @@ export default function ManifestoRunner() {
       // Apply strip opacity for intro fade-in
       ctx.globalAlpha = stripOpacity;
 
-      // Draw dark void first (always visible once strip appears)
-      ctx.fillStyle = C.z1Sky;
+      // Draw pure darkness first (nothing visible until Nic lands)
+      ctx.fillStyle = "#0a0a0a";
       ctx.fillRect(0, 0, w, h);
-      // Faint ground line in the void (subtle hint of where the world will be)
-      if (worldT < 1) {
-        ctx.fillStyle = `rgba(100, 100, 120, ${stripOpacity * 0.15})`;
-        ctx.fillRect(0, GROUND_Y, w, h - GROUND_Y);
-      }
 
       // World draws on top with worldT opacity (materializes when Nic lands)
       ctx.globalAlpha = stripOpacity * worldT;
