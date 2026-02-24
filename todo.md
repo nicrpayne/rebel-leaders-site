@@ -216,3 +216,9 @@
 - [x] Show locked (grayed out) vs unlocked (gold) states
 - [x] Add descriptions for each achievement
 - [x] Accessible from HUD via click on achievements count (→ arrow)
+
+## Phase 34: Fix Side-Scroller Jump/Entity Alignment
+- [x] Fix Nic's jumps to properly correspond to enemy and brick positions (scroll-driven arc)
+- [x] Ensure Nic jumps OVER enemies and hits bricks from below at the right time
+- [x] Verify visual alignment across all 4 zones (all entities trigger jumps correctly)
+- [x] Fix entity spacing to minimum 80+ art-px gaps between all entities

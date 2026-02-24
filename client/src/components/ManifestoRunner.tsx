@@ -11,15 +11,23 @@
  *   4 (75-100%) Golden summit — victory run, flag
  *
  * COORDINATE SYSTEM:
- *   All drawing is in CSS pixel space. DPR is handled by canvas transform.
- *   PX = pixel size for 8-bit look (2px squares = one "pixel art pixel").
+ *   All entity positions and sprite drawing use "art-pixel" coordinates.
+ *   1 art-pixel = PX CSS pixels on screen.
+ *   The canvas is CANVAS_H CSS pixels tall.
+ *   DPR is handled by canvas buffer scaling + ctx.setTransform.
+ *
+ * JUMP SYSTEM:
+ *   Nic's world position = progress * LEVEL_LEN (in art-pixels).
+ *   Camera follows Nic so he's always at screen center.
+ *   Jump triggers use LOOK-AHEAD: Nic starts jumping ~30 art-px before an entity
+ *   so the arc peaks right when he's over the enemy.
  */
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import { useGame } from "@/contexts/GameContext";
 
 /* ═══════════════════════════════════════════════════════════════
-   CONSTANTS — all in CSS pixels
+   CONSTANTS — all in CSS pixels unless noted
    ═══════════════════════════════════════════════════════════════ */
 
 const CANVAS_H = 140;          // CSS height of the runner strip
@@ -28,6 +36,14 @@ const GROUND_Y = CANVAS_H - 16; // ground line (CSS px from top)
 const NIC_W = 10;              // Nic width in art-pixels
 const NIC_H = 16;              // Nic height in art-pixels
 const LEVEL_LEN = 4000;        // virtual level length in art-pixels
+
+// Jump tuning
+const JUMP_LOOKAHEAD = 35;     // art-px ahead to start jump
+const JUMP_PEAK_HEIGHT = 16;   // art-px max jump height
+const ENEMY_KILL_DIST = 12;    // art-px horizontal proximity to kill enemy
+const ENEMY_KILL_MIN_H = 4;    // minimum jump height to kill
+const BLOCK_HIT_DIST = 10;     // art-px horizontal proximity to smash block
+const BLOCK_HIT_MIN_H = 8;     // minimum jump height to smash
 
 /* ═══════════════════════════════════════════════════════════════
    COLOR PALETTES (elegant 8-bit)
@@ -94,7 +110,7 @@ function pxRect(ctx: CanvasRenderingContext2D, ax: number, ay: number, aw: numbe
 function drawNic(ctx: CanvasRenderingContext2D, ax: number, ay: number, frame: number) {
   const f = frame % 4;
 
-  // Shadow
+  // Shadow on ground (always at ground level, not at feet)
   ctx.fillStyle = "rgba(0,0,0,0.3)";
   ctx.fillRect((ax - 1) * PX, (ay) * PX, 8 * PX, PX);
 
@@ -411,21 +427,21 @@ function drawBackground(ctx: CanvasRenderingContext2D, camX: number, w: number, 
 
 interface Enemy {
   type: "goomba" | "bat" | "turtle";
-  x: number; // art-pixel x in level
+  x: number; // art-pixel x in level (center of enemy)
   label: string;
   alive: boolean;
 }
 
 interface Block {
-  x: number;
-  y: number; // art-pixels above ground
+  x: number; // art-pixel x in level (center of block)
+  y: number; // art-pixels above ground for the BOTTOM of the block
   label: string;
   rebelWord: string;
   smashed: boolean;
   smashProgress: number;
 }
 
-const GOOMBA_LABELS = ["Quick Mtg", "Standup", "Quick Sync", "Grab You?", "Quick Call", "Hop On?"];
+const GOOMBA_LABELS = ["Quick Mtg", "Standup", "Quick Sync", "Hop On?", "Quick Call", "Grab You?"];
 const BAT_LABELS = ["@here", "Reply All", "Following Up", "Urgent!", "Per My Email"];
 const TURTLE_LABELS = ["Compliance", "Process", "Precedent", "Policy"];
 const BRICK_LABELS = ["SYNERGY", "ALIGN", "BUY-IN", "LEVERAGE", "OPTIMIZE", "BANDWIDTH", "BEST PRACTICE", "RESOURCES", "INFLUENCE"];
@@ -434,37 +450,76 @@ const REBEL_WORDS = ["PRESENCE", "TRUTH", "REPAIR", "BELONGING", "AGENCY", "MEAN
 function generateLevel(): { enemies: Enemy[]; blocks: Block[] } {
   const enemies: Enemy[] = [];
   const blocks: Block[] = [];
-  const rng = (s: number) => ((s * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff;
 
-  // Zone 1 (0-1000): Corporate
-  for (let i = 0; i < 6; i++) {
-    enemies.push({ type: "goomba", x: 100 + i * 140 + Math.floor(rng(i * 7) * 40), label: GOOMBA_LABELS[i % GOOMBA_LABELS.length], alive: true });
-  }
-  for (let i = 0; i < 4; i++) {
-    blocks.push({ x: 150 + i * 200, y: 18, label: BRICK_LABELS[i], rebelWord: REBEL_WORDS[i % REBEL_WORDS.length], smashed: false, smashProgress: 0 });
+  // SPACING STRATEGY:
+  // Entities are spaced far enough apart that each jump arc completes
+  // before the next one needs to start. A jump arc covers ~70 art-px
+  // of forward travel (JUMP_LOOKAHEAD + arc duration).
+  // Minimum spacing between entities = 80 art-px.
+
+  // ENTITY PLACEMENT RULES:
+  // - Minimum 80 art-px between ANY two entities (enemy or block)
+  // - This ensures each jump arc (70 art-px total) completes before the next starts
+  // - Entities are placed in a single sorted sequence per zone
+
+  // Zone 1 (0-1000): Corporate — goombas + bricks interleaved
+  // Sequence: enemy, block, enemy, block, enemy, enemy, block, enemy, block, enemy
+  const z1 = [
+    { type: "enemy" as const, x: 100, eType: "goomba" as const, label: GOOMBA_LABELS[0] },
+    { type: "block" as const, x: 200, label: BRICK_LABELS[0], word: REBEL_WORDS[0] },
+    { type: "enemy" as const, x: 300, eType: "goomba" as const, label: GOOMBA_LABELS[1] },
+    { type: "enemy" as const, x: 420, eType: "goomba" as const, label: GOOMBA_LABELS[2] },
+    { type: "block" as const, x: 530, label: BRICK_LABELS[1], word: REBEL_WORDS[1] },
+    { type: "enemy" as const, x: 640, eType: "goomba" as const, label: GOOMBA_LABELS[3] },
+    { type: "block" as const, x: 750, label: BRICK_LABELS[2], word: REBEL_WORDS[2] },
+    { type: "enemy" as const, x: 860, eType: "goomba" as const, label: GOOMBA_LABELS[4] },
+    { type: "block" as const, x: 960, label: BRICK_LABELS[3], word: REBEL_WORDS[3] },
+  ];
+  for (const e of z1) {
+    if (e.type === "enemy") {
+      enemies.push({ type: e.eType!, x: e.x, label: e.label, alive: true });
+    } else {
+      blocks.push({ x: e.x, y: 18, label: e.label, rebelWord: e.word!, smashed: false, smashProgress: 0 });
+    }
   }
 
-  // Zone 2 (1000-2000): Crumbling
-  for (let i = 0; i < 5; i++) {
-    enemies.push({ type: "bat", x: 1100 + i * 160 + Math.floor(rng(i * 13) * 60), label: BAT_LABELS[i % BAT_LABELS.length], alive: true });
-  }
-  for (let i = 0; i < 3; i++) {
-    enemies.push({ type: "turtle", x: 1200 + i * 240, label: TURTLE_LABELS[i % TURTLE_LABELS.length], alive: true });
-  }
-  for (let i = 0; i < 3; i++) {
-    blocks.push({ x: 1150 + i * 280, y: 20, label: BRICK_LABELS[(i + 4) % BRICK_LABELS.length], rebelWord: REBEL_WORDS[(i + 3) % REBEL_WORDS.length], smashed: false, smashProgress: 0 });
+  // Zone 2 (1000-2000): Crumbling — bats + turtles + bricks
+  const z2 = [
+    { type: "enemy" as const, x: 1080, eType: "bat" as const, label: BAT_LABELS[0] },
+    { type: "enemy" as const, x: 1200, eType: "turtle" as const, label: TURTLE_LABELS[0] },
+    { type: "block" as const, x: 1320, label: BRICK_LABELS[4], word: REBEL_WORDS[4] },
+    { type: "enemy" as const, x: 1440, eType: "bat" as const, label: BAT_LABELS[1] },
+    { type: "enemy" as const, x: 1560, eType: "turtle" as const, label: TURTLE_LABELS[1] },
+    { type: "block" as const, x: 1680, label: BRICK_LABELS[5], word: REBEL_WORDS[5] },
+    { type: "enemy" as const, x: 1800, eType: "bat" as const, label: BAT_LABELS[2] },
+    { type: "enemy" as const, x: 1920, eType: "bat" as const, label: BAT_LABELS[3] },
+  ];
+  for (const e of z2) {
+    if (e.type === "enemy") {
+      enemies.push({ type: e.eType!, x: e.x, label: e.label, alive: true });
+    } else {
+      blocks.push({ x: e.x, y: 20, label: e.label, rebelWord: e.word!, smashed: false, smashProgress: 0 });
+    }
   }
 
-  // Zone 3 (2000-3000): Growth
-  for (let i = 0; i < 3; i++) {
-    enemies.push({ type: "goomba", x: 2200 + i * 300, label: GOOMBA_LABELS[(i + 3) % GOOMBA_LABELS.length], alive: true });
-  }
-  for (let i = 0; i < 2; i++) {
-    blocks.push({ x: 2400 + i * 400, y: 16, label: BRICK_LABELS[(i + 7) % BRICK_LABELS.length], rebelWord: REBEL_WORDS[(i + 4) % REBEL_WORDS.length], smashed: false, smashProgress: 0 });
+  // Zone 3 (2000-3000): Growth — fewer enemies, more breathing room
+  const z3 = [
+    { type: "enemy" as const, x: 2150, eType: "goomba" as const, label: GOOMBA_LABELS[5] },
+    { type: "block" as const, x: 2350, label: BRICK_LABELS[6], word: REBEL_WORDS[0] },
+    { type: "enemy" as const, x: 2550, eType: "goomba" as const, label: GOOMBA_LABELS[0] },
+    { type: "block" as const, x: 2750, label: BRICK_LABELS[7], word: REBEL_WORDS[1] },
+    { type: "enemy" as const, x: 2950, eType: "goomba" as const, label: GOOMBA_LABELS[1] },
+  ];
+  for (const e of z3) {
+    if (e.type === "enemy") {
+      enemies.push({ type: e.eType!, x: e.x, label: e.label, alive: true });
+    } else {
+      blocks.push({ x: e.x, y: 16, label: e.label, rebelWord: e.word!, smashed: false, smashProgress: 0 });
+    }
   }
 
-  // Zone 4 (3000-4000): Summit — minimal
-  enemies.push({ type: "turtle", x: 3400, label: "Final Boss", alive: true });
+  // Zone 4 (3000-4000): Summit — one final boss
+  enemies.push({ type: "turtle", x: 3500, label: "Final Boss", alive: true });
 
   return { enemies, blocks };
 }
@@ -479,8 +534,12 @@ export default function ManifestoRunner() {
   const levelRef = useRef(generateLevel());
   const animFrameRef = useRef(0);
   const lastCamRef = useRef(0);
-  const nicJumpY = useRef(0);
-  const nicJumpPhase = useRef(0);
+  const nicJumpY = useRef(0);       // current jump height in art-pixels
+  // Scroll-driven jump: track where the jump started and what it targets
+  const jumpStartX = useRef(0);     // Nic's world X when jump began
+  const jumpTargetX = useRef(0);    // the entity's world X (jump peaks here)
+  const jumpLandX = useRef(0);      // where Nic lands (past the entity)
+  const isJumping = useRef(false);
   const [visible, setVisible] = useState(true);
   const [completed, setCompleted] = useState(false);
   const { awardAchievement } = useGame();
@@ -512,8 +571,8 @@ export default function ManifestoRunner() {
     let running = true;
     const level = levelRef.current;
 
-    // Convert art-pixel ground Y
-    const groundAY = Math.floor(GROUND_Y / PX); // art-pixel Y of ground
+    // Ground Y in art-pixels
+    const groundAY = Math.floor(GROUND_Y / PX);
 
     const render = () => {
       if (!running) return;
@@ -522,52 +581,110 @@ export default function ManifestoRunner() {
       const w = canvas.width / (window.devicePixelRatio || 1);
       const h = CANVAS_H;
 
-      // Camera in CSS pixels
-      const totalLevelCSS = LEVEL_LEN * PX;
-      const camX = progress * Math.max(0, totalLevelCSS - w);
-      const nicWorldAX = progress * LEVEL_LEN; // Nic's art-pixel x in level
+      // ── Nic's world position (art-pixels) ──
+      const nicWorldAX = progress * LEVEL_LEN;
 
-      // Animation
-      const scrollDelta = Math.abs(camX - lastCamRef.current);
-      lastCamRef.current = camX;
+      // ── Camera: Nic is always at screen center ──
+      // Camera offset in art-pixels, then convert to CSS pixels
+      const halfScreenAX = w / (2 * PX);
+      const camAX = nicWorldAX - halfScreenAX; // camera left edge in art-pixels
+      const camCSS = camAX * PX; // camera left edge in CSS pixels
+
+      // Animation frame counter
+      const scrollDelta = Math.abs(camCSS - lastCamRef.current);
+      lastCamRef.current = camCSS;
       const isMoving = scrollDelta > 0.5;
       if (isMoving) animFrameRef.current += 0.15;
       const frame = Math.floor(animFrameRef.current);
 
-      // Auto-jump near enemies
-      let shouldJump = false;
+      // ── SCROLL-DRIVEN JUMP LOGIC ──
+      // The jump arc is tied to Nic's forward movement, not real time.
+      // Jump starts JUMP_LOOKAHEAD art-px before the entity,
+      // peaks exactly AT the entity, and lands JUMP_LOOKAHEAD art-px after.
+      // Total jump travel = JUMP_LOOKAHEAD * 2 art-px.
+
+      const JUMP_TRAVEL = JUMP_LOOKAHEAD * 2; // total art-px of forward travel during a jump
+
+      if (!isJumping.current) {
+        // Look for nearest obstacle ahead
+        let nearestX = Infinity;
+        for (const e of level.enemies) {
+          if (!e.alive) continue;
+          const ahead = e.x - nicWorldAX;
+          if (ahead > 0 && ahead <= JUMP_LOOKAHEAD && e.x < nearestX) {
+            nearestX = e.x;
+          }
+        }
+        for (const b of level.blocks) {
+          if (b.smashed) continue;
+          const ahead = b.x - nicWorldAX;
+          if (ahead > 0 && ahead <= JUMP_LOOKAHEAD && b.x < nearestX) {
+            nearestX = b.x;
+          }
+        }
+
+        if (nearestX < Infinity && isMoving) {
+          // Start jump
+          isJumping.current = true;
+          jumpStartX.current = nicWorldAX;
+          jumpTargetX.current = nearestX;
+          jumpLandX.current = nearestX + JUMP_LOOKAHEAD;
+        }
+      }
+
+      if (isJumping.current) {
+        // Calculate jump progress based on how far Nic has traveled
+        const totalDist = jumpLandX.current - jumpStartX.current;
+        const traveled = nicWorldAX - jumpStartX.current;
+        const t = Math.max(0, Math.min(1, traveled / totalDist)); // 0 to 1
+
+        // Sin arc: peaks at t=0.5 (which is when Nic is at the target entity)
+        nicJumpY.current = Math.sin(t * Math.PI) * JUMP_PEAK_HEIGHT;
+
+        // Land when we've passed the full travel distance
+        if (t >= 1) {
+          isJumping.current = false;
+          nicJumpY.current = 0;
+        }
+      }
+
+      // ── COLLISION: Kill enemies / smash blocks ──
+      // Enemies die when Nic is close AND jumping high enough
       for (const e of level.enemies) {
         if (!e.alive) continue;
         const dist = Math.abs(nicWorldAX - e.x);
-        if (dist < 20) {
-          shouldJump = true;
-          if (dist < 10 && nicJumpY.current > 3) e.alive = false;
+        if (dist < ENEMY_KILL_DIST && nicJumpY.current > ENEMY_KILL_MIN_H) {
+          e.alive = false;
         }
       }
-      // Auto-smash blocks
+      // Blocks smash when Nic is close AND jumping high enough
       for (const b of level.blocks) {
-        if (b.smashed) { b.smashProgress = Math.min(1, b.smashProgress + 0.02); continue; }
+        if (b.smashed) continue;
         const dist = Math.abs(nicWorldAX - b.x);
-        if (dist < 8 && nicJumpY.current > 6) { b.smashed = true; b.smashProgress = 0; }
+        if (dist < BLOCK_HIT_DIST && nicJumpY.current > BLOCK_HIT_MIN_H) {
+          b.smashed = true;
+          b.smashProgress = 0;
+        }
+      }
+      // Advance smash animations
+      for (const b of level.blocks) {
+        if (b.smashed && b.smashProgress < 1) {
+          b.smashProgress = Math.min(1, b.smashProgress + 0.02);
+        }
       }
 
-      // Jump physics
-      if (shouldJump && nicJumpPhase.current === 0) nicJumpPhase.current = 1;
-      if (nicJumpPhase.current > 0) {
-        nicJumpPhase.current += 0.06;
-        if (nicJumpPhase.current >= Math.PI) { nicJumpPhase.current = 0; nicJumpY.current = 0; }
-        else nicJumpY.current = Math.sin(nicJumpPhase.current) * 14;
-      }
-
-      // Clear
+      // ── RENDER ──
       ctx.clearRect(0, 0, w, h);
 
-      // Background
-      drawBackground(ctx, camX, w, h, progress);
+      // Background (uses CSS pixel camera)
+      drawBackground(ctx, camCSS, w, h, progress);
+
+      // Helper: convert world art-pixel X to screen art-pixel X
+      const toScreen = (worldAX: number) => worldAX - camAX;
 
       // Blocks
       for (const b of level.blocks) {
-        const screenAX = b.x - camX / PX;
+        const screenAX = toScreen(b.x);
         if (screenAX < -12 || screenAX > w / PX + 12) continue;
         const blockAY = groundAY - b.y;
         if (b.smashed) drawSmash(ctx, screenAX, blockAY, b.smashProgress, b.rebelWord);
@@ -577,29 +694,36 @@ export default function ManifestoRunner() {
       // Enemies
       for (const e of level.enemies) {
         if (!e.alive) continue;
-        const screenAX = e.x - camX / PX;
+        const screenAX = toScreen(e.x);
         if (screenAX < -12 || screenAX > w / PX + 12) continue;
         switch (e.type) {
-          case "goomba": drawGoomba(ctx, screenAX, groundAY, frame, e.label); break;
-          case "bat": drawBat(ctx, screenAX, groundAY - 12 - Math.sin(animFrameRef.current * 0.5 + e.x * 0.1) * 3, frame, e.label); break;
-          case "turtle": drawTurtle(ctx, screenAX, groundAY, frame, e.label); break;
+          case "goomba":
+            drawGoomba(ctx, screenAX, groundAY, frame, e.label);
+            break;
+          case "bat":
+            drawBat(ctx, screenAX, groundAY - 12 - Math.sin(animFrameRef.current * 0.5 + e.x * 0.1) * 3, frame, e.label);
+            break;
+          case "turtle":
+            drawTurtle(ctx, screenAX, groundAY, frame, e.label);
+            break;
         }
       }
 
       // Victory flag
       if (progress > 0.85) {
-        const flagAX = (LEVEL_LEN - 60) - camX / PX;
-        drawFlag(ctx, flagAX, groundAY);
+        const flagScreenAX = toScreen(LEVEL_LEN - 60);
+        drawFlag(ctx, flagScreenAX, groundAY);
       }
 
-      // Nic (screen-centered)
-      const nicScreenAX = Math.floor(w / (2 * PX)) - Math.floor(NIC_W / 2);
-      const nicScreenAY = groundAY - nicJumpY.current;
+      // ── NIC (always at screen center) ──
+      const nicScreenAX = halfScreenAX - Math.floor(NIC_W / 2);
+      // When jumping, Nic's feet rise above ground
+      const nicFeetAY = groundAY - nicJumpY.current;
 
-      // Draw Nic (first pass — will be under fade)
-      drawNic(ctx, nicScreenAX, nicScreenAY, isMoving ? frame : 0);
+      // Draw Nic (first pass — under the fade)
+      drawNic(ctx, nicScreenAX, nicFeetAY, isMoving ? frame : 0);
 
-      // Top fade overlay (transparent at top → page bg match)
+      // Top fade overlay
       const fadeH = h * 0.45;
       const fadeGrad = ctx.createLinearGradient(0, 0, 0, fadeH);
       fadeGrad.addColorStop(0, "rgba(13, 26, 10, 1)");
@@ -610,10 +734,10 @@ export default function ManifestoRunner() {
 
       // Re-draw Nic ON TOP of fade when jumping high (breaking-out effect)
       if (nicJumpY.current > 5) {
-        drawNic(ctx, nicScreenAX, nicScreenAY, isMoving ? frame : 0);
+        drawNic(ctx, nicScreenAX, nicFeetAY, isMoving ? frame : 0);
       }
 
-      // Victory
+      // Victory check
       if (progress > 0.95 && !completed) {
         setCompleted(true);
         awardAchievement("runner_complete");
