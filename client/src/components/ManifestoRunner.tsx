@@ -60,8 +60,8 @@ const STRIP_FADE_START = 0.005;
 const STRIP_FADE_END = 0.012;
 const NIC_DROP_START = 0.012;
 const NIC_DROP_END = 0.025;
-const WORLD_FADE_START = 0.025;
-const WORLD_FADE_END = 0.045;
+const WORLD_FADE_START = 0.035;
+const WORLD_FADE_END = 0.065;
 
 /* ═══════════════════════════════════════════════════════════════
    COLORS
@@ -761,32 +761,7 @@ export default function ManifestoRunner() {
         drawDustPuff(ctx, nicScreenCX, GROUND_Y, dustT);
       }
 
-      // ── TOP FADE OVERLAY ──
-      const fadeH = h * 0.35;
-      const fadeGrad = ctx.createLinearGradient(0, 0, 0, fadeH);
-      fadeGrad.addColorStop(0, "rgba(13, 26, 10, 1)");
-      fadeGrad.addColorStop(0.5, "rgba(13, 26, 10, 0.5)");
-      fadeGrad.addColorStop(1, "rgba(13, 26, 10, 0)");
-      ctx.save();
-      ctx.globalAlpha = stripT * worldT;
-      ctx.fillStyle = fadeGrad;
-      ctx.fillRect(0, 0, w, fadeH);
-      ctx.restore();
-
-      // Re-draw Nic on top of fade when jumping high (breaking-out effect)
-      if (nicJumpY > 10) {
-        drawNicSprite(
-          ctx,
-          { run: sprites.nicRun, jump: sprites.nicJump, idle: sprites.nicIdle },
-          nicScreenCX,
-          nicFeetY,
-          frame,
-          isMoving,
-          isJumping,
-          jumpT,
-          nicAlpha * stripT,
-        );
-      }
+      // (Top fade handled by CSS mask-image on the container div)
 
       ctx.globalAlpha = 1;
 
@@ -851,6 +826,8 @@ export default function ManifestoRunner() {
             opacity: containerOpacity,
             transform: `translateY(${containerTranslateY}%)`,
             willChange: "opacity, transform",
+            maskImage: "linear-gradient(to bottom, transparent 0%, black 40%)",
+            WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 40%)",
           }}
         >
           <canvas

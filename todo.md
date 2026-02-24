@@ -282,3 +282,7 @@
 - [x] Complete web-db-user upgrade (db, server, user features)
 - [x] Run pnpm db:push to sync database schema
 - [x] Verify all 9 existing tests pass after upgrade
+
+## Phase 42: Game Strip Polish — World Timing & Top Fade
+- [x] Fix world materialization: pushed WORLD_FADE_START to 0.035 (gap after Nic lands at 0.025), WORLD_FADE_END to 0.065
+- [x] Top of game strip fades to transparent via CSS mask-image (removed canvas gradient overlay, added mask-image on container div)
