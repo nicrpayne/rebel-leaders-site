@@ -503,7 +503,7 @@ function makeEvent(
   approachPct: number, type: EventType, label: string,
   opts?: { enemyType?: "goomba" | "bat" | "turtle"; rebelWord?: string; blockY?: number }
 ): TimelineEvent {
-  const worldX = pctToWorldX(approachPct) + 95; // enemy ahead of Nic — offset accounts for Nic's forward movement during jump
+  const worldX = pctToWorldX(approachPct) + 105; // enemy ahead of Nic — offset accounts for Nic's forward movement during jump
   return {
     type, approachAt: approachPct,
     jumpStartAt: approachPct + 0.005,
@@ -547,7 +547,7 @@ const TIMELINE: TimelineEvent[] = [
   makeEvent(0.88, "enemy", "Policy", { enemyType: "turtle" }),
 ];
 
-const FLAG_X = pctToWorldX(0.95) + 95;
+const FLAG_X = pctToWorldX(0.95) + 105;
 const ZONE_TRANSITIONS = [0.25, 0.50, 0.75];
 
 /* ═══════════════════════════════════════════════════════════════
@@ -796,8 +796,9 @@ export default function ManifestoRunner() {
 
       // ── NIC (drawn independently of world) ──
       const nicFeetY = GROUND_Y - nicJumpY + nicDropOffset;
-      // Nic stops running and goes idle when he reaches the flag
-      const nicIsMoving = reachedFlag ? false : isMoving;
+      // Nic is idle during intro (before world scrolls) and at the flag
+      const introComplete = progress > WORLD_FADE_END && gameProgress > 0.005;
+      const nicIsMoving = reachedFlag ? false : (introComplete ? isMoving : false);
       const nicIsJumping = reachedFlag ? false : isJumping;
       drawNicSprite(
         ctx,

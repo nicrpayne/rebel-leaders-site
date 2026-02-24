@@ -307,3 +307,8 @@
 ## Phase 47: Offset +95 & Taller Strip
 - [x] Bumped event worldX offset from +85 to +95
 - [x] Increased game strip height from 200px to 240px (GROUND_Y adjusted to 212)
+
+## Phase 48: Offset +105 & Idle After Landing
+- [x] Bumped event worldX offset from +95 to +105
+- [x] Nic now stands idle after landing until world is fully materialized and scrolling begins (introComplete check)
+- [x] Dust cloud from landing remains visible during idle phase
