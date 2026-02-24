@@ -948,12 +948,12 @@ export default function ManifestoRunner() {
 
   return (
     <>
-      {/* Toggle button */}
+      {/* Toggle button — bottom-left, small and unassuming, always visible */}
       <button
         onClick={() => setVisible(!visible)}
-        className="fixed bottom-2 right-2 z-50 pointer-events-auto font-pixel text-[8px] text-gold/50 hover:text-gold bg-forest-deep/80 hover:bg-forest-deep border border-gold/20 hover:border-gold/40 px-2 py-1 rounded-sm transition-all"
+        className="fixed bottom-2 left-2 z-50 pointer-events-auto font-pixel text-[7px] text-parchment-dim/30 hover:text-gold/70 bg-forest-deep/60 hover:bg-forest-deep/80 border border-gold/10 hover:border-gold/30 px-1.5 py-0.5 rounded-sm transition-all"
       >
-        {visible ? "HIDE GAME" : "SHOW GAME"}
+        {visible ? "HIDE" : "SHOW"}  
       </button>
 
       {/* Game strip container */}

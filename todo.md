@@ -388,3 +388,6 @@
 ## Phase 61: Fix Turtles Direction + Dust Particles
 - [x] Fixed turtles: turtle sprite naturally faces LEFT, so removed the horizontal flip for turtles only (goombas/bats still flipped)
 - [x] Added subtle dust-puff particles on enemy stomps: 5 small warm-colored circles at 30% max opacity, expanding outward and fading quickly
+
+## Phase 62: Relocate HIDE GAME Button
+- [x] Moved HIDE/SHOW button to bottom-left, 7px pixel font at 30% opacity, completely independent of HUD state
