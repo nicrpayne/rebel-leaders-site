@@ -381,27 +381,31 @@ function drawVictoryBanner(ctx: CanvasRenderingContext2D, w: number, h: number, 
   ctx.save();
   ctx.globalAlpha = alpha;
 
-  // Golden glow behind text
-  const glowAlpha = Math.sin(t * 6) * 0.15 + 0.25;
-  ctx.fillStyle = `rgba(196, 164, 105, ${glowAlpha})`;
-  const bannerY = h * 0.25;
-  ctx.fillRect(w * 0.15, bannerY - 20, w * 0.7, 44);
+  // Fully opaque dark background — no bleed-through
+  const bannerH = 48;
+  const bannerY = h * 0.15; // positioned in the top fifth, well above Nic
+  const bannerX = w * 0.2;
+  const bannerW = w * 0.6;
 
-  // Banner border
+  // Dark background fill
+  ctx.fillStyle = "rgba(10, 18, 10, 0.95)";
+  ctx.fillRect(bannerX, bannerY, bannerW, bannerH);
+
+  // Clean gold border — single pixel
   ctx.strokeStyle = C.gold;
-  ctx.lineWidth = 2;
-  ctx.strokeRect(w * 0.15, bannerY - 20, w * 0.7, 44);
+  ctx.lineWidth = 1.5;
+  ctx.strokeRect(bannerX, bannerY, bannerW, bannerH);
 
-  // "REBELLION COMPLETE" text
+  // "REBELLION COMPLETE" text — centered in banner
   ctx.fillStyle = C.gold;
-  ctx.font = `bold 14px "Press Start 2P", monospace`;
+  ctx.font = `bold 12px "Press Start 2P", monospace`;
   ctx.textAlign = "center";
-  ctx.fillText("REBELLION COMPLETE", w / 2, bannerY + 6);
+  ctx.fillText("REBELLION COMPLETE", w / 2, bannerY + 20);
 
-  // Subtitle
-  ctx.fillStyle = "#fff";
-  ctx.font = `8px "Press Start 2P", monospace`;
-  ctx.fillText("The real game begins now.", w / 2, bannerY + 22);
+  // Subtitle — smaller, softer
+  ctx.fillStyle = "rgba(255, 255, 255, 0.7)";
+  ctx.font = `7px "Press Start 2P", monospace`;
+  ctx.fillText("The real game begins now.", w / 2, bannerY + 36);
 
   ctx.textAlign = "left";
   ctx.restore();
@@ -625,7 +629,11 @@ const ZONE_TRANSITIONS = [0.25, 0.50, 0.75];
    MAIN COMPONENT
    ═══════════════════════════════════════════════════════════════ */
 
-export default function ManifestoRunner() {
+interface ManifestoRunnerProps {
+  onVisibilityChange?: (visible: boolean) => void;
+}
+
+export default function ManifestoRunner({ onVisibilityChange }: ManifestoRunnerProps = {}) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const animFrameRef = useRef(0);
@@ -999,7 +1007,7 @@ export default function ManifestoRunner() {
     <>
       {/* Toggle button — bottom-left, small and unassuming, always visible */}
       <button
-        onClick={() => setVisible(!visible)}
+        onClick={() => { const next = !visible; setVisible(next); onVisibilityChange?.(next); }}
         className="fixed bottom-2 left-2 z-50 pointer-events-auto font-pixel text-[7px] text-parchment-dim/30 hover:text-gold/70 bg-forest-deep/60 hover:bg-forest-deep/80 border border-gold/10 hover:border-gold/30 px-1.5 py-0.5 rounded-sm transition-all"
         title={visible ? "Hide the game strip" : "Show the game strip"}
       >

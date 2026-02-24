@@ -401,3 +401,6 @@
 ## Phase 64: Game Strip Label List + Animated Flag Wave
 - [x] Generated ordered list of all 21 game strip elements (enemies, blocks) across 4 zones for user review
 - [x] Implemented SNES-style animated flag wave: 16-slice vertical distortion with sine wave, amplitude increases toward flag edge, runs on realTimeRef for continuous animation
+
+## Phase 65: Hide Footer + Clean Up Victory Bann- [x] Footer hidden on Manifesto page when game is visible; reappears when game is hidden via HIDE button
+- [x] Victory banner cleaned up: opaque dark bg (rgba 10,18,10,0.95), tighter 48px height, positioned at top 15% of canvas, thinner 1.5px gold border, slightly smaller textove Nic/flag
