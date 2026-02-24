@@ -299,3 +299,7 @@
 
 ## Phase 45: Nudge Nic Position Back
 - [x] Increased event worldX offset from +30 to +55 to account for Nic's forward movement during jump arc
+
+## Phase 46: Offset Bump + Flag Celebration
+- [x] Bumped event worldX offset from +70 to +85
+- [x] Enhanced flag celebration: "REBELLION COMPLETE" banner with golden glow, bigger sparkles (50 particles), Nic stops and goes idle at flag

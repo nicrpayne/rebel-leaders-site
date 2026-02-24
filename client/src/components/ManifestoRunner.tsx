@@ -297,19 +297,52 @@ function drawSmash(ctx: CanvasRenderingContext2D, cx: number, cy: number, t: num
 
 function drawVictorySparkles(ctx: CanvasRenderingContext2D, w: number, h: number, t: number) {
   if (t <= 0) return;
-  const alpha = Math.min(1, t * 2);
+  const alpha = Math.min(1, t * 3);
   ctx.save();
-  for (let i = 0; i < 25; i++) {
+  // More sparkles, bigger, more dramatic
+  for (let i = 0; i < 50; i++) {
     const sx = ((i * 137 + 42) % Math.floor(w));
-    const speed = 0.5 + (i % 5) * 0.3;
-    const sy = h - (t * speed * h * 1.5) + ((i * 73) % 60);
+    const speed = 0.4 + (i % 5) * 0.25;
+    const sy = h - (t * speed * h * 1.8) + ((i * 73) % 80);
     if (sy < -10 || sy > h + 10) continue;
-    const sparkleAlpha = Math.sin(t * 8 + i) * 0.5 + 0.5;
-    ctx.fillStyle = i % 3 === 0 ? C.gold : i % 3 === 1 ? "#fff" : C.saber;
-    ctx.globalAlpha = alpha * sparkleAlpha * 0.6;
-    const size = (i % 2 === 0) ? 3 : 2;
+    const sparkleAlpha = Math.sin(t * 10 + i) * 0.5 + 0.5;
+    ctx.fillStyle = i % 4 === 0 ? C.gold : i % 4 === 1 ? "#fff" : i % 4 === 2 ? C.saber : "#ffdd44";
+    ctx.globalAlpha = alpha * sparkleAlpha * 0.8;
+    const size = (i % 3 === 0) ? 4 : (i % 3 === 1) ? 3 : 2;
     ctx.fillRect(sx, sy, size, size);
   }
+  ctx.restore();
+}
+
+function drawVictoryBanner(ctx: CanvasRenderingContext2D, w: number, h: number, t: number) {
+  if (t <= 0) return;
+  const alpha = Math.min(1, t * 4);
+  ctx.save();
+  ctx.globalAlpha = alpha;
+
+  // Golden glow behind text
+  const glowAlpha = Math.sin(t * 6) * 0.15 + 0.25;
+  ctx.fillStyle = `rgba(196, 164, 105, ${glowAlpha})`;
+  const bannerY = h * 0.25;
+  ctx.fillRect(w * 0.15, bannerY - 20, w * 0.7, 44);
+
+  // Banner border
+  ctx.strokeStyle = C.gold;
+  ctx.lineWidth = 2;
+  ctx.strokeRect(w * 0.15, bannerY - 20, w * 0.7, 44);
+
+  // "REBELLION COMPLETE" text
+  ctx.fillStyle = C.gold;
+  ctx.font = `bold 14px "Press Start 2P", monospace`;
+  ctx.textAlign = "center";
+  ctx.fillText("REBELLION COMPLETE", w / 2, bannerY + 6);
+
+  // Subtitle
+  ctx.fillStyle = "#fff";
+  ctx.font = `8px "Press Start 2P", monospace`;
+  ctx.fillText("The real game begins now.", w / 2, bannerY + 22);
+
+  ctx.textAlign = "left";
   ctx.restore();
 }
 
@@ -470,7 +503,7 @@ function makeEvent(
   approachPct: number, type: EventType, label: string,
   opts?: { enemyType?: "goomba" | "bat" | "turtle"; rebelWord?: string; blockY?: number }
 ): TimelineEvent {
-  const worldX = pctToWorldX(approachPct) + 70; // enemy ahead of Nic — offset accounts for Nic's forward movement during jump
+  const worldX = pctToWorldX(approachPct) + 85; // enemy ahead of Nic — offset accounts for Nic's forward movement during jump
   return {
     type, approachAt: approachPct,
     jumpStartAt: approachPct + 0.005,
@@ -514,7 +547,7 @@ const TIMELINE: TimelineEvent[] = [
   makeEvent(0.88, "enemy", "Policy", { enemyType: "turtle" }),
 ];
 
-const FLAG_X = pctToWorldX(0.95) + 70;
+const FLAG_X = pctToWorldX(0.95) + 85;
 const ZONE_TRANSITIONS = [0.25, 0.50, 0.75];
 
 /* ═══════════════════════════════════════════════════════════════
@@ -750,22 +783,30 @@ export default function ManifestoRunner() {
       }
       ctx.restore();
 
-      // Victory sparkles
-      if (gameProgress > 0.92) {
-        const sparkleT = (gameProgress - 0.92) / 0.08;
+      // Victory celebration — Nic stops at flag, sparkles + banner
+      const reachedFlag = gameProgress > 0.93;
+      if (gameProgress > 0.88) {
+        const sparkleT = (gameProgress - 0.88) / 0.12;
         drawVictorySparkles(ctx, w, h, sparkleT);
+      }
+      if (reachedFlag) {
+        const bannerT = (gameProgress - 0.93) / 0.07;
+        drawVictoryBanner(ctx, w, h, bannerT);
       }
 
       // ── NIC (drawn independently of world) ──
       const nicFeetY = GROUND_Y - nicJumpY + nicDropOffset;
+      // Nic stops running and goes idle when he reaches the flag
+      const nicIsMoving = reachedFlag ? false : isMoving;
+      const nicIsJumping = reachedFlag ? false : isJumping;
       drawNicSprite(
         ctx,
         { run: sprites.nicRun, jump: sprites.nicJump, idle: sprites.nicIdle },
         nicScreenCX,
         nicFeetY,
         frame,
-        isMoving,
-        isJumping,
+        nicIsMoving,
+        nicIsJumping,
         jumpT,
         nicAlpha * stripT,
       );
