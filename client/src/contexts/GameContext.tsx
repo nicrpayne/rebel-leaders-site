@@ -83,7 +83,7 @@ const DEFAULT_STATE: GameState = {
   foundEggs: [],
   unlockedAchievements: [],
   timePlayedSeconds: 0,
-  hudMinimized: false,
+  hudMinimized: true,
   firstVisitTimestamp: Date.now(),
 };
 
@@ -117,7 +117,8 @@ function loadState(): GameState {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return { ...DEFAULT_STATE, firstVisitTimestamp: Date.now() };
     const parsed = JSON.parse(raw);
-    return { ...DEFAULT_STATE, ...parsed };
+    // Always start minimized — user can expand manually
+    return { ...DEFAULT_STATE, ...parsed, hudMinimized: true };
   } catch {
     return { ...DEFAULT_STATE, firstVisitTimestamp: Date.now() };
   }

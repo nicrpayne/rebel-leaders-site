@@ -61,7 +61,7 @@ function XpBar({ percent }: { percent: number }) {
   return (
     <div className="w-full">
       <div className="flex items-center justify-between mb-1">
-        <span className="font-pixel text-[8px] text-gold/70 tracking-wider">XP</span>
+        <span className="font-pixel text-[8px] text-gold/70 tracking-wider" title="Experience points earned from exploring the site">XP</span>
         <span className="font-pixel text-[8px] text-parchment-dim/50">{percent}%</span>
       </div>
       <div className="h-2.5 bg-black/60 border border-gold/30 rounded-[1px] overflow-hidden relative">
@@ -168,13 +168,13 @@ export default function GameHud() {
                 {/* Stats Row */}
                 <div className="px-3 pb-2.5 flex items-center justify-between">
                   <div className="flex items-center gap-1.5">
-                    <span className="font-pixel text-[7px] text-parchment-dim/40 tracking-wider">PAGES</span>
+                    <span className="font-pixel text-[7px] text-parchment-dim/40 tracking-wider" title="Pages discovered across the site">PAGES</span>
                     <span className="font-pixel text-[9px] text-parchment-dim/70">
                       {state.visitedPages.length}/9
                     </span>
                   </div>
                   <div className="flex items-center gap-1.5">
-                    <span className="font-pixel text-[7px] text-parchment-dim/40 tracking-wider">SECRETS</span>
+                    <span className="font-pixel text-[7px] text-parchment-dim/40 tracking-wider" title="Hidden easter eggs found">SECRETS</span>
                     <span className="font-pixel text-[9px] text-parchment-dim/70">
                       {state.foundEggs.length}/5
                     </span>
@@ -184,7 +184,7 @@ export default function GameHud() {
                 {/* Time Played */}
                 <div className="px-3 pb-2.5 border-t border-gold/10 pt-2">
                   <div className="flex items-center justify-between">
-                    <span className="font-pixel text-[7px] text-parchment-dim/40 tracking-wider">
+                    <span className="font-pixel text-[7px] text-parchment-dim/40 tracking-wider" title="Total time spent on the site">
                       TIME IN THE REBELLION
                     </span>
                     <span className="font-pixel text-[9px] text-parchment-dim/60">

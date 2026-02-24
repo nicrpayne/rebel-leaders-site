@@ -391,3 +391,9 @@
 
 ## Phase 62: Relocate HIDE GAME Button
 - [x] Moved HIDE/SHOW button to bottom-left, 7px pixel font at 30% opacity, completely independent of HUD state
+
+## Phase 63: Polish Pass — Confetti, HUD, Tooltips, Dust
+- [x] More confetti: 140+60 pieces in two waves (up from 80), bigger particles, more colors, secondary delayed burst
+- [x] HUD auto-minimized: always starts collapsed (small XP icon), user can expand manually
+- [x] Tooltips added: HIDE/SHOW button, XP minimized icon, XP bar, PAGES, SECRETS, TIME IN THE REBELLION, achievements
+- [x] SNES-style dust puffs: 9 particles (up from 5), 65% opacity (up from 30%), wider spread, two-tone coloring, ground dust line

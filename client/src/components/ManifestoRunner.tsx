@@ -243,21 +243,29 @@ function drawEnemyDeath(ctx: CanvasRenderingContext2D, cx: number, bottomY: numb
   if (t <= 0 || t >= 1) return;
   const alpha = 1 - t;
 
-  // Subtle dust-puff: small semi-transparent circles that expand outward from stomp point
-  if (t < 0.5) {
-    const dustT = t / 0.5;
+  // SNES-style dust puff: pronounced cloud burst on stomp
+  if (t < 0.6) {
+    const dustT = t / 0.6;
     ctx.save();
-    ctx.globalAlpha = (1 - dustT) * 0.3; // very subtle, max 30% opacity
+    ctx.globalAlpha = (1 - dustT) * 0.65;
+    // More particles, bigger, wider spread
     const dustPuffs: [number, number, number][] = [
-      [-10, 0, 3], [12, -1, 2.5], [-5, -2, 2], [8, 1, 2.5], [0, -1, 3],
+      [-14, 0, 5], [16, -1, 4.5], [-8, -3, 4], [10, 2, 4.5], [0, -1, 5.5],
+      [-18, 1, 3.5], [20, -2, 3], [-3, -4, 3.5], [6, 3, 3],
     ];
     for (const [dx, dy, r] of dustPuffs) {
-      const spread = 1 + dustT * 2;
-      ctx.fillStyle = "#c8b898"; // warm dust color
+      const spread = 1 + dustT * 3;
+      // Two-tone dust: lighter center, darker edge
+      ctx.fillStyle = dustT < 0.3 ? "#e0d4b8" : "#c8b898";
       ctx.beginPath();
-      ctx.arc(cx + dx * spread, bottomY + dy - 2, r + dustT * 2, 0, Math.PI * 2);
+      ctx.arc(cx + dx * spread, bottomY + dy - 3, r + dustT * 3, 0, Math.PI * 2);
       ctx.fill();
     }
+    // Ground dust line
+    ctx.fillStyle = "#b8a878";
+    const lineW = 30 + dustT * 20;
+    ctx.globalAlpha = (1 - dustT) * 0.4;
+    ctx.fillRect(cx - lineW / 2, bottomY - 1, lineW, 2);
     ctx.restore();
   }
 
@@ -322,31 +330,48 @@ function drawSmash(ctx: CanvasRenderingContext2D, cx: number, cy: number, t: num
 
 function drawVictoryConfetti(ctx: CanvasRenderingContext2D, w: number, h: number, t: number) {
   if (t <= 0) return;
-  // All confetti releases at once from the top and falls together
-  const alpha = Math.min(1, t * 5); // quick fade-in
+  const alpha = Math.min(1, t * 5);
   ctx.save();
-  const confettiColors = [C.gold, "#ff4444", "#44ff44", C.saber, "#ff88ff", "#ffdd44", "#ffffff", "#ff8844"];
-  for (let i = 0; i < 80; i++) {
-    // Fixed x position spread across the canvas
-    const cx = ((i * 137 + 42) % Math.floor(w));
-    // All pieces start at the top and fall at slightly different speeds
-    // but they ALL start at t=0 (burst effect)
-    const fallSpeed = 0.5 + (i % 5) * 0.12;
-    const startY = -10 - (i % 8) * 3; // slight stagger at top
+  const confettiColors = [C.gold, "#ff4444", "#44ff44", C.saber, "#ff88ff", "#ffdd44", "#ffffff", "#ff8844", "#44aaff", "#ffaa00"];
+
+  // Wave 1: main burst — 140 pieces
+  for (let i = 0; i < 140; i++) {
+    const cx = ((i * 97 + 23) % Math.floor(w));
+    const fallSpeed = 0.4 + (i % 7) * 0.1;
+    const startY = -10 - (i % 12) * 4;
     const cy = startY + t * fallSpeed * h * 3;
-    if (cy > h + 10) continue; // off-screen
-    // Fade out as they reach the bottom
+    if (cy > h + 10) continue;
     const fadeOut = cy > h * 0.7 ? Math.max(0, 1 - (cy - h * 0.7) / (h * 0.3)) : 1;
-    // Gentle sway side to side
-    const sway = Math.sin(t * 5 + i * 0.7) * 10;
-    // Rotation effect via width/height variation
+    const sway = Math.sin(t * 5 + i * 0.7) * 12;
     const rotation = Math.sin(t * 8 + i * 1.3);
-    const pw = 3 + Math.abs(rotation) * 4;
-    const ph = 2 + (1 - Math.abs(rotation)) * 5;
+    const pw = 3 + Math.abs(rotation) * 5;
+    const ph = 2 + (1 - Math.abs(rotation)) * 6;
     ctx.fillStyle = confettiColors[i % confettiColors.length];
     ctx.globalAlpha = alpha * fadeOut * 0.9;
     ctx.fillRect(cx + sway - pw / 2, cy - ph / 2, pw, ph);
   }
+
+  // Wave 2: delayed secondary burst — 60 pieces, starts at t=0.15
+  const t2 = t - 0.15;
+  if (t2 > 0) {
+    const alpha2 = Math.min(1, t2 * 4);
+    for (let i = 0; i < 60; i++) {
+      const cx = ((i * 173 + 67) % Math.floor(w));
+      const fallSpeed = 0.35 + (i % 5) * 0.14;
+      const startY = -5 - (i % 6) * 5;
+      const cy = startY + t2 * fallSpeed * h * 2.5;
+      if (cy > h + 10) continue;
+      const fadeOut = cy > h * 0.6 ? Math.max(0, 1 - (cy - h * 0.6) / (h * 0.4)) : 1;
+      const sway = Math.sin(t2 * 4 + i * 1.1) * 15;
+      const rotation = Math.sin(t2 * 6 + i * 0.9);
+      const pw = 2 + Math.abs(rotation) * 3;
+      const ph = 2 + (1 - Math.abs(rotation)) * 4;
+      ctx.fillStyle = confettiColors[(i + 3) % confettiColors.length];
+      ctx.globalAlpha = alpha2 * fadeOut * 0.7;
+      ctx.fillRect(cx + sway - pw / 2, cy - ph / 2, pw, ph);
+    }
+  }
+
   ctx.restore();
 }
 
@@ -952,6 +977,7 @@ export default function ManifestoRunner() {
       <button
         onClick={() => setVisible(!visible)}
         className="fixed bottom-2 left-2 z-50 pointer-events-auto font-pixel text-[7px] text-parchment-dim/30 hover:text-gold/70 bg-forest-deep/60 hover:bg-forest-deep/80 border border-gold/10 hover:border-gold/30 px-1.5 py-0.5 rounded-sm transition-all"
+        title={visible ? "Hide the game strip" : "Show the game strip"}
       >
         {visible ? "HIDE" : "SHOW"}  
       </button>
