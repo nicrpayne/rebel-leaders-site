@@ -404,3 +404,6 @@
 
 ## Phase 65: Hide Footer + Clean Up Victory Bann- [x] Footer hidden on Manifesto page when game is visible; reappears when game is hidden via HIDE button
 - [x] Victory banner cleaned up: opaque dark bg (rgba 10,18,10,0.95), tighter 48px height, positioned at top 15% of canvas, thinner 1.5px gold border, slightly smaller textove Nic/flag
+
+## Phase 66: Fix Footer Hiding Approach
+- [x] Changed from conditional rendering ({!hideFooter && <Footer />}) to visibility:hidden wrapper so footer still takes up space and page scrolls fully, but content is invisible when game is active

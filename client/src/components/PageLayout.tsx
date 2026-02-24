@@ -18,7 +18,9 @@ export default function PageLayout({ children, hideFooter = false }: PageLayoutP
       <main className="pt-14 md:pt-16">
         {children}
       </main>
-      {!hideFooter && <Footer />}
+      <div style={{ visibility: hideFooter ? 'hidden' : 'visible' }}>
+        <Footer />
+      </div>
     </div>
   );
 }
