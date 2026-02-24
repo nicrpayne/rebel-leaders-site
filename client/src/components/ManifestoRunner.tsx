@@ -199,8 +199,10 @@ function drawNicSprite(
   ctx.fill();
   ctx.restore();
 
-  // Draw sprite — all states render at NIC_SIZE for consistent proportions
-  drawSprite(ctx, sheet, spriteFrame, cx, bottomY, NIC_SIZE, NIC_SIZE, alpha);
+  // Draw sprite — victory sprite gets a height boost only (no width change) to match running Nic's visual height
+  const renderW = NIC_SIZE;
+  const renderH = isVictory ? NIC_SIZE * 1.15 : NIC_SIZE;
+  drawSprite(ctx, sheet, spriteFrame, cx, bottomY, renderW, renderH, alpha);
 
   // Lightsaber glow aura
   if (alpha > 0.3) {

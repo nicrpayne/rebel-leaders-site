@@ -370,3 +370,6 @@
 - [x] Removed the 1.5x scale multiplier that was causing horizontal stretching/bloating
 - [x] Victory Nic now renders at exactly NIC_SIZE (64x64) — same as running Nic, no distortion
 - [x] All 9 tests passing
+
+## Phase 58: Victory Nic Height Tweak
+- [x] Increased victory Nic render height to 1.15x (73.6px) while keeping width at 64px — taller without horizontal stretch
