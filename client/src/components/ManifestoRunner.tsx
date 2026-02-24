@@ -199,8 +199,9 @@ function drawNicSprite(
   ctx.fill();
   ctx.restore();
 
-  // Draw sprite at NIC_SIZE — no scaling needed, sprite sheet is already correct dimensions
-  drawSprite(ctx, sheet, spriteFrame, cx, bottomY, NIC_SIZE, NIC_SIZE, alpha);
+  // Draw sprite — victory sprite gets a uniform 1.15x bump so it reads slightly larger to the eye
+  const renderSize = isVictory ? NIC_SIZE * 1.15 : NIC_SIZE;
+  drawSprite(ctx, sheet, spriteFrame, cx, bottomY, renderSize, renderSize, alpha);
 
   // Lightsaber glow aura
   if (alpha > 0.3) {

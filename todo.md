@@ -381,3 +381,6 @@
 - [x] Uploaded to CDN and replaced sprite URL in ManifestoRunner.tsx
 - [x] Removed all scaling — renders at NIC_SIZE (64x64) with no adjustments
 - [x] Visual test confirms match, all 9 tests passing
+
+## Phase 60: Victory Sprite Size Bump
+- [x] Increased victory Nic render size uniformly to 1.15x (both width and height) so it reads slightly larger to the eye
