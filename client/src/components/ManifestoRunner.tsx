@@ -174,9 +174,9 @@ function drawNicSprite(
   let spriteFrame: number;
 
   if (isVictory) {
-    // Victory pose: use the jump sprite frame 1 (sword raised) — same art style/size as running Nic
-    sheet = sheets.jump;
-    spriteFrame = 1;
+    // Victory pose: front-facing sprite with sword raised, drawn at NIC_SIZE to match running Nic
+    sheet = sheets.victory;
+    spriteFrame = frame % 2;
   } else if (isJumping) {
     sheet = sheets.jump;
     if (jumpT < 0.35) spriteFrame = 0;
@@ -199,8 +199,9 @@ function drawNicSprite(
   ctx.fill();
   ctx.restore();
 
-  // Draw sprite
-  drawSprite(ctx, sheet, spriteFrame, cx, bottomY, NIC_SIZE, NIC_SIZE, alpha);
+  // Draw sprite — victory sprite is front-facing so needs to be drawn larger to match side-view visual weight
+  const renderSize = isVictory ? NIC_SIZE * 1.5 : NIC_SIZE;
+  drawSprite(ctx, sheet, spriteFrame, cx, bottomY, renderSize, renderSize, alpha);
 
   // Lightsaber glow aura
   if (alpha > 0.3) {
@@ -797,7 +798,7 @@ export default function ManifestoRunner() {
           drawEnemyDeath(ctx, screenCX, deathY, deathT, deathColor);
         } else {
           const batBob = Math.sin(realTimeRef.current * 3 + evt.worldX * 0.1) * 4;
-          // Flip enemies horizontally so they face LEFT (toward Nic)
+          // Flip all enemies horizontally so they face LEFT (toward Nic)
           ctx.save();
           ctx.translate(screenCX, 0);
           ctx.scale(-1, 1);

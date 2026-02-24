@@ -359,3 +359,8 @@
 - [x] Fixed turtle animation: uses static frame 0 only (no more flip/glitch alternation)
 - [x] Fixed victory Nic: uses existing jump sprite frame 1 (sword raised) — same art style and size as running Nic
 - [x] All 9 tests passing
+
+## Phase 56: Fix Turtle Direction and Victory Sprite Size
+- [x] Flip turtles to face LEFT toward Nic (removed special case that skipped flip; turtles now use same ctx.scale(-1,1) as goombas/bats)
+- [x] Increased victory Nic sprite from 1.25x (80px) to 1.5x (96px) for better visual weight matching with running Nic
+- [x] All 9 tests passing
