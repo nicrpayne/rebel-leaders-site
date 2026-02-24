@@ -384,3 +384,7 @@
 
 ## Phase 60: Victory Sprite Size Bump
 - [x] Increased victory Nic render size uniformly to 1.15x (both width and height) so it reads slightly larger to the eye
+
+## Phase 61: Fix Turtles Direction + Dust Particles
+- [x] Fixed turtles: turtle sprite naturally faces LEFT, so removed the horizontal flip for turtles only (goombas/bats still flipped)
+- [x] Added subtle dust-puff particles on enemy stomps: 5 small warm-colored circles at 30% max opacity, expanding outward and fading quickly

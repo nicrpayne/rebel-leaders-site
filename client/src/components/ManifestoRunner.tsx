@@ -243,6 +243,24 @@ function drawEnemyDeath(ctx: CanvasRenderingContext2D, cx: number, bottomY: numb
   if (t <= 0 || t >= 1) return;
   const alpha = 1 - t;
 
+  // Subtle dust-puff: small semi-transparent circles that expand outward from stomp point
+  if (t < 0.5) {
+    const dustT = t / 0.5;
+    ctx.save();
+    ctx.globalAlpha = (1 - dustT) * 0.3; // very subtle, max 30% opacity
+    const dustPuffs: [number, number, number][] = [
+      [-10, 0, 3], [12, -1, 2.5], [-5, -2, 2], [8, 1, 2.5], [0, -1, 3],
+    ];
+    for (const [dx, dy, r] of dustPuffs) {
+      const spread = 1 + dustT * 2;
+      ctx.fillStyle = "#c8b898"; // warm dust color
+      ctx.beginPath();
+      ctx.arc(cx + dx * spread, bottomY + dy - 2, r + dustT * 2, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.restore();
+  }
+
   if (t < 0.3) {
     const squish = t / 0.3;
     ctx.save();
@@ -798,20 +816,26 @@ export default function ManifestoRunner() {
           drawEnemyDeath(ctx, screenCX, deathY, deathT, deathColor);
         } else {
           const batBob = Math.sin(realTimeRef.current * 3 + evt.worldX * 0.1) * 4;
-          // Flip all enemies horizontally so they face LEFT (toward Nic)
           ctx.save();
-          ctx.translate(screenCX, 0);
-          ctx.scale(-1, 1);
-          switch (evt.enemyType) {
-            case "goomba":
-              drawSprite(ctx, sprites.goomba, frame % 2, 0, GROUND_Y, ENEMY_SIZE, ENEMY_SIZE);
-              break;
-            case "bat":
-              drawSprite(ctx, sprites.bat, frame % 2, 0, GROUND_Y - 16 - batBob, ENEMY_SIZE, ENEMY_SIZE);
-              break;
-            case "turtle":
-              drawSprite(ctx, sprites.turtle, 0, 0, GROUND_Y, ENEMY_SIZE, ENEMY_SIZE);
-              break;
+          if (evt.enemyType === "turtle") {
+            // Turtle sprite already faces LEFT (toward Nic) — draw without flip
+            switch (evt.enemyType) {
+              case "turtle":
+                drawSprite(ctx, sprites.turtle, 0, screenCX, GROUND_Y, ENEMY_SIZE, ENEMY_SIZE);
+                break;
+            }
+          } else {
+            // Flip goombas and bats horizontally so they face LEFT (toward Nic)
+            ctx.translate(screenCX, 0);
+            ctx.scale(-1, 1);
+            switch (evt.enemyType) {
+              case "goomba":
+                drawSprite(ctx, sprites.goomba, frame % 2, 0, GROUND_Y, ENEMY_SIZE, ENEMY_SIZE);
+                break;
+              case "bat":
+                drawSprite(ctx, sprites.bat, frame % 2, 0, GROUND_Y - 16 - batBob, ENEMY_SIZE, ENEMY_SIZE);
+                break;
+            }
           }
           ctx.restore();
           // Enemy label
