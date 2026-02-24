@@ -39,7 +39,7 @@ const SPRITES = {
   turtle:   "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/tAUdctTTtbAZnbfH.png",
   brick:    "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/CZIKNFXWjzlvpjEI.png",
   flag:     "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/XErroFrcgEbnlBdi.png",
-  nicVictory: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/tzHolSjJGlqrVcTw.png",
+  nicVictory: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/VrAjRkmkMHEOwWhA.png",
 };
 
 /* ═══════════════════════════════════════════════════════════════
@@ -199,10 +199,8 @@ function drawNicSprite(
   ctx.fill();
   ctx.restore();
 
-  // Draw sprite — victory sprite gets a height boost only (no width change) to match running Nic's visual height
-  const renderW = NIC_SIZE;
-  const renderH = isVictory ? NIC_SIZE * 1.15 : NIC_SIZE;
-  drawSprite(ctx, sheet, spriteFrame, cx, bottomY, renderW, renderH, alpha);
+  // Draw sprite at NIC_SIZE — no scaling needed, sprite sheet is already correct dimensions
+  drawSprite(ctx, sheet, spriteFrame, cx, bottomY, NIC_SIZE, NIC_SIZE, alpha);
 
   // Lightsaber glow aura
   if (alpha > 0.3) {

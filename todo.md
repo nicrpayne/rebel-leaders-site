@@ -373,3 +373,11 @@
 
 ## Phase 58: Victory Nic Height Tweak
 - [x] Increased victory Nic render height to 1.15x (73.6px) while keeping width at 64px — taller without horizontal stretch
+
+## Phase 59: Generate New Victory Sprite to Match Running Nic
+- [x] Studied running sprite art style — dark green shirt, grey pants, brown boots, dark hair with silver streak, beard, cyan lightsaber
+- [x] Generated new front-facing victory sprite with diagonal sword pose for better proportions at 64x64
+- [x] Processed into 128x64 sprite sheet (2 frames of 64x64, character fills 40x60px)
+- [x] Uploaded to CDN and replaced sprite URL in ManifestoRunner.tsx
+- [x] Removed all scaling — renders at NIC_SIZE (64x64) with no adjustments
+- [x] Visual test confirms match, all 9 tests passing
