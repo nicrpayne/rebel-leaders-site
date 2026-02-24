@@ -165,13 +165,18 @@ function drawNicSprite(
   isJumping: boolean,
   jumpT: number,
   alpha = 1,
+  isVictory = false,
 ) {
   if (alpha <= 0) return;
 
   let sheet: SpriteSheet;
   let spriteFrame: number;
 
-  if (isJumping) {
+  if (isVictory) {
+    // Victory pose: use jump sprite frame 1 (sword raised high)
+    sheet = sheets.jump;
+    spriteFrame = 1;
+  } else if (isJumping) {
     sheet = sheets.jump;
     if (jumpT < 0.35) spriteFrame = 0;
     else if (jumpT < 0.65) spriteFrame = 1;
@@ -295,21 +300,28 @@ function drawSmash(ctx: CanvasRenderingContext2D, cx: number, cy: number, t: num
   ctx.restore();
 }
 
-function drawVictorySparkles(ctx: CanvasRenderingContext2D, w: number, h: number, t: number) {
+function drawVictoryConfetti(ctx: CanvasRenderingContext2D, w: number, h: number, t: number) {
   if (t <= 0) return;
-  const alpha = Math.min(1, t * 3);
+  const alpha = Math.min(1, t * 2);
   ctx.save();
-  // More sparkles, bigger, more dramatic
-  for (let i = 0; i < 50; i++) {
-    const sx = ((i * 137 + 42) % Math.floor(w));
-    const speed = 0.4 + (i % 5) * 0.25;
-    const sy = h - (t * speed * h * 1.8) + ((i * 73) % 80);
-    if (sy < -10 || sy > h + 10) continue;
-    const sparkleAlpha = Math.sin(t * 10 + i) * 0.5 + 0.5;
-    ctx.fillStyle = i % 4 === 0 ? C.gold : i % 4 === 1 ? "#fff" : i % 4 === 2 ? C.saber : "#ffdd44";
-    ctx.globalAlpha = alpha * sparkleAlpha * 0.8;
-    const size = (i % 3 === 0) ? 4 : (i % 3 === 1) ? 3 : 2;
-    ctx.fillRect(sx, sy, size, size);
+  // Confetti pieces falling from the top
+  const confettiColors = [C.gold, "#ff4444", "#44ff44", C.saber, "#ff88ff", "#ffdd44", "#ffffff", "#ff8844"];
+  for (let i = 0; i < 60; i++) {
+    // Each piece has a fixed x position and falls at different speeds
+    const cx = ((i * 137 + 42) % Math.floor(w));
+    const fallSpeed = 0.3 + (i % 7) * 0.15;
+    // Start above the canvas and fall down
+    const cy = -20 + t * fallSpeed * h * 2.5 + ((i * 73) % 60);
+    if (cy < -10 || cy > h + 10) continue;
+    // Gentle sway side to side
+    const sway = Math.sin(t * 4 + i * 0.7) * 8;
+    // Rotation effect via width/height variation
+    const rotation = Math.sin(t * 6 + i * 1.3);
+    const pw = 3 + Math.abs(rotation) * 3;
+    const ph = 2 + (1 - Math.abs(rotation)) * 4;
+    ctx.fillStyle = confettiColors[i % confettiColors.length];
+    ctx.globalAlpha = alpha * 0.85;
+    ctx.fillRect(cx + sway - pw / 2, cy - ph / 2, pw, ph);
   }
   ctx.restore();
 }
@@ -557,7 +569,7 @@ const TIMELINE: TimelineEvent[] = [
 ];
 
 const FLAG_X = 3850;  // near end of LEVEL_LEN (4000)
-const FLAG_STOP_X = FLAG_X - NIC_SIZE * 0.75;  // Nic stops 48px before flag (in front of it)
+const FLAG_STOP_X = FLAG_X - 8;  // Nic stops 8px before flag (right next to it)
 const ZONE_TRANSITIONS = [0.25, 0.50, 0.75];
 
 /* ═══════════════════════════════════════════════════════════════
@@ -798,18 +810,21 @@ export default function ManifestoRunner() {
       }
       ctx.restore();
 
-      // Victory celebration — sparkles + banner
-      if (gameProgress > 0.88) {
-        const sparkleT = (gameProgress - 0.88) / 0.12;
-        drawVictorySparkles(ctx, w, h, sparkleT);
-      }
+      // Victory celebration — confetti + banner
       if (reachedFlag) {
-        const bannerT = (gameProgress - 0.93) / 0.07;
+        // Calculate how far past the flag we are for animation timing
+        const flagGP = FLAG_STOP_X / LEVEL_LEN;
+        const victoryT = Math.max(0, (gameProgress - flagGP) / (1 - flagGP));
+        drawVictoryConfetti(ctx, w, h, victoryT);
+        // Banner fades in quickly after reaching the flag
+        const bannerT = Math.min(1, victoryT * 3);
         drawVictoryBanner(ctx, w, h, bannerT);
       }
 
       // ── NIC (drawn at clamped position, stops in front of flag) ──
-      const nicFeetY = GROUND_Y - nicJumpY + nicDropOffset;
+      // Victory pose: slight upward bob when at the flag
+      const victoryBob = reachedFlag ? Math.sin(Date.now() * 0.003) * 2 : 0;
+      const nicFeetY = GROUND_Y - nicJumpY + nicDropOffset - victoryBob;
       // Nic is idle during intro (before world scrolls) and at the flag
       const introComplete = progress > WORLD_FADE_END && gameProgress > 0.005;
       const nicIsMoving = reachedFlag ? false : (introComplete ? isMoving : false);
@@ -824,6 +839,7 @@ export default function ManifestoRunner() {
         nicIsJumping,
         jumpT,
         nicAlpha * stripT,
+        reachedFlag,  // victory pose
       );
 
       // Landing dust puff

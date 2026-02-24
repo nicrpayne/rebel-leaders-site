@@ -333,3 +333,10 @@
 ## Phase 51: Fix End-Game Flag Behavior
 - [x] Nic keeps running animation all the way to the flag (reachedFlag now based on worldX >= FLAG_STOP_X)
 - [x] Nic stops IN FRONT of the flag (FLAG_STOP_X = FLAG_X - 48px, clamped draw position)
+
+## Phase 52: End-Game Victory Celebration
+- [x] Move Nic closer to the flag (FLAG_STOP_X = FLAG_X - 8, only 8px gap now)
+- [x] Add sword-raise victory pose (jump sprite frame 1 with subtle bob animation)
+- [x] Replace sparkles with proper confetti (60 colored rectangles falling from top with sway + rotation)
+- [x] Banner and confetti both trigger at reachedFlag (no more hardcoded 0.93 threshold)
+- [x] All 9 tests passing
