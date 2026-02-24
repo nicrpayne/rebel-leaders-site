@@ -222,3 +222,25 @@
 - [x] Ensure Nic jumps OVER enemies and hits bricks from below at the right time
 - [x] Verify visual alignment across all 4 zones (all entities trigger jumps correctly)
 - [x] Fix entity spacing to minimum 80+ art-px gaps between all entities
+
+## Phase 35: Rebuild ManifestoRunner as Hardcoded Scroll Animation
+- [ ] Analyze Manifesto page scroll length and map content to scroll percentages
+- [ ] Design full choreography timeline (every jump, kill, smash at exact scroll %)
+- [ ] Rewrite ManifestoRunner as timeline-driven animation (no reactive game logic)
+- [ ] Nic moves across screen left-to-right as progress increases
+- [ ] Make all labels, enemy names, and rebel words large and clearly readable
+- [ ] Choreograph special moments (dramatic pauses, zone transitions, victory sequence)
+- [ ] Taller canvas strip for better visibility
+- [ ] Test full scroll range in browser
+- [ ] Polish and save checkpoint
+
+## Phase 36: Cinematic Intro & Fun Animations
+- [x] Game strip hidden on page load, fades in when user starts scrolling (~1.5% scroll)
+- [x] Nic drops in from above with easeOutBounce + landing dust puff
+- [x] Enemy death pop animations (squish flat + particle burst + "+1" score flash)
+- [x] Brick smash particle burst with rebel word floating up with glow
+- [x] Victory celebration at the end (gold/white/cyan sparkles rising)
+- [x] Zone transition effects (white flash at 25%, 50%, 75%)
+- [x] Bricks bob subtly with real-time sine wave
+- [x] Flag waves at summit
+- [x] Smooth overall feel — every moment is a little treat
