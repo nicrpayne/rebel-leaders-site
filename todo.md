@@ -312,3 +312,13 @@
 - [x] Bumped event worldX offset from +95 to +105
 - [x] Nic now stands idle after landing until world is fully materialized and scrolling begins (introComplete check)
 - [x] Dust cloud from landing remains visible during idle phase
+
+## Phase 49: Position-Based Collision System (Inverse-Function Approach)
+- [x] Replace fixed scroll-percentage + offset event triggers with inverse-function collision system
+- [x] Enemies placed at fixed worldX positions; scroll percentages derived via worldXToScrollPct()
+- [x] peakAt = atEnemyPct exactly (0.0px error, math-guaranteed)
+- [x] Symmetric jump timing (JUMP_HALF = 0.009) so peak is at exact midpoint of arc (sin(0.5*PI) = 1.0)
+- [x] Eliminated the need for manual offset adjustments (+30, +55, +70, +85, +95, +105, +110, +115 all removed)
+- [x] Verified alignment across all 4 zones in browser
+- [x] All 9 tests passing
+- [x] Keep sprite sizes at 64/48/32/64 (the larger sizes user likes)
