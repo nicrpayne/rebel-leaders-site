@@ -30,10 +30,15 @@ const GROUND_Y = CANVAS_H - 18;
 const LEVEL_LEN = 4000;
 
 // Intro timing (scroll percentages)
-const INTRO_START = 0.012;   // strip begins to appear
-const INTRO_END = 0.03;     // strip fully visible, Nic has landed
-const NIC_DROP_START = 0.018;
-const NIC_DROP_END = 0.028;
+// Phase 1: Canvas appears (dark void)
+const STRIP_FADE_START = 0.005;  // canvas starts to appear (just darkness)
+const STRIP_FADE_END = 0.012;    // canvas fully visible (still dark void)
+// Phase 2: Nic drops through the void
+const NIC_DROP_START = 0.012;
+const NIC_DROP_END = 0.025;       // Nic lands
+// Phase 3: World materializes on landing
+const WORLD_FADE_START = 0.023;  // world starts appearing (just before landing)
+const WORLD_FADE_END = 0.04;     // world fully materialized
 
 /* ═══════════════════════════════════════════════════════════════
    COLORS
@@ -577,21 +582,24 @@ export default function ManifestoRunner() {
       lastProgressRef.current = progress;
       const frame = Math.floor(animFrameRef.current);
 
-      // ── INTRO: Strip opacity & Nic drop-in ──
-      const introT = Math.max(0, Math.min(1, (progress - INTRO_START) / (INTRO_END - INTRO_START)));
-      const stripOpacity = introT;
+      // ── INTRO PHASE 1: Canvas (dark void) fades in ──
+      const stripT = Math.max(0, Math.min(1, (progress - STRIP_FADE_START) / (STRIP_FADE_END - STRIP_FADE_START)));
+      const stripOpacity = stripT;
 
-      // Nic drop: bounces in from above
+      // ── INTRO PHASE 2: Nic drops through the void ──
       const dropT = Math.max(0, Math.min(1, (progress - NIC_DROP_START) / (NIC_DROP_END - NIC_DROP_START)));
       const dropBounce = easeOutBounce(dropT);
-      const nicDropOffset = progress < NIC_DROP_START ? -40 : (1 - dropBounce) * -40;
-      const nicAlpha = progress < NIC_DROP_START ? 0 : Math.min(1, dropT * 3);
+      const nicDropOffset = progress < NIC_DROP_START ? -60 : (1 - dropBounce) * -60;
+      const nicAlpha = progress < NIC_DROP_START ? 0 : Math.min(1, dropT * 2.5);
+
+      // ── INTRO PHASE 3: World materializes when Nic lands ──
+      const worldT = Math.max(0, Math.min(1, (progress - WORLD_FADE_START) / (WORLD_FADE_END - WORLD_FADE_START)));
 
       // Dust puff timing (appears right when Nic lands)
-      const dustT = dropT > 0.8 ? Math.min(1, (dropT - 0.8) / 0.2 + (progress - NIC_DROP_END) / 0.01) : -1;
+      const dustT = dropT > 0.85 ? Math.min(1, (dropT - 0.85) / 0.15 + (progress - NIC_DROP_END) / 0.01) : -1;
 
-      // ── GAME PROGRESS (only starts after intro) ──
-      const gameProgress = Math.max(0, progress - INTRO_END) / (1 - INTRO_END);
+      // ── GAME PROGRESS (only starts after world is materialized) ──
+      const gameProgress = Math.max(0, progress - WORLD_FADE_END) / (1 - WORLD_FADE_END);
 
       // ── NIC'S WORLD POSITION ──
       const nicWorldAX = gameProgress * LEVEL_LEN;
@@ -623,9 +631,28 @@ export default function ManifestoRunner() {
       // Apply strip opacity for intro fade-in
       ctx.globalAlpha = stripOpacity;
 
+      // Draw dark void first (always visible once strip appears)
+      ctx.fillStyle = C.z1Sky;
+      ctx.fillRect(0, 0, w, h);
+      // Faint ground line in the void (subtle hint of where the world will be)
+      if (worldT < 1) {
+        ctx.fillStyle = `rgba(100, 100, 120, ${stripOpacity * 0.15})`;
+        ctx.fillRect(0, GROUND_Y, w, h - GROUND_Y);
+      }
+
+      // World draws on top with worldT opacity (materializes when Nic lands)
+      ctx.globalAlpha = stripOpacity * worldT;
       drawBackground(ctx, camCSS, w, h, progress);
 
       const toScreen = (worldAX: number) => worldAX - camAX;
+
+      // World materialization flash (bright pulse when world appears)
+      if (worldT > 0 && worldT < 1) {
+        const matFlash = Math.sin(worldT * Math.PI) * 0.25;
+        ctx.globalAlpha = stripOpacity;
+        ctx.fillStyle = `rgba(255, 255, 255, ${matFlash})`;
+        ctx.fillRect(0, 0, w, h);
+      }
 
       // Zone transition flash
       for (const zt of ZONE_TRANSITIONS) {
@@ -635,7 +662,8 @@ export default function ManifestoRunner() {
         }
       }
 
-      // Draw blocks
+      // Draw blocks (only after world materializes)
+      ctx.globalAlpha = stripOpacity * worldT;
       for (const evt of TIMELINE) {
         if (evt.type !== "block") continue;
         const screenAX = toScreen(evt.worldX);
@@ -653,7 +681,8 @@ export default function ManifestoRunner() {
         }
       }
 
-      // Draw enemies
+      // Draw enemies (only after world materializes)
+      ctx.globalAlpha = stripOpacity * worldT;
       for (const evt of TIMELINE) {
         if (evt.type !== "enemy") continue;
         const screenAX = toScreen(evt.worldX);
@@ -684,7 +713,8 @@ export default function ManifestoRunner() {
         }
       }
 
-      // Victory flag
+      // Victory flag (only after world materializes)
+      ctx.globalAlpha = stripOpacity * worldT;
       if (gameProgress > 0.7) {
         const flagScreenAX = toScreen(FLAG_X);
         if (flagScreenAX > -20 && flagScreenAX < w / PX + 20) {
@@ -698,7 +728,8 @@ export default function ManifestoRunner() {
         drawVictorySparkles(ctx, w, h, sparkleT);
       }
 
-      // ── NIC ──
+      // ── NIC (drawn independently of world — he appears first in the void) ──
+      ctx.globalAlpha = 1; // Reset for Nic
       const nicFeetAY = groundAY - nicJumpY + nicDropOffset;
       drawNic(ctx, nicScreenAX, nicFeetAY, isMoving ? frame : 0, nicAlpha * stripOpacity);
 
@@ -707,13 +738,13 @@ export default function ManifestoRunner() {
         drawDustPuff(ctx, nicScreenAX, groundAY, dustT);
       }
 
-      // Top fade overlay (the forest-dark vignette)
+      // Top fade overlay (the forest-dark vignette) — only when world is visible
       const fadeH = h * 0.35;
       const fadeGrad = ctx.createLinearGradient(0, 0, 0, fadeH);
       fadeGrad.addColorStop(0, "rgba(13, 26, 10, 1)");
       fadeGrad.addColorStop(0.5, "rgba(13, 26, 10, 0.5)");
       fadeGrad.addColorStop(1, "rgba(13, 26, 10, 0)");
-      ctx.globalAlpha = stripOpacity;
+      ctx.globalAlpha = stripOpacity * worldT;
       ctx.fillStyle = fadeGrad;
       ctx.fillRect(0, 0, w, fadeH);
 

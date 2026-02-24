@@ -244,3 +244,11 @@
 - [x] Bricks bob subtly with real-time sine wave
 - [x] Flag waves at summit
 - [x] Smooth overall feel — every moment is a little treat
+
+## Phase 37: Reworked Cinematic Intro
+- [x] Nothing visible on page load (no buildings, no enemies, no ground — just dark void)
+- [x] Phase 1 (0.5-1.2%): Dark void canvas fades in
+- [x] Phase 2 (1.2-2.5%): Nic drops through the void with easeOutBounce
+- [x] Phase 3 (2.3-4%): World materializes when Nic lands (white pulse flash)
+- [x] Enemies, blocks, ground, buildings all tied to worldT opacity
+- [x] Cinematic story: the game world is born from the reader's attention
