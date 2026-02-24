@@ -397,3 +397,7 @@
 - [x] HUD auto-minimized: always starts collapsed (small XP icon), user can expand manually
 - [x] Tooltips added: HIDE/SHOW button, XP minimized icon, XP bar, PAGES, SECRETS, TIME IN THE REBELLION, achievements
 - [x] SNES-style dust puffs: 9 particles (up from 5), 65% opacity (up from 30%), wider spread, two-tone coloring, ground dust line
+
+## Phase 64: Game Strip Label List + Animated Flag Wave
+- [x] Generated ordered list of all 21 game strip elements (enemies, blocks) across 4 zones for user review
+- [x] Implemented SNES-style animated flag wave: 16-slice vertical distortion with sine wave, amplitude increases toward flag edge, runs on realTimeRef for continuous animation

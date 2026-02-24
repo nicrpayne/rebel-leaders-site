@@ -877,13 +877,37 @@ export default function ManifestoRunner() {
       }
       ctx.restore();
 
-      // ── FLAG ──
+      // ── FLAG (SNES-style animated wave) ──
       ctx.save();
       ctx.globalAlpha = stripT * worldT;
       if (gameProgress > 0.7) {
         const flagScreenCX = toScreenX(FLAG_X) + FLAG_SIZE / 2;
         if (flagScreenCX > -60 && flagScreenCX < w + 60) {
-          drawSprite(ctx, sprites.flag, 0, flagScreenCX, GROUND_Y, FLAG_SIZE, FLAG_SIZE);
+          // Draw the flag with a wave distortion effect
+          const flagSheet = sprites.flag;
+          if (flagSheet.loaded) {
+            const rt = realTimeRef.current;
+            ctx.save();
+            // Draw the flag in vertical slices with a sine wave offset for ripple
+            const sliceCount = 16;
+            const sliceW = flagSheet.frameW / sliceCount;
+            const renderSliceW = FLAG_SIZE / sliceCount;
+            for (let s = 0; s < sliceCount; s++) {
+              // Wave: each slice gets a slightly different vertical offset
+              const wavePhase = s / sliceCount * Math.PI * 2;
+              const waveAmp = 1.5 + s * 0.15; // amplitude increases toward flag edge
+              const waveOffset = Math.sin(rt * 4 + wavePhase) * waveAmp;
+              const sx = s * sliceW;
+              const dx = flagScreenCX - FLAG_SIZE / 2 + s * renderSliceW;
+              const dy = GROUND_Y - FLAG_SIZE + waveOffset;
+              ctx.drawImage(
+                flagSheet.img,
+                sx, 0, sliceW, flagSheet.frameH,
+                dx, dy, renderSliceW, FLAG_SIZE
+              );
+            }
+            ctx.restore();
+          }
         }
       }
       ctx.restore();
