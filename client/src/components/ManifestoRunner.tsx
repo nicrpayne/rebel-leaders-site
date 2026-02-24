@@ -768,6 +768,25 @@ export default function ManifestoRunner() {
     return () => { running = false; window.removeEventListener("resize", resize); };
   }, [visible, getScrollProgress, completed, awardAchievement]);
 
+  // Container visibility driven by scroll
+  const [containerOpacity, setContainerOpacity] = useState(0);
+  const [containerTranslateY, setContainerTranslateY] = useState(100);
+
+  // Update container visibility from scroll progress
+  useEffect(() => {
+    if (!visible) return;
+    const updateContainerVisibility = () => {
+      const progress = getScrollProgress();
+      // Container starts sliding up and fading in at STRIP_FADE_START
+      const t = Math.max(0, Math.min(1, (progress - STRIP_FADE_START) / (STRIP_FADE_END - STRIP_FADE_START)));
+      setContainerOpacity(t);
+      setContainerTranslateY((1 - t) * 100); // 100% -> 0%
+    };
+    updateContainerVisibility();
+    window.addEventListener("scroll", updateContainerVisibility, { passive: true });
+    return () => window.removeEventListener("scroll", updateContainerVisibility);
+  }, [visible, getScrollProgress]);
+
   // Mobile check
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
@@ -779,25 +798,37 @@ export default function ManifestoRunner() {
 
   if (isMobile) return null;
 
+  // The toggle button is always visible (so user can show/hide)
+  // but the canvas container slides up from below only when scrolling begins
   return (
-    <div
-      ref={containerRef}
-      className="fixed bottom-0 left-0 right-0 z-40 pointer-events-none"
-      style={{ height: CANVAS_H }}
-    >
+    <>
+      {/* Toggle button — always visible at bottom-right */}
       <button
         onClick={() => setVisible(!visible)}
-        className="pointer-events-auto absolute top-2 right-2 z-50 font-pixel text-[8px] text-gold/50 hover:text-gold bg-forest-deep/80 hover:bg-forest-deep border border-gold/20 hover:border-gold/40 px-2 py-1 rounded-sm transition-all"
+        className="fixed bottom-2 right-2 z-50 pointer-events-auto font-pixel text-[8px] text-gold/50 hover:text-gold bg-forest-deep/80 hover:bg-forest-deep border border-gold/20 hover:border-gold/40 px-2 py-1 rounded-sm transition-all"
       >
         {visible ? "HIDE GAME" : "SHOW GAME"}
       </button>
+
+      {/* Game strip container — hidden on load, slides up on scroll */}
       {visible && (
-        <canvas
-          ref={canvasRef}
-          className="w-full"
-          style={{ imageRendering: "pixelated" }}
-        />
+        <div
+          ref={containerRef}
+          className="fixed bottom-0 left-0 right-0 z-40 pointer-events-none"
+          style={{
+            height: CANVAS_H,
+            opacity: containerOpacity,
+            transform: `translateY(${containerTranslateY}%)`,
+            willChange: "opacity, transform",
+          }}
+        >
+          <canvas
+            ref={canvasRef}
+            className="w-full"
+            style={{ imageRendering: "pixelated" }}
+          />
+        </div>
       )}
-    </div>
+    </>
   );
 }

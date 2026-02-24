@@ -252,3 +252,9 @@
 - [x] Phase 3 (2.3-4%): World materializes when Nic lands (white pulse flash)
 - [x] Enemies, blocks, ground, buildings all tied to worldT opacity
 - [x] Cinematic story: the game world is born from the reader's attention
+
+## Phase 38: Fix Game Strip Visibility on Page Load
+- [x] Game strip container div completely hidden at scroll 0 (opacity:0, translateY:100%)
+- [x] CSS opacity + translateY on container div driven by scroll-state React state
+- [x] Nothing visible until user starts scrolling — verified at scroll 0
+- [x] Toggle button (HIDE/SHOW GAME) separated from container, always accessible
