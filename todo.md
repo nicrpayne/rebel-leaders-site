@@ -286,3 +286,6 @@
 ## Phase 42: Game Strip Polish — World Timing & Top Fade
 - [x] Fix world materialization: pushed WORLD_FADE_START to 0.035 (gap after Nic lands at 0.025), WORLD_FADE_END to 0.065
 - [x] Top of game strip fades to transparent via CSS mask-image (removed canvas gradient overlay, added mask-image on container div)
+
+## Phase 43: Push Game Strip Intro Much Later
+- [x] Push all intro timing constants significantly later: STRIP 3-5%, NIC_DROP 5-7%, WORLD 8-12% (was 0.5-6.5%)

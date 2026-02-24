@@ -56,12 +56,15 @@ const BRICK_SIZE = 28;
 const FLAG_SIZE = 56;
 
 // Intro timing (scroll percentages)
-const STRIP_FADE_START = 0.005;
-const STRIP_FADE_END = 0.012;
-const NIC_DROP_START = 0.012;
-const NIC_DROP_END = 0.025;
-const WORLD_FADE_START = 0.035;
-const WORLD_FADE_END = 0.065;
+// Strip slides up after user scrolls past the hero section
+const STRIP_FADE_START = 0.03;
+const STRIP_FADE_END = 0.05;
+// Nic drops through darkness
+const NIC_DROP_START = 0.05;
+const NIC_DROP_END = 0.07;
+// World materializes AFTER Nic lands (clear gap)
+const WORLD_FADE_START = 0.08;
+const WORLD_FADE_END = 0.12;
 
 /* ═══════════════════════════════════════════════════════════════
    COLORS
