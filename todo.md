@@ -347,3 +347,10 @@
 - [x] Confetti burst: 80 pieces release at once from top, fall with sway/rotation, fade at bottom
 - [x] Flipped all enemy sprites horizontally via ctx.translate + ctx.scale(-1,1) — face LEFT toward Nic
 - [x] All 9 tests passing
+
+## Phase 54: Sprite Fixes, Screen-Shake, Scroll Arrow
+- [x] Regenerated victory sprite scaled 1.6x (24px char → 38px, matching other Nic sprites)
+- [x] Regenerated turtle sprite with filing cabinet shell + hard hat; fixed frame 2 flip
+- [x] Added subtle screen-shake (2-4px random offset for 0.15s) triggered on enemy/block death
+- [x] Added "▼ SCROLL TO BEGIN ▼" pulsing arrow on Manifesto page (matches Home page style)
+- [x] All 9 tests passing

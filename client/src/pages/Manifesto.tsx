@@ -11,6 +11,7 @@
  * Holistic Impact Depth, the Transformed Teachers concept, and the ethos.
  */
 
+import { motion } from "framer-motion";
 import PageLayout from "@/components/PageLayout";
 import FadeIn from "@/components/FadeIn";
 import DialogueBox from "@/components/DialogueBox";
@@ -63,11 +64,26 @@ export default function Manifesto() {
               </EasterEgg>
             </div>
           </FadeIn>
+          <FadeIn delay={0.6}>
+            <div className="mt-8">
+              <button
+                onClick={() => document.querySelector("#manifesto-opening")?.scrollIntoView({ behavior: "smooth" })}
+                className="font-pixel text-[10px] text-gold/60 hover:text-gold transition-colors tracking-widest"
+              >
+                <motion.span
+                  animate={{ opacity: [1, 0.3, 1] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                >
+                  ▼ SCROLL TO BEGIN ▼
+                </motion.span>
+              </button>
+            </div>
+          </FadeIn>
         </div>
       </section>
 
       {/* Opening — the voice that draws you in */}
-      <section className="py-12 md:py-20">
+      <section id="manifesto-opening" className="py-12 md:py-20">
         <div className="container">
           <div className="max-w-2xl mx-auto md:ml-[10%]">
             <FadeIn>

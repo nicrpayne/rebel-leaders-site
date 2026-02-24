@@ -36,10 +36,10 @@ const SPRITES = {
   nicIdle:  "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/yJbGgdWrupYGmAAu.png",
   goomba:   "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/nBERaIlYpCEOiWnP.png",
   bat:      "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/SYHEtkMnhFfFNKbp.png",
-  turtle:   "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/slKsYBACRStroewa.png",
+  turtle:   "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/tAUdctTTtbAZnbfH.png",
   brick:    "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/CZIKNFXWjzlvpjEI.png",
   flag:     "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/XErroFrcgEbnlBdi.png",
-  nicVictory: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/xyvhYLveOGauWSxQ.png",
+  nicVictory: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/tzHolSjJGlqrVcTw.png",
 };
 
 /* ═══════════════════════════════════════════════════════════════
@@ -587,6 +587,7 @@ export default function ManifestoRunner() {
   const animFrameRef = useRef(0);
   const lastProgressRef = useRef(0);
   const realTimeRef = useRef(0);
+  const shakeRef = useRef(0); // screen shake timer (counts down)
   const [visible, setVisible] = useState(true);
   const [completed, setCompleted] = useState(false);
   const { awardAchievement } = useGame();
@@ -699,8 +700,23 @@ export default function ManifestoRunner() {
         }
       }
 
+      // ── SCREEN SHAKE (subtle 2px for enemy/block deaths) ──
+      // Trigger shake when an enemy/block just died
+      for (const evt of TIMELINE) {
+        const deathMoment = evt.peakAt + 0.003;
+        const justDied = progress >= deathMoment && progress < deathMoment + 0.004;
+        if (justDied) { shakeRef.current = 0.15; break; }
+      }
+      if (shakeRef.current > 0) {
+        shakeRef.current = Math.max(0, shakeRef.current - dt);
+      }
+      const shakeX = shakeRef.current > 0 ? (Math.random() - 0.5) * 4 : 0;
+      const shakeY = shakeRef.current > 0 ? (Math.random() - 0.5) * 3 : 0;
+
       // ── RENDER ──
       ctx.clearRect(0, 0, w, h);
+      ctx.save();
+      ctx.translate(shakeX, shakeY);
 
       // Dark void
       ctx.save();
@@ -861,6 +877,7 @@ export default function ManifestoRunner() {
 
       // (Top fade handled by CSS mask-image on the container div)
 
+      ctx.restore(); // end screen shake transform
       ctx.globalAlpha = 1;
 
       // Victory achievement
