@@ -456,10 +456,21 @@ interface TimelineEvent {
   blockY?: number;
 }
 
+/**
+ * Auto-calculate worldX from the scroll percentage so Nic is always
+ * AT the event when it triggers. The enemy/block is placed slightly
+ * ahead (+30px) so Nic visually walks up to it before jumping.
+ */
+function pctToWorldX(pct: number): number {
+  const gp = Math.max(0, pct - WORLD_FADE_END) / (1 - WORLD_FADE_END);
+  return gp * LEVEL_LEN;
+}
+
 function makeEvent(
-  approachPct: number, type: EventType, label: string, worldX: number,
+  approachPct: number, type: EventType, label: string,
   opts?: { enemyType?: "goomba" | "bat" | "turtle"; rebelWord?: string; blockY?: number }
 ): TimelineEvent {
+  const worldX = pctToWorldX(approachPct) + 30; // enemy slightly ahead of Nic
   return {
     type, approachAt: approachPct,
     jumpStartAt: approachPct + 0.005,
@@ -473,37 +484,37 @@ function makeEvent(
 }
 
 const TIMELINE: TimelineEvent[] = [
-  // Zone 1: Corporate Landscape (0-25%)
-  makeEvent(0.04, "enemy", "Quick Mtg", 160, { enemyType: "goomba" }),
-  makeEvent(0.07, "block", "SYNERGY", 280, { rebelWord: "PRESENCE" }),
-  makeEvent(0.10, "enemy", "Standup", 400, { enemyType: "goomba" }),
-  makeEvent(0.13, "enemy", "Quick Sync", 520, { enemyType: "goomba" }),
-  makeEvent(0.16, "block", "ALIGN", 640, { rebelWord: "TRUTH" }),
-  makeEvent(0.19, "enemy", "Hop On?", 760, { enemyType: "goomba" }),
-  makeEvent(0.22, "block", "BUY-IN", 880, { rebelWord: "REPAIR" }),
+  // Zone 1: Corporate Landscape — all events AFTER WORLD_FADE_END (0.12)
+  makeEvent(0.15, "enemy", "Quick Mtg", { enemyType: "goomba" }),
+  makeEvent(0.18, "block", "SYNERGY", { rebelWord: "PRESENCE" }),
+  makeEvent(0.20, "enemy", "Standup", { enemyType: "goomba" }),
+  makeEvent(0.22, "enemy", "Quick Sync", { enemyType: "goomba" }),
+  makeEvent(0.24, "block", "ALIGN", { rebelWord: "TRUTH" }),
+  makeEvent(0.26, "enemy", "Hop On?", { enemyType: "goomba" }),
+  makeEvent(0.28, "block", "BUY-IN", { rebelWord: "REPAIR" }),
 
-  // Zone 2: Crumbling World (25-50%)
-  makeEvent(0.28, "enemy", "Reply All", 1120, { enemyType: "bat" }),
-  makeEvent(0.31, "enemy", "Compliance", 1240, { enemyType: "turtle" }),
-  makeEvent(0.34, "block", "LEVERAGE", 1360, { rebelWord: "BELONGING" }),
-  makeEvent(0.37, "enemy", "Following Up", 1480, { enemyType: "bat" }),
-  makeEvent(0.40, "enemy", "Process", 1600, { enemyType: "turtle" }),
-  makeEvent(0.43, "block", "OPTIMIZE", 1720, { rebelWord: "AGENCY" }),
-  makeEvent(0.46, "enemy", "Urgent!", 1840, { enemyType: "bat" }),
-  makeEvent(0.49, "enemy", "Per My Email", 1960, { enemyType: "bat" }),
+  // Zone 2: Crumbling World
+  makeEvent(0.32, "enemy", "Reply All", { enemyType: "bat" }),
+  makeEvent(0.35, "enemy", "Compliance", { enemyType: "turtle" }),
+  makeEvent(0.38, "block", "LEVERAGE", { rebelWord: "BELONGING" }),
+  makeEvent(0.41, "enemy", "Following Up", { enemyType: "bat" }),
+  makeEvent(0.44, "enemy", "Process", { enemyType: "turtle" }),
+  makeEvent(0.47, "block", "OPTIMIZE", { rebelWord: "AGENCY" }),
+  makeEvent(0.50, "enemy", "Urgent!", { enemyType: "bat" }),
+  makeEvent(0.53, "enemy", "Per My Email", { enemyType: "bat" }),
 
-  // Zone 3: Green Growth (50-75%)
-  makeEvent(0.55, "enemy", "Grab You?", 2200, { enemyType: "goomba" }),
-  makeEvent(0.60, "block", "BANDWIDTH", 2400, { rebelWord: "MEANING", blockY: 22 }),
-  makeEvent(0.65, "enemy", "Quick Call", 2600, { enemyType: "goomba" }),
-  makeEvent(0.70, "block", "RESOURCES", 2800, { rebelWord: "WHOLENESS", blockY: 22 }),
+  // Zone 3: Green Growth
+  makeEvent(0.58, "enemy", "Grab You?", { enemyType: "goomba" }),
+  makeEvent(0.63, "block", "BANDWIDTH", { rebelWord: "MEANING", blockY: 22 }),
+  makeEvent(0.68, "enemy", "Quick Call", { enemyType: "goomba" }),
+  makeEvent(0.73, "block", "RESOURCES", { rebelWord: "WHOLENESS", blockY: 22 }),
 
-  // Zone 4: Golden Summit (75-100%)
-  makeEvent(0.80, "enemy", "Precedent", 3200, { enemyType: "turtle" }),
-  makeEvent(0.86, "enemy", "Policy", 3500, { enemyType: "turtle" }),
+  // Zone 4: Golden Summit
+  makeEvent(0.82, "enemy", "Precedent", { enemyType: "turtle" }),
+  makeEvent(0.88, "enemy", "Policy", { enemyType: "turtle" }),
 ];
 
-const FLAG_X = 3900;
+const FLAG_X = pctToWorldX(0.95) + 30;
 const ZONE_TRANSITIONS = [0.25, 0.50, 0.75];
 
 /* ═══════════════════════════════════════════════════════════════

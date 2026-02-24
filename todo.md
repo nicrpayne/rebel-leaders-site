@@ -289,3 +289,10 @@
 
 ## Phase 43: Push Game Strip Intro Much Later
 - [x] Push all intro timing constants significantly later: STRIP 3-5%, NIC_DROP 5-7%, WORLD 8-12% (was 0.5-6.5%)
+
+## Phase 44: Fix Game Strip Timing & Positioning Bugs
+- [x] Fix world materializing too early: redistributed all events after WORLD_FADE_END (12%)
+- [x] Fix double landing glitch: events now start at 15% (well after intro completes at 12%)
+- [x] Fix Nic not moving forward: auto-calculate worldX from approachPct via makeEvent helper
+- [x] Ensure camera follows Nic and events trigger relative to his actual position
+- [x] Ensure box hit (+1) only shows when Nic is actually near the box
