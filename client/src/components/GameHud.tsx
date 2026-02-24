@@ -3,10 +3,13 @@
  * Pixel-art styled HUD in the bottom-right corner.
  * Shows XP bar, time played, and achievement toasts.
  * Minimizable to a small icon. Mobile-friendly.
+ * Clicking the achievements count opens the full achievements panel.
  */
 
+import { useState } from "react";
 import { useGame, type ToastItem } from "@/contexts/GameContext";
 import { AnimatePresence, motion } from "framer-motion";
+import AchievementsPanel from "./AchievementsPanel";
 
 /* ─── Time Formatter ─── */
 function formatTime(seconds: number): string {
@@ -92,9 +95,13 @@ function XpBar({ percent }: { percent: number }) {
 /* ─── Main HUD Component ─── */
 export default function GameHud() {
   const { state, xpPercent, toggleHud, toasts, dismissToast } = useGame();
+  const [showAchievements, setShowAchievements] = useState(false);
 
   return (
     <>
+      {/* Achievements Panel Overlay */}
+      <AchievementsPanel isOpen={showAchievements} onClose={() => setShowAchievements(false)} />
+
       {/* Toast Stack — top-right on mobile, bottom-right above HUD on desktop */}
       <div className="fixed top-16 right-3 md:bottom-24 md:top-auto md:right-4 z-[60] flex flex-col gap-2">
         <AnimatePresence mode="popLayout">
@@ -186,16 +193,20 @@ export default function GameHud() {
                   </div>
                 </div>
 
-                {/* Achievements count */}
+                {/* Achievements count — clickable to open panel */}
                 <div className="px-3 pb-2.5">
-                  <div className="flex items-center justify-between">
-                    <span className="font-pixel text-[7px] text-parchment-dim/40 tracking-wider">
+                  <button
+                    onClick={() => setShowAchievements(true)}
+                    className="w-full flex items-center justify-between group hover:bg-gold/5 -mx-1 px-1 py-0.5 rounded-sm transition-colors"
+                    title="View all achievements"
+                  >
+                    <span className="font-pixel text-[7px] text-parchment-dim/40 tracking-wider group-hover:text-gold/60 transition-colors">
                       ACHIEVEMENTS
                     </span>
-                    <span className="font-pixel text-[9px] text-parchment-dim/60">
-                      {state.unlockedAchievements.length}/13
+                    <span className="font-pixel text-[9px] text-parchment-dim/60 group-hover:text-gold transition-colors">
+                      {state.unlockedAchievements.length}/14 →
                     </span>
-                  </div>
+                  </button>
                 </div>
               </div>
             </motion.div>

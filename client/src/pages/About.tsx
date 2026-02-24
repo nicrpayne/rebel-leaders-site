@@ -10,6 +10,7 @@ import { usePageTracker } from "@/hooks/usePageTracker";
 import DialogueBox from "@/components/DialogueBox";
 import PixelDivider from "@/components/PixelDivider";
 import RebelLogo from "@/components/RebelLogo";
+import EasterEgg from "@/components/EasterEgg";
 
 const RPG_SPRITE = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/oCdVePFazaeRgvNO.png";
 const RPG_BOOKSHELF = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/yIOHdhgRJwHhvBLy.png";
@@ -206,19 +207,35 @@ export default function About() {
                     { name: "Rory Sutherland", contribution: "Behavioral economics — why the irrational is often more powerful than the rational" },
                     { name: "Robert Putnam", contribution: "Social capital — the data behind The Great Transfer" },
                     { name: "Nassim Taleb", contribution: "Antifragility — systems that grow stronger under stress" },
-                    { name: "J.R.R. Tolkien", contribution: "Story — the deepest truths are always told, never explained" },
+                    { name: "J.R.R. Tolkien", contribution: "Story — the deepest truths are always told, never explained", isEgg: true },
                   ]},
                 ].map((group, gi) => (
                   <div key={gi} className="mb-8 last:mb-0">
                     <p className="font-pixel text-[7px] text-gold/40 tracking-[0.2em] mb-3">{group.category}</p>
-                    {group.entries.map((person, i) => (
-                      <div key={i} className="flex items-start gap-4 border-l-2 border-gold/15 pl-5 py-2">
-                        <div>
-                          <p className="font-display text-base font-semibold text-parchment">{person.name}</p>
-                          <p className="text-parchment-dim/50 text-sm font-display">{person.contribution}</p>
+                    {group.entries.map((person: { name: string; contribution: string; isEgg?: boolean }, i: number) => {
+                      const content = (
+                        <div key={i} className="flex items-start gap-4 border-l-2 border-gold/15 pl-5 py-2">
+                          <div>
+                            <p className="font-display text-base font-semibold text-parchment">{person.name}</p>
+                            <p className="text-parchment-dim/50 text-sm font-display">{person.contribution}</p>
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      );
+                      if (person.isEgg) {
+                        return (
+                          <EasterEgg
+                            key={i}
+                            id="egg-about-tolkien"
+                            mode="hover"
+                            quote="All that is gold does not glitter, not all those who wander are lost; the old that is strong does not wither, deep roots are not reached by the frost."
+                            attribution="J.R.R. Tolkien, The Fellowship of the Ring"
+                          >
+                            {content}
+                          </EasterEgg>
+                        );
+                      }
+                      return content;
+                    })}
                   </div>
                 ))
                 }

@@ -19,6 +19,7 @@ import RebelLogo from "@/components/RebelLogo";
 import Footer from "@/components/Footer";
 import SubstackSignup from "@/components/SubstackSignup";
 import { usePageTracker } from "@/hooks/usePageTracker";
+import EasterEgg from "@/components/EasterEgg";
 
 /* ─── CDN Image URLs ─── */
 const RPG_OFFICE = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/zlNQJQinSxaqyYjB.png";
@@ -69,7 +70,14 @@ export default function Home() {
             transition={{ duration: 1, delay: 0.3 }}
             className="flex justify-center mb-6"
           >
-            <RebelLogo size={48} className="text-gold" />
+            <EasterEgg
+              id="egg-home-logo"
+              mode="triple"
+              quote="The real voyage of discovery consists not in seeking new landscapes, but in having new eyes."
+              attribution="Marcel Proust"
+            >
+              <RebelLogo size={48} className="text-gold" />
+            </EasterEgg>
           </motion.div>
 
           {/* Pixel font title */}

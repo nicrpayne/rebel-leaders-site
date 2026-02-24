@@ -10,6 +10,7 @@ import FadeIn from "@/components/FadeIn";
 import { usePageTracker } from "@/hooks/usePageTracker";
 import PixelDivider from "@/components/PixelDivider";
 import DialogueBox from "@/components/DialogueBox";
+import EasterEgg from "@/components/EasterEgg";
 
 const BOOKSHELF_IMG = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/fHPXctuxSsjvwkhg.png";
 
@@ -436,10 +437,24 @@ export default function Shelf() {
           </FadeIn>
           <FadeIn delay={0.3}>
             <p className="font-display text-lg text-parchment-dim/70 max-w-xl mx-auto">
-              These are not "recommended reading." These are the texts that broke something open.
+              These are not &ldquo;recommended reading.&rdquo; These are the texts that broke something open.
               The ones that gave language to what I was already feeling. Start anywhere — or start
               with the five that changed everything.
             </p>
+          </FadeIn>
+          <FadeIn delay={0.4}>
+            <div className="mt-4 flex justify-center">
+              <EasterEgg
+                id="egg-shelf-book"
+                mode="click"
+                quote="A reader lives a thousand lives before he dies. The man who never reads lives only one."
+                attribution="George R.R. Martin"
+              >
+                <span className="font-pixel text-[8px] text-gold/20 hover:text-gold/40 transition-colors cursor-pointer select-none tracking-widest">
+                  📖 ???
+                </span>
+              </EasterEgg>
+            </div>
           </FadeIn>
         </div>
       </section>

@@ -11,6 +11,7 @@ import { usePageTracker } from "@/hooks/usePageTracker";
 import DialogueBox from "@/components/DialogueBox";
 import PixelDivider from "@/components/PixelDivider";
 import SubstackSignup from "@/components/SubstackSignup";
+import EasterEgg from "@/components/EasterEgg";
 
 const RPG_OFFICE = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/zlNQJQinSxaqyYjB.png";
 const RPG_SPRITE = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/oCdVePFazaeRgvNO.png";
@@ -19,6 +20,16 @@ export default function StartHere() {
   usePageTracker("start");
   return (
     <PageLayout>
+      {/* Easter Egg 5: Konami Code — hidden, always listening */}
+      <EasterEgg
+        id="egg-konami"
+        mode="konami"
+        quote="It's dangerous to go alone! Take this: the courage to be yourself in a world that profits from your performance."
+        attribution="Ancient Gamer Wisdom"
+        className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[100]"
+      >
+        <span />
+      </EasterEgg>
       {/* Hero */}
       <section className="relative py-20 md:py-28">
         <div className="absolute inset-0 opacity-45">

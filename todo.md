@@ -169,3 +169,50 @@
 
 ## Phase 30: HUD Minimize Button Visibility
 - [x] Make the HUD minimize/expand button more obvious and clickable (larger hit area, ▾ icon, hover border/bg)
+
+## Phase 31: Scroll-Driven Side-Scroller (The Map Page)
+### Sprite Assets
+- [x] Generate Nic running sprite (4-frame animation, lightsaber)
+- [x] Generate Quick Meeting goomba enemy sprite
+- [x] Generate Slack Ping bat enemy sprite
+- [x] Generate Policy Turtle enemy sprite
+- [x] Generate Buzzword Brick block sprites
+- [x] Generate 4 background tilesets (corporate, crumbling, growth, summit)
+- [x] Generate ground/platform tiles
+
+### Canvas Engine
+- [x] Build scroll-driven Canvas renderer component
+- [x] Implement parallax background scrolling (2-3 layers)
+- [x] Implement sprite animation system (frame cycling)
+- [x] Implement Nic auto-movement tied to scroll position
+- [x] Implement auto-jump over enemies
+- [x] Implement block smashing with rebel word pop-outs
+- [x] Add top-edge fade transparency (but Nic stays opaque on high jumps)
+
+### Level Design
+- [x] Zone 1 (0-25%): Corporate landscape with goombas and buzzword bricks
+- [x] Zone 2 (25-50%): Crumbling world with bats and turtles
+- [x] Zone 3 (50-75%): Green growth, fewer enemies
+- [x] Zone 4 (75-100%): Golden summit, victory run
+
+### Integration
+- [x] Mount as fixed overlay on Manifesto page bottom
+- [x] Add toggle button to show/hide
+- [x] Connect to XP system (completion = achievement)
+- [x] Hide on mobile (< 768px)
+- [x] Performance: requestAnimationFrame with scroll throttling
+
+## Phase 32: Easter Eggs (5 Hidden Secrets for 100% XP)
+- [x] Easter Egg 1: Triple-click Rebel Logo on Home page (Proust quote)
+- [x] Easter Egg 2: Click X on Manifesto hero (Tolkien quote)
+- [x] Easter Egg 3: Hover on Tolkien entry in About Skill Tree (LOTR poem)
+- [x] Easter Egg 4: Click ??? book on Shelf hero (GRRM quote)
+- [x] Easter Egg 5: Konami code on New Player page (gamer wisdom)
+- [x] Each egg reveals a quote/commentary and awards 7 XP via trackEasterEgg()
+- [x] Visual feedback: pixel-art reveal animation when found
+
+## Phase 33: Achievements Panel
+- [x] Build expandable achievements panel showing all 14 achievements
+- [x] Show locked (grayed out) vs unlocked (gold) states
+- [x] Add descriptions for each achievement
+- [x] Accessible from HUD via click on achievements count (→ arrow)

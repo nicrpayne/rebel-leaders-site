@@ -47,7 +47,7 @@ export interface Achievement {
   icon: string; // emoji for now, pixel art later
 }
 
-const ACHIEVEMENTS: Achievement[] = [
+export const ACHIEVEMENTS: Achievement[] = [
   { id: "first-visit", title: "Quest Begun", description: "Visited your first page", icon: "⚔️" },
   { id: "explorer", title: "Explorer", description: "Visited 5 different pages", icon: "🗺️" },
   { id: "cartographer", title: "Cartographer", description: "Visited every page", icon: "🏆" },
@@ -61,6 +61,7 @@ const ACHIEVEMENTS: Achievement[] = [
   { id: "xp-100", title: "Fully Alive", description: "100% completion", icon: "✨" },
   { id: "time-30", title: "Present", description: "Spent 30 minutes in the rebellion", icon: "⏳" },
   { id: "time-60", title: "Committed", description: "Spent 1 hour in the rebellion", icon: "🕐" },
+  { id: "runner_complete", title: "Level Complete", description: "Completed the Manifesto side-scroller", icon: "🎮" },
 ];
 
 /* ─── State Shape ─── */
@@ -105,6 +106,7 @@ interface GameContextValue {
   dismissToast: (id: string) => void;
   getAchievement: (id: string) => Achievement | undefined;
   isAchievementUnlocked: (id: string) => boolean;
+  awardAchievement: (id: string) => void;
 }
 
 const GameContext = createContext<GameContextValue | null>(null);
@@ -314,6 +316,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
         dismissToast,
         getAchievement,
         isAchievementUnlocked,
+        awardAchievement: unlockAchievement,
       }}
     >
       {children}
