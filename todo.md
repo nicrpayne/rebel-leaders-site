@@ -425,7 +425,8 @@
 - [ ] Verify which sprite state is active during landing-on-enemy vs mid-air
 
 ## Phase 70: Fix Nic Transparency/Flashing on Scroll
-- [x] Found 3 alpha sources: nicAlpha, stripT, and CSS mask-image gradient
-- [x] Tightened CSS mask from 40% to 12% so only the very top edge fades
-- [x] Clamped nicAlpha*stripT to 1.0 once intro completes — no more flashing
-- [x] Clamped containerOpacity to 1 once intro fade is done
+- [x] Found root cause: Nic sprite PNGs have 61-79% semi-transparent pixels vs enemies at 3-32%
+- [x] Processed all 4 Nic sprites: alpha > 40 → fully opaque, edges softly boosted
+- [x] Uploaded fixed sprites to CDN and swapped URLs
+- [x] Reverted CSS mask back to original 40% gradient per user request
+- [x] Kept nicAlpha clamp for intro sequence

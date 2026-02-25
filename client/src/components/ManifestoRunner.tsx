@@ -31,15 +31,15 @@ import { useGame } from "@/contexts/GameContext";
    ═══════════════════════════════════════════════════════════════ */
 
 const SPRITES = {
-  nicRun:   "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/NbXkjdorVgqUcilx.png",
-  nicJump:  "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/DjyFCombPKtvIAse.png",
-  nicIdle:  "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/yJbGgdWrupYGmAAu.png",
+  nicRun:   "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/WNcrOeqBSPNNlXjy.png",
+  nicJump:  "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/xywzqmjGrbLmqQqG.png",
+  nicIdle:  "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/UPZzFLuAJyZfZWxY.png",
   goomba:   "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/nBERaIlYpCEOiWnP.png",
   bat:      "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/SYHEtkMnhFfFNKbp.png",
   turtle:   "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/tAUdctTTtbAZnbfH.png",
   brick:    "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/CZIKNFXWjzlvpjEI.png",
   flag:     "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/XErroFrcgEbnlBdi.png",
-  nicVictory: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/VrAjRkmkMHEOwWhA.png",
+  nicVictory: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/YhXlPLshnAmoKzYg.png",
 };
 
 /* ═══════════════════════════════════════════════════════════════
@@ -1002,8 +1002,7 @@ export default function ManifestoRunner({ onVisibilityChange }: ManifestoRunnerP
     const updateContainerVisibility = () => {
       const progress = getScrollProgress();
       const t = Math.max(0, Math.min(1, (progress - STRIP_FADE_START) / (STRIP_FADE_END - STRIP_FADE_START)));
-      // Clamp to 1 once intro fade is done to prevent micro-fluctuations
-      setContainerOpacity(t >= 0.99 ? 1 : t);
+      setContainerOpacity(t);
       setContainerTranslateY((1 - t) * 100);
     };
     updateContainerVisibility();
@@ -1043,8 +1042,8 @@ export default function ManifestoRunner({ onVisibilityChange }: ManifestoRunnerP
             opacity: containerOpacity,
             transform: `translateY(${containerTranslateY}%)`,
             willChange: "opacity, transform",
-            maskImage: "linear-gradient(to bottom, transparent 0%, black 12%)",
-            WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 12%)",
+            maskImage: "linear-gradient(to bottom, transparent 0%, black 40%)",
+            WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 40%)",
           }}
         >
           <canvas
