@@ -480,3 +480,11 @@
 - [x] Removed diagnostic console.log/warn statements from sprite loader
 - [x] All 9 tests passing
 - [x] Nic renders solid and opaque in browser — victory pose clearly visible
+
+## Phase 78: Replace Nic with User's Actual Google Drive Sprites
+- [x] Download the 4 Google Drive files (the user's NEW character art, not old AI sprites)
+- [x] Identify what each file contains: file1=idle(2 frames), file2=jump(3 frames), file3=run(4 frames), file4=victory(1 frame)
+- [x] Process into proper horizontal sprite sheets: idle 72x64, run 208x64, jump 168x64, victory 84x64
+- [x] Upload to CDN (4/4 success) and swap all 4 URLs in ManifestoRunner.tsx
+- [x] Verify Nic uses the new art in browser (confirmed new art visible in all states including victory)
+- [x] Tests passing (9/9), checkpoint saved
