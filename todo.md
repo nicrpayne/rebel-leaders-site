@@ -488,3 +488,29 @@
 - [x] Upload to CDN (4/4 success) and swap all 4 URLs in ManifestoRunner.tsx
 - [x] Verify Nic uses the new art in browser (confirmed new art visible in all states including victory)
 - [x] Tests passing (9/9), checkpoint saved
+
+## Phase 79: Victory Sprite Swap + Frame Size Normalization
+- [x] Download new victory sprite from Google Drive (sword-in-air pose)
+- [x] Measure all source frames at original pixel scale to find Nic's "true" body height
+- [x] Normalize all sprite sheets so Nic's body is the same height across all states
+- [x] Upload normalized sheets to CDN and swap URLs
+- [x] Test and checkpoint
+
+## Phase 79b: Manual Sprite Size Tuning
+- [x] Idle: tuned to 105% width / 110% height + render multiplier 1.10
+- [x] Run: render multiplier 0.94 (6% smaller)
+- [x] Jump: frames 0-1 render multiplier 1.20, frame 2 (stomp) 1.0
+- [x] Victory: render multiplier 1.70
+- [x] Upload final tuned sprites and swap URLs
+- [x] Test — all sprites look correctly sized
+
+## Phase 80: Generate Matching Victory Sprite
+- [x] Analyzed proportions of existing sprites (semi-realistic, not chibi)
+- [x] Generated front-facing victory pose (sword raised) matching existing art style
+- [x] Processed, uploaded, and swapped in ManifestoRunner.tsx
+- [x] Victory sprite looks great — user confirmed "perfect"
+
+## Phase 81: Checkpoint, GitHub Sync & Publish Fix
+- [ ] Save checkpoint with all sprite tuning changes
+- [ ] Push to GitHub
+- [ ] Diagnose why published version shows older content

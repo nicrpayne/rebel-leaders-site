@@ -32,14 +32,14 @@ import { useGame } from "@/contexts/GameContext";
 
 const SPRITES = {
   nicRun:   "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/UpbgmXKMNsNjpnpu.png",
-  nicJump:  "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/lZYQUQDGUgkNHvHP.png",
-  nicIdle:  "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/lcBNIPKcJxbcFSib.png",
+  nicJump:  "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/XLuyIUSYWidBHSap.png",
+  nicIdle:  "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/WHwqHpqvQUlZmkTM.png",
   goomba:   "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/nBERaIlYpCEOiWnP.png",
   bat:      "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/SYHEtkMnhFfFNKbp.png",
   turtle:   "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/tAUdctTTtbAZnbfH.png",
   brick:    "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/CZIKNFXWjzlvpjEI.png",
   flag:     "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/XErroFrcgEbnlBdi.png",
-  nicVictory: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/OfiCJXrOQrzWAohx.png",
+  nicVictory: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/gEUSBozlhzsCUQVp.png",
 };
 
 /* ═══════════════════════════════════════════════════════════════
@@ -186,7 +186,7 @@ function drawNicSprite(
   if (isVictory) {
     // Victory pose: front-facing sprite with sword raised, drawn at NIC_SIZE to match running Nic
     sheet = sheets.victory;
-    spriteFrame = frame % 2;
+    spriteFrame = 0; // single-frame victory sprite
   } else if (isJumping) {
     sheet = sheets.jump;
     if (jumpT < 0.35) spriteFrame = 0;
@@ -209,9 +209,26 @@ function drawNicSprite(
   ctx.fill();
   ctx.restore();
 
-  // Draw sprite — victory sprite gets a uniform 1.15x bump so it reads slightly larger to the eye
-  const renderSize = isVictory ? NIC_SIZE * 1.15 : NIC_SIZE;
-  drawSprite(ctx, sheet, spriteFrame, cx, bottomY, renderSize, renderSize, alpha);
+  // Per-state size multipliers (tune these to match sprite art)
+  // idle: 105w/110h, run: 100/100, jump f0-1: 120/120, jump f2(stomp): 100/100, victory: 115/115
+  let sizeMult = 1.0;
+  if (isVictory) {
+    sizeMult = 1.70;
+  } else if (isJumping) {
+    sizeMult = spriteFrame < 2 ? 1.20 : 1.0;
+  } else if (isMoving) {
+    sizeMult = 0.94;
+  } else {
+    // idle
+    sizeMult = 1.10;
+  }
+
+  // Draw sprite — respect the sprite cell's aspect ratio instead of forcing into a square
+  const baseSize = NIC_SIZE * sizeMult;
+  const renderH = baseSize;
+  const aspectRatio = sheet.loaded && sheet.frameH > 0 ? sheet.frameW / sheet.frameH : 1;
+  const renderW = baseSize * aspectRatio;
+  drawSprite(ctx, sheet, spriteFrame, cx, bottomY, renderW, renderH, alpha);
 
 
   // Lightsaber glow aura
@@ -672,7 +689,7 @@ export default function ManifestoRunner({ onVisibilityChange }: ManifestoRunnerP
       nicRun:  loadSpriteSheet(SPRITES.nicRun, 4),
       nicJump: loadSpriteSheet(SPRITES.nicJump, 3),
       nicIdle: loadSpriteSheet(SPRITES.nicIdle, 2),
-      nicVictory: loadSpriteSheet(SPRITES.nicVictory, 2),
+      nicVictory: loadSpriteSheet(SPRITES.nicVictory, 1),
       goomba:  loadSpriteSheet(SPRITES.goomba, 2),
       bat:     loadSpriteSheet(SPRITES.bat, 2),
       turtle:  loadSpriteSheet(SPRITES.turtle, 2),
