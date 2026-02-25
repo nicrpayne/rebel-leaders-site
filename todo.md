@@ -437,3 +437,11 @@
 - [x] Fix 2: Math.round on all destination coords (dx, dy, dw, dh) in drawSprite
 - [x] Fix 3: imageSmoothingEnabled = false on every render frame and in drawSprite
 - [x] These fixes prevent subpixel blending that was washing out Nic's colors
+
+## Phase 72: Definitive Fix for Nic Sprite Flashing
+- [x] Traced git history: flashing started at Phase 67 when per-state scale multipliers were introduced
+- [x] Reverted all 3 Nic sprite URLs to originals (run, jump, idle, victory)
+- [x] Reverted drawNicSprite to original clean version — no per-state scaling, only victory 1.15x
+- [x] Reverted drawSprite and loadSpriteSheet to originals (no Math.floor/Math.round hacks)
+- [x] Removed imageSmoothingEnabled override
+- [x] All 9 tests passing

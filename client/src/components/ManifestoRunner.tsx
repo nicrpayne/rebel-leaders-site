@@ -31,15 +31,15 @@ import { useGame } from "@/contexts/GameContext";
    ═══════════════════════════════════════════════════════════════ */
 
 const SPRITES = {
-  nicRun:   "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/ruWXpmcrrjchSGrw.png",
-  nicJump:  "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/lIKHMXdeZsWPiufS.png",
-  nicIdle:  "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/xDxzTOpVFdnVgtPr.png",
+  nicRun:   "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/NbXkjdorVgqUcilx.png",
+  nicJump:  "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/DjyFCombPKtvIAse.png",
+  nicIdle:  "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/yJbGgdWrupYGmAAu.png",
   goomba:   "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/nBERaIlYpCEOiWnP.png",
   bat:      "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/SYHEtkMnhFfFNKbp.png",
   turtle:   "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/tAUdctTTtbAZnbfH.png",
   brick:    "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/CZIKNFXWjzlvpjEI.png",
   flag:     "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/XErroFrcgEbnlBdi.png",
-  nicVictory: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/StJGPDnKACgbMNBi.png",
+  nicVictory: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/VrAjRkmkMHEOwWhA.png",
 };
 
 /* ═══════════════════════════════════════════════════════════════
@@ -117,7 +117,7 @@ function loadSpriteSheet(url: string, frameCount: number): SpriteSheet {
   // Note: no crossOrigin needed — CDN doesn't require CORS for rendering
   const sheet: SpriteSheet = { img, frameW: 0, frameH: 0, frameCount, loaded: false };
   img.onload = () => {
-    sheet.frameW = Math.floor(img.naturalWidth / frameCount);
+    sheet.frameW = img.naturalWidth / frameCount;
     sheet.frameH = img.naturalHeight;
     sheet.loaded = true;
   };
@@ -145,19 +145,13 @@ function drawSprite(
 ) {
   if (!sheet.loaded || alpha <= 0) return;
   const f = frame % sheet.frameCount;
-  const sx = f * sheet.frameW; // frameW is already Math.floor'd
-  // Snap destination to integers to prevent subpixel blending against transparent edges
-  const dx = Math.round(cx - renderW / 2);
-  const dy = Math.round(bottomY - renderH);
-  const dw = Math.round(renderW);
-  const dh = Math.round(renderH);
+  const sx = f * sheet.frameW;
   ctx.save();
-  ctx.imageSmoothingEnabled = false;
   ctx.globalAlpha = alpha;
   ctx.drawImage(
     sheet.img,
     sx, 0, sheet.frameW, sheet.frameH,
-    dx, dy, dw, dh
+    cx - renderW / 2, bottomY - renderH, renderW, renderH
   );
   ctx.restore();
 }
@@ -205,25 +199,8 @@ function drawNicSprite(
   ctx.fill();
   ctx.restore();
 
-  // Scale each sprite state so the visible character matches the running sprite's visual weight.
-  // Measured character widths within 64x64 frames:
-  //   Running avg ~50px (reference), Idle avg ~37px, Jump avg ~48px, Victory ~40px.
-  // We scale the *render size* per-state so transitions look consistent.
-  let renderSize = NIC_SIZE;
-  if (isVictory) {
-    renderSize = NIC_SIZE * 1.25;      // 40px char → 50px visual (50/40)
-  } else if (!isMoving && !isJumping) {
-    renderSize = NIC_SIZE * 1.11;      // idle: bumped to 1.11x per user feedback
-  } else if (isJumping) {
-    if (jumpT > 0.65) {
-      renderSize = NIC_SIZE * 1.0;          // Frame 2: landing/stomp — trimmed to 1.0x
-    } else if (jumpT >= 0.35) {
-      renderSize = NIC_SIZE * 1.62;        // Frame 1: peak (higher mid-air) — nudged up a smidge
-    } else {
-      renderSize = NIC_SIZE * 1.38;        // Frame 0: ascending (lower mid-air) — trimmed per user feedback
-    }
-  }
-  // Running stays at NIC_SIZE — it's the reference
+  // Draw sprite — victory sprite gets a uniform 1.15x bump so it reads slightly larger to the eye
+  const renderSize = isVictory ? NIC_SIZE * 1.15 : NIC_SIZE;
   drawSprite(ctx, sheet, spriteFrame, cx, bottomY, renderSize, renderSize, alpha);
 
 
@@ -791,7 +768,6 @@ export default function ManifestoRunner({ onVisibilityChange }: ManifestoRunnerP
 
       // ── RENDER ──
       ctx.clearRect(0, 0, w, h);
-      ctx.imageSmoothingEnabled = false; // pixel art — no subpixel blending
       ctx.save();
       ctx.translate(shakeX, shakeY);
 
