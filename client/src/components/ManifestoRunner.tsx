@@ -209,12 +209,13 @@ function drawNicSprite(
   } else if (!isMoving && !isJumping) {
     renderSize = NIC_SIZE * 1.17;      // idle: reduced 15% per user feedback
   } else if (isJumping) {
-    renderSize = NIC_SIZE * 1.42;      // jump: bigger per user feedback
+    if (jumpT > 0.65) {
+      renderSize = NIC_SIZE * 1.42 * 0.75; // landing/stomp frame: reduced 25% per user feedback
+    } else {
+      renderSize = NIC_SIZE * 1.42;        // mid-air (sword up): bigger per user feedback
+    }
   }
-  // Running scaled down 25% per user feedback
-  if (!isVictory && !isJumping && isMoving) {
-    renderSize = NIC_SIZE * 0.75;
-  }
+  // Running stays at NIC_SIZE — it's the reference
   drawSprite(ctx, sheet, spriteFrame, cx, bottomY, renderSize, renderSize, alpha);
 
   // Lightsaber glow aura
