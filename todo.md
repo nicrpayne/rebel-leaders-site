@@ -407,3 +407,9 @@
 
 ## Phase 66: Fix Footer Hiding Approach
 - [x] Changed from conditional rendering ({!hideFooter && <Footer />}) to visibility:hidden wrapper so footer still takes up space and page scrolls fully, but content is invisible when game is active
+
+## Phase 67: Fix Inconsistent Nic Sprite Sizes
+- [x] Analyzed all Nic sprite states: measured exact bounding boxes (run avg 50px, idle avg 37px, jump avg 48px, victory 40px within 64x64 frames)
+- [x] Applied per-state scale factors: idle 1.35x, jump 1.10x, victory 1.25x, running 1.0x (reference)
+- [x] Verified visual consistency across all animation states in browser
+- [x] All 9 tests passing

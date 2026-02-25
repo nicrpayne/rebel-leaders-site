@@ -199,8 +199,19 @@ function drawNicSprite(
   ctx.fill();
   ctx.restore();
 
-  // Draw sprite — victory sprite gets a uniform 1.15x bump so it reads slightly larger to the eye
-  const renderSize = isVictory ? NIC_SIZE * 1.15 : NIC_SIZE;
+  // Scale each sprite state so the visible character matches the running sprite's visual weight.
+  // Measured character widths within 64x64 frames:
+  //   Running avg ~50px (reference), Idle avg ~37px, Jump avg ~48px, Victory ~40px.
+  // We scale the *render size* per-state so transitions look consistent.
+  let renderSize = NIC_SIZE;
+  if (isVictory) {
+    renderSize = NIC_SIZE * 1.25;      // 40px char → 50px visual (50/40)
+  } else if (!isMoving && !isJumping) {
+    renderSize = NIC_SIZE * 1.35;      // 37px char → 50px visual (50/37)
+  } else if (isJumping) {
+    renderSize = NIC_SIZE * 1.10;      // 48px avg char → ~53px (conservative, frame 2 is already wide)
+  }
+  // Running stays at NIC_SIZE — it's the reference
   drawSprite(ctx, sheet, spriteFrame, cx, bottomY, renderSize, renderSize, alpha);
 
   // Lightsaber glow aura
