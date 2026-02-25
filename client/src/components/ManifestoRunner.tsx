@@ -117,9 +117,16 @@ function loadSpriteSheet(url: string, frameCount: number): SpriteSheet {
   // Note: no crossOrigin needed — CDN doesn't require CORS for rendering
   const sheet: SpriteSheet = { img, frameW: 0, frameH: 0, frameCount, loaded: false };
   img.onload = () => {
-    sheet.frameW = img.naturalWidth / frameCount;
-    sheet.frameH = img.naturalHeight;
+    sheet.frameW = Math.floor(img.naturalWidth / frameCount);
+    sheet.frameH = Math.floor(img.naturalHeight);
     sheet.loaded = true;
+    // Diagnostic: log sprite dimensions to verify clean divisibility
+    const remainder = img.naturalWidth % frameCount;
+    if (remainder !== 0) {
+      console.warn(`[SPRITE] ${url} — naturalWidth ${img.naturalWidth} not divisible by ${frameCount} (remainder ${remainder}), frameW floored to ${sheet.frameW}`);
+    } else {
+      console.log(`[SPRITE] ${url} — ${img.naturalWidth}x${img.naturalHeight}, ${frameCount} frames, frameW=${sheet.frameW}`);
+    }
   };
   img.src = url;
   return sheet;
@@ -145,7 +152,12 @@ function drawSprite(
 ) {
   if (!sheet.loaded || alpha <= 0) return;
   const f = frame % sheet.frameCount;
-  const sx = f * sheet.frameW;
+  // Force integer source rects to prevent sampling across frame boundaries
+  const sx = Math.floor(f * sheet.frameW);
+  const sw = Math.floor(sheet.frameW);
+  const sh = Math.floor(sheet.frameH);
+  // Clamp: ensure we don't read past the image edge on the last frame
+  const clampedSw = Math.min(sw, sheet.img.naturalWidth - sx);
   // Snap destination to integer pixels to prevent subpixel anti-aliasing shimmer
   const dx = Math.round(cx - renderW / 2);
   const dy = Math.round(bottomY - renderH);
@@ -155,7 +167,7 @@ function drawSprite(
   ctx.globalAlpha = alpha;
   ctx.drawImage(
     sheet.img,
-    sx, 0, sheet.frameW, sheet.frameH,
+    sx, 0, clampedSw, sh,
     dx, dy, dw, dh
   );
   ctx.restore();
@@ -204,6 +216,8 @@ function drawNicSprite(
   ctx.fill();
   ctx.restore();
 
+  // DIAGNOSTIC: Lock to frame 0 to test if shimmer is from frame slicing bleed
+  spriteFrame = 0;
   // Draw sprite — victory sprite gets a uniform 1.15x bump so it reads slightly larger to the eye
   const renderSize = isVictory ? NIC_SIZE * 1.15 : NIC_SIZE;
   drawSprite(ctx, sheet, spriteFrame, cx, bottomY, renderSize, renderSize, alpha);

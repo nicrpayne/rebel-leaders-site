@@ -462,3 +462,9 @@
 - [x] Test A: Snap Nic coords to integers + snap drawSprite destination coords to integers
 - [x] Test B: Disable lightsaber glow (shadowBlur) entirely
 - [x] Test C: Remove CSS mask-image if A+B don't fix it
+
+## Phase 76: Fractional Frame Slicing Fix
+- [x] Fix frameW to integer via Math.floor in sprite loader
+- [x] Fix drawSprite source rects to integers (sx, sw, sh)
+- [x] Lock Nic to frame 0 as diagnostic test
+- [x] Log naturalWidth/frameCount for all Nic sheets
