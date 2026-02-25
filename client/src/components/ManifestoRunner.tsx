@@ -211,7 +211,10 @@ function drawNicSprite(
   } else if (isJumping) {
     renderSize = NIC_SIZE * 1.42;      // jump: bigger per user feedback
   }
-  // Running stays at NIC_SIZE — it's the reference
+  // Running scaled down 25% per user feedback
+  if (!isVictory && !isJumping && isMoving) {
+    renderSize = NIC_SIZE * 0.75;
+  }
   drawSprite(ctx, sheet, spriteFrame, cx, bottomY, renderSize, renderSize, alpha);
 
   // Lightsaber glow aura
