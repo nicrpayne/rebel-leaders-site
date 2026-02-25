@@ -465,11 +465,11 @@ function drawVictoryBanner(ctx: CanvasRenderingContext2D, w: number, h: number, 
   ctx.lineWidth = 1.5;
   ctx.strokeRect(bannerX, bannerY, bannerW, bannerH);
 
-  // "REBELLION COMPLETE" text — centered in banner
+  // "TUTORIAL COMPLETE" text — centered in banner
   ctx.fillStyle = C.gold;
   ctx.font = `bold 12px "Press Start 2P", monospace`;
   ctx.textAlign = "center";
-  ctx.fillText("REBELLION COMPLETE", w / 2, bannerY + 20);
+  ctx.fillText("TUTORIAL COMPLETE", w / 2, bannerY + 20);
 
   // Subtitle — smaller, softer
   ctx.fillStyle = "rgba(255, 255, 255, 0.7)";
