@@ -31,15 +31,15 @@ import { useGame } from "@/contexts/GameContext";
    ═══════════════════════════════════════════════════════════════ */
 
 const SPRITES = {
-  nicRun:   "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/UhDYgSYVdoVymXQN.png",
-  nicJump:  "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/bdPRSeIvzPIMSMIs.png",
-  nicIdle:  "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/IlPEGwdZmYgwuklf.png",
+  nicRun:   "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/szEOauhqWKXyfZer.png",
+  nicJump:  "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/WqknjgCOVOKUVnME.png",
+  nicIdle:  "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/zygCgKwuWqYtyVlK.png",
   goomba:   "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/nBERaIlYpCEOiWnP.png",
   bat:      "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/SYHEtkMnhFfFNKbp.png",
   turtle:   "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/tAUdctTTtbAZnbfH.png",
   brick:    "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/CZIKNFXWjzlvpjEI.png",
   flag:     "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/XErroFrcgEbnlBdi.png",
-  nicVictory: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/gctjAkPwmWydLRPu.png",
+  nicVictory: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/jPIzRLWFkCQwtsaI.png",
 };
 
 /* ═══════════════════════════════════════════════════════════════
@@ -120,13 +120,6 @@ function loadSpriteSheet(url: string, frameCount: number): SpriteSheet {
     sheet.frameW = Math.floor(img.naturalWidth / frameCount);
     sheet.frameH = Math.floor(img.naturalHeight);
     sheet.loaded = true;
-    // Diagnostic: log sprite dimensions to verify clean divisibility
-    const remainder = img.naturalWidth % frameCount;
-    if (remainder !== 0) {
-      console.warn(`[SPRITE] ${url} — naturalWidth ${img.naturalWidth} not divisible by ${frameCount} (remainder ${remainder}), frameW floored to ${sheet.frameW}`);
-    } else {
-      console.log(`[SPRITE] ${url} — ${img.naturalWidth}x${img.naturalHeight}, ${frameCount} frames, frameW=${sheet.frameW}`);
-    }
   };
   img.src = url;
   return sheet;
@@ -216,25 +209,23 @@ function drawNicSprite(
   ctx.fill();
   ctx.restore();
 
-  // DIAGNOSTIC: Lock to frame 0 to test if shimmer is from frame slicing bleed
-  spriteFrame = 0;
   // Draw sprite — victory sprite gets a uniform 1.15x bump so it reads slightly larger to the eye
   const renderSize = isVictory ? NIC_SIZE * 1.15 : NIC_SIZE;
   drawSprite(ctx, sheet, spriteFrame, cx, bottomY, renderSize, renderSize, alpha);
 
 
-  // Lightsaber glow aura — DISABLED for diagnostic (shadowBlur can cause compositing artifacts)
-  // if (alpha > 0.3) {
-  //   ctx.save();
-  //   ctx.globalAlpha = alpha * 0.12;
-  //   ctx.shadowColor = C.saber;
-  //   ctx.shadowBlur = 14;
-  //   ctx.fillStyle = C.saber;
-  //   ctx.beginPath();
-  //   ctx.arc(cx + NIC_SIZE * 0.25, bottomY - NIC_SIZE * 0.55, 4, 0, Math.PI * 2);
-  //   ctx.fill();
-  //   ctx.restore();
-  // }
+  // Lightsaber glow aura
+  if (alpha > 0.3) {
+    ctx.save();
+    ctx.globalAlpha = alpha * 0.12;
+    ctx.shadowColor = C.saber;
+    ctx.shadowBlur = 14;
+    ctx.fillStyle = C.saber;
+    ctx.beginPath();
+    ctx.arc(cx + NIC_SIZE * 0.25, bottomY - NIC_SIZE * 0.55, 4, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -1064,8 +1055,8 @@ export default function ManifestoRunner({ onVisibilityChange }: ManifestoRunnerP
             opacity: containerOpacity,
             transform: `translateY(${containerTranslateY}%)`,
             willChange: "opacity, transform",
-            // maskImage: "linear-gradient(to bottom, transparent 0%, black 40%)",  // DISABLED for diagnostic Test C
-            // WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 40%)",
+            maskImage: "linear-gradient(to bottom, transparent 0%, black 40%)",
+             WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 40%)",
           }}
         >
           <canvas

@@ -468,3 +468,15 @@
 - [x] Fix drawSprite source rects to integers (sx, sw, sh)
 - [x] Lock Nic to frame 0 as diagnostic test
 - [x] Log naturalWidth/frameCount for all Nic sheets
+
+## Phase 77: User-Provided Clean Sprites (Final Fix)
+- [x] Used pre-processed fixed sprites with boosted alpha (81-89% high-alpha, matching goomba's 82%)
+- [x] Sprites already in correct format: idle 128x64, run 256x64, jump 192x64, victory 128x64
+- [x] Uploaded all 4 fixed sprite sheets to CDN (verified PNG format with RGBA preserved)
+- [x] Swapped all 4 Nic sprite URLs in ManifestoRunner.tsx
+- [x] Restored lightsaber glow aura (was disabled for diagnostic)
+- [x] CSS mask-image already present (40% gradient)
+- [x] Kept defense-in-depth fixes: Math.floor frameW, Math.round dest coords, imageSmoothingEnabled=false, canvas state reset
+- [x] Removed diagnostic console.log/warn statements from sprite loader
+- [x] All 9 tests passing
+- [x] Nic renders solid and opaque in browser — victory pose clearly visible
