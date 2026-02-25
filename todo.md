@@ -520,3 +520,14 @@
 - [x] Reduce dust to 1-2 particles when enemy death particles are also active
 - [x] Add subtle lightsaber trail effect during movement (4 ghost positions, 0.07 opacity, screen blend)
 - [x] Test and checkpoint — all 9 tests passing, no regressions
+
+## Phase 83: Game Strip Label Rework — Tone Alignment
+- [x] Review Manifesto themes and current game strip labels
+- [x] Brainstorm cohesive naming system for enemies, blocks, and rebel words
+- [x] Recommend direction that matches Manifesto's philosophical voice (not corporate satire)
+- [x] Get user approval on direction before implementing
+- [x] Swap all enemy labels to mythic-philosophical inner states (Perform, Comply, Prove, Control, Cynicism, etc.)
+- [x] Swap all block labels to system buzzwords (OPTIMIZE, ALIGN, SCALE, LEVERAGE, DISRUPT, METRICS, BRAND)
+- [x] Swap all rebel words to Manifesto recovery vocabulary (PRESENCE, TRUTH, REPAIR, BELONGING, AGENCY, MEANING, WHOLENESS)
+- [x] Verify all labels render correctly in browser
+- [x] Run tests and checkpoint — all 9 tests passing

@@ -660,34 +660,37 @@ function makeEvent(
 }
 
 const TIMELINE: TimelineEvent[] = [
-  // Zone 1: Corporate Landscape (worldX 150-1000)
-  makeEvent(200,  "enemy", "Quick Mtg",  { enemyType: "goomba" }),
-  makeEvent(380,  "block", "SYNERGY",    { rebelWord: "PRESENCE" }),
-  makeEvent(520,  "enemy", "Standup",    { enemyType: "goomba" }),
-  makeEvent(660,  "enemy", "Quick Sync", { enemyType: "goomba" }),
+  // Zone 1: The False Self (worldX 150-1000)
+  // Inner adaptations people make to survive the machine
+  makeEvent(200,  "enemy", "Perform",   { enemyType: "goomba" }),
+  makeEvent(380,  "block", "OPTIMIZE",   { rebelWord: "PRESENCE" }),
+  makeEvent(520,  "enemy", "Comply",     { enemyType: "goomba" }),
+  makeEvent(660,  "enemy", "Prove",      { enemyType: "goomba" }),
   makeEvent(800,  "block", "ALIGN",      { rebelWord: "TRUTH" }),
-  makeEvent(940,  "enemy", "Hop On?",    { enemyType: "goomba" }),
-  makeEvent(1080, "block", "BUY-IN",     { rebelWord: "REPAIR" }),
+  makeEvent(940,  "enemy", "Control",    { enemyType: "goomba" }),
+  makeEvent(1080, "block", "SCALE",      { rebelWord: "REPAIR" }),
 
-  // Zone 2: Crumbling World (worldX 1200-2200)
-  makeEvent(1250, "enemy", "Reply All",     { enemyType: "bat" }),
-  makeEvent(1400, "enemy", "Compliance",    { enemyType: "turtle" }),
-  makeEvent(1550, "block", "LEVERAGE",      { rebelWord: "BELONGING" }),
-  makeEvent(1700, "enemy", "Following Up",  { enemyType: "bat" }),
-  makeEvent(1850, "enemy", "Process",       { enemyType: "turtle" }),
-  makeEvent(2000, "block", "OPTIMIZE",      { rebelWord: "AGENCY" }),
-  makeEvent(2150, "enemy", "Urgent!",       { enemyType: "bat" }),
-  makeEvent(2300, "enemy", "Per My Email",  { enemyType: "bat" }),
+  // Zone 2: The Crumbling — Disconnections Exposed (worldX 1200-2200)
+  // Deeper forces: cynicism, numbness, scarcity, isolation, shame, fear
+  makeEvent(1250, "enemy", "Cynicism",    { enemyType: "bat" }),
+  makeEvent(1400, "enemy", "Numbness",    { enemyType: "turtle" }),
+  makeEvent(1550, "block", "LEVERAGE",    { rebelWord: "BELONGING" }),
+  makeEvent(1700, "enemy", "Scarcity",    { enemyType: "bat" }),
+  makeEvent(1850, "enemy", "Isolation",   { enemyType: "turtle" }),
+  makeEvent(2000, "block", "DISRUPT",     { rebelWord: "AGENCY" }),
+  makeEvent(2150, "enemy", "Shame",       { enemyType: "bat" }),
+  makeEvent(2300, "enemy", "Fear",        { enemyType: "bat" }),
 
-  // Zone 3: Green Growth (worldX 2400-3100)
-  makeEvent(2500, "enemy", "Grab You?",   { enemyType: "goomba" }),
-  makeEvent(2700, "block", "BANDWIDTH",   { rebelWord: "MEANING", blockY: 22 }),
-  makeEvent(2900, "enemy", "Quick Call",   { enemyType: "goomba" }),
-  makeEvent(3100, "block", "RESOURCES",   { rebelWord: "WHOLENESS", blockY: 22 }),
+  // Zone 3: Green Growth — Recovery (worldX 2400-3100)
+  // Subtler enemies: the internal resistance to change
+  makeEvent(2500, "enemy", "Doubt",      { enemyType: "goomba" }),
+  makeEvent(2700, "block", "METRICS",    { rebelWord: "MEANING", blockY: 22 }),
+  makeEvent(2900, "enemy", "Old Self",   { enemyType: "goomba" }),
+  makeEvent(3100, "block", "BRAND",      { rebelWord: "WHOLENESS", blockY: 22 }),
 
-  // Zone 4: Golden Summit (worldX 3300-3700)
-  makeEvent(3400, "enemy", "Precedent",   { enemyType: "turtle" }),
-  makeEvent(3650, "enemy", "Policy",      { enemyType: "turtle" }),
+  // Zone 4: The Summit — Final Gatekeepers (worldX 3300-3700)
+  makeEvent(3400, "enemy", "Ego",        { enemyType: "turtle" }),
+  makeEvent(3650, "enemy", "Despair",    { enemyType: "turtle" }),
 ];
 
 const FLAG_X = 3850;  // near end of LEVEL_LEN (4000)
@@ -949,7 +952,7 @@ export default function ManifestoRunner({ onVisibilityChange }: ManifestoRunnerP
           ctx.fillStyle = C.brickLabel;
           ctx.font = `bold 7px "Press Start 2P", monospace`;
           ctx.textAlign = "center";
-          ctx.fillText(evt.label.length > 7 ? "?" : evt.label, screenCX, blockBottomY - BRICK_SIZE - 4 + bob);
+          ctx.fillText(evt.label.length > 8 ? "?" : evt.label, screenCX, blockBottomY - BRICK_SIZE - 4 + bob);
           ctx.textAlign = "left";
           ctx.restore();
         }
