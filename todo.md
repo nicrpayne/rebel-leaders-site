@@ -430,3 +430,10 @@
 - [x] Uploaded fixed sprites to CDN and swapped URLs
 - [x] Reverted CSS mask back to original 40% gradient per user request
 - [x] Kept nicAlpha clamp for intro sequence
+
+## Phase 71: Fix Nic Drawn Behind Background / Color Washout
+- [x] Root cause: fractional pixel sampling — non-integer frameW from naturalWidth/frameCount causes drawImage to blend adjacent transparent pixels
+- [x] Fix 1: Math.floor on frameW in loadSpriteSheet
+- [x] Fix 2: Math.round on all destination coords (dx, dy, dw, dh) in drawSprite
+- [x] Fix 3: imageSmoothingEnabled = false on every render frame and in drawSprite
+- [x] These fixes prevent subpixel blending that was washing out Nic's colors

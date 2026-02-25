@@ -117,7 +117,7 @@ function loadSpriteSheet(url: string, frameCount: number): SpriteSheet {
   // Note: no crossOrigin needed — CDN doesn't require CORS for rendering
   const sheet: SpriteSheet = { img, frameW: 0, frameH: 0, frameCount, loaded: false };
   img.onload = () => {
-    sheet.frameW = img.naturalWidth / frameCount;
+    sheet.frameW = Math.floor(img.naturalWidth / frameCount);
     sheet.frameH = img.naturalHeight;
     sheet.loaded = true;
   };
@@ -145,13 +145,19 @@ function drawSprite(
 ) {
   if (!sheet.loaded || alpha <= 0) return;
   const f = frame % sheet.frameCount;
-  const sx = f * sheet.frameW;
+  const sx = f * sheet.frameW; // frameW is already Math.floor'd
+  // Snap destination to integers to prevent subpixel blending against transparent edges
+  const dx = Math.round(cx - renderW / 2);
+  const dy = Math.round(bottomY - renderH);
+  const dw = Math.round(renderW);
+  const dh = Math.round(renderH);
   ctx.save();
+  ctx.imageSmoothingEnabled = false;
   ctx.globalAlpha = alpha;
   ctx.drawImage(
     sheet.img,
     sx, 0, sheet.frameW, sheet.frameH,
-    cx - renderW / 2, bottomY - renderH, renderW, renderH
+    dx, dy, dw, dh
   );
   ctx.restore();
 }
@@ -785,6 +791,7 @@ export default function ManifestoRunner({ onVisibilityChange }: ManifestoRunnerP
 
       // ── RENDER ──
       ctx.clearRect(0, 0, w, h);
+      ctx.imageSmoothingEnabled = false; // pixel art — no subpixel blending
       ctx.save();
       ctx.translate(shakeX, shakeY);
 
