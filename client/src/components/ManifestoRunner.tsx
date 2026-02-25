@@ -212,7 +212,7 @@ function drawNicSprite(
     if (jumpT > 0.65) {
       renderSize = NIC_SIZE * 1.42 * 0.75; // Frame 2: landing/stomp — reduced 25%
     } else if (jumpT >= 0.35) {
-      renderSize = NIC_SIZE * 1.55;        // Frame 1: peak (higher mid-air) — bumped to match Frame 0
+      renderSize = NIC_SIZE * 1.62;        // Frame 1: peak (higher mid-air) — nudged up a smidge
     } else {
       renderSize = NIC_SIZE * 1.42;        // Frame 0: ascending (lower mid-air) — reference
     }
