@@ -965,7 +965,8 @@ export default function ManifestoRunner({ onVisibilityChange }: ManifestoRunnerP
         nicIsMoving,
         nicIsJumping,
         jumpT,
-        nicAlpha * stripT,
+        // Force full opacity once intro is complete to prevent flashing
+        (nicAlpha >= 0.99 && stripT >= 0.99) ? 1 : nicAlpha * stripT,
         reachedFlag,  // victory pose
       );
 
@@ -1001,7 +1002,8 @@ export default function ManifestoRunner({ onVisibilityChange }: ManifestoRunnerP
     const updateContainerVisibility = () => {
       const progress = getScrollProgress();
       const t = Math.max(0, Math.min(1, (progress - STRIP_FADE_START) / (STRIP_FADE_END - STRIP_FADE_START)));
-      setContainerOpacity(t);
+      // Clamp to 1 once intro fade is done to prevent micro-fluctuations
+      setContainerOpacity(t >= 0.99 ? 1 : t);
       setContainerTranslateY((1 - t) * 100);
     };
     updateContainerVisibility();
@@ -1041,8 +1043,8 @@ export default function ManifestoRunner({ onVisibilityChange }: ManifestoRunnerP
             opacity: containerOpacity,
             transform: `translateY(${containerTranslateY}%)`,
             willChange: "opacity, transform",
-            maskImage: "linear-gradient(to bottom, transparent 0%, black 40%)",
-            WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 40%)",
+            maskImage: "linear-gradient(to bottom, transparent 0%, black 12%)",
+            WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 12%)",
           }}
         >
           <canvas

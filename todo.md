@@ -423,3 +423,9 @@
 - [ ] Jumping Nic (mid-air, sword overhead) is too big at 1.27x — reduce
 - [ ] User wants the mid-air sprite slightly larger but 1.27x overshoots
 - [ ] Verify which sprite state is active during landing-on-enemy vs mid-air
+
+## Phase 70: Fix Nic Transparency/Flashing on Scroll
+- [x] Found 3 alpha sources: nicAlpha, stripT, and CSS mask-image gradient
+- [x] Tightened CSS mask from 40% to 12% so only the very top edge fades
+- [x] Clamped nicAlpha*stripT to 1.0 once intro completes — no more flashing
+- [x] Clamped containerOpacity to 1 once intro fade is done
