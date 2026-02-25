@@ -450,3 +450,10 @@
 - [x] Fix #1: Hard-reset canvas state (globalAlpha, globalCompositeOperation, filter, imageSmoothingEnabled) at top of every render frame
 - [x] Fix #2: Force Nic alpha to exactly 1 after intro completes (eliminate floating-point near-1 values)
 - [x] Fix #3: Wrap every glow/shadow effect in save/restore to prevent state leaking into Nic draw
+
+## Phase 74: Sprite Alpha Fix (Root Cause Found)
+- [x] Sprite swap diagnostic: goomba solid, Nic flashing → confirmed PNG alpha issue
+- [x] Analyzed alpha channels: Nic 21-38% opaque vs goomba 68% opaque
+- [x] Fixed all 4 Nic sprites: alpha >= 40 → 255, alpha 10-39 → 230
+- [x] Uploaded fixed sprites to CDN and swapped URLs
+- [x] Removed diagnostic goomba code

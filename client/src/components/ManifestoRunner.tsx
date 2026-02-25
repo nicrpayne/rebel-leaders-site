@@ -31,15 +31,15 @@ import { useGame } from "@/contexts/GameContext";
    ═══════════════════════════════════════════════════════════════ */
 
 const SPRITES = {
-  nicRun:   "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/NbXkjdorVgqUcilx.png",
-  nicJump:  "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/DjyFCombPKtvIAse.png",
-  nicIdle:  "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/yJbGgdWrupYGmAAu.png",
+  nicRun:   "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/UhDYgSYVdoVymXQN.png",
+  nicJump:  "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/bdPRSeIvzPIMSMIs.png",
+  nicIdle:  "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/IlPEGwdZmYgwuklf.png",
   goomba:   "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/nBERaIlYpCEOiWnP.png",
   bat:      "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/SYHEtkMnhFfFNKbp.png",
   turtle:   "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/tAUdctTTtbAZnbfH.png",
   brick:    "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/CZIKNFXWjzlvpjEI.png",
   flag:     "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/XErroFrcgEbnlBdi.png",
-  nicVictory: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/VrAjRkmkMHEOwWhA.png",
+  nicVictory: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/gctjAkPwmWydLRPu.png",
 };
 
 /* ═══════════════════════════════════════════════════════════════
