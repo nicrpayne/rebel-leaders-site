@@ -210,9 +210,11 @@ function drawNicSprite(
     renderSize = NIC_SIZE * 1.17;      // idle: reduced 15% per user feedback
   } else if (isJumping) {
     if (jumpT > 0.65) {
-      renderSize = NIC_SIZE * 1.42 * 0.75; // landing/stomp frame: reduced 25% per user feedback
+      renderSize = NIC_SIZE * 1.42 * 0.75; // Frame 2: landing/stomp — reduced 25%
+    } else if (jumpT >= 0.35) {
+      renderSize = NIC_SIZE * 1.55;        // Frame 1: peak (higher mid-air) — bumped to match Frame 0
     } else {
-      renderSize = NIC_SIZE * 1.42;        // mid-air (sword up): bigger per user feedback
+      renderSize = NIC_SIZE * 1.42;        // Frame 0: ascending (lower mid-air) — reference
     }
   }
   // Running stays at NIC_SIZE — it's the reference
