@@ -418,3 +418,8 @@
 - [x] Reduce idle Nic scale by 15% (from 1.35x to ~1.17x)
 - [x] Increase jumping Nic scale by 15% (from 1.10x to ~1.27x)
 - [x] All 9 tests passing
+
+## Phase 69: Fix Sprite Scaling — Jumping Too Big, Need to Understand States
+- [ ] Jumping Nic (mid-air, sword overhead) is too big at 1.27x — reduce
+- [ ] User wants the mid-air sprite slightly larger but 1.27x overshoots
+- [ ] Verify which sprite state is active during landing-on-enemy vs mid-air
