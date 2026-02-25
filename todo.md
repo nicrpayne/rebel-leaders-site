@@ -511,6 +511,12 @@
 - [x] Victory sprite looks great — user confirmed "perfect"
 
 ## Phase 81: Checkpoint, GitHub Sync & Publish Fix
-- [ ] Save checkpoint with all sprite tuning changes
+- [x] Save checkpoint with all sprite tuning changes (version 58e7534e)
 - [ ] Push to GitHub
 - [ ] Diagnose why published version shows older content
+
+## Phase 82: Landing Dust & Lightsaber Trail
+- [x] Add landing dust particles when Nic lands from any jump (4 particles, 0.25s duration)
+- [x] Reduce dust to 1-2 particles when enemy death particles are also active
+- [x] Add subtle lightsaber trail effect during movement (4 ghost positions, 0.07 opacity, screen blend)
+- [x] Test and checkpoint — all 9 tests passing, no regressions

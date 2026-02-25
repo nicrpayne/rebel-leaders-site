@@ -267,6 +267,48 @@ function drawDustPuff(ctx: CanvasRenderingContext2D, cx: number, groundY: number
   ctx.restore();
 }
 
+/**
+ * Landing dust — smaller puff for normal jump landings.
+ * `reduced` mode uses fewer/smaller particles when enemy death particles are already active.
+ */
+function drawLandingDust(ctx: CanvasRenderingContext2D, cx: number, groundY: number, t: number, reduced: boolean) {
+  if (t <= 0 || t >= 1) return;
+  const alpha = 1 - t;
+  ctx.save();
+
+  if (reduced) {
+    // Minimal dust — just 2 small puffs so it doesn't compete with death particles
+    ctx.globalAlpha = alpha * 0.3;
+    const spread = t * 10;
+    const puffs: [number, number][] = [[-6, 0], [7, -1]];
+    for (const [dx, dy] of puffs) {
+      ctx.fillStyle = "#9a9a7a";
+      ctx.fillRect(cx + dx * (1 + spread * 0.15) - 1, groundY - 2 + dy, 2, 2);
+    }
+  } else {
+    // Normal landing dust — 4 particles, moderate spread
+    ctx.globalAlpha = alpha * 0.45;
+    const spread = t * 14;
+    const puffs: [number, number, number][] = [
+      [-8, 0, 2.5], [9, -1, 2], [-3, -2, 2], [5, 1, 2.5],
+    ];
+    for (const [dx, dy, r] of puffs) {
+      const s = 1 + t * 1.5;
+      ctx.fillStyle = t < 0.3 ? "#c8b898" : "#9a9a7a";
+      ctx.beginPath();
+      ctx.arc(cx + dx * s, groundY - 2 + dy, r + t * 1.5, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    // Subtle ground line
+    ctx.fillStyle = "#8a8a6a";
+    const lineW = 16 + t * 10;
+    ctx.globalAlpha = alpha * 0.25;
+    ctx.fillRect(cx - lineW / 2, groundY - 1, lineW, 1.5);
+  }
+
+  ctx.restore();
+}
+
 function drawEnemyDeath(ctx: CanvasRenderingContext2D, cx: number, bottomY: number, t: number, color: string) {
   if (t <= 0 || t >= 1) return;
   const alpha = 1 - t;
@@ -667,6 +709,9 @@ export default function ManifestoRunner({ onVisibilityChange }: ManifestoRunnerP
   const lastProgressRef = useRef(0);
   const realTimeRef = useRef(0);
   const shakeRef = useRef(0); // screen shake timer (counts down)
+  const landingDustRef = useRef<{ t: number; x: number; reduced: boolean } | null>(null);
+  const prevJumpingRef = useRef(false); // track jump→land transitions
+  const saberTrailRef = useRef<{ x: number; y: number; alpha: number }[]>([]); // lightsaber trail positions
   const [visible, setVisible] = useState(true);
   const [completed, setCompleted] = useState(false);
   const { awardAchievement } = useGame();
@@ -777,6 +822,46 @@ export default function ManifestoRunner({ onVisibilityChange }: ManifestoRunnerP
           isJumping = true;
           break;
         }
+      }
+
+      // ── LANDING DUST (triggered on jump→ground transition) ──
+      if (prevJumpingRef.current && !isJumping && !reachedFlag) {
+        // Nic just landed — check if this landing coincides with an enemy/block kill
+        let hasDeathParticles = false;
+        for (const evt of TIMELINE) {
+          const deathMoment = evt.peakAt + 0.003;
+          // If death happened recently (within the last ~2% scroll), particles are still active
+          if (progress >= deathMoment && progress < deathMoment + 0.02) {
+            hasDeathParticles = true;
+            break;
+          }
+        }
+        landingDustRef.current = { t: 0, x: nicDrawScreenCX, reduced: hasDeathParticles };
+      }
+      prevJumpingRef.current = isJumping;
+
+      // Advance landing dust timer
+      if (landingDustRef.current) {
+        landingDustRef.current.t += dt * 4; // ~0.25s duration
+        if (landingDustRef.current.t >= 1) landingDustRef.current = null;
+      }
+
+      // ── LIGHTSABER TRAIL (subtle cyan streak during movement) ──
+      const trail = saberTrailRef.current;
+      if ((isMoving || isJumping) && !reachedFlag && nicAlpha > 0.5) {
+        // Approximate saber tip position relative to Nic center
+        const saberX = nicDrawScreenCX + NIC_SIZE * 0.3;
+        const saberY = (GROUND_Y - nicJumpY + nicDropOffset) - NIC_SIZE * 0.5;
+        trail.push({ x: saberX, y: saberY, alpha: 0.07 });
+        // Keep only last 4 positions
+        if (trail.length > 4) trail.shift();
+      } else {
+        // Fade out trail when stopped
+        trail.length = 0;
+      }
+      // Decay trail alpha each frame
+      for (const pt of trail) {
+        pt.alpha *= 0.85;
       }
 
       // ── SCREEN SHAKE (subtle 2px for enemy/block deaths) ──
@@ -997,9 +1082,35 @@ export default function ManifestoRunner({ onVisibilityChange }: ManifestoRunnerP
         reachedFlag,  // victory pose
       );
 
-      // Landing dust puff
+      // Intro landing dust puff
       if (dustT >= 0 && dustT < 1) {
         drawDustPuff(ctx, nicX, GROUND_Y, dustT);
+      }
+
+      // Jump landing dust (combat-aware)
+      if (landingDustRef.current) {
+        const ld = landingDustRef.current;
+        drawLandingDust(ctx, Math.round(ld.x), GROUND_Y, ld.t, ld.reduced);
+      }
+
+      // Lightsaber trail (subtle cyan streaks behind the blade)
+      if (trail.length > 1 && stripT > 0.5) {
+        ctx.save();
+        ctx.globalCompositeOperation = "screen"; // additive blend for glow
+        for (let i = 0; i < trail.length - 1; i++) {
+          const p = trail[i];
+          if (p.alpha < 0.005) continue;
+          ctx.globalAlpha = p.alpha * stripT;
+          ctx.strokeStyle = C.saber;
+          ctx.lineWidth = 1.5;
+          ctx.shadowColor = C.saber;
+          ctx.shadowBlur = 4;
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(trail[i + 1].x, trail[i + 1].y);
+          ctx.stroke();
+        }
+        ctx.restore();
       }
 
       // (Top fade handled by CSS mask-image on the container div)
