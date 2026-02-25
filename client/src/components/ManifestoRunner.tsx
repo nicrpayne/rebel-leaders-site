@@ -324,8 +324,7 @@ function drawSmash(ctx: CanvasRenderingContext2D, cx: number, cy: number, t: num
   ctx.shadowColor = C.rebelWord;
   ctx.shadowBlur = 10 * alpha;
   ctx.fillText(word, cx, cy - 20 - t * 30);
-  ctx.shadowBlur = 0;
-  ctx.textAlign = "left";
+  // No need to manually reset — ctx.restore() handles it
   ctx.restore();
 }
 
@@ -767,6 +766,19 @@ export default function ManifestoRunner({ onVisibilityChange }: ManifestoRunnerP
       const shakeY = shakeRef.current > 0 ? (Math.random() - 0.5) * 3 : 0;
 
       // ── RENDER ──
+      // Hard-reset ALL canvas state at frame start to prevent leaking
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.globalAlpha = 1;
+      ctx.globalCompositeOperation = "source-over";
+      ctx.filter = "none";
+      ctx.imageSmoothingEnabled = false;
+      ctx.shadowBlur = 0;
+      ctx.shadowColor = "transparent";
+
+      // Re-apply DPR transform after reset
+      const dpr2 = window.devicePixelRatio || 1;
+      ctx.setTransform(dpr2, 0, 0, dpr2, 0, 0);
+
       ctx.clearRect(0, 0, w, h);
       ctx.save();
       ctx.translate(shakeX, shakeY);
@@ -940,6 +952,8 @@ export default function ManifestoRunner({ onVisibilityChange }: ManifestoRunnerP
       const introComplete = progress > WORLD_FADE_END && gameProgress > 0.005;
       const nicIsMoving = reachedFlag ? false : (introComplete ? isMoving : false);
       const nicIsJumping = reachedFlag ? false : isJumping;
+      // Force Nic alpha to EXACTLY 1 once intro is done — no floating-point near-1 values
+      const nicFinalAlpha = (nicAlpha >= 0.95 && stripT >= 0.95) ? 1 : nicAlpha * stripT;
       drawNicSprite(
         ctx,
         { run: sprites.nicRun, jump: sprites.nicJump, idle: sprites.nicIdle, victory: sprites.nicVictory },
@@ -949,8 +963,7 @@ export default function ManifestoRunner({ onVisibilityChange }: ManifestoRunnerP
         nicIsMoving,
         nicIsJumping,
         jumpT,
-        // Force full opacity once intro is complete to prevent flashing
-        (nicAlpha >= 0.99 && stripT >= 0.99) ? 1 : nicAlpha * stripT,
+        nicFinalAlpha,
         reachedFlag,  // victory pose
       );
 
@@ -962,7 +975,10 @@ export default function ManifestoRunner({ onVisibilityChange }: ManifestoRunnerP
       // (Top fade handled by CSS mask-image on the container div)
 
       ctx.restore(); // end screen shake transform
+      // Redundant safety reset (frame-start reset handles this, but belt-and-suspenders)
       ctx.globalAlpha = 1;
+      ctx.globalCompositeOperation = "source-over";
+      ctx.shadowBlur = 0;
 
       // Victory achievement
       if (gameProgress > 0.95 && !completed) {

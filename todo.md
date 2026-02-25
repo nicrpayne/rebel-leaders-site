@@ -445,3 +445,8 @@
 - [x] Reverted drawSprite and loadSpriteSheet to originals (no Math.floor/Math.round hacks)
 - [x] Removed imageSmoothingEnabled override
 - [x] All 9 tests passing
+
+## Phase 73: Canvas State Reset + Alpha Hardening (Diagnostic Fixes)
+- [x] Fix #1: Hard-reset canvas state (globalAlpha, globalCompositeOperation, filter, imageSmoothingEnabled) at top of every render frame
+- [x] Fix #2: Force Nic alpha to exactly 1 after intro completes (eliminate floating-point near-1 values)
+- [x] Fix #3: Wrap every glow/shadow effect in save/restore to prevent state leaking into Nic draw
