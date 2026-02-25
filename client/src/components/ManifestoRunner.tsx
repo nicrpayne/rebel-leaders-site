@@ -146,12 +146,17 @@ function drawSprite(
   if (!sheet.loaded || alpha <= 0) return;
   const f = frame % sheet.frameCount;
   const sx = f * sheet.frameW;
+  // Snap destination to integer pixels to prevent subpixel anti-aliasing shimmer
+  const dx = Math.round(cx - renderW / 2);
+  const dy = Math.round(bottomY - renderH);
+  const dw = Math.round(renderW);
+  const dh = Math.round(renderH);
   ctx.save();
   ctx.globalAlpha = alpha;
   ctx.drawImage(
     sheet.img,
     sx, 0, sheet.frameW, sheet.frameH,
-    cx - renderW / 2, bottomY - renderH, renderW, renderH
+    dx, dy, dw, dh
   );
   ctx.restore();
 }
@@ -204,18 +209,18 @@ function drawNicSprite(
   drawSprite(ctx, sheet, spriteFrame, cx, bottomY, renderSize, renderSize, alpha);
 
 
-  // Lightsaber glow aura
-  if (alpha > 0.3) {
-    ctx.save();
-    ctx.globalAlpha = alpha * 0.12;
-    ctx.shadowColor = C.saber;
-    ctx.shadowBlur = 14;
-    ctx.fillStyle = C.saber;
-    ctx.beginPath();
-    ctx.arc(cx + NIC_SIZE * 0.25, bottomY - NIC_SIZE * 0.55, 4, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.restore();
-  }
+  // Lightsaber glow aura — DISABLED for diagnostic (shadowBlur can cause compositing artifacts)
+  // if (alpha > 0.3) {
+  //   ctx.save();
+  //   ctx.globalAlpha = alpha * 0.12;
+  //   ctx.shadowColor = C.saber;
+  //   ctx.shadowBlur = 14;
+  //   ctx.fillStyle = C.saber;
+  //   ctx.beginPath();
+  //   ctx.arc(cx + NIC_SIZE * 0.25, bottomY - NIC_SIZE * 0.55, 4, 0, Math.PI * 2);
+  //   ctx.fill();
+  //   ctx.restore();
+  // }
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -954,11 +959,14 @@ export default function ManifestoRunner({ onVisibilityChange }: ManifestoRunnerP
       const nicIsJumping = reachedFlag ? false : isJumping;
       // Force Nic alpha to EXACTLY 1 once intro is done — no floating-point near-1 values
       const nicFinalAlpha = (nicAlpha >= 0.95 && stripT >= 0.95) ? 1 : nicAlpha * stripT;
+      // Snap Nic to integer pixels — subpixel positions cause shimmer on pixel art
+      const nicX = Math.round(nicDrawScreenCX);
+      const nicY = Math.round(nicFeetY);
       drawNicSprite(
         ctx,
         { run: sprites.nicRun, jump: sprites.nicJump, idle: sprites.nicIdle, victory: sprites.nicVictory },
-        nicDrawScreenCX,
-        nicFeetY,
+        nicX,
+        nicY,
         frame,
         nicIsMoving,
         nicIsJumping,
@@ -969,7 +977,7 @@ export default function ManifestoRunner({ onVisibilityChange }: ManifestoRunnerP
 
       // Landing dust puff
       if (dustT >= 0 && dustT < 1) {
-        drawDustPuff(ctx, nicDrawScreenCX, GROUND_Y, dustT);
+        drawDustPuff(ctx, nicX, GROUND_Y, dustT);
       }
 
       // (Top fade handled by CSS mask-image on the container div)
