@@ -207,9 +207,9 @@ function drawNicSprite(
   if (isVictory) {
     renderSize = NIC_SIZE * 1.25;      // 40px char → 50px visual (50/40)
   } else if (!isMoving && !isJumping) {
-    renderSize = NIC_SIZE * 1.35;      // 37px char → 50px visual (50/37)
+    renderSize = NIC_SIZE * 1.17;      // idle: reduced 15% per user feedback
   } else if (isJumping) {
-    renderSize = NIC_SIZE * 1.10;      // 48px avg char → ~53px (conservative, frame 2 is already wide)
+    renderSize = NIC_SIZE * 1.27;      // jump: increased 15% per user feedback
   }
   // Running stays at NIC_SIZE — it's the reference
   drawSprite(ctx, sheet, spriteFrame, cx, bottomY, renderSize, renderSize, alpha);

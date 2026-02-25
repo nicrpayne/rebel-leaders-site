@@ -413,3 +413,8 @@
 - [x] Applied per-state scale factors: idle 1.35x, jump 1.10x, victory 1.25x, running 1.0x (reference)
 - [x] Verified visual consistency across all animation states in browser
 - [x] All 9 tests passing
+
+## Phase 68: Adjust Nic Sprite Scaling Per User Feedback
+- [x] Reduce idle Nic scale by 15% (from 1.35x to ~1.17x)
+- [x] Increase jumping Nic scale by 15% (from 1.10x to ~1.27x)
+- [x] All 9 tests passing
