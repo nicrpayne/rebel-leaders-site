@@ -1050,8 +1050,8 @@ export default function ManifestoRunner({ onVisibilityChange }: ManifestoRunnerP
             opacity: containerOpacity,
             transform: `translateY(${containerTranslateY}%)`,
             willChange: "opacity, transform",
-            maskImage: "linear-gradient(to bottom, transparent 0%, black 40%)",
-            WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 40%)",
+            // maskImage: "linear-gradient(to bottom, transparent 0%, black 40%)",  // DISABLED for diagnostic Test C
+            // WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 40%)",
           }}
         >
           <canvas

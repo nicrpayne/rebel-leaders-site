@@ -461,4 +461,4 @@
 ## Phase 75: Chat's Diagnostic Tests for Nic Transparency
 - [x] Test A: Snap Nic coords to integers + snap drawSprite destination coords to integers
 - [x] Test B: Disable lightsaber glow (shadowBlur) entirely
-- [ ] Test C: Remove CSS mask-image if A+B don't fix it
+- [x] Test C: Remove CSS mask-image if A+B don't fix it
