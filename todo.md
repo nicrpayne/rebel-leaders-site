@@ -547,3 +547,10 @@
 - [x] Register /game-standalone route in App.tsx (not in navigation)
 - [x] Add Arthur Brooks to Behavioral Science & Culture section on About page
 - [x] All 9 tests passing, verified in browser
+
+## Phase 87: Smart HUD Open/Close Behavior
+- [x] Default HUD to expanded for first-time visitors (no previous visit in localStorage)
+- [x] Auto-minimize HUD on Map page (restore previous state when leaving)
+- [x] Returning visitors: HUD starts minimized (they already know it exists)
+- [x] Respect manual toggle state across page navigations
+- [x] All 9 tests passing, code logic verified

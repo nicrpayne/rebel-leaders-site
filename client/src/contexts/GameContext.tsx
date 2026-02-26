@@ -102,6 +102,7 @@ interface GameContextValue {
   trackScrollComplete: (pageId: string) => void;
   trackEasterEgg: (eggId: string) => void;
   toggleHud: () => void;
+  setHudMinimized: (minimized: boolean) => void;
   toasts: ToastItem[];
   dismissToast: (id: string) => void;
   getAchievement: (id: string) => Achievement | undefined;
@@ -115,12 +116,15 @@ const GameContext = createContext<GameContextValue | null>(null);
 function loadState(): GameState {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return { ...DEFAULT_STATE, firstVisitTimestamp: Date.now() };
+    if (!raw) {
+      // First-time visitor: HUD starts expanded so they discover it
+      return { ...DEFAULT_STATE, firstVisitTimestamp: Date.now(), hudMinimized: false };
+    }
     const parsed = JSON.parse(raw);
-    // Always start minimized — user can expand manually
+    // Returning visitor: HUD starts minimized (they already know it exists)
     return { ...DEFAULT_STATE, ...parsed, hudMinimized: true };
   } catch {
-    return { ...DEFAULT_STATE, firstVisitTimestamp: Date.now() };
+    return { ...DEFAULT_STATE, firstVisitTimestamp: Date.now(), hudMinimized: false };
   }
 }
 
@@ -299,6 +303,11 @@ export function GameProvider({ children }: { children: ReactNode }) {
     setState((prev) => ({ ...prev, hudMinimized: !prev.hudMinimized }));
   }, []);
 
+  // Set HUD minimized state directly (used by auto-minimize on Map page)
+  const setHudMinimized = useCallback((minimized: boolean) => {
+    setState((prev) => ({ ...prev, hudMinimized: minimized }));
+  }, []);
+
   const xpPercent = Math.round((state.xp / MAX_XP) * 100);
 
   const getAchievement = useCallback((id: string) => ACHIEVEMENTS.find((a) => a.id === id), []);
@@ -313,6 +322,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
         trackScrollComplete,
         trackEasterEgg,
         toggleHud,
+        setHudMinimized,
         toasts,
         dismissToast,
         getAchievement,

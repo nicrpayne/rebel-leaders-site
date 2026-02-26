@@ -6,8 +6,9 @@
  * Clicking the achievements count opens the full achievements panel.
  */
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useGame, type ToastItem } from "@/contexts/GameContext";
+import { useLocation } from "wouter";
 import { AnimatePresence, motion } from "framer-motion";
 import AchievementsPanel from "./AchievementsPanel";
 
@@ -94,8 +95,29 @@ function XpBar({ percent }: { percent: number }) {
 
 /* ─── Main HUD Component ─── */
 export default function GameHud() {
-  const { state, xpPercent, toggleHud, toasts, dismissToast } = useGame();
+  const { state, xpPercent, toggleHud, setHudMinimized, toasts, dismissToast } = useGame();
   const [showAchievements, setShowAchievements] = useState(false);
+  const [location] = useLocation();
+  const wasMinimizedBeforeMap = useRef<boolean | null>(null);
+
+  // Auto-minimize on Map page, restore when leaving
+  useEffect(() => {
+    const isMapPage = location === "/manifesto";
+    if (isMapPage) {
+      // Save current state before auto-minimizing
+      wasMinimizedBeforeMap.current = state.hudMinimized;
+      if (!state.hudMinimized) {
+        setHudMinimized(true);
+      }
+    } else if (wasMinimizedBeforeMap.current !== null) {
+      // Leaving Map page — restore previous state
+      if (wasMinimizedBeforeMap.current === false) {
+        setHudMinimized(false);
+      }
+      wasMinimizedBeforeMap.current = null;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location]);
 
   return (
     <>
