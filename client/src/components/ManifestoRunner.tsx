@@ -703,9 +703,10 @@ const ZONE_TRANSITIONS = [0.25, 0.50, 0.75];
 
 interface ManifestoRunnerProps {
   onVisibilityChange?: (visible: boolean) => void;
+  standalone?: boolean;
 }
 
-export default function ManifestoRunner({ onVisibilityChange }: ManifestoRunnerProps = {}) {
+export default function ManifestoRunner({ onVisibilityChange, standalone = false }: ManifestoRunnerProps = {}) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const animFrameRef = useRef(0);
@@ -1163,18 +1164,20 @@ export default function ManifestoRunner({ onVisibilityChange }: ManifestoRunnerP
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  if (isMobile) return null;
+  if (isMobile && !standalone) return null;
 
   return (
     <>
-      {/* Toggle button — bottom-left, small and unassuming, always visible */}
-      <button
-        onClick={() => { const next = !visible; setVisible(next); onVisibilityChange?.(next); }}
-        className="fixed bottom-2 left-2 z-50 pointer-events-auto font-pixel text-[7px] text-parchment-dim/30 hover:text-gold/70 bg-forest-deep/60 hover:bg-forest-deep/80 border border-gold/10 hover:border-gold/30 px-1.5 py-0.5 rounded-sm transition-all"
-        title={visible ? "Hide the game strip" : "Show the game strip"}
-      >
-        {visible ? "HIDE" : "SHOW"}  
-      </button>
+      {/* Toggle button — bottom-left, small and unassuming, always visible (hidden in standalone mode) */}
+      {!standalone && (
+        <button
+          onClick={() => { const next = !visible; setVisible(next); onVisibilityChange?.(next); }}
+          className="fixed bottom-2 left-2 z-50 pointer-events-auto font-pixel text-[7px] text-parchment-dim/30 hover:text-gold/70 bg-forest-deep/60 hover:bg-forest-deep/80 border border-gold/10 hover:border-gold/30 px-1.5 py-0.5 rounded-sm transition-all"
+          title={visible ? "Hide the game strip" : "Show the game strip"}
+        >
+          {visible ? "HIDE" : "SHOW"}  
+        </button>
+      )}
 
       {/* Game strip container */}
       {visible && (

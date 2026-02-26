@@ -204,6 +204,7 @@ export default function About() {
                     { name: "Beck & Cowan", contribution: "Spiral Dynamics — mapping consciousness development" },
                   ]},
                   { category: "BEHAVIORAL SCIENCE & CULTURE", entries: [
+                    { name: "Arthur Brooks", contribution: "The science of happiness — why building a life requires managing what you love, not what you want" },
                     { name: "Rory Sutherland", contribution: "Behavioral economics — why the irrational is often more powerful than the rational" },
                     { name: "Robert Putnam", contribution: "Social capital — the data behind The Great Transfer" },
                     { name: "Nassim Taleb", contribution: "Antifragility — systems that grow stronger under stress" },

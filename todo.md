@@ -539,3 +539,11 @@
 - [x] Find all green badge/level boxes with hard-to-read text (LVL badges on Home, etc.)
 - [x] Improve text contrast: changed text-forest-light to text-gold, added border-gold/30 for definition
 - [x] Verify fixes across all pages where badges appear — all 9 tests passing
+
+## Phase 86: Standalone Game Page + Arthur Brooks
+- [x] Build hidden /game-standalone route with full-screen ManifestoRunner
+- [x] Add auto-scroll with Play/Pause/Reset controls, countdown, and speed selector (0.5x-2x)
+- [x] Hide ManifestoRunner toggle button in standalone mode
+- [x] Register /game-standalone route in App.tsx (not in navigation)
+- [x] Add Arthur Brooks to Behavioral Science & Culture section on About page
+- [x] All 9 tests passing, verified in browser

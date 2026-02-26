@@ -18,6 +18,7 @@ import Book from "./pages/Book";
 import Community from "./pages/Community";
 import Mirror from "./pages/Mirror";
 import Armory from "./pages/Armory";
+import GameStandalone from "./pages/GameStandalone";
 function Router() {
   // make sure to consider if you need authentication for certain routes
   return (
@@ -34,6 +35,7 @@ function Router() {
       <Route path="/community" component={Community} />
       <Route path="/mirror" component={Mirror} />
       <Route path="/armory" component={Armory} />
+      <Route path="/game-standalone" component={GameStandalone} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
     </Switch>
