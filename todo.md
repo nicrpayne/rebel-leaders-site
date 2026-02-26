@@ -534,3 +534,8 @@
 
 ## Phase 84: Victory Banner Text
 - [x] Change "REBELLION COMPLETE" to "TUTORIAL COMPLETE"
+
+## Phase 85: Fix Green Badge Text Contrast
+- [x] Find all green badge/level boxes with hard-to-read text (LVL badges on Home, etc.)
+- [x] Improve text contrast: changed text-forest-light to text-gold, added border-gold/30 for definition
+- [x] Verify fixes across all pages where badges appear — all 9 tests passing

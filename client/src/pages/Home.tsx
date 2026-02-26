@@ -383,7 +383,7 @@ export default function Home() {
                   ].map((item, i) => (
                     <div key={i} className="group">
                       <div className="flex items-center gap-3 mb-2">
-                        <span className="font-pixel text-[7px] text-forest-light bg-gold/15 px-2 py-1 tracking-wider">
+                        <span className="font-pixel text-[7px] text-gold bg-gold/15 border border-gold/30 px-2 py-1 tracking-wider">
                           {item.level}
                         </span>
                         <span className="font-pixel text-[10px] text-gold tracking-wider">
@@ -526,7 +526,7 @@ export default function Home() {
                       className="w-full text-left quest-card p-5 md:p-6 group block"
                     >
                       <div className="flex items-center justify-between mb-3">
-                        <span className="font-pixel text-[7px] text-forest-light bg-gold/10 px-2 py-1 tracking-wider">
+                        <span className="font-pixel text-[7px] text-gold bg-gold/15 border border-gold/30 px-2 py-1 tracking-wider">
                           {item.tag}
                         </span>
                         <span className="font-pixel text-[7px] text-gold/30 tracking-wider">
@@ -546,7 +546,7 @@ export default function Home() {
                       className="w-full text-left quest-card p-5 md:p-6 group block"
                     >
                       <div className="flex items-center justify-between mb-3">
-                        <span className="font-pixel text-[7px] text-forest-light bg-gold/10 px-2 py-1 tracking-wider">
+                        <span className="font-pixel text-[7px] text-gold bg-gold/15 border border-gold/30 px-2 py-1 tracking-wider">
                           {item.tag}
                         </span>
                         <span className="font-pixel text-[7px] text-gold/30 tracking-wider">
