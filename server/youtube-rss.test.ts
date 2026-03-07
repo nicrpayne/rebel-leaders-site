@@ -1,100 +1,172 @@
 import { describe, expect, it, vi, beforeEach } from "vitest";
 
-// We need to mock rss-parser so the module under test uses our mock
-const mockParseURL = vi.fn();
+// Mock the Data API so we don't make real HTTP calls in tests
+const mockCallDataApi = vi.fn();
 
-vi.mock("rss-parser", () => {
-  return {
-    default: vi.fn().mockImplementation(() => ({
-      parseURL: mockParseURL,
-    })),
-  };
-});
+vi.mock("./_core/dataApi", () => ({
+  callDataApi: (...args: any[]) => mockCallDataApi(...args),
+}));
 
-// Sample RSS feed data mimicking YouTube's Atom feed
-const mockFeedItems = [
+// Sample Data API response for videos_latest
+const mockVideoContents = [
   {
-    videoId: "NrXlHMCGlVM",
-    title: 'Your "Why" Is Whack - New Metaphors for Leadership',
-    link: "https://www.youtube.com/watch?v=NrXlHMCGlVM",
-    pubDate: "2025-10-25T13:44:19.000Z",
-    isoDate: "2025-10-25T13:44:19.000Z",
-    mediaGroup: '<media:description>A great video about leadership.</media:description><media:thumbnail url="https://i3.ytimg.com/vi/NrXlHMCGlVM/hqdefault.jpg" width="480" height="360"/>',
+    type: "video",
+    video: {
+      videoId: "NrXlHMCGlVM",
+      title: 'Your "Why" Is Whack - New Metaphors for Leadership',
+      publishedTimeText: "4 months ago",
+      descriptionSnippet: "A great video about leadership.",
+      thumbnails: [
+        { url: "https://i.ytimg.com/vi/NrXlHMCGlVM/default.jpg", width: 120, height: 90 },
+        { url: "https://i.ytimg.com/vi/NrXlHMCGlVM/hqdefault.jpg", width: 480, height: 360 },
+      ],
+    },
   },
   {
-    videoId: "w_Xvjt_WKA4", // Known Short
-    title: "ChatGPT Teaches Me Martin Buber's Philosophy",
-    link: "https://www.youtube.com/shorts/w_Xvjt_WKA4",
-    pubDate: "2026-01-25T19:37:04.000Z",
-    isoDate: "2026-01-25T19:37:04.000Z",
-    mediaGroup: '<media:description>A short about philosophy.</media:description><media:thumbnail url="https://i4.ytimg.com/vi/w_Xvjt_WKA4/hqdefault.jpg" width="480" height="360"/>',
-  },
-  {
-    videoId: "HEiZivaxue0",
-    title: "The Problem Of Mattering",
-    link: "https://www.youtube.com/watch?v=HEiZivaxue0",
-    pubDate: "2025-10-02T20:50:00.000Z",
-    isoDate: "2025-10-02T20:50:00.000Z",
-    mediaGroup: '<media:description>Why do leaders need to be reminded that people matter?</media:description><media:thumbnail url="https://i1.ytimg.com/vi/HEiZivaxue0/hqdefault.jpg" width="480" height="360"/>',
-  },
-  {
-    videoId: "5Gwh5O3HzMo", // Known Short
-    title: "Equipping vs. Developing Humans",
-    link: "https://www.youtube.com/shorts/5Gwh5O3HzMo",
-    pubDate: "2026-01-23T19:37:16.000Z",
-    isoDate: "2026-01-23T19:37:16.000Z",
-    mediaGroup: '<media:description>Yes. There is a difference.</media:description><media:thumbnail url="https://i2.ytimg.com/vi/5Gwh5O3HzMo/hqdefault.jpg" width="480" height="360"/>',
+    type: "video",
+    video: {
+      videoId: "HEiZivaxue0",
+      title: "The Problem Of Mattering",
+      publishedTimeText: "5 months ago",
+      descriptionSnippet: "Why do leaders need to be reminded that people matter?",
+      thumbnails: [
+        { url: "https://i.ytimg.com/vi/HEiZivaxue0/hqdefault.jpg", width: 480, height: 360 },
+      ],
+    },
   },
 ];
 
-describe("YouTube RSS Integration", () => {
+// Sample Data API response for shorts_latest
+const mockShortsContents = [
+  {
+    type: "video",
+    video: {
+      videoId: "w_Xvjt_WKA4",
+      title: "ChatGPT Teaches Me Martin Buber's Philosophy",
+      publishedTimeText: "1 month ago",
+      descriptionSnippet: "A short about philosophy.",
+      thumbnails: [
+        { url: "https://i.ytimg.com/vi/w_Xvjt_WKA4/hqdefault.jpg", width: 480, height: 360 },
+      ],
+    },
+  },
+  {
+    type: "video",
+    video: {
+      videoId: "5Gwh5O3HzMo",
+      title: "Equipping vs. Developing Humans",
+      publishedTimeText: "2 months ago",
+      descriptionSnippet: "Yes. There is a difference.",
+      thumbnails: [
+        { url: "https://i.ytimg.com/vi/5Gwh5O3HzMo/hqdefault.jpg", width: 480, height: 360 },
+      ],
+    },
+  },
+];
+
+describe("YouTube Data API Integration", () => {
   beforeEach(async () => {
-    // Reset modules to clear the cache in youtube-rss.ts
     vi.resetModules();
-    mockParseURL.mockReset();
+    mockCallDataApi.mockReset();
   });
 
-  it("fetches and parses YouTube videos from RSS feed", async () => {
-    mockParseURL.mockResolvedValueOnce({ items: mockFeedItems });
+  it("fetches and parses full videos from Data API", async () => {
+    mockCallDataApi.mockResolvedValueOnce({ contents: mockVideoContents });
 
-    // Dynamic import after resetModules to get fresh module with cleared cache
-    const { fetchYouTubeVideos } = await import("./youtube-rss");
-    const videos = await fetchYouTubeVideos();
+    const { fetchYouTubeFullVideos } = await import("./youtube-rss");
+    const videos = await fetchYouTubeFullVideos();
 
-    expect(videos).toHaveLength(4);
-    expect(videos[0].videoId).toBeDefined();
-    expect(videos[0].title).toBeDefined();
-    expect(videos[0].thumbnailUrl).toBeDefined();
+    expect(videos).toHaveLength(2);
+    expect(videos[0].videoId).toBe("NrXlHMCGlVM");
+    expect(videos[0].title).toContain("Why");
+    expect(videos[0].isShort).toBe(false);
+    expect(videos[0].link).toContain("youtube.com/watch");
+
+    // Verify the Data API was called with correct params
+    expect(mockCallDataApi).toHaveBeenCalledWith("Youtube/get_channel_videos", {
+      query: {
+        id: "UCQvL3b2AbMM_K38lY3FHdLg",
+        filter: "videos_latest",
+        hl: "en",
+        gl: "US",
+      },
+    });
   });
 
-  it("separates full videos from shorts", async () => {
-    mockParseURL.mockResolvedValueOnce({ items: mockFeedItems });
+  it("fetches and parses shorts from Data API", async () => {
+    mockCallDataApi.mockResolvedValueOnce({ contents: mockShortsContents });
+
+    const { fetchYouTubeShorts } = await import("./youtube-rss");
+    const shorts = await fetchYouTubeShorts();
+
+    expect(shorts).toHaveLength(2);
+    expect(shorts[0].isShort).toBe(true);
+    expect(shorts[0].videoId).toBeDefined();
+
+    // Verify the Data API was called with shorts filter
+    expect(mockCallDataApi).toHaveBeenCalledWith("Youtube/get_channel_videos", {
+      query: {
+        id: "UCQvL3b2AbMM_K38lY3FHdLg",
+        filter: "shorts_latest",
+        hl: "en",
+        gl: "US",
+      },
+    });
+  });
+
+  it("separates full videos from shorts correctly", async () => {
+    // First call for videos, second for shorts
+    mockCallDataApi
+      .mockResolvedValueOnce({ contents: mockVideoContents })
+      .mockResolvedValueOnce({ contents: mockShortsContents });
 
     const { fetchYouTubeFullVideos, fetchYouTubeShorts } = await import("./youtube-rss");
 
-    // fetchYouTubeFullVideos calls fetchYouTubeVideos internally (which caches)
     const fullVideos = await fetchYouTubeFullVideos();
     const shorts = await fetchYouTubeShorts();
 
+    expect(fullVideos.every((v) => v.isShort === false)).toBe(true);
+    expect(shorts.every((v) => v.isShort === true)).toBe(true);
     expect(fullVideos.length).toBe(2);
     expect(shorts.length).toBe(2);
+  });
 
-    // Shorts should be the known IDs
-    const shortIds = shorts.map((s) => s.videoId);
-    expect(shortIds).toContain("w_Xvjt_WKA4");
-    expect(shortIds).toContain("5Gwh5O3HzMo");
+  it("returns empty array on Data API failure", async () => {
+    mockCallDataApi.mockRejectedValueOnce(new Error("Network error"));
 
-    // Full videos should NOT contain shorts
-    const fullIds = fullVideos.map((v) => v.videoId);
-    expect(fullIds).not.toContain("w_Xvjt_WKA4");
-    expect(fullIds).not.toContain("5Gwh5O3HzMo");
+    const { fetchYouTubeFullVideos } = await import("./youtube-rss");
+    const videos = await fetchYouTubeFullVideos();
+    expect(videos).toEqual([]);
+  });
+
+  it("generates fallback thumbnail URLs for videos without thumbnails", async () => {
+    const noThumbContents = [
+      {
+        type: "video",
+        video: {
+          videoId: "testId123",
+          title: "Test Video",
+          publishedTimeText: "1 day ago",
+          descriptionSnippet: "",
+          thumbnails: [],
+        },
+      },
+    ];
+
+    mockCallDataApi.mockResolvedValueOnce({ contents: noThumbContents });
+
+    const { fetchYouTubeFullVideos } = await import("./youtube-rss");
+    const videos = await fetchYouTubeFullVideos();
+
+    expect(videos).toHaveLength(1);
+    expect(videos[0].thumbnailUrl).toBe("https://i.ytimg.com/vi/testId123/hqdefault.jpg");
   });
 
   it("sorts videos by date, newest first", async () => {
-    mockParseURL.mockResolvedValueOnce({ items: mockFeedItems });
+    mockCallDataApi.mockResolvedValueOnce({ contents: mockVideoContents });
 
-    const { fetchYouTubeVideos } = await import("./youtube-rss");
-    const videos = await fetchYouTubeVideos();
+    const { fetchYouTubeFullVideos } = await import("./youtube-rss");
+    const videos = await fetchYouTubeFullVideos();
 
     for (let i = 1; i < videos.length; i++) {
       const prevDate = new Date(videos[i - 1].pubDate).getTime();
@@ -103,32 +175,36 @@ describe("YouTube RSS Integration", () => {
     }
   });
 
-  it("returns empty array on feed fetch failure", async () => {
-    mockParseURL.mockRejectedValueOnce(new Error("Network error"));
+  it("handles empty API response gracefully", async () => {
+    mockCallDataApi.mockResolvedValueOnce({ contents: [] });
 
-    const { fetchYouTubeVideos } = await import("./youtube-rss");
-    const videos = await fetchYouTubeVideos();
+    const { fetchYouTubeFullVideos } = await import("./youtube-rss");
+    const videos = await fetchYouTubeFullVideos();
     expect(videos).toEqual([]);
   });
 
-  it("generates fallback thumbnail URLs for videos without media:group", async () => {
-    const itemsWithoutMedia = [
+  it("handles malformed video items gracefully", async () => {
+    const malformedContents = [
+      { type: "video", video: null },
+      { type: "video", video: { videoId: "", title: "No ID" } },
       {
-        videoId: "testId123",
-        title: "Test Video",
-        link: "https://www.youtube.com/watch?v=testId123",
-        pubDate: "2025-12-01T00:00:00.000Z",
-        isoDate: "2025-12-01T00:00:00.000Z",
-        mediaGroup: undefined,
+        type: "video",
+        video: {
+          videoId: "valid123",
+          title: "Valid Video",
+          publishedTimeText: "1 day ago",
+          thumbnails: [],
+        },
       },
     ];
 
-    mockParseURL.mockResolvedValueOnce({ items: itemsWithoutMedia });
+    mockCallDataApi.mockResolvedValueOnce({ contents: malformedContents });
 
-    const { fetchYouTubeVideos } = await import("./youtube-rss");
-    const videos = await fetchYouTubeVideos();
+    const { fetchYouTubeFullVideos } = await import("./youtube-rss");
+    const videos = await fetchYouTubeFullVideos();
 
+    // Only the valid video should be returned
     expect(videos).toHaveLength(1);
-    expect(videos[0].thumbnailUrl).toBe("https://i.ytimg.com/vi/testId123/hqdefault.jpg");
+    expect(videos[0].videoId).toBe("valid123");
   });
 });

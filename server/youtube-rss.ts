@@ -1,20 +1,17 @@
-import Parser from "rss-parser";
-
-const parser = new Parser({
-  customFields: {
-    item: [
-      ["yt:videoId", "videoId"],
-      ["media:group", "mediaGroup"],
-    ],
-  },
-});
+/**
+ * YouTube video fetching via Manus Data API.
+ * Replaces the old RSS-based approach which was unreliable from production server IPs
+ * (YouTube blocks RSS requests from cloud hosting).
+ */
+import { callDataApi } from "./_core/dataApi";
 
 const YOUTUBE_CHANNEL_ID = "UCQvL3b2AbMM_K38lY3FHdLg";
-const YOUTUBE_FEED_URL = `https://www.youtube.com/feeds/videos.xml?channel_id=${YOUTUBE_CHANNEL_ID}`;
 
 // Cache results for 30 minutes
 let cachedVideos: YouTubeVideo[] | null = null;
-let cacheTimestamp = 0;
+let cachedShorts: YouTubeVideo[] | null = null;
+let videoCacheTimestamp = 0;
+let shortsCacheTimestamp = 0;
 const CACHE_TTL_MS = 30 * 60 * 1000;
 
 export interface YouTubeVideo {
@@ -27,89 +24,155 @@ export interface YouTubeVideo {
   isShort: boolean;
 }
 
-// Known Shorts video IDs (YouTube RSS doesn't distinguish Shorts from regular videos)
-// We identify Shorts by their known IDs from the channel
-const KNOWN_SHORTS_IDS = new Set([
-  "w_Xvjt_WKA4",
-  "1_s6IfOiBJk",
-  "5Gwh5O3HzMo",
-]);
+function parseDataApiVideo(item: any, isShort: boolean): YouTubeVideo | null {
+  try {
+    const video = item?.video;
+    if (!video) return null;
 
-function extractFromMediaGroup(mediaGroup: any): { description: string; thumbnailUrl: string } {
-  let description = "";
-  let thumbnailUrl = "";
+    const videoId = video.videoId || "";
+    if (!videoId) return null;
 
-  if (typeof mediaGroup === "string") {
-    // Parse XML-like media:group content
-    const descMatch = mediaGroup.match(/<media:description[^>]*>([\s\S]*?)<\/media:description>/);
-    if (descMatch) description = descMatch[1].trim();
+    // Get the best thumbnail
+    const thumbnails = video.thumbnails || [];
+    const thumbnailUrl =
+      thumbnails.length > 0
+        ? thumbnails[thumbnails.length - 1]?.url || ""
+        : `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
 
-    const thumbMatch = mediaGroup.match(/<media:thumbnail[^>]+url="([^"]+)"/);
-    if (thumbMatch) thumbnailUrl = thumbMatch[1];
-  } else if (mediaGroup && typeof mediaGroup === "object") {
-    // Parsed object form
-    if (mediaGroup["media:description"]) {
-      const desc = mediaGroup["media:description"];
-      description = typeof desc === "string" ? desc : (desc?.[0] || desc?._ || "");
-    }
-    if (mediaGroup["media:thumbnail"]) {
-      const thumb = mediaGroup["media:thumbnail"];
-      thumbnailUrl = typeof thumb === "string" ? thumb : (thumb?.$?.url || thumb?.[0]?.$?.url || "");
-    }
+    // Parse published time - the API returns relative text like "2 weeks ago"
+    const publishedText = video.publishedTimeText || "";
+    const pubDate = parseRelativeTime(publishedText);
+
+    // Get description snippet
+    const description = video.descriptionSnippet || "";
+    const shortDesc = description.length > 200 ? description.slice(0, 200) + "..." : description;
+
+    return {
+      videoId,
+      title: video.title || "Untitled",
+      link: `https://www.youtube.com/watch?v=${videoId}`,
+      pubDate,
+      description: shortDesc,
+      thumbnailUrl,
+      isShort,
+    };
+  } catch {
+    return null;
   }
-
-  return { description, thumbnailUrl };
 }
 
-export async function fetchYouTubeVideos(): Promise<YouTubeVideo[]> {
+/**
+ * Convert relative time strings like "2 weeks ago" to ISO date strings.
+ * This is approximate but good enough for display ordering.
+ */
+function parseRelativeTime(text: string): string {
+  if (!text) return new Date().toISOString();
+
   const now = Date.now();
-  if (cachedVideos && now - cacheTimestamp < CACHE_TTL_MS) {
-    return cachedVideos;
-  }
+  const lower = text.toLowerCase();
 
+  const match = lower.match(/(\d+)\s+(second|minute|hour|day|week|month|year)s?\s+ago/);
+  if (!match) return new Date().toISOString();
+
+  const amount = parseInt(match[1], 10);
+  const unit = match[2];
+
+  const msPerUnit: Record<string, number> = {
+    second: 1000,
+    minute: 60 * 1000,
+    hour: 60 * 60 * 1000,
+    day: 24 * 60 * 60 * 1000,
+    week: 7 * 24 * 60 * 60 * 1000,
+    month: 30 * 24 * 60 * 60 * 1000,
+    year: 365 * 24 * 60 * 60 * 1000,
+  };
+
+  const ms = msPerUnit[unit] || 0;
+  return new Date(now - amount * ms).toISOString();
+}
+
+async function fetchFromDataApi(
+  filterType: "videos_latest" | "shorts_latest"
+): Promise<YouTubeVideo[]> {
   try {
-    const feed = await parser.parseURL(YOUTUBE_FEED_URL);
+    console.log(`[YouTube DataAPI] Fetching ${filterType} for channel ${YOUTUBE_CHANNEL_ID}`);
+    const result = (await callDataApi("Youtube/get_channel_videos", {
+      query: {
+        id: YOUTUBE_CHANNEL_ID,
+        filter: filterType,
+        hl: "en",
+        gl: "US",
+      },
+    })) as any;
 
-    const videos: YouTubeVideo[] = (feed.items || []).map((item: any) => {
-      const videoId = item.videoId || item.id?.replace("yt:video:", "") || "";
-      const { description, thumbnailUrl } = extractFromMediaGroup(item.mediaGroup);
+    const contents = result?.contents || [];
+    console.log(`[YouTube DataAPI] Got ${contents.length} items for ${filterType}`);
+    const isShort = filterType === "shorts_latest";
 
-      // Use high-quality thumbnail if available
-      const thumbnail = thumbnailUrl || `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
-
-      // Truncate description
-      const shortDesc = description.length > 200 ? description.slice(0, 200) + "..." : description;
-
-      return {
-        videoId,
-        title: item.title || "Untitled",
-        link: item.link || `https://www.youtube.com/watch?v=${videoId}`,
-        pubDate: item.pubDate || item.isoDate || "",
-        description: shortDesc,
-        thumbnailUrl: thumbnail,
-        isShort: KNOWN_SHORTS_IDS.has(videoId),
-      };
-    });
+    const videos: YouTubeVideo[] = contents
+      .map((item: any) => parseDataApiVideo(item, isShort))
+      .filter((v: YouTubeVideo | null): v is YouTubeVideo => v !== null);
 
     // Sort by date, newest first
-    videos.sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime());
+    videos.sort(
+      (a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime()
+    );
 
-    cachedVideos = videos;
-    cacheTimestamp = now;
     return videos;
   } catch (error) {
-    console.error("[YouTube RSS] Failed to fetch feed:", error);
-    if (cachedVideos) return cachedVideos;
+    console.error(
+      `[YouTube DataAPI] Failed to fetch ${filterType}:`,
+      error instanceof Error ? error.message : error
+    );
     return [];
   }
 }
 
+export async function fetchYouTubeVideos(): Promise<YouTubeVideo[]> {
+  // This returns ALL videos (both full and shorts) for backward compat
+  const [full, shorts] = await Promise.all([
+    fetchYouTubeFullVideos(),
+    fetchYouTubeShorts(),
+  ]);
+  return [...full, ...shorts].sort(
+    (a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime()
+  );
+}
+
 export async function fetchYouTubeFullVideos(): Promise<YouTubeVideo[]> {
-  const all = await fetchYouTubeVideos();
-  return all.filter((v) => !v.isShort);
+  const now = Date.now();
+  if (cachedVideos && now - videoCacheTimestamp < CACHE_TTL_MS) {
+    return cachedVideos;
+  }
+
+  const videos = await fetchFromDataApi("videos_latest");
+
+  if (videos.length > 0) {
+    cachedVideos = videos;
+    videoCacheTimestamp = now;
+    return videos;
+  }
+
+  // Return cached if available, otherwise empty
+  if (cachedVideos) return cachedVideos;
+  return [];
 }
 
 export async function fetchYouTubeShorts(): Promise<YouTubeVideo[]> {
-  const all = await fetchYouTubeVideos();
-  return all.filter((v) => v.isShort);
+  const now = Date.now();
+  if (cachedShorts && now - shortsCacheTimestamp < CACHE_TTL_MS) {
+    return cachedShorts;
+  }
+
+  const shorts = await fetchFromDataApi("shorts_latest");
+
+  if (shorts.length > 0) {
+    cachedShorts = shorts;
+    shortsCacheTimestamp = now;
+    return shorts;
+  }
+
+  // Return cached if available, otherwise empty
+  if (cachedShorts) return cachedShorts;
+  return [];
 }

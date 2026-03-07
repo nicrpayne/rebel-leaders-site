@@ -554,3 +554,9 @@
 - [x] Returning visitors: HUD starts minimized (they already know it exists)
 - [x] Respect manual toggle state across page navigations
 - [x] All 9 tests passing, code logic verified
+
+## Phase 88: Fix YouTube Video Loading on Archives Page
+- [x] Diagnosed root cause: YouTube RSS feed blocked from production server IP
+- [x] Replaced RSS-based fetching with Manus Data API (Youtube/get_channel_videos)
+- [x] Shorts now auto-detected via "shorts_latest" filter (no more hardcoded IDs)
+- [x] All 12 tests passing (8 YouTube Data API + 3 Substack RSS + 1 auth), verified in browser
