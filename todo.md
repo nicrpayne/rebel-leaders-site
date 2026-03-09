@@ -560,3 +560,10 @@
 - [x] Replaced RSS-based fetching with Manus Data API (Youtube/get_channel_videos)
 - [x] Shorts now auto-detected via "shorts_latest" filter (no more hardcoded IDs)
 - [x] All 12 tests passing (8 YouTube Data API + 3 Substack RSS + 1 auth), verified in browser
+
+## Phase 89: Hidden Assets Gallery Page
+- [x] Scanned all CDN image URLs from codebase (21 assets found)
+- [x] Built /hidden-assets page with thumbnail grid, search, category filters, and full-quality download links
+- [x] Registered route in App.tsx (hidden from navigation)
+- [x] Tested — all 21 assets render, download/copy/open-in-tab buttons work, mobile action row visible
+- [x] All 12 tests passing, checkpoint saved
