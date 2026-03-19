@@ -1,18 +1,6 @@
-/*
- * RotaryKnob — Premium tactile rotary control.
- *
- * Design goals (Apple Digital Crown / high-end audio gear):
- *   • 21 detent positions (0, 5, 10 … 100) with magnetic snap
- *   • Momentum / inertia on fast release
- *   • Layered click audio (noise burst + bandpass, speed-responsive)
- *   • Haptic pulse on supported devices
- *   • Visual glow, progressive tick illumination, grab state
- */
-
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
 
-/* ─── Types ─── */
 interface RotaryKnobProps {
   value: number;
   min: number;
@@ -23,516 +11,134 @@ interface RotaryKnobProps {
   className?: string;
 }
 
-/* ─── Audio Engine ─── */
-const CLICK_BUFFER_DURATION = 0.015; // 15 ms
-const CLICK_SAMPLE_RATE = 44100;
-
-let _audioCtx: AudioContext | null = null;
-let _clickBuffer: AudioBuffer | null = null;
-let _thunkBuffer: AudioBuffer | null = null;
-
-function getAudioCtx(): AudioContext | null {
-  if (typeof window === "undefined") return null;
-  if (!_audioCtx) {
-    _audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
-  }
-  return _audioCtx;
-}
-
-/** Pre-compute a short noise-burst buffer for the detent click. */
-function getClickBuffer(): AudioBuffer | null {
-  const ctx = getAudioCtx();
-  if (!ctx) return null;
-  if (_clickBuffer) return _clickBuffer;
-
-  const length = Math.ceil(CLICK_BUFFER_DURATION * CLICK_SAMPLE_RATE);
-  const buf = ctx.createBuffer(1, length, CLICK_SAMPLE_RATE);
-  const data = buf.getChannelData(0);
-
-  for (let i = 0; i < length; i++) {
-    // Shaped noise burst: fast attack, exponential decay
-    const t = i / CLICK_SAMPLE_RATE;
-    const envelope = Math.exp(-t * 400); // fast decay
-    const noise = (Math.random() * 2 - 1);
-    data[i] = noise * envelope * 0.6;
-  }
-  _clickBuffer = buf;
-  return buf;
-}
-
-/** Slightly longer, lower thunk for endpoint stops. */
-function getThunkBuffer(): AudioBuffer | null {
-  const ctx = getAudioCtx();
-  if (!ctx) return null;
-  if (_thunkBuffer) return _thunkBuffer;
-
-  const duration = 0.04;
-  const length = Math.ceil(duration * CLICK_SAMPLE_RATE);
-  const buf = ctx.createBuffer(1, length, CLICK_SAMPLE_RATE);
-  const data = buf.getChannelData(0);
-
-  for (let i = 0; i < length; i++) {
-    const t = i / CLICK_SAMPLE_RATE;
-    const envelope = Math.exp(-t * 120);
-    const noise = (Math.random() * 2 - 1);
-    // Mix in a low sine for weight
-    const sine = Math.sin(2 * Math.PI * 120 * t) * 0.4;
-    data[i] = (noise * 0.5 + sine) * envelope * 0.7;
-  }
-  _thunkBuffer = buf;
-  return buf;
-}
-
-/**
- * Play a single detent click.
- * @param speed 0–1 normalized drag speed. Affects volume + filter.
- */
-function playDetentClick(speed: number = 0.3) {
-  const ctx = getAudioCtx();
-  const buf = getClickBuffer();
-  if (!ctx || !buf) return;
-  if (ctx.state === "suspended") ctx.resume();
-
-  const source = ctx.createBufferSource();
-  source.buffer = buf;
-
-  // Bandpass filter — faster motion → brighter click
-  const filter = ctx.createBiquadFilter();
-  filter.type = "bandpass";
-  filter.frequency.value = 3000 + speed * 3000; // 3–6 kHz
-  filter.Q.value = 1.2;
-
-  // Gain — faster motion → slightly louder (but never harsh)
-  const gain = ctx.createGain();
-  const vol = 0.08 + speed * 0.14; // 0.08 – 0.22
-  gain.gain.value = Math.min(vol, 0.25);
-
-  // Playback rate variation for organic feel
-  source.playbackRate.value = 0.9 + Math.random() * 0.2 + speed * 0.15;
-
-  source.connect(filter);
-  filter.connect(gain);
-  gain.connect(ctx.destination);
-  source.start();
-}
-
-/** Play endpoint thunk when hitting min or max. */
-function playEndpointThunk() {
-  const ctx = getAudioCtx();
-  const buf = getThunkBuffer();
-  if (!ctx || !buf) return;
-  if (ctx.state === "suspended") ctx.resume();
-
-  const source = ctx.createBufferSource();
-  source.buffer = buf;
-
-  const gain = ctx.createGain();
-  gain.gain.value = 0.18;
-
-  source.connect(gain);
-  gain.connect(ctx.destination);
-  source.start();
-}
-
-/** Haptic pulse for supported devices. */
-function hapticTick() {
-  if (typeof navigator !== "undefined" && navigator.vibrate) {
-    navigator.vibrate(4);
-  }
-}
-
-/* ─── Component ─── */
-export default function RotaryKnob({
-  value,
-  min,
-  max,
-  step = 1,
-  onChange,
-  label,
-  className,
-}: RotaryKnobProps) {
+export default function RotaryKnob({ value, min, max, step = 1, onChange, label, className }: RotaryKnobProps) {
   const [isDragging, setIsDragging] = useState(false);
-  const [isHovering, setIsHovering] = useState(false);
+  const startY = useRef<number>(0);
+  const startValue = useRef<number>(0);
   const knobRef = useRef<HTMLDivElement>(null);
 
-  // Drag tracking
-  const startY = useRef(0);
-  const startValue = useRef(0);
-  const lastValue = useRef(value);
-  const lastDetent = useRef(Math.round(value / 5));
-  const lastTime = useRef(0);
-  const velocity = useRef(0);
-
-  // Momentum animation
-  const momentumRaf = useRef<number>(0);
-  const momentumValue = useRef(value);
-
-  // Keep lastValue in sync when value changes externally
-  useEffect(() => {
-    lastValue.current = value;
-    lastDetent.current = Math.round(value / 5);
-    momentumValue.current = value;
-  }, [value]);
-
-  const range = max - min;
-
-  /** Snap to nearest detent (every 5 units) with magnetic pull. */
-  const snapToDetent = useCallback(
-    (raw: number): number => {
-      const detentSize = 5;
-      const snapped = Math.round(raw / detentSize) * detentSize;
-      // Magnetic pull: if within 1.5 units of a detent, snap fully
-      const dist = Math.abs(raw - snapped);
-      if (dist < 1.5) return Math.max(min, Math.min(max, snapped));
-      return Math.max(min, Math.min(max, raw));
-    },
-    [min, max],
-  );
-
-  /** Process a new raw value: snap, play audio, fire onChange. */
-  const processValue = useCallback(
-    (raw: number, dragSpeed: number = 0.3) => {
-      const clamped = Math.max(min, Math.min(max, raw));
-      const snapped = snapToDetent(clamped);
-      const newDetent = Math.round(snapped / 5);
-
-      // Detect endpoint hit
-      const wasAtEnd =
-        lastValue.current <= min + 0.5 || lastValue.current >= max - 0.5;
-      const isAtEnd = snapped <= min + 0.5 || snapped >= max - 0.5;
-      if (isAtEnd && !wasAtEnd) {
-        playEndpointThunk();
-        hapticTick();
-      }
-
-      // Detent crossed → click + haptic
-      if (newDetent !== lastDetent.current) {
-        playDetentClick(dragSpeed);
-        hapticTick();
-        lastDetent.current = newDetent;
-      }
-
-      lastValue.current = snapped;
-
-      // Snap to step for the actual output
-      const stepped = step
-        ? Math.round(snapped / step) * step
-        : snapped;
-      onChange(Math.max(min, Math.min(max, stepped)));
-    },
-    [min, max, step, onChange, snapToDetent],
-  );
-
-  /* ─── Pointer Handlers ─── */
   const handlePointerDown = (e: React.PointerEvent) => {
     e.preventDefault();
     e.stopPropagation();
-
-    // Cancel any running momentum
-    if (momentumRaf.current) {
-      cancelAnimationFrame(momentumRaf.current);
-      momentumRaf.current = 0;
-    }
-
+    
     setIsDragging(true);
     startY.current = e.clientY;
     startValue.current = value;
-    lastTime.current = performance.now();
-    velocity.current = 0;
-
+    
+    // Capture pointer for consistent tracking even if mouse leaves element
     (e.target as Element).setPointerCapture(e.pointerId);
-    document.body.classList.add("knob-dragging");
-
-    // Resume audio context on first interaction
-    const ctx = getAudioCtx();
-    if (ctx?.state === "suspended") ctx.resume();
+    
+    // Add global dragging class to body to prevent text selection/cursor changes
+    document.body.classList.add('knob-dragging');
   };
 
   const handlePointerMove = (e: React.PointerEvent) => {
     if (!isDragging) return;
     e.preventDefault();
-
-    const now = performance.now();
-    const dt = Math.max(now - lastTime.current, 1);
+    
     const deltaY = startY.current - e.clientY;
-
-    // Variable sensitivity: slow drag = fine, fast drag = coarse
-    const pixelSpeed = Math.abs(e.movementY) / dt; // px/ms
-    const sensitivity = 180 + Math.min(pixelSpeed * 40, 80); // 180–260px for full range
-    const deltaValue = (deltaY / sensitivity) * range;
-
-    const raw = startValue.current + deltaValue;
-
-    // Track velocity for momentum
-    const valueDelta = raw - lastValue.current;
-    velocity.current = valueDelta / dt; // units/ms
-
-    lastTime.current = now;
-
-    const speed = Math.min(Math.abs(velocity.current) * 8, 1); // normalize 0–1
-    processValue(raw, speed);
+    const range = max - min;
+    // Sensitivity: 200px drag = full range
+    const deltaValue = (deltaY / 200) * range; 
+    
+    let newValue = startValue.current + deltaValue;
+    newValue = Math.max(min, Math.min(max, newValue));
+    
+    // Snap to step
+    if (step) {
+      newValue = Math.round(newValue / step) * step;
+    }
+    
+    onChange(newValue);
   };
 
   const handlePointerUp = (e: React.PointerEvent) => {
     setIsDragging(false);
     (e.target as Element).releasePointerCapture(e.pointerId);
-    document.body.classList.remove("knob-dragging");
-
-    // Momentum: if velocity is significant, coast to a stop
-    const v = velocity.current;
-    if (Math.abs(v) > 0.02) {
-      momentumValue.current = lastValue.current;
-      let vel = v;
-      const friction = 0.92; // deceleration per frame
-
-      const tick = () => {
-        vel *= friction;
-        if (Math.abs(vel) < 0.005) {
-          // Final snap to nearest detent
-          const final5 = Math.round(momentumValue.current / 5) * 5;
-          processValue(final5, 0.1);
-          momentumRaf.current = 0;
-          return;
-        }
-        momentumValue.current += vel * 16; // ~16ms per frame
-        const speed = Math.min(Math.abs(vel) * 8, 1);
-        processValue(momentumValue.current, speed);
-        momentumRaf.current = requestAnimationFrame(tick);
-      };
-      momentumRaf.current = requestAnimationFrame(tick);
-    } else {
-      // Snap to nearest detent on release
-      const final5 = Math.round(lastValue.current / 5) * 5;
-      processValue(final5, 0.1);
-    }
+    document.body.classList.remove('knob-dragging');
   };
 
-  // Cleanup momentum on unmount
-  useEffect(() => {
-    return () => {
-      if (momentumRaf.current) cancelAnimationFrame(momentumRaf.current);
-    };
-  }, []);
-
-  /* ─── Visual Calculations ─── */
+  // Calculate rotation (-135deg to +135deg)
   const percentage = (value - min) / (max - min);
-  const rotation = -135 + percentage * 270;
-
-  // Unique IDs for SVG gradients (avoid clashes if multiple knobs)
-  const uid = useRef(`knob-${Math.random().toString(36).slice(2, 8)}`).current;
+  const rotation = -135 + (percentage * 270);
 
   return (
-    <div
-      className={cn(
-        "flex flex-col items-center gap-4 select-none touch-none",
-        className,
-      )}
-    >
-      <div
+    <div className={cn("flex flex-col items-center gap-4 select-none touch-none", className)}>
+      <div 
         ref={knobRef}
-        className={cn(
-          "relative w-24 h-24 cursor-ns-resize group touch-none transition-transform duration-200",
-          isHovering && !isDragging && "scale-[1.03]",
-          isDragging && "scale-[1.01]",
-        )}
+        className="relative w-24 h-24 cursor-ns-resize group touch-none"
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
         onPointerCancel={handlePointerUp}
-        onMouseEnter={() => setIsHovering(true)}
-        onMouseLeave={() => setIsHovering(false)}
-        style={{ touchAction: "none" }}
+        style={{ touchAction: 'none' }}
       >
-        {/* Glow ring when grabbed */}
-        <div
-          className={cn(
-            "absolute -inset-1 rounded-full transition-opacity duration-300 pointer-events-none",
-            isDragging ? "opacity-100" : "opacity-0",
-          )}
-          style={{
-            background:
-              "radial-gradient(circle, rgba(212,175,55,0.12) 40%, transparent 70%)",
-          }}
-        />
-
-        {/* Shadow behind knob */}
-        <div
-          className={cn(
-            "absolute inset-2 rounded-full blur-md transform translate-y-2 translate-x-1 transition-all duration-200",
-            isDragging ? "bg-black/70 blur-lg translate-y-1" : "bg-black/60",
-          )}
-        />
+        {/* Shadow behind knob (Lift) - Unified Light Source (Top-Left) */}
+        <div className="absolute inset-2 rounded-full bg-black/60 blur-md transform translate-y-2 translate-x-1" />
 
         {/* The Knob SVG */}
-        <svg
-          viewBox="0 0 100 100"
-          className="w-full h-full drop-shadow-2xl overflow-visible pointer-events-none"
-        >
+        <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-2xl overflow-visible pointer-events-none">
           <defs>
-            <linearGradient
-              id={`${uid}-body`}
-              x1="20%"
-              y1="20%"
-              x2="80%"
-              y2="80%"
-            >
+            {/* Main Body Gradient - Top-Left Light Source */}
+            <linearGradient id="knobBodyGradient" x1="20%" y1="20%" x2="80%" y2="80%">
               <stop offset="0%" stopColor="#2a2a2a" />
               <stop offset="50%" stopColor="#1a1a1a" />
               <stop offset="100%" stopColor="#050505" />
             </linearGradient>
-
-            <radialGradient
-              id={`${uid}-face`}
-              cx="50%"
-              cy="50%"
-              r="50%"
-              fx="30%"
-              fy="30%"
-            >
-              <stop offset="0%" stopColor={isDragging ? "#3a3a3a" : "#333"} />
-              <stop offset="100%" stopColor={isDragging ? "#161616" : "#111"} />
+            
+            {/* Top Face Gradient - Subtle radial for matte finish */}
+            <radialGradient id="knobFaceGradient" cx="50%" cy="50%" r="50%" fx="30%" fy="30%">
+              <stop offset="0%" stopColor="#333" />
+              <stop offset="100%" stopColor="#111" />
             </radialGradient>
-
-            <pattern
-              id={`${uid}-knurl`}
-              x="0"
-              y="0"
-              width="4"
-              height="4"
-              patternUnits="userSpaceOnUse"
-            >
-              <rect width="2" height="4" fill="#151515" />
-              <rect x="2" width="2" height="4" fill="#1a1a1a" />
+            
+            {/* Knurling Pattern */}
+            <pattern id="knurling" x="0" y="0" width="4" height="4" patternUnits="userSpaceOnUse">
+               <rect width="2" height="4" fill="#151515" />
+               <rect x="2" width="2" height="4" fill="#1a1a1a" />
             </pattern>
-
-            {/* Glow filter for indicator */}
-            <filter id={`${uid}-glow`} x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur stdDeviation="2" result="blur" />
-              <feMerge>
-                <feMergeNode in="blur" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
           </defs>
 
           {/* Outer Ring (Knurled Texture Base) */}
-          <circle
-            cx="50"
-            cy="50"
-            r="48"
-            fill={`url(#${uid}-knurl)`}
-            stroke="#0a0a0a"
-            strokeWidth="1"
-          />
-          <circle cx="50" cy="50" r="48" fill="black" fillOpacity="0.3" />
-
+          <circle cx="50" cy="50" r="48" fill="url(#knurling)" stroke="#0a0a0a" strokeWidth="1" />
+          <circle cx="50" cy="50" r="48" fill="black" fillOpacity="0.3" /> {/* Darken knurling */}
+          
           {/* Inner Body (Side) */}
-          <circle
-            cx="50"
-            cy="50"
-            r="44"
-            fill={`url(#${uid}-body)`}
-            stroke="#000"
-            strokeWidth="0.5"
-          />
-
+          <circle cx="50" cy="50" r="44" fill="url(#knobBodyGradient)" stroke="#000" strokeWidth="0.5" />
+          
           {/* Top Face (Matte Plastic) */}
-          <circle
-            cx="50"
-            cy="50"
-            r="38"
-            fill={`url(#${uid}-face)`}
-            stroke="#333"
-            strokeWidth="0.5"
-          />
-
+          <circle cx="50" cy="50" r="38" fill="url(#knobFaceGradient)" stroke="#333" strokeWidth="0.5" />
+          
           {/* Inner Shadow for Top Face (Depth) */}
-          <circle
-            cx="50"
-            cy="50"
-            r="38"
-            fill="none"
-            stroke="black"
-            strokeWidth="2"
-            strokeOpacity="0.3"
-          />
+          <circle cx="50" cy="50" r="38" fill="none" stroke="black" strokeWidth="2" strokeOpacity="0.3" />
 
           {/* Rotating Group */}
           <g transform={`rotate(${rotation} 50 50)`}>
-            {/* Indicator groove (indented channel) */}
-            <rect
-              x="48.5"
-              y="18"
-              width="3"
-              height="14"
-              rx="1"
-              fill="#000"
-              fillOpacity="0.8"
-            />
-            {/* Indicator line — brightens when dragging */}
-            <rect
-              x="49.5"
-              y="19"
-              width="1"
-              height="12"
-              rx="0.5"
-              fill={isDragging ? "#d4af37" : "#fff"}
-              fillOpacity={isDragging ? 1 : 0.9}
-              filter={isDragging ? `url(#${uid}-glow)` : undefined}
-            />
+            {/* The Indicator Line (Indented) */}
+            <rect x="48.5" y="18" width="3" height="14" rx="1" fill="#000" fillOpacity="0.8" />
+            <rect x="49.5" y="19" width="1" height="12" rx="0.5" fill="#fff" fillOpacity="0.9" />
           </g>
 
-          {/* Top-Left Highlight (Specular Reflection) */}
-          <path
-            d="M 25 25 Q 50 10 75 25"
-            fill="none"
-            stroke="white"
-            strokeWidth="1.5"
-            strokeOpacity={isDragging ? 0.2 : 0.15}
-            strokeLinecap="round"
-          />
-
+          {/* Top-Left Highlight (Specular Reflection) - Consistent Light Source */}
+          <path d="M 25 25 Q 50 10 75 25" fill="none" stroke="white" strokeWidth="1.5" strokeOpacity="0.15" strokeLinecap="round" />
+          
           {/* Bottom-Right Rim Light (Bounce) */}
-          <path
-            d="M 30 75 Q 50 85 70 75"
-            fill="none"
-            stroke="white"
-            strokeWidth="1"
-            strokeOpacity="0.05"
-            strokeLinecap="round"
-          />
+          <path d="M 30 75 Q 50 85 70 75" fill="none" stroke="white" strokeWidth="1" strokeOpacity="0.05" strokeLinecap="round" />
         </svg>
 
-        {/* Tick Marks (Static Ring) — progressive illumination */}
+        {/* Tick Marks (Static Ring) - Outside the knob */}
         <div className="absolute -inset-3 pointer-events-none">
-          <svg
-            viewBox="0 0 100 100"
-            className="w-full h-full overflow-visible"
-          >
-            {[...Array(21)].map((_, i) => {
-              const rot = -135 + i * (270 / 20);
+          <svg viewBox="0 0 100 100" className="w-full h-full overflow-visible">
+            {[...Array(11)].map((_, i) => {
+              const rot = -135 + (i * 27);
               const isActive = rotation >= rot;
-              const isMajor = i % 2 === 0; // every other tick is major
-
               return (
                 <g key={i} transform={`rotate(${rot} 50 50)`}>
-                  <line
-                    x1="50"
-                    y1={isMajor ? "1" : "3"}
-                    x2="50"
-                    y2={isMajor ? "8" : "7"}
-                    stroke={
-                      isActive
-                        ? isDragging
-                          ? "#d4af37"
-                          : "#888"
-                        : "#2a2a2a"
-                    }
-                    strokeWidth={isMajor ? "1.5" : "1"}
+                   <line
+                    x1="50" y1="2" x2="50" y2="8"
+                    stroke={isActive ? "#666" : "#333"}
+                    strokeWidth="1.5"
                     strokeLinecap="round"
-                    style={{
-                      transition: "stroke 0.15s ease",
-                    }}
                   />
                 </g>
               );
@@ -543,12 +149,7 @@ export default function RotaryKnob({
 
       {/* Label */}
       {label && (
-        <div
-          className={cn(
-            "text-[10px] font-pixel tracking-widest uppercase drop-shadow-sm mt-1 select-none transition-colors duration-300",
-            isDragging ? "text-[#d4af37]" : "text-[#555]",
-          )}
-        >
+        <div className="text-[10px] font-pixel text-[#555] tracking-widest uppercase drop-shadow-sm mt-1 select-none">
           {label}
         </div>
       )}
