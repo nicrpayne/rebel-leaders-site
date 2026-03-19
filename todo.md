@@ -586,3 +586,9 @@
 - [x] Found broken /labels/label_read.png, label_scan.png, label_eject.png in CabinetDeck.tsx
 - [x] Uploaded 3 label images to CDN and replaced local paths
 - [x] No remaining local asset paths in workbench files
+
+## Phase 92: Gamification inventory + README update + mobile discussion
+- [x] Compiled full XP (100 max), 17 achievements, 5 easter eggs inventory
+- [x] Created comprehensive README.md with full site structure, plugins, gamification, tech stack
+- [x] Discussed mobile strategy — plugins stay desktop-only, landing page responsive
+- [x] Checkpoint and deliver
