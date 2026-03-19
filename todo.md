@@ -581,3 +581,8 @@
 - [x] Tested in browser — Workbench landing, Gravitas shell, Results + Side-Chain, Codex cabinet all working
 - [x] All 12 tests passing, TypeScript compiles clean, no console errors
 - [x] Checkpoint and deliver
+
+## Phase 91: Fix broken button label images on Codex (READ, SCAN, EJECT)
+- [x] Found broken /labels/label_read.png, label_scan.png, label_eject.png in CabinetDeck.tsx
+- [x] Uploaded 3 label images to CDN and replaced local paths
+- [x] No remaining local asset paths in workbench files

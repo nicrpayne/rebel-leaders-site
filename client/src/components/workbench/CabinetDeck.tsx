@@ -881,7 +881,7 @@ startTicker(msg, 14000, () => {
         title="READ PROTOCOL"
       >
         <img
-          src="/labels/label_read.png"
+          src="https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/label_read_a7058f5a.png"
           alt="READ"
           className="absolute pointer-events-none select-none"
           style={{
@@ -915,7 +915,7 @@ startTicker(msg, 14000, () => {
         title="SCAN CARTRIDGE"
       >
         <img
-          src="/labels/label_scan.png"
+          src="https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/label_scan_9c357f8b.png"
           alt="SCAN"
           className="absolute pointer-events-none select-none"
           style={{
@@ -949,7 +949,7 @@ startTicker(msg, 14000, () => {
         title="EJECT CARTRIDGE"
       >
         <img
-          src="/labels/label_eject.png"
+          src="https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/label_eject_b5224993.png"
           alt="EJECT"
           className="absolute pointer-events-none select-none"
           style={{
