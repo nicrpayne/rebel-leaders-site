@@ -18,17 +18,35 @@ const audioCtx =
 
 const playTickSound = () => {
   if (!audioCtx) return;
-  const osc = audioCtx.createOscillator();
+  const now = audioCtx.currentTime;
+
+  // Short noise burst shaped into a mechanical click (like a combination lock detent)
+  const bufferLen = Math.ceil(0.012 * audioCtx.sampleRate); // 12ms
+  const buffer = audioCtx.createBuffer(1, bufferLen, audioCtx.sampleRate);
+  const data = buffer.getChannelData(0);
+  for (let i = 0; i < bufferLen; i++) {
+    const t = i / audioCtx.sampleRate;
+    const envelope = Math.exp(-t * 600); // very fast decay
+    data[i] = (Math.random() * 2 - 1) * envelope;
+  }
+
+  const source = audioCtx.createBufferSource();
+  source.buffer = buffer;
+
+  // Bandpass filter to shape the noise into a crisp "tick"
+  const filter = audioCtx.createBiquadFilter();
+  filter.type = "bandpass";
+  filter.frequency.value = 4000;
+  filter.Q.value = 1.0;
+
   const gain = audioCtx.createGain();
-  osc.type = "triangle";
-  osc.frequency.setValueAtTime(2000, audioCtx.currentTime);
-  osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.05);
-  gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
-  gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
-  osc.connect(gain);
+  gain.gain.setValueAtTime(0.12, now);
+  gain.gain.exponentialRampToValueAtTime(0.001, now + 0.012);
+
+  source.connect(filter);
+  filter.connect(gain);
   gain.connect(audioCtx.destination);
-  osc.start();
-  osc.stop(audioCtx.currentTime + 0.05);
+  source.start();
 };
 
 const playClunkSound = () => {

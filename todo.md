@@ -598,3 +598,7 @@
 - [x] Wrap Gravitas, Results, and Codex pages
 - [x] Test on mobile viewport (12/12 tests pass, no build errors)
 - [x] Checkpoint and deliver
+
+## Phase 96: Tweak rotary knob tick sound — mechanical click like combination lock / turn signal
+- [x] Replace playTickSound with a light, crisp mechanical click (noise burst + bandpass, 12ms)
+- [x] Test and checkpoint (12/12 tests pass, zero TS errors)
