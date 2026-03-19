@@ -331,7 +331,7 @@ function PluginCard({ plugin }: { plugin: Plugin }) {
         isActive
           ? "hover:-translate-y-1 hover:shadow-[0_0_30px_-10px_rgba(197,160,89,0.2)] hover:border-gold/50 cursor-pointer"
           : hasImage
-            ? "opacity-85 grayscale-[0.15] cursor-default hover:opacity-95 hover:grayscale-0"
+            ? "opacity-95 grayscale-[0.08] cursor-default hover:opacity-100 hover:grayscale-0"
             : "opacity-65 grayscale-[0.3] cursor-default"
       }`}
     >
@@ -370,7 +370,7 @@ function PluginCard({ plugin }: { plugin: Plugin }) {
             {plugin.title}
           </h3>
           <span
-            className={`font-pixel text-[7px] tracking-[0.2em] px-2 py-1 shrink-0 ml-2 ${
+            className={`font-pixel text-[7px] tracking-[0.2em] px-2 py-1 shrink-0 ml-2 -mt-1 -mr-1 ${
               isActive
                 ? "bg-gold/15 text-gold border border-gold/30"
                 : "bg-red-900/20 text-red-400/80 border border-red-500/30"

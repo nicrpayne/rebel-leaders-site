@@ -620,3 +620,8 @@
 - [x] Make LOCKED badge more prominent (red-tinted: bg-red-900/20, text-red-400/80)
 - [x] Remove redundant LOCKED text from footer
 - [x] Test and checkpoint (12/12 tests pass, zero TS errors)
+
+## Phase 100: Polish badge position and brighten Underground
+- [x] Nudge badge slightly right and up (-mt-1 -mr-1)
+- [x] Brighten cover-image cards further (opacity 85→95%, grayscale 15→8%, hover to 100%/0%)
+- [x] Test and checkpoint (12/12 tests pass, zero TS errors)
