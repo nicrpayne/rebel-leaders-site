@@ -4,6 +4,7 @@ import GravitasShell from "@/components/workbench/GravitasShell";
 import { ScoringResult } from "@/lib/workbench/scoring";
 import { cn } from "@/lib/utils";
 import { useGame } from "@/contexts/GameContext";
+import DesktopOnly from "@/components/workbench/DesktopOnly";
 
 // Audio Context for sound effects
 const audioCtx =
@@ -232,6 +233,7 @@ export default function Results() {
   );
 
   return (
+    <DesktopOnly toolName="Gravitas Results">
     <GravitasShell
       footerControls={footerControls}
       status="FIELD ANALYSIS COMPLETE"
@@ -445,5 +447,6 @@ export default function Results() {
         }
       `}</style>
     </GravitasShell>
+    </DesktopOnly>
   );
 }

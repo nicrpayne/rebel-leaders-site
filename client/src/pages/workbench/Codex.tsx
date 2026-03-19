@@ -6,6 +6,7 @@ import { getBestCartridge, type GravitasSignal, type RankingRationale } from "@/
 import { codexAudio } from "@/lib/workbench/CodexAudio";
 import CabinetDeck from "@/components/workbench/CabinetDeck";
 import { useGame } from "@/contexts/GameContext";
+import DesktopOnly from "@/components/workbench/DesktopOnly";
 
 import { ReaderPanel } from "@/components/workbench/reader";
 import CodexShelf from "@/components/workbench/CodexShelf";
@@ -221,6 +222,7 @@ export default function Codex() {
   };
 
   return (
+    <DesktopOnly toolName="The Codex">
     <div className="min-h-screen bg-[#050505] font-sans selection:bg-amber-900 selection:text-amber-50">
       <div className="w-full max-w-6xl mx-auto">
 
@@ -291,5 +293,6 @@ export default function Codex() {
         />
       )}
     </div>
+    </DesktopOnly>
   );
 }

@@ -6,6 +6,7 @@ import VUMeter from "@/components/ui/VUMeter";
 import { getQuestions, type Question } from "@/lib/workbench/questions";
 import { calculateScore } from "@/lib/workbench/scoring";
 import { cn } from "@/lib/utils";
+import DesktopOnly from "@/components/workbench/DesktopOnly";
 
 type ScanMode = "SCAN" | "DEEP_SCAN";
 
@@ -280,7 +281,7 @@ export default function GravityCheck() {
   );
 
   return (
-    <>
+    <DesktopOnly toolName="Gravitas">
     <GravitasShell
       footerControls={footerControls}
       status={isLastQuestion ? "SIGNAL LOCKED" : "SEARCHING..."}
@@ -413,6 +414,6 @@ export default function GravityCheck() {
       `}</style>
     </GravitasShell>
 
-    </>
+    </DesktopOnly>
   );
 }

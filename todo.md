@@ -592,3 +592,9 @@
 - [x] Created comprehensive README.md with full site structure, plugins, gamification, tech stack
 - [x] Discussed mobile strategy — plugins stay desktop-only, landing page responsive
 - [x] Checkpoint and deliver
+
+## Phase 93: Mobile gate for plugin pages
+- [x] Build reusable DesktopOnly wrapper component with branded message
+- [x] Wrap Gravitas, Results, and Codex pages
+- [x] Test on mobile viewport (12/12 tests pass, no build errors)
+- [x] Checkpoint and deliver
