@@ -625,3 +625,8 @@
 - [x] Nudge badge slightly right and up (-mt-1 -mr-1)
 - [x] Brighten cover-image cards further (opacity 85→95%, grayscale 15→8%, hover to 100%/0%)
 - [x] Test and checkpoint (12/12 tests pass, zero TS errors)
+
+## Phase 101: Add The Terrain cover image to Workbench
+- [x] Upload Terrain cover to CDN
+- [x] Update The Terrain plugin card with cover image
+- [x] Test and checkpoint (12/12 tests pass, zero TS errors)

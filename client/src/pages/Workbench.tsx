@@ -79,7 +79,7 @@ const PLUGINS: Plugin[] = [
     desc: "Mythic cartography. Organizations are landscapes, not flat charts.",
     status: "LOCKED",
     link: "#",
-    image: null,
+    image: "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/terrain_cover_1e056580.jpg",
     version: "—",
   },
   {
