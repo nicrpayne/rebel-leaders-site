@@ -323,13 +323,16 @@ export default function Workbench() {
 /* ─── Plugin Card Component ─── */
 function PluginCard({ plugin }: { plugin: Plugin }) {
   const isActive = plugin.status === "ACTIVE";
+  const hasImage = !!plugin.image;
 
   const cardContent = (
     <div
       className={`group relative bg-card border border-gold/20 transition-all duration-500 flex flex-col h-full ${
         isActive
           ? "hover:-translate-y-1 hover:shadow-[0_0_30px_-10px_rgba(197,160,89,0.2)] hover:border-gold/50 cursor-pointer"
-          : "opacity-60 grayscale-[0.4] cursor-default"
+          : hasImage
+            ? "opacity-85 grayscale-[0.15] cursor-default hover:opacity-95 hover:grayscale-0"
+            : "opacity-65 grayscale-[0.3] cursor-default"
       }`}
     >
       {/* Corner accents */}
@@ -380,7 +383,9 @@ function PluginCard({ plugin }: { plugin: Plugin }) {
         <p className="font-pixel text-[7px] tracking-[0.15em] text-gold-dim/60 mb-3">
           {plugin.category} &nbsp;// &nbsp;{plugin.version}
         </p>
-        <p className="font-display text-sm text-parchment-dim/60 leading-relaxed flex-1">
+        <p className={`font-display text-sm leading-relaxed flex-1 ${
+          isActive ? "text-parchment-dim/60" : hasImage ? "text-parchment-dim/70" : "text-parchment-dim/50"
+        }`}>
           {plugin.desc}
         </p>
 

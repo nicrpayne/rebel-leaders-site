@@ -608,3 +608,8 @@
 - [x] Update Workbench.tsx: rename Soil Test to Underground, update description, category (MAP), and cover image
 - [x] Ensure LaaS Calibrator remains as a separate plugin
 - [x] Test and checkpoint (12/12 tests pass, zero TS errors)
+
+## Phase 98: Brighten locked plugin cards on Workbench
+- [x] Reduce opacity/grayscale on locked cards with cover images (85% opacity, 15% grayscale, hover to 95%/0%)
+- [x] Keep placeholder "INCOMING" cards slightly more muted (65% opacity, 30% grayscale)
+- [x] Test and checkpoint (12/12 tests pass, zero TS errors)
