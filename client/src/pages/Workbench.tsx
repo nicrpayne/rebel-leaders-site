@@ -32,6 +32,7 @@ interface Plugin {
 }
 
 const PLUGINS: Plugin[] = [
+  /* ── ACTIVE ── */
   {
     id: "gravity-check",
     title: "GRAVITAS",
@@ -52,6 +53,7 @@ const PLUGINS: Plugin[] = [
     image: "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/6XMovZHp9ctGFaj4XUiVdL/codex_cover-GFY7usmeN4FzNRmJ64c5wD.webp",
     version: "V.1.0.4",
   },
+  /* ── LOCKED with covers ── */
   {
     id: "laas",
     title: "LaaS Calibrator",
@@ -83,6 +85,27 @@ const PLUGINS: Plugin[] = [
     version: "—",
   },
   {
+    id: "underground",
+    title: "Underground",
+    category: "MAP",
+    desc: "Leadership culture analysis. Map the root system beneath your team's surface.",
+    status: "LOCKED",
+    link: "#",
+    image: "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/underground_cover_31183985.jpg",
+    version: "—",
+  },
+  {
+    id: "astrolabe",
+    title: "Astrolabe",
+    category: "MIRROR",
+    desc: "Vocational bearing. Find true north when everything around you is spinning.",
+    status: "LOCKED",
+    link: "#",
+    image: "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/astrolabe_cover_95fbbeb7.jpg",
+    version: "—",
+  },
+  /* ── LOCKED placeholders ── */
+  {
     id: "leak-finder",
     title: "Leak Finder",
     category: "SIGNAL",
@@ -100,16 +123,6 @@ const PLUGINS: Plugin[] = [
     status: "LOCKED",
     link: "#",
     image: null,
-    version: "—",
-  },
-  {
-    id: "underground",
-    title: "Underground",
-    category: "MAP",
-    desc: "Leadership culture analysis. Map the root system beneath your team's surface.",
-    status: "LOCKED",
-    link: "#",
-    image: "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/underground_cover_31183985.jpg",
     version: "—",
   },
   {
@@ -170,16 +183,6 @@ const PLUGINS: Plugin[] = [
     status: "LOCKED",
     link: "#",
     image: null,
-    version: "—",
-  },
-  {
-    id: "astrolabe",
-    title: "Astrolabe",
-    category: "MIRROR",
-    desc: "Vocational bearing. Find true north when everything around you is spinning.",
-    status: "LOCKED",
-    link: "#",
-    image: "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/astrolabe_cover_95fbbeb7.jpg",
     version: "—",
   },
 ];

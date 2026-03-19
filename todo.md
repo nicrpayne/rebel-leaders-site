@@ -636,3 +636,7 @@
 - [x] Add Astrolabe as new MIRROR plugin ("Vocational bearing. Find true north when everything around you is spinning.")
 - [x] Add cover image to the card
 - [x] Test and checkpoint (12/12 tests pass, zero TS errors)
+
+## Phase 103: Reorder plugin cards — covers first, placeholders last
+- [x] Reorder PLUGINS array: active (2), locked-with-covers (5), placeholders (8)
+- [x] Test and checkpoint (12/12 tests pass, zero TS errors)
