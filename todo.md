@@ -602,3 +602,9 @@
 ## Phase 96: Tweak rotary knob tick sound — mechanical click like combination lock / turn signal
 - [x] Replace playTickSound with a light, crisp mechanical click (noise burst + bandpass, 12ms)
 - [x] Test and checkpoint (12/12 tests pass, zero TS errors)
+
+## Phase 97: Add Underground plugin cover to Workbench
+- [x] Upload Underground cover image to CDN
+- [x] Update Workbench.tsx: rename Soil Test to Underground, update description, category (MAP), and cover image
+- [x] Ensure LaaS Calibrator remains as a separate plugin
+- [x] Test and checkpoint (12/12 tests pass, zero TS errors)

@@ -103,13 +103,13 @@ const PLUGINS: Plugin[] = [
     version: "—",
   },
   {
-    id: "soil-test",
-    title: "Soil Test",
-    category: "MIRROR",
-    desc: "Ecological analyzer. Does the culture actually sustain life?",
+    id: "underground",
+    title: "Underground",
+    category: "MAP",
+    desc: "Leadership culture analysis. Map the root system beneath your team's surface.",
     status: "LOCKED",
     link: "#",
-    image: null,
+    image: "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/underground_cover_31183985.jpg",
     version: "—",
   },
   {
