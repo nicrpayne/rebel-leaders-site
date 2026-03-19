@@ -567,3 +567,17 @@
 - [x] Registered route in App.tsx (hidden from navigation)
 - [x] Tested — all 21 assets render, download/copy/open-in-tab buttons work, mobile action row visible
 - [x] All 12 tests passing, checkpoint saved
+
+## Phase 90: Integrate Rebel OS Plugins (Gravitas + Codex) — Replace Armory with Workbench
+- [x] Cloned and studied plugins repo — 20+ files, all client-side, no server/DB changes needed
+- [x] Studied main site's Armory, routing, XP system, navigation structure
+- [x] Presented detailed merge plan — user approved routes, nav placement, full integration approach
+- [x] Executed merge — copied 20 files into workbench/ subdirs, updated all import paths and route prefixes
+- [x] Built branded Workbench landing page with 8-bit desk hero, filter sidebar, 14 plugin cards
+- [x] Uploaded all plugin assets to CDN (cover art, frames, textures, sounds, sticker)
+- [x] Updated Navigation (Workbench after Shelf), Footer, Home page links, removed Armory
+- [x] Added VT323 font to index.html for plugin UI compatibility
+- [x] Wired 3 XP achievements: Toolsmith (visit Workbench), Field Operative (complete Gravitas), Protocol Officer (read Codex protocol)
+- [x] Tested in browser — Workbench landing, Gravitas shell, Results + Side-Chain, Codex cabinet all working
+- [x] All 12 tests passing, TypeScript compiles clean, no console errors
+- [x] Checkpoint and deliver

@@ -54,11 +54,11 @@ const ASSETS: Asset[] = [
   },
   {
     id: "bookshelf-about",
-    name: "Bookshelf (About / Armory)",
-    description: "Bookshelf scene used on About and Armory pages.",
+    name: "Bookshelf (About)",
+    description: "Bookshelf scene used on the About page.",
     category: "scene",
     url: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/yIOHdhgRJwHhvBLy.png",
-    usedIn: ["About", "Armory"],
+    usedIn: ["About"],
   },
   {
     id: "scroll-map",

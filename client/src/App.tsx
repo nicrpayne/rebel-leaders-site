@@ -17,9 +17,13 @@ import Game from "./pages/Game";
 import Book from "./pages/Book";
 import Community from "./pages/Community";
 import Mirror from "./pages/Mirror";
-import Armory from "./pages/Armory";
+import Workbench from "./pages/Workbench";
+import GravityCheck from "./pages/workbench/GravityCheck";
+import Results from "./pages/workbench/Results";
+import Codex from "./pages/workbench/Codex";
 import GameStandalone from "./pages/GameStandalone";
 import HiddenAssets from "./pages/HiddenAssets";
+
 function Router() {
   // make sure to consider if you need authentication for certain routes
   return (
@@ -35,7 +39,13 @@ function Router() {
       <Route path="/book" component={Book} />
       <Route path="/community" component={Community} />
       <Route path="/mirror" component={Mirror} />
-      <Route path="/armory" component={Armory} />
+      {/* Workbench — Plugin Hub */}
+      <Route path="/workbench" component={Workbench} />
+      <Route path="/workbench/gravitas" component={GravityCheck} />
+      <Route path="/workbench/results" component={Results} />
+      <Route path="/workbench/codex" component={Codex} />
+      {/* Legacy redirect */}
+      <Route path="/armory">{() => { window.location.href = "/workbench"; return null; }}</Route>
       <Route path="/game-standalone" component={GameStandalone} />
       <Route path="/hidden-assets" component={HiddenAssets} />
       <Route path="/404" component={NotFound} />

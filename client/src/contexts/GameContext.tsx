@@ -18,7 +18,7 @@ const PAGE_VISIT_XP: Record<string, number> = {
   shelf: 5,
   about: 5,
   mirror: 5,
-  armory: 5,
+  workbench: 5,
   residency: 5,
 };
 
@@ -62,6 +62,9 @@ export const ACHIEVEMENTS: Achievement[] = [
   { id: "time-30", title: "Present", description: "Spent 30 minutes in the rebellion", icon: "⏳" },
   { id: "time-60", title: "Committed", description: "Spent 1 hour in the rebellion", icon: "🕐" },
   { id: "runner_complete", title: "Level Complete", description: "Completed the Manifesto side-scroller", icon: "🎮" },
+  { id: "toolsmith", title: "Toolsmith", description: "Entered the Workbench", icon: "🔧" },
+  { id: "field-operative", title: "Field Operative", description: "Completed a Gravitas scan", icon: "📡" },
+  { id: "protocol-officer", title: "Protocol Officer", description: "Read your first Codex protocol", icon: "📋" },
 ];
 
 /* ─── State Shape ─── */

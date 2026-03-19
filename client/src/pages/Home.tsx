@@ -434,7 +434,7 @@ export default function Home() {
                     title: "MOVES",
                     emoji: "⚔",
                     desc: "Small experiments you can actually do. Daily practices that shift the relational field.",
-                    href: "/armory",
+                    href: "/workbench",
                   },
                 ].map((item, i) => (
                   <Link

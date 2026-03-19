@@ -48,7 +48,7 @@ export default function Footer() {
               { label: "Start Here", href: "/start" },
               { label: "The Game", href: "/game" },
               { label: "The Mirror", href: "/mirror" },
-              { label: "The Armory", href: "/armory" },
+              { label: "Workbench", href: "/workbench" },
               { label: "Community", href: "/community" },
               { label: "The Manuscript", href: "/book" },
             ].map((item) => (
