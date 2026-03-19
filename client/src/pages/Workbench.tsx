@@ -104,6 +104,16 @@ const PLUGINS: Plugin[] = [
     image: "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/astrolabe_cover_95fbbeb7.jpg",
     version: "—",
   },
+  {
+    id: "drift",
+    title: "Drift",
+    category: "MAP",
+    desc: "Orbital alignment. Declared center vs. actual center. See where the system is really pulling.",
+    status: "LOCKED",
+    link: "#",
+    image: "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/drift_cover_dc876c35.jpg",
+    version: "—",
+  },
   /* ── LOCKED placeholders ── */
   {
     id: "leak-finder",
@@ -135,16 +145,7 @@ const PLUGINS: Plugin[] = [
     image: null,
     version: "—",
   },
-  {
-    id: "drift",
-    title: "Drift",
-    category: "MAP",
-    desc: "Orbital alignment. Declared center vs. actual center. See where the system is really pulling.",
-    status: "LOCKED",
-    link: "#",
-    image: "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/drift_cover_dc876c35.jpg",
-    version: "—",
-  },
+
   {
     id: "move-matcher",
     title: "Move Matcher",
