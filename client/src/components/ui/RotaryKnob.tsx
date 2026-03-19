@@ -23,12 +23,13 @@ interface RotaryKnobProps {
   className?: string;
 }
 
-/* ─── Audio Engine (sample-based) ─── */
-const CLICK_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/knob-click_65005c8d.mp3";
+/* ─── Audio Engine ─── */
+const CLICK_BUFFER_DURATION = 0.015; // 15 ms
+const CLICK_SAMPLE_RATE = 44100;
 
 let _audioCtx: AudioContext | null = null;
 let _clickBuffer: AudioBuffer | null = null;
-let _loadingClick = false;
+let _thunkBuffer: AudioBuffer | null = null;
 
 function getAudioCtx(): AudioContext | null {
   if (typeof window === "undefined") return null;
@@ -38,59 +39,95 @@ function getAudioCtx(): AudioContext | null {
   return _audioCtx;
 }
 
-/** Fetch and decode the mechanical click sample from CDN (cached after first load). */
-async function loadClickBuffer(): Promise<void> {
+/** Pre-compute a short noise-burst buffer for the detent click. */
+function getClickBuffer(): AudioBuffer | null {
   const ctx = getAudioCtx();
-  if (!ctx || _clickBuffer || _loadingClick) return;
-  _loadingClick = true;
-  try {
-    const resp = await fetch(CLICK_URL);
-    const arrayBuf = await resp.arrayBuffer();
-    _clickBuffer = await ctx.decodeAudioData(arrayBuf);
-  } catch (e) {
-    console.warn("[RotaryKnob] Failed to load click sample:", e);
-  } finally {
-    _loadingClick = false;
+  if (!ctx) return null;
+  if (_clickBuffer) return _clickBuffer;
+
+  const length = Math.ceil(CLICK_BUFFER_DURATION * CLICK_SAMPLE_RATE);
+  const buf = ctx.createBuffer(1, length, CLICK_SAMPLE_RATE);
+  const data = buf.getChannelData(0);
+
+  for (let i = 0; i < length; i++) {
+    // Shaped noise burst: fast attack, exponential decay
+    const t = i / CLICK_SAMPLE_RATE;
+    const envelope = Math.exp(-t * 400); // fast decay
+    const noise = (Math.random() * 2 - 1);
+    data[i] = noise * envelope * 0.6;
   }
+  _clickBuffer = buf;
+  return buf;
+}
+
+/** Slightly longer, lower thunk for endpoint stops. */
+function getThunkBuffer(): AudioBuffer | null {
+  const ctx = getAudioCtx();
+  if (!ctx) return null;
+  if (_thunkBuffer) return _thunkBuffer;
+
+  const duration = 0.04;
+  const length = Math.ceil(duration * CLICK_SAMPLE_RATE);
+  const buf = ctx.createBuffer(1, length, CLICK_SAMPLE_RATE);
+  const data = buf.getChannelData(0);
+
+  for (let i = 0; i < length; i++) {
+    const t = i / CLICK_SAMPLE_RATE;
+    const envelope = Math.exp(-t * 120);
+    const noise = (Math.random() * 2 - 1);
+    // Mix in a low sine for weight
+    const sine = Math.sin(2 * Math.PI * 120 * t) * 0.4;
+    data[i] = (noise * 0.5 + sine) * envelope * 0.7;
+  }
+  _thunkBuffer = buf;
+  return buf;
 }
 
 /**
- * Play a single detent click using the mechanical click sample.
- * @param speed 0–1 normalized drag speed. Affects volume + playback rate.
+ * Play a single detent click.
+ * @param speed 0–1 normalized drag speed. Affects volume + filter.
  */
 function playDetentClick(speed: number = 0.3) {
   const ctx = getAudioCtx();
-  if (!ctx || !_clickBuffer) return;
+  const buf = getClickBuffer();
+  if (!ctx || !buf) return;
   if (ctx.state === "suspended") ctx.resume();
 
   const source = ctx.createBufferSource();
-  source.buffer = _clickBuffer;
+  source.buffer = buf;
 
-  // Playback rate: faster drag → slightly higher pitch for variety
-  source.playbackRate.value = 0.92 + Math.random() * 0.16 + speed * 0.2;
+  // Bandpass filter — faster motion → brighter click
+  const filter = ctx.createBiquadFilter();
+  filter.type = "bandpass";
+  filter.frequency.value = 3000 + speed * 3000; // 3–6 kHz
+  filter.Q.value = 1.2;
 
-  // Gain: faster drag → slightly louder (but never harsh)
+  // Gain — faster motion → slightly louder (but never harsh)
   const gain = ctx.createGain();
-  const vol = 0.15 + speed * 0.25; // 0.15 – 0.40
-  gain.gain.value = Math.min(vol, 0.45);
+  const vol = 0.08 + speed * 0.14; // 0.08 – 0.22
+  gain.gain.value = Math.min(vol, 0.25);
 
-  source.connect(gain);
+  // Playback rate variation for organic feel
+  source.playbackRate.value = 0.9 + Math.random() * 0.2 + speed * 0.15;
+
+  source.connect(filter);
+  filter.connect(gain);
   gain.connect(ctx.destination);
   source.start();
 }
 
-/** Play endpoint thunk: same sample but pitched down and louder for weight. */
+/** Play endpoint thunk when hitting min or max. */
 function playEndpointThunk() {
   const ctx = getAudioCtx();
-  if (!ctx || !_clickBuffer) return;
+  const buf = getThunkBuffer();
+  if (!ctx || !buf) return;
   if (ctx.state === "suspended") ctx.resume();
 
   const source = ctx.createBufferSource();
-  source.buffer = _clickBuffer;
-  source.playbackRate.value = 0.6; // pitched down for a heavier "thunk"
+  source.buffer = buf;
 
   const gain = ctx.createGain();
-  gain.gain.value = 0.5;
+  gain.gain.value = 0.18;
 
   source.connect(gain);
   gain.connect(ctx.destination);
@@ -206,10 +243,9 @@ export default function RotaryKnob({
     (e.target as Element).setPointerCapture(e.pointerId);
     document.body.classList.add("knob-dragging");
 
-    // Resume audio context and preload click sample on first interaction
+    // Resume audio context on first interaction
     const ctx = getAudioCtx();
     if (ctx?.state === "suspended") ctx.resume();
-    loadClickBuffer();
   };
 
   const handlePointerMove = (e: React.PointerEvent) => {
@@ -303,7 +339,7 @@ export default function RotaryKnob({
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
         onPointerCancel={handlePointerUp}
-        onMouseEnter={() => { setIsHovering(true); loadClickBuffer(); }}
+        onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
         style={{ touchAction: "none" }}
       >

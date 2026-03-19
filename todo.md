@@ -609,8 +609,3 @@
 - [x] Redesign with satisfying click detents, smooth physics, rich audio feedback
 - [x] Visual polish: lighting, shadow, indicator refinement
 - [x] Test and checkpoint (12/12 tests pass, zero TS errors)
-
-## Phase 95: Swap knob click sound with user's mechanical-click-swoop MP3
-- [x] Analyze and trim the uploaded audio clip to a tight click (60ms, normalized, fade-out)
-- [x] Upload as static asset and wire into RotaryKnob detent system
-- [x] Test and checkpoint (12/12 tests pass, zero TS errors)
