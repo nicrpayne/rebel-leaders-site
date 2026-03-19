@@ -613,3 +613,10 @@
 - [x] Reduce opacity/grayscale on locked cards with cover images (85% opacity, 15% grayscale, hover to 95%/0%)
 - [x] Keep placeholder "INCOMING" cards slightly more muted (65% opacity, 30% grayscale)
 - [x] Test and checkpoint (12/12 tests pass, zero TS errors)
+
+## Phase 99: Move status badges below image and make LOCKED more visible
+- [x] Remove status badge overlay from cover image area
+- [x] Place status badge inline with title in card body
+- [x] Make LOCKED badge more prominent (red-tinted: bg-red-900/20, text-red-400/80)
+- [x] Remove redundant LOCKED text from footer
+- [x] Test and checkpoint (12/12 tests pass, zero TS errors)

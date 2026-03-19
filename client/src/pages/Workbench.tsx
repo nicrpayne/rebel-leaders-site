@@ -341,19 +341,6 @@ function PluginCard({ plugin }: { plugin: Plugin }) {
       <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-gold/40 group-hover:border-gold/80 transition-colors" />
       <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-gold/40 group-hover:border-gold/80 transition-colors" />
 
-      {/* Status badge */}
-      <div className="absolute top-3 right-3 z-10">
-        <span
-          className={`font-pixel text-[7px] tracking-[0.2em] px-2 py-1 ${
-            isActive
-              ? "bg-gold/15 text-gold border border-gold/30"
-              : "bg-parchment-dim/5 text-parchment-dim/40 border border-parchment-dim/15"
-          }`}
-        >
-          {plugin.status}
-        </span>
-      </div>
-
       {/* Cover Image */}
       <div className="relative aspect-[4/3] overflow-hidden bg-forest-deep">
         {plugin.image ? (
@@ -377,9 +364,21 @@ function PluginCard({ plugin }: { plugin: Plugin }) {
 
       {/* Card Body */}
       <div className="p-4 flex flex-col flex-1">
-        <h3 className="font-display text-xl text-parchment font-semibold mb-1 tracking-wide">
-          {plugin.title}
-        </h3>
+        {/* Status badge row */}
+        <div className="flex items-center justify-between mb-2">
+          <h3 className="font-display text-xl text-parchment font-semibold tracking-wide">
+            {plugin.title}
+          </h3>
+          <span
+            className={`font-pixel text-[7px] tracking-[0.2em] px-2 py-1 shrink-0 ml-2 ${
+              isActive
+                ? "bg-gold/15 text-gold border border-gold/30"
+                : "bg-red-900/20 text-red-400/80 border border-red-500/30"
+            }`}
+          >
+            {plugin.status}
+          </span>
+        </div>
         <p className="font-pixel text-[7px] tracking-[0.15em] text-gold-dim/60 mb-3">
           {plugin.category} &nbsp;// &nbsp;{plugin.version}
         </p>
@@ -394,13 +393,9 @@ function PluginCard({ plugin }: { plugin: Plugin }) {
           <span className="font-pixel text-[7px] tracking-[0.2em] text-parchment-dim/30">
             REBEL OS
           </span>
-          {isActive ? (
+          {isActive && (
             <span className="font-pixel text-[8px] tracking-[0.2em] text-gold group-hover:text-gold transition-colors flex items-center gap-1">
               LAUNCH <span className="transition-transform group-hover:translate-x-0.5">&rarr;</span>
-            </span>
-          ) : (
-            <span className="font-pixel text-[7px] tracking-[0.2em] text-parchment-dim/25">
-              LOCKED
             </span>
           )}
         </div>
