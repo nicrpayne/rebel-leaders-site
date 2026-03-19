@@ -640,3 +640,10 @@
 ## Phase 103: Reorder plugin cards — covers first, placeholders last
 - [x] Reorder PLUGINS array: active (2), locked-with-covers (5), placeholders (8)
 - [x] Test and checkpoint (12/12 tests pass, zero TS errors)
+
+## Phase 104: Rename Org Orbit to Drift, add cover image
+- [x] Upload Drift cover to CDN
+- [x] Rename Org Orbit to Drift in Workbench plugin data
+- [x] Update description: "Orbital alignment. Declared center vs. actual center. See where the system is really pulling."
+- [x] Add cover image
+- [x] Test and checkpoint (12/12 tests pass, zero TS errors)

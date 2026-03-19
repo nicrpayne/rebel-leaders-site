@@ -136,13 +136,13 @@ const PLUGINS: Plugin[] = [
     version: "—",
   },
   {
-    id: "org-orbit",
-    title: "Org Orbit",
+    id: "drift",
+    title: "Drift",
     category: "MAP",
-    desc: "Cosmic systems map. What your people are becoming by what is central.",
+    desc: "Orbital alignment. Declared center vs. actual center. See where the system is really pulling.",
     status: "LOCKED",
     link: "#",
-    image: null,
+    image: "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/drift_cover_dc876c35.jpg",
     version: "—",
   },
   {
