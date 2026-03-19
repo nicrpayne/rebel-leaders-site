@@ -630,3 +630,9 @@
 - [x] Upload Terrain cover to CDN
 - [x] Update The Terrain plugin card with cover image
 - [x] Test and checkpoint (12/12 tests pass, zero TS errors)
+
+## Phase 102: Rename Calling Compass to Astrolabe and add cover image
+- [x] Upload Astrolabe cover to CDN
+- [x] Add Astrolabe as new MIRROR plugin ("Vocational bearing. Find true north when everything around you is spinning.")
+- [x] Add cover image to the card
+- [x] Test and checkpoint (12/12 tests pass, zero TS errors)

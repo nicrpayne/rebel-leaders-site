@@ -172,6 +172,16 @@ const PLUGINS: Plugin[] = [
     image: null,
     version: "—",
   },
+  {
+    id: "astrolabe",
+    title: "Astrolabe",
+    category: "MIRROR",
+    desc: "Vocational bearing. Find true north when everything around you is spinning.",
+    status: "LOCKED",
+    link: "#",
+    image: "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/astrolabe_cover_95fbbeb7.jpg",
+    version: "—",
+  },
 ];
 
 const CATEGORIES = ["ALL", "MIRROR", "MAP", "MOVE", "SIGNAL"] as const;
