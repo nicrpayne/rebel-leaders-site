@@ -114,7 +114,6 @@ const PLUGINS: Plugin[] = [
     image: "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/drift_cover_dc876c35.jpg",
     version: "—",
   },
-  /* ── LOCKED placeholders ── */
   {
     id: "leak-finder",
     title: "Leak Finder",
@@ -122,9 +121,10 @@ const PLUGINS: Plugin[] = [
     desc: "Fault detection. Where the system is bleeding trust, clarity, or energy.",
     status: "LOCKED",
     link: "#",
-    image: null,
+    image: "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/leak_finder_cover_v2_5efb7e41.jpg",
     version: "—",
   },
+  /* ── LOCKED placeholders ── */
   {
     id: "signal-decoder",
     title: "Signal Decoder",
