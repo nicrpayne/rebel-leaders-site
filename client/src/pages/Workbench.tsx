@@ -134,6 +134,16 @@ const PLUGINS: Plugin[] = [
     image: "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/eye_cover_v2_c9db526c.jpg",
     version: "—",
   },
+  {
+    id: "prism",
+    title: "Prism",
+    category: "SIGNAL",
+    desc: "Conflict refraction. See what's really hiding inside the signal before you react.",
+    status: "LOCKED",
+    link: "#",
+    image: "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/prism_cover_v2_7264cb05.jpg",
+    version: "—",
+  },
   /* ── LOCKED placeholders ── */
   {
     id: "signal-decoder",
@@ -150,16 +160,6 @@ const PLUGINS: Plugin[] = [
     title: "Move Matcher",
     category: "MOVE",
     desc: "Tactical routing. Fitting the right move to the actual rupture.",
-    status: "LOCKED",
-    link: "#",
-    image: null,
-    version: "—",
-  },
-  {
-    id: "conflict-reframe",
-    title: "Conflict Reframe",
-    category: "SIGNAL",
-    desc: "Optical prism. What kind of truth is hiding inside the conflict.",
     status: "LOCKED",
     link: "#",
     image: null,

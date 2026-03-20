@@ -653,3 +653,9 @@
 - [x] Rename Identity Weather to EYE, update description
 - [x] Move to cover-image section (after Leak Finder, before placeholders)
 - [x] Test and checkpoint (12/12 tests pass, zero TS errors)
+
+## Phase 106: Rename Conflict Reframe to Prism, add cover image
+- [x] Upload Prism cover to CDN
+- [x] Rename Conflict Reframe to Prism, update description
+- [x] Move to cover-image section (after EYE, before placeholders)
+- [x] Test and checkpoint (12/12 tests pass, zero TS errors)
