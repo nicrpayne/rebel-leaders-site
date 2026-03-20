@@ -174,7 +174,7 @@ const PLUGINS: Plugin[] = [
     image: "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/field_notes_cover_v3_8603f66f.jpg",
     version: "—",
   },
-  /* ── LOCKED placeholders ── */
+  /* ── LOCKED with covers (cont.) ── */
   {
     id: "praxis-builder",
     title: "Praxis Builder",
@@ -182,7 +182,7 @@ const PLUGINS: Plugin[] = [
     desc: "Action sequencer. Transformation through repeated embodied practice.",
     status: "LOCKED",
     link: "#",
-    image: null,
+    image: "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/praxis_builder_cover_v2_b60dcd75.jpg",
     version: "—",
   },
 ];

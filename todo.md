@@ -674,3 +674,9 @@
 - [x] Upload Field Notes cover to CDN
 - [x] Add cover image and move to cover-image section
 - [x] Test and checkpoint (12/12 tests pass, zero TS errors)
+
+## Phase 110: Add Praxis Builder cover image (FINAL PLUGIN)
+- [x] Upload Praxis Builder cover to CDN
+- [x] Add cover image and move to cover-image section
+- [x] Test and checkpoint (12/12 tests pass, zero TS errors)
+- [x] ALL 15 PLUGINS NOW HAVE COVER ART — ZERO PLACEHOLDERS
