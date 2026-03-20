@@ -647,3 +647,9 @@
 - [x] Update description: "Orbital alignment. Declared center vs. actual center. See where the system is really pulling."
 - [x] Add cover image
 - [x] Test and checkpoint (12/12 tests pass, zero TS errors)
+
+## Phase 105: Rename Identity Weather to EYE, add cover and new description
+- [x] Upload EYE cover to CDN
+- [x] Rename Identity Weather to EYE, update description
+- [x] Move to cover-image section (after Leak Finder, before placeholders)
+- [x] Test and checkpoint (12/12 tests pass, zero TS errors)

@@ -124,6 +124,16 @@ const PLUGINS: Plugin[] = [
     image: "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/leak_finder_cover_v2_5efb7e41.jpg",
     version: "—",
   },
+  {
+    id: "eye",
+    title: "EYE",
+    category: "MIRROR",
+    desc: "Inner climate scan. Read the pressure system moving through you before it moves through your team.",
+    status: "LOCKED",
+    link: "#",
+    image: "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/eye_cover_v2_c9db526c.jpg",
+    version: "—",
+  },
   /* ── LOCKED placeholders ── */
   {
     id: "signal-decoder",
@@ -135,17 +145,6 @@ const PLUGINS: Plugin[] = [
     image: null,
     version: "—",
   },
-  {
-    id: "identity-weather",
-    title: "Identity Weather",
-    category: "MIRROR",
-    desc: "Soul radar. The atmosphere a person lives under before they speak.",
-    status: "LOCKED",
-    link: "#",
-    image: null,
-    version: "—",
-  },
-
   {
     id: "move-matcher",
     title: "Move Matcher",
