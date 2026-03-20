@@ -669,3 +669,8 @@
 - [x] Upload Move Matcher cover to CDN
 - [x] Add cover image and move to cover-image section
 - [x] Test and checkpoint (12/12 tests pass, zero TS errors)
+
+## Phase 109: Add Field Notes cover image
+- [x] Upload Field Notes cover to CDN
+- [x] Add cover image and move to cover-image section
+- [x] Test and checkpoint (12/12 tests pass, zero TS errors)

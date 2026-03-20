@@ -164,7 +164,6 @@ const PLUGINS: Plugin[] = [
     image: "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/move_matcher_cover_v2_4efd9f3f.jpg",
     version: "—",
   },
-  /* ── LOCKED placeholders ── */
   {
     id: "field-notes",
     title: "Field Notes",
@@ -172,9 +171,10 @@ const PLUGINS: Plugin[] = [
     desc: "Expedition log. Reflection as formation.",
     status: "LOCKED",
     link: "#",
-    image: null,
+    image: "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/field_notes_cover_v3_8603f66f.jpg",
     version: "—",
   },
+  /* ── LOCKED placeholders ── */
   {
     id: "praxis-builder",
     title: "Praxis Builder",
