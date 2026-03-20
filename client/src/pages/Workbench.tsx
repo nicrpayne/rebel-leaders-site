@@ -144,7 +144,6 @@ const PLUGINS: Plugin[] = [
     image: "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/prism_cover_v2_7264cb05.jpg",
     version: "—",
   },
-  /* ── LOCKED placeholders ── */
   {
     id: "signal-decoder",
     title: "Signal Decoder",
@@ -152,9 +151,10 @@ const PLUGINS: Plugin[] = [
     desc: "Signal analysis. Translating recurring tensions into truth.",
     status: "LOCKED",
     link: "#",
-    image: null,
+    image: "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/signal_decoder_cover_v1_e83fe0fa.jpg",
     version: "—",
   },
+  /* ── LOCKED placeholders ── */
   {
     id: "move-matcher",
     title: "Move Matcher",

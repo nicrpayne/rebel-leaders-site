@@ -659,3 +659,8 @@
 - [x] Rename Conflict Reframe to Prism, update description
 - [x] Move to cover-image section (after EYE, before placeholders)
 - [x] Test and checkpoint (12/12 tests pass, zero TS errors)
+
+## Phase 107: Add Signal Decoder cover image
+- [x] Upload Signal Decoder cover to CDN
+- [x] Add cover image and move to cover-image section
+- [x] Test and checkpoint (12/12 tests pass, zero TS errors)
