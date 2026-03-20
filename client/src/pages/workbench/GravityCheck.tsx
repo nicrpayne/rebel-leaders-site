@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { useGravitasOnboarding } from "@/components/onboarding";
 import { useLocation } from "wouter";
 import GravitasShell from "@/components/workbench/GravitasShell";
 import RotaryKnob from "@/components/ui/RotaryKnob";
@@ -91,6 +92,53 @@ const playBootSound = () => {
     osc.start(now + i * 0.12);
     osc.stop(now + i * 0.12 + 0.15);
   });
+};
+
+// Completion sound for INITIALIZE — a rewarding resolution chord.
+// Low foundation tone + warm fifth + gentle octave shimmer.
+const playInitializeSound = () => {
+  if (!audioCtx) return;
+  const now = audioCtx.currentTime;
+
+  // Layer 1: warm foundation (C4 — 262 Hz)
+  const o1 = audioCtx.createOscillator();
+  const g1 = audioCtx.createGain();
+  o1.type = "sine";
+  o1.frequency.setValueAtTime(262, now);
+  g1.gain.setValueAtTime(0.14, now);
+  g1.gain.setValueAtTime(0.14, now + 0.15);
+  g1.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
+  o1.connect(g1);
+  g1.connect(audioCtx.destination);
+  o1.start(now);
+  o1.stop(now + 0.55);
+
+  // Layer 2: fifth (G4 — 392 Hz), slightly delayed
+  const o2 = audioCtx.createOscillator();
+  const g2 = audioCtx.createGain();
+  o2.type = "sine";
+  o2.frequency.setValueAtTime(392, now + 0.06);
+  g2.gain.setValueAtTime(0.001, now);
+  g2.gain.linearRampToValueAtTime(0.11, now + 0.08);
+  g2.gain.setValueAtTime(0.11, now + 0.2);
+  g2.gain.exponentialRampToValueAtTime(0.001, now + 0.55);
+  o2.connect(g2);
+  g2.connect(audioCtx.destination);
+  o2.start(now + 0.06);
+  o2.stop(now + 0.6);
+
+  // Layer 3: octave shimmer (C5 — 523 Hz), gentle triangle
+  const o3 = audioCtx.createOscillator();
+  const g3 = audioCtx.createGain();
+  o3.type = "triangle";
+  o3.frequency.setValueAtTime(523, now + 0.12);
+  g3.gain.setValueAtTime(0.001, now);
+  g3.gain.linearRampToValueAtTime(0.07, now + 0.15);
+  g3.gain.exponentialRampToValueAtTime(0.001, now + 0.65);
+  o3.connect(g3);
+  g3.connect(audioCtx.destination);
+  o3.start(now + 0.12);
+  o3.stop(now + 0.7);
 };
 
 function ModeSelect({ onSelect }: { onSelect: (mode: ScanMode) => void }) {
@@ -196,6 +244,10 @@ function ModeSelect({ onSelect }: { onSelect: (mode: ScanMode) => void }) {
 
 export default function GravityCheck() {
   const [scanMode, setScanMode] = useState<ScanMode | null>(null);
+  const { OnboardingUI } = useGravitasOnboarding({
+    onBeginScan: () => setScanMode("SCAN"),
+    onTourComplete: () => setScanMode(null),
+  });
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [knobValue, setKnobValue] = useState(50);
@@ -216,7 +268,11 @@ export default function GravityCheck() {
 
   const handleNext = useCallback(() => {
     if (!currentQuestion) return;
-    playClunkSound();
+    if (isLastQuestion) {
+      playInitializeSound();
+    } else {
+      playClunkSound();
+    }
 
     const score = 1 + (knobValue / 100) * 4;
     const newAnswers = { ...answers, [currentQuestion.id]: score };
@@ -233,8 +289,12 @@ export default function GravityCheck() {
     }
   }, [currentQuestion, knobValue, answers, isLastQuestion, setLocation]);
 
+  const onboardingOverlay = <OnboardingUI />;
+
   if (!scanMode) {
     return (
+      <>
+      {onboardingOverlay}
       <GravitasShell
         status="AWAITING DEPTH SELECTION"
         statusColor="text-[#3a3a44]"
@@ -255,6 +315,7 @@ export default function GravityCheck() {
       >
         <ModeSelect onSelect={(mode) => setScanMode(mode)} />
       </GravitasShell>
+      </>
     );
   }
 
@@ -269,6 +330,7 @@ export default function GravityCheck() {
         WORKBENCH
       </a>
     <button
+      data-tour="gravitas-next"
       onClick={handleNext}
       className={cn(
         "group flex items-center gap-1.5 px-2.5 py-1 bg-gradient-to-b from-[#1a1a20] to-[#141418] border rounded-[2px] shadow-[0_2px_4px_rgba(0,0,0,0.4)] transition-all duration-300",
@@ -364,6 +426,7 @@ export default function GravityCheck() {
                 {currentQuestion && (
                   <>
                     <div
+                      data-tour="gravitas-display"
                       className="relative z-20 text-green-400 text-[10px] leading-[2] tracking-[0.2em] text-center uppercase"
                       style={{
                         textShadow:
@@ -402,7 +465,7 @@ export default function GravityCheck() {
         </div>
 
         <div className="flex justify-center items-center h-full">
-          <div className="transform scale-[0.85] origin-center">
+          <div className="transform scale-[0.85] origin-center" data-tour="gravitas-knob">
             <RotaryKnob
               value={knobValue}
               min={0}
@@ -431,7 +494,7 @@ export default function GravityCheck() {
         }
       `}</style>
     </GravitasShell>
-
+    {onboardingOverlay}
     </DesktopOnly>
   );
 }
