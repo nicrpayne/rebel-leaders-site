@@ -154,7 +154,6 @@ const PLUGINS: Plugin[] = [
     image: "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/signal_decoder_cover_v1_e83fe0fa.jpg",
     version: "—",
   },
-  /* ── LOCKED placeholders ── */
   {
     id: "move-matcher",
     title: "Move Matcher",
@@ -162,9 +161,10 @@ const PLUGINS: Plugin[] = [
     desc: "Tactical routing. Fitting the right move to the actual rupture.",
     status: "LOCKED",
     link: "#",
-    image: null,
+    image: "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/move_matcher_cover_v2_4efd9f3f.jpg",
     version: "—",
   },
+  /* ── LOCKED placeholders ── */
   {
     id: "field-notes",
     title: "Field Notes",

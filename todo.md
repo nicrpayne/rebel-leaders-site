@@ -664,3 +664,8 @@
 - [x] Upload Signal Decoder cover to CDN
 - [x] Add cover image and move to cover-image section
 - [x] Test and checkpoint (12/12 tests pass, zero TS errors)
+
+## Phase 108: Add Move Matcher cover image
+- [x] Upload Move Matcher cover to CDN
+- [x] Add cover image and move to cover-image section
+- [x] Test and checkpoint (12/12 tests pass, zero TS errors)
