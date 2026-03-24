@@ -10,14 +10,13 @@
  *   - /workbench/results (back to Gravitas results)
  */
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useLocation } from "wouter";
 import PluginShell from "@/components/workbench/PluginShell";
 import DesktopOnly from "@/components/workbench/DesktopOnly";
 import { cn } from "@/lib/utils";
 import {
   getReadingBlock,
-  FAMILY_LABELS,
   type MirrorResult,
   type ReadingBlock,
   type GravitasPrior,
@@ -130,6 +129,7 @@ export default function MirrorReading() {
   const [gravitasPrior, setGravitasPrior] = useState<GravitasPrior | null>(null);
   const [reading, setReading] = useState<ReadingBlock | null>(null);
   const [isRevealed, setIsRevealed] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   // ─── Load Data ───────────────────────────────────────────────────
 
@@ -155,10 +155,9 @@ export default function MirrorReading() {
 
   // ─── Handle Codex Navigation ─────────────────────────────────────
 
-  const handleSideChainToCodex = () => {
-    if (!mirrorResult || !gravitasPrior) return;
+  const buildCodexUrl = () => {
+    if (!mirrorResult || !gravitasPrior) return null;
 
-    // Build Codex URL with Mirror framing flags
     const params = new URLSearchParams();
     params.set("archetype", gravitasPrior.archetype);
     params.set("leak", gravitasPrior.leak);
@@ -178,7 +177,41 @@ export default function MirrorReading() {
       params.set("mirrorResistance", mirrorResult.resistance_core_key);
     }
 
-    navigate(`/workbench/codex?${params.toString()}`);
+    return `/workbench/codex?${params.toString()}`;
+  };
+
+  const codexReadyRef = useRef(false);
+  const transitionTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const handleSideChainToCodex = () => {
+    if (!mirrorResult || !gravitasPrior) return;
+    setIsTransitioning(true);
+    codexReadyRef.current = false;
+
+    const url = buildCodexUrl();
+    if (!url) return;
+
+    // Prefetch the Codex page module in the background
+    const prefetchPromise = import("./Codex").then(() => {
+      codexReadyRef.current = true;
+    }).catch(() => {
+      // If prefetch fails, we'll navigate anyway on the cap timer
+    });
+
+    // Minimum interstitial display: 1.2 seconds (so the copy lands emotionally)
+    const minDisplayPromise = new Promise((resolve) => setTimeout(resolve, 1200));
+
+    // Navigate when both the module is ready AND the minimum display has passed
+    // Cap at 3 seconds regardless
+    const capTimer = setTimeout(() => navigate(url), 3000);
+    transitionTimerRef.current = capTimer;
+
+    Promise.all([prefetchPromise, minDisplayPromise]).then(() => {
+      if (transitionTimerRef.current) {
+        clearTimeout(transitionTimerRef.current);
+      }
+      navigate(url);
+    });
   };
 
   // ─── Render: Loading ─────────────────────────────────────────────
@@ -275,13 +308,7 @@ export default function MirrorReading() {
                   </span>
                 </>
               )}
-              <span className="text-[#333]">|</span>
-              <span className="text-[#444]">
-                PATTERN:{" "}
-                <span className="text-amber-700">
-                  {FAMILY_LABELS[mirrorResult.top_family]}
-                </span>
-              </span>
+
             </div>
           </div>
 
@@ -325,6 +352,44 @@ export default function MirrorReading() {
           }
         `}</style>
       </PluginShell>
+
+      {/* Codex Transition Interstitial */}
+      {isTransitioning && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center"
+          style={{
+            backgroundColor: "#0a0a0a",
+            animation: "interstitialFadeIn 0.5s ease-out",
+          }}
+        >
+          <div className="text-center space-y-6" style={{ animation: "interstitialTextReveal 0.8s ease-out 0.3s backwards" }}>
+            <p className="text-green-300/70 text-sm font-mono leading-relaxed max-w-md mx-auto">
+              Mirror has named the pattern.
+            </p>
+            <p className="text-green-400/90 text-sm font-mono leading-relaxed max-w-md mx-auto">
+              The Codex holds the move.
+            </p>
+            <div className="pt-4">
+              <div className="w-16 h-[1px] bg-green-900/50 mx-auto" style={{ animation: "interstitialBarGrow 1.5s ease-in-out" }} />
+            </div>
+          </div>
+        </div>
+      )}
+
+      <style>{`
+        @keyframes interstitialFadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        @keyframes interstitialTextReveal {
+          from { opacity: 0; transform: translateY(8px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes interstitialBarGrow {
+          from { width: 0; }
+          to { width: 4rem; }
+        }
+      `}</style>
     </DesktopOnly>
   );
 }
