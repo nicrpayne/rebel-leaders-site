@@ -4,9 +4,13 @@ import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, router } from "./_core/trpc";
 import { fetchSubstackArticles } from "./rss";
 import { fetchYouTubeFullVideos, fetchYouTubeShorts } from "./youtube-rss";
+import { gravitasRouter } from "./gravitas";
 
 export const appRouter = router({
   system: systemRouter,
+
+  // Gravitas result persistence
+  gravitas: gravitasRouter,
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),
     logout: publicProcedure.mutation(({ ctx }) => {

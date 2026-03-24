@@ -8,6 +8,7 @@ import { getQuestions, type Question } from "@/lib/workbench/questions";
 import { calculateScore } from "@/lib/workbench/scoring";
 import { cn } from "@/lib/utils";
 import DesktopOnly from "@/components/workbench/DesktopOnly";
+import { trpcVanilla } from "@/lib/trpc-vanilla";
 
 type ScanMode = "SCAN" | "DEEP_SCAN";
 
@@ -281,6 +282,19 @@ export default function GravityCheck() {
     if (isLastQuestion) {
       const results = calculateScore(newAnswers);
       localStorage.setItem("gravityCheckResults", JSON.stringify(results));
+      // Persist to database if authenticated — fire-and-forget, never blocks navigation
+      trpcVanilla.gravitas.save.mutate({
+        scanMode: scanMode as "SCAN" | "DEEP_SCAN",
+        identity: results.identity,
+        relationship: results.relationship,
+        vision: results.vision,
+        culture: results.culture,
+        total: results.total,
+        archetype: results.archetype,
+        leak: results.leak,
+        force: results.force,
+        fullPayload: { ...results, answers: newAnswers },
+      }).catch(() => { /* localStorage is the fallback — swallow silently */ });
       setLocation("/workbench/results");
     } else {
       setCurrentQuestionIndex((prev) => prev + 1);
