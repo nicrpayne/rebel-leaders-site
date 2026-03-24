@@ -1,4 +1,5 @@
 import { Toaster } from "@/components/ui/sonner";
+import { useClaimAnonymousResult } from "@/_core/hooks/useClaimAnonymousResult";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
 import { Route, Switch } from "wouter";
@@ -25,6 +26,7 @@ import MirrorFlow from "./pages/workbench/MirrorFlow";
 import MirrorReading from "./pages/workbench/MirrorReading";
 import GameStandalone from "./pages/GameStandalone";
 import HiddenAssets from "./pages/HiddenAssets";
+import Admin from "./pages/Admin";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -52,6 +54,7 @@ function Router() {
       <Route path="/armory">{() => { window.location.href = "/workbench"; return null; }}</Route>
       <Route path="/game-standalone" component={GameStandalone} />
       <Route path="/hidden-assets" component={HiddenAssets} />
+      <Route path="/admin" component={Admin} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
     </Switch>
@@ -59,6 +62,7 @@ function Router() {
 }
 
 function App() {
+  useClaimAnonymousResult();
   return (
     <ErrorBoundary>
       <ThemeProvider defaultTheme="dark">

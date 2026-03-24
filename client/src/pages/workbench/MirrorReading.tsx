@@ -21,6 +21,7 @@ import {
   type ReadingBlock,
   type GravitasPrior,
 } from "@/lib/mirror";
+import SaveReadingPrompt from "@/components/workbench/SaveReadingPrompt";
 
 // ─── Data Loaders ────────────────────────────────────────────────────
 
@@ -323,6 +324,9 @@ export default function MirrorReading() {
               />
             ))}
           </div>
+
+          {/* Save Reading Prompt */}
+          <SaveReadingPrompt context="mirror" />
 
           {/* Bottom CTA */}
           <div className="border-t border-[#1a1a1a] pt-8 text-center space-y-4">

@@ -5,6 +5,7 @@ import { ScoringResult } from "@/lib/workbench/scoring";
 import { cn } from "@/lib/utils";
 import { useGame } from "@/contexts/GameContext";
 import DesktopOnly from "@/components/workbench/DesktopOnly";
+import SaveReadingPrompt from "@/components/workbench/SaveReadingPrompt";
 
 // Audio Context for sound effects
 const audioCtx =
@@ -401,6 +402,9 @@ export default function Results() {
               </div>
             </div>
           </div>
+
+          {/* Save Reading Prompt */}
+          <SaveReadingPrompt context="gravitas" />
 
           {/* Return link */}
           <div className="text-center pt-1 pb-2">
