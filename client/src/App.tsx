@@ -21,6 +21,8 @@ import Workbench from "./pages/Workbench";
 import GravityCheck from "./pages/workbench/GravityCheck";
 import Results from "./pages/workbench/Results";
 import Codex from "./pages/workbench/Codex";
+import MirrorFlow from "./pages/workbench/MirrorFlow";
+import MirrorReading from "./pages/workbench/MirrorReading";
 import GameStandalone from "./pages/GameStandalone";
 import HiddenAssets from "./pages/HiddenAssets";
 
@@ -44,6 +46,8 @@ function Router() {
       <Route path="/workbench/gravitas" component={GravityCheck} />
       <Route path="/workbench/results" component={Results} />
       <Route path="/workbench/codex" component={Codex} />
+      <Route path="/workbench/mirror" component={MirrorFlow} />
+      <Route path="/workbench/mirror/reading" component={MirrorReading} />
       {/* Legacy redirect */}
       <Route path="/armory">{() => { window.location.href = "/workbench"; return null; }}</Route>
       <Route path="/game-standalone" component={GameStandalone} />
