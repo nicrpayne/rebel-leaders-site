@@ -38,6 +38,12 @@ export default function Codex() {
   const [rankingRationale, setRankingRationale] = useState<RankingRationale | null>(null);
   const [gravitasSignalData, setGravitasSignalData] = useState<GravitasSignal | null>(null);
 
+  // Mirror enrichment signals (read from URL params, stored for future use)
+  const [mirrorFamily, setMirrorFamily] = useState<string | null>(null);
+  const [mirrorConfidence, setMirrorConfidence] = useState<string | null>(null);
+  const [mirrorFraming, setMirrorFraming] = useState<string[]>([]);
+  const [mirrorResistance, setMirrorResistance] = useState<string | null>(null);
+
   // Load recent entries from localStorage
   useEffect(() => {
     try {
@@ -59,6 +65,24 @@ export default function Codex() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const signal = params.get("signal");
+
+    // Parse Mirror enrichment params (if arriving from Mirror reading)
+    const mirrorFamilyParam = params.get("mirrorFamily");
+    const mirrorConfidenceParam = params.get("mirrorConfidence");
+    const mirrorFramingParam = params.get("mirrorFraming");
+    const mirrorResistanceParam = params.get("mirrorResistance");
+    if (mirrorFamilyParam) setMirrorFamily(mirrorFamilyParam);
+    if (mirrorConfidenceParam) setMirrorConfidence(mirrorConfidenceParam);
+    if (mirrorFramingParam) setMirrorFraming(mirrorFramingParam.split(","));
+    if (mirrorResistanceParam) setMirrorResistance(mirrorResistanceParam);
+    if (mirrorFamilyParam) {
+      console.log("[Codex] Mirror signal received:", {
+        family: mirrorFamilyParam,
+        confidence: mirrorConfidenceParam,
+        framing: mirrorFramingParam,
+        resistance: mirrorResistanceParam,
+      });
+    }
     const bottleneck = params.get("bottleneck");
     const firstMoveParam = params.get("firstMove");
 
