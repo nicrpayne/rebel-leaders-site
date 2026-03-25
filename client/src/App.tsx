@@ -29,7 +29,6 @@ import HiddenAssets from "./pages/HiddenAssets";
 import Admin from "./pages/Admin";
 
 function Router() {
-  // make sure to consider if you need authentication for certain routes
   return (
     <Switch>
       <Route path="/" component={Home} />
@@ -43,14 +42,12 @@ function Router() {
       <Route path="/book" component={Book} />
       <Route path="/community" component={Community} />
       <Route path="/mirror" component={Mirror} />
-      {/* Workbench — Plugin Hub */}
       <Route path="/workbench" component={Workbench} />
       <Route path="/workbench/gravitas" component={GravityCheck} />
       <Route path="/workbench/results" component={Results} />
       <Route path="/workbench/codex" component={Codex} />
       <Route path="/workbench/mirror" component={MirrorFlow} />
       <Route path="/workbench/mirror/reading" component={MirrorReading} />
-      {/* Legacy redirect */}
       <Route path="/armory">{() => { window.location.href = "/workbench"; return null; }}</Route>
       <Route path="/game-standalone" component={GameStandalone} />
       <Route path="/hidden-assets" component={HiddenAssets} />
