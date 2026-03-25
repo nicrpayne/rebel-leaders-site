@@ -38,7 +38,25 @@ export const gravitasRouter = router({
    * Unauthenticated users get a success response; the client writes to localStorage.
    */
   save: publicProcedure
-    .input(saveInputSchema)
+    .input(z.object({
+      scanMode: z.enum(["SCAN", "DEEP_SCAN"]),
+      identity: z.number(),
+      relationship: z.number(),
+      vision: z.number(),
+      culture: z.number(),
+      total: z.number(),
+      archetype: z.string(),
+      leak: z.string(),
+      force: z.string(),
+      fullPayload: z.record(z.string(), z.unknown()).optional(),
+    }).transform(data => ({
+      ...data,
+      identity: Math.min(5, Math.max(1, data.identity)),
+      relationship: Math.min(5, Math.max(1, data.relationship)),
+      vision: Math.min(5, Math.max(1, data.vision)),
+      culture: Math.min(5, Math.max(1, data.culture)),
+      total: Math.min(5, Math.max(1, data.total)),
+    })).pipe(saveInputSchema))
     .mutation(async ({ ctx, input }) => {
       // If user is not authenticated, return gracefully
       if (!ctx.user) {
