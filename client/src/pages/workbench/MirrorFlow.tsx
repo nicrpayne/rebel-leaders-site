@@ -49,7 +49,7 @@ const BASIN_WIDE_URL =
 const GOLD = {
   active: "#d4a853",       // warm gold, full brightness for active answer
   inactive: "#c5a059",     // same warm gold, just dimmer via opacity
-  question: "#e8dcc8",     // lighter parchment for question text
+  question: "#C9A84C",     // warm antique gold, same family as answer text
   muted: "#8b7340",        // muted gold for UI chrome
   glow: "rgba(197,160,89,0.35)",
   faintGlow: "rgba(197,160,89,0.12)",
