@@ -309,7 +309,7 @@ function BasinQuestion({
           position: "absolute",
           left: "2%",
           right: "2%",
-          top: "32%",
+          top: "26%",
           animation: confirmed ? "answerConfirmed 0.5s ease-out forwards" : "basinTextReveal 0.35s ease-out",
           cursor: "pointer",
         }}
@@ -324,7 +324,7 @@ function BasinQuestion({
               <path
                 key={`curve-${i}`}
                 id={`curve-${i}`}
-                d={`M 30 ${55 + i * 46} Q 250 ${105 + i * 46} 470 ${55 + i * 46}`}
+                d={`M 30 ${55 + i * 40} Q 250 ${105 + i * 40} 470 ${55 + i * 40}`}
                 fill="none"
               />
             ))}
@@ -354,7 +354,7 @@ function BasinQuestion({
             <circle
               key={idx}
               cx={250 + (idx - (options.length - 1) / 2) * 18}
-              cy={55 + totalLines * 46 + 16}
+              cy={55 + totalLines * 40 + 16}
               r={idx === activeIndex ? 4 : 3}
               fill={GOLD.active}
               opacity={idx === activeIndex ? 1 : 0.3}
