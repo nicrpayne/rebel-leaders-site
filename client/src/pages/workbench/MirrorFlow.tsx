@@ -106,54 +106,39 @@ type FlowPhase =
 // We use percentage-based x/y from the content area's top-left.
 
 function getArcPositions(count: number): { x: number; y: number; rotation: number }[] {
-  // Center of the dark water ellipse (percentage of content area)
-  // cy is pushed down so answers sit in the LOWER portion of the dark water
-  const cx = 50;
-  const cy = 58;
-  // Radii of the arc where answers sit (percentage units)
-  const rx = 40; // horizontal radius — wide enough to use the full dark water width
-  const ry = 22; // vertical radius (elliptical, flatter — keeps answers in lower band)
+  // Hand-tuned positions to match the concept art exactly.
+  // Answers follow the lower arc of the basin, with outer answers higher
+  // (following the rim curvature) and inner answers lower (closer to bottom).
+  // All positions are percentages of the content area.
 
   if (count === 2) {
-    // Confirmation pair: left and right on the lower arc
-    const angles = [225, 315]; // 7:30 and 4:30 positions
-    return angles.map((deg) => {
-      const rad = (deg * Math.PI) / 180;
-      return {
-        x: cx + rx * Math.cos(rad),
-        y: cy - ry * Math.sin(rad),
-        rotation: (deg > 270 ? deg - 360 : deg) * -0.06, // subtle tangent follow
-      };
-    });
+    // Confirmation pair: left and right, centered vertically in lower basin
+    return [
+      { x: 28, y: 58, rotation: -2 },
+      { x: 72, y: 58, rotation: 2 },
+    ];
   }
 
   if (count === 4) {
-    // Clock positions: ~7, ~8, ~4, ~3 (matching concept art)
-    // Wider angular spread to prevent inner answers from overlapping
-    const angles = [210, 240, 300, 330];
-    return angles.map((deg) => {
-      const rad = (deg * Math.PI) / 180;
-      // Rotation follows the tangent of the arc
-      const tangentAngle = deg - 270; // 0 at bottom, negative left, positive right
-      return {
-        x: cx + rx * Math.cos(rad),
-        y: cy - ry * Math.sin(rad),
-        rotation: tangentAngle * 0.15, // subtle rotation following the curve
-      };
-    });
+    // 4 options: spread across lower arc like compass points 7→5 o'clock
+    // Outer answers sit higher (following the rim), inner answers sit lower
+    return [
+      { x: 16, y: 54, rotation: -6 },   // far left, higher — ~7 o'clock
+      { x: 36, y: 66, rotation: -2 },   // center-left, lower — ~8 o'clock
+      { x: 64, y: 66, rotation: 2 },    // center-right, lower — ~4 o'clock
+      { x: 84, y: 54, rotation: 6 },    // far right, higher — ~5 o'clock
+    ];
   }
 
-  // 5 options: spread from ~200° to ~340°
-  const angles = [200, 230, 270, 310, 340];
-  return angles.map((deg) => {
-    const rad = (deg * Math.PI) / 180;
-    const tangentAngle = deg - 270;
-    return {
-      x: cx + rx * Math.cos(rad),
-      y: cy - ry * Math.sin(rad),
-      rotation: tangentAngle * 0.12,
-    };
-  });
+  // 5 options: spread across lower arc from ~7 o'clock to ~5 o'clock
+  // Three-row stagger: positions 1,5 highest; 2,4 middle; 3 lowest (bottom center)
+  return [
+    { x: 14, y: 52, rotation: -7 },   // far left, highest — ~7 o'clock
+    { x: 30, y: 64, rotation: -3 },   // left-center, middle — ~8 o'clock
+    { x: 50, y: 72, rotation: 0 },    // dead center, lowest — ~6 o'clock
+    { x: 70, y: 64, rotation: 3 },    // right-center, middle — ~4 o'clock
+    { x: 86, y: 52, rotation: 7 },    // far right, highest — ~5 o'clock
+  ];
 }
 
 // ─── Basin Question Component ────────────────────────────────────────
