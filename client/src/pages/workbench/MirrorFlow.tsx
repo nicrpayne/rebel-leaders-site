@@ -313,7 +313,7 @@ function BasinQuestion({
         }}
       >
         <svg
-          viewBox="0 0 500 120"
+          viewBox="0 0 500 160"
           width="100%"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -322,7 +322,7 @@ function BasinQuestion({
               <path
                 key={`curve-${i}`}
                 id={`curve-${i}`}
-                d={`M 20 ${80 - (totalLines - 1 - i) * 36} Q 250 ${60 - (totalLines - 1 - i) * 36} 480 ${80 - (totalLines - 1 - i) * 36}`}
+                d={`M 30 ${110 - (totalLines - 1 - i) * 42} Q 250 ${60 - (totalLines - 1 - i) * 42} 470 ${110 - (totalLines - 1 - i) * 42}`}
                 fill="none"
               />
             ))}
@@ -333,9 +333,9 @@ function BasinQuestion({
               style={{
                 fontFamily: "'Cormorant Garamond', serif",
                 fontStyle: "italic",
-                fontSize: "18px",
+                fontSize: "17px",
                 fill: GOLD.active,
-                filter: `drop-shadow(0 0 8px ${GOLD.glow})`,
+                filter: `drop-shadow(0 0 6px ${GOLD.glow})`,
               }}
             >
               <textPath
@@ -394,7 +394,7 @@ function BasinQuestion({
       <div
         className="absolute left-1/2 -translate-x-1/2 select-none"
         style={{
-          bottom: "-22%",
+          bottom: "-8%",
           zIndex: 30,
           width: "80px",
           height: "80px",
