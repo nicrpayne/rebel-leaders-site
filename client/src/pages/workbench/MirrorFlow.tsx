@@ -309,13 +309,13 @@ function BasinQuestion({
           position: "absolute",
           left: "2%",
           right: "2%",
-          top: "40%",
+          top: "36%",
           animation: confirmed ? "answerConfirmed 0.5s ease-out forwards" : "basinTextReveal 0.35s ease-out",
           cursor: "pointer",
         }}
       >
         <svg
-          viewBox="0 0 500 220"
+          viewBox="0 0 500 200"
           width="100%"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -324,7 +324,7 @@ function BasinQuestion({
               <path
                 key={`curve-${i}`}
                 id={`curve-${i}`}
-                d={`M 30 ${60 + i * 44} Q 250 ${115 + i * 44} 470 ${60 + i * 44}`}
+                d={`M 30 ${60 + i * 38} Q 250 ${115 + i * 38} 470 ${60 + i * 38}`}
                 fill="none"
               />
             ))}
@@ -374,23 +374,6 @@ function BasinQuestion({
         ))}
       </div>
 
-      {/* Confirm hint */}
-      <div
-        className="absolute left-1/2 -translate-x-1/2 text-center"
-        style={{ top: "85%", transform: "translateX(-50%)", opacity: 0.4 }}
-      >
-        <span
-          style={{
-            fontFamily: "'Cormorant Garamond', serif",
-            fontSize: "11px",
-            fontStyle: "italic",
-            color: GOLD.muted,
-            letterSpacing: "0.12em",
-          }}
-        >
-          click to choose · scroll or drag knob to cycle
-        </span>
-      </div>
 
       {/* Invisible knob overlay */}
       <div
