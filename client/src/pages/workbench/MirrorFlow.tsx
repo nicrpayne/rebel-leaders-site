@@ -103,42 +103,36 @@ type FlowPhase =
 // Each position includes x, y (percentage), and rotation angle.
 
 function getArcPositions(count: number): { x: number; y: number; rotation: number }[] {
-  // Arc spans from ~200° to ~340° (lower portion of basin)
-  // 0° = top, 90° = right, 180° = bottom, 270° = left
-  const startAngle = 195;
-  const endAngle = 345;
+  // Hand-tuned positions for 2, 4, and 5 option layouts.
+  // Answers are spread across the lower basin with staggered heights
+  // to prevent text overlap while following the rim curvature.
 
-  // Ellipse radii (percentage of container)
-  const rx = 40; // horizontal
-  const ry = 16; // vertical — shallow arc
-
-  // Center of ellipse — in the lower basin
-  const cx = 50;
-  const cy = 68;
-
-  const positions: { x: number; y: number; rotation: number }[] = [];
-
-  for (let i = 0; i < count; i++) {
-    const t = count === 1 ? 0.5 : i / (count - 1);
-    const angleDeg = startAngle + t * (endAngle - startAngle);
-    const angleRad = (angleDeg * Math.PI) / 180;
-
-    const x = cx + rx * Math.cos(angleRad);
-    const y = cy + ry * Math.sin(angleRad);
-
-    // Text rotation: follow the tangent of the ellipse slightly
-    // Outer answers tilt more, center answers are more upright
-    const tangentAngle = Math.atan2(
-      ry * Math.cos(angleRad),
-      -rx * Math.sin(angleRad),
-    );
-    // Subtle rotation — just enough to follow the rim curvature
-    const rotation = (tangentAngle * 180) / Math.PI * 0.15;
-
-    positions.push({ x, y, rotation });
+  if (count === 2) {
+    // Confirmation pair: left and right
+    return [
+      { x: 28, y: 55, rotation: -3 },
+      { x: 72, y: 55, rotation: 3 },
+    ];
   }
 
-  return positions;
+  if (count === 4) {
+    // Q1 layout: spread across lower basin, staggered heights
+    return [
+      { x: 22, y: 56, rotation: -3 },   // far left, higher
+      { x: 38, y: 68, rotation: -1 },    // center-left, lower
+      { x: 62, y: 68, rotation: 1 },     // center-right, lower
+      { x: 78, y: 56, rotation: 3 },     // far right, higher
+    ];
+  }
+
+  // 5 options (Q2-Q7): spread with alternating heights
+  return [
+    { x: 18, y: 54, rotation: -4 },   // far left, higher
+    { x: 34, y: 66, rotation: -1.5 }, // left-center, lower
+    { x: 50, y: 72, rotation: 0 },    // dead center, lowest
+    { x: 66, y: 66, rotation: 1.5 },  // right-center, lower
+    { x: 82, y: 54, rotation: 4 },    // far right, higher
+  ];
 }
 
 // ─── Basin Question Component ────────────────────────────────────────
@@ -331,7 +325,7 @@ function BasinQuestion({
             }}
           >
             <p
-              className="text-[11px] md:text-xs leading-snug transition-all duration-300"
+              className="text-xs leading-snug transition-all duration-300"
               style={{
                 fontFamily: "'Cormorant Garamond', serif",
                 fontWeight: isActive ? 600 : 400,
@@ -341,7 +335,7 @@ function BasinQuestion({
                   : isActive
                     ? AMBER.bright
                     : AMBER.muted,
-                opacity: isActive ? 1 : 0.45,
+                opacity: isActive ? 1 : 0.5,
                 textShadow: isConfirmed
                   ? `0 0 20px ${AMBER.glow}, 0 0 40px ${AMBER.faintGlow}`
                   : isActive
@@ -550,7 +544,7 @@ function BasinPair({
             }}
           >
             <p
-              className="text-[11px] md:text-xs leading-snug transition-all duration-300"
+              className="text-xs leading-snug transition-all duration-300"
               style={{
                 fontFamily: "'Cormorant Garamond', serif",
                 fontWeight: isActive ? 600 : 400,
