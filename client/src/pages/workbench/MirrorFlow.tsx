@@ -107,11 +107,12 @@ type FlowPhase =
 
 function getArcPositions(count: number): { x: number; y: number; rotation: number }[] {
   // Center of the dark water ellipse (percentage of content area)
+  // cy is pushed down so answers sit in the LOWER portion of the dark water
   const cx = 50;
-  const cy = 45;
+  const cy = 58;
   // Radii of the arc where answers sit (percentage units)
-  const rx = 36; // horizontal radius
-  const ry = 28; // vertical radius (elliptical, flatter)
+  const rx = 40; // horizontal radius — wide enough to use the full dark water width
+  const ry = 22; // vertical radius (elliptical, flatter — keeps answers in lower band)
 
   if (count === 2) {
     // Confirmation pair: left and right on the lower arc
@@ -128,7 +129,8 @@ function getArcPositions(count: number): { x: number; y: number; rotation: numbe
 
   if (count === 4) {
     // Clock positions: ~7, ~8, ~4, ~3 (matching concept art)
-    const angles = [215, 245, 295, 325];
+    // Wider angular spread to prevent inner answers from overlapping
+    const angles = [210, 240, 300, 330];
     return angles.map((deg) => {
       const rad = (deg * Math.PI) / 180;
       // Rotation follows the tangent of the arc
@@ -142,7 +144,7 @@ function getArcPositions(count: number): { x: number; y: number; rotation: numbe
   }
 
   // 5 options: spread from ~200° to ~340°
-  const angles = [205, 232, 270, 308, 335];
+  const angles = [200, 230, 270, 310, 340];
   return angles.map((deg) => {
     const rad = (deg * Math.PI) / 180;
     const tangentAngle = deg - 270;
@@ -328,7 +330,7 @@ function BasinQuestion({
             }}
           >
             <p
-              className="text-xs leading-snug transition-all duration-300"
+              className="text-sm leading-snug transition-all duration-300"
               style={{
                 fontFamily: "'Cormorant Garamond', serif",
                 fontWeight: 400,
@@ -356,10 +358,10 @@ function BasinQuestion({
       <div
         className="absolute left-1/2 -translate-x-1/2 select-none"
         style={{
-          bottom: "-12%",
+          bottom: "-22%",
           zIndex: 30,
-          width: "70px",
-          height: "70px",
+          width: "80px",
+          height: "80px",
           transform: "translateX(-50%)",
           borderRadius: "50%",
           opacity: 0,
