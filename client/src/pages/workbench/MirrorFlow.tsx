@@ -281,7 +281,7 @@ function BasinQuestion({
         key={question.id}
         className="absolute left-1/2 -translate-x-1/2 text-center px-6"
         style={{
-          top: "18%",
+          top: "14%",
           width: "85%",
           animation: "basinTextReveal 0.6s ease-out",
         }}
@@ -309,7 +309,7 @@ function BasinQuestion({
           position: "absolute",
           left: "2%",
           right: "2%",
-          top: "26%",
+          top: "30%",
           animation: confirmed ? "answerConfirmed 0.5s ease-out forwards" : "basinTextReveal 0.35s ease-out",
           cursor: "pointer",
         }}
