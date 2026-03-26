@@ -353,13 +353,13 @@ function BasinQuestion({
         );
       })}
 
-      {/* Brass knob — bottom center */}
+      {/* Invisible knob overlay — positioned over the image knob */}
       <div
         className="absolute left-1/2 -translate-x-1/2"
         style={{ bottom: "2%", zIndex: 25 }}
       >
         <div
-          className="relative cursor-pointer select-none"
+          className="select-none"
           onMouseDown={handleKnobMouseDown}
           onMouseUp={handleKnobMouseUp}
           onMouseLeave={() => {
@@ -369,48 +369,14 @@ function BasinQuestion({
             }
           }}
           onWheel={handleWheel}
-          title="Turn to cycle • Press to confirm"
           style={{
             width: "52px",
             height: "52px",
             borderRadius: "50%",
-            background: `radial-gradient(circle at 40% 35%, #c9a84c 0%, #a08030 40%, #7a6020 70%, #5a4515 100%)`,
-            boxShadow: `
-              0 2px 8px rgba(0,0,0,0.5),
-              0 0 16px ${AMBER.faintGlow},
-              inset 0 1px 2px rgba(255,255,255,0.2),
-              inset 0 -1px 2px rgba(0,0,0,0.3)
-            `,
-            border: `1px solid rgba(160,128,48,0.4)`,
+            opacity: 0,
+            cursor: "pointer",
           }}
-        >
-          {/* Indicator notch */}
-          <div
-            className="absolute"
-            style={{
-              top: "6px",
-              left: "50%",
-              transform: `translateX(-50%) rotate(${knobRotation}deg)`,
-              transformOrigin: "50% 20px",
-              width: "3px",
-              height: "10px",
-              borderRadius: "1.5px",
-              backgroundColor: AMBER.active,
-              boxShadow: `0 0 6px ${AMBER.glow}`,
-              transition: "transform 0.3s ease-out",
-            }}
-          />
-          {/* Center dot */}
-          <div
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-            style={{
-              width: "6px",
-              height: "6px",
-              borderRadius: "50%",
-              backgroundColor: "rgba(200,170,80,0.4)",
-            }}
-          />
-        </div>
+        />
       </div>
 
       <style>{`
