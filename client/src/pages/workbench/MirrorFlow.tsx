@@ -55,6 +55,7 @@ const AMBER = {
   faintGlow: "rgba(197,160,89,0.15)",
   active: "#e8c55a",
   dim: "rgba(139,115,64,0.35)",
+  inactiveText: "rgba(220,210,195,0.6)",  // warm white at 60% for readable inactive answers
 };
 
 const PARCHMENT = {
@@ -346,9 +347,9 @@ function BasinQuestion({
                 color: isConfirmed
                   ? AMBER.active
                   : isActive
-                    ? AMBER.bright
-                    : AMBER.muted,
-                opacity: isActive ? 1 : 0.5,
+                    ? AMBER.active
+                    : AMBER.inactiveText,
+                opacity: 1,
                 textShadow: isConfirmed
                   ? `0 0 20px ${AMBER.glow}, 0 0 40px ${AMBER.faintGlow}`
                   : isActive
@@ -540,9 +541,9 @@ function BasinPair({
                 color: isConfirmed
                   ? AMBER.active
                   : isActive
-                    ? AMBER.bright
-                    : AMBER.muted,
-                opacity: isActive ? 1 : 0.4,
+                    ? AMBER.active
+                    : AMBER.inactiveText,
+                opacity: 1,
                 textShadow: isConfirmed
                   ? `0 0 20px ${AMBER.glow}, 0 0 40px ${AMBER.faintGlow}`
                   : isActive
