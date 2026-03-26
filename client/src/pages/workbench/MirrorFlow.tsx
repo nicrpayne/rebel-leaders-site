@@ -131,13 +131,14 @@ function getArcPositions(count: number): { x: number; y: number; rotation: numbe
   }
 
   // 5 options: spread across lower arc from ~7 o'clock to ~5 o'clock
-  // Three-row stagger: positions 1,5 highest; 2,4 middle; 3 lowest (bottom center)
+  // Two-row layout: positions 1,3,5 on upper row; 2,4 on lower row
+  // Wider horizontal spread to prevent overlap with long answer text
   return [
-    { x: 18, y: 56, rotation: -6 },   // far left, highest — ~7 o'clock
-    { x: 32, y: 68, rotation: -3 },   // left-center, middle — ~8 o'clock
-    { x: 50, y: 76, rotation: 0 },    // dead center, lowest — ~6 o'clock
-    { x: 68, y: 68, rotation: 3 },    // right-center, middle — ~4 o'clock
-    { x: 82, y: 56, rotation: 6 },    // far right, highest — ~5 o'clock
+    { x: 16, y: 54, rotation: -5 },   // far left, upper row — ~7 o'clock
+    { x: 34, y: 68, rotation: -2 },   // left-center, lower row — ~8 o'clock
+    { x: 50, y: 54, rotation: 0 },    // dead center, upper row — ~6 o'clock
+    { x: 66, y: 68, rotation: 2 },    // right-center, lower row — ~4 o'clock
+    { x: 84, y: 54, rotation: 5 },    // far right, upper row — ~5 o'clock
   ];
 }
 
@@ -308,7 +309,7 @@ function BasinQuestion({
               left: `${pos.x}%`,
               top: `${pos.y}%`,
               transform: `translate(-50%, -50%) rotate(${pos.rotation}deg)`,
-              maxWidth: options.length <= 4 ? "150px" : "125px",
+              maxWidth: options.length <= 4 ? "150px" : "110px",
               zIndex: isActive ? 20 : 10,
               cursor: "pointer",
               textAlign: "center",
