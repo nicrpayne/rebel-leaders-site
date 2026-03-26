@@ -307,7 +307,7 @@ function BasinQuestion({
           position: "absolute",
           left: "10%",
           right: "10%",
-          top: "48%",
+          top: "40%",
           animation: "basinTextReveal 0.35s ease-out",
           cursor: "pointer",
         }}
@@ -353,7 +353,7 @@ function BasinQuestion({
       {/* Navigation dots */}
       <div
         className="absolute left-1/2 -translate-x-1/2 flex gap-3"
-        style={{ top: "82%", transform: "translateX(-50%)", left: "50%" }}
+        style={{ top: "88%", transform: "translateX(-50%)", left: "50%" }}
       >
         {options.map((_, idx) => (
           <div
