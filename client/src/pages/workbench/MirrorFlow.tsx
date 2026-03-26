@@ -301,19 +301,19 @@ function BasinQuestion({
 
       {/* Single answer — SVG curved text */}
       <div
-        className="absolute left-1/2 -translate-x-1/2"
         key={`answer-${activeIndex}`}
         onClick={handleConfirm}
         style={{
-          top: "58%",
-          width: "80%",
-          transform: "translateX(-50%)",
+          position: "absolute",
+          left: "10%",
+          right: "10%",
+          top: "55%",
           animation: "basinTextReveal 0.35s ease-out",
           cursor: "pointer",
         }}
       >
         <svg
-          viewBox="0 0 500 160"
+          viewBox="0 0 500 220"
           width="100%"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -322,7 +322,7 @@ function BasinQuestion({
               <path
                 key={`curve-${i}`}
                 id={`curve-${i}`}
-                d={`M 30 ${50 + (totalLines - 1 - i) * 42} Q 250 ${100 + (totalLines - 1 - i) * 42} 470 ${50 + (totalLines - 1 - i) * 42}`}
+                d={`M 30 ${60 + (totalLines - 1 - i) * 44} Q 250 ${115 + (totalLines - 1 - i) * 44} 470 ${60 + (totalLines - 1 - i) * 44}`}
                 fill="none"
               />
             ))}
