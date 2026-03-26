@@ -3,16 +3,17 @@
  *
  * Renders the assembled Mirror reading in 6-7 sections.
  * Reads MirrorResult from localStorage, retrieves the content block,
- * and displays it with the CRT instrument aesthetic.
+ * and displays it with the warm amber conservatory aesthetic.
  *
  * Exits to:
  *   - /workbench/codex (with Mirror framing flags)
  *   - /workbench/results (back to Gravitas results)
+ *
+ * Design: warm amber/parchment on dark background. Scrollable reading.
  */
 
 import { useState, useEffect, useRef } from "react";
 import { useLocation } from "wouter";
-import PluginShell from "@/components/workbench/PluginShell";
 import DesktopOnly from "@/components/workbench/DesktopOnly";
 import { cn } from "@/lib/utils";
 import {
@@ -22,6 +23,28 @@ import {
   type GravitasPrior,
 } from "@/lib/mirror";
 import SaveReadingPrompt from "@/components/workbench/SaveReadingPrompt";
+
+// ─── Design Tokens ──────────────────────────────────────────────────
+
+const AMBER = {
+  bright: "#d4a853",
+  warm: "#c5a059",
+  muted: "#8b7340",
+  glow: "rgba(197,160,89,0.4)",
+  faintGlow: "rgba(197,160,89,0.15)",
+};
+
+const PARCHMENT = {
+  light: "#e8dcc8",
+  mid: "#d4c8b0",
+  muted: "#a09080",
+  faint: "#706050",
+};
+
+// ─── CDN Assets ─────────────────────────────────────────────────────
+
+const BASIN_CLOSE_URL =
+  "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/5e5kxa7Hxu2DiYaSmWbPxb/mirror-basin-close_697b33ca.png";
 
 // ─── Data Loaders ────────────────────────────────────────────────────
 
@@ -61,10 +84,9 @@ interface ReadingSectionProps {
   label: string;
   content: string;
   index: number;
-  isPlaceholder?: boolean;
 }
 
-function ReadingSection({ label, content, index, isPlaceholder }: ReadingSectionProps) {
+function ReadingSection({ label, content, index }: ReadingSectionProps) {
   const isContentPlaceholder = content.startsWith("[PLACEHOLDER");
 
   return (
@@ -76,8 +98,14 @@ function ReadingSection({ label, content, index, isPlaceholder }: ReadingSection
     >
       {/* Section label */}
       <div className="flex items-center gap-3">
-        <div className="w-1.5 h-1.5 rounded-full bg-green-800" />
-        <h3 className="text-green-500/80 font-pixel text-[10px] tracking-[0.25em] uppercase">
+        <div
+          className="w-1.5 h-1.5 rounded-full"
+          style={{ backgroundColor: AMBER.warm }}
+        />
+        <h3
+          className="font-pixel text-[10px] tracking-[0.25em] uppercase"
+          style={{ color: AMBER.bright }}
+        >
           {label}
         </h3>
       </div>
@@ -85,16 +113,29 @@ function ReadingSection({ label, content, index, isPlaceholder }: ReadingSection
       {/* Section content */}
       <div
         className={cn(
-          "pl-5 border-l border-[#1a1a1a]",
+          "pl-5 border-l",
           isContentPlaceholder ? "opacity-50" : "",
         )}
+        style={{ borderColor: "rgba(197,160,89,0.15)" }}
       >
         {isContentPlaceholder ? (
-          <p className="text-green-900/60 text-sm font-mono leading-relaxed italic">
+          <p
+            className="text-sm leading-relaxed italic"
+            style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              color: PARCHMENT.faint,
+            }}
+          >
             This section is being written. Your reading will be richer when the content arrives.
           </p>
         ) : (
-          <p className="text-green-300/80 text-sm font-mono leading-relaxed whitespace-pre-wrap">
+          <p
+            className="text-sm leading-relaxed whitespace-pre-wrap"
+            style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              color: PARCHMENT.mid,
+            }}
+          >
             {content}
           </p>
         )}
@@ -107,15 +148,21 @@ function ReadingSection({ label, content, index, isPlaceholder }: ReadingSection
 
 function ConfidenceBadge({ band }: { band: string }) {
   const config = {
-    high: { label: "HIGH CONFIDENCE", color: "text-green-500", dot: "bg-green-500" },
-    medium: { label: "MEDIUM CONFIDENCE", color: "text-amber-500", dot: "bg-amber-500" },
-    low: { label: "BLENDED SIGNAL", color: "text-orange-500", dot: "bg-orange-500" },
-  }[band] || { label: "SIGNAL", color: "text-green-500", dot: "bg-green-500" };
+    high: { label: "HIGH CONFIDENCE", color: AMBER.bright, dot: AMBER.bright },
+    medium: { label: "MEDIUM CONFIDENCE", color: AMBER.warm, dot: AMBER.warm },
+    low: { label: "BLENDED SIGNAL", color: PARCHMENT.muted, dot: PARCHMENT.muted },
+  }[band] || { label: "SIGNAL", color: AMBER.warm, dot: AMBER.warm };
 
   return (
     <div className="flex items-center gap-2">
-      <div className={cn("w-1.5 h-1.5 rounded-full", config.dot)} />
-      <span className={cn("font-pixel text-[9px] tracking-widest", config.color)}>
+      <div
+        className="w-1.5 h-1.5 rounded-full"
+        style={{ backgroundColor: config.dot }}
+      />
+      <span
+        className="font-pixel text-[9px] tracking-widest"
+        style={{ color: config.color }}
+      >
         {config.label}
       </span>
     </div>
@@ -146,11 +193,9 @@ export default function MirrorReading() {
     setMirrorResult(result);
     setGravitasPrior(prior);
 
-    // Retrieve reading content
     const block = getReadingBlock(result);
     setReading(block);
 
-    // Reveal with a brief delay for dramatic effect
     setTimeout(() => setIsRevealed(true), 400);
   }, [navigate]);
 
@@ -164,7 +209,6 @@ export default function MirrorReading() {
     params.set("leak", gravitasPrior.leak);
     params.set("force", gravitasPrior.force);
 
-    // Mirror enrichments
     if (mirrorResult.top_family) {
       params.set("mirrorFamily", mirrorResult.top_family);
     }
@@ -192,18 +236,12 @@ export default function MirrorReading() {
     const url = buildCodexUrl();
     if (!url) return;
 
-    // Prefetch the Codex page module in the background
     const prefetchPromise = import("./Codex").then(() => {
       codexReadyRef.current = true;
-    }).catch(() => {
-      // If prefetch fails, we'll navigate anyway on the cap timer
-    });
+    }).catch(() => {});
 
-    // Minimum interstitial display: 1.2 seconds (so the copy lands emotionally)
     const minDisplayPromise = new Promise((resolve) => setTimeout(resolve, 1200));
 
-    // Navigate when both the module is ready AND the minimum display has passed
-    // Cap at 3 seconds regardless
     const capTimer = setTimeout(() => navigate(url), 3000);
     transitionTimerRef.current = capTimer;
 
@@ -220,13 +258,14 @@ export default function MirrorReading() {
   if (!mirrorResult || !reading) {
     return (
       <DesktopOnly toolName="Mirror">
-        <PluginShell title="MIRROR" category="READING" status="LOADING" statusColor="text-yellow-600">
-          <div className="flex items-center justify-center h-64">
-            <p className="text-green-900 font-pixel text-sm animate-pulse">
-              LOADING READING...
-            </p>
-          </div>
-        </PluginShell>
+        <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: "#0a0c10" }}>
+          <p
+            className="font-pixel text-sm animate-pulse tracking-widest uppercase"
+            style={{ color: AMBER.muted }}
+          >
+            LOADING READING...
+          </p>
+        </div>
       </DesktopOnly>
     );
   }
@@ -242,145 +281,203 @@ export default function MirrorReading() {
     { label: "Why This Is Hard", content: reading.why_this_is_hard },
   ];
 
-  // Add wisdom thread if present
   if (reading.wisdom_thread) {
     sections.push({ label: "A Thread Worth Pulling", content: reading.wisdom_thread });
   }
 
   return (
     <DesktopOnly toolName="Mirror">
-      <PluginShell
-        title="MIRROR"
-        category="READING"
-        status="COMPLETE"
-        statusColor="text-green-500"
-        footerControls={
-          <div className="flex items-center justify-between w-full">
+      {/* Dark reading environment with subtle basin texture */}
+      <div
+        className="min-h-screen relative"
+        style={{ backgroundColor: "#0a0c10" }}
+      >
+        {/* Very faint basin background — just a hint of the conservatory */}
+        <div
+          className="fixed inset-0 bg-cover bg-center bg-no-repeat pointer-events-none"
+          style={{
+            backgroundImage: `url(${BASIN_CLOSE_URL})`,
+            opacity: 0.06,
+          }}
+        />
+
+        {/* Content */}
+        <div className="relative z-10 max-w-2xl mx-auto px-6 md:px-10 py-12">
+          {/* Top nav */}
+          <div className="flex items-center justify-between mb-10">
             <button
               onClick={() => navigate("/workbench/results")}
-              className="text-[10px] font-pixel text-[#444] tracking-widest uppercase hover:text-[#666] transition-colors"
+              className="font-pixel text-[10px] tracking-widest uppercase transition-colors duration-200"
+              style={{ color: PARCHMENT.faint }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = PARCHMENT.muted; }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = PARCHMENT.faint; }}
             >
               ← BACK TO GRAVITAS
             </button>
-            <button
-              onClick={handleSideChainToCodex}
-              className={cn(
-                "px-6 py-2 rounded-sm border transition-all duration-300",
-                "bg-green-900/20 border-green-700/50 text-green-400",
-                "hover:bg-green-900/40 hover:border-green-500/70 hover:text-green-300",
-                "hover:shadow-[0_0_15px_rgba(74,222,128,0.15)]",
-                "font-pixel text-[10px] tracking-widest uppercase",
-              )}
+            <span
+              className="font-pixel text-[10px] tracking-[0.3em] uppercase"
+              style={{ color: AMBER.muted }}
             >
-              SIDE-CHAIN TO CODEX →
-            </button>
+              MIRROR · READING
+            </span>
           </div>
-        }
-      >
-        <div
-          className={cn(
-            "px-6 md:px-10 py-8 space-y-10 transition-opacity duration-700",
-            isRevealed ? "opacity-100" : "opacity-0",
-          )}
-        >
-          {/* Header */}
-          <div className="space-y-4 border-b border-[#1a1a1a] pb-6">
-            <div className="flex items-center justify-between">
-              <h2 className="text-green-400 font-pixel text-sm tracking-widest uppercase">
-                Your Mirror Reading
-              </h2>
-              <ConfidenceBadge band={mirrorResult.confidence_band} />
+
+          {/* Reading body */}
+          <div
+            className={cn(
+              "space-y-10 transition-opacity duration-700",
+              isRevealed ? "opacity-100" : "opacity-0",
+            )}
+          >
+            {/* Header */}
+            <div
+              className="space-y-4 pb-6"
+              style={{ borderBottom: `1px solid rgba(197,160,89,0.12)` }}
+            >
+              <div className="flex items-center justify-between">
+                <h2
+                  className="font-pixel text-sm tracking-widest uppercase"
+                  style={{ color: AMBER.bright }}
+                >
+                  Your Mirror Reading
+                </h2>
+                <ConfidenceBadge band={mirrorResult.confidence_band} />
+              </div>
+
+              {/* Signal summary */}
+              <div className="flex flex-wrap gap-4 text-[10px] font-pixel tracking-widest uppercase">
+                {gravitasPrior && (
+                  <>
+                    <span style={{ color: PARCHMENT.faint }}>
+                      GRAVITAS: <span style={{ color: AMBER.muted }}>{gravitasPrior.archetype}</span>
+                    </span>
+                    <span style={{ color: "rgba(197,160,89,0.15)" }}>|</span>
+                    <span style={{ color: PARCHMENT.faint }}>
+                      LEAK: <span style={{ color: "#8b4040" }}>{gravitasPrior.leak}</span>
+                    </span>
+                    <span style={{ color: "rgba(197,160,89,0.15)" }}>|</span>
+                    <span style={{ color: PARCHMENT.faint }}>
+                      FORCE: <span style={{ color: AMBER.muted }}>{gravitasPrior.force}</span>
+                    </span>
+                  </>
+                )}
+              </div>
             </div>
 
-            {/* Signal summary */}
-            <div className="flex flex-wrap gap-4 text-[10px] font-pixel tracking-widest uppercase">
-              {gravitasPrior && (
-                <>
-                  <span className="text-[#444]">
-                    GRAVITAS: <span className="text-green-800">{gravitasPrior.archetype}</span>
-                  </span>
-                  <span className="text-[#333]">|</span>
-                  <span className="text-[#444]">
-                    LEAK: <span className="text-red-900">{gravitasPrior.leak}</span>
-                  </span>
-                  <span className="text-[#333]">|</span>
-                  <span className="text-[#444]">
-                    FORCE: <span className="text-green-800">{gravitasPrior.force}</span>
-                  </span>
-                </>
-              )}
-
+            {/* Reading Sections */}
+            <div className="space-y-8">
+              {sections.map((section, idx) => (
+                <ReadingSection
+                  key={section.label}
+                  label={section.label}
+                  content={section.content}
+                  index={idx}
+                />
+              ))}
             </div>
-          </div>
 
-          {/* Reading Sections */}
-          <div className="space-y-8">
-            {sections.map((section, idx) => (
-              <ReadingSection
-                key={section.label}
-                label={section.label}
-                content={section.content}
-                index={idx}
-              />
-            ))}
-          </div>
+            {/* Save Reading Prompt */}
+            <SaveReadingPrompt context="mirror" />
 
-          {/* Save Reading Prompt */}
-          <SaveReadingPrompt context="mirror" />
-
-          {/* Bottom CTA */}
-          <div className="border-t border-[#1a1a1a] pt-8 text-center space-y-4">
-            <p className="text-green-300/60 text-sm font-mono leading-relaxed max-w-lg mx-auto">
-              Mirror has named the pattern. The Codex holds the move.
-            </p>
-            <button
-              onClick={handleSideChainToCodex}
-              className={cn(
-                "px-8 py-3 rounded-sm border transition-all duration-300",
-                "bg-green-900/20 border-green-700/50 text-green-400",
-                "hover:bg-green-900/40 hover:border-green-500/70 hover:text-green-300",
-                "hover:shadow-[0_0_15px_rgba(74,222,128,0.15)]",
-                "font-pixel text-sm tracking-widest uppercase",
-              )}
+            {/* Bottom CTA */}
+            <div
+              className="pt-8 text-center space-y-4"
+              style={{ borderTop: `1px solid rgba(197,160,89,0.12)` }}
             >
-              Get Your Move
-            </button>
+              <p
+                className="text-sm leading-relaxed max-w-lg mx-auto"
+                style={{
+                  fontFamily: "'Cormorant Garamond', serif",
+                  color: PARCHMENT.muted,
+                }}
+              >
+                Mirror has named the pattern. The Codex holds the move.
+              </p>
+              <button
+                onClick={handleSideChainToCodex}
+                className="px-8 py-3 border transition-all duration-300 font-pixel text-sm tracking-widest uppercase"
+                style={{
+                  color: AMBER.bright,
+                  borderColor: AMBER.muted,
+                  backgroundColor: "transparent",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = AMBER.bright;
+                  e.currentTarget.style.boxShadow = `0 0 15px ${AMBER.faintGlow}`;
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = AMBER.muted;
+                  e.currentTarget.style.boxShadow = "none";
+                }}
+              >
+                Get Your Move
+              </button>
+            </div>
           </div>
         </div>
 
-        {/* Inline keyframes */}
-        <style>{`
-          @keyframes sectionFadeIn {
-            from { opacity: 0; transform: translateY(12px); }
-            to { opacity: 1; transform: translateY(0); }
-          }
-        `}</style>
-      </PluginShell>
+        {/* Nic sticker */}
+        <div className="fixed bottom-6 left-6 w-16 md:w-20 z-20 pointer-events-none opacity-80">
+          <img
+            src="https://cdn.manus.space/2026-03-06-17-48-36-398032/nic_victory_v4-3.png"
+            alt="Nic Sticker"
+            className="w-full h-auto drop-shadow-[2px_4px_6px_rgba(0,0,0,0.5)]"
+            style={{ transform: "rotate(-8deg)" }}
+          />
+        </div>
+      </div>
 
       {/* Codex Transition Interstitial */}
       {isTransitioning && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center"
           style={{
-            backgroundColor: "#0a0a0a",
+            backgroundColor: "#050505",
             animation: "interstitialFadeIn 0.5s ease-out",
           }}
         >
-          <div className="text-center space-y-6" style={{ animation: "interstitialTextReveal 0.8s ease-out 0.3s backwards" }}>
-            <p className="text-green-300/70 text-sm font-mono leading-relaxed max-w-md mx-auto">
+          <div
+            className="text-center space-y-6"
+            style={{ animation: "interstitialTextReveal 0.8s ease-out 0.3s backwards" }}
+          >
+            <p
+              className="text-sm leading-relaxed max-w-md mx-auto"
+              style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                color: PARCHMENT.muted,
+              }}
+            >
               Mirror has named the pattern.
             </p>
-            <p className="text-green-400/90 text-sm font-mono leading-relaxed max-w-md mx-auto">
+            <p
+              className="text-sm leading-relaxed max-w-md mx-auto"
+              style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                color: PARCHMENT.light,
+              }}
+            >
               The Codex holds the move.
             </p>
             <div className="pt-4">
-              <div className="w-16 h-[1px] bg-green-900/50 mx-auto" style={{ animation: "interstitialBarGrow 1.5s ease-in-out" }} />
+              <div
+                className="h-[1px] mx-auto"
+                style={{
+                  backgroundColor: AMBER.muted,
+                  opacity: 0.4,
+                  animation: "interstitialBarGrow 1.5s ease-in-out",
+                }}
+              />
             </div>
           </div>
         </div>
       )}
 
+      {/* Inline keyframes */}
       <style>{`
+        @keyframes sectionFadeIn {
+          from { opacity: 0; transform: translateY(12px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
         @keyframes interstitialFadeIn {
           from { opacity: 0; }
           to { opacity: 1; }

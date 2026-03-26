@@ -1,21 +1,20 @@
 /**
  * MirrorFlow — The Mirror Question Experience
  *
- * Flow:
- *   1. Read Gravitas signal from localStorage
- *   2. Show 7 core questions (one at a time, felt-language options)
- *   3. Score after core questions
- *   4. If ambiguous → show confirmation pair
- *   5. If still ambiguous → show adaptive deepener
- *   6. Final score → navigate to /workbench/mirror/reading
+ * Three-act cinematic flow:
+ *   Act 1 (Approach): Wide conservatory shot, slow Ken Burns zoom
+ *   Act 2 (Threshold): Fade to black, ritual framing text, "Look Into the Basin"
+ *   Act 3 (Basin): Close basin view, questions float on dark water surface
  *
- * UI: Uses PluginShell for the instrument chassis.
- * Sound: No sounds until we decide (per user preference).
+ * After questions: scoring → navigate to /workbench/mirror/reading
+ *
+ * Design: Warm amber/gold on dark glass. Quieter than Gravitas.
+ * Functional logic is IDENTICAL to the original — only visuals changed.
  */
 
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { useLocation } from "wouter";
-import PluginShell from "@/components/workbench/PluginShell";
+import MirrorShell from "@/components/workbench/MirrorShell";
 import DesktopOnly from "@/components/workbench/DesktopOnly";
 import { cn } from "@/lib/utils";
 import {
@@ -38,6 +37,28 @@ import {
   type ConfirmationPair,
   type PatternFamily,
 } from "@/lib/mirror";
+
+// ─── CDN Assets ─────────────────────────────────────────────────────
+
+const BASIN_WIDE_URL =
+  "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/5e5kxa7Hxu2DiYaSmWbPxb/mirror-basin-wide_1b4e8990.png";
+
+// ─── Design Tokens ──────────────────────────────────────────────────
+
+const AMBER = {
+  bright: "#d4a853",
+  warm: "#c5a059",
+  muted: "#8b7340",
+  glow: "rgba(197,160,89,0.4)",
+  faintGlow: "rgba(197,160,89,0.15)",
+};
+
+const PARCHMENT = {
+  light: "#e8dcc8",
+  mid: "#d4c8b0",
+  muted: "#a09080",
+  faint: "#706050",
+};
 
 // ─── Gravitas Signal Loader ──────────────────────────────────────────
 
@@ -65,8 +86,9 @@ function loadGravitasPrior(): GravitasPrior | null {
 
 type FlowPhase =
   | "loading"
-  | "intro"
-  | "core_questions"
+  | "approach"       // Act 1: wide shot zoom
+  | "threshold"      // Act 2: black screen, ritual text
+  | "core_questions" // Act 3: basin questions
   | "confirmation_pair"
   | "adaptive_question"
   | "scoring"
@@ -97,18 +119,39 @@ export default function MirrorFlow() {
   // Final result
   const [mirrorResult, setMirrorResult] = useState<MirrorResult | null>(null);
 
+  // Threshold text reveal state
+  const [thresholdStep, setThresholdStep] = useState(0);
+
   // ─── Load Gravitas Signal ────────────────────────────────────────
 
   useEffect(() => {
     const prior = loadGravitasPrior();
     if (!prior || !prior.archetype) {
-      // No Gravitas signal — redirect back
       navigate("/workbench/results");
       return;
     }
     setGravitasPrior(prior);
-    setPhase("intro");
+    setPhase("approach");
   }, [navigate]);
+
+  // ─── Act 1 → Act 2 auto-advance ─────────────────────────────────
+
+  useEffect(() => {
+    if (phase !== "approach") return;
+    const timer = setTimeout(() => setPhase("threshold"), 6000);
+    return () => clearTimeout(timer);
+  }, [phase]);
+
+  // ─── Threshold text reveal sequence ──────────────────────────────
+
+  useEffect(() => {
+    if (phase !== "threshold") return;
+    const delays = [800, 2400, 4200, 6000];
+    const timers = delays.map((delay, i) =>
+      setTimeout(() => setThresholdStep(i + 1), delay)
+    );
+    return () => timers.forEach(clearTimeout);
+  }, [phase]);
 
   // ─── Current Question ────────────────────────────────────────────
 
@@ -135,18 +178,15 @@ export default function MirrorFlow() {
       setSelectedOption(option.id);
       setIsTransitioning(true);
 
-      // Record answer
       const newAnswers = { ...answers, [currentQuestion.id]: option };
       setAnswers(newAnswers);
 
-      // Transition to next question or scoring
       setTimeout(() => {
         if (currentQuestionIndex < MIRROR_CORE_QUESTIONS.length - 1) {
           setCurrentQuestionIndex((i) => i + 1);
           setSelectedOption(null);
           setIsTransitioning(false);
         } else {
-          // Core questions complete — run initial scoring
           runPostCoreScoring(newAnswers);
         }
       }, 600);
@@ -160,7 +200,6 @@ export default function MirrorFlow() {
     (currentAnswers: Record<string, MirrorAnswerOption>) => {
       if (!gravitasPrior) return;
 
-      // Run a preliminary score to check if we need confirmation
       const prelimResult = scoreMirror({
         gravitasPrior,
         answers: currentAnswers,
@@ -172,7 +211,6 @@ export default function MirrorFlow() {
       const needsPair = shouldTriggerConfirmationPair(ranked);
 
       if (needsPair && pairSequence) {
-        // Show confirmation pair
         const pair = CONFIRMATION_PAIRS[pairSequence.first];
         if (pair) {
           setActivePair(pair);
@@ -183,7 +221,6 @@ export default function MirrorFlow() {
         }
       }
 
-      // No pair needed — check if adaptive question needed
       if (isAmbiguous(ranked)) {
         const adaptiveQ = MIRROR_ADAPTIVE_QUESTIONS.find(
           (q) => q.trigger === "ambiguous_top_two",
@@ -197,7 +234,6 @@ export default function MirrorFlow() {
         }
       }
 
-      // Clear signal — finalize
       finalizeResult(currentAnswers, null, null);
     },
     [gravitasPrior],
@@ -213,7 +249,6 @@ export default function MirrorFlow() {
       setPairResult(optionId);
       setIsTransitioning(true);
 
-      // Create a synthetic answer option from the pair selection
       const pairAnswer: MirrorAnswerOption = {
         id: optionId,
         text: "",
@@ -226,7 +261,6 @@ export default function MirrorFlow() {
       setAnswers(newAnswers);
 
       setTimeout(() => {
-        // Re-score with pair answer included
         const updatedResult = scoreMirror({
           gravitasPrior,
           answers: newAnswers,
@@ -234,7 +268,6 @@ export default function MirrorFlow() {
 
         const ranked = rankFamilies(updatedResult.family_scores);
 
-        // Check if still ambiguous — might need a second pair or adaptive Q
         if (isAmbiguous(ranked)) {
           const adaptiveQ = MIRROR_ADAPTIVE_QUESTIONS.find(
             (q) => q.trigger === "ambiguous_top_two",
@@ -248,7 +281,6 @@ export default function MirrorFlow() {
           }
         }
 
-        // Finalize
         finalizeResult(newAnswers, activePair.id, null);
       }, 600);
     },
@@ -293,17 +325,14 @@ export default function MirrorFlow() {
         answers: finalAnswers,
       });
 
-      // Patch in the pair/adaptive metadata
       result.confirmation_pair_used = confirmationPairUsed;
       result.adaptive_question_used = adaptiveQuestionUsed;
 
       setMirrorResult(result);
       setPhase("scoring");
 
-      // Save to localStorage
       localStorage.setItem("mirrorResult", JSON.stringify(result));
 
-      // Brief scoring animation, then navigate
       setTimeout(() => {
         setPhase("complete");
         navigate("/workbench/mirror/reading");
@@ -312,146 +341,304 @@ export default function MirrorFlow() {
     [gravitasPrior, navigate],
   );
 
+  // ═══════════════════════════════════════════════════════════════════
+  // RENDER PHASES
+  // ═══════════════════════════════════════════════════════════════════
+
   // ─── Render: Loading ─────────────────────────────────────────────
 
   if (phase === "loading") {
     return (
       <DesktopOnly toolName="Mirror">
-        <PluginShell title="MIRROR" category="DIAGNOSTIC" status="LOADING" statusColor="text-yellow-600">
-          <div className="flex items-center justify-center h-64">
-            <p className="text-green-900 font-pixel text-sm animate-pulse">
-              LOADING GRAVITAS SIGNAL...
-            </p>
-          </div>
-        </PluginShell>
+        <div className="min-h-screen bg-black flex items-center justify-center">
+          <p
+            className="font-pixel text-sm tracking-widest uppercase animate-pulse"
+            style={{ color: AMBER.muted }}
+          >
+            LOADING GRAVITAS SIGNAL...
+          </p>
+        </div>
       </DesktopOnly>
     );
   }
 
-  // ─── Render: Intro ───────────────────────────────────────────────
+  // ─── Render: Act 1 — The Approach ────────────────────────────────
+  // Wide conservatory shot with slow Ken Burns zoom toward the basin.
 
-  if (phase === "intro") {
+  if (phase === "approach") {
     return (
       <DesktopOnly toolName="Mirror">
-        <PluginShell title="MIRROR" category="DIAGNOSTIC" status="READY" statusColor="text-green-700">
-          <div className="flex flex-col items-center justify-center px-8 py-12 space-y-8">
-            {/* CRT-style intro text */}
-            <div className="max-w-lg text-center space-y-6">
-              <h2 className="text-green-400 font-pixel text-lg tracking-widest uppercase">
-                Go Deeper
-              </h2>
-              <div className="space-y-4 text-green-300/80 text-sm leading-relaxed font-mono">
-                <p>
-                  Gravitas showed you the field — the shape of your leadership gravity.
-                </p>
-                <p>
-                  Mirror looks underneath. Not at what you do, but at what you protect.
-                  What you carry. What it costs.
-                </p>
-                <p>
-                  Seven questions. No right answers. Just honest ones.
-                </p>
-              </div>
-            </div>
-
-            {/* Begin button */}
-            <button
-              onClick={() => {
-                setPhase("core_questions");
+        <div className="fixed inset-0 bg-black overflow-hidden">
+          <div
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{
+              backgroundImage: `url(${BASIN_WIDE_URL})`,
+              animation: "approachZoom 6s ease-in-out forwards",
+            }}
+          />
+          {/* Subtle dark edges */}
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background: "radial-gradient(ellipse 80% 80% at 50% 50%, transparent 40%, rgba(0,0,0,0.5) 100%)",
+            }}
+          />
+          {/* "MIRROR" text at top */}
+          <div className="absolute top-8 left-0 right-0 text-center z-10">
+            <h1
+              className="font-pixel text-2xl tracking-[0.3em] uppercase"
+              style={{
+                color: AMBER.bright,
+                textShadow: `0 0 20px ${AMBER.glow}`,
+                animation: "mirrorFadeIn 1.5s ease-out",
               }}
-              className={cn(
-                "px-8 py-3 rounded-sm border transition-all duration-300",
-                "bg-green-900/20 border-green-700/50 text-green-400",
-                "hover:bg-green-900/40 hover:border-green-500/70 hover:text-green-300",
-                "hover:shadow-[0_0_15px_rgba(74,222,128,0.15)]",
-                "font-pixel text-sm tracking-widest uppercase",
-              )}
             >
-              Begin
-            </button>
-
-            {/* Gravitas signal indicator */}
-            {gravitasPrior && (
-              <div className="text-[10px] font-pixel text-[#333] tracking-widest uppercase">
-                SIGNAL: {gravitasPrior.archetype} / {gravitasPrior.leak} LEAK / {gravitasPrior.force} FORCE
-              </div>
-            )}
+              MIRROR
+            </h1>
           </div>
-        </PluginShell>
+        </div>
+
+        <style>{`
+          @keyframes approachZoom {
+            from { transform: scale(1); }
+            to { transform: scale(1.15); }
+          }
+          @keyframes mirrorFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+          }
+        `}</style>
       </DesktopOnly>
     );
   }
 
-  // ─── Render: Core Questions ──────────────────────────────────────
+  // ─── Render: Act 2 — The Threshold ───────────────────────────────
+  // Fade to black. Ritual framing text reveals in sequence.
+
+  if (phase === "threshold") {
+    return (
+      <DesktopOnly toolName="Mirror">
+        <div
+          className="fixed inset-0 flex flex-col items-center justify-center px-8"
+          style={{
+            backgroundColor: "#050505",
+            animation: "thresholdFadeIn 1s ease-out",
+          }}
+        >
+          <div className="max-w-lg text-center space-y-6">
+            {/* Line 1 */}
+            <p
+              className="text-base leading-relaxed transition-opacity duration-700"
+              style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                color: PARCHMENT.mid,
+                opacity: thresholdStep >= 1 ? 1 : 0,
+              }}
+            >
+              Gravitas showed you the field — the shape of your leadership gravity.
+            </p>
+
+            {/* Line 2 */}
+            <p
+              className="text-base leading-relaxed transition-opacity duration-700"
+              style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                color: PARCHMENT.mid,
+                opacity: thresholdStep >= 2 ? 1 : 0,
+              }}
+            >
+              Mirror looks underneath. Not at what you do, but at what you protect.
+              What you carry. What it costs.
+            </p>
+
+            {/* Line 3 */}
+            <p
+              className="text-sm leading-relaxed transition-opacity duration-700"
+              style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                color: PARCHMENT.muted,
+                opacity: thresholdStep >= 3 ? 1 : 0,
+              }}
+            >
+              Seven questions. No right answers. Just honest ones.
+            </p>
+
+            {/* CTA Button */}
+            <div
+              className="pt-4 transition-opacity duration-700"
+              style={{ opacity: thresholdStep >= 4 ? 1 : 0 }}
+            >
+              <button
+                onClick={() => setPhase("core_questions")}
+                className="px-8 py-3 border transition-all duration-300 font-pixel text-sm tracking-widest uppercase"
+                style={{
+                  color: AMBER.bright,
+                  borderColor: AMBER.muted,
+                  backgroundColor: "transparent",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = AMBER.bright;
+                  e.currentTarget.style.boxShadow = `0 0 15px ${AMBER.faintGlow}`;
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = AMBER.muted;
+                  e.currentTarget.style.boxShadow = "none";
+                }}
+              >
+                Look Into the Basin
+              </button>
+            </div>
+          </div>
+
+          {/* Gravitas signal whisper */}
+          {gravitasPrior && thresholdStep >= 3 && (
+            <div
+              className="absolute bottom-8 text-center transition-opacity duration-700"
+              style={{ opacity: 0.4 }}
+            >
+              <span
+                className="font-pixel text-[9px] tracking-widest uppercase"
+                style={{ color: PARCHMENT.faint }}
+              >
+                SIGNAL: {gravitasPrior.archetype} / {gravitasPrior.leak} LEAK / {gravitasPrior.force} FORCE
+              </span>
+            </div>
+          )}
+        </div>
+
+        <style>{`
+          @keyframes thresholdFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+          }
+        `}</style>
+      </DesktopOnly>
+    );
+  }
+
+  // ─── Render: Act 3 — Core Questions (Basin Surface) ──────────────
 
   if (phase === "core_questions" && currentQuestion) {
+    const optionCount = currentQuestion.options.length;
+    const isCompact = optionCount >= 5;
+
     return (
       <DesktopOnly toolName="Mirror">
-        <PluginShell
-          title="MIRROR"
-          category="DIAGNOSTIC"
-          status="ACTIVE"
-          statusColor="text-green-500"
-          footerControls={
-            <div className="flex items-center gap-4 w-full">
-              {/* Progress bar */}
-              <div className="flex-1 h-1 bg-[#1a1a1a] rounded-full overflow-hidden">
+        <MirrorShell
+          footer={
+            <div className="flex items-center gap-3">
+              {/* Progress dots */}
+              {MIRROR_CORE_QUESTIONS.map((_, i) => (
                 <div
-                  className="h-full bg-green-800 transition-all duration-500 ease-out"
-                  style={{ width: `${progress.percent}%` }}
+                  key={i}
+                  className="w-1.5 h-1.5 rounded-full transition-all duration-300"
+                  style={{
+                    backgroundColor:
+                      i < currentQuestionIndex
+                        ? AMBER.bright
+                        : i === currentQuestionIndex
+                        ? AMBER.warm
+                        : "rgba(197,160,89,0.2)",
+                    boxShadow:
+                      i === currentQuestionIndex
+                        ? `0 0 6px ${AMBER.glow}`
+                        : "none",
+                  }}
                 />
-              </div>
-              <span className="text-[10px] font-pixel text-[#444] tracking-widest">
+              ))}
+              <span
+                className="ml-2 font-pixel text-[9px] tracking-widest"
+                style={{ color: PARCHMENT.faint }}
+              >
                 {progress.current}/{progress.total}
               </span>
             </div>
           }
         >
-          <div className="px-6 md:px-10 py-8 space-y-8">
-            {/* Question text */}
-            <div
-              key={currentQuestion.id}
-              className="animate-[fadeIn_0.4s_ease-out]"
+          {/* Question text — centered in the dark water */}
+          <div
+            key={currentQuestion.id}
+            className="text-center mb-4"
+            style={{ animation: "mirrorFadeIn 0.5s ease-out" }}
+          >
+            <p
+              className={cn(
+                "leading-relaxed italic",
+                isCompact ? "text-sm" : "text-base md:text-lg"
+              )}
+              style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                color: PARCHMENT.light,
+                textShadow: `0 0 12px rgba(232,220,200,0.3)`,
+              }}
             >
-              <p className="text-green-400 text-base md:text-lg leading-relaxed font-mono max-w-2xl">
-                {currentQuestion.text}
-              </p>
-            </div>
-
-            {/* Options */}
-            <div className="space-y-3 max-w-2xl">
-              {currentQuestion.options.map((option, idx) => (
-                <button
-                  key={option.id}
-                  onClick={() => handleSelectOption(option)}
-                  disabled={isTransitioning}
-                  className={cn(
-                    "w-full text-left px-5 py-4 rounded-sm border transition-all duration-300",
-                    "font-mono text-sm leading-relaxed",
-                    selectedOption === option.id
-                      ? "bg-green-900/30 border-green-500/60 text-green-300 shadow-[0_0_10px_rgba(74,222,128,0.1)]"
-                      : "bg-[#0a0a0a] border-[#222] text-green-300/70 hover:border-green-800/50 hover:bg-[#111] hover:text-green-300",
-                    isTransitioning && selectedOption !== option.id && "opacity-40",
-                  )}
-                  style={{
-                    animationDelay: `${idx * 80}ms`,
-                    animation: "fadeIn 0.3s ease-out backwards",
-                  }}
-                >
-                  {option.text}
-                </button>
-              ))}
-            </div>
+              {currentQuestion.text}
+            </p>
           </div>
 
-          {/* Inline keyframes */}
+          {/* Answer options — stacked vertically on the dark water */}
+          <div
+            className="w-full flex flex-col items-center"
+            style={{ gap: isCompact ? "4px" : "6px" }}
+          >
+            {currentQuestion.options.map((option, idx) => (
+              <button
+                key={option.id}
+                onClick={() => handleSelectOption(option)}
+                disabled={isTransitioning}
+                className="w-full text-center transition-all duration-300 cursor-pointer"
+                style={{
+                  fontFamily: "'Cormorant Garamond', serif",
+                  fontSize: isCompact ? "0.75rem" : "0.8rem",
+                  lineHeight: "1.4",
+                  color:
+                    selectedOption === option.id
+                      ? AMBER.bright
+                      : PARCHMENT.mid,
+                  textShadow:
+                    selectedOption === option.id
+                      ? `0 0 10px ${AMBER.glow}`
+                      : `0 0 6px rgba(0,0,0,0.8)`,
+                  opacity:
+                    isTransitioning && selectedOption !== option.id
+                      ? 0.3
+                      : 1,
+                  padding: isCompact ? "6px 12px" : "8px 14px",
+                  backgroundColor: "rgba(5,8,15,0.3)",
+                  borderRadius: "4px",
+                  border: selectedOption === option.id
+                    ? `1px solid ${AMBER.muted}`
+                    : "1px solid transparent",
+                  maxWidth: "90%",
+                  animation: `mirrorFadeIn 0.3s ease-out ${idx * 80}ms backwards`,
+                }}
+                onMouseEnter={(e) => {
+                  if (selectedOption !== option.id) {
+                    e.currentTarget.style.color = AMBER.bright;
+                    e.currentTarget.style.textShadow = `0 0 8px ${AMBER.faintGlow}`;
+                    e.currentTarget.style.backgroundColor = "rgba(5,8,15,0.5)";
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (selectedOption !== option.id) {
+                    e.currentTarget.style.color = PARCHMENT.mid;
+                    e.currentTarget.style.textShadow = "0 0 6px rgba(0,0,0,0.8)";
+                    e.currentTarget.style.backgroundColor = "rgba(5,8,15,0.3)";
+                  }
+                }}
+              >
+                {option.text}
+              </button>
+            ))}
+          </div>
+
           <style>{`
-            @keyframes fadeIn {
-              from { opacity: 0; transform: translateY(8px); }
+            @keyframes mirrorFadeIn {
+              from { opacity: 0; transform: translateY(6px); }
               to { opacity: 1; transform: translateY(0); }
             }
           `}</style>
-        </PluginShell>
+        </MirrorShell>
       </DesktopOnly>
     );
   }
@@ -461,72 +648,114 @@ export default function MirrorFlow() {
   if (phase === "confirmation_pair" && activePair) {
     return (
       <DesktopOnly toolName="Mirror">
-        <PluginShell title="MIRROR" category="DIAGNOSTIC" status="REFINING" statusColor="text-amber-600">
-          <div className="px-6 md:px-10 py-8 space-y-8">
-            <div className="space-y-3">
-              <p className="text-amber-500/80 font-pixel text-xs tracking-widest uppercase">
-                One more distinction
-              </p>
-              <p className="text-green-400/80 text-sm font-mono leading-relaxed max-w-2xl">
-                Both of these may feel partially true. Choose the one that feels
-                <em> more </em> true under real pressure.
-              </p>
-            </div>
-
-            <div className="space-y-4 max-w-2xl">
-              {/* Option A */}
-              <button
-                onClick={() =>
-                  handlePairSelect(
-                    activePair.option_a.id,
-                    activePair.option_a.supports_family,
-                    activePair.option_a.weight,
-                  )
-                }
-                disabled={isTransitioning}
-                className={cn(
-                  "w-full text-left px-6 py-5 rounded-sm border transition-all duration-300",
-                  "font-mono text-sm leading-relaxed",
-                  selectedOption === activePair.option_a.id
-                    ? "bg-green-900/30 border-green-500/60 text-green-300"
-                    : "bg-[#0a0a0a] border-[#222] text-green-300/70 hover:border-green-800/50 hover:bg-[#111] hover:text-green-300",
-                  isTransitioning && selectedOption !== activePair.option_a.id && "opacity-40",
-                )}
-              >
-                {activePair.option_a.text}
-              </button>
-
-              {/* Divider */}
-              <div className="flex items-center gap-4">
-                <div className="flex-1 h-px bg-[#222]" />
-                <span className="text-[10px] font-pixel text-[#444] tracking-widest">OR</span>
-                <div className="flex-1 h-px bg-[#222]" />
-              </div>
-
-              {/* Option B */}
-              <button
-                onClick={() =>
-                  handlePairSelect(
-                    activePair.option_b.id,
-                    activePair.option_b.supports_family,
-                    activePair.option_b.weight,
-                  )
-                }
-                disabled={isTransitioning}
-                className={cn(
-                  "w-full text-left px-6 py-5 rounded-sm border transition-all duration-300",
-                  "font-mono text-sm leading-relaxed",
-                  selectedOption === activePair.option_b.id
-                    ? "bg-green-900/30 border-green-500/60 text-green-300"
-                    : "bg-[#0a0a0a] border-[#222] text-green-300/70 hover:border-green-800/50 hover:bg-[#111] hover:text-green-300",
-                  isTransitioning && selectedOption !== activePair.option_b.id && "opacity-40",
-                )}
-              >
-                {activePair.option_b.text}
-              </button>
-            </div>
+        <MirrorShell>
+          {/* Pair prompt */}
+          <div className="text-center mb-4">
+            <p
+              className="font-pixel text-[9px] tracking-widest uppercase mb-3"
+              style={{ color: AMBER.muted }}
+            >
+              One more distinction
+            </p>
+            <p
+              className="text-xs leading-relaxed italic"
+              style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                color: PARCHMENT.muted,
+              }}
+            >
+              Both may feel partially true. Choose the one that feels{" "}
+              <em>more</em> true under real pressure.
+            </p>
           </div>
-        </PluginShell>
+
+          {/* Option A */}
+          <button
+            onClick={() =>
+              handlePairSelect(
+                activePair.option_a.id,
+                activePair.option_a.supports_family,
+                activePair.option_a.weight,
+              )
+            }
+            disabled={isTransitioning}
+            className="w-full text-center transition-all duration-300 cursor-pointer mb-3"
+            style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontSize: "0.8rem",
+              lineHeight: "1.4",
+              color:
+                selectedOption === activePair.option_a.id
+                  ? AMBER.bright
+                  : PARCHMENT.mid,
+              textShadow:
+                selectedOption === activePair.option_a.id
+                  ? `0 0 10px ${AMBER.glow}`
+                  : `0 0 6px rgba(0,0,0,0.8)`,
+              opacity:
+                isTransitioning && selectedOption !== activePair.option_a.id
+                  ? 0.3
+                  : 1,
+              padding: "8px 14px",
+              backgroundColor: "rgba(5,8,15,0.3)",
+              borderRadius: "4px",
+              border: selectedOption === activePair.option_a.id
+                ? `1px solid ${AMBER.muted}`
+                : "1px solid transparent",
+              maxWidth: "90%",
+            }}
+          >
+            {activePair.option_a.text}
+          </button>
+
+          {/* OR divider */}
+          <div className="flex items-center gap-3 my-1 w-3/4">
+            <div className="flex-1 h-px" style={{ backgroundColor: AMBER.muted, opacity: 0.2 }} />
+            <span className="font-pixel text-[8px] tracking-widest" style={{ color: PARCHMENT.faint }}>
+              OR
+            </span>
+            <div className="flex-1 h-px" style={{ backgroundColor: AMBER.muted, opacity: 0.2 }} />
+          </div>
+
+          {/* Option B */}
+          <button
+            onClick={() =>
+              handlePairSelect(
+                activePair.option_b.id,
+                activePair.option_b.supports_family,
+                activePair.option_b.weight,
+              )
+            }
+            disabled={isTransitioning}
+            className="w-full text-center transition-all duration-300 cursor-pointer mt-3"
+            style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontSize: "0.8rem",
+              lineHeight: "1.4",
+              color:
+                selectedOption === activePair.option_b.id
+                  ? AMBER.bright
+                  : PARCHMENT.mid,
+              textShadow:
+                selectedOption === activePair.option_b.id
+                  ? `0 0 10px ${AMBER.glow}`
+                  : `0 0 6px rgba(0,0,0,0.8)`,
+              opacity:
+                isTransitioning && selectedOption !== activePair.option_b.id
+                  ? 0.3
+                  : 1,
+              padding: "8px 14px",
+              backgroundColor: "rgba(5,8,15,0.3)",
+              borderRadius: "4px",
+              border: selectedOption === activePair.option_b.id
+                ? `1px solid ${AMBER.muted}`
+                : "1px solid transparent",
+              maxWidth: "90%",
+            }}
+          >
+            {activePair.option_b.text}
+          </button>
+        </MirrorShell>
       </DesktopOnly>
     );
   }
@@ -534,51 +763,96 @@ export default function MirrorFlow() {
   // ─── Render: Adaptive Question ───────────────────────────────────
 
   if (phase === "adaptive_question" && adaptiveQuestion) {
+    const optionCount = adaptiveQuestion.options.length;
+    const isCompact = optionCount >= 5;
+
     return (
       <DesktopOnly toolName="Mirror">
-        <PluginShell title="MIRROR" category="DIAGNOSTIC" status="DEEPENING" statusColor="text-amber-600">
-          <div className="px-6 md:px-10 py-8 space-y-8">
-            <div className="space-y-3">
-              <p className="text-amber-500/80 font-pixel text-xs tracking-widest uppercase">
-                One more
-              </p>
-              <p className="text-green-400 text-base md:text-lg leading-relaxed font-mono max-w-2xl">
-                {adaptiveQuestion.text}
-              </p>
-            </div>
+        <MirrorShell>
+          <div className="text-center mb-4">
+            <p
+              className="font-pixel text-[9px] tracking-widest uppercase mb-3"
+              style={{ color: AMBER.muted }}
+            >
+              One more
+            </p>
+            <p
+              className={cn(
+                "leading-relaxed italic",
+                isCompact ? "text-sm" : "text-base"
+              )}
+              style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                color: PARCHMENT.light,
+                textShadow: "0 0 12px rgba(232,220,200,0.3)",
+              }}
+            >
+              {adaptiveQuestion.text}
+            </p>
+          </div>
 
-            <div className="space-y-3 max-w-2xl">
-              {adaptiveQuestion.options.map((option, idx) => (
-                <button
-                  key={option.id}
-                  onClick={() => handleAdaptiveSelect(option)}
-                  disabled={isTransitioning}
-                  className={cn(
-                    "w-full text-left px-5 py-4 rounded-sm border transition-all duration-300",
-                    "font-mono text-sm leading-relaxed",
+          <div
+            className="w-full flex flex-col items-center"
+            style={{ gap: isCompact ? "4px" : "6px" }}
+          >
+            {adaptiveQuestion.options.map((option, idx) => (
+              <button
+                key={option.id}
+                onClick={() => handleAdaptiveSelect(option)}
+                disabled={isTransitioning}
+                className="w-full text-center transition-all duration-300 cursor-pointer"
+                style={{
+                  fontFamily: "'Cormorant Garamond', serif",
+                  fontSize: isCompact ? "0.75rem" : "0.8rem",
+                  lineHeight: "1.4",
+                  color:
                     selectedOption === option.id
-                      ? "bg-green-900/30 border-green-500/60 text-green-300"
-                      : "bg-[#0a0a0a] border-[#222] text-green-300/70 hover:border-green-800/50 hover:bg-[#111] hover:text-green-300",
-                    isTransitioning && selectedOption !== option.id && "opacity-40",
-                  )}
-                  style={{
-                    animationDelay: `${idx * 80}ms`,
-                    animation: "fadeIn 0.3s ease-out backwards",
-                  }}
-                >
-                  {option.text}
-                </button>
-              ))}
-            </div>
+                      ? AMBER.bright
+                      : PARCHMENT.mid,
+                  textShadow:
+                    selectedOption === option.id
+                      ? `0 0 10px ${AMBER.glow}`
+                      : "0 0 6px rgba(0,0,0,0.8)",
+                  opacity:
+                    isTransitioning && selectedOption !== option.id
+                      ? 0.3
+                      : 1,
+                  padding: isCompact ? "6px 12px" : "8px 14px",
+                  backgroundColor: "rgba(5,8,15,0.3)",
+                  borderRadius: "4px",
+                  border: selectedOption === option.id
+                    ? `1px solid ${AMBER.muted}`
+                    : "1px solid transparent",
+                  maxWidth: "90%",
+                  animation: `mirrorFadeIn 0.3s ease-out ${idx * 80}ms backwards`,
+                }}
+                onMouseEnter={(e) => {
+                  if (selectedOption !== option.id) {
+                    e.currentTarget.style.color = AMBER.bright;
+                    e.currentTarget.style.textShadow = `0 0 8px ${AMBER.faintGlow}`;
+                    e.currentTarget.style.backgroundColor = "rgba(5,8,15,0.5)";
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (selectedOption !== option.id) {
+                    e.currentTarget.style.color = PARCHMENT.mid;
+                    e.currentTarget.style.textShadow = "0 0 6px rgba(0,0,0,0.8)";
+                    e.currentTarget.style.backgroundColor = "rgba(5,8,15,0.3)";
+                  }
+                }}
+              >
+                {option.text}
+              </button>
+            ))}
           </div>
 
           <style>{`
-            @keyframes fadeIn {
-              from { opacity: 0; transform: translateY(8px); }
+            @keyframes mirrorFadeIn {
+              from { opacity: 0; transform: translateY(6px); }
               to { opacity: 1; transform: translateY(0); }
             }
           `}</style>
-        </PluginShell>
+        </MirrorShell>
       </DesktopOnly>
     );
   }
@@ -588,17 +862,21 @@ export default function MirrorFlow() {
   if (phase === "scoring") {
     return (
       <DesktopOnly toolName="Mirror">
-        <PluginShell title="MIRROR" category="DIAGNOSTIC" status="PROCESSING" statusColor="text-green-500">
-          <div className="flex flex-col items-center justify-center h-64 space-y-6">
-            <div className="w-48 h-1 bg-[#1a1a1a] rounded-full overflow-hidden">
+        <MirrorShell showSticker={false}>
+          <div className="flex flex-col items-center justify-center space-y-6">
+            <div className="w-32 h-[1px] overflow-hidden" style={{ backgroundColor: "rgba(197,160,89,0.2)" }}>
               <div
-                className="h-full bg-green-600 rounded-full"
+                className="h-full"
                 style={{
+                  backgroundColor: AMBER.warm,
                   animation: "scoringBar 1.5s ease-out forwards",
                 }}
               />
             </div>
-            <p className="text-green-800 font-pixel text-xs tracking-widest uppercase animate-pulse">
+            <p
+              className="font-pixel text-[10px] tracking-widest uppercase animate-pulse"
+              style={{ color: AMBER.muted }}
+            >
               Assembling your reading...
             </p>
           </div>
@@ -609,7 +887,7 @@ export default function MirrorFlow() {
               to { width: 100%; }
             }
           `}</style>
-        </PluginShell>
+        </MirrorShell>
       </DesktopOnly>
     );
   }
@@ -618,13 +896,14 @@ export default function MirrorFlow() {
 
   return (
     <DesktopOnly toolName="Mirror">
-      <PluginShell title="MIRROR" category="DIAGNOSTIC" status="OFF" statusColor="text-red-900">
-        <div className="flex items-center justify-center h-64">
-          <p className="text-red-900 font-pixel text-sm">
-            NO GRAVITAS SIGNAL DETECTED
-          </p>
-        </div>
-      </PluginShell>
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <p
+          className="font-pixel text-sm tracking-widest uppercase"
+          style={{ color: "#4a2020" }}
+        >
+          NO GRAVITAS SIGNAL DETECTED
+        </p>
+      </div>
     </DesktopOnly>
   );
 }
