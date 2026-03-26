@@ -134,11 +134,11 @@ function getArcPositions(count: number): { x: number; y: number; rotation: numbe
   // Two-row layout: positions 1,3,5 on upper row; 2,4 on lower row
   // Wider horizontal spread to prevent overlap with long answer text
   return [
-    { x: 16, y: 54, rotation: -5 },   // far left, upper row — ~7 o'clock
-    { x: 34, y: 68, rotation: -2 },   // left-center, lower row — ~8 o'clock
+    { x: 20, y: 54, rotation: -4 },   // far left, upper row — ~7 o'clock
+    { x: 35, y: 68, rotation: -2 },   // left-center, lower row — ~8 o'clock
     { x: 50, y: 54, rotation: 0 },    // dead center, upper row — ~6 o'clock
-    { x: 66, y: 68, rotation: 2 },    // right-center, lower row — ~4 o'clock
-    { x: 84, y: 54, rotation: 5 },    // far right, upper row — ~5 o'clock
+    { x: 65, y: 68, rotation: 2 },    // right-center, lower row — ~4 o'clock
+    { x: 80, y: 54, rotation: 4 },    // far right, upper row — ~5 o'clock
   ];
 }
 
