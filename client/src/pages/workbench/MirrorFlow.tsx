@@ -305,8 +305,8 @@ function BasinQuestion({
         onClick={handleConfirm}
         style={{
           position: "absolute",
-          left: "10%",
-          right: "10%",
+          left: "5%",
+          right: "5%",
           top: "40%",
           animation: "basinTextReveal 0.35s ease-out",
           cursor: "pointer",
@@ -409,8 +409,8 @@ function BasinQuestion({
 
       <style>{`
         @keyframes basinTextReveal {
-          from { opacity: 0; transform: translateX(-50%) translateY(6px); }
-          to { opacity: 1; transform: translateX(-50%) translateY(0); }
+          from { opacity: 0; }
+          to { opacity: 1; }
         }
       `}</style>
     </div>
