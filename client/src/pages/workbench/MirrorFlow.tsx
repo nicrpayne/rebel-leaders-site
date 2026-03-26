@@ -5,8 +5,8 @@
  *   Act 1 (Approach): Wide conservatory shot, slow Ken Burns zoom
  *   Act 2 (Threshold): Fade to black, ritual framing text, "Look Into the Basin"
  *   Act 3 (Basin): Close basin view — ALL answer texts visible around the lower
- *                   arc of the basin rim. Knob cycles which answer glows bright.
- *                   Press/click knob to confirm.
+ *                   arc of the basin. Drag/scroll knob to cycle highlight.
+ *                   Click highlighted answer to confirm.
  *
  * After questions: scoring → navigate to /workbench/mirror/reading
  *
@@ -18,7 +18,6 @@ import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import { useLocation } from "wouter";
 import MirrorShell from "@/components/workbench/MirrorShell";
 import DesktopOnly from "@/components/workbench/DesktopOnly";
-import { cn } from "@/lib/utils";
 import {
   MIRROR_CORE_QUESTIONS,
   MIRROR_ADAPTIVE_QUESTIONS,
@@ -47,15 +46,13 @@ const BASIN_WIDE_URL =
 
 // ─── Design Tokens ──────────────────────────────────────────────────
 
-const AMBER = {
-  bright: "#d4a853",
-  warm: "#c5a059",
-  muted: "#8b7340",
-  glow: "rgba(197,160,89,0.4)",
-  faintGlow: "rgba(197,160,89,0.15)",
-  active: "#e8c55a",
-  dim: "rgba(139,115,64,0.35)",
-  inactiveText: "rgba(220,210,195,0.6)",  // warm white at 60% for readable inactive answers
+const GOLD = {
+  active: "#d4a853",       // warm gold, full brightness for active answer
+  inactive: "#c5a059",     // same warm gold, just dimmer via opacity
+  question: "#e8dcc8",     // lighter parchment for question text
+  muted: "#8b7340",        // muted gold for UI chrome
+  glow: "rgba(197,160,89,0.35)",
+  faintGlow: "rgba(197,160,89,0.12)",
 };
 
 const PARCHMENT = {
@@ -101,45 +98,65 @@ type FlowPhase =
 
 // ─── Arc Geometry ───────────────────────────────────────────────────
 // Position answer TEXT labels along the lower arc of the basin ellipse.
-// Each position includes x, y (percentage), and rotation angle.
+// Uses polar coordinates: center of basin as origin, answers placed at
+// angles along the lower semicircle (210° to 330° for 4 options,
+// 200° to 340° for 5 options).
+//
+// The basin's dark water is an ellipse roughly centered in the content area.
+// We use percentage-based x/y from the content area's top-left.
 
 function getArcPositions(count: number): { x: number; y: number; rotation: number }[] {
-  // Hand-tuned positions for 2, 4, and 5 option layouts.
-  // Answers are spread across the lower basin with staggered heights
-  // to prevent text overlap while following the rim curvature.
+  // Center of the dark water ellipse (percentage of content area)
+  const cx = 50;
+  const cy = 45;
+  // Radii of the arc where answers sit (percentage units)
+  const rx = 36; // horizontal radius
+  const ry = 28; // vertical radius (elliptical, flatter)
 
   if (count === 2) {
-    // Confirmation pair: left and right — well inside the dark water
-    return [
-      { x: 32, y: 55, rotation: -2 },
-      { x: 68, y: 55, rotation: 2 },
-    ];
+    // Confirmation pair: left and right on the lower arc
+    const angles = [225, 315]; // 7:30 and 4:30 positions
+    return angles.map((deg) => {
+      const rad = (deg * Math.PI) / 180;
+      return {
+        x: cx + rx * Math.cos(rad),
+        y: cy - ry * Math.sin(rad),
+        rotation: (deg > 270 ? deg - 360 : deg) * -0.06, // subtle tangent follow
+      };
+    });
   }
 
   if (count === 4) {
-    // Q1 layout: pulled inward into dark water, staggered heights
-    return [
-      { x: 26, y: 54, rotation: -2 },   // left, higher
-      { x: 40, y: 66, rotation: -0.5 }, // center-left, lower
-      { x: 60, y: 66, rotation: 0.5 },  // center-right, lower
-      { x: 74, y: 54, rotation: 2 },    // right, higher
-    ];
+    // Clock positions: ~7, ~8, ~4, ~3 (matching concept art)
+    const angles = [215, 245, 295, 325];
+    return angles.map((deg) => {
+      const rad = (deg * Math.PI) / 180;
+      // Rotation follows the tangent of the arc
+      const tangentAngle = deg - 270; // 0 at bottom, negative left, positive right
+      return {
+        x: cx + rx * Math.cos(rad),
+        y: cy - ry * Math.sin(rad),
+        rotation: tangentAngle * 0.15, // subtle rotation following the curve
+      };
+    });
   }
 
-  // 5 options (Q2-Q7): two-row stagger, pulled inward
-  // Row 1 (upper): positions 1, 3, 5
-  // Row 2 (lower): positions 2, 4
-  return [
-    { x: 20, y: 52, rotation: -3 },   // left, upper row
-    { x: 36, y: 66, rotation: -1 },   // left-center, lower row
-    { x: 50, y: 52, rotation: 0 },    // center, upper row
-    { x: 64, y: 66, rotation: 1 },    // right-center, lower row
-    { x: 80, y: 52, rotation: 3 },    // right, upper row
-  ];
+  // 5 options: spread from ~200° to ~340°
+  const angles = [205, 232, 270, 308, 335];
+  return angles.map((deg) => {
+    const rad = (deg * Math.PI) / 180;
+    const tangentAngle = deg - 270;
+    return {
+      x: cx + rx * Math.cos(rad),
+      y: cy - ry * Math.sin(rad),
+      rotation: tangentAngle * 0.12,
+    };
+  });
 }
 
 // ─── Basin Question Component ────────────────────────────────────────
-// All answers visible around the arc. Knob cycles highlight. Press confirms.
+// All answers visible around the arc. Drag/scroll knob to cycle.
+// Click highlighted answer to confirm.
 
 interface BasinQuestionProps {
   question: MirrorQuestion;
@@ -196,30 +213,48 @@ function BasinQuestion({
     onSelect(options[activeIndex]);
   }, [isTransitioning, confirmed, activeIndex, options, onSelect]);
 
-  // Knob click = cycle forward
-  const handleKnobClick = useCallback(() => {
+  // ─── Drag-to-turn knob interaction ────────────────────────────────
+  const isDragging = useRef(false);
+  const dragStartY = useRef(0);
+  const dragAccumulated = useRef(0);
+
+  const handleKnobMouseDown = useCallback((e: React.MouseEvent) => {
     if (isTransitioning || confirmed) return;
-    setActiveIndex((prev) => (prev + 1) % options.length);
+    isDragging.current = true;
+    dragStartY.current = e.clientY;
+    dragAccumulated.current = 0;
+    e.preventDefault();
+  }, [isTransitioning, confirmed]);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isDragging.current || isTransitioning || confirmed) return;
+      const delta = dragStartY.current - e.clientY;
+      dragAccumulated.current += delta;
+      dragStartY.current = e.clientY;
+
+      // Every ~25px of drag = advance one option
+      if (Math.abs(dragAccumulated.current) > 25) {
+        const direction = dragAccumulated.current > 0 ? 1 : -1;
+        setActiveIndex((prev) => {
+          const next = prev + direction;
+          return ((next % options.length) + options.length) % options.length;
+        });
+        dragAccumulated.current = 0;
+      }
+    };
+
+    const handleMouseUp = () => {
+      isDragging.current = false;
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseup", handleMouseUp);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
+    };
   }, [options.length, isTransitioning, confirmed]);
-
-  // Knob press (mousedown hold > 300ms or double-click) = confirm
-  const knobPressTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const handleKnobMouseDown = useCallback(() => {
-    if (isTransitioning || confirmed) return;
-    knobPressTimer.current = setTimeout(() => {
-      handleConfirm();
-      knobPressTimer.current = null;
-    }, 400);
-  }, [isTransitioning, confirmed, handleConfirm]);
-
-  const handleKnobMouseUp = useCallback(() => {
-    if (knobPressTimer.current) {
-      clearTimeout(knobPressTimer.current);
-      knobPressTimer.current = null;
-      // Short click = cycle
-      handleKnobClick();
-    }
-  }, [handleKnobClick]);
 
   // Scroll/wheel on knob to cycle
   const handleWheel = useCallback(
@@ -235,63 +270,18 @@ function BasinQuestion({
     [options.length, isTransitioning, confirmed],
   );
 
-  // Knob rotation angle based on active index
-  const knobRotation = options.length > 1
-    ? (activeIndex / (options.length - 1)) * 270 - 135
-    : 0;
-
   return (
     <div
-      className="relative w-full outline-none"
-      style={{ height: "55vh", maxHeight: "550px" }}
+      className="relative w-full select-none outline-none"
+      style={{ height: "60vh", maxHeight: "600px" }}
       tabIndex={0}
     >
-      {/* Progress dots at top */}
-      <div
-        className="absolute left-1/2 -translate-x-1/2 flex gap-1.5"
-        style={{ top: "2%" }}
-      >
-        {Array.from({ length: totalQuestions }).map((_, i) => (
-          <div
-            key={i}
-            className="rounded-full transition-all duration-300"
-            style={{
-              width: i === questionNumber - 1 ? "8px" : "4px",
-              height: "4px",
-              backgroundColor:
-                i < questionNumber - 1
-                  ? AMBER.warm
-                  : i === questionNumber - 1
-                    ? AMBER.active
-                    : AMBER.dim,
-              boxShadow:
-                i === questionNumber - 1
-                  ? `0 0 6px ${AMBER.glow}`
-                  : "none",
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Question counter */}
-      <div
-        className="absolute"
-        style={{ top: "2%", right: "4%" }}
-      >
-        <span
-          className="font-pixel text-[8px] tracking-widest"
-          style={{ color: AMBER.dim, opacity: 0.8 }}
-        >
-          {questionNumber}/{totalQuestions}
-        </span>
-      </div>
-
       {/* Question text — centered in upper portion of basin */}
       <div
         key={question.id}
         className="absolute left-1/2 -translate-x-1/2 text-center px-6"
         style={{
-          top: "10%",
+          top: "8%",
           width: "85%",
           animation: "basinTextReveal 0.6s ease-out",
         }}
@@ -301,15 +291,15 @@ function BasinQuestion({
           style={{
             fontFamily: "'Cormorant Garamond', serif",
             fontWeight: 500,
-            color: PARCHMENT.light,
-            textShadow: `0 0 20px rgba(232,220,200,0.25), 0 2px 8px rgba(0,0,0,0.6)`,
+            color: GOLD.question,
+            textShadow: `0 0 20px rgba(232,220,200,0.2), 0 2px 8px rgba(0,0,0,0.6)`,
           }}
         >
           {question.text}
         </p>
       </div>
 
-      {/* Answer texts positioned around the lower arc */}
+      {/* Answer texts positioned along the lower arc */}
       {options.map((option, idx) => {
         const pos = positions[idx];
         const isActive = idx === activeIndex;
@@ -318,14 +308,12 @@ function BasinQuestion({
         return (
           <div
             key={`answer-${option.id}`}
-            className="absolute transition-all duration-300 text-center select-none"
+            className="absolute select-none"
             onClick={() => {
               if (isTransitioning || confirmed) return;
               if (isActive) {
-                // Already highlighted — confirm selection
                 handleConfirm();
               } else {
-                // Not highlighted — select this one
                 setActiveIndex(idx);
               }
             }}
@@ -333,29 +321,25 @@ function BasinQuestion({
               left: `${pos.x}%`,
               top: `${pos.y}%`,
               transform: `translate(-50%, -50%) rotate(${pos.rotation}deg)`,
-              maxWidth: options.length <= 4 ? "155px" : "120px",
+              maxWidth: options.length <= 4 ? "150px" : "125px",
               zIndex: isActive ? 20 : 10,
               cursor: "pointer",
+              textAlign: "center",
             }}
           >
             <p
               className="text-xs leading-snug transition-all duration-300"
               style={{
                 fontFamily: "'Cormorant Garamond', serif",
-                fontWeight: isActive ? 600 : 400,
+                fontWeight: 400,
                 fontStyle: "italic",
-                color: isConfirmed
-                  ? AMBER.active
-                  : isActive
-                    ? AMBER.active
-                    : AMBER.inactiveText,
-                opacity: 1,
+                color: isConfirmed ? GOLD.active : GOLD.active,
+                opacity: isConfirmed ? 1 : isActive ? 1 : 0.5,
                 textShadow: isConfirmed
-                  ? `0 0 20px ${AMBER.glow}, 0 0 40px ${AMBER.faintGlow}`
+                  ? `0 0 18px ${GOLD.glow}, 0 0 36px ${GOLD.faintGlow}`
                   : isActive
-                    ? `0 0 14px ${AMBER.glow}, 0 2px 6px rgba(0,0,0,0.5)`
-                    : `0 1px 4px rgba(0,0,0,0.5)`,
-                transform: isActive ? "scale(1.05)" : "scale(1)",
+                    ? `0 0 12px ${GOLD.glow}, 0 1px 4px rgba(0,0,0,0.5)`
+                    : `0 1px 3px rgba(0,0,0,0.5)`,
                 transition: "all 0.3s ease-out",
               }}
             >
@@ -365,31 +349,25 @@ function BasinQuestion({
         );
       })}
 
-      {/* Invisible knob overlay — positioned over the image knob */}
+      {/* Invisible knob overlay — positioned over the actual brass knob in the image.
+          The knob sits at the very bottom center of the basin rim.
+          With the 1.18 scale on the basin image, the knob is roughly at
+          the bottom edge of the viewport content area. */}
       <div
-        className="absolute left-1/2 -translate-x-1/2"
-        style={{ bottom: "2%", zIndex: 25 }}
-      >
-        <div
-          className="select-none"
-          onMouseDown={handleKnobMouseDown}
-          onMouseUp={handleKnobMouseUp}
-          onMouseLeave={() => {
-            if (knobPressTimer.current) {
-              clearTimeout(knobPressTimer.current);
-              knobPressTimer.current = null;
-            }
-          }}
-          onWheel={handleWheel}
-          style={{
-            width: "52px",
-            height: "52px",
-            borderRadius: "50%",
-            opacity: 0,
-            cursor: "pointer",
-          }}
-        />
-      </div>
+        className="absolute left-1/2 -translate-x-1/2 select-none"
+        style={{
+          bottom: "-12%",
+          zIndex: 30,
+          width: "70px",
+          height: "70px",
+          transform: "translateX(-50%)",
+          borderRadius: "50%",
+          opacity: 0,
+          cursor: isDragging.current ? "grabbing" : "grab",
+        }}
+        onMouseDown={handleKnobMouseDown}
+        onWheel={handleWheel}
+      />
 
       <style>{`
         @keyframes basinTextReveal {
@@ -402,7 +380,7 @@ function BasinQuestion({
 }
 
 // ─── Basin Pair Component ────────────────────────────────────────────
-// Two long-form options visible. Knob toggles, press confirms.
+// Two long-form options visible. Drag/scroll knob toggles, click confirms.
 
 interface BasinPairProps {
   pair: ConfirmationPair;
@@ -424,6 +402,8 @@ function BasinPair({
     () => [pair.option_a, pair.option_b],
     [pair],
   );
+
+  const positions = useMemo(() => getArcPositions(2), []);
 
   // Keyboard
   useEffect(() => {
@@ -448,30 +428,57 @@ function BasinPair({
     onSelect(opt.id, opt.supports_family, opt.weight);
   }, [isTransitioning, confirmed, activeIndex, pairOptions, onSelect]);
 
-  // Knob: click cycles, long-press confirms
-  const knobPressTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const handleKnobMouseDown = useCallback(() => {
+  // ─── Drag-to-turn knob interaction ────────────────────────────────
+  const isDragging = useRef(false);
+  const dragStartY = useRef(0);
+  const dragAccumulated = useRef(0);
+
+  const handleKnobMouseDown = useCallback((e: React.MouseEvent) => {
     if (isTransitioning || confirmed) return;
-    knobPressTimer.current = setTimeout(() => {
-      handleConfirm();
-      knobPressTimer.current = null;
-    }, 400);
-  }, [isTransitioning, confirmed, handleConfirm]);
+    isDragging.current = true;
+    dragStartY.current = e.clientY;
+    dragAccumulated.current = 0;
+    e.preventDefault();
+  }, [isTransitioning, confirmed]);
 
-  const handleKnobMouseUp = useCallback(() => {
-    if (knobPressTimer.current) {
-      clearTimeout(knobPressTimer.current);
-      knobPressTimer.current = null;
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isDragging.current || isTransitioning || confirmed) return;
+      const delta = dragStartY.current - e.clientY;
+      dragAccumulated.current += delta;
+      dragStartY.current = e.clientY;
+
+      if (Math.abs(dragAccumulated.current) > 25) {
+        setActiveIndex((prev) => (prev === 0 ? 1 : 0));
+        dragAccumulated.current = 0;
+      }
+    };
+
+    const handleMouseUp = () => {
+      isDragging.current = false;
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseup", handleMouseUp);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, [isTransitioning, confirmed]);
+
+  const handleWheel = useCallback(
+    (e: React.WheelEvent) => {
+      if (isTransitioning || confirmed) return;
+      e.preventDefault();
       setActiveIndex((prev) => (prev === 0 ? 1 : 0));
-    }
-  }, []);
-
-  const knobRotation = activeIndex * 180;
+    },
+    [isTransitioning, confirmed],
+  );
 
   return (
     <div
-      className="relative w-full outline-none"
-      style={{ height: "55vh", maxHeight: "550px" }}
+      className="relative w-full select-none outline-none"
+      style={{ height: "60vh", maxHeight: "600px" }}
       tabIndex={0}
     >
       {/* Header */}
@@ -481,7 +488,7 @@ function BasinPair({
       >
         <span
           className="font-pixel text-[9px] tracking-widest uppercase"
-          style={{ color: AMBER.muted, opacity: 0.6 }}
+          style={{ color: GOLD.muted, opacity: 0.6 }}
         >
           ONE MORE DISTINCTION
         </span>
@@ -504,17 +511,16 @@ function BasinPair({
         </p>
       </div>
 
-      {/* Two options — left and right of center */}
+      {/* Two options — positioned on the arc */}
       {pairOptions.map((opt, idx) => {
         const isActive = idx === activeIndex;
         const isConfirmed = confirmed && isActive;
-        // Position: option A on the left, option B on the right
-        const xPos = idx === 0 ? 25 : 75;
+        const pos = positions[idx];
 
         return (
           <div
             key={opt.id}
-            className="absolute transition-all duration-300 text-center select-none"
+            className="absolute select-none"
             onClick={() => {
               if (isTransitioning || confirmed) return;
               if (isActive) {
@@ -524,32 +530,28 @@ function BasinPair({
               }
             }}
             style={{
-              left: `${xPos}%`,
-              top: "45%",
-              transform: "translate(-50%, -50%)",
+              left: `${pos.x}%`,
+              top: `${pos.y}%`,
+              transform: `translate(-50%, -50%) rotate(${pos.rotation}deg)`,
               maxWidth: "200px",
               zIndex: isActive ? 20 : 10,
               cursor: "pointer",
+              textAlign: "center",
             }}
           >
             <p
               className="text-xs leading-snug transition-all duration-300"
               style={{
                 fontFamily: "'Cormorant Garamond', serif",
-                fontWeight: isActive ? 600 : 400,
+                fontWeight: 400,
                 fontStyle: "italic",
-                color: isConfirmed
-                  ? AMBER.active
-                  : isActive
-                    ? AMBER.active
-                    : AMBER.inactiveText,
-                opacity: 1,
+                color: GOLD.active,
+                opacity: isConfirmed ? 1 : isActive ? 1 : 0.5,
                 textShadow: isConfirmed
-                  ? `0 0 20px ${AMBER.glow}, 0 0 40px ${AMBER.faintGlow}`
+                  ? `0 0 18px ${GOLD.glow}, 0 0 36px ${GOLD.faintGlow}`
                   : isActive
-                    ? `0 0 14px ${AMBER.glow}, 0 2px 6px rgba(0,0,0,0.5)`
-                    : `0 1px 4px rgba(0,0,0,0.5)`,
-                transform: isActive ? "scale(1.05)" : "scale(1)",
+                    ? `0 0 12px ${GOLD.glow}, 0 1px 4px rgba(0,0,0,0.5)`
+                    : `0 1px 3px rgba(0,0,0,0.5)`,
                 transition: "all 0.3s ease-out",
               }}
             >
@@ -562,7 +564,7 @@ function BasinPair({
       {/* OR label between the two */}
       <div
         className="absolute left-1/2 -translate-x-1/2"
-        style={{ top: "45%", transform: "translate(-50%, -50%)", opacity: 0.25 }}
+        style={{ top: "55%", transform: "translate(-50%, -50%)", opacity: 0.2 }}
       >
         <span
           className="font-pixel text-[8px] tracking-widest"
@@ -574,28 +576,20 @@ function BasinPair({
 
       {/* Invisible knob overlay */}
       <div
-        className="absolute left-1/2 -translate-x-1/2"
-        style={{ bottom: "2%", zIndex: 25 }}
-      >
-        <div
-          className="select-none"
-          onMouseDown={handleKnobMouseDown}
-          onMouseUp={handleKnobMouseUp}
-          onMouseLeave={() => {
-            if (knobPressTimer.current) {
-              clearTimeout(knobPressTimer.current);
-              knobPressTimer.current = null;
-            }
-          }}
-          style={{
-            width: "52px",
-            height: "52px",
-            borderRadius: "50%",
-            opacity: 0,
-            cursor: "pointer",
-          }}
-        />
-      </div>
+        className="absolute left-1/2 -translate-x-1/2 select-none"
+        style={{
+          bottom: "-12%",
+          zIndex: 30,
+          width: "70px",
+          height: "70px",
+          transform: "translateX(-50%)",
+          borderRadius: "50%",
+          opacity: 0,
+          cursor: isDragging.current ? "grabbing" : "grab",
+        }}
+        onMouseDown={handleKnobMouseDown}
+        onWheel={handleWheel}
+      />
     </div>
   );
 }
@@ -859,7 +853,7 @@ export default function MirrorFlow() {
         <div className="min-h-screen bg-black flex items-center justify-center">
           <p
             className="font-pixel text-sm tracking-widest uppercase animate-pulse"
-            style={{ color: AMBER.muted }}
+            style={{ color: GOLD.muted }}
           >
             LOADING GRAVITAS SIGNAL...
           </p>
@@ -891,8 +885,8 @@ export default function MirrorFlow() {
             <h1
               className="font-pixel text-2xl tracking-[0.3em] uppercase"
               style={{
-                color: AMBER.bright,
-                textShadow: `0 0 20px ${AMBER.glow}`,
+                color: GOLD.active,
+                textShadow: `0 0 20px ${GOLD.glow}`,
                 animation: "mirrorFadeIn 1.5s ease-out",
               }}
             >
@@ -970,16 +964,16 @@ export default function MirrorFlow() {
                 onClick={() => setPhase("core_questions")}
                 className="px-8 py-3 border transition-all duration-300 font-pixel text-sm tracking-widest uppercase"
                 style={{
-                  color: AMBER.bright,
-                  borderColor: AMBER.muted,
+                  color: GOLD.active,
+                  borderColor: GOLD.muted,
                   backgroundColor: "transparent",
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = AMBER.bright;
-                  e.currentTarget.style.boxShadow = `0 0 15px ${AMBER.faintGlow}`;
+                  e.currentTarget.style.borderColor = GOLD.active;
+                  e.currentTarget.style.boxShadow = `0 0 15px ${GOLD.faintGlow}`;
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = AMBER.muted;
+                  e.currentTarget.style.borderColor = GOLD.muted;
                   e.currentTarget.style.boxShadow = "none";
                 }}
               >
@@ -1071,20 +1065,20 @@ export default function MirrorFlow() {
   if (phase === "scoring") {
     return (
       <DesktopOnly toolName="Mirror">
-        <MirrorShell showSticker={false}>
+        <MirrorShell>
           <div className="flex flex-col items-center justify-center space-y-6">
             <div className="w-32 h-[1px] overflow-hidden" style={{ backgroundColor: "rgba(197,160,89,0.2)" }}>
               <div
                 className="h-full"
                 style={{
-                  backgroundColor: AMBER.warm,
+                  backgroundColor: GOLD.active,
                   animation: "scoringBar 1.5s ease-out forwards",
                 }}
               />
             </div>
             <p
               className="font-pixel text-[10px] tracking-widest uppercase animate-pulse"
-              style={{ color: AMBER.muted }}
+              style={{ color: GOLD.muted }}
             >
               Assembling your reading...
             </p>
