@@ -4,7 +4,9 @@
  * Three-act cinematic flow:
  *   Act 1 (Approach): Wide conservatory shot, slow Ken Burns zoom
  *   Act 2 (Threshold): Fade to black, ritual framing text, "Look Into the Basin"
- *   Act 3 (Basin): Close basin view, questions float on dark water surface
+ *   Act 3 (Basin): Close basin view — radial answer dots around lower arc,
+ *                   brass knob cycles selection, question + selected answer
+ *                   float on the dark water surface.
  *
  * After questions: scoring → navigate to /workbench/mirror/reading
  *
@@ -12,7 +14,7 @@
  * Functional logic is IDENTICAL to the original — only visuals changed.
  */
 
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import { useLocation } from "wouter";
 import MirrorShell from "@/components/workbench/MirrorShell";
 import DesktopOnly from "@/components/workbench/DesktopOnly";
@@ -51,6 +53,8 @@ const AMBER = {
   muted: "#8b7340",
   glow: "rgba(197,160,89,0.4)",
   faintGlow: "rgba(197,160,89,0.15)",
+  dotActive: "#e8c55a",
+  dotDim: "rgba(197,160,89,0.25)",
 };
 
 const PARCHMENT = {
@@ -93,6 +97,601 @@ type FlowPhase =
   | "adaptive_question"
   | "scoring"
   | "complete";
+
+// ─── Radial Dot Geometry ─────────────────────────────────────────────
+// Position dots along the lower arc of an ellipse.
+// The arc spans from ~200° to ~340° (bottom portion of the basin).
+// 0° = top, 90° = right, 180° = bottom, 270° = left (CSS convention).
+// We want the lower arc: from about 7 o'clock to 5 o'clock.
+
+function getArcPositions(count: number): { x: number; y: number; angleDeg: number }[] {
+  // Arc from 200° to 340° (wide shallow arc across the lower basin)
+  const startAngle = 200;
+  const endAngle = 340;
+  const positions: { x: number; y: number; angleDeg: number }[] = [];
+
+  for (let i = 0; i < count; i++) {
+    const t = count === 1 ? 0.5 : i / (count - 1);
+    const angleDeg = startAngle + t * (endAngle - startAngle);
+    const angleRad = (angleDeg * Math.PI) / 180;
+
+    // Ellipse radii (percentage of container)
+    const rx = 38; // horizontal radius %
+    const ry = 14; // vertical radius % — shallow arc, not a full ellipse
+
+    // Center of ellipse — pushed well into lower basin
+    const cx = 50;
+    const cy = 74;
+
+    const x = cx + rx * Math.cos(angleRad);
+    const y = cy + ry * Math.sin(angleRad);
+
+    positions.push({ x, y, angleDeg });
+  }
+
+  return positions;
+}
+
+// ─── Basin Question Component ────────────────────────────────────────
+// Renders question text + radial dots + knob + selected answer text
+
+interface BasinQuestionProps {
+  question: MirrorQuestion;
+  onSelect: (option: MirrorAnswerOption) => void;
+  isTransitioning: boolean;
+  selectedOption: string | null;
+  questionNumber: number;
+  totalQuestions: number;
+}
+
+function BasinQuestion({
+  question,
+  onSelect,
+  isTransitioning,
+  selectedOption,
+  questionNumber,
+  totalQuestions,
+}: BasinQuestionProps) {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [confirmed, setConfirmed] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const options = question.options;
+  const positions = useMemo(() => getArcPositions(options.length), [options.length]);
+
+  // Reset active index when question changes
+  useEffect(() => {
+    setActiveIndex(0);
+    setConfirmed(false);
+  }, [question.id]);
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (isTransitioning || confirmed) return;
+
+      if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+        e.preventDefault();
+        setActiveIndex((prev) => (prev - 1 + options.length) % options.length);
+      } else if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+        e.preventDefault();
+        setActiveIndex((prev) => (prev + 1) % options.length);
+      } else if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        handleConfirm();
+      }
+    };
+
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [options.length, isTransitioning, confirmed, activeIndex]);
+
+  // Scroll/wheel on knob to cycle
+  const handleWheel = useCallback(
+    (e: React.WheelEvent) => {
+      if (isTransitioning || confirmed) return;
+      e.preventDefault();
+      if (e.deltaY > 0) {
+        setActiveIndex((prev) => (prev + 1) % options.length);
+      } else {
+        setActiveIndex((prev) => (prev - 1 + options.length) % options.length);
+      }
+    },
+    [options.length, isTransitioning, confirmed],
+  );
+
+  // Knob click = confirm selection
+  const handleConfirm = useCallback(() => {
+    if (isTransitioning || confirmed) return;
+    setConfirmed(true);
+    onSelect(options[activeIndex]);
+  }, [isTransitioning, confirmed, activeIndex, options, onSelect]);
+
+  // Knob turn click (cycle forward)
+  const handleKnobCycle = useCallback(() => {
+    if (isTransitioning || confirmed) return;
+    setActiveIndex((prev) => (prev + 1) % options.length);
+  }, [options.length, isTransitioning, confirmed]);
+
+  const activeOption = options[activeIndex];
+
+  return (
+    <div
+      ref={containerRef}
+      className="relative w-full"
+      style={{ height: "50vh", maxHeight: "500px" }}
+      tabIndex={0}
+    >
+      {/* "MIRROR" label at top of basin */}
+      <div
+        className="absolute left-1/2 -translate-x-1/2"
+        style={{ top: "2%" }}
+      >
+        <span
+          className="font-pixel text-[9px] tracking-[0.4em] uppercase"
+          style={{
+            color: AMBER.muted,
+            opacity: 0.6,
+          }}
+        >
+          MIRROR
+        </span>
+      </div>
+
+      {/* Question text — centered in upper portion of dark water */}
+      <div
+        key={question.id}
+        className="absolute left-1/2 -translate-x-1/2 text-center px-6"
+        style={{
+          top: "15%",
+          width: "80%",
+          animation: "basinTextReveal 0.6s ease-out",
+        }}
+      >
+        <p
+          className="text-lg md:text-xl lg:text-2xl leading-snug"
+          style={{
+            fontFamily: "'Cormorant Garamond', serif",
+            fontWeight: 500,
+            color: PARCHMENT.light,
+            textShadow: `0 0 20px rgba(232,220,200,0.25), 0 2px 8px rgba(0,0,0,0.6)`,
+          }}
+        >
+          {question.text}
+        </p>
+      </div>
+
+      {/* Selected answer text — centered in middle of basin */}
+      <div
+        key={`answer-${question.id}-${activeIndex}`}
+        className="absolute left-1/2 -translate-x-1/2 text-center px-8"
+        style={{
+          top: "36%",
+          width: "75%",
+          animation: "answerFade 0.3s ease-out",
+        }}
+      >
+        <p
+          className="text-sm md:text-base leading-relaxed italic"
+          style={{
+            fontFamily: "'Cormorant Garamond', serif",
+            fontWeight: 400,
+            color: confirmed
+              ? AMBER.bright
+              : AMBER.warm,
+            textShadow: confirmed
+              ? `0 0 16px ${AMBER.glow}, 0 2px 6px rgba(0,0,0,0.5)`
+              : `0 0 10px ${AMBER.faintGlow}, 0 2px 6px rgba(0,0,0,0.5)`,
+            transition: "color 0.3s, text-shadow 0.3s",
+          }}
+        >
+          {activeOption.text}
+        </p>
+      </div>
+
+      {/* Radial dots along lower arc */}
+      {positions.map((pos, idx) => {
+        const isActive = idx === activeIndex;
+        const dotSize = isActive ? 14 : 8;
+
+        return (
+          <button
+            key={`dot-${idx}`}
+            onClick={() => {
+              if (isTransitioning || confirmed) return;
+              if (idx === activeIndex) {
+                handleConfirm();
+              } else {
+                setActiveIndex(idx);
+              }
+            }}
+            className="absolute transition-all duration-300 cursor-pointer"
+            style={{
+              left: `${pos.x}%`,
+              top: `${pos.y}%`,
+              transform: "translate(-50%, -50%)",
+              width: `${dotSize}px`,
+              height: `${dotSize}px`,
+              borderRadius: "50%",
+              backgroundColor: isActive ? AMBER.dotActive : AMBER.dotDim,
+              boxShadow: isActive
+                ? `0 0 12px ${AMBER.glow}, 0 0 24px ${AMBER.faintGlow}`
+                : `0 0 4px ${AMBER.faintGlow}`,
+              border: "none",
+              padding: 0,
+              zIndex: 20,
+            }}
+            aria-label={`Option ${idx + 1}: ${options[idx].text.substring(0, 50)}...`}
+          />
+        );
+      })}
+
+      {/* Connecting arc line (subtle) */}
+      <svg
+        className="absolute inset-0 w-full h-full pointer-events-none"
+        style={{ zIndex: 15, opacity: 0.15 }}
+        viewBox="0 0 100 100"
+        preserveAspectRatio="none"
+      >
+        <ellipse
+          cx="50"
+          cy="74"
+          rx="38"
+          ry="14"
+          fill="none"
+          stroke={AMBER.muted}
+          strokeWidth="0.15"
+          strokeDasharray="0.5 1"
+          style={{
+            // Only show the lower arc portion
+            clipPath: "polygon(0 45%, 100% 45%, 100% 100%, 0 100%)",
+          }}
+        />
+      </svg>
+
+      {/* Brass knob at bottom center */}
+      <div
+        className="absolute left-1/2 -translate-x-1/2"
+        style={{ bottom: "3%", zIndex: 25 }}
+      >
+        {/* Knob outer ring */}
+        <div
+          className="relative cursor-pointer select-none"
+          onClick={handleKnobCycle}
+          onDoubleClick={handleConfirm}
+          onWheel={handleWheel}
+          style={{
+            width: "52px",
+            height: "52px",
+            borderRadius: "50%",
+            background: `radial-gradient(circle at 40% 35%, #c9a84c 0%, #a08030 40%, #7a6020 70%, #5a4515 100%)`,
+            boxShadow: `
+              0 2px 8px rgba(0,0,0,0.5),
+              0 0 16px ${AMBER.faintGlow},
+              inset 0 1px 2px rgba(255,255,255,0.2),
+              inset 0 -1px 2px rgba(0,0,0,0.3)
+            `,
+            border: `1px solid rgba(160,128,48,0.4)`,
+          }}
+          title="Click to cycle options • Double-click or Enter to confirm"
+        >
+          {/* Knob indicator notch */}
+          <div
+            className="absolute"
+            style={{
+              top: "6px",
+              left: "50%",
+              transform: `translateX(-50%) rotate(${(activeIndex / options.length) * 360}deg)`,
+              transformOrigin: "50% 20px",
+              width: "3px",
+              height: "10px",
+              borderRadius: "1.5px",
+              backgroundColor: AMBER.dotActive,
+              boxShadow: `0 0 6px ${AMBER.glow}`,
+              transition: "transform 0.3s ease-out",
+            }}
+          />
+
+          {/* Center dot */}
+          <div
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+            style={{
+              width: "6px",
+              height: "6px",
+              borderRadius: "50%",
+              backgroundColor: "rgba(200,170,80,0.4)",
+            }}
+          />
+        </div>
+
+        {/* Confirm hint */}
+        <div
+          className="absolute left-1/2 -translate-x-1/2 whitespace-nowrap"
+          style={{
+            bottom: "-18px",
+            opacity: confirmed ? 0 : 0.5,
+            transition: "opacity 0.3s",
+          }}
+        >
+          <span
+            className="font-pixel text-[7px] tracking-widest uppercase"
+            style={{ color: PARCHMENT.faint }}
+          >
+            CLICK DOT TO SELECT • ENTER TO CONFIRM
+          </span>
+        </div>
+      </div>
+
+      {/* Progress indicator */}
+      <div
+        className="absolute right-4"
+        style={{ top: "4%", opacity: 0.4 }}
+      >
+        <span
+          className="font-pixel text-[8px] tracking-widest"
+          style={{ color: PARCHMENT.faint }}
+        >
+          {questionNumber}/{totalQuestions}
+        </span>
+      </div>
+
+      {/* Progress dots along top */}
+      <div
+        className="absolute left-1/2 -translate-x-1/2 flex items-center gap-2"
+        style={{ top: "6%", opacity: 0.5 }}
+      >
+        {Array.from({ length: totalQuestions }).map((_, i) => (
+          <div
+            key={i}
+            className="rounded-full transition-all duration-300"
+            style={{
+              width: i === questionNumber - 1 ? "6px" : "3px",
+              height: i === questionNumber - 1 ? "6px" : "3px",
+              backgroundColor:
+                i < questionNumber - 1
+                  ? AMBER.bright
+                  : i === questionNumber - 1
+                  ? AMBER.warm
+                  : AMBER.dotDim,
+              boxShadow:
+                i === questionNumber - 1
+                  ? `0 0 6px ${AMBER.glow}`
+                  : "none",
+            }}
+          />
+        ))}
+      </div>
+
+      <style>{`
+        @keyframes basinTextReveal {
+          from { opacity: 0; transform: translateX(-50%) translateY(8px); }
+          to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+        @keyframes answerFade {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+      `}</style>
+    </div>
+  );
+}
+
+// ─── Confirmation Pair Basin Component ───────────────────────────────
+
+interface BasinPairProps {
+  pair: ConfirmationPair;
+  onSelect: (optionId: string, supportsFamily: PatternFamily, weight: number) => void;
+  isTransitioning: boolean;
+  selectedOption: string | null;
+}
+
+function BasinPair({ pair, onSelect, isTransitioning, selectedOption }: BasinPairProps) {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [confirmed, setConfirmed] = useState(false);
+
+  const pairOptions = [pair.option_a, pair.option_b];
+  const positions = useMemo(() => getArcPositions(2), []);
+
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (isTransitioning || confirmed) return;
+      if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+        e.preventDefault();
+        setActiveIndex((prev) => (prev === 0 ? 1 : 0));
+      } else if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+        e.preventDefault();
+        setActiveIndex((prev) => (prev === 0 ? 1 : 0));
+      } else if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        handleConfirm();
+      }
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [isTransitioning, confirmed, activeIndex]);
+
+  const handleConfirm = useCallback(() => {
+    if (isTransitioning || confirmed) return;
+    setConfirmed(true);
+    const opt = pairOptions[activeIndex];
+    onSelect(opt.id, opt.supports_family, opt.weight);
+  }, [isTransitioning, confirmed, activeIndex, pairOptions, onSelect]);
+
+  const activeOpt = pairOptions[activeIndex];
+
+  return (
+    <div
+      className="relative w-full"
+      style={{ height: "50vh", maxHeight: "500px" }}
+      tabIndex={0}
+    >
+      {/* Prompt */}
+      <div
+        className="absolute left-1/2 -translate-x-1/2 text-center"
+        style={{ top: "8%" }}
+      >
+        <span
+          className="font-pixel text-[9px] tracking-widest uppercase"
+          style={{ color: AMBER.muted }}
+        >
+          ONE MORE DISTINCTION
+        </span>
+      </div>
+
+      {/* Instruction */}
+      <div
+        className="absolute left-1/2 -translate-x-1/2 text-center px-8"
+        style={{ top: "16%", width: "80%" }}
+      >
+        <p
+          className="text-sm leading-relaxed italic"
+          style={{
+            fontFamily: "'Cormorant Garamond', serif",
+            color: PARCHMENT.muted,
+          }}
+        >
+          Both may feel partially true. Choose the one that feels{" "}
+          <em>more</em> true under real pressure.
+        </p>
+      </div>
+
+      {/* Selected answer text */}
+      <div
+        key={`pair-answer-${activeIndex}`}
+        className="absolute left-1/2 -translate-x-1/2 text-center px-8"
+        style={{
+          top: "35%",
+          width: "75%",
+          animation: "answerFade 0.3s ease-out",
+        }}
+      >
+        <p
+          className="text-sm md:text-base leading-relaxed italic"
+          style={{
+            fontFamily: "'Cormorant Garamond', serif",
+            color: confirmed ? AMBER.bright : AMBER.warm,
+            textShadow: confirmed
+              ? `0 0 16px ${AMBER.glow}`
+              : `0 0 10px ${AMBER.faintGlow}`,
+          }}
+        >
+          {activeOpt.text}
+        </p>
+      </div>
+
+      {/* Two dots */}
+      {positions.map((pos, idx) => {
+        const isActive = idx === activeIndex;
+        const dotSize = isActive ? 14 : 8;
+        return (
+          <button
+            key={`pair-dot-${idx}`}
+            onClick={() => {
+              if (isTransitioning || confirmed) return;
+              if (idx === activeIndex) {
+                handleConfirm();
+              } else {
+                setActiveIndex(idx);
+              }
+            }}
+            className="absolute transition-all duration-300 cursor-pointer"
+            style={{
+              left: `${pos.x}%`,
+              top: `${pos.y}%`,
+              transform: "translate(-50%, -50%)",
+              width: `${dotSize}px`,
+              height: `${dotSize}px`,
+              borderRadius: "50%",
+              backgroundColor: isActive ? AMBER.dotActive : AMBER.dotDim,
+              boxShadow: isActive
+                ? `0 0 12px ${AMBER.glow}, 0 0 24px ${AMBER.faintGlow}`
+                : `0 0 4px ${AMBER.faintGlow}`,
+              border: "none",
+              padding: 0,
+              zIndex: 20,
+            }}
+          />
+        );
+      })}
+
+      {/* OR label between dots */}
+      <div
+        className="absolute left-1/2 -translate-x-1/2"
+        style={{
+          top: `${(positions[0].y + positions[1].y) / 2 + 5}%`,
+          opacity: 0.3,
+        }}
+      >
+        <span
+          className="font-pixel text-[8px] tracking-widest"
+          style={{ color: PARCHMENT.faint }}
+        >
+          OR
+        </span>
+      </div>
+
+      {/* Knob */}
+      <div
+        className="absolute left-1/2 -translate-x-1/2"
+        style={{ bottom: "3%", zIndex: 25 }}
+      >
+        <div
+          className="relative cursor-pointer select-none"
+          onClick={() => {
+            if (isTransitioning || confirmed) return;
+            setActiveIndex((prev) => (prev === 0 ? 1 : 0));
+          }}
+          onDoubleClick={handleConfirm}
+          style={{
+            width: "52px",
+            height: "52px",
+            borderRadius: "50%",
+            background: `radial-gradient(circle at 40% 35%, #c9a84c 0%, #a08030 40%, #7a6020 70%, #5a4515 100%)`,
+            boxShadow: `
+              0 2px 8px rgba(0,0,0,0.5),
+              0 0 16px ${AMBER.faintGlow},
+              inset 0 1px 2px rgba(255,255,255,0.2),
+              inset 0 -1px 2px rgba(0,0,0,0.3)
+            `,
+            border: `1px solid rgba(160,128,48,0.4)`,
+          }}
+        >
+          <div
+            className="absolute"
+            style={{
+              top: "6px",
+              left: "50%",
+              transform: `translateX(-50%) rotate(${activeIndex * 180}deg)`,
+              transformOrigin: "50% 20px",
+              width: "3px",
+              height: "10px",
+              borderRadius: "1.5px",
+              backgroundColor: AMBER.dotActive,
+              boxShadow: `0 0 6px ${AMBER.glow}`,
+              transition: "transform 0.3s ease-out",
+            }}
+          />
+          <div
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+            style={{
+              width: "6px",
+              height: "6px",
+              borderRadius: "50%",
+              backgroundColor: "rgba(200,170,80,0.4)",
+            }}
+          />
+        </div>
+      </div>
+
+      <style>{`
+        @keyframes answerFade {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+      `}</style>
+    </div>
+  );
+}
 
 // ─── Component ───────────────────────────────────────────────────────
 
@@ -363,7 +962,6 @@ export default function MirrorFlow() {
   }
 
   // ─── Render: Act 1 — The Approach ────────────────────────────────
-  // Wide conservatory shot with slow Ken Burns zoom toward the basin.
 
   if (phase === "approach") {
     return (
@@ -376,14 +974,12 @@ export default function MirrorFlow() {
               animation: "approachZoom 6s ease-in-out forwards",
             }}
           />
-          {/* Subtle dark edges */}
           <div
             className="absolute inset-0 pointer-events-none"
             style={{
               background: "radial-gradient(ellipse 80% 80% at 50% 50%, transparent 40%, rgba(0,0,0,0.5) 100%)",
             }}
           />
-          {/* "MIRROR" text at top */}
           <div className="absolute top-8 left-0 right-0 text-center z-10">
             <h1
               className="font-pixel text-2xl tracking-[0.3em] uppercase"
@@ -413,7 +1009,6 @@ export default function MirrorFlow() {
   }
 
   // ─── Render: Act 2 — The Threshold ───────────────────────────────
-  // Fade to black. Ritual framing text reveals in sequence.
 
   if (phase === "threshold") {
     return (
@@ -426,7 +1021,6 @@ export default function MirrorFlow() {
           }}
         >
           <div className="max-w-lg text-center space-y-6">
-            {/* Line 1 */}
             <p
               className="text-base leading-relaxed transition-opacity duration-700"
               style={{
@@ -438,7 +1032,6 @@ export default function MirrorFlow() {
               Gravitas showed you the field — the shape of your leadership gravity.
             </p>
 
-            {/* Line 2 */}
             <p
               className="text-base leading-relaxed transition-opacity duration-700"
               style={{
@@ -451,7 +1044,6 @@ export default function MirrorFlow() {
               What you carry. What it costs.
             </p>
 
-            {/* Line 3 */}
             <p
               className="text-sm leading-relaxed transition-opacity duration-700"
               style={{
@@ -463,7 +1055,6 @@ export default function MirrorFlow() {
               Seven questions. No right answers. Just honest ones.
             </p>
 
-            {/* CTA Button */}
             <div
               className="pt-4 transition-opacity duration-700"
               style={{ opacity: thresholdStep >= 4 ? 1 : 0 }}
@@ -490,7 +1081,6 @@ export default function MirrorFlow() {
             </div>
           </div>
 
-          {/* Gravitas signal whisper */}
           {gravitasPrior && thresholdStep >= 3 && (
             <div
               className="absolute bottom-8 text-center transition-opacity duration-700"
@@ -519,125 +1109,17 @@ export default function MirrorFlow() {
   // ─── Render: Act 3 — Core Questions (Basin Surface) ──────────────
 
   if (phase === "core_questions" && currentQuestion) {
-    const optionCount = currentQuestion.options.length;
-    const isCompact = optionCount >= 5;
-
     return (
       <DesktopOnly toolName="Mirror">
-        <MirrorShell
-          footer={
-            <div className="flex items-center gap-3">
-              {/* Progress dots */}
-              {MIRROR_CORE_QUESTIONS.map((_, i) => (
-                <div
-                  key={i}
-                  className="w-1.5 h-1.5 rounded-full transition-all duration-300"
-                  style={{
-                    backgroundColor:
-                      i < currentQuestionIndex
-                        ? AMBER.bright
-                        : i === currentQuestionIndex
-                        ? AMBER.warm
-                        : "rgba(197,160,89,0.2)",
-                    boxShadow:
-                      i === currentQuestionIndex
-                        ? `0 0 6px ${AMBER.glow}`
-                        : "none",
-                  }}
-                />
-              ))}
-              <span
-                className="ml-2 font-pixel text-[9px] tracking-widest"
-                style={{ color: PARCHMENT.faint }}
-              >
-                {progress.current}/{progress.total}
-              </span>
-            </div>
-          }
-        >
-          {/* Question text — centered in the dark water */}
-          <div
-            key={currentQuestion.id}
-            className="text-center mb-4"
-            style={{ animation: "mirrorFadeIn 0.5s ease-out" }}
-          >
-            <p
-              className={cn(
-                "leading-relaxed italic",
-                isCompact ? "text-sm" : "text-base md:text-lg"
-              )}
-              style={{
-                fontFamily: "'Cormorant Garamond', serif",
-                color: PARCHMENT.light,
-                textShadow: `0 0 12px rgba(232,220,200,0.3)`,
-              }}
-            >
-              {currentQuestion.text}
-            </p>
-          </div>
-
-          {/* Answer options — stacked vertically on the dark water */}
-          <div
-            className="w-full flex flex-col items-center"
-            style={{ gap: isCompact ? "4px" : "6px" }}
-          >
-            {currentQuestion.options.map((option, idx) => (
-              <button
-                key={option.id}
-                onClick={() => handleSelectOption(option)}
-                disabled={isTransitioning}
-                className="w-full text-center transition-all duration-300 cursor-pointer"
-                style={{
-                  fontFamily: "'Cormorant Garamond', serif",
-                  fontSize: isCompact ? "0.75rem" : "0.8rem",
-                  lineHeight: "1.4",
-                  color:
-                    selectedOption === option.id
-                      ? AMBER.bright
-                      : PARCHMENT.mid,
-                  textShadow:
-                    selectedOption === option.id
-                      ? `0 0 10px ${AMBER.glow}`
-                      : `0 0 6px rgba(0,0,0,0.8)`,
-                  opacity:
-                    isTransitioning && selectedOption !== option.id
-                      ? 0.3
-                      : 1,
-                  padding: isCompact ? "6px 12px" : "8px 14px",
-                  backgroundColor: "rgba(5,8,15,0.3)",
-                  borderRadius: "4px",
-                  border: selectedOption === option.id
-                    ? `1px solid ${AMBER.muted}`
-                    : "1px solid transparent",
-                  maxWidth: "90%",
-                  animation: `mirrorFadeIn 0.3s ease-out ${idx * 80}ms backwards`,
-                }}
-                onMouseEnter={(e) => {
-                  if (selectedOption !== option.id) {
-                    e.currentTarget.style.color = AMBER.bright;
-                    e.currentTarget.style.textShadow = `0 0 8px ${AMBER.faintGlow}`;
-                    e.currentTarget.style.backgroundColor = "rgba(5,8,15,0.5)";
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (selectedOption !== option.id) {
-                    e.currentTarget.style.color = PARCHMENT.mid;
-                    e.currentTarget.style.textShadow = "0 0 6px rgba(0,0,0,0.8)";
-                    e.currentTarget.style.backgroundColor = "rgba(5,8,15,0.3)";
-                  }
-                }}
-              >
-                {option.text}
-              </button>
-            ))}
-          </div>
-
-          <style>{`
-            @keyframes mirrorFadeIn {
-              from { opacity: 0; transform: translateY(6px); }
-              to { opacity: 1; transform: translateY(0); }
-            }
-          `}</style>
+        <MirrorShell>
+          <BasinQuestion
+            question={currentQuestion}
+            onSelect={handleSelectOption}
+            isTransitioning={isTransitioning}
+            selectedOption={selectedOption}
+            questionNumber={progress.current}
+            totalQuestions={progress.total}
+          />
         </MirrorShell>
       </DesktopOnly>
     );
@@ -649,112 +1131,12 @@ export default function MirrorFlow() {
     return (
       <DesktopOnly toolName="Mirror">
         <MirrorShell>
-          {/* Pair prompt */}
-          <div className="text-center mb-4">
-            <p
-              className="font-pixel text-[9px] tracking-widest uppercase mb-3"
-              style={{ color: AMBER.muted }}
-            >
-              One more distinction
-            </p>
-            <p
-              className="text-xs leading-relaxed italic"
-              style={{
-                fontFamily: "'Cormorant Garamond', serif",
-                color: PARCHMENT.muted,
-              }}
-            >
-              Both may feel partially true. Choose the one that feels{" "}
-              <em>more</em> true under real pressure.
-            </p>
-          </div>
-
-          {/* Option A */}
-          <button
-            onClick={() =>
-              handlePairSelect(
-                activePair.option_a.id,
-                activePair.option_a.supports_family,
-                activePair.option_a.weight,
-              )
-            }
-            disabled={isTransitioning}
-            className="w-full text-center transition-all duration-300 cursor-pointer mb-3"
-            style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontSize: "0.8rem",
-              lineHeight: "1.4",
-              color:
-                selectedOption === activePair.option_a.id
-                  ? AMBER.bright
-                  : PARCHMENT.mid,
-              textShadow:
-                selectedOption === activePair.option_a.id
-                  ? `0 0 10px ${AMBER.glow}`
-                  : `0 0 6px rgba(0,0,0,0.8)`,
-              opacity:
-                isTransitioning && selectedOption !== activePair.option_a.id
-                  ? 0.3
-                  : 1,
-              padding: "8px 14px",
-              backgroundColor: "rgba(5,8,15,0.3)",
-              borderRadius: "4px",
-              border: selectedOption === activePair.option_a.id
-                ? `1px solid ${AMBER.muted}`
-                : "1px solid transparent",
-              maxWidth: "90%",
-            }}
-          >
-            {activePair.option_a.text}
-          </button>
-
-          {/* OR divider */}
-          <div className="flex items-center gap-3 my-1 w-3/4">
-            <div className="flex-1 h-px" style={{ backgroundColor: AMBER.muted, opacity: 0.2 }} />
-            <span className="font-pixel text-[8px] tracking-widest" style={{ color: PARCHMENT.faint }}>
-              OR
-            </span>
-            <div className="flex-1 h-px" style={{ backgroundColor: AMBER.muted, opacity: 0.2 }} />
-          </div>
-
-          {/* Option B */}
-          <button
-            onClick={() =>
-              handlePairSelect(
-                activePair.option_b.id,
-                activePair.option_b.supports_family,
-                activePair.option_b.weight,
-              )
-            }
-            disabled={isTransitioning}
-            className="w-full text-center transition-all duration-300 cursor-pointer mt-3"
-            style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontSize: "0.8rem",
-              lineHeight: "1.4",
-              color:
-                selectedOption === activePair.option_b.id
-                  ? AMBER.bright
-                  : PARCHMENT.mid,
-              textShadow:
-                selectedOption === activePair.option_b.id
-                  ? `0 0 10px ${AMBER.glow}`
-                  : `0 0 6px rgba(0,0,0,0.8)`,
-              opacity:
-                isTransitioning && selectedOption !== activePair.option_b.id
-                  ? 0.3
-                  : 1,
-              padding: "8px 14px",
-              backgroundColor: "rgba(5,8,15,0.3)",
-              borderRadius: "4px",
-              border: selectedOption === activePair.option_b.id
-                ? `1px solid ${AMBER.muted}`
-                : "1px solid transparent",
-              maxWidth: "90%",
-            }}
-          >
-            {activePair.option_b.text}
-          </button>
+          <BasinPair
+            pair={activePair}
+            onSelect={handlePairSelect}
+            isTransitioning={isTransitioning}
+            selectedOption={selectedOption}
+          />
         </MirrorShell>
       </DesktopOnly>
     );
@@ -763,95 +1145,17 @@ export default function MirrorFlow() {
   // ─── Render: Adaptive Question ───────────────────────────────────
 
   if (phase === "adaptive_question" && adaptiveQuestion) {
-    const optionCount = adaptiveQuestion.options.length;
-    const isCompact = optionCount >= 5;
-
     return (
       <DesktopOnly toolName="Mirror">
         <MirrorShell>
-          <div className="text-center mb-4">
-            <p
-              className="font-pixel text-[9px] tracking-widest uppercase mb-3"
-              style={{ color: AMBER.muted }}
-            >
-              One more
-            </p>
-            <p
-              className={cn(
-                "leading-relaxed italic",
-                isCompact ? "text-sm" : "text-base"
-              )}
-              style={{
-                fontFamily: "'Cormorant Garamond', serif",
-                color: PARCHMENT.light,
-                textShadow: "0 0 12px rgba(232,220,200,0.3)",
-              }}
-            >
-              {adaptiveQuestion.text}
-            </p>
-          </div>
-
-          <div
-            className="w-full flex flex-col items-center"
-            style={{ gap: isCompact ? "4px" : "6px" }}
-          >
-            {adaptiveQuestion.options.map((option, idx) => (
-              <button
-                key={option.id}
-                onClick={() => handleAdaptiveSelect(option)}
-                disabled={isTransitioning}
-                className="w-full text-center transition-all duration-300 cursor-pointer"
-                style={{
-                  fontFamily: "'Cormorant Garamond', serif",
-                  fontSize: isCompact ? "0.75rem" : "0.8rem",
-                  lineHeight: "1.4",
-                  color:
-                    selectedOption === option.id
-                      ? AMBER.bright
-                      : PARCHMENT.mid,
-                  textShadow:
-                    selectedOption === option.id
-                      ? `0 0 10px ${AMBER.glow}`
-                      : "0 0 6px rgba(0,0,0,0.8)",
-                  opacity:
-                    isTransitioning && selectedOption !== option.id
-                      ? 0.3
-                      : 1,
-                  padding: isCompact ? "6px 12px" : "8px 14px",
-                  backgroundColor: "rgba(5,8,15,0.3)",
-                  borderRadius: "4px",
-                  border: selectedOption === option.id
-                    ? `1px solid ${AMBER.muted}`
-                    : "1px solid transparent",
-                  maxWidth: "90%",
-                  animation: `mirrorFadeIn 0.3s ease-out ${idx * 80}ms backwards`,
-                }}
-                onMouseEnter={(e) => {
-                  if (selectedOption !== option.id) {
-                    e.currentTarget.style.color = AMBER.bright;
-                    e.currentTarget.style.textShadow = `0 0 8px ${AMBER.faintGlow}`;
-                    e.currentTarget.style.backgroundColor = "rgba(5,8,15,0.5)";
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (selectedOption !== option.id) {
-                    e.currentTarget.style.color = PARCHMENT.mid;
-                    e.currentTarget.style.textShadow = "0 0 6px rgba(0,0,0,0.8)";
-                    e.currentTarget.style.backgroundColor = "rgba(5,8,15,0.3)";
-                  }
-                }}
-              >
-                {option.text}
-              </button>
-            ))}
-          </div>
-
-          <style>{`
-            @keyframes mirrorFadeIn {
-              from { opacity: 0; transform: translateY(6px); }
-              to { opacity: 1; transform: translateY(0); }
-            }
-          `}</style>
+          <BasinQuestion
+            question={adaptiveQuestion}
+            onSelect={handleAdaptiveSelect}
+            isTransitioning={isTransitioning}
+            selectedOption={selectedOption}
+            questionNumber={progress.total + 1}
+            totalQuestions={progress.total + 1}
+          />
         </MirrorShell>
       </DesktopOnly>
     );

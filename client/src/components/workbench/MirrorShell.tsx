@@ -1,12 +1,15 @@
 /**
  * MirrorShell — The Mirror instrument chassis.
  *
- * Unlike GravitasShell (dark office, green phosphor CRT), Mirror lives in
- * the conservatory — a bright, airy glass room with a brass basin.
+ * The close-up basin image IS the instrument. The dark water surface
+ * is where all content lives. The brass rim frames everything naturally.
  *
- * The close-up basin image IS the instrument. Text floats directly on the
- * dark water surface. No rectangular panel overlay. The brass rim frames
- * everything naturally.
+ * This shell provides:
+ *   - Full-bleed basin background
+ *   - Vignette overlay for depth
+ *   - Content slot positioned over the dark water ellipse
+ *   - Footer slot below the basin
+ *   - Nic sticker
  *
  * Design: warm amber/gold text on dark glass, quieter than Gravitas.
  */
@@ -46,11 +49,10 @@ export default function MirrorShell({ children, footer, showSticker = true }: Mi
       <div
         className="relative z-10 flex flex-col items-center justify-center"
         style={{
-          width: "42%",
-          minHeight: "40vh",
-          maxHeight: "55vh",
-          marginTop: "2vh",
-          marginRight: "1%",
+          width: "50%",
+          minHeight: "50vh",
+          maxHeight: "65vh",
+          marginTop: "1vh",
         }}
       >
         {/* Dark water readability overlay — elliptical to match basin shape */}
@@ -58,13 +60,13 @@ export default function MirrorShell({ children, footer, showSticker = true }: Mi
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              "radial-gradient(ellipse 100% 100% at 50% 50%, rgba(5,8,15,0.65) 0%, rgba(5,8,15,0.35) 60%, transparent 85%)",
+              "radial-gradient(ellipse 100% 100% at 50% 50%, rgba(5,8,15,0.65) 0%, rgba(5,8,15,0.4) 55%, transparent 80%)",
             borderRadius: "50%",
           }}
         />
 
         {/* Children render here — directly on the basin surface */}
-        <div className="relative z-10 w-full h-full flex flex-col items-center justify-center px-4">
+        <div className="relative z-10 w-full h-full flex flex-col items-center justify-center">
           {children}
         </div>
       </div>
