@@ -317,13 +317,24 @@ function BasinQuestion({
         return (
           <div
             key={`answer-${option.id}`}
-            className="absolute transition-all duration-300 text-center cursor-default select-none"
+            className="absolute transition-all duration-300 text-center select-none"
+            onClick={() => {
+              if (isTransitioning || confirmed) return;
+              if (isActive) {
+                // Already highlighted — confirm selection
+                handleConfirm();
+              } else {
+                // Not highlighted — select this one
+                setActiveIndex(idx);
+              }
+            }}
             style={{
               left: `${pos.x}%`,
               top: `${pos.y}%`,
               transform: `translate(-50%, -50%) rotate(${pos.rotation}deg)`,
               maxWidth: options.length <= 4 ? "155px" : "120px",
               zIndex: isActive ? 20 : 10,
+              cursor: "pointer",
             }}
           >
             <p
@@ -502,13 +513,22 @@ function BasinPair({
         return (
           <div
             key={opt.id}
-            className="absolute transition-all duration-300 text-center cursor-default select-none"
+            className="absolute transition-all duration-300 text-center select-none"
+            onClick={() => {
+              if (isTransitioning || confirmed) return;
+              if (isActive) {
+                handleConfirm();
+              } else {
+                setActiveIndex(idx);
+              }
+            }}
             style={{
               left: `${xPos}%`,
               top: "45%",
               transform: "translate(-50%, -50%)",
               maxWidth: "200px",
               zIndex: isActive ? 20 : 10,
+              cursor: "pointer",
             }}
           >
             <p
