@@ -143,8 +143,17 @@ function getArcPositions(count: number): { x: number; y: number; rotation: numbe
 }
 
 // ─── Basin Question Component ────────────────────────────────────────
-// All answers visible around the arc. Drag/scroll knob to cycle.
-// Click highlighted answer to confirm.
+// Single answer at a time, displayed as SVG curved text.
+// Knob/arrows cycle, click or Enter confirms.
+
+function splitIntoLines(text: string, wordsPerLine: number = 6): string[] {
+  const words = text.split(' ');
+  const lines: string[] = [];
+  for (let i = 0; i < words.length; i += wordsPerLine) {
+    lines.push(words.slice(i, i + wordsPerLine).join(' '));
+  }
+  return lines;
+}
 
 interface BasinQuestionProps {
   question: MirrorQuestion;
@@ -258,18 +267,21 @@ function BasinQuestion({
     [options.length, isTransitioning, confirmed],
   );
 
+  const lines = splitIntoLines(options[activeIndex].text, 6);
+  const totalLines = lines.length;
+
   return (
     <div
       className="relative w-full select-none outline-none"
       style={{ height: "60vh", maxHeight: "600px" }}
       tabIndex={0}
     >
-      {/* Question text — centered in upper portion of basin */}
+      {/* Question text */}
       <div
         key={question.id}
         className="absolute left-1/2 -translate-x-1/2 text-center px-6"
         style={{
-          top: "22%",
+          top: "18%",
           width: "85%",
           animation: "basinTextReveal 0.6s ease-out",
         }}
@@ -287,60 +299,98 @@ function BasinQuestion({
         </p>
       </div>
 
-      {/* Answer texts positioned along the lower arc */}
-      {options.map((option, idx) => {
-        const pos = positions[idx];
-        const isActive = idx === activeIndex;
-        const isConfirmed = confirmed && isActive;
-
-        return (
-          <div
-            key={`answer-${option.id}`}
-            className="absolute select-none"
-            onClick={() => {
-              if (isTransitioning || confirmed) return;
-              if (isActive) {
-                handleConfirm();
-              } else {
-                setActiveIndex(idx);
-              }
-            }}
-            style={{
-              left: `${pos.x}%`,
-              top: `${pos.y}%`,
-              transform: `translate(-50%, -50%) rotate(${pos.rotation}deg)`,
-              maxWidth: options.length <= 4 ? "150px" : "110px",
-              zIndex: isActive ? 20 : 10,
-              cursor: "pointer",
-              textAlign: "center",
-            }}
-          >
-            <p
-              className="text-sm leading-snug transition-all duration-300"
+      {/* Single answer — SVG curved text */}
+      <div
+        className="absolute left-1/2 -translate-x-1/2"
+        key={`answer-${activeIndex}`}
+        onClick={handleConfirm}
+        style={{
+          top: "58%",
+          width: "80%",
+          transform: "translateX(-50%)",
+          animation: "basinTextReveal 0.35s ease-out",
+          cursor: "pointer",
+        }}
+      >
+        <svg
+          viewBox="0 0 500 120"
+          width="100%"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <defs>
+            {lines.map((_, i) => (
+              <path
+                key={`curve-${i}`}
+                id={`curve-${i}`}
+                d={`M 20 ${80 - (totalLines - 1 - i) * 36} Q 250 ${60 - (totalLines - 1 - i) * 36} 480 ${80 - (totalLines - 1 - i) * 36}`}
+                fill="none"
+              />
+            ))}
+          </defs>
+          {lines.map((line, i) => (
+            <text
+              key={`line-${i}`}
               style={{
                 fontFamily: "'Cormorant Garamond', serif",
-                fontWeight: 400,
                 fontStyle: "italic",
-                color: isConfirmed ? GOLD.active : GOLD.active,
-                opacity: isConfirmed ? 1 : isActive ? 1 : 0.6,
-                textShadow: isConfirmed
-                  ? `0 0 18px ${GOLD.glow}, 0 0 36px ${GOLD.faintGlow}`
-                  : isActive
-                    ? `0 0 14px ${GOLD.glow}, 0 0 28px ${GOLD.faintGlow}, 0 1px 4px rgba(0,0,0,0.5)`
-                    : `0 1px 3px rgba(0,0,0,0.5)`,
-                transition: "all 0.3s ease-out",
+                fontSize: "18px",
+                fill: GOLD.active,
+                filter: `drop-shadow(0 0 8px ${GOLD.glow})`,
               }}
             >
-              {option.text}
-            </p>
-          </div>
-        );
-      })}
+              <textPath
+                href={`#curve-${i}`}
+                startOffset="50%"
+                textAnchor="middle"
+              >
+                {line}
+              </textPath>
+            </text>
+          ))}
+        </svg>
+      </div>
 
-      {/* Invisible knob overlay — positioned over the actual brass knob in the image.
-          The knob sits at the very bottom center of the basin rim.
-          With the 1.18 scale on the basin image, the knob is roughly at
-          the bottom edge of the viewport content area. */}
+      {/* Navigation dots */}
+      <div
+        className="absolute left-1/2 -translate-x-1/2 flex gap-3"
+        style={{ top: "78%", transform: "translateX(-50%)" }}
+      >
+        {options.map((_, idx) => (
+          <div
+            key={idx}
+            onClick={(e) => { e.stopPropagation(); setActiveIndex(idx); }}
+            style={{
+              width: idx === activeIndex ? "8px" : "6px",
+              height: idx === activeIndex ? "8px" : "6px",
+              borderRadius: "50%",
+              backgroundColor: GOLD.active,
+              opacity: idx === activeIndex ? 1 : 0.3,
+              cursor: "pointer",
+              transition: "all 0.3s ease",
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Confirm hint */}
+      <div
+        className="absolute left-1/2 -translate-x-1/2 text-center"
+        style={{ top: "85%", transform: "translateX(-50%)", opacity: 0.4 }}
+      >
+        <span
+          style={{
+            fontFamily: "'Cormorant Garamond', serif",
+            fontSize: "11px",
+            fontStyle: "italic",
+            color: GOLD.muted,
+            letterSpacing: "0.12em",
+          }}
+        >
+          click to choose · scroll or drag knob to cycle
+        </span>
+      </div>
+
+      {/* Invisible knob overlay */}
       <div
         className="absolute left-1/2 -translate-x-1/2 select-none"
         style={{
@@ -359,8 +409,8 @@ function BasinQuestion({
 
       <style>{`
         @keyframes basinTextReveal {
-          from { opacity: 0; transform: translate(-50%, 0) translateY(8px); }
-          to { opacity: 1; transform: translate(-50%, 0) translateY(0); }
+          from { opacity: 0; transform: translateX(-50%) translateY(6px); }
+          to { opacity: 1; transform: translateX(-50%) translateY(0); }
         }
       `}</style>
     </div>
