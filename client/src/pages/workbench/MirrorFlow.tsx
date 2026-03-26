@@ -4,9 +4,9 @@
  * Three-act cinematic flow:
  *   Act 1 (Approach): Wide conservatory shot, slow Ken Burns zoom
  *   Act 2 (Threshold): Fade to black, ritual framing text, "Look Into the Basin"
- *   Act 3 (Basin): Close basin view — radial answer dots around lower arc,
- *                   brass knob cycles selection, question + selected answer
- *                   float on the dark water surface.
+ *   Act 3 (Basin): Close basin view — ALL answer texts visible around the lower
+ *                   arc of the basin rim. Knob cycles which answer glows bright.
+ *                   Press/click knob to confirm.
  *
  * After questions: scoring → navigate to /workbench/mirror/reading
  *
@@ -53,8 +53,8 @@ const AMBER = {
   muted: "#8b7340",
   glow: "rgba(197,160,89,0.4)",
   faintGlow: "rgba(197,160,89,0.15)",
-  dotActive: "#e8c55a",
-  dotDim: "rgba(197,160,89,0.25)",
+  active: "#e8c55a",
+  dim: "rgba(139,115,64,0.35)",
 };
 
 const PARCHMENT = {
@@ -98,48 +98,56 @@ type FlowPhase =
   | "scoring"
   | "complete";
 
-// ─── Radial Dot Geometry ─────────────────────────────────────────────
-// Position dots along the lower arc of an ellipse.
-// The arc spans from ~200° to ~340° (bottom portion of the basin).
-// 0° = top, 90° = right, 180° = bottom, 270° = left (CSS convention).
-// We want the lower arc: from about 7 o'clock to 5 o'clock.
+// ─── Arc Geometry ───────────────────────────────────────────────────
+// Position answer TEXT labels along the lower arc of the basin ellipse.
+// Each position includes x, y (percentage), and rotation angle.
 
-function getArcPositions(count: number): { x: number; y: number; angleDeg: number }[] {
-  // Arc from 200° to 340° (wide shallow arc across the lower basin)
-  const startAngle = 200;
-  const endAngle = 340;
-  const positions: { x: number; y: number; angleDeg: number }[] = [];
+function getArcPositions(count: number): { x: number; y: number; rotation: number }[] {
+  // Arc spans from ~200° to ~340° (lower portion of basin)
+  // 0° = top, 90° = right, 180° = bottom, 270° = left
+  const startAngle = 195;
+  const endAngle = 345;
+
+  // Ellipse radii (percentage of container)
+  const rx = 40; // horizontal
+  const ry = 16; // vertical — shallow arc
+
+  // Center of ellipse — in the lower basin
+  const cx = 50;
+  const cy = 68;
+
+  const positions: { x: number; y: number; rotation: number }[] = [];
 
   for (let i = 0; i < count; i++) {
     const t = count === 1 ? 0.5 : i / (count - 1);
     const angleDeg = startAngle + t * (endAngle - startAngle);
     const angleRad = (angleDeg * Math.PI) / 180;
 
-    // Ellipse radii (percentage of container)
-    const rx = 38; // horizontal radius %
-    const ry = 14; // vertical radius % — shallow arc, not a full ellipse
-
-    // Center of ellipse — pushed well into lower basin
-    const cx = 50;
-    const cy = 74;
-
     const x = cx + rx * Math.cos(angleRad);
     const y = cy + ry * Math.sin(angleRad);
 
-    positions.push({ x, y, angleDeg });
+    // Text rotation: follow the tangent of the ellipse slightly
+    // Outer answers tilt more, center answers are more upright
+    const tangentAngle = Math.atan2(
+      ry * Math.cos(angleRad),
+      -rx * Math.sin(angleRad),
+    );
+    // Subtle rotation — just enough to follow the rim curvature
+    const rotation = (tangentAngle * 180) / Math.PI * 0.15;
+
+    positions.push({ x, y, rotation });
   }
 
   return positions;
 }
 
 // ─── Basin Question Component ────────────────────────────────────────
-// Renders question text + radial dots + knob + selected answer text
+// All answers visible around the arc. Knob cycles highlight. Press confirms.
 
 interface BasinQuestionProps {
   question: MirrorQuestion;
   onSelect: (option: MirrorAnswerOption) => void;
   isTransitioning: boolean;
-  selectedOption: string | null;
   questionNumber: number;
   totalQuestions: number;
 }
@@ -148,24 +156,22 @@ function BasinQuestion({
   question,
   onSelect,
   isTransitioning,
-  selectedOption,
   questionNumber,
   totalQuestions,
 }: BasinQuestionProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [confirmed, setConfirmed] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
 
   const options = question.options;
   const positions = useMemo(() => getArcPositions(options.length), [options.length]);
 
-  // Reset active index when question changes
+  // Reset when question changes
   useEffect(() => {
     setActiveIndex(0);
     setConfirmed(false);
   }, [question.id]);
 
-  // Keyboard navigation
+  // Keyboard: arrows cycle, Enter/Space confirms
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
       if (isTransitioning || confirmed) return;
@@ -186,6 +192,38 @@ function BasinQuestion({
     return () => window.removeEventListener("keydown", handleKey);
   }, [options.length, isTransitioning, confirmed, activeIndex]);
 
+  // Confirm selection
+  const handleConfirm = useCallback(() => {
+    if (isTransitioning || confirmed) return;
+    setConfirmed(true);
+    onSelect(options[activeIndex]);
+  }, [isTransitioning, confirmed, activeIndex, options, onSelect]);
+
+  // Knob click = cycle forward
+  const handleKnobClick = useCallback(() => {
+    if (isTransitioning || confirmed) return;
+    setActiveIndex((prev) => (prev + 1) % options.length);
+  }, [options.length, isTransitioning, confirmed]);
+
+  // Knob press (mousedown hold > 300ms or double-click) = confirm
+  const knobPressTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const handleKnobMouseDown = useCallback(() => {
+    if (isTransitioning || confirmed) return;
+    knobPressTimer.current = setTimeout(() => {
+      handleConfirm();
+      knobPressTimer.current = null;
+    }, 400);
+  }, [isTransitioning, confirmed, handleConfirm]);
+
+  const handleKnobMouseUp = useCallback(() => {
+    if (knobPressTimer.current) {
+      clearTimeout(knobPressTimer.current);
+      knobPressTimer.current = null;
+      // Short click = cycle
+      handleKnobClick();
+    }
+  }, [handleKnobClick]);
+
   // Scroll/wheel on knob to cycle
   const handleWheel = useCallback(
     (e: React.WheelEvent) => {
@@ -200,51 +238,64 @@ function BasinQuestion({
     [options.length, isTransitioning, confirmed],
   );
 
-  // Knob click = confirm selection
-  const handleConfirm = useCallback(() => {
-    if (isTransitioning || confirmed) return;
-    setConfirmed(true);
-    onSelect(options[activeIndex]);
-  }, [isTransitioning, confirmed, activeIndex, options, onSelect]);
-
-  // Knob turn click (cycle forward)
-  const handleKnobCycle = useCallback(() => {
-    if (isTransitioning || confirmed) return;
-    setActiveIndex((prev) => (prev + 1) % options.length);
-  }, [options.length, isTransitioning, confirmed]);
-
-  const activeOption = options[activeIndex];
+  // Knob rotation angle based on active index
+  const knobRotation = options.length > 1
+    ? (activeIndex / (options.length - 1)) * 270 - 135
+    : 0;
 
   return (
     <div
-      ref={containerRef}
       className="relative w-full"
-      style={{ height: "50vh", maxHeight: "500px" }}
+      style={{ height: "55vh", maxHeight: "550px" }}
       tabIndex={0}
     >
-      {/* "MIRROR" label at top of basin */}
+      {/* Progress dots at top */}
       <div
-        className="absolute left-1/2 -translate-x-1/2"
+        className="absolute left-1/2 -translate-x-1/2 flex gap-1.5"
         style={{ top: "2%" }}
       >
+        {Array.from({ length: totalQuestions }).map((_, i) => (
+          <div
+            key={i}
+            className="rounded-full transition-all duration-300"
+            style={{
+              width: i === questionNumber - 1 ? "8px" : "4px",
+              height: "4px",
+              backgroundColor:
+                i < questionNumber - 1
+                  ? AMBER.warm
+                  : i === questionNumber - 1
+                    ? AMBER.active
+                    : AMBER.dim,
+              boxShadow:
+                i === questionNumber - 1
+                  ? `0 0 6px ${AMBER.glow}`
+                  : "none",
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Question counter */}
+      <div
+        className="absolute"
+        style={{ top: "2%", right: "4%" }}
+      >
         <span
-          className="font-pixel text-[9px] tracking-[0.4em] uppercase"
-          style={{
-            color: AMBER.muted,
-            opacity: 0.6,
-          }}
+          className="font-pixel text-[8px] tracking-widest"
+          style={{ color: AMBER.dim, opacity: 0.8 }}
         >
-          MIRROR
+          {questionNumber}/{totalQuestions}
         </span>
       </div>
 
-      {/* Question text — centered in upper portion of dark water */}
+      {/* Question text — centered in upper portion of basin */}
       <div
         key={question.id}
         className="absolute left-1/2 -translate-x-1/2 text-center px-6"
         style={{
-          top: "15%",
-          width: "80%",
+          top: "10%",
+          width: "85%",
           animation: "basinTextReveal 0.6s ease-out",
         }}
       >
@@ -261,105 +312,68 @@ function BasinQuestion({
         </p>
       </div>
 
-      {/* Selected answer text — centered in middle of basin */}
-      <div
-        key={`answer-${question.id}-${activeIndex}`}
-        className="absolute left-1/2 -translate-x-1/2 text-center px-8"
-        style={{
-          top: "36%",
-          width: "75%",
-          animation: "answerFade 0.3s ease-out",
-        }}
-      >
-        <p
-          className="text-sm md:text-base leading-relaxed italic"
-          style={{
-            fontFamily: "'Cormorant Garamond', serif",
-            fontWeight: 400,
-            color: confirmed
-              ? AMBER.bright
-              : AMBER.warm,
-            textShadow: confirmed
-              ? `0 0 16px ${AMBER.glow}, 0 2px 6px rgba(0,0,0,0.5)`
-              : `0 0 10px ${AMBER.faintGlow}, 0 2px 6px rgba(0,0,0,0.5)`,
-            transition: "color 0.3s, text-shadow 0.3s",
-          }}
-        >
-          {activeOption.text}
-        </p>
-      </div>
-
-      {/* Radial dots along lower arc */}
-      {positions.map((pos, idx) => {
+      {/* Answer texts positioned around the lower arc */}
+      {options.map((option, idx) => {
+        const pos = positions[idx];
         const isActive = idx === activeIndex;
-        const dotSize = isActive ? 14 : 8;
+        const isConfirmed = confirmed && isActive;
 
         return (
-          <button
-            key={`dot-${idx}`}
-            onClick={() => {
-              if (isTransitioning || confirmed) return;
-              if (idx === activeIndex) {
-                handleConfirm();
-              } else {
-                setActiveIndex(idx);
-              }
-            }}
-            className="absolute transition-all duration-300 cursor-pointer"
+          <div
+            key={`answer-${option.id}`}
+            className="absolute transition-all duration-300 text-center cursor-default select-none"
             style={{
               left: `${pos.x}%`,
               top: `${pos.y}%`,
-              transform: "translate(-50%, -50%)",
-              width: `${dotSize}px`,
-              height: `${dotSize}px`,
-              borderRadius: "50%",
-              backgroundColor: isActive ? AMBER.dotActive : AMBER.dotDim,
-              boxShadow: isActive
-                ? `0 0 12px ${AMBER.glow}, 0 0 24px ${AMBER.faintGlow}`
-                : `0 0 4px ${AMBER.faintGlow}`,
-              border: "none",
-              padding: 0,
-              zIndex: 20,
+              transform: `translate(-50%, -50%) rotate(${pos.rotation}deg)`,
+              maxWidth: options.length <= 4 ? "160px" : "140px",
+              zIndex: isActive ? 20 : 10,
             }}
-            aria-label={`Option ${idx + 1}: ${options[idx].text.substring(0, 50)}...`}
-          />
+          >
+            <p
+              className="text-[11px] md:text-xs leading-snug transition-all duration-300"
+              style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontWeight: isActive ? 600 : 400,
+                fontStyle: "italic",
+                color: isConfirmed
+                  ? AMBER.active
+                  : isActive
+                    ? AMBER.bright
+                    : AMBER.muted,
+                opacity: isActive ? 1 : 0.45,
+                textShadow: isConfirmed
+                  ? `0 0 20px ${AMBER.glow}, 0 0 40px ${AMBER.faintGlow}`
+                  : isActive
+                    ? `0 0 14px ${AMBER.glow}, 0 2px 6px rgba(0,0,0,0.5)`
+                    : `0 1px 4px rgba(0,0,0,0.5)`,
+                transform: isActive ? "scale(1.05)" : "scale(1)",
+                transition: "all 0.3s ease-out",
+              }}
+            >
+              {option.text}
+            </p>
+          </div>
         );
       })}
 
-      {/* Connecting arc line (subtle) */}
-      <svg
-        className="absolute inset-0 w-full h-full pointer-events-none"
-        style={{ zIndex: 15, opacity: 0.15 }}
-        viewBox="0 0 100 100"
-        preserveAspectRatio="none"
-      >
-        <ellipse
-          cx="50"
-          cy="74"
-          rx="38"
-          ry="14"
-          fill="none"
-          stroke={AMBER.muted}
-          strokeWidth="0.15"
-          strokeDasharray="0.5 1"
-          style={{
-            // Only show the lower arc portion
-            clipPath: "polygon(0 45%, 100% 45%, 100% 100%, 0 100%)",
-          }}
-        />
-      </svg>
-
-      {/* Brass knob at bottom center */}
+      {/* Brass knob — bottom center */}
       <div
         className="absolute left-1/2 -translate-x-1/2"
-        style={{ bottom: "3%", zIndex: 25 }}
+        style={{ bottom: "2%", zIndex: 25 }}
       >
-        {/* Knob outer ring */}
         <div
           className="relative cursor-pointer select-none"
-          onClick={handleKnobCycle}
-          onDoubleClick={handleConfirm}
+          onMouseDown={handleKnobMouseDown}
+          onMouseUp={handleKnobMouseUp}
+          onMouseLeave={() => {
+            if (knobPressTimer.current) {
+              clearTimeout(knobPressTimer.current);
+              knobPressTimer.current = null;
+            }
+          }}
           onWheel={handleWheel}
+          title="Turn to cycle • Press to confirm"
           style={{
             width: "52px",
             height: "52px",
@@ -373,25 +387,23 @@ function BasinQuestion({
             `,
             border: `1px solid rgba(160,128,48,0.4)`,
           }}
-          title="Click to cycle options • Double-click or Enter to confirm"
         >
-          {/* Knob indicator notch */}
+          {/* Indicator notch */}
           <div
             className="absolute"
             style={{
               top: "6px",
               left: "50%",
-              transform: `translateX(-50%) rotate(${(activeIndex / options.length) * 360}deg)`,
+              transform: `translateX(-50%) rotate(${knobRotation}deg)`,
               transformOrigin: "50% 20px",
               width: "3px",
               height: "10px",
               borderRadius: "1.5px",
-              backgroundColor: AMBER.dotActive,
+              backgroundColor: AMBER.active,
               boxShadow: `0 0 6px ${AMBER.glow}`,
               transition: "transform 0.3s ease-out",
             }}
           />
-
           {/* Center dot */}
           <div
             className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
@@ -403,80 +415,20 @@ function BasinQuestion({
             }}
           />
         </div>
-
-        {/* Confirm hint */}
-        <div
-          className="absolute left-1/2 -translate-x-1/2 whitespace-nowrap"
-          style={{
-            bottom: "-18px",
-            opacity: confirmed ? 0 : 0.5,
-            transition: "opacity 0.3s",
-          }}
-        >
-          <span
-            className="font-pixel text-[7px] tracking-widest uppercase"
-            style={{ color: PARCHMENT.faint }}
-          >
-            CLICK DOT TO SELECT • ENTER TO CONFIRM
-          </span>
-        </div>
-      </div>
-
-      {/* Progress indicator */}
-      <div
-        className="absolute right-4"
-        style={{ top: "4%", opacity: 0.4 }}
-      >
-        <span
-          className="font-pixel text-[8px] tracking-widest"
-          style={{ color: PARCHMENT.faint }}
-        >
-          {questionNumber}/{totalQuestions}
-        </span>
-      </div>
-
-      {/* Progress dots along top */}
-      <div
-        className="absolute left-1/2 -translate-x-1/2 flex items-center gap-2"
-        style={{ top: "6%", opacity: 0.5 }}
-      >
-        {Array.from({ length: totalQuestions }).map((_, i) => (
-          <div
-            key={i}
-            className="rounded-full transition-all duration-300"
-            style={{
-              width: i === questionNumber - 1 ? "6px" : "3px",
-              height: i === questionNumber - 1 ? "6px" : "3px",
-              backgroundColor:
-                i < questionNumber - 1
-                  ? AMBER.bright
-                  : i === questionNumber - 1
-                  ? AMBER.warm
-                  : AMBER.dotDim,
-              boxShadow:
-                i === questionNumber - 1
-                  ? `0 0 6px ${AMBER.glow}`
-                  : "none",
-            }}
-          />
-        ))}
       </div>
 
       <style>{`
         @keyframes basinTextReveal {
-          from { opacity: 0; transform: translateX(-50%) translateY(8px); }
-          to { opacity: 1; transform: translateX(-50%) translateY(0); }
-        }
-        @keyframes answerFade {
-          from { opacity: 0; }
-          to { opacity: 1; }
+          from { opacity: 0; transform: translate(-50%, 0) translateY(8px); }
+          to { opacity: 1; transform: translate(-50%, 0) translateY(0); }
         }
       `}</style>
     </div>
   );
 }
 
-// ─── Confirmation Pair Basin Component ───────────────────────────────
+// ─── Basin Pair Component ────────────────────────────────────────────
+// Two long-form options visible. Knob toggles, press confirms.
 
 interface BasinPairProps {
   pair: ConfirmationPair;
@@ -485,20 +437,25 @@ interface BasinPairProps {
   selectedOption: string | null;
 }
 
-function BasinPair({ pair, onSelect, isTransitioning, selectedOption }: BasinPairProps) {
+function BasinPair({
+  pair,
+  onSelect,
+  isTransitioning,
+  selectedOption,
+}: BasinPairProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [confirmed, setConfirmed] = useState(false);
 
-  const pairOptions = [pair.option_a, pair.option_b];
-  const positions = useMemo(() => getArcPositions(2), []);
+  const pairOptions = useMemo(
+    () => [pair.option_a, pair.option_b],
+    [pair],
+  );
 
+  // Keyboard
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
       if (isTransitioning || confirmed) return;
-      if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
-        e.preventDefault();
-        setActiveIndex((prev) => (prev === 0 ? 1 : 0));
-      } else if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+      if (e.key === "ArrowLeft" || e.key === "ArrowUp" || e.key === "ArrowRight" || e.key === "ArrowDown") {
         e.preventDefault();
         setActiveIndex((prev) => (prev === 0 ? 1 : 0));
       } else if (e.key === "Enter" || e.key === " ") {
@@ -517,22 +474,40 @@ function BasinPair({ pair, onSelect, isTransitioning, selectedOption }: BasinPai
     onSelect(opt.id, opt.supports_family, opt.weight);
   }, [isTransitioning, confirmed, activeIndex, pairOptions, onSelect]);
 
-  const activeOpt = pairOptions[activeIndex];
+  // Knob: click cycles, long-press confirms
+  const knobPressTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const handleKnobMouseDown = useCallback(() => {
+    if (isTransitioning || confirmed) return;
+    knobPressTimer.current = setTimeout(() => {
+      handleConfirm();
+      knobPressTimer.current = null;
+    }, 400);
+  }, [isTransitioning, confirmed, handleConfirm]);
+
+  const handleKnobMouseUp = useCallback(() => {
+    if (knobPressTimer.current) {
+      clearTimeout(knobPressTimer.current);
+      knobPressTimer.current = null;
+      setActiveIndex((prev) => (prev === 0 ? 1 : 0));
+    }
+  }, []);
+
+  const knobRotation = activeIndex * 180;
 
   return (
     <div
       className="relative w-full"
-      style={{ height: "50vh", maxHeight: "500px" }}
+      style={{ height: "55vh", maxHeight: "550px" }}
       tabIndex={0}
     >
-      {/* Prompt */}
+      {/* Header */}
       <div
         className="absolute left-1/2 -translate-x-1/2 text-center"
-        style={{ top: "8%" }}
+        style={{ top: "3%" }}
       >
         <span
           className="font-pixel text-[9px] tracking-widest uppercase"
-          style={{ color: AMBER.muted }}
+          style={{ color: AMBER.muted, opacity: 0.6 }}
         >
           ONE MORE DISTINCTION
         </span>
@@ -541,7 +516,7 @@ function BasinPair({ pair, onSelect, isTransitioning, selectedOption }: BasinPai
       {/* Instruction */}
       <div
         className="absolute left-1/2 -translate-x-1/2 text-center px-8"
-        style={{ top: "16%", width: "80%" }}
+        style={{ top: "10%", width: "80%" }}
       >
         <p
           className="text-sm leading-relaxed italic"
@@ -555,72 +530,56 @@ function BasinPair({ pair, onSelect, isTransitioning, selectedOption }: BasinPai
         </p>
       </div>
 
-      {/* Selected answer text */}
-      <div
-        key={`pair-answer-${activeIndex}`}
-        className="absolute left-1/2 -translate-x-1/2 text-center px-8"
-        style={{
-          top: "35%",
-          width: "75%",
-          animation: "answerFade 0.3s ease-out",
-        }}
-      >
-        <p
-          className="text-sm md:text-base leading-relaxed italic"
-          style={{
-            fontFamily: "'Cormorant Garamond', serif",
-            color: confirmed ? AMBER.bright : AMBER.warm,
-            textShadow: confirmed
-              ? `0 0 16px ${AMBER.glow}`
-              : `0 0 10px ${AMBER.faintGlow}`,
-          }}
-        >
-          {activeOpt.text}
-        </p>
-      </div>
-
-      {/* Two dots */}
-      {positions.map((pos, idx) => {
+      {/* Two options — left and right of center */}
+      {pairOptions.map((opt, idx) => {
         const isActive = idx === activeIndex;
-        const dotSize = isActive ? 14 : 8;
+        const isConfirmed = confirmed && isActive;
+        // Position: option A on the left, option B on the right
+        const xPos = idx === 0 ? 25 : 75;
+
         return (
-          <button
-            key={`pair-dot-${idx}`}
-            onClick={() => {
-              if (isTransitioning || confirmed) return;
-              if (idx === activeIndex) {
-                handleConfirm();
-              } else {
-                setActiveIndex(idx);
-              }
-            }}
-            className="absolute transition-all duration-300 cursor-pointer"
+          <div
+            key={opt.id}
+            className="absolute transition-all duration-300 text-center cursor-default select-none"
             style={{
-              left: `${pos.x}%`,
-              top: `${pos.y}%`,
+              left: `${xPos}%`,
+              top: "45%",
               transform: "translate(-50%, -50%)",
-              width: `${dotSize}px`,
-              height: `${dotSize}px`,
-              borderRadius: "50%",
-              backgroundColor: isActive ? AMBER.dotActive : AMBER.dotDim,
-              boxShadow: isActive
-                ? `0 0 12px ${AMBER.glow}, 0 0 24px ${AMBER.faintGlow}`
-                : `0 0 4px ${AMBER.faintGlow}`,
-              border: "none",
-              padding: 0,
-              zIndex: 20,
+              maxWidth: "200px",
+              zIndex: isActive ? 20 : 10,
             }}
-          />
+          >
+            <p
+              className="text-[11px] md:text-xs leading-snug transition-all duration-300"
+              style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontWeight: isActive ? 600 : 400,
+                fontStyle: "italic",
+                color: isConfirmed
+                  ? AMBER.active
+                  : isActive
+                    ? AMBER.bright
+                    : AMBER.muted,
+                opacity: isActive ? 1 : 0.4,
+                textShadow: isConfirmed
+                  ? `0 0 20px ${AMBER.glow}, 0 0 40px ${AMBER.faintGlow}`
+                  : isActive
+                    ? `0 0 14px ${AMBER.glow}, 0 2px 6px rgba(0,0,0,0.5)`
+                    : `0 1px 4px rgba(0,0,0,0.5)`,
+                transform: isActive ? "scale(1.05)" : "scale(1)",
+                transition: "all 0.3s ease-out",
+              }}
+            >
+              {opt.text}
+            </p>
+          </div>
         );
       })}
 
-      {/* OR label between dots */}
+      {/* OR label between the two */}
       <div
         className="absolute left-1/2 -translate-x-1/2"
-        style={{
-          top: `${(positions[0].y + positions[1].y) / 2 + 5}%`,
-          opacity: 0.3,
-        }}
+        style={{ top: "45%", transform: "translate(-50%, -50%)", opacity: 0.25 }}
       >
         <span
           className="font-pixel text-[8px] tracking-widest"
@@ -630,18 +589,22 @@ function BasinPair({ pair, onSelect, isTransitioning, selectedOption }: BasinPai
         </span>
       </div>
 
-      {/* Knob */}
+      {/* Brass knob */}
       <div
         className="absolute left-1/2 -translate-x-1/2"
-        style={{ bottom: "3%", zIndex: 25 }}
+        style={{ bottom: "2%", zIndex: 25 }}
       >
         <div
           className="relative cursor-pointer select-none"
-          onClick={() => {
-            if (isTransitioning || confirmed) return;
-            setActiveIndex((prev) => (prev === 0 ? 1 : 0));
+          onMouseDown={handleKnobMouseDown}
+          onMouseUp={handleKnobMouseUp}
+          onMouseLeave={() => {
+            if (knobPressTimer.current) {
+              clearTimeout(knobPressTimer.current);
+              knobPressTimer.current = null;
+            }
           }}
-          onDoubleClick={handleConfirm}
+          title="Turn to cycle • Press to confirm"
           style={{
             width: "52px",
             height: "52px",
@@ -661,12 +624,12 @@ function BasinPair({ pair, onSelect, isTransitioning, selectedOption }: BasinPai
             style={{
               top: "6px",
               left: "50%",
-              transform: `translateX(-50%) rotate(${activeIndex * 180}deg)`,
+              transform: `translateX(-50%) rotate(${knobRotation}deg)`,
               transformOrigin: "50% 20px",
               width: "3px",
               height: "10px",
               borderRadius: "1.5px",
-              backgroundColor: AMBER.dotActive,
+              backgroundColor: AMBER.active,
               boxShadow: `0 0 6px ${AMBER.glow}`,
               transition: "transform 0.3s ease-out",
             }}
@@ -682,13 +645,6 @@ function BasinPair({ pair, onSelect, isTransitioning, selectedOption }: BasinPai
           />
         </div>
       </div>
-
-      <style>{`
-        @keyframes answerFade {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-      `}</style>
     </div>
   );
 }
@@ -1116,7 +1072,6 @@ export default function MirrorFlow() {
             question={currentQuestion}
             onSelect={handleSelectOption}
             isTransitioning={isTransitioning}
-            selectedOption={selectedOption}
             questionNumber={progress.current}
             totalQuestions={progress.total}
           />
@@ -1152,7 +1107,6 @@ export default function MirrorFlow() {
             question={adaptiveQuestion}
             onSelect={handleAdaptiveSelect}
             isTransitioning={isTransitioning}
-            selectedOption={selectedOption}
             questionNumber={progress.total + 1}
             totalQuestions={progress.total + 1}
           />
