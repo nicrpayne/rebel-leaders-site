@@ -123,7 +123,7 @@ function getArcPositions(count: number): { x: number; y: number; rotation: numbe
     // 4 options: spread across lower arc like compass points 7→5 o'clock
     // Outer answers sit higher (following the rim), inner answers sit lower
     return [
-      { x: 20, y: 58, rotation: -5 },   // far left, higher — ~7 o'clock
+      { x: 25, y: 61, rotation: -5 },   // far left, higher — ~7 o'clock (shifted right+down into dark water)
       { x: 37, y: 70, rotation: -2 },   // center-left, lower — ~8 o'clock
       { x: 63, y: 70, rotation: 2 },    // center-right, lower — ~4 o'clock
       { x: 80, y: 58, rotation: 5 },    // far right, higher — ~5 o'clock
@@ -134,7 +134,7 @@ function getArcPositions(count: number): { x: number; y: number; rotation: numbe
   // Two-row layout: positions 1,3,5 on upper row; 2,4 on lower row
   // Wider horizontal spread to prevent overlap with long answer text
   return [
-    { x: 20, y: 54, rotation: -4 },   // far left, upper row — ~7 o'clock
+    { x: 25, y: 57, rotation: -4 },   // far left, upper row — ~7 o'clock (shifted right+down into dark water)
     { x: 35, y: 68, rotation: -2 },   // left-center, lower row — ~8 o'clock
     { x: 50, y: 54, rotation: 0 },    // dead center, upper row — ~6 o'clock
     { x: 65, y: 68, rotation: 2 },    // right-center, lower row — ~4 o'clock
