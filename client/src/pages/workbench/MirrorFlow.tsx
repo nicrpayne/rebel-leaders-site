@@ -322,7 +322,7 @@ function BasinQuestion({
               <path
                 key={`curve-${i}`}
                 id={`curve-${i}`}
-                d={`M 30 ${110 - (totalLines - 1 - i) * 42} Q 250 ${60 - (totalLines - 1 - i) * 42} 470 ${110 - (totalLines - 1 - i) * 42}`}
+                d={`M 30 ${50 + (totalLines - 1 - i) * 42} Q 250 ${100 + (totalLines - 1 - i) * 42} 470 ${50 + (totalLines - 1 - i) * 42}`}
                 fill="none"
               />
             ))}
