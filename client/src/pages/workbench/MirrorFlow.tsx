@@ -146,7 +146,7 @@ function getArcPositions(count: number): { x: number; y: number; rotation: numbe
 // Single answer at a time, displayed as SVG curved text.
 // Knob/arrows cycle, click or Enter confirms.
 
-function splitIntoLines(text: string, wordsPerLine: number = 6): string[] {
+function splitIntoLines(text: string, wordsPerLine: number = 7): string[] {
   const words = text.split(' ');
   const lines: string[] = [];
   for (let i = 0; i < words.length; i += wordsPerLine) {
@@ -267,7 +267,8 @@ function BasinQuestion({
     [options.length, isTransitioning, confirmed],
   );
 
-  const lines = splitIntoLines(options[activeIndex].text, 6);
+  const lines = splitIntoLines(options[activeIndex].text, 7);
+  const FIXED_LINES = 4; // always render 4 line slots regardless of actual lines
   const totalLines = lines.length;
 
   return (
@@ -281,13 +282,13 @@ function BasinQuestion({
         key={question.id}
         className="absolute left-1/2 -translate-x-1/2 text-center px-6"
         style={{
-          top: "14%",
+          top: "10%",
           width: "85%",
           animation: "basinTextReveal 0.6s ease-out",
         }}
       >
         <p
-          className="text-2xl md:text-3xl lg:text-4xl leading-snug"
+          className="text-xl md:text-2xl lg:text-3xl leading-snug"
           style={{
             fontFamily: "'Cormorant Garamond', serif",
             fontWeight: 500,
@@ -309,13 +310,13 @@ function BasinQuestion({
           position: "absolute",
           left: "2%",
           right: "2%",
-          top: "27%",
+          top: "32%",
           animation: confirmed ? "answerConfirmed 0.5s ease-out forwards" : "basinTextReveal 0.35s ease-out",
           cursor: "pointer",
         }}
       >
         <svg
-          viewBox="0 0 600 260"
+          viewBox="0 0 600 280"
           width="100%"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -353,8 +354,8 @@ function BasinQuestion({
           {options.map((_, idx) => (
             <circle
               key={idx}
-              cx={300 + (idx - (options.length - 1) / 2) * 18}
-              cy={55 + totalLines * 40 + 16}
+              cx={300 + (idx - (options.length - 1) / 2) * 22}
+              cy={55 + FIXED_LINES * 40 + 16}
               r={idx === activeIndex ? 4 : 3}
               fill={GOLD.active}
               opacity={idx === activeIndex ? 1 : 0.3}
