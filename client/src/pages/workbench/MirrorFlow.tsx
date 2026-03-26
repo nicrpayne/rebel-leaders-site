@@ -334,7 +334,7 @@ function BasinQuestion({
                 fontWeight: 400,
                 fontStyle: "italic",
                 color: isConfirmed ? GOLD.active : GOLD.active,
-                opacity: isConfirmed ? 1 : isActive ? 1 : 0.5,
+                opacity: isConfirmed ? 1 : isActive ? 1 : 0.7,
                 textShadow: isConfirmed
                   ? `0 0 18px ${GOLD.glow}, 0 0 36px ${GOLD.faintGlow}`
                   : isActive
@@ -546,7 +546,7 @@ function BasinPair({
                 fontWeight: 400,
                 fontStyle: "italic",
                 color: GOLD.active,
-                opacity: isConfirmed ? 1 : isActive ? 1 : 0.5,
+                opacity: isConfirmed ? 1 : isActive ? 1 : 0.7,
                 textShadow: isConfirmed
                   ? `0 0 18px ${GOLD.glow}, 0 0 36px ${GOLD.faintGlow}`
                   : isActive
