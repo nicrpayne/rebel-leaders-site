@@ -315,7 +315,7 @@ function BasinQuestion({
         }}
       >
         <svg
-          viewBox="0 0 500 240"
+          viewBox="0 0 500 260"
           width="100%"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -324,7 +324,7 @@ function BasinQuestion({
               <path
                 key={`curve-${i}`}
                 id={`curve-${i}`}
-                d={`M 30 ${60 + i * 46} Q 250 ${115 + i * 46} 470 ${60 + i * 46}`}
+                d={`M 30 ${55 + i * 46} Q 250 ${105 + i * 46} 470 ${55 + i * 46}`}
                 fill="none"
               />
             ))}
@@ -349,30 +349,22 @@ function BasinQuestion({
               </textPath>
             </text>
           ))}
+          {/* Dots inside SVG, always below the last line */}
+          {options.map((_, idx) => (
+            <circle
+              key={idx}
+              cx={250 + (idx - (options.length - 1) / 2) * 18}
+              cy={55 + totalLines * 46 + 16}
+              r={idx === activeIndex ? 4 : 3}
+              fill={GOLD.active}
+              opacity={idx === activeIndex ? 1 : 0.3}
+              style={{ cursor: "pointer" }}
+              onClick={(e) => { e.stopPropagation(); setActiveIndex(idx); }}
+            />
+          ))}
         </svg>
       </div>
 
-      {/* Navigation dots */}
-      <div
-        className="absolute left-1/2 -translate-x-1/2 flex gap-3"
-        style={{ top: "94%", transform: "translateX(-50%)", left: "50%" }}
-      >
-        {options.map((_, idx) => (
-          <div
-            key={idx}
-            onClick={(e) => { e.stopPropagation(); setActiveIndex(idx); }}
-            style={{
-              width: idx === activeIndex ? "8px" : "6px",
-              height: idx === activeIndex ? "8px" : "6px",
-              borderRadius: "50%",
-              backgroundColor: GOLD.active,
-              opacity: idx === activeIndex ? 1 : 0.3,
-              cursor: "pointer",
-              transition: "all 0.3s ease",
-            }}
-          />
-        ))}
-      </div>
 
 
       {/* Invisible knob overlay */}
