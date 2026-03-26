@@ -269,13 +269,13 @@ function BasinQuestion({
         key={question.id}
         className="absolute left-1/2 -translate-x-1/2 text-center px-6"
         style={{
-          top: "8%",
+          top: "22%",
           width: "85%",
           animation: "basinTextReveal 0.6s ease-out",
         }}
       >
         <p
-          className="text-lg md:text-xl lg:text-2xl leading-snug"
+          className="text-2xl md:text-3xl lg:text-4xl leading-snug"
           style={{
             fontFamily: "'Cormorant Garamond', serif",
             fontWeight: 500,
