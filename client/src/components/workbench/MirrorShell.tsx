@@ -30,10 +30,14 @@ const BASIN_CLOSE_URL =
 export default function MirrorShell({ children, footer, showSticker = true }: MirrorShellProps) {
   return (
     <div className="min-h-screen w-full relative overflow-hidden flex flex-col items-center justify-center">
-      {/* Basin background — full bleed */}
+      {/* Basin background — full bleed, slightly zoomed for more dark water area */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${BASIN_CLOSE_URL})` }}
+        style={{
+          backgroundImage: `url(${BASIN_CLOSE_URL})`,
+          transform: "scale(1.18)",
+          transformOrigin: "center center",
+        }}
       />
 
       {/* Subtle vignette overlay for depth */}
