@@ -303,12 +303,14 @@ function BasinQuestion({
       <div
         key={`answer-${activeIndex}`}
         onClick={handleConfirm}
+        onMouseEnter={(e) => { e.currentTarget.style.filter = "brightness(1.3)"; }}
+        onMouseLeave={(e) => { e.currentTarget.style.filter = "brightness(1)"; }}
         style={{
           position: "absolute",
-          left: "5%",
-          right: "5%",
+          left: "2%",
+          right: "2%",
           top: "40%",
-          animation: "basinTextReveal 0.35s ease-out",
+          animation: confirmed ? "answerConfirmed 0.5s ease-out forwards" : "basinTextReveal 0.35s ease-out",
           cursor: "pointer",
         }}
       >
@@ -403,6 +405,7 @@ function BasinQuestion({
           opacity: 0,
           cursor: isDragging.current ? "grabbing" : "grab",
         }}
+        onClick={handleConfirm}
         onMouseDown={handleKnobMouseDown}
         onWheel={handleWheel}
       />
@@ -411,6 +414,11 @@ function BasinQuestion({
         @keyframes basinTextReveal {
           from { opacity: 0; }
           to { opacity: 1; }
+        }
+        @keyframes answerConfirmed {
+          0% { filter: brightness(1); }
+          40% { filter: brightness(2.2) drop-shadow(0 0 12px rgba(212,168,83,0.9)); }
+          100% { filter: brightness(1.4) drop-shadow(0 0 6px rgba(212,168,83,0.5)); }
         }
       `}</style>
     </div>
