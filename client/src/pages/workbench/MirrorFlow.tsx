@@ -133,7 +133,7 @@ function getArcPositions(count: number): { x: number; y: number; rotation: numbe
     { x: 33, y: 68, rotation: -1 },   // left-center, lower row
     { x: 50, y: 52, rotation: 0 },    // dead center, upper row
     { x: 67, y: 68, rotation: 1 },    // right-center, lower row
-    { x: 85, y: 52, rotation: 4 },    // far right, upper row
+    { x: 82, y: 52, rotation: 3 },    // far right, upper row
   ];
 }
 
