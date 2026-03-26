@@ -307,7 +307,7 @@ function BasinQuestion({
           position: "absolute",
           left: "10%",
           right: "10%",
-          top: "55%",
+          top: "48%",
           animation: "basinTextReveal 0.35s ease-out",
           cursor: "pointer",
         }}
@@ -322,7 +322,7 @@ function BasinQuestion({
               <path
                 key={`curve-${i}`}
                 id={`curve-${i}`}
-                d={`M 30 ${60 + (totalLines - 1 - i) * 44} Q 250 ${115 + (totalLines - 1 - i) * 44} 470 ${60 + (totalLines - 1 - i) * 44}`}
+                d={`M 30 ${60 + i * 44} Q 250 ${115 + i * 44} 470 ${60 + i * 44}`}
                 fill="none"
               />
             ))}
@@ -353,7 +353,7 @@ function BasinQuestion({
       {/* Navigation dots */}
       <div
         className="absolute left-1/2 -translate-x-1/2 flex gap-3"
-        style={{ top: "78%", transform: "translateX(-50%)" }}
+        style={{ top: "82%", transform: "translateX(-50%)", left: "50%" }}
       >
         {options.map((_, idx) => (
           <div
