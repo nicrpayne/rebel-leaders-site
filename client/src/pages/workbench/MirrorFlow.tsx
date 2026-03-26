@@ -108,32 +108,32 @@ function getArcPositions(count: number): { x: number; y: number; rotation: numbe
   // to prevent text overlap while following the rim curvature.
 
   if (count === 2) {
-    // Confirmation pair: left and right
+    // Confirmation pair: left and right — well inside the dark water
     return [
-      { x: 28, y: 55, rotation: -3 },
-      { x: 72, y: 55, rotation: 3 },
+      { x: 32, y: 55, rotation: -2 },
+      { x: 68, y: 55, rotation: 2 },
     ];
   }
 
   if (count === 4) {
-    // Q1 layout: spread across lower basin, staggered heights
+    // Q1 layout: pulled inward into dark water, staggered heights
     return [
-      { x: 22, y: 56, rotation: -3 },   // far left, higher
-      { x: 38, y: 68, rotation: -1 },    // center-left, lower
-      { x: 62, y: 68, rotation: 1 },     // center-right, lower
-      { x: 78, y: 56, rotation: 3 },     // far right, higher
+      { x: 26, y: 54, rotation: -2 },   // left, higher
+      { x: 40, y: 66, rotation: -0.5 }, // center-left, lower
+      { x: 60, y: 66, rotation: 0.5 },  // center-right, lower
+      { x: 74, y: 54, rotation: 2 },    // right, higher
     ];
   }
 
-  // 5 options (Q2-Q7): two-row stagger to prevent center crowding
-  // Row 1 (upper): positions 1, 3, 5 — spread wide
-  // Row 2 (lower): positions 2, 4 — fill the gaps
+  // 5 options (Q2-Q7): two-row stagger, pulled inward
+  // Row 1 (upper): positions 1, 3, 5
+  // Row 2 (lower): positions 2, 4
   return [
-    { x: 15, y: 52, rotation: -4 },   // far left, upper row
-    { x: 33, y: 68, rotation: -1 },   // left-center, lower row
-    { x: 50, y: 52, rotation: 0 },    // dead center, upper row
-    { x: 67, y: 68, rotation: 1 },    // right-center, lower row
-    { x: 82, y: 52, rotation: 3 },    // far right, upper row
+    { x: 20, y: 52, rotation: -3 },   // left, upper row
+    { x: 36, y: 66, rotation: -1 },   // left-center, lower row
+    { x: 50, y: 52, rotation: 0 },    // center, upper row
+    { x: 64, y: 66, rotation: 1 },    // right-center, lower row
+    { x: 80, y: 52, rotation: 3 },    // right, upper row
   ];
 }
 
