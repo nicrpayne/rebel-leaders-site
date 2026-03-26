@@ -61,9 +61,11 @@ export default function MirrorShell({ children, footer }: MirrorShellProps) {
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
-            background:
-              "radial-gradient(ellipse 100% 100% at 50% 50%, rgba(5,8,15,0.65) 0%, rgba(5,8,15,0.4) 55%, transparent 80%)",
+            background: "radial-gradient(ellipse 88% 82% at 50% 46%, rgba(5,8,15,0.65) 0%, rgba(5,8,15,0.4) 55%, transparent 78%)",
             borderRadius: "50%",
+            position: "absolute",
+            inset: 0,
+            pointerEvents: "none",
           }}
         />
 

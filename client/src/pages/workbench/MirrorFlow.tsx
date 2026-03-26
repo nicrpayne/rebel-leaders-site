@@ -315,7 +315,7 @@ function BasinQuestion({
         }}
       >
         <svg
-          viewBox="0 0 500 200"
+          viewBox="0 0 500 240"
           width="100%"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -324,7 +324,7 @@ function BasinQuestion({
               <path
                 key={`curve-${i}`}
                 id={`curve-${i}`}
-                d={`M 30 ${60 + i * 38} Q 250 ${115 + i * 38} 470 ${60 + i * 38}`}
+                d={`M 30 ${60 + i * 46} Q 250 ${115 + i * 46} 470 ${60 + i * 46}`}
                 fill="none"
               />
             ))}
@@ -355,7 +355,7 @@ function BasinQuestion({
       {/* Navigation dots */}
       <div
         className="absolute left-1/2 -translate-x-1/2 flex gap-3"
-        style={{ top: "92%", transform: "translateX(-50%)", left: "50%" }}
+        style={{ top: "94%", transform: "translateX(-50%)", left: "50%" }}
       >
         {options.map((_, idx) => (
           <div
