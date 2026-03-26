@@ -309,13 +309,13 @@ function BasinQuestion({
           position: "absolute",
           left: "2%",
           right: "2%",
-          top: "30%",
+          top: "27%",
           animation: confirmed ? "answerConfirmed 0.5s ease-out forwards" : "basinTextReveal 0.35s ease-out",
           cursor: "pointer",
         }}
       >
         <svg
-          viewBox="0 0 500 260"
+          viewBox="0 0 600 260"
           width="100%"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -353,7 +353,7 @@ function BasinQuestion({
           {options.map((_, idx) => (
             <circle
               key={idx}
-              cx={250 + (idx - (options.length - 1) / 2) * 18}
+              cx={300 + (idx - (options.length - 1) / 2) * 18}
               cy={55 + totalLines * 40 + 16}
               r={idx === activeIndex ? 4 : 3}
               fill={GOLD.active}
