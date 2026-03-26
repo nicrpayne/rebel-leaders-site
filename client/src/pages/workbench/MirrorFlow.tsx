@@ -125,13 +125,15 @@ function getArcPositions(count: number): { x: number; y: number; rotation: numbe
     ];
   }
 
-  // 5 options (Q2-Q7): spread with alternating heights
+  // 5 options (Q2-Q7): two-row stagger to prevent center crowding
+  // Row 1 (upper): positions 1, 3, 5 — spread wide
+  // Row 2 (lower): positions 2, 4 — fill the gaps
   return [
-    { x: 18, y: 54, rotation: -4 },   // far left, higher
-    { x: 34, y: 66, rotation: -1.5 }, // left-center, lower
-    { x: 50, y: 72, rotation: 0 },    // dead center, lowest
-    { x: 66, y: 66, rotation: 1.5 },  // right-center, lower
-    { x: 82, y: 54, rotation: 4 },    // far right, higher
+    { x: 15, y: 52, rotation: -4 },   // far left, upper row
+    { x: 33, y: 68, rotation: -1 },   // left-center, lower row
+    { x: 50, y: 52, rotation: 0 },    // dead center, upper row
+    { x: 67, y: 68, rotation: 1 },    // right-center, lower row
+    { x: 85, y: 52, rotation: 4 },    // far right, upper row
   ];
 }
 
@@ -239,7 +241,7 @@ function BasinQuestion({
 
   return (
     <div
-      className="relative w-full"
+      className="relative w-full outline-none"
       style={{ height: "55vh", maxHeight: "550px" }}
       tabIndex={0}
     >
@@ -320,7 +322,7 @@ function BasinQuestion({
               left: `${pos.x}%`,
               top: `${pos.y}%`,
               transform: `translate(-50%, -50%) rotate(${pos.rotation}deg)`,
-              maxWidth: options.length <= 4 ? "160px" : "140px",
+              maxWidth: options.length <= 4 ? "155px" : "120px",
               zIndex: isActive ? 20 : 10,
             }}
           >
@@ -490,7 +492,7 @@ function BasinPair({
 
   return (
     <div
-      className="relative w-full"
+      className="relative w-full outline-none"
       style={{ height: "55vh", maxHeight: "550px" }}
       tabIndex={0}
     >
