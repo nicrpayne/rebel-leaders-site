@@ -20,14 +20,12 @@ interface MirrorShellProps {
   children: ReactNode;
   /** Optional footer content (progress dots, nav) */
   footer?: ReactNode;
-  /** Show the Nic sticker */
-  showSticker?: boolean;
 }
 
 const BASIN_CLOSE_URL =
   "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/5e5kxa7Hxu2DiYaSmWbPxb/mirror-basin-close_697b33ca.png";
 
-export default function MirrorShell({ children, footer, showSticker = true }: MirrorShellProps) {
+export default function MirrorShell({ children, footer }: MirrorShellProps) {
   return (
     <div className="min-h-screen w-full relative overflow-hidden flex flex-col items-center justify-center">
       {/* Basin background — full bleed, slightly zoomed for more dark water area */}
@@ -79,18 +77,6 @@ export default function MirrorShell({ children, footer, showSticker = true }: Mi
       {footer && (
         <div className="relative z-10 mt-4 mb-6">
           {footer}
-        </div>
-      )}
-
-      {/* Nic sticker */}
-      {showSticker && (
-        <div className="absolute bottom-6 left-6 w-16 md:w-20 z-20 pointer-events-none opacity-80">
-          <img
-            src="https://cdn.manus.space/2026-03-06-17-48-36-398032/nic_victory_v4-3.png"
-            alt="Nic Sticker"
-            className="w-full h-auto drop-shadow-[2px_4px_6px_rgba(0,0,0,0.5)]"
-            style={{ transform: "rotate(-8deg)" }}
-          />
         </div>
       )}
 
