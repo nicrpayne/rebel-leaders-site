@@ -1215,37 +1215,50 @@ export default function MirrorFlow() {
   // ─── Render: Scoring ─────────────────────────────────────────────
 
   if (phase === "scoring") {
-    return (
-      <DesktopOnly toolName="Mirror">
-        <MirrorShell>
-          <div className="flex flex-col items-center justify-center space-y-6">
-            <div className="w-32 h-[1px] overflow-hidden" style={{ backgroundColor: "rgba(197,160,89,0.2)" }}>
-              <div
-                className="h-full"
-                style={{
-                  backgroundColor: GOLD.active,
-                  animation: "scoringBar 1.5s ease-out forwards",
-                }}
-              />
-            </div>
-            <p
-              className="font-pixel text-[10px] tracking-widest uppercase animate-pulse"
-              style={{ color: GOLD.muted }}
-            >
-              Assembling your reading...
-            </p>
+  return (
+    <DesktopOnly toolName="Mirror">
+      <MirrorShell>
+        <div className="flex flex-col items-center justify-center space-y-8">
+          <p
+            style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontStyle: "italic",
+              fontSize: "22px",
+              color: GOLD.question,
+              opacity: 0.85,
+              letterSpacing: "0.08em",
+              animation: "mirrorFadeIn 1s ease-out",
+            }}
+          >
+            The mirror is reading...
+          </p>
+          <div
+            style={{
+              width: "120px",
+              height: "1px",
+              backgroundColor: "rgba(197,160,89,0.2)",
+              overflow: "hidden",
+            }}
+          >
+            <div
+              style={{
+                height: "100%",
+                backgroundColor: GOLD.active,
+                animation: "scoringBar 1.5s ease-out forwards",
+              }}
+            />
           </div>
-
-          <style>{`
-            @keyframes scoringBar {
-              from { width: 0%; }
-              to { width: 100%; }
-            }
-          `}</style>
-        </MirrorShell>
-      </DesktopOnly>
-    );
-  }
+        </div>
+        <style>{`
+          @keyframes scoringBar {
+            from { width: 0%; }
+            to { width: 100%; }
+          }
+        `}</style>
+      </MirrorShell>
+    </DesktopOnly>
+  );
+}
 
   // ─── Render: Fallback ────────────────────────────────────────────
 

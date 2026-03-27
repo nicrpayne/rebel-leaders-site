@@ -163,62 +163,104 @@ export default function SaveReadingPrompt({ context, onSaved }: SaveReadingPromp
   };
 
   return (
-    <>
+  <>
+    <div
+      className="mt-6 mx-auto max-w-lg"
+      style={{ animation: "savePromptFadeIn 0.6s ease-out 2s backwards" }}
+    >
       <div
-        className="mt-6 mx-auto max-w-lg"
-        style={{ animation: "savePromptFadeIn 0.6s ease-out 2s backwards" }}
+        style={{
+          backgroundColor: "#0a0a0e",
+          border: "1px solid rgba(197,160,89,0.12)",
+          borderRadius: "2px",
+          padding: "24px",
+          display: "flex",
+          flexDirection: "column",
+          gap: "16px",
+        }}
       >
-        <div className="bg-[#0a0a0e] border border-[#1a1a22] rounded-sm p-4 space-y-3">
-          {/* Header */}
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="w-1 h-1 rounded-full bg-amber-500/60" />
-              <span className="text-[9px] font-pixel tracking-[0.25em] text-amber-500/60 uppercase">
-                Save Your Reading
-              </span>
-            </div>
-            <button
-              onClick={() => setDismissed(true)}
-              className="text-[#2a2a32] hover:text-[#4a4a52] transition-colors text-xs"
-              aria-label="Dismiss"
+        {/* Header */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="w-1 h-1 rounded-full" style={{ backgroundColor: "rgba(197,160,89,0.6)" }} />
+            <span
+              style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: "15px",
+                letterSpacing: "0.2em",
+                color: "rgba(197,160,89,0.9)",
+              }}
             >
-              ✕
-            </button>
+              Save Your Reading
+            </span>
           </div>
-
-          {/* Copy */}
-          <p className="text-[11px] leading-relaxed text-[#6a6a76] font-mono">
-            Create a free account to keep this reading and access it later.
-            No spam, no gatekeeping — just a place to store what you've built here.
-          </p>
-
-          {/* CTA */}
           <button
-            onClick={handleSignIn}
-            className={cn(
-              "w-full py-2 rounded-sm border transition-all duration-300",
-              "bg-[#141418] border-amber-900/30 text-amber-500/80",
-              "hover:border-amber-700/50 hover:text-amber-400",
-              "hover:shadow-[0_0_12px_rgba(197,160,89,0.1)]",
-              "text-[10px] font-pixel tracking-[0.2em] uppercase",
-            )}
+            onClick={() => setDismissed(true)}
+            style={{ color: "rgba(197,160,89,0.3)", fontSize: "12px" }}
+            aria-label="Dismiss"
           >
-            Create Free Account
+            ✕
           </button>
-
-          {/* Subtext */}
-          <p className="text-[8px] text-[#2a2a32] text-center tracking-wider">
-            YOUR READING STAYS EVEN IF YOU DON'T
-          </p>
         </div>
+        {/* Copy */}
+        <p
+          style={{
+            fontFamily: "'Cormorant Garamond', serif",
+            fontSize: "16px",
+            lineHeight: "1.7",
+            color: "rgba(197,160,89,0.65)",
+          }}
+        >
+          Create a free account to keep this reading and access it later.
+          No spam, no gatekeeping — just a place to store what you've built here.
+        </p>
+        {/* CTA */}
+        <button
+          onClick={handleSignIn}
+          style={{
+            width: "100%",
+            padding: "10px",
+            border: "1px solid rgba(197,160,89,0.25)",
+            backgroundColor: "transparent",
+            fontFamily: "'Cormorant Garamond', serif",
+            fontSize: "15px",
+            letterSpacing: "0.2em",
+            color: "rgba(197,160,89,0.85)",
+            cursor: "pointer",
+            transition: "all 0.3s ease",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.borderColor = "rgba(197,160,89,0.6)";
+            e.currentTarget.style.color = "rgba(197,160,89,0.85)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.borderColor = "rgba(197,160,89,0.25)";
+            e.currentTarget.style.color = "rgba(197,160,89,0.85)";
+          }}
+        >
+          Create Free Account
+        </button>
+        {/* Subtext */}
+        <p
+          style={{
+            fontFamily: "'Cormorant Garamond', serif",
+            fontStyle: "italic",
+            fontSize: "12px",
+            textAlign: "center",
+            letterSpacing: "0.1em",
+            color: "rgba(197,160,89,0.55)",
+          }}
+        >
+          Your reading stays even if you don't
+        </p>
       </div>
-
-      <style>{`
-        @keyframes savePromptFadeIn {
-          from { opacity: 0; transform: translateY(8px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-      `}</style>
-    </>
-  );
+    </div>
+    <style>{`
+      @keyframes savePromptFadeIn {
+        from { opacity: 0; transform: translateY(8px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+    `}</style>
+  </>
+);
 }

@@ -103,8 +103,12 @@ function ReadingSection({ label, content, index }: ReadingSectionProps) {
           style={{ backgroundColor: AMBER.warm }}
         />
         <h3
-          className="font-pixel text-[10px] tracking-[0.25em] uppercase"
-          style={{ color: AMBER.bright }}
+          style={{ 
+  fontFamily: "'Cormorant Garamond', serif", 
+  fontSize: "18px", 
+  letterSpacing: "0.25em", 
+  color: AMBER.bright 
+}}
         >
           {label}
         </h3>
@@ -148,11 +152,10 @@ function ReadingSection({ label, content, index }: ReadingSectionProps) {
 
 function ConfidenceBadge({ band }: { band: string }) {
   const config = {
-    high: { label: "HIGH CONFIDENCE", color: AMBER.bright, dot: AMBER.bright },
-    medium: { label: "MEDIUM CONFIDENCE", color: AMBER.warm, dot: AMBER.warm },
-    low: { label: "BLENDED SIGNAL", color: PARCHMENT.muted, dot: PARCHMENT.muted },
-  }[band] || { label: "SIGNAL", color: AMBER.warm, dot: AMBER.warm };
-
+    high: { label: "High Confidence", color: AMBER.bright, dot: AMBER.bright },
+    medium: { label: "Medium Confidence", color: AMBER.warm, dot: AMBER.warm },
+    low: { label: "Blended Signal", color: PARCHMENT.muted, dot: PARCHMENT.muted },
+  }[band] || { label: "Signal", color: AMBER.warm, dot: AMBER.warm };
   return (
     <div className="flex items-center gap-2">
       <div
@@ -160,8 +163,12 @@ function ConfidenceBadge({ band }: { band: string }) {
         style={{ backgroundColor: config.dot }}
       />
       <span
-        className="font-pixel text-[9px] tracking-widest"
-        style={{ color: config.color }}
+        style={{
+          fontFamily: "'Cormorant Garamond', serif",
+          fontSize: "18px",
+          letterSpacing: "0.15em",
+          color: config.color,
+        }}
       >
         {config.label}
       </span>
@@ -307,19 +314,24 @@ export default function MirrorReading() {
           <div className="flex items-center justify-between mb-10">
             <button
               onClick={() => navigate("/workbench/results")}
-              className="font-pixel text-[10px] tracking-widest uppercase transition-colors duration-200"
-              style={{ color: PARCHMENT.faint }}
+              className="transition-colors duration-200"
+style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: "italic", fontSize: "13px", color: PARCHMENT.faint }}
               onMouseEnter={(e) => { e.currentTarget.style.color = PARCHMENT.muted; }}
               onMouseLeave={(e) => { e.currentTarget.style.color = PARCHMENT.faint; }}
             >
               ← BACK TO GRAVITAS
             </button>
             <span
-              className="font-pixel text-[10px] tracking-[0.3em] uppercase"
-              style={{ color: AMBER.muted }}
-            >
-              MIRROR · READING
-            </span>
+  style={{
+    fontFamily: "'Cormorant Garamond', serif",
+    fontStyle: "italic",
+    fontSize: "13px",
+    letterSpacing: "0.3em",
+    color: AMBER.muted,
+  }}
+>
+  Mirror · Reading
+</span>
           </div>
 
           {/* Reading body */}
@@ -336,8 +348,8 @@ export default function MirrorReading() {
             >
               <div className="flex items-center justify-between">
                 <h2
-                  className="font-pixel text-sm tracking-widest uppercase"
-                  style={{ color: AMBER.bright }}
+                  className="tracking-widest uppercase"
+                  style={{ color: AMBER.bright, fontFamily: "'Cormorant Garamond', serif", fontSize: "24px"}}
                 >
                   Your Mirror Reading
                 </h2>
@@ -345,23 +357,23 @@ export default function MirrorReading() {
               </div>
 
               {/* Signal summary */}
-              <div className="flex flex-wrap gap-4 text-[10px] font-pixel tracking-widest uppercase">
-                {gravitasPrior && (
-                  <>
-                    <span style={{ color: PARCHMENT.faint }}>
-                      GRAVITAS: <span style={{ color: AMBER.muted }}>{gravitasPrior.archetype}</span>
-                    </span>
-                    <span style={{ color: "rgba(197,160,89,0.15)" }}>|</span>
-                    <span style={{ color: PARCHMENT.faint }}>
-                      LEAK: <span style={{ color: "#8b4040" }}>{gravitasPrior.leak}</span>
-                    </span>
-                    <span style={{ color: "rgba(197,160,89,0.15)" }}>|</span>
-                    <span style={{ color: PARCHMENT.faint }}>
-                      FORCE: <span style={{ color: AMBER.muted }}>{gravitasPrior.force}</span>
-                    </span>
-                  </>
-                )}
-              </div>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "16px", fontFamily: "'Cormorant Garamond', serif", fontSize: "12px", letterSpacing: "0.15em" }}>
+  {gravitasPrior && (
+    <>
+      <span style={{ color: PARCHMENT.faint }}>
+        Gravitas: <span style={{ color: AMBER.muted }}>{gravitasPrior.archetype}</span>
+      </span>
+      <span style={{ color: "rgba(197,160,89,0.15)" }}>|</span>
+      <span style={{ color: PARCHMENT.faint }}>
+        Leak: <span style={{ color: "#8b4040" }}>{gravitasPrior.leak}</span>
+      </span>
+      <span style={{ color: "rgba(197,160,89,0.15)" }}>|</span>
+      <span style={{ color: PARCHMENT.faint }}>
+        Force: <span style={{ color: AMBER.muted }}>{gravitasPrior.force}</span>
+      </span>
+    </>
+  )}
+</div>
             </div>
 
             {/* Reading Sections */}
@@ -395,11 +407,12 @@ export default function MirrorReading() {
               </p>
               <button
                 onClick={handleSideChainToCodex}
-                className="px-8 py-3 border transition-all duration-300 font-pixel text-sm tracking-widest uppercase"
+                className="px-8 py-3 border transition-all duration-300 text-sm tracking-widest uppercase"
                 style={{
                   color: AMBER.bright,
                   borderColor: AMBER.muted,
                   backgroundColor: "transparent",
+                   fontFamily: "'Cormorant Garamond', serif", letterSpacing: "0.2em"
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.borderColor = AMBER.bright;
@@ -414,16 +427,6 @@ export default function MirrorReading() {
               </button>
             </div>
           </div>
-        </div>
-
-        {/* Nic sticker */}
-        <div className="fixed bottom-6 left-6 w-16 md:w-20 z-20 pointer-events-none opacity-80">
-          <img
-            src="https://cdn.manus.space/2026-03-06-17-48-36-398032/nic_victory_v4-3.png"
-            alt="Nic Sticker"
-            className="w-full h-auto drop-shadow-[2px_4px_6px_rgba(0,0,0,0.5)]"
-            style={{ transform: "rotate(-8deg)" }}
-          />
         </div>
       </div>
 
