@@ -380,39 +380,98 @@ function BasinQuestion({
           ))}
         </svg>
       </div>
-
-
-
-      {/* Invisible knob overlay */}
-      <div
-        className="absolute select-none"
+{questionNumber === 1 && (
+  <>
+    <div
+      className="absolute pointer-events-none"
+      style={{
+        bottom: "-12%",
+        left: "calc(50% - 120px)",
+        zIndex: 31,
+        animation: "turnMeFade 4s ease-in-out 3s 1 forwards",
+        opacity: 0,
+      }}
+    >
+      <span
         style={{
-          bottom: "-18%",
-          left: "calc(50% - 38px)",
-          zIndex: 30,
-          width: "80px",
-          height: "80px",
-          borderRadius: "50%",
-          opacity: 0.4,
-          background: "red",
-          cursor: isDragging.current ? "grabbing" : "grab",
+          fontFamily: "'Cormorant Garamond', serif",
+          fontStyle: "italic",
+          fontSize: "32px",
+          letterSpacing: "0.14em",
+          color: "black",
         }}
-        onClick={() => { if (!hasDragged.current) handleConfirm(); }}
-        onMouseDown={handleKnobMouseDown}
-        onWheel={handleWheel}
-      />
+      >
+        turn
+      </span>
+    </div>
+    <div
+      className="absolute pointer-events-none"
+      style={{
+        bottom: "-12%",
+        left: "calc(50% + 56px)",
+        zIndex: 31,
+        animation: "turnMeFade 4s ease-in-out 3s 1 forwards",
+        opacity: 0,
+      }}
+    >
+      <span
+        style={{
+          fontFamily: "'Cormorant Garamond', serif",
+          fontStyle: "italic",
+          fontSize: "32px",
+          letterSpacing: "0.14em",
+          color: "black",
+        }}
+      >
+        me
+      </span>
+    </div>
+  </>
+)}
+
+
+      {/* Knob overlay — transparent, pulses once on first question to indicate interactivity */}
+<div
+  className="absolute select-none"
+  style={{
+    bottom: "-13%",
+    left: "calc(50% - 24px)",
+    zIndex: 30,
+    width: "45px",
+    height: "45px",
+    borderRadius: "50%",
+    opacity: 1,
+    background: "transparent",
+    cursor: isDragging.current ? "grabbing" : "grab",
+    animation: questionNumber === 1 ? "knobPulse 2s ease-in-out 1s 2" : "none",
+  }}
+  onClick={() => { if (!hasDragged.current) handleConfirm(); }}
+  onMouseDown={handleKnobMouseDown}
+  onWheel={handleWheel}
+/>
 
       <style>{`
-        @keyframes basinTextReveal {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-        @keyframes answerConfirmed {
-          0% { filter: brightness(1); }
-          40% { filter: brightness(2.2) drop-shadow(0 0 12px rgba(212,168,83,0.9)); }
-          100% { filter: brightness(1.4) drop-shadow(0 0 6px rgba(212,168,83,0.5)); }
-        }
-      `}</style>
+  @keyframes basinTextReveal {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes answerConfirmed {
+    0% { filter: brightness(1); }
+    40% { filter: brightness(2.2) drop-shadow(0 0 12px rgba(212,168,83,0.9)); }
+    100% { filter: brightness(1.4) drop-shadow(0 0 6px rgba(212,168,83,0.5)); }
+  }
+  @keyframes knobPulse {
+    0% { box-shadow: 0 0 0 0 rgba(197,160,89,0); }
+    50% { box-shadow: 0 0 0 12px rgba(197,160,89,0.4); }
+    100% { box-shadow: 0 0 0 0 rgba(197,160,89,0); }
+  }
+    @keyframes turnMeFade {
+  0% { opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { opacity: 0; }
+}
+`}</style>
     </div>
   );
 }
