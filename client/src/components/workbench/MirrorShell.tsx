@@ -54,7 +54,7 @@ export default function MirrorShell({ children, footer }: MirrorShellProps) {
           width: "62%",
           minHeight: "55vh",
           maxHeight: "70vh",
-          marginTop: "-2vh",
+          marginTop: "-5vh",
         }}
       >
         {/* Dark water readability overlay — elliptical to match basin shape */}
@@ -65,7 +65,7 @@ export default function MirrorShell({ children, footer }: MirrorShellProps) {
             inset: 0,
             pointerEvents: "none",
             borderRadius: "50%",
-            background: "radial-gradient(ellipse 82% 86% at 50% 48%, rgba(5,8,15,0.72) 0%, rgba(5,8,15,0.5) 52%, rgba(5,8,15,0.15) 72%, transparent 88%)",
+            background: "radial-gradient(ellipse 52% 54% at 50% 46%, rgba(5,8,15,0.72) 0%, rgba(5,8,15,0.5) 52%, rgba(5,8,15,0.15) 72%, transparent 88%)",
           }}
         />
 

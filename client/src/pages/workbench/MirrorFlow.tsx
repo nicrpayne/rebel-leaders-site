@@ -212,12 +212,14 @@ function BasinQuestion({
 
   // ─── Drag-to-turn knob interaction ────────────────────────────────
   const isDragging = useRef(false);
+  const hasDragged = useRef(false);
   const dragStartY = useRef(0);
   const dragAccumulated = useRef(0);
 
   const handleKnobMouseDown = useCallback((e: React.MouseEvent) => {
     if (isTransitioning || confirmed) return;
     isDragging.current = true;
+    hasDragged.current = false;
     dragStartY.current = e.clientY;
     dragAccumulated.current = 0;
     e.preventDefault();
@@ -232,6 +234,7 @@ function BasinQuestion({
 
       // Every ~25px of drag = advance one option
       if (Math.abs(dragAccumulated.current) > 25) {
+        hasDragged.current = true;
         const direction = dragAccumulated.current > 0 ? 1 : -1;
         setActiveIndex((prev) => {
           const next = prev + direction;
@@ -267,8 +270,8 @@ function BasinQuestion({
     [options.length, isTransitioning, confirmed],
   );
 
-  const lines = splitIntoLines(options[activeIndex].text, 7);
-  const FIXED_LINES = 4; // always render 4 line slots regardless of actual lines
+  const lines = splitIntoLines(options[activeIndex].text, 10);
+  const FIXED_LINES = 3; // always render 4 line slots regardless of actual lines
   const totalLines = lines.length;
 
   return (
@@ -282,13 +285,13 @@ function BasinQuestion({
         key={question.id}
         className="absolute left-1/2 -translate-x-1/2 text-center px-6"
         style={{
-          top: "16%",
-          width: "85%",
+          top: "22%",
+          width: "60%",
           animation: "basinTextReveal 0.6s ease-out",
         }}
       >
         <p
-          className="text-xl md:text-2xl lg:text-3xl leading-snug"
+          className="text-lg md:text-xl lg:text-2xl leading-snug"
           style={{
             fontFamily: "'Cormorant Garamond', serif",
             fontWeight: 500,
@@ -311,12 +314,13 @@ function BasinQuestion({
           left: "2%",
           right: "2%",
           top: "38%",
+          zIndex: 10,
           animation: confirmed ? "answerConfirmed 0.5s ease-out forwards" : "basinTextReveal 0.35s ease-out",
           cursor: "pointer",
         }}
       >
         <svg
-          viewBox="0 0 600 280"
+          viewBox="0 0 600 200"
           width="100%"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -325,7 +329,7 @@ function BasinQuestion({
               <path
                 key={`curve-${i}`}
                 id={`curve-${i}`}
-                d={`M 30 ${55 + i * 40} Q 250 ${105 + i * 40} 470 ${55 + i * 40}`}
+                d={`M 20 ${55 + i * 40} Q 300 ${85 + i * 40} 580 ${55 + i * 40}`}
                 fill="none"
               />
             ))}
@@ -336,7 +340,7 @@ function BasinQuestion({
               style={{
                 fontFamily: "'Cormorant Garamond', serif",
                 fontStyle: "italic",
-                fontSize: "17px",
+                fontSize: "15px",
                 fill: GOLD.active,
                 filter: `drop-shadow(0 0 6px ${GOLD.glow})`,
               }}
@@ -355,7 +359,7 @@ function BasinQuestion({
             <circle
               key={idx}
               cx={300 + (idx - (options.length - 1) / 2) * 22}
-              cy={55 + FIXED_LINES * 40 + 16}
+              cy={55 + 3 * 40 + 12}
               r={idx === activeIndex ? 4 : 3}
               fill={GOLD.active}
               opacity={idx === activeIndex ? 1 : 0.3}
@@ -370,18 +374,19 @@ function BasinQuestion({
 
       {/* Invisible knob overlay */}
       <div
-        className="absolute left-1/2 -translate-x-1/2 select-none"
+        className="absolute select-none"
         style={{
-          bottom: "-8%",
+          bottom: "-18%",
+          left: "calc(50% - 38px)",
           zIndex: 30,
           width: "80px",
           height: "80px",
-          transform: "translateX(-50%)",
           borderRadius: "50%",
-          opacity: 0,
+          opacity: 0.4,
+          background: "red",
           cursor: isDragging.current ? "grabbing" : "grab",
         }}
-        onClick={handleConfirm}
+        onClick={() => { if (!hasDragged.current) handleConfirm(); }}
         onMouseDown={handleKnobMouseDown}
         onWheel={handleWheel}
       />
@@ -452,12 +457,14 @@ function BasinPair({
 
   // ─── Drag-to-turn knob interaction ────────────────────────────────
   const isDragging = useRef(false);
+  const hasDragged = useRef(false);
   const dragStartY = useRef(0);
   const dragAccumulated = useRef(0);
 
   const handleKnobMouseDown = useCallback((e: React.MouseEvent) => {
     if (isTransitioning || confirmed) return;
     isDragging.current = true;
+    hasDragged.current = false;
     dragStartY.current = e.clientY;
     dragAccumulated.current = 0;
     e.preventDefault();
@@ -471,6 +478,7 @@ function BasinPair({
       dragStartY.current = e.clientY;
 
       if (Math.abs(dragAccumulated.current) > 25) {
+        hasDragged.current = true;
         setActiveIndex((prev) => (prev === 0 ? 1 : 0));
         dragAccumulated.current = 0;
       }

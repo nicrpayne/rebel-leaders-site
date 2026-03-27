@@ -693,3 +693,9 @@
 - [x] Report findings to user
 - [x] Get explicit user approval before merge
 - [x] Merge, pull, test, and checkpoint
+
+## Phase 54: Mirror Flow Visual Enhancement — Art Direction Match
+- [ ] CSS perspective/rotateX transform on basin content to mimic text resting on pool surface
+- [ ] Font differentiation between question text and answer text (weight, opacity, glow)
+- [ ] Subtle swirl/galaxy canvas effect in the dark water depths
+- [ ] Remove red debug overlay from knob (change to transparent)
