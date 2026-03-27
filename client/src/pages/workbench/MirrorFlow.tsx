@@ -50,6 +50,7 @@ const GOLD = {
   active: "#d4a853",       // warm gold, full brightness for active answer
   inactive: "#c5a059",     // same warm gold, just dimmer via opacity
   question: "#C9A84C",     // warm antique gold, same family as answer text
+  answer: "#9a8460",       // darker bronze for answer text — recedes into surface
   muted: "#8b7340",        // muted gold for UI chrome
   glow: "rgba(197,160,89,0.35)",
   faintGlow: "rgba(197,160,89,0.12)",
@@ -146,13 +147,16 @@ function getArcPositions(count: number): { x: number; y: number; rotation: numbe
 // Single answer at a time, displayed as SVG curved text.
 // Knob/arrows cycle, click or Enter confirms.
 
-function splitIntoLines(text: string, wordsPerLine: number = 7): string[] {
+function splitIntoLines(text: string): string[] {
   const words = text.split(' ');
-  const lines: string[] = [];
-  for (let i = 0; i < words.length; i += wordsPerLine) {
-    lines.push(words.slice(i, i + wordsPerLine).join(' '));
-  }
-  return lines;
+  // Short answers: keep on one line
+  if (words.length <= 8) return [text];
+  // Longer answers: split into 2 lines, first line gets ~60% of words (the wider line)
+  const splitAt = Math.ceil(words.length * 0.6);
+  return [
+    words.slice(0, splitAt).join(' '),
+    words.slice(splitAt).join(' '),
+  ];
 }
 
 interface BasinQuestionProps {
@@ -270,7 +274,7 @@ function BasinQuestion({
     [options.length, isTransitioning, confirmed],
   );
 
-  const lines = splitIntoLines(options[activeIndex].text, 10);
+  const lines = splitIntoLines(options[activeIndex].text);
   const FIXED_LINES = 3; // always render 4 line slots regardless of actual lines
   const totalLines = lines.length;
 
@@ -285,16 +289,16 @@ function BasinQuestion({
         key={question.id}
         className="absolute left-1/2 -translate-x-1/2 text-center px-6"
         style={{
-          top: "22%",
-          width: "60%",
+          top: "13%",
+          width: "85%",
           animation: "basinTextReveal 0.6s ease-out",
         }}
       >
         <p
-          className="text-lg md:text-xl lg:text-2xl leading-snug"
+          className="text-[2rem] md:text-[2.75rem] lg:text-[3.5rem] leading-tight"
           style={{
             fontFamily: "'Cormorant Garamond', serif",
-            fontWeight: 500,
+            fontWeight: 600,
             color: GOLD.question,
             textShadow: `0 0 20px rgba(232,220,200,0.2), 0 2px 8px rgba(0,0,0,0.6)`,
           }}
@@ -313,7 +317,7 @@ function BasinQuestion({
           position: "absolute",
           left: "2%",
           right: "2%",
-          top: "38%",
+          top: "44%",
           zIndex: 10,
           animation: confirmed ? "answerConfirmed 0.5s ease-out forwards" : "basinTextReveal 0.35s ease-out",
           cursor: "pointer",
@@ -322,6 +326,7 @@ function BasinQuestion({
         <svg
           viewBox="0 0 600 200"
           width="100%"
+          preserveAspectRatio="xMidYMid meet"
           xmlns="http://www.w3.org/2000/svg"
         >
           <defs>
@@ -329,7 +334,7 @@ function BasinQuestion({
               <path
                 key={`curve-${i}`}
                 id={`curve-${i}`}
-                d={`M 20 ${55 + i * 40} Q 300 ${85 + i * 40} 580 ${55 + i * 40}`}
+                d={`M 40 ${30 + i * 28} Q 300 ${220 + i * 28} 560 ${30 + i * 28}`}
                 fill="none"
               />
             ))}
@@ -339,10 +344,11 @@ function BasinQuestion({
               key={`line-${i}`}
               style={{
                 fontFamily: "'Cormorant Garamond', serif",
-                fontStyle: "italic",
-                fontSize: "15px",
-                fill: GOLD.active,
+                fontWeight: 500,
+                fontSize: "18px",
+                fill: GOLD.answer,
                 filter: `drop-shadow(0 0 6px ${GOLD.glow})`,
+                letterSpacing: "0.02em",
               }}
             >
               <textPath
@@ -358,9 +364,14 @@ function BasinQuestion({
           {options.map((_, idx) => (
             <circle
               key={idx}
-              cx={300 + (idx - (options.length - 1) / 2) * 22}
-              cy={55 + 3 * 40 + 12}
-              r={idx === activeIndex ? 4 : 3}
+              cx={300 + (idx - (options.length - 1) / 2) * 30}
+              cy={(() => {
+                // Arc the dots: center lowest (hugs basin rim), edges rise up
+                const center = (options.length - 1) / 2;
+                const dist = Math.abs(idx - center) / (center || 1); // 0 at center, 1 at edges
+                return 30 + 3 * 28 + 65 + (1 - dist) * 6;
+              })()}
+              r={idx === activeIndex ? 3 : 2}
               fill={GOLD.active}
               opacity={idx === activeIndex ? 1 : 0.3}
               style={{ cursor: "pointer" }}
@@ -676,7 +687,7 @@ export default function MirrorFlow() {
 
   useEffect(() => {
     if (phase !== "threshold") return;
-    const delays = [800, 2400, 4200, 6000];
+    const delays = [1200, 3500, 6000, 8500];
     const timers = delays.map((delay, i) =>
       setTimeout(() => setThresholdStep(i + 1), delay)
     );
@@ -948,63 +959,109 @@ export default function MirrorFlow() {
           className="fixed inset-0 flex flex-col items-center justify-center px-8"
           style={{
             backgroundColor: "#050505",
-            animation: "thresholdFadeIn 1s ease-out",
+            animation: "thresholdFadeIn 2s ease-out",
           }}
         >
-          <div className="max-w-lg text-center space-y-6">
+          {/* Subtle radial vignette for depth */}
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background: "radial-gradient(ellipse at center, rgba(197,160,89,0.03) 0%, transparent 60%, rgba(0,0,0,0.4) 100%)",
+            }}
+          />
+
+          <div className="relative max-w-2xl text-center" style={{ marginTop: "-5vh" }}>
+            {/* Line 1 */}
             <p
-              className="text-base leading-relaxed transition-opacity duration-700"
+              className="transition-all duration-[2000ms] ease-out"
               style={{
                 fontFamily: "'Cormorant Garamond', serif",
-                color: PARCHMENT.mid,
+                fontSize: "clamp(1.15rem, 2.2vw, 1.5rem)",
+                fontWeight: 400,
+                fontStyle: "italic",
+                lineHeight: 1.8,
+                letterSpacing: "0.03em",
+                color: GOLD.active,
+                textShadow: `0 0 20px ${GOLD.faintGlow}, 0 0 40px rgba(197,160,89,0.08)`,
                 opacity: thresholdStep >= 1 ? 1 : 0,
+                transform: thresholdStep >= 1 ? "translateY(0)" : "translateY(12px)",
+                marginBottom: "2.5rem",
               }}
             >
-              Gravitas showed you the field — the shape of your leadership gravity.
+              Gravitas showed you the field —<br />the shape of your leadership gravity.
             </p>
 
+            {/* Line 2 */}
             <p
-              className="text-base leading-relaxed transition-opacity duration-700"
+              className="transition-all duration-[2000ms] ease-out"
               style={{
                 fontFamily: "'Cormorant Garamond', serif",
-                color: PARCHMENT.mid,
+                fontSize: "clamp(1.25rem, 2.5vw, 1.65rem)",
+                fontWeight: 500,
+                lineHeight: 1.7,
+                letterSpacing: "0.02em",
+                color: PARCHMENT.light,
+                textShadow: `0 0 25px ${GOLD.faintGlow}`,
                 opacity: thresholdStep >= 2 ? 1 : 0,
+                transform: thresholdStep >= 2 ? "translateY(0)" : "translateY(12px)",
+                marginBottom: "2.5rem",
               }}
             >
-              Mirror looks underneath. Not at what you do, but at what you protect.
+              Mirror looks underneath.<br />
+              Not at what you do, but at what you protect.<br />
               What you carry. What it costs.
             </p>
 
+            {/* Line 3 — the quiet kicker */}
             <p
-              className="text-sm leading-relaxed transition-opacity duration-700"
+              className="transition-all duration-[2000ms] ease-out"
               style={{
                 fontFamily: "'Cormorant Garamond', serif",
+                fontSize: "clamp(0.95rem, 1.8vw, 1.15rem)",
+                fontWeight: 400,
+                fontStyle: "italic",
+                lineHeight: 1.8,
+                letterSpacing: "0.06em",
                 color: PARCHMENT.muted,
-                opacity: thresholdStep >= 3 ? 1 : 0,
+                textShadow: `0 0 15px rgba(197,160,89,0.06)`,
+                opacity: thresholdStep >= 3 ? 0.75 : 0,
+                transform: thresholdStep >= 3 ? "translateY(0)" : "translateY(8px)",
+                marginBottom: "3rem",
               }}
             >
               Seven questions. No right answers. Just honest ones.
             </p>
 
+            {/* Button — appears last, like an invitation */}
             <div
-              className="pt-4 transition-opacity duration-700"
-              style={{ opacity: thresholdStep >= 4 ? 1 : 0 }}
+              className="transition-all duration-[2500ms] ease-out"
+              style={{
+                opacity: thresholdStep >= 4 ? 1 : 0,
+                transform: thresholdStep >= 4 ? "translateY(0)" : "translateY(10px)",
+              }}
             >
               <button
                 onClick={() => setPhase("core_questions")}
-                className="px-8 py-3 border transition-all duration-300 font-pixel text-sm tracking-widest uppercase"
+                className="px-10 py-4 border transition-all duration-500"
                 style={{
+                  fontFamily: "'Cormorant Garamond', serif",
+                  fontSize: "clamp(0.9rem, 1.6vw, 1.1rem)",
+                  fontWeight: 600,
+                  letterSpacing: "0.2em",
+                  textTransform: "uppercase",
                   color: GOLD.active,
-                  borderColor: GOLD.muted,
+                  borderColor: `rgba(197,160,89,0.3)`,
                   backgroundColor: "transparent",
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.borderColor = GOLD.active;
-                  e.currentTarget.style.boxShadow = `0 0 15px ${GOLD.faintGlow}`;
+                  e.currentTarget.style.boxShadow = `0 0 30px ${GOLD.faintGlow}, inset 0 0 20px rgba(197,160,89,0.05)`;
+                  e.currentTarget.style.color = PARCHMENT.light;
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = GOLD.muted;
+                  e.currentTarget.style.borderColor = `rgba(197,160,89,0.3)`;
                   e.currentTarget.style.boxShadow = "none";
+                  e.currentTarget.style.color = GOLD.active;
                 }}
               >
                 Look Into the Basin
@@ -1014,14 +1071,20 @@ export default function MirrorFlow() {
 
           {gravitasPrior && thresholdStep >= 3 && (
             <div
-              className="absolute bottom-8 text-center transition-opacity duration-700"
-              style={{ opacity: 0.4 }}
+              className="absolute bottom-8 text-center transition-all duration-[2000ms] ease-out"
+              style={{ opacity: 0.3 }}
             >
               <span
-                className="font-pixel text-[9px] tracking-widest uppercase"
-                style={{ color: PARCHMENT.faint }}
+                style={{
+                  fontFamily: "'Cormorant Garamond', serif",
+                  fontSize: "0.7rem",
+                  fontWeight: 400,
+                  letterSpacing: "0.15em",
+                  textTransform: "uppercase",
+                  color: PARCHMENT.faint,
+                }}
               >
-                SIGNAL: {gravitasPrior.archetype} / {gravitasPrior.leak} LEAK / {gravitasPrior.force} FORCE
+                Signal: {gravitasPrior.archetype} / {gravitasPrior.leak} Leak / {gravitasPrior.force} Force
               </span>
             </div>
           )}

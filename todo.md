@@ -695,7 +695,13 @@
 - [x] Merge, pull, test, and checkpoint
 
 ## Phase 54: Mirror Flow Visual Enhancement — Art Direction Match
-- [ ] CSS perspective/rotateX transform on basin content to mimic text resting on pool surface
-- [ ] Font differentiation between question text and answer text (weight, opacity, glow)
+- [x] CSS perspective/rotateX transform on basin content to mimic text resting on pool surface
+- [x] Font differentiation between question text and answer text (weight, opacity, glow)
 - [ ] Subtle swirl/galaxy canvas effect in the dark water depths
 - [ ] Remove red debug overlay from knob (change to transparent)
+
+## Phase 55: Mirror Threshold Screen — Cinematic Restyle
+- [x] Restyle threshold text — larger Cormorant Garamond, warm gold glow, storytelling feel
+- [x] Staggered fade-in animations — each line appears one at a time with deliberate pacing
+- [x] Button fades in last after all text has settled
+- [x] Remove web-page feel, make it feel like opening a leather-bound book

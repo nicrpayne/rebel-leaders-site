@@ -55,6 +55,11 @@ export default function MirrorShell({ children, footer }: MirrorShellProps) {
           minHeight: "55vh",
           maxHeight: "70vh",
           marginTop: "-5vh",
+          /* 3D perspective: tilts the text plane so it appears to rest
+             on the basin surface, receding away from the viewer.
+             transform-origin at bottom so the near edge (answers/knob)
+             stays grounded while the far edge (question) recedes. */
+          perspective: "900px",
         }}
       >
         {/* Dark water readability overlay — elliptical to match basin shape */}
@@ -69,8 +74,15 @@ export default function MirrorShell({ children, footer }: MirrorShellProps) {
           }}
         />
 
-        {/* Children render here — directly on the basin surface */}
-        <div className="relative z-10 w-full h-full flex flex-col items-center justify-center">
+        {/* Children render here — directly on the basin surface, with 3D tilt */}
+        <div
+          className="relative z-10 w-full h-full flex flex-col items-center justify-center"
+          style={{
+            transform: "rotateX(33deg)",
+            transformOrigin: "center bottom",
+            transformStyle: "preserve-3d",
+          }}
+        >
           {children}
         </div>
       </div>
