@@ -228,7 +228,8 @@ export default function MirrorReading() {
     if (mirrorResult.resistance_core_key) {
       params.set("mirrorResistance", mirrorResult.resistance_core_key);
     }
-
+params.set("signal", "received");
+params.set("bottleneck", gravitasPrior.leak.toUpperCase());
     return `/workbench/codex?${params.toString()}`;
   };
 
@@ -256,6 +257,7 @@ export default function MirrorReading() {
       if (transitionTimerRef.current) {
         clearTimeout(transitionTimerRef.current);
       }
+      window.scrollTo(0, 0);
       navigate(url);
     });
   };
