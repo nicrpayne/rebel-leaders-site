@@ -5,6 +5,7 @@ import { ScoringResult } from "@/lib/workbench/scoring";
 import { cn } from "@/lib/utils";
 import { useGame } from "@/contexts/GameContext";
 import DesktopOnly from "@/components/workbench/DesktopOnly";
+import SaveReadingPrompt from "@/components/workbench/SaveReadingPrompt";
 
 // Audio Context for sound effects
 const audioCtx =
@@ -202,6 +203,7 @@ export default function Results() {
 
   const footerControls = (
     <div className="flex items-center gap-2">
+      {/* Path 1: Side-chain to Codex — "Get a Move" */}
       <button
         onClick={handleSideChain}
         disabled={isTransmitting}
@@ -221,9 +223,17 @@ export default function Results() {
               : "sidechain-glow-text group-hover:text-[#c5a059]"
           )}
         >
-          {isTransmitting ? "TRANSMITTING..." : "SIDE-CHAIN TO CODEX"}
+          {isTransmitting ? "TRANSMITTING..." : "GET A MOVE"}
         </span>
       </button>
+      {/* Path 2: Go Deeper — Mirror */}
+      <Link href="/workbench/mirror">
+        <span className="group flex items-center gap-1.5 px-2.5 py-1 bg-gradient-to-b from-[#1a1a20] to-[#141418] border border-[#1a1a22] rounded-[2px] transition-all duration-150 hover:border-[rgba(167,139,250,0.3)] hover:shadow-[0_0_12px_rgba(167,139,250,0.08)] active:translate-y-[1px] active:shadow-none cursor-pointer">
+          <span className="text-[8px] tracking-[0.2em] uppercase text-[#5a5a66] group-hover:text-[#a78bfa] transition-colors">
+            GO DEEPER
+          </span>
+        </span>
+      </Link>
       <Link href="/workbench/gravitas">
         <span className="text-[7px] tracking-[0.15em] text-[#3a3a44] hover:text-[#5a5a66] cursor-pointer uppercase transition-colors">
           RE-SCAN
@@ -392,6 +402,9 @@ export default function Results() {
               </div>
             </div>
           </div>
+
+          {/* Save Reading Prompt */}
+          <SaveReadingPrompt context="gravitas" />
 
           {/* Return link */}
           <div className="text-center pt-1 pb-2">
