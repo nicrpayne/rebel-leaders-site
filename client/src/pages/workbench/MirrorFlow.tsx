@@ -15,6 +15,7 @@
  */
 
 import { useState, useEffect, useCallback, useMemo, useRef } from "react";
+import { mirrorAudio } from "@/lib/workbench/MirrorAudio";
 import { useLocation } from "wouter";
 import MirrorShell from "@/components/workbench/MirrorShell";
 import DesktopOnly from "@/components/workbench/DesktopOnly";
@@ -182,9 +183,10 @@ function BasinQuestion({
 
   // Reset when question changes
   useEffect(() => {
-    setActiveIndex(0);
-    setConfirmed(false);
-  }, [question.id]);
+  setActiveIndex(0);
+  setConfirmed(false);
+  mirrorAudio.playQuestionReveal();
+}, [question.id]);
 
   // Keyboard: arrows cycle, Enter/Space confirms
   useEffect(() => {

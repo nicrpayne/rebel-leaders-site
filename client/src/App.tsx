@@ -61,6 +61,7 @@ function Router() {
 function App() {
   useClaimAnonymousResult();
   return (
+  <div style={{ backgroundColor: "#050505", minHeight: "100vh" }}>
     <ErrorBoundary>
       <ThemeProvider defaultTheme="dark">
         <GameProvider>
@@ -72,7 +73,8 @@ function App() {
         </GameProvider>
       </ThemeProvider>
     </ErrorBoundary>
-  );
+  </div>
+);
 }
 
 export default App;

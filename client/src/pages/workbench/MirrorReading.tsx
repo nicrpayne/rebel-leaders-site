@@ -185,6 +185,7 @@ export default function MirrorReading() {
   const [reading, setReading] = useState<ReadingBlock | null>(null);
   const [isRevealed, setIsRevealed] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isFadingOut, setIsFadingOut] = useState(false);
 
   // ─── Load Data ───────────────────────────────────────────────────
 
@@ -237,30 +238,23 @@ params.set("bottleneck", gravitasPrior.leak.toUpperCase());
   const transitionTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleSideChainToCodex = () => {
-    if (!mirrorResult || !gravitasPrior) return;
-    setIsTransitioning(true);
-    codexReadyRef.current = false;
+  if (!mirrorResult || !gravitasPrior) return;
+  const url = buildCodexUrl();
+  if (!url) return;
 
-    const url = buildCodexUrl();
-    if (!url) return;
+  setIsTransitioning(true);
+  setIsFadingOut(false);
 
-    const prefetchPromise = import("./Codex").then(() => {
-      codexReadyRef.current = true;
-    }).catch(() => {});
+  import("./Codex").catch(() => {});
 
-    const minDisplayPromise = new Promise((resolve) => setTimeout(resolve, 1200));
-
-    const capTimer = setTimeout(() => navigate(url), 3000);
-    transitionTimerRef.current = capTimer;
-
-    Promise.all([prefetchPromise, minDisplayPromise]).then(() => {
-      if (transitionTimerRef.current) {
-        clearTimeout(transitionTimerRef.current);
-      }
+  setTimeout(() => {
+    setIsFadingOut(true);
+    setTimeout(() => {
       window.scrollTo(0, 0);
       navigate(url);
-    });
-  };
+    }, 800);
+  }, 2800);
+};
 
   // ─── Render: Loading ─────────────────────────────────────────────
 
@@ -437,9 +431,12 @@ style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: "italic", fontSiz
         <div
           className="fixed inset-0 z-50 flex items-center justify-center"
           style={{
-            backgroundColor: "#050505",
-            animation: "interstitialFadeIn 0.5s ease-out",
-          }}
+  backgroundColor: "#050505",
+  zIndex: 9999,
+  animation: isFadingOut
+    ? "interstitialFadeOut 0.6s ease-in forwards"
+    : "interstitialFadeIn 0.5s ease-out",
+}}
         >
           <div
             className="text-center space-y-6"
