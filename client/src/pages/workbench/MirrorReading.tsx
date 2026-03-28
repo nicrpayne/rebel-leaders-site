@@ -299,7 +299,7 @@ params.set("bottleneck", gravitasPrior.leak.toUpperCase());
       {/* Dark reading environment with subtle basin texture */}
       <div
         className="min-h-screen relative"
-        style={{ backgroundColor: "#0a0c10" }}
+        style={{ backgroundColor: "#0a0c10", userSelect: "none"  }}
       >
         {/* Very faint basin background — just a hint of the conservatory */}
         <div

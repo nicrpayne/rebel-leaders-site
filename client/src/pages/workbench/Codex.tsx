@@ -141,9 +141,10 @@ export default function Codex() {
           targetEntry = CODEX_ENTRIES.find((e) => e.id === targetId) || CODEX_ENTRIES[0];
         }
         setTimeout(() => {
-          handleLoad(targetEntry);
-          setIsReceivingSignal(false);
-        }, 3000);
+  window.scrollTo(0, 0);
+  handleLoad(targetEntry);
+  setIsReceivingSignal(false);
+}, 3000);
       } else {
         setTimeout(() => setIsReceivingSignal(false), 2500);
       }

@@ -212,6 +212,7 @@ function BasinQuestion({
     if (isTransitioning || confirmed) return;
     setConfirmed(true);
     onSelect(options[activeIndex]);
+    window.getSelection()?.removeAllRanges();
   }, [isTransitioning, confirmed, activeIndex, options, onSelect]);
 
   // ─── Drag-to-turn knob interaction ────────────────────────────────
@@ -283,6 +284,7 @@ function BasinQuestion({
       className="relative w-full select-none outline-none"
       style={{ height: "60vh", maxHeight: "600px" }}
       tabIndex={0}
+      
     >
       {/* Question text */}
       <div
