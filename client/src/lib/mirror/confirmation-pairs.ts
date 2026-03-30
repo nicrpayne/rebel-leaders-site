@@ -38,6 +38,11 @@ export const PAIR_ROUTING: Record<string, PairSequence> = {
     if_a_wins: "pair_2b", // Silence Stabilizer wins → vs Standard-Bearer
     if_b_wins: "pair_2c", // Bandwidth Conserver wins → vs Significance Seeker
   },
+  "COMPENSATION ORBIT::CULTURE::CULTURE": {
+    first: "pair_1a",
+    if_a_wins: "pair_1b",
+    if_b_wins: "pair_1c",
+  },
   "FRICTION BELT::VISION::CULTURE": {
     first: "pair_3a",
     if_a_wins: "pair_3b", // Warmth Protector wins → vs Map-Maker

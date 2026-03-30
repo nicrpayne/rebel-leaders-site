@@ -598,30 +598,34 @@ function BasinPair({
       {/* Header */}
       <div
         className="absolute left-1/2 -translate-x-1/2 text-center"
-        style={{ top: "4%" }}
-      >
-        <span
-          className="font-pixel text-[9px] tracking-widest uppercase"
-          style={{ color: GOLD.muted, opacity: 0.6 }}
-        >
-          ONE MORE DISTINCTION
-        </span>
-      </div>
-
-      {/* Instruction */}
-      <div
-        className="absolute left-1/2 -translate-x-1/2 text-center px-8"
-        style={{ top: "10%", width: "80%" }}
+        style={{ top: "4%", width: "85%" }}
       >
         <p
-          className="text-sm leading-relaxed italic"
           style={{
             fontFamily: "'Cormorant Garamond', serif",
+            fontSize: "clamp(2rem, 4.5vw, 4.5rem)",
+            fontWeight: 600,
+            fontStyle: "italic",
+            lineHeight: 1.3,
+            color: GOLD.question,
+            textShadow: `0 0 20px rgba(232,220,200,0.2), 0 2px 8px rgba(0,0,0,0.6)`,
+            marginBottom: "0.5rem",
+          }}
+        >
+          One more distinction.
+        </p>
+        <p
+          style={{
+            fontFamily: "'Cormorant Garamond', serif",
+            fontSize: "clamp(1.4rem, 2vw, 1.75rem)",
+            fontWeight: 400,
+            fontStyle: "italic",
+            lineHeight: 1.6,
+            letterSpacing: "0.03em",
             color: PARCHMENT.muted,
           }}
         >
-          Both may feel partially true. Choose the one that feels{" "}
-          <em>more</em> true under real pressure.
+          Both may feel partially true. Choose the one that feels <em>more</em> true under real pressure.
         </p>
       </div>
 
@@ -635,14 +639,14 @@ function BasinPair({
           position: "absolute",
           left: "2%",
           right: "2%",
-          top: "36%",
+          top: "30%",
           zIndex: 10,
           animation: confirmed ? "answerConfirmed 0.5s ease-out forwards" : "basinTextReveal 0.35s ease-out",
           cursor: "pointer",
         }}
       >
         <svg
-          viewBox="0 0 600 220"
+          viewBox="0 0 600 260"
           width="100%"
           preserveAspectRatio="xMidYMid meet"
           xmlns="http://www.w3.org/2000/svg"
@@ -683,25 +687,11 @@ function BasinPair({
             <g key={idx} style={{ cursor: "pointer" }} onClick={(e) => { e.stopPropagation(); if (!isTransitioning && !confirmed) setActiveIndex(idx); }}>
               <circle
                 cx={300 + (idx - 0.5) * 30}
-                cy={30 + 5 * 26 + 20}
+                cy={30 + 5 * 26 + 70}
                 r={idx === activeIndex ? 3 : 2}
                 fill={GOLD.active}
                 opacity={idx === activeIndex ? 1 : 0.3}
               />
-              <text
-                x={300 + (idx - 0.5) * 30}
-                y={30 + 5 * 26 + 36}
-                textAnchor="middle"
-                style={{
-                  fontFamily: "'Cormorant Garamond', serif",
-                  fontSize: "10px",
-                  fill: GOLD.muted,
-                  opacity: idx === activeIndex ? 0.8 : 0.3,
-                  letterSpacing: "0.1em",
-                }}
-              >
-                {DOT_LABELS[idx]}
-              </text>
             </g>
           ))}
         </svg>
