@@ -477,7 +477,21 @@ function BasinQuestion({
 }
 
 // ─── Basin Pair Component ────────────────────────────────────────────
-// Two long-form options visible. Drag/scroll knob toggles, click confirms.
+// Single active option displayed as SVG curved text (same as BasinQuestion).
+// Drag/scroll knob or click A/B dots to toggle, click text or Enter confirms.
+
+/** Split pair option text into ~5 even lines for the SVG curved display */
+function splitPairIntoLines(text: string): string[] {
+  const words = text.split(' ');
+  if (words.length <= 6) return [text];
+  const targetLines = Math.min(5, Math.ceil(words.length / 5));
+  const wordsPerLine = Math.ceil(words.length / targetLines);
+  const result: string[] = [];
+  for (let i = 0; i < words.length; i += wordsPerLine) {
+    result.push(words.slice(i, i + wordsPerLine).join(' '));
+  }
+  return result;
+}
 
 interface BasinPairProps {
   pair: ConfirmationPair;
@@ -490,7 +504,6 @@ function BasinPair({
   pair,
   onSelect,
   isTransitioning,
-  selectedOption,
 }: BasinPairProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [confirmed, setConfirmed] = useState(false);
@@ -499,8 +512,6 @@ function BasinPair({
     () => [pair.option_a, pair.option_b],
     [pair],
   );
-
-  const positions = useMemo(() => getArcPositions(2), []);
 
   // Keyboard
   useEffect(() => {
@@ -575,6 +586,9 @@ function BasinPair({
     [isTransitioning, confirmed],
   );
 
+  const lines = splitPairIntoLines(pairOptions[activeIndex].text);
+  const DOT_LABELS = ["A", "B"];
+
   return (
     <div
       className="relative w-full select-none outline-none"
@@ -584,7 +598,7 @@ function BasinPair({
       {/* Header */}
       <div
         className="absolute left-1/2 -translate-x-1/2 text-center"
-        style={{ top: "3%" }}
+        style={{ top: "4%" }}
       >
         <span
           className="font-pixel text-[9px] tracking-widest uppercase"
@@ -611,82 +625,103 @@ function BasinPair({
         </p>
       </div>
 
-      {/* Two options — positioned on the arc */}
-      {pairOptions.map((opt, idx) => {
-        const isActive = idx === activeIndex;
-        const isConfirmed = confirmed && isActive;
-        const pos = positions[idx];
-
-        return (
-          <div
-            key={opt.id}
-            className="absolute select-none"
-            onClick={() => {
-              if (isTransitioning || confirmed) return;
-              if (isActive) {
-                handleConfirm();
-              } else {
-                setActiveIndex(idx);
-              }
-            }}
-            style={{
-              left: `${pos.x}%`,
-              top: `${pos.y}%`,
-              transform: `translate(-50%, -50%) rotate(${pos.rotation}deg)`,
-              maxWidth: "200px",
-              zIndex: isActive ? 20 : 10,
-              cursor: "pointer",
-              textAlign: "center",
-            }}
-          >
-            <p
-              className="text-xs leading-snug transition-all duration-300"
+      {/* Single active option — SVG curved text, same approach as BasinQuestion */}
+      <div
+        key={`pair-answer-${activeIndex}`}
+        onClick={handleConfirm}
+        onMouseEnter={(e) => { e.currentTarget.style.filter = "brightness(1.3)"; }}
+        onMouseLeave={(e) => { e.currentTarget.style.filter = "brightness(1)"; }}
+        style={{
+          position: "absolute",
+          left: "2%",
+          right: "2%",
+          top: "36%",
+          zIndex: 10,
+          animation: confirmed ? "answerConfirmed 0.5s ease-out forwards" : "basinTextReveal 0.35s ease-out",
+          cursor: "pointer",
+        }}
+      >
+        <svg
+          viewBox="0 0 600 220"
+          width="100%"
+          preserveAspectRatio="xMidYMid meet"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <defs>
+            {lines.map((_, i) => (
+              <path
+                key={`pair-curve-${i}`}
+                id={`pair-curve-${i}`}
+                d={`M 40 ${30 + i * 26} Q 300 ${190 + i * 26} 560 ${30 + i * 26}`}
+                fill="none"
+              />
+            ))}
+          </defs>
+          {lines.map((line, i) => (
+            <text
+              key={`pair-line-${i}`}
               style={{
                 fontFamily: "'Cormorant Garamond', serif",
-                fontWeight: 400,
-                fontStyle: "italic",
-                color: GOLD.active,
-                opacity: isConfirmed ? 1 : isActive ? 1 : 0.7,
-                textShadow: isConfirmed
-                  ? `0 0 18px ${GOLD.glow}, 0 0 36px ${GOLD.faintGlow}`
-                  : isActive
-                    ? `0 0 12px ${GOLD.glow}, 0 1px 4px rgba(0,0,0,0.5)`
-                    : `0 1px 3px rgba(0,0,0,0.5)`,
-                transition: "all 0.3s ease-out",
+                fontWeight: 500,
+                fontSize: "18px",
+                fill: GOLD.answer,
+                filter: `drop-shadow(0 0 6px ${GOLD.glow})`,
+                letterSpacing: "0.02em",
               }}
             >
-              {opt.text}
-            </p>
-          </div>
-        );
-      })}
-
-      {/* OR label between the two */}
-      <div
-        className="absolute left-1/2 -translate-x-1/2"
-        style={{ top: "55%", transform: "translate(-50%, -50%)", opacity: 0.2 }}
-      >
-        <span
-          className="font-pixel text-[8px] tracking-widest"
-          style={{ color: PARCHMENT.faint }}
-        >
-          OR
-        </span>
+              <textPath
+                href={`#pair-curve-${i}`}
+                startOffset="50%"
+                textAnchor="middle"
+              >
+                {line}
+              </textPath>
+            </text>
+          ))}
+          {/* A / B navigation dots — same style as BasinQuestion dots */}
+          {pairOptions.map((_, idx) => (
+            <g key={idx} style={{ cursor: "pointer" }} onClick={(e) => { e.stopPropagation(); if (!isTransitioning && !confirmed) setActiveIndex(idx); }}>
+              <circle
+                cx={300 + (idx - 0.5) * 30}
+                cy={30 + 5 * 26 + 20}
+                r={idx === activeIndex ? 3 : 2}
+                fill={GOLD.active}
+                opacity={idx === activeIndex ? 1 : 0.3}
+              />
+              <text
+                x={300 + (idx - 0.5) * 30}
+                y={30 + 5 * 26 + 36}
+                textAnchor="middle"
+                style={{
+                  fontFamily: "'Cormorant Garamond', serif",
+                  fontSize: "10px",
+                  fill: GOLD.muted,
+                  opacity: idx === activeIndex ? 0.8 : 0.3,
+                  letterSpacing: "0.1em",
+                }}
+              >
+                {DOT_LABELS[idx]}
+              </text>
+            </g>
+          ))}
+        </svg>
       </div>
 
-      {/* Invisible knob overlay */}
+      {/* Knob overlay — transparent, drag/scroll to toggle */}
       <div
-        className="absolute left-1/2 -translate-x-1/2 select-none"
+        className="absolute select-none"
         style={{
-          bottom: "-12%",
+          bottom: "-13%",
+          left: "calc(50% - 24px)",
           zIndex: 30,
-          width: "70px",
-          height: "70px",
-          transform: "translateX(-50%)",
+          width: "45px",
+          height: "45px",
           borderRadius: "50%",
-          opacity: 0,
+          opacity: 1,
+          background: "transparent",
           cursor: isDragging.current ? "grabbing" : "grab",
         }}
+        onClick={() => { if (!hasDragged.current) handleConfirm(); }}
         onMouseDown={handleKnobMouseDown}
         onWheel={handleWheel}
       />
