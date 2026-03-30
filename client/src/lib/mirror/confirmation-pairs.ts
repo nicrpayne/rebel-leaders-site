@@ -43,6 +43,11 @@ export const PAIR_ROUTING: Record<string, PairSequence> = {
     if_a_wins: "pair_3b", // Warmth Protector wins → vs Map-Maker
     if_b_wins: "pair_3b_alt", // Standard-Bearer wins → vs Map-Maker
   },
+  "COMPENSATION ORBIT::CULTURE::CULTURE": {
+  first: "pair_1a",
+  if_a_wins: "pair_1b",
+  if_b_wins: "pair_1c",
+},
 };
 
 // ─── All Confirmation Pairs ──────────────────────────────────────────

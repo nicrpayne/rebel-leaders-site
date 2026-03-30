@@ -277,7 +277,8 @@ function BasinQuestion({
     [options.length, isTransitioning, confirmed],
   );
 
-  const lines = splitIntoLines(options[activeIndex].text);
+  const currentOption = options[activeIndex] ?? options[0];
+const lines = splitIntoLines(currentOption.text, 7);
   const FIXED_LINES = 3; // always render 4 line slots regardless of actual lines
   const totalLines = lines.length;
 
@@ -588,30 +589,34 @@ function BasinPair({
       {/* Header */}
       <div
         className="absolute left-1/2 -translate-x-1/2 text-center"
-        style={{ top: "3%" }}
-      >
-        <span
-          className="font-pixel text-[9px] tracking-widest uppercase"
-          style={{ color: GOLD.muted, opacity: 0.6 }}
-        >
-          ONE MORE DISTINCTION
-        </span>
-      </div>
-
-      {/* Instruction */}
-      <div
-        className="absolute left-1/2 -translate-x-1/2 text-center px-8"
-        style={{ top: "10%", width: "80%" }}
+        style={{ top: "13%", width: "85%" }}
       >
         <p
-          className="text-sm leading-relaxed italic"
           style={{
             fontFamily: "'Cormorant Garamond', serif",
+            fontSize: "clamp(2rem, 4.5vw, 4.5rem)",
+            fontWeight: 600,
+            fontStyle: "italic",
+            lineHeight: 1.3,
+            color: GOLD.question,
+            textShadow: `0 0 20px rgba(232,220,200,0.2), 0 2px 8px rgba(0,0,0,0.6)`,
+            marginBottom: "0.6rem",
+          }}
+        >
+          One more distinction.
+        </p>
+        <p
+          style={{
+            fontFamily: "'Cormorant Garamond', serif",
+            fontSize: "clamp(0.8rem, 1.3vw, 0.95rem)",
+            fontWeight: 400,
+            fontStyle: "italic",
+            lineHeight: 1.6,
+            letterSpacing: "0.03em",
             color: PARCHMENT.muted,
           }}
         >
-          Both may feel partially true. Choose the one that feels{" "}
-          <em>more</em> true under real pressure.
+          Both may feel partially true. Choose the one that feels <em>more</em> true under real pressure.
         </p>
       </div>
 
@@ -813,6 +818,10 @@ export default function MirrorFlow() {
       const comboKey = buildGravitasComboKey(gravitasPrior);
       const pairSequence = PAIR_ROUTING[comboKey];
       const needsPair = shouldTriggerConfirmationPair(ranked);
+      console.log("[Mirror] ranked:", ranked);
+console.log("[Mirror] comboKey:", comboKey);
+console.log("[Mirror] pairSequence:", pairSequence);
+console.log("[Mirror] needsPair:", needsPair);
 
       if (needsPair && pairSequence) {
         const pair = CONFIRMATION_PAIRS[pairSequence.first];
