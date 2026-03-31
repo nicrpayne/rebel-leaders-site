@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 interface GravitasShellProps {
   children: ReactNode;
   className?: string;
+  results?: boolean;
   footerControls?: ReactNode;
   status?: string;
   statusColor?: string;
@@ -25,6 +26,7 @@ export default function GravitasShell({
   totalQuestions = 12,
   hideCalibration = false,
   hideCalStamp = false,
+  results = false,
 }: GravitasShellProps) {
   const dustRef = useRef<HTMLDivElement>(null);
 
@@ -57,7 +59,10 @@ export default function GravitasShell({
           "relative w-full max-w-[177.78vh] overflow-hidden",
           className
         )}
-        style={{ aspectRatio: "16/9" }}
+        style={{
+          aspectRatio: "16/9",
+          animation: results ? "gravitasResultsZoom 12s ease-in-out forwards" : "none",
+        }}
       >
         {/* Background Art — the generated frame image */}
         <div
@@ -345,6 +350,11 @@ export default function GravitasShell({
           10% { opacity: 0.06; }
           90% { opacity: 0.06; }
           100% { transform: translateY(-10%) translateX(30px); opacity: 0; }
+        }
+        @keyframes gravitasResultsZoom {
+          0% { transform: scale(1); }
+          100% { transform: scale(1.28); }
+        }
         }
       `}</style>
     </div>

@@ -448,6 +448,7 @@ export default function Results() {
   return (
     <DesktopOnly toolName="Gravitas Results">
     <GravitasShell
+      results
       footerControls={footerControls}
       status="FIELD ANALYSIS COMPLETE"
       statusColor="text-green-400"
