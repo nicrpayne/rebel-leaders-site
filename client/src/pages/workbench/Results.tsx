@@ -619,9 +619,9 @@ export default function Results() {
                     <p className="text-[8px] leading-[1.9] text-[#5a5a66] tracking-[0.05em] italic text-center">
                       The full reading is available with the Deep Scan — 52 questions, ~12 min.
                     </p>
-                    <Link href="/workbench/gravitas">
+                    <Link href="/workbench/gravitas?continue=true">
                       <span className="text-[7px] tracking-[0.2em] uppercase text-[#c5a059]/60 hover:text-[#c5a059] cursor-pointer transition-colors border border-[#c5a059]/20 hover:border-[#c5a059]/40 px-2.5 py-1 rounded-[2px]">
-                        TAKE THE DEEP SCAN →
+                        CONTINUE TO DEEP SCAN →
                       </span>
                     </Link>
                   </div>

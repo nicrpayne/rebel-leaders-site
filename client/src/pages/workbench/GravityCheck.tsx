@@ -244,13 +244,38 @@ function ModeSelect({ onSelect }: { onSelect: (mode: ScanMode) => void }) {
 }
 
 export default function GravityCheck() {
-  const [scanMode, setScanMode] = useState<ScanMode | null>(null);
+  // Detect continue=true — must be before useState calls
+  const isContinuing = typeof window !== "undefined" &&
+    new URLSearchParams(window.location.search).get("continue") === "true";
+
+  const [scanMode, setScanMode] = useState<ScanMode | null>(
+    isContinuing ? "DEEP_SCAN" : null
+  );
   const { OnboardingUI } = useGravitasOnboarding({
     onBeginScan: () => setScanMode("SCAN"),
     onTourComplete: () => setScanMode(null),
   });
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [answers, setAnswers] = useState<Record<number, number>>({});
+
+  const savedAnswers: Record<number, number> = (() => {
+    if (!isContinuing) return {};
+    try {
+      return JSON.parse(localStorage.getItem("gravityCheckAnswers") || "{}");
+    } catch { return {}; }
+  })();
+
+  const deepQuestions = getQuestions("DEEP_SCAN");
+  const firstUnansweredIndex = isContinuing
+    ? Math.max(0, deepQuestions.findIndex(q => !(q.id in savedAnswers) && q.depth !== "SCAN"))
+    : 0;
+
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(
+    isContinuing ? firstUnansweredIndex : 0
+  );
+  const [answers, setAnswers] = useState<Record<number, number>>(
+    isContinuing ? savedAnswers : {}
+  );
+
+  
   const [knobValue, setKnobValue] = useState(50);
   const [knobTouched, setKnobTouched] = useState(false);
   const [, setLocation] = useLocation();
@@ -282,6 +307,7 @@ export default function GravityCheck() {
     if (isLastQuestion) {
       const results = calculateScore(newAnswers);
       localStorage.setItem("gravityCheckResults", JSON.stringify({ ...results, scanMode }));
+      localStorage.setItem("gravityCheckAnswers", JSON.stringify(newAnswers));
       // Persist to database if authenticated — fire-and-forget, never blocks navigation
       trpcVanilla.gravitas.save.mutate({
         scanMode: scanMode as "SCAN" | "DEEP_SCAN",
