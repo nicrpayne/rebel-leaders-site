@@ -281,7 +281,7 @@ export default function GravityCheck() {
 
     if (isLastQuestion) {
       const results = calculateScore(newAnswers);
-      localStorage.setItem("gravityCheckResults", JSON.stringify(results));
+      localStorage.setItem("gravityCheckResults", JSON.stringify({ ...results, scanMode }));
       // Persist to database if authenticated — fire-and-forget, never blocks navigation
       trpcVanilla.gravitas.save.mutate({
         scanMode: scanMode as "SCAN" | "DEEP_SCAN",

@@ -610,13 +610,21 @@ export default function Results() {
           {/* Save Reading Prompt */}
           {/* SECTIONS 6–10: Interpretive Reading */}
           {(() => {
-            const profile = getGravitasProfile(results.archetype, results.leak);
+            const profile = results.scanMode === "DEEP_SCAN" ? getGravitasProfile(results.archetype, results.leak) : null;
             if (!profile) {
               return (
-                <div className="bg-gradient-to-b from-[#0e0e12] to-[#0a0a0d] border border-[#1a1a22] rounded p-3">
-                  <p className="text-[8px] leading-[1.9] text-[#3a3a44] tracking-[0.05em] italic text-center">
-                    Full reading coming soon — check back after your next scan.
-                  </p>
+                <div className="bg-gradient-to-b from-[#0e0e12] to-[#0a0a0d] border border-[#1a1a22] rounded p-3 relative overflow-hidden">
+                  <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at center, rgba(197,160,89,0.03) 0%, transparent 70%)" }} />
+                  <div className="relative z-10 flex flex-col items-center gap-2 py-1">
+                    <p className="text-[8px] leading-[1.9] text-[#5a5a66] tracking-[0.05em] italic text-center">
+                      The full reading is available with the Deep Scan — 52 questions, ~12 min.
+                    </p>
+                    <Link href="/workbench/gravitas">
+                      <span className="text-[7px] tracking-[0.2em] uppercase text-[#c5a059]/60 hover:text-[#c5a059] cursor-pointer transition-colors border border-[#c5a059]/20 hover:border-[#c5a059]/40 px-2.5 py-1 rounded-[2px]">
+                        TAKE THE DEEP SCAN →
+                      </span>
+                    </Link>
+                  </div>
                 </div>
               );
             }

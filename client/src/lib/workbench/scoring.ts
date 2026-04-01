@@ -14,6 +14,7 @@ export interface ScoringResult {
   forceDescription: string;
   firstMove: string;
   firstMoveDescription: string;
+  scanMode?: "SCAN" | "DEEP_SCAN";
 }
 
 export function calculateScore(answers: Record<number, number>): ScoringResult {
