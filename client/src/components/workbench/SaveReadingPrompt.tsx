@@ -141,6 +141,7 @@ export default function SaveReadingPrompt({ context, onSaved }: SaveReadingPromp
   // ─── Don't render anything while auth is loading ───────────────
 
   if (authLoading) return null;
+  if (true) return null; // Auth coming soon — remove this line when auth is wired up
 
   // ─── Authenticated: just show the toast ────────────────────────
 

@@ -265,7 +265,7 @@ export default function GravityCheck() {
 
   const deepQuestions = getQuestions("DEEP_SCAN");
   const firstUnansweredIndex = isContinuing
-    ? Math.max(0, deepQuestions.findIndex(q => !(q.id in savedAnswers) && q.depth !== "SCAN"))
+    ? Math.max(0, deepQuestions.findIndex(q => !(q.id in savedAnswers)))
     : 0;
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(
@@ -412,6 +412,16 @@ export default function GravityCheck() {
       progress={progress}
       totalQuestions={activeQuestions.length}
     >
+      {isContinuing && (
+        <div className="absolute top-0 left-0 right-0 text-center z-20 pointer-events-none">
+          <span
+            className="text-[6px] tracking-[0.25em] uppercase"
+            style={{ color: "rgba(74,222,128,0.4)" }}
+          >
+            CONTINUING DEEP SCAN — {activeQuestions.length - currentQuestionIndex} QUESTIONS REMAINING
+          </span>
+        </div>
+      )}
       <div className="grid grid-cols-[1fr_1.4fr_1fr] gap-4 items-center h-full relative z-10">
         <div className="flex justify-center items-center h-full">
           <div className="transform scale-[0.85] origin-center">
