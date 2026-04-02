@@ -1,9 +1,6 @@
 /*
  * THE WORKBENCH — /workbench
  * The Rebel OS plugin hub. Browse, filter, and launch leadership tools.
- * Hero image: 8-bit pixel art of Nic's desk/study.
- * Filter sidebar (Categories + Status) on left, plugin cards on right.
- * Fully branded in the main site's RPG aesthetic.
  */
 import { useState, useEffect } from "react";
 import { Link } from "wouter";
@@ -17,7 +14,7 @@ import { useGame } from "@/contexts/GameContext";
 const HERO_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/workbench-hero-desk_30c9a78e.png";
 
 /* ─── Plugin Data ─── */
-type PluginStatus = "ACTIVE" | "LOCKED";
+type PluginStatus = "ACTIVE" | "LOCKED" | "SIGNAL_DEPENDENT";
 type PluginCategory = "MIRROR" | "MAP" | "MOVE" | "SIGNAL";
 
 interface Plugin {
@@ -28,11 +25,12 @@ interface Plugin {
   status: PluginStatus;
   link: string;
   image: string | null;
+  imageDormant?: string | null;
+  imageRevealed?: string | null;
   version: string;
 }
 
 const PLUGINS: Plugin[] = [
-  /* ── ACTIVE ── */
   {
     id: "gravity-check",
     title: "GRAVITAS",
@@ -44,6 +42,18 @@ const PLUGINS: Plugin[] = [
     version: "V.1.0.4",
   },
   {
+    id: "mirror",
+    title: "Mirror",
+    category: "SIGNAL",
+    desc: "Hidden until discovered.",
+    status: "SIGNAL_DEPENDENT",
+    link: "/workbench/mirror",
+    image: null,
+    imageDormant: "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/5e5kxa7Hxu2DiYaSmWbPxb/mirror-cover-dormant-AbLZh9Kevt6HfMAgTuECyw.webp",
+    imageRevealed: "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/5e5kxa7Hxu2DiYaSmWbPxb/mirror-cover-revealed-Fyp6UxnGXZmTbrZBVjBb6Y.webp",
+    version: "V.1.0.0",
+  },
+  {
     id: "codex",
     title: "The Codex",
     category: "MOVE",
@@ -53,7 +63,6 @@ const PLUGINS: Plugin[] = [
     image: "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/6XMovZHp9ctGFaj4XUiVdL/codex_cover-GFY7usmeN4FzNRmJ64c5wD.webp",
     version: "V.1.0.4",
   },
-  /* ── LOCKED with covers ── */
   {
     id: "laas",
     title: "LaaS Calibrator",
@@ -174,7 +183,6 @@ const PLUGINS: Plugin[] = [
     image: "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/field_notes_cover_v3_8603f66f.jpg",
     version: "—",
   },
-  /* ── LOCKED with covers (cont.) ── */
   {
     id: "praxis-builder",
     title: "Praxis Builder",
@@ -187,14 +195,13 @@ const PLUGINS: Plugin[] = [
   },
 ];
 
-const CATEGORIES = ["ALL", "MIRROR", "MAP", "MOVE", "SIGNAL"] as const;
+const CATEGORIES = ["ALL", "MIRROR", "SIGNAL", "MAP", "MOVE"] as const;
 const STATUSES = ["ALL", "ACTIVE", "LOCKED"] as const;
 
 export default function Workbench() {
   usePageTracker("workbench");
   const { awardAchievement } = useGame();
 
-  // Award "Toolsmith" achievement on first visit
   useEffect(() => {
     awardAchievement("toolsmith");
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
@@ -202,14 +209,27 @@ export default function Workbench() {
   const [activeCategory, setActiveCategory] = useState<string>("ALL");
   const [activeStatus, setActiveStatus] = useState<string>("ALL");
 
+  const hasGravitasSignal =
+    typeof window !== "undefined" &&
+    !!localStorage.getItem("gravityCheckResults");
+
   const filtered = PLUGINS.filter((p) => {
     const catMatch = activeCategory === "ALL" || p.category === activeCategory;
-    const statMatch = activeStatus === "ALL" || p.status === activeStatus;
+    // Mirror counts as ACTIVE for filter purposes when signal exists
+    const effectiveStatus =
+      p.status === "SIGNAL_DEPENDENT"
+        ? hasGravitasSignal ? "ACTIVE" : "LOCKED"
+        : p.status;
+    const statMatch = activeStatus === "ALL" || effectiveStatus === activeStatus;
     return catMatch && statMatch;
   });
 
-  const activeCount = PLUGINS.filter((p) => p.status === "ACTIVE").length;
-  const lockedCount = PLUGINS.filter((p) => p.status === "LOCKED").length;
+  const activeCount = PLUGINS.filter((p) =>
+    p.status === "ACTIVE" || (p.status === "SIGNAL_DEPENDENT" && hasGravitasSignal)
+  ).length;
+  const lockedCount = PLUGINS.filter((p) =>
+    p.status === "LOCKED" || (p.status === "SIGNAL_DEPENDENT" && !hasGravitasSignal)
+  ).length;
 
   return (
     <PageLayout>
@@ -251,13 +271,12 @@ export default function Workbench() {
         </FadeIn>
       </section>
 
-      {/* Filter + Cards Section */}
+      {/* Filter + Cards */}
       <section className="container pb-24">
         <div className="flex flex-col md:flex-row gap-8 md:gap-12">
-          {/* Sidebar Filters */}
+          {/* Sidebar */}
           <FadeIn>
             <aside className="md:w-48 shrink-0">
-              {/* Categories */}
               <div className="mb-8">
                 <p className="font-pixel text-[8px] tracking-[0.3em] text-gold/80 mb-3">CATEGORIES</p>
                 <div className="space-y-1 border-l border-gold/20 pl-4">
@@ -280,7 +299,6 @@ export default function Workbench() {
                 </div>
               </div>
 
-              {/* Status */}
               <div>
                 <p className="font-pixel text-[8px] tracking-[0.3em] text-gold/80 mb-3">STATUS</p>
                 <div className="space-y-1 border-l border-gold/20 pl-4">
@@ -309,16 +327,15 @@ export default function Workbench() {
             </aside>
           </FadeIn>
 
-          {/* Plugin Cards Grid */}
+          {/* Grid */}
           <div className="flex-1">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {filtered.map((plugin, i) => (
                 <FadeIn key={plugin.id} delay={i * 0.05}>
-                  <PluginCard plugin={plugin} />
+                  <PluginCard plugin={plugin} hasGravitasSignal={hasGravitasSignal} />
                 </FadeIn>
               ))}
             </div>
-
             {filtered.length === 0 && (
               <div className="text-center py-16">
                 <p className="font-pixel text-[9px] tracking-[0.2em] text-parchment-dim/40">
@@ -333,19 +350,30 @@ export default function Workbench() {
   );
 }
 
-/* ─── Plugin Card Component ─── */
-function PluginCard({ plugin }: { plugin: Plugin }) {
-  const isActive = plugin.status === "ACTIVE";
-  const hasImage = !!plugin.image;
+/* ─── Plugin Card ─── */
+function PluginCard({ plugin, hasGravitasSignal }: { plugin: Plugin; hasGravitasSignal: boolean }) {
+  const isMirror = plugin.id === "mirror";
+  const mirrorRevealed = isMirror && hasGravitasSignal;
+  const mirrorDormant = isMirror && !hasGravitasSignal;
+  const isActive = plugin.status === "ACTIVE" || mirrorRevealed;
+  const hasImage = !!(plugin.image || (isMirror && (plugin.imageDormant || plugin.imageRevealed)));
+
+  const effectiveImage = isMirror
+    ? mirrorRevealed ? plugin.imageRevealed : plugin.imageDormant
+    : plugin.image;
 
   const cardContent = (
     <div
-      className={`group relative bg-card border border-gold/20 transition-all duration-500 flex flex-col h-full ${
-        isActive
-          ? "hover:-translate-y-1 hover:shadow-[0_0_30px_-10px_rgba(197,160,89,0.2)] hover:border-gold/50 cursor-pointer"
+      className={`group relative bg-card border transition-all duration-500 flex flex-col h-full ${
+        mirrorRevealed
+          ? "border-gold/50 cursor-pointer hover:-translate-y-1 hover:shadow-[0_0_40px_-8px_rgba(197,160,89,0.35)] hover:border-gold"
+          : mirrorDormant
+          ? "border-gold/10 cursor-default opacity-80 animate-pulse"
+          : isActive
+          ? "border-gold/20 cursor-pointer hover:-translate-y-1 hover:shadow-[0_0_30px_-10px_rgba(197,160,89,0.2)] hover:border-gold/50"
           : hasImage
-            ? "opacity-95 grayscale-[0.08] cursor-default hover:opacity-100 hover:grayscale-0"
-            : "opacity-65 grayscale-[0.3] cursor-default"
+          ? "border-gold/20 opacity-95 grayscale-[0.08] cursor-default hover:opacity-100 hover:grayscale-0"
+          : "border-gold/20 opacity-65 grayscale-[0.3] cursor-default"
       }`}
     >
       {/* Corner accents */}
@@ -354,13 +382,17 @@ function PluginCard({ plugin }: { plugin: Plugin }) {
       <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-gold/40 group-hover:border-gold/80 transition-colors" />
       <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-gold/40 group-hover:border-gold/80 transition-colors" />
 
-      {/* Cover Image */}
+      {/* Cover */}
       <div className="relative aspect-[4/3] overflow-hidden bg-forest-deep">
-        {plugin.image ? (
+        {effectiveImage ? (
           <img
-            src={plugin.image}
+            src={effectiveImage}
             alt={plugin.title}
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            className={`w-full h-full object-cover transition-all duration-700 ${
+              mirrorDormant
+                ? "opacity-60 grayscale-[0.2]"
+                : "group-hover:scale-105"
+            }`}
             loading="lazy"
           />
         ) : (
@@ -371,25 +403,27 @@ function PluginCard({ plugin }: { plugin: Plugin }) {
             </div>
           </div>
         )}
-        {/* Overlay gradient */}
         <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent opacity-60" />
       </div>
 
-      {/* Card Body */}
+      {/* Body */}
       <div className="p-4 flex flex-col flex-1">
-        {/* Status badge row */}
         <div className="flex items-center justify-between mb-2">
           <h3 className="font-display text-xl text-parchment font-semibold tracking-wide">
             {plugin.title}
           </h3>
           <span
-            className={`font-pixel text-[7px] tracking-[0.2em] px-2 py-1 shrink-0 ml-2 -mt-1 -mr-1 ${
-              isActive
-                ? "bg-gold/15 text-gold border border-gold/30"
-                : "bg-red-900/20 text-red-400/80 border border-red-500/30"
+            className={`font-pixel text-[7px] tracking-[0.2em] px-2 py-1 shrink-0 ml-2 -mt-1 -mr-1 border ${
+              mirrorRevealed
+                ? "bg-gold/15 text-gold border-gold/40"
+                : mirrorDormant
+                ? "bg-card text-gold/30 border-gold/15"
+                : isActive
+                ? "bg-gold/15 text-gold border-gold/30"
+                : "bg-red-900/20 text-red-400/80 border-red-500/30"
             }`}
           >
-            {plugin.status}
+            {mirrorRevealed ? "SIGNAL RECEIVED" : mirrorDormant ? "AWAITING SIGNAL" : plugin.status}
           </span>
         </div>
         <p className="font-pixel text-[7px] tracking-[0.15em] text-gold-dim/60 mb-3">
@@ -403,14 +437,16 @@ function PluginCard({ plugin }: { plugin: Plugin }) {
 
         {/* Footer */}
         <div className="flex items-center justify-between mt-4 pt-3 border-t border-gold/10">
-          <span className="font-pixel text-[7px] tracking-[0.2em] text-parchment-dim/30">
-            REBEL OS
-          </span>
-          {isActive && (
-            <span className="font-pixel text-[8px] tracking-[0.2em] text-gold group-hover:text-gold transition-colors flex items-center gap-1">
-              LAUNCH <span className="transition-transform group-hover:translate-x-0.5">&rarr;</span>
+          <span className="font-pixel text-[7px] tracking-[0.2em] text-parchment-dim/30">REBEL OS</span>
+          {mirrorDormant ? (
+            <span className="font-pixel text-[7px] tracking-[0.15em] text-gold/30">
+              RUN GRAVITAS TO UNLOCK
             </span>
-          )}
+          ) : isActive ? (
+            <span className="font-pixel text-[8px] tracking-[0.2em] text-gold flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+              LAUNCH &rarr;
+            </span>
+          ) : null}
         </div>
       </div>
     </div>
@@ -421,3 +457,4 @@ function PluginCard({ plugin }: { plugin: Plugin }) {
   }
   return cardContent;
 }
+
