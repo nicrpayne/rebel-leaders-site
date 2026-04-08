@@ -1,17 +1,15 @@
 /**
- * YouTube video fetching via Manus Data API.
- * Replaces the old RSS-based approach which was unreliable from production server IPs
- * (YouTube blocks RSS requests from cloud hosting).
+ * YouTube video fetching via YouTube Data API v3.
+ * Replaces the Manus Data API approach which only works on Manus infrastructure.
  */
-import { callDataApi } from "./_core/dataApi";
+import { ENV } from "./_core/env";
 
 const YOUTUBE_CHANNEL_ID = "UCQvL3b2AbMM_K38lY3FHdLg";
+const YT_API_BASE = "https://www.googleapis.com/youtube/v3";
 
-// Cache results for 30 minutes
-let cachedVideos: YouTubeVideo[] | null = null;
-let cachedShorts: YouTubeVideo[] | null = null;
-let videoCacheTimestamp = 0;
-let shortsCacheTimestamp = 0;
+// Single shared cache — fetch videos and shorts together, split on read
+let cache: { videos: YouTubeVideo[]; shorts: YouTubeVideo[] } | null = null;
+let cacheTimestamp = 0;
 const CACHE_TTL_MS = 30 * 60 * 1000;
 
 export interface YouTubeVideo {
@@ -24,155 +22,152 @@ export interface YouTubeVideo {
   isShort: boolean;
 }
 
-function parseDataApiVideo(item: any, isShort: boolean): YouTubeVideo | null {
+/**
+ * Parse an ISO 8601 duration string (e.g. "PT1M30S") to total seconds.
+ */
+function parseDurationSeconds(duration: string): number {
+  const match = duration.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
+  if (!match) return 0;
+  const hours = parseInt(match[1] ?? "0", 10);
+  const minutes = parseInt(match[2] ?? "0", 10);
+  const seconds = parseInt(match[3] ?? "0", 10);
+  return hours * 3600 + minutes * 60 + seconds;
+}
+
+async function fetchFromYouTubeApi(): Promise<{ videos: YouTubeVideo[]; shorts: YouTubeVideo[] }> {
+  const apiKey = ENV.youtubeApiKey;
+
+  if (!apiKey) {
+    console.error("[YouTube API] YOUTUBE_API_KEY is not set");
+    return { videos: [], shorts: [] };
+  }
+
+  // Step 1: search.list — get recent uploads (videos only, ordered by date)
+  const searchUrl = new URL(`${YT_API_BASE}/search`);
+  searchUrl.searchParams.set("channelId", YOUTUBE_CHANNEL_ID);
+  searchUrl.searchParams.set("type", "video");
+  searchUrl.searchParams.set("order", "date");
+  searchUrl.searchParams.set("maxResults", "25");
+  searchUrl.searchParams.set("part", "id,snippet");
+  searchUrl.searchParams.set("key", apiKey);
+
+  let searchItems: any[];
   try {
-    const video = item?.video;
-    if (!video) return null;
+    const res = await fetch(searchUrl.toString());
+    if (!res.ok) {
+      const body = await res.text();
+      console.error(`[YouTube API] search.list failed ${res.status}: ${body}`);
+      return { videos: [], shorts: [] };
+    }
+    const data = await res.json();
+    searchItems = data.items ?? [];
+    console.log(`[YouTube API] search.list returned ${searchItems.length} items`);
+  } catch (err) {
+    console.error("[YouTube API] search.list error:", err instanceof Error ? err.message : err);
+    return { videos: [], shorts: [] };
+  }
 
-    const videoId = video.videoId || "";
-    if (!videoId) return null;
+  if (searchItems.length === 0) return { videos: [], shorts: [] };
 
-    // Get the best thumbnail
-    const thumbnails = video.thumbnails || [];
+  // Step 2: videos.list — get durations to detect Shorts (≤ 60s)
+  const videoIds = searchItems.map((i: any) => i.id?.videoId).filter(Boolean).join(",");
+  const videosUrl = new URL(`${YT_API_BASE}/videos`);
+  videosUrl.searchParams.set("id", videoIds);
+  videosUrl.searchParams.set("part", "contentDetails");
+  videosUrl.searchParams.set("key", apiKey);
+
+  let durationMap: Record<string, number> = {};
+  try {
+    const res = await fetch(videosUrl.toString());
+    if (!res.ok) {
+      const body = await res.text();
+      console.error(`[YouTube API] videos.list failed ${res.status}: ${body}`);
+      // Proceed without duration data — treat all as full videos
+    } else {
+      const data = await res.json();
+      for (const item of data.items ?? []) {
+        durationMap[item.id] = parseDurationSeconds(item.contentDetails?.duration ?? "");
+      }
+    }
+  } catch (err) {
+    console.error("[YouTube API] videos.list error:", err instanceof Error ? err.message : err);
+  }
+
+  const videos: YouTubeVideo[] = [];
+  const shorts: YouTubeVideo[] = [];
+
+  for (const item of searchItems) {
+    const videoId = item.id?.videoId;
+    if (!videoId) continue;
+
+    const snippet = item.snippet ?? {};
+    const durationSecs = durationMap[videoId] ?? 9999;
+    const isShort = durationSecs <= 60;
+
+    const thumbnails = snippet.thumbnails ?? {};
     const thumbnailUrl =
-      thumbnails.length > 0
-        ? thumbnails[thumbnails.length - 1]?.url || ""
-        : `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
+      thumbnails.maxres?.url ||
+      thumbnails.high?.url ||
+      thumbnails.medium?.url ||
+      thumbnails.default?.url ||
+      `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
 
-    // Parse published time - the API returns relative text like "2 weeks ago"
-    const publishedText = video.publishedTimeText || "";
-    const pubDate = parseRelativeTime(publishedText);
-
-    // Get description snippet
-    const description = video.descriptionSnippet || "";
+    const description: string = snippet.description ?? "";
     const shortDesc = description.length > 200 ? description.slice(0, 200) + "..." : description;
 
-    return {
+    const video: YouTubeVideo = {
       videoId,
-      title: video.title || "Untitled",
-      link: `https://www.youtube.com/watch?v=${videoId}`,
-      pubDate,
+      title: snippet.title ?? "Untitled",
+      link: isShort
+        ? `https://www.youtube.com/shorts/${videoId}`
+        : `https://www.youtube.com/watch?v=${videoId}`,
+      pubDate: snippet.publishedAt ?? new Date().toISOString(),
       description: shortDesc,
       thumbnailUrl,
       isShort,
     };
-  } catch {
-    return null;
+
+    if (isShort) {
+      shorts.push(video);
+    } else {
+      videos.push(video);
+    }
   }
+
+  console.log(`[YouTube API] Parsed ${videos.length} full videos, ${shorts.length} shorts`);
+  return { videos, shorts };
 }
 
-/**
- * Convert relative time strings like "2 weeks ago" to ISO date strings.
- * This is approximate but good enough for display ordering.
- */
-function parseRelativeTime(text: string): string {
-  if (!text) return new Date().toISOString();
-
+async function getCache(): Promise<{ videos: YouTubeVideo[]; shorts: YouTubeVideo[] }> {
   const now = Date.now();
-  const lower = text.toLowerCase();
-
-  const match = lower.match(/(\d+)\s+(second|minute|hour|day|week|month|year)s?\s+ago/);
-  if (!match) return new Date().toISOString();
-
-  const amount = parseInt(match[1], 10);
-  const unit = match[2];
-
-  const msPerUnit: Record<string, number> = {
-    second: 1000,
-    minute: 60 * 1000,
-    hour: 60 * 60 * 1000,
-    day: 24 * 60 * 60 * 1000,
-    week: 7 * 24 * 60 * 60 * 1000,
-    month: 30 * 24 * 60 * 60 * 1000,
-    year: 365 * 24 * 60 * 60 * 1000,
-  };
-
-  const ms = msPerUnit[unit] || 0;
-  return new Date(now - amount * ms).toISOString();
-}
-
-async function fetchFromDataApi(
-  filterType: "videos_latest" | "shorts_latest"
-): Promise<YouTubeVideo[]> {
-  try {
-    console.log(`[YouTube DataAPI] Fetching ${filterType} for channel ${YOUTUBE_CHANNEL_ID}`);
-    const result = (await callDataApi("Youtube/get_channel_videos", {
-      query: {
-        id: YOUTUBE_CHANNEL_ID,
-        filter: filterType,
-        hl: "en",
-        gl: "US",
-      },
-    })) as any;
-
-    const contents = result?.contents || [];
-    console.log(`[YouTube DataAPI] Got ${contents.length} items for ${filterType}`);
-    const isShort = filterType === "shorts_latest";
-
-    const videos: YouTubeVideo[] = contents
-      .map((item: any) => parseDataApiVideo(item, isShort))
-      .filter((v: YouTubeVideo | null): v is YouTubeVideo => v !== null);
-
-    // Sort by date, newest first
-    videos.sort(
-      (a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime()
-    );
-
-    return videos;
-  } catch (error) {
-    console.error(
-      `[YouTube DataAPI] Failed to fetch ${filterType}:`,
-      error instanceof Error ? error.message : error
-    );
-    return [];
+  if (cache && now - cacheTimestamp < CACHE_TTL_MS) {
+    return cache;
   }
+
+  const result = await fetchFromYouTubeApi();
+
+  // Only update cache if we got results
+  if (result.videos.length > 0 || result.shorts.length > 0) {
+    cache = result;
+    cacheTimestamp = now;
+  }
+
+  return result.videos.length > 0 || result.shorts.length > 0 ? result : cache ?? { videos: [], shorts: [] };
 }
 
 export async function fetchYouTubeVideos(): Promise<YouTubeVideo[]> {
-  // This returns ALL videos (both full and shorts) for backward compat
-  const [full, shorts] = await Promise.all([
-    fetchYouTubeFullVideos(),
-    fetchYouTubeShorts(),
-  ]);
-  return [...full, ...shorts].sort(
+  const { videos, shorts } = await getCache();
+  return [...videos, ...shorts].sort(
     (a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime()
   );
 }
 
 export async function fetchYouTubeFullVideos(): Promise<YouTubeVideo[]> {
-  const now = Date.now();
-  if (cachedVideos && now - videoCacheTimestamp < CACHE_TTL_MS) {
-    return cachedVideos;
-  }
-
-  const videos = await fetchFromDataApi("videos_latest");
-
-  if (videos.length > 0) {
-    cachedVideos = videos;
-    videoCacheTimestamp = now;
-    return videos;
-  }
-
-  // Return cached if available, otherwise empty
-  if (cachedVideos) return cachedVideos;
-  return [];
+  const { videos } = await getCache();
+  return videos;
 }
 
 export async function fetchYouTubeShorts(): Promise<YouTubeVideo[]> {
-  const now = Date.now();
-  if (cachedShorts && now - shortsCacheTimestamp < CACHE_TTL_MS) {
-    return cachedShorts;
-  }
-
-  const shorts = await fetchFromDataApi("shorts_latest");
-
-  if (shorts.length > 0) {
-    cachedShorts = shorts;
-    shortsCacheTimestamp = now;
-    return shorts;
-  }
-
-  // Return cached if available, otherwise empty
-  if (cachedShorts) return cachedShorts;
-  return [];
+  const { shorts } = await getCache();
+  return shorts;
 }
