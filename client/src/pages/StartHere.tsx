@@ -17,7 +17,7 @@ const RPG_OFFICE = "https://files.manuscdn.com/user_upload_by_module/session_fil
 const RPG_SPRITE = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/oCdVePFazaeRgvNO.png";
 
 export default function StartHere() {
-  usePageTracker("start");
+  usePageTracker("new-player");
   return (
     <PageLayout>
       {/* Easter Egg 5: Konami Code — hidden, always listening */}

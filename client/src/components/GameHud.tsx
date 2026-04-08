@@ -7,7 +7,7 @@
  */
 
 import { useState, useEffect, useRef } from "react";
-import { useGame, type ToastItem } from "@/contexts/GameContext";
+import { useGame, ACHIEVEMENTS, type ToastItem } from "@/contexts/GameContext";
 import { useLocation } from "wouter";
 import { AnimatePresence, motion } from "framer-motion";
 import AchievementsPanel from "./AchievementsPanel";
@@ -226,7 +226,7 @@ export default function GameHud() {
                       ACHIEVEMENTS
                     </span>
                     <span className="font-pixel text-[9px] text-parchment-dim/60 group-hover:text-gold transition-colors">
-                      {state.unlockedAchievements.length}/14 →
+                      {state.unlockedAchievements.length}/{ACHIEVEMENTS.length} →
                     </span>
                   </button>
                 </div>
