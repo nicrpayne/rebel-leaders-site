@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git commit -m ':*)",
+      "Bash(git push:*)",
+      "Bash(npm install:*)",
+      "Bash(node -e \"require\\('@aws-sdk/client-s3'\\); console.log\\('ok'\\)\")",
+      "Bash(npm run:*)",
+      "Bash(DATABASE_URL=\"mysql://root:RZtoiztpLPHaLRXNyqlzGAIAzIyzuamv@gondola.proxy.rlwy.net:29632/railway\" npm run db:push)",
+      "Bash(git add:*)",
+      "Bash(npx tsc:*)",
+      "Bash(node -e \"require\\('react-photo-album'\\); require\\('yet-another-react-lightbox'\\); console.log\\('ok'\\)\")",
+      "Bash(node -e \"const p = require\\('react-photo-album/package.json'\\); console.log\\(p.version\\)\")",
+      "Bash(pnpm install:*)",
+      "Read(//Users/nicholaspayne/.nvm/**)",
+      "Read(//Users/nicholaspayne/**)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(curl -s https://raw.githubusercontent.com/nicrpayne/the-wall/main/src/components/CommunityWall.tsx)",
+      "Bash(curl -s https://raw.githubusercontent.com/nicrpayne/the-wall/main/src/components/JournalUploader.tsx)",
+      "Bash(curl -s https://raw.githubusercontent.com/nicrpayne/the-wall/main/src/components/WallPage.tsx)",
+      "Bash(curl -s https://raw.githubusercontent.com/nicrpayne/the-wall/main/src/lib/supabase.ts)",
+      "WebFetch(domain:github.com)"
+    ]
+  }
+}

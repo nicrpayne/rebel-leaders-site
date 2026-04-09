@@ -4,6 +4,7 @@ import { trpc } from "@/lib/trpc";
 import { useGame } from "@/contexts/GameContext";
 import WallGate from "./WallGate";
 import WallGrid, { type WallEntry } from "./WallGrid";
+import RichTextDisplay from "@/components/wall/RichTextDisplay";
 
 export default function WallPage() {
   const [, params] = useRoute("/wall/:wallCode");
@@ -58,23 +59,47 @@ export default function WallPage() {
   }
 
   return (
-    // TODO: swap bg-background for wall texture image when asset is ready
     <div className="min-h-screen bg-background flex flex-col">
-      {/* Header */}
-      <div className="flex items-center justify-between px-4 py-3 border-b border-parchment/10">
-        <div>
-          <p className="font-pixel text-gold text-[11px] tracking-widest">THE WALL</p>
-          <p className="font-pixel text-parchment/30 text-[9px] tracking-widest">COMMUNAL ARCHIVE</p>
-        </div>
-        {hasSubmitted && (
-          <button
-            onClick={() => setHasSubmitted(false)}
-            className="font-pixel text-[9px] tracking-widest text-parchment/50 border border-parchment/20 px-3 py-1.5 active:opacity-70"
-          >
-            CONTRIBUTE
-          </button>
+      {/* Header — full-width image or dark gradient fallback */}
+      <div className="relative w-full">
+        {wall.headerImageUrl ? (
+          <>
+            <img src={wall.headerImageUrl} alt="" className="w-full h-48 object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-background" />
+          </>
+        ) : (
+          <div className="w-full h-32 bg-gradient-to-b from-gray-900 to-background" />
         )}
+        {/* Title + CONTRIBUTE overlaid on header */}
+        <div className="absolute bottom-0 left-0 right-0 flex items-end justify-between px-4 pb-3">
+          <div>
+            <p className="font-pixel text-gold text-[11px] tracking-widest">THE WALL</p>
+            <p className="font-pixel text-parchment/30 text-[9px] tracking-widest">COMMUNAL ARCHIVE</p>
+          </div>
+          {hasSubmitted && (
+            <button
+              onClick={() => setHasSubmitted(false)}
+              className="font-pixel text-[9px] tracking-widest text-parchment/50 border border-parchment/20 px-3 py-1.5 active:opacity-70"
+            >
+              CONTRIBUTE
+            </button>
+          )}
+        </div>
       </div>
+
+      {/* Wall description + prompt (shown before submission only) */}
+      {(wall.description || wall.promptText) && !hasSubmitted && (
+        <div className="px-6 py-5 border-b border-parchment/10 max-w-lg mx-auto w-full">
+          {wall.description && (
+            <RichTextDisplay content={wall.description} className="mb-4" />
+          )}
+          {wall.promptText && (
+            <p className="font-display text-parchment/70 text-base leading-snug">
+              {wall.promptText}
+            </p>
+          )}
+        </div>
+      )}
 
       {/* Main content */}
       {hasSubmitted ? (

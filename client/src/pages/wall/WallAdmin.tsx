@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { trpc } from "@/lib/trpc";
+import RichTextEditor from "@/components/wall/RichTextEditor";
+import ZoomableImage from "@/components/wall/ZoomableImage";
 
 type Tab = "submissions" | "walls";
 
@@ -12,6 +14,8 @@ export default function WallAdmin() {
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [newWall, setNewWall] = useState({ title: "", promptText: "", description: "" });
   const [createResult, setCreateResult] = useState<{ wallCode: string; shareableUrl: string } | null>(null);
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [isBulkProcessing, setIsBulkProcessing] = useState(false);
 
   const verify = trpc.wall.adminVerify.useMutation();
   const { data: walls = [], refetch: refetchWalls } = trpc.wall.adminGetWalls.useQuery(
@@ -51,6 +55,34 @@ export default function WallAdmin() {
       title: newWall.title,
       promptText: newWall.promptText || undefined,
       description: newWall.description || undefined,
+    });
+  }
+
+  async function handleBulkApprove() {
+    setIsBulkProcessing(true);
+    for (const id of Array.from(selectedIds)) {
+      await approve.mutateAsync({ secret, submissionId: id });
+    }
+    setSelectedIds(new Set());
+    setIsBulkProcessing(false);
+    refetchSubmissions();
+  }
+
+  async function handleBulkReject() {
+    setIsBulkProcessing(true);
+    for (const id of Array.from(selectedIds)) {
+      await reject.mutateAsync({ secret, submissionId: id });
+    }
+    setSelectedIds(new Set());
+    setIsBulkProcessing(false);
+    refetchSubmissions();
+  }
+
+  function toggleSelect(id: string) {
+    setSelectedIds((prev) => {
+      const next = new Set(prev);
+      next.has(id) ? next.delete(id) : next.add(id);
+      return next;
     });
   }
 
@@ -118,9 +150,9 @@ export default function WallAdmin() {
         {activeTab === "submissions" && (
           <div>
             {/* Wall filter */}
-            <div className="flex gap-2 mb-6 flex-wrap">
+            <div className="flex gap-2 mb-4 flex-wrap">
               <button
-                onClick={() => setSelectedWallId(null)}
+                onClick={() => { setSelectedWallId(null); setSelectedIds(new Set()); }}
                 className={`px-3 py-1 text-xs border ${selectedWallId === null ? "border-white text-white" : "border-gray-600 text-gray-400 hover:border-white hover:text-white"}`}
               >
                 ALL
@@ -128,7 +160,7 @@ export default function WallAdmin() {
               {walls.map((w) => (
                 <button
                   key={w.id}
-                  onClick={() => setSelectedWallId(w.id)}
+                  onClick={() => { setSelectedWallId(w.id); setSelectedIds(new Set()); }}
                   className={`px-3 py-1 text-xs border ${selectedWallId === w.id ? "border-white text-white" : "border-gray-600 text-gray-400 hover:border-white hover:text-white"}`}
                 >
                   {w.wallCode}
@@ -139,38 +171,82 @@ export default function WallAdmin() {
             {submissions.length === 0 ? (
               <p className="text-gray-500 text-sm">No pending submissions.</p>
             ) : (
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {submissions.map((sub) => (
-                  <div key={sub.id} className="border border-gray-700 p-3 flex flex-col gap-2">
-                    <a href={sub.imageUrl} target="_blank" rel="noreferrer">
-                      <img
-                        src={sub.imageUrl}
-                        alt=""
-                        className="w-full aspect-square object-cover hover:opacity-80"
-                      />
-                    </a>
-                    <p className="text-xs text-gray-400">
-                      {sub.submittedAt ? new Date(sub.submittedAt).toLocaleString() : "—"}
-                    </p>
-                    <div className="flex gap-2">
+              <>
+                {/* Bulk controls */}
+                <div className="flex items-center gap-4 mb-4 pb-4 border-b border-gray-800">
+                  <label className="flex items-center gap-2 text-xs text-gray-400 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={selectedIds.size === submissions.length}
+                      onChange={(e) =>
+                        setSelectedIds(e.target.checked ? new Set(submissions.map((s) => s.id)) : new Set())
+                      }
+                      className="accent-white"
+                    />
+                    SELECT ALL
+                  </label>
+                  {selectedIds.size > 0 && (
+                    <>
                       <button
-                        onClick={() => approve.mutate({ secret, submissionId: sub.id })}
-                        disabled={approve.isPending}
-                        className="flex-1 py-1 text-xs bg-green-800 hover:bg-green-700 disabled:opacity-50"
+                        onClick={handleBulkApprove}
+                        disabled={isBulkProcessing}
+                        className="px-3 py-1 text-xs bg-green-800 hover:bg-green-700 disabled:opacity-50"
                       >
-                        APPROVE
+                        APPROVE SELECTED ({selectedIds.size})
                       </button>
                       <button
-                        onClick={() => reject.mutate({ secret, submissionId: sub.id })}
-                        disabled={reject.isPending}
-                        className="flex-1 py-1 text-xs bg-red-900 hover:bg-red-800 disabled:opacity-50"
+                        onClick={handleBulkReject}
+                        disabled={isBulkProcessing}
+                        className="px-3 py-1 text-xs bg-red-900 hover:bg-red-800 disabled:opacity-50"
                       >
-                        REJECT
+                        REJECT SELECTED ({selectedIds.size})
                       </button>
+                    </>
+                  )}
+                </div>
+
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                  {submissions.map((sub) => (
+                    <div
+                      key={sub.id}
+                      className={`border p-3 flex flex-col gap-2 ${selectedIds.has(sub.id) ? "border-white" : "border-gray-700"}`}
+                    >
+                      <div className="relative w-full aspect-square bg-gray-900">
+                        <ZoomableImage
+                          src={sub.imageUrl}
+                          alt=""
+                          className="w-full h-full"
+                        />
+                        <input
+                          type="checkbox"
+                          checked={selectedIds.has(sub.id)}
+                          onChange={() => toggleSelect(sub.id)}
+                          className="absolute top-1 left-1 accent-white w-4 h-4 z-20"
+                        />
+                      </div>
+                      <p className="text-xs text-gray-400">
+                        {sub.submittedAt ? new Date(sub.submittedAt).toLocaleString() : "—"}
+                      </p>
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => approve.mutate({ secret, submissionId: sub.id })}
+                          disabled={approve.isPending || isBulkProcessing}
+                          className="flex-1 py-1 text-xs bg-green-800 hover:bg-green-700 disabled:opacity-50"
+                        >
+                          APPROVE
+                        </button>
+                        <button
+                          onClick={() => reject.mutate({ secret, submissionId: sub.id })}
+                          disabled={reject.isPending || isBulkProcessing}
+                          className="flex-1 py-1 text-xs bg-red-900 hover:bg-red-800 disabled:opacity-50"
+                        >
+                          REJECT
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              </>
             )}
           </div>
         )}
@@ -204,12 +280,11 @@ export default function WallAdmin() {
                   onChange={(e) => setNewWall({ ...newWall, promptText: e.target.value })}
                   className="bg-gray-800 text-white px-3 py-2 text-sm border border-gray-600 focus:outline-none focus:border-white resize-none"
                 />
-                <textarea
+                <RichTextEditor
+                  content={newWall.description}
+                  onChange={(val) => setNewWall({ ...newWall, description: val })}
                   placeholder="Description (optional)"
-                  rows={2}
-                  value={newWall.description}
-                  onChange={(e) => setNewWall({ ...newWall, description: e.target.value })}
-                  className="bg-gray-800 text-white px-3 py-2 text-sm border border-gray-600 focus:outline-none focus:border-white resize-none"
+                  className="min-h-[120px]"
                 />
                 <button
                   type="submit"
