@@ -201,17 +201,7 @@ const WallCreationForm = ({
   return (
     <Card
       className="w-full max-w-md mx-auto max-h-[85vh] flex flex-col"
-      style={{
-        background: "#fff",
-        "--background": "#fff",
-        "--foreground": "#111827",
-        "--card": "#fff",
-        "--card-foreground": "#111827",
-        "--muted-foreground": "#6b7280",
-        "--border": "#e5e7eb",
-        "--input": "#f9fafb",
-        "--ring": "#6b7280",
-      } as React.CSSProperties}
+      style={{ backgroundColor: '#ffffff', color: '#111827' }}
     >
       <CardHeader className="flex-shrink-0 pb-4">
         <CardTitle>
