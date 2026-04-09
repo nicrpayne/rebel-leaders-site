@@ -164,6 +164,30 @@ export const wallRouter = router({
       return { success: true } as const;
     }),
 
+  adminUpdateWall: publicProcedure
+    .input(z.object({
+      secret: z.string(),
+      wallId: z.string(),
+      title: z.string(),
+      description: z.string().optional(),
+      promptText: z.string().optional(),
+      headerImageUrl: z.string().optional(),
+    }))
+    .mutation(async ({ input }) => {
+      requireAdmin(input.secret);
+      const db = await getDb();
+      if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Database unavailable" });
+
+      await db.update(walls).set({
+        title: input.title,
+        description: input.description ?? null,
+        promptText: input.promptText ?? null,
+        headerImageUrl: input.headerImageUrl ?? null,
+      }).where(eq(walls.id, input.wallId));
+
+      return { success: true } as const;
+    }),
+
   adminCreateWall: publicProcedure
     .input(z.object({
       secret: z.string(),

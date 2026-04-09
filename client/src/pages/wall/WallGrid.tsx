@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { trpc } from "@/lib/trpc";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -145,6 +146,9 @@ const CommunityWall = ({
 
   // Admin functionality states
   const [showSettings, setShowSettings] = useState(false);
+  const updateWallMutation = trpc.wall.adminUpdateWall.useMutation({
+    onSuccess: () => setShowSettings(false),
+  });
   const [isRearrangeMode, setIsRearrangeMode] = useState(false);
   const [reorderedEntries, setReorderedEntries] =
     useState<JournalEntry[]>(entries);
@@ -1014,14 +1018,41 @@ const CommunityWall = ({
               Update the title, description, and privacy settings for this wall.
             </DialogDescription>
           </DialogHeader>
-          <div className="space-y-4 pt-2">
-            <p className="text-sm text-muted-foreground">
-              Wall settings are managed from the admin dashboard.
-            </p>
-            <Button variant="outline" onClick={() => setShowSettings(false)}>
-              Close
-            </Button>
-          </div>
+          <form
+            onSubmit={async (e) => {
+              e.preventDefault();
+              const secret = sessionStorage.getItem("wall_admin_secret") ?? "";
+              const fd = new FormData(e.currentTarget);
+              await updateWallMutation.mutateAsync({
+                secret,
+                wallId: wallData?.id ?? wallId,
+                title: fd.get("title") as string,
+                description: (fd.get("description") as string) || undefined,
+                promptText: (fd.get("promptText") as string) || undefined,
+                headerImageUrl: (fd.get("headerImageUrl") as string) || undefined,
+              });
+            }}
+            className="space-y-4 pt-2"
+          >
+            <div className="space-y-1">
+              <label className="text-sm font-medium">Title</label>
+              <input name="title" defaultValue={wallData?.title ?? title} required className="w-full border rounded px-3 py-2 text-sm bg-background" />
+            </div>
+            <div className="space-y-1">
+              <label className="text-sm font-medium">Description</label>
+              <textarea name="description" defaultValue={wallData?.description ?? description} rows={3} className="w-full border rounded px-3 py-2 text-sm bg-background resize-none" />
+            </div>
+            <div className="space-y-1">
+              <label className="text-sm font-medium">Header Image URL</label>
+              <input name="headerImageUrl" defaultValue={wallData?.headerImageUrl ?? ""} className="w-full border rounded px-3 py-2 text-sm bg-background" />
+            </div>
+            <div className="flex justify-end gap-2">
+              <Button type="button" variant="outline" onClick={() => setShowSettings(false)}>Cancel</Button>
+              <Button type="submit" disabled={updateWallMutation.isPending}>
+                {updateWallMutation.isPending ? "Saving..." : "Save Changes"}
+              </Button>
+            </div>
+          </form>
         </DialogContent>
       </Dialog>
     </div>

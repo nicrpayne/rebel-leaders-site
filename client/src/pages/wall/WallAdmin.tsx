@@ -113,6 +113,9 @@ const AdminDashboard = () => {
   const createWallMutation = trpc.wall.adminCreateWall.useMutation({
     onSuccess: () => refetchWalls(),
   });
+  const updateWallMutation = trpc.wall.adminUpdateWall.useMutation({
+    onSuccess: () => { refetchWalls(); setSelectedWallForEdit(null); },
+  });
 
   const submissions = allSubmissions as Submission[];
   const pendingSubmissions = submissions.filter((s) => s.status === "pending");
@@ -150,6 +153,7 @@ const AdminDashboard = () => {
     setAuthError(false);
     try {
       await verify.mutateAsync({ secret });
+      sessionStorage.setItem("wall_admin_secret", secret);
       setAuthenticated(true);
     } catch {
       setAuthError(true);
@@ -832,19 +836,49 @@ const AdminDashboard = () => {
             </DialogDescription>
           </DialogHeader>
           {selectedWallForEdit && (
-            <div className="mt-2">
-              <p className="text-sm text-muted-foreground">
-                Wall editing is not yet available.
-              </p>
-              <div className="flex justify-end mt-4">
-                <Button
-                  variant="outline"
-                  onClick={() => setSelectedWallForEdit(null)}
-                >
-                  Close
+            <form
+              onSubmit={async (e) => {
+                e.preventDefault();
+                const fd = new FormData(e.currentTarget);
+                try {
+                  await updateWallMutation.mutateAsync({
+                    secret,
+                    wallId: selectedWallForEdit.id,
+                    title: fd.get("title") as string,
+                    description: (fd.get("description") as string) || undefined,
+                    promptText: (fd.get("promptText") as string) || undefined,
+                    headerImageUrl: (fd.get("headerImageUrl") as string) || undefined,
+                  });
+                  toast({ title: "Wall updated!" });
+                } catch (error: any) {
+                  toast({ title: "Error", description: error?.message ?? "Failed to update wall.", variant: "destructive" });
+                }
+              }}
+              className="space-y-4 mt-2"
+            >
+              <div className="space-y-1">
+                <label className="text-sm font-medium">Title</label>
+                <input name="title" defaultValue={selectedWallForEdit.title} required className="w-full border rounded px-3 py-2 text-sm bg-background" />
+              </div>
+              <div className="space-y-1">
+                <label className="text-sm font-medium">Description</label>
+                <textarea name="description" defaultValue={selectedWallForEdit.description ?? ""} rows={3} className="w-full border rounded px-3 py-2 text-sm bg-background resize-none" />
+              </div>
+              <div className="space-y-1">
+                <label className="text-sm font-medium">Prompt Text</label>
+                <input name="promptText" defaultValue={""} className="w-full border rounded px-3 py-2 text-sm bg-background" />
+              </div>
+              <div className="space-y-1">
+                <label className="text-sm font-medium">Header Image URL</label>
+                <input name="headerImageUrl" defaultValue={selectedWallForEdit.headerImageUrl ?? ""} className="w-full border rounded px-3 py-2 text-sm bg-background" />
+              </div>
+              <div className="flex justify-end gap-2">
+                <Button type="button" variant="outline" onClick={() => setSelectedWallForEdit(null)}>Cancel</Button>
+                <Button type="submit" disabled={updateWallMutation.isPending}>
+                  {updateWallMutation.isPending ? "Saving..." : "Save Changes"}
                 </Button>
               </div>
-            </div>
+            </form>
           )}
         </DialogContent>
       </Dialog>
