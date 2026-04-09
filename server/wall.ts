@@ -4,7 +4,7 @@ import { publicProcedure, router } from "./_core/trpc";
 import { getDb } from "./db";
 import { walls, wallSubmissions, wallEntries } from "../drizzle/schema";
 import { eq, desc, and } from "drizzle-orm";
-import { uploadWallImage } from "./r2";
+import { uploadWallImage, uploadWallHeader } from "./r2";
 import { ENV } from "./_core/env";
 import { randomUUID } from "crypto";
 
@@ -218,5 +218,33 @@ export const wallRouter = router({
       });
 
       return { wallCode, shareableUrl: `/wall/${wallCode}` } as const;
+    }),
+
+  adminUploadHeaderImage: publicProcedure
+    .input(z.object({
+      secret: z.string(),
+      wallCode: z.string(),
+      imageBase64: z.string(),
+      contentType: z.string(),
+    }))
+    .mutation(async ({ input }) => {
+      requireAdmin(input.secret);
+      const imageBuffer = Buffer.from(input.imageBase64, "base64");
+      const url = await uploadWallHeader(imageBuffer, input.contentType, input.wallCode);
+      return { url } as const;
+    }),
+
+  adminDeleteWall: publicProcedure
+    .input(z.object({ secret: z.string(), wallId: z.string() }))
+    .mutation(async ({ input }) => {
+      requireAdmin(input.secret);
+      const db = await getDb();
+      if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Database unavailable" });
+
+      await db.delete(wallEntries).where(eq(wallEntries.wallId, input.wallId));
+      await db.delete(wallSubmissions).where(eq(wallSubmissions.wallId, input.wallId));
+      await db.delete(walls).where(eq(walls.id, input.wallId));
+
+      return { success: true } as const;
     }),
 });

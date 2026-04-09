@@ -114,6 +114,10 @@ const AdminDashboard = () => {
   const updateWallMutation = trpc.wall.adminUpdateWall.useMutation({
     onSuccess: () => { refetchWalls(); setSelectedWallForEdit(null); },
   });
+  const deleteWallMutation = trpc.wall.adminDeleteWall.useMutation({
+    onSuccess: () => { refetchWalls(); refetchSubmissions(); },
+  });
+  const uploadHeaderMutation = trpc.wall.adminUploadHeaderImage.useMutation();
 
   const submissions = allSubmissions as Submission[];
   const pendingSubmissions = submissions.filter((s) => s.status === "pending");
@@ -157,6 +161,25 @@ const AdminDashboard = () => {
       setAuthError(true);
     }
   }
+
+  const fileToBase64 = (file: File): Promise<string> =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve((reader.result as string).split(",")[1]);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+
+  const makeUploadHeaderHandler = (wallCode: string) => async (file: File) => {
+    const imageBase64 = await fileToBase64(file);
+    const { url } = await uploadHeaderMutation.mutateAsync({
+      secret,
+      wallCode,
+      imageBase64,
+      contentType: file.type,
+    });
+    return url;
+  };
 
   const handleCreateWall = async (wallData: {
     title: string;
@@ -211,11 +234,16 @@ const AdminDashboard = () => {
   };
 
   const handleDeleteWall = async (wall: Wall) => {
-    toast({
-      title: "Not implemented",
-      description: "Wall deletion is not yet available.",
-      variant: "destructive",
-    });
+    try {
+      await deleteWallMutation.mutateAsync({ secret, wallId: wall.id });
+      toast({ title: "Success", description: `"${wall.title}" deleted.` });
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error?.message ?? "Failed to delete wall.",
+        variant: "destructive",
+      });
+    }
     setWallToDelete(null);
   };
 
@@ -821,6 +849,7 @@ const AdminDashboard = () => {
           {selectedWallForEdit && (
             <WallCreationForm
               onSubmit={handleEditWall}
+              onUploadHeaderImage={makeUploadHeaderHandler(selectedWallForEdit.wallCode)}
               initialData={{
                 title: selectedWallForEdit.title,
                 description: selectedWallForEdit.description ?? "",

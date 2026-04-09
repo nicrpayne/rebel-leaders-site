@@ -34,6 +34,7 @@ interface WallCreationFormProps {
     shareableLink?: string;
     wallCode?: string;
   }>;
+  onUploadHeaderImage?: (file: File) => Promise<string>;
   initialData?: {
     title: string;
     description: string;
@@ -52,6 +53,7 @@ const WallCreationForm = ({
     shareableLink: "https://example.com/wall/123",
     wallCode: "ABC123",
   }),
+  onUploadHeaderImage,
   initialData,
   isEditMode = false,
   onCancel,
@@ -163,16 +165,22 @@ const WallCreationForm = ({
     const file = event.target.files?.[0];
     if (!file) return;
 
+    if (!onUploadHeaderImage) {
+      setError("Header image file upload is not available here. Please enter a URL directly below.");
+      return;
+    }
+
     setIsUploadingHeader(true);
     setError(null);
 
     try {
-      // TODO: port header image upload to tRPC
-      throw new Error("Header image file upload is not yet available. Please enter a URL directly below.");
+      const url = await onUploadHeaderImage(file);
+      setHeaderImageUrl(url);
     } catch (err: any) {
       setError(err?.message ?? "Failed to upload header image.");
     } finally {
       setIsUploadingHeader(false);
+      if (headerFileInputRef.current) headerFileInputRef.current.value = "";
     }
   };
 
