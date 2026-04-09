@@ -29,6 +29,7 @@ import HiddenAssets from "./pages/HiddenAssets";
 import Admin from "./pages/Admin";
 import WallIndex from "./pages/wall/WallIndex";
 import WallPage from "./pages/wall/WallPage";
+import WallAdmin from "./pages/wall/WallAdmin";
 
 function Router() {
   return (
@@ -54,6 +55,7 @@ function Router() {
       <Route path="/game-standalone" component={GameStandalone} />
       <Route path="/hidden-assets" component={HiddenAssets} />
       <Route path="/admin" component={Admin} />
+      <Route path="/admin/wall" component={WallAdmin} />
       <Route path="/wall" component={WallIndex} />
       <Route path="/wall/:wallCode" component={WallPage} />
       <Route path="/404" component={NotFound} />
