@@ -1,9 +1,8 @@
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ColumnsPhotoAlbum } from "react-photo-album";
 import PhotoSwipe from "photoswipe";
 import "photoswipe/style.css";
 
-// PhotoSwipe hardware-acceleration styles (lifted verbatim from old app)
 const pswpStyles = `
   .pswp--smooth { will-change: transform, opacity; }
   .pswp--smooth .pswp__img { will-change: transform; transform: translateZ(0); }
@@ -27,15 +26,44 @@ interface WallGridProps {
 type WallPhoto = { src: string; width: number; height: number; key: string; entryIndex: number };
 
 export default function WallGrid({ entries }: WallGridProps) {
+  const [photosWithDimensions, setPhotosWithDimensions] = useState<WallPhoto[]>([]);
+
+  // Lifted verbatim from CommunityWall.tsx loadImageDimensions()
+  useEffect(() => {
+    if (entries.length === 0) {
+      setPhotosWithDimensions([]);
+      return;
+    }
+
+    setPhotosWithDimensions([]);
+
+    entries.forEach((entry, i) => {
+      const img = new Image();
+      img.crossOrigin = "anonymous";
+
+      const addPhoto = (w: number, h: number) => {
+        setPhotosWithDimensions((prev) => {
+          if (prev.find((p) => p.key === entry.id)) return prev;
+          return [...prev, { src: entry.imageUrl, width: w, height: h, key: entry.id, entryIndex: i }];
+        });
+      };
+
+      const timeout = setTimeout(() => addPhoto(400, 600), 10000);
+
+      img.onload = () => { clearTimeout(timeout); addPhoto(img.naturalWidth || 400, img.naturalHeight || 600); };
+      img.onerror = () => { clearTimeout(timeout); addPhoto(400, 600); };
+      img.src = entry.imageUrl;
+    });
+  }, [entries]);
+
   const openPhotoSwipe = useCallback((index: number) => {
-    const items = entries.map((entry) => ({
-      src: entry.imageUrl,
-      width: 800,
-      height: 600,
+    const items = photosWithDimensions.map((p) => ({
+      src: p.src,
+      width: p.width,
+      height: p.height,
       alt: "",
     }));
 
-    // Config lifted verbatim from old CommunityWall.tsx openPhotoSwipe()
     const options = {
       dataSource: items,
       index,
@@ -75,7 +103,7 @@ export default function WallGrid({ entries }: WallGridProps) {
 
     const gallery = new PhotoSwipe(options);
     gallery.init();
-  }, [entries]);
+  }, [photosWithDimensions]);
 
   if (entries.length === 0) {
     return (
@@ -87,41 +115,57 @@ export default function WallGrid({ entries }: WallGridProps) {
     );
   }
 
-  const photos: WallPhoto[] = entries.map((e, i) => ({
-    src: e.imageUrl,
-    width: 800,
-    height: 600,
-    key: e.id,
-    entryIndex: i,
-  }));
+  // Show loading spinner while images are pre-loading dimensions
+  if (photosWithDimensions.length < entries.length) {
+    return (
+      <div className="flex flex-col items-center justify-center flex-1 py-16 px-6">
+        <p className="font-pixel text-parchment/40 text-[10px] tracking-widest">
+          LOADING...
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="flex-1 overflow-y-auto px-2 py-4">
       <style>{pswpStyles}</style>
-      <ColumnsPhotoAlbum
-        photos={photos}
-        columns={(containerWidth) => (containerWidth < 600 ? 2 : 3)}
-        onClick={({ index }) => openPhotoSwipe(index)}
-        render={{
-          photo: (_props, context) => (
-            <div
-              className="cursor-pointer mb-3 overflow-hidden"
-              style={{
-                transform: `rotate(${context.photo.entryIndex % 2 === 0 ? "2deg" : "-2deg"})`,
-              }}
-            >
-              <img
-                src={context.photo.src}
-                width={context.width}
-                height={context.height}
-                alt=""
-                className="w-full h-auto block shadow-sm hover:shadow-md transition-shadow"
-                loading="lazy"
-              />
-            </div>
-          ),
-        }}
-      />
+      <div style={{ width: "100%", maxWidth: "none", display: "block", overflow: "visible" }}>
+        <ColumnsPhotoAlbum
+          photos={photosWithDimensions}
+          onClick={({ index }) => openPhotoSwipe(index)}
+          spacing={32}
+          padding={0}
+          columns={(containerWidth) => {
+            const actualWidth = typeof window !== "undefined" ? window.innerWidth : containerWidth;
+            if (actualWidth < 640) return 2;
+            if (actualWidth < 1024) return 3;
+            return 4;
+          }}
+          render={{
+            photo: (_props, context) => (
+              <div
+                style={{
+                  transform: `rotate(${context.photo.entryIndex % 2 === 0 ? "1.5deg" : "-1.5deg"})`,
+                  display: "block",
+                  position: "relative",
+                  marginBottom: "16px",
+                  breakInside: "avoid",
+                  pageBreakInside: "avoid",
+                }}
+                className="photo-wrapper"
+              >
+                <img
+                  src={context.photo.src}
+                  alt=""
+                  style={{ width: "100%", height: "auto", objectFit: "cover", display: "block", borderRadius: "8px" }}
+                  className="shadow-sm hover:shadow-md transition-shadow cursor-pointer"
+                  loading="lazy"
+                />
+              </div>
+            ),
+          }}
+        />
+      </div>
     </div>
   );
 }
