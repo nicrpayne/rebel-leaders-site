@@ -12,10 +12,13 @@ export default function WallPage() {
 
   const { awardAchievement } = useGame();
 
+  const isAdminPreview = new URLSearchParams(window.location.search).get("admin") === "true";
+
   const storageKey = `wall_submitted_${wallCode}`;
   const [hasSubmitted, setHasSubmitted] = useState(() => {
     return localStorage.getItem(storageKey) === "true";
   });
+  const showGate = !hasSubmitted && !isAdminPreview;
 
   const { data: wall, isLoading: wallLoading } = trpc.wall.getWall.useQuery(
     { wallCode },
@@ -88,7 +91,7 @@ export default function WallPage() {
       </div>
 
       {/* Wall description + prompt (shown before submission only) */}
-      {(wall.description || wall.promptText) && !hasSubmitted && (
+      {(wall.description || wall.promptText) && showGate && (
         <div className="px-6 py-5 border-b border-parchment/10 max-w-lg mx-auto w-full">
           {wall.description && (
             <RichTextDisplay content={wall.description} className="mb-4" />
@@ -102,7 +105,7 @@ export default function WallPage() {
       )}
 
       {/* Main content */}
-      {hasSubmitted ? (
+      {!showGate ? (
         <WallGrid entries={entries} wallCode={wallCode} />
       ) : (
         <WallGate wall={wall} onSuccess={handleSuccess} />

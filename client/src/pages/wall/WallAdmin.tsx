@@ -548,7 +548,7 @@ const AdminDashboard = () => {
                           variant="outline"
                           size="sm"
                           onClick={() => {
-                            window.open(`/wall/${wall.wallCode}`, "_blank");
+                            window.open(`/wall/${wall.wallCode}?admin=true`, "_blank");
                           }}
                         >
                           <Eye className="h-4 w-4 mr-1" />
