@@ -199,7 +199,20 @@ const WallCreationForm = ({
   };
 
   return (
-    <Card className="w-full max-w-md mx-auto bg-white text-gray-900 max-h-[85vh] flex flex-col">
+    <Card
+      className="w-full max-w-md mx-auto max-h-[85vh] flex flex-col"
+      style={{
+        background: "#fff",
+        "--background": "#fff",
+        "--foreground": "#111827",
+        "--card": "#fff",
+        "--card-foreground": "#111827",
+        "--muted-foreground": "#6b7280",
+        "--border": "#e5e7eb",
+        "--input": "#f9fafb",
+        "--ring": "#6b7280",
+      } as React.CSSProperties}
+    >
       <CardHeader className="flex-shrink-0 pb-4">
         <CardTitle>
           {isEditMode ? "Edit Wall Settings" : "Create New Community Wall"}
@@ -409,7 +422,7 @@ const WallCreationForm = ({
       </CardContent>
 
       {!shareableLink && (
-        <CardFooter className="flex justify-end items-center gap-2 flex-shrink-0 border-t bg-white px-6 py-3">
+        <CardFooter className="flex justify-end items-center gap-2 flex-shrink-0 border-t px-6 py-3">
           <Button type="button" variant="outline" onClick={handleCancel}>
             Cancel
           </Button>
