@@ -6,6 +6,7 @@ import { fetchSubstackArticles } from "./rss";
 import { fetchYouTubeFullVideos, fetchYouTubeShorts } from "./youtube-rss";
 import { gravitasRouter } from "./gravitas";
 import { adminRouter } from "./admin";
+import { wallRouter } from "./wall";
 
 export const appRouter = router({
   system: systemRouter,
@@ -15,6 +16,9 @@ export const appRouter = router({
 
   // Admin dashboard
   admin: adminRouter,
+
+  // Wall feature
+  wall: wallRouter,
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),
     logout: publicProcedure.mutation(({ ctx }) => {
