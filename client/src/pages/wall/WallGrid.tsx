@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { trpc } from "@/lib/trpc";
+import WallCreationForm from "@/components/wall/WallCreationForm";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -1011,48 +1012,32 @@ const CommunityWall = ({
 
       {/* Settings Dialog */}
       <Dialog open={showSettings} onOpenChange={setShowSettings}>
-        <DialogContent className="max-w-md">
-          <DialogHeader>
-            <DialogTitle>Wall Settings</DialogTitle>
-            <DialogDescription>
-              Update the title, description, and privacy settings for this wall.
-            </DialogDescription>
-          </DialogHeader>
-          <form
-            onSubmit={async (e) => {
-              e.preventDefault();
-              const secret = sessionStorage.getItem("wall_admin_secret") ?? "";
-              const fd = new FormData(e.currentTarget);
-              await updateWallMutation.mutateAsync({
-                secret,
-                wallId: wallData?.id ?? wallId,
-                title: fd.get("title") as string,
-                description: (fd.get("description") as string) || undefined,
-                promptText: (fd.get("promptText") as string) || undefined,
-                headerImageUrl: (fd.get("headerImageUrl") as string) || undefined,
-              });
+        <DialogContent className="p-0 max-w-md">
+          <WallCreationForm
+            onSubmit={async (data) => {
+              const adminSecret = sessionStorage.getItem("wall_admin_secret") ?? "";
+              try {
+                await updateWallMutation.mutateAsync({
+                  secret: adminSecret,
+                  wallId: wallData?.id ?? wallId,
+                  title: data.title,
+                  description: data.description || undefined,
+                  headerImageUrl: data.headerImageUrl || undefined,
+                });
+                return { success: true };
+              } catch {
+                return { success: false };
+              }
             }}
-            className="space-y-4 pt-2"
-          >
-            <div className="space-y-1">
-              <label className="text-sm font-medium">Title</label>
-              <input name="title" defaultValue={wallData?.title ?? title} required className="w-full border rounded px-3 py-2 text-sm bg-background" />
-            </div>
-            <div className="space-y-1">
-              <label className="text-sm font-medium">Description</label>
-              <textarea name="description" defaultValue={wallData?.description ?? description} rows={3} className="w-full border rounded px-3 py-2 text-sm bg-background resize-none" />
-            </div>
-            <div className="space-y-1">
-              <label className="text-sm font-medium">Header Image URL</label>
-              <input name="headerImageUrl" defaultValue={wallData?.headerImageUrl ?? ""} className="w-full border rounded px-3 py-2 text-sm bg-background" />
-            </div>
-            <div className="flex justify-end gap-2">
-              <Button type="button" variant="outline" onClick={() => setShowSettings(false)}>Cancel</Button>
-              <Button type="submit" disabled={updateWallMutation.isPending}>
-                {updateWallMutation.isPending ? "Saving..." : "Save Changes"}
-              </Button>
-            </div>
-          </form>
+            initialData={{
+              title: wallData?.title ?? title ?? "",
+              description: wallData?.description ?? description ?? "",
+              isPrivate: wallData?.isPrivate ?? false,
+              headerImageUrl: wallData?.headerImageUrl ?? undefined,
+            }}
+            isEditMode={true}
+            onCancel={() => setShowSettings(false)}
+          />
         </DialogContent>
       </Dialog>
     </div>

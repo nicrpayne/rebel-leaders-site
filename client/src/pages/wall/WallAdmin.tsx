@@ -53,6 +53,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { trpc } from "@/lib/trpc";
 import ZoomableImage from "@/components/wall/ZoomableImage";
 import RichTextDisplay from "@/components/wall/RichTextDisplay";
+import WallCreationForm from "@/components/wall/WallCreationForm";
 
 // Local types (replaces Supabase Wall / Submission / Entry)
 interface Wall {
@@ -88,9 +89,6 @@ const AdminDashboard = () => {
   const { toast } = useToast();
   const [previousSubmissionCount, setPreviousSubmissionCount] = useState(0);
 
-  // Create wall form state (inline, replaces WallCreationForm)
-  const [createWallTitle, setCreateWallTitle] = useState("");
-  const [createWallPromptText, setCreateWallPromptText] = useState("");
 
   // Bulk selection state
   const [selectedSubmissionIds, setSelectedSubmissionIds] = useState<
@@ -160,27 +158,55 @@ const AdminDashboard = () => {
     }
   }
 
-  const handleCreateWall = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleCreateWall = async (wallData: {
+    title: string;
+    description: string;
+    isPrivate: boolean;
+    headerImageUrl?: string;
+  }) => {
     try {
       const result = await createWallMutation.mutateAsync({
         secret,
-        title: createWallTitle,
-        promptText: createWallPromptText || undefined,
+        title: wallData.title,
+        description: wallData.description || undefined,
+        headerImageUrl: wallData.headerImageUrl || undefined,
       });
       setIsCreateWallDialogOpen(false);
-      setCreateWallTitle("");
-      setCreateWallPromptText("");
-      toast({
-        title: "Wall created!",
-        description: `Wall code: ${result.wallCode}`,
-      });
+      return { success: true, wallCode: result.wallCode, shareableLink: `${window.location.origin}/wall/${result.wallCode}` };
     } catch (error: any) {
       toast({
         title: "Error",
         description: error?.message ?? "Failed to create wall. Please try again.",
         variant: "destructive",
       });
+      return { success: false };
+    }
+  };
+
+  const handleEditWall = async (wallData: {
+    title: string;
+    description: string;
+    isPrivate: boolean;
+    headerImageUrl?: string;
+  }) => {
+    if (!selectedWallForEdit) return { success: false };
+    try {
+      await updateWallMutation.mutateAsync({
+        secret,
+        wallId: selectedWallForEdit.id,
+        title: wallData.title,
+        description: wallData.description || undefined,
+        headerImageUrl: wallData.headerImageUrl || undefined,
+      });
+      toast({ title: "Success", description: "Wall updated successfully." });
+      return { success: true };
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error?.message ?? "Failed to update wall.",
+        variant: "destructive",
+      });
+      return { success: false };
     }
   };
 
@@ -421,49 +447,12 @@ const AdminDashboard = () => {
                       Create New Wall
                     </Button>
                   </DialogTrigger>
-                  <DialogContent>
-                    <DialogHeader>
-                      <DialogTitle>Create New Community Wall</DialogTitle>
-                      <DialogDescription>
-                        Fill out the details below to create a new community
-                        wall for journal submissions.
-                      </DialogDescription>
-                    </DialogHeader>
-                    <form onSubmit={handleCreateWall} className="flex flex-col gap-3 mt-2">
-                      <div>
-                        <label className="text-sm font-medium mb-1 block">Title</label>
-                        <input
-                          type="text"
-                          required
-                          value={createWallTitle}
-                          onChange={(e) => setCreateWallTitle(e.target.value)}
-                          placeholder="Wall title"
-                          className="w-full border px-3 py-2 text-sm rounded"
-                        />
-                      </div>
-                      <div>
-                        <label className="text-sm font-medium mb-1 block">Prompt Text</label>
-                        <textarea
-                          value={createWallPromptText}
-                          onChange={(e) => setCreateWallPromptText(e.target.value)}
-                          placeholder="The reflection question shown to users (optional)"
-                          rows={3}
-                          className="w-full border px-3 py-2 text-sm rounded resize-none"
-                        />
-                      </div>
-                      <div className="flex justify-end gap-2 mt-2">
-                        <Button
-                          type="button"
-                          variant="outline"
-                          onClick={() => setIsCreateWallDialogOpen(false)}
-                        >
-                          Cancel
-                        </Button>
-                        <Button type="submit" disabled={createWallMutation.isPending}>
-                          {createWallMutation.isPending ? "Creating..." : "Create Wall"}
-                        </Button>
-                      </div>
-                    </form>
+                  <DialogContent className="p-0 max-w-md">
+                    <WallCreationForm
+                      onSubmit={handleCreateWall}
+                      shouldResetScroll={isCreateWallDialogOpen}
+                      onCancel={() => setIsCreateWallDialogOpen(false)}
+                    />
                   </DialogContent>
                 </Dialog>
               </div>
@@ -828,57 +817,19 @@ const AdminDashboard = () => {
         open={!!selectedWallForEdit}
         onOpenChange={(open) => !open && setSelectedWallForEdit(null)}
       >
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Edit Wall Settings</DialogTitle>
-            <DialogDescription>
-              Update the settings for &quot;{selectedWallForEdit?.title}&quot;.
-            </DialogDescription>
-          </DialogHeader>
+        <DialogContent className="p-0 max-w-md">
           {selectedWallForEdit && (
-            <form
-              onSubmit={async (e) => {
-                e.preventDefault();
-                const fd = new FormData(e.currentTarget);
-                try {
-                  await updateWallMutation.mutateAsync({
-                    secret,
-                    wallId: selectedWallForEdit.id,
-                    title: fd.get("title") as string,
-                    description: (fd.get("description") as string) || undefined,
-                    promptText: (fd.get("promptText") as string) || undefined,
-                    headerImageUrl: (fd.get("headerImageUrl") as string) || undefined,
-                  });
-                  toast({ title: "Wall updated!" });
-                } catch (error: any) {
-                  toast({ title: "Error", description: error?.message ?? "Failed to update wall.", variant: "destructive" });
-                }
+            <WallCreationForm
+              onSubmit={handleEditWall}
+              initialData={{
+                title: selectedWallForEdit.title,
+                description: selectedWallForEdit.description ?? "",
+                isPrivate: false,
+                headerImageUrl: selectedWallForEdit.headerImageUrl ?? undefined,
               }}
-              className="space-y-4 mt-2"
-            >
-              <div className="space-y-1">
-                <label className="text-sm font-medium">Title</label>
-                <input name="title" defaultValue={selectedWallForEdit.title} required className="w-full border rounded px-3 py-2 text-sm bg-background" />
-              </div>
-              <div className="space-y-1">
-                <label className="text-sm font-medium">Description</label>
-                <textarea name="description" defaultValue={selectedWallForEdit.description ?? ""} rows={3} className="w-full border rounded px-3 py-2 text-sm bg-background resize-none" />
-              </div>
-              <div className="space-y-1">
-                <label className="text-sm font-medium">Prompt Text</label>
-                <input name="promptText" defaultValue={""} className="w-full border rounded px-3 py-2 text-sm bg-background" />
-              </div>
-              <div className="space-y-1">
-                <label className="text-sm font-medium">Header Image URL</label>
-                <input name="headerImageUrl" defaultValue={selectedWallForEdit.headerImageUrl ?? ""} className="w-full border rounded px-3 py-2 text-sm bg-background" />
-              </div>
-              <div className="flex justify-end gap-2">
-                <Button type="button" variant="outline" onClick={() => setSelectedWallForEdit(null)}>Cancel</Button>
-                <Button type="submit" disabled={updateWallMutation.isPending}>
-                  {updateWallMutation.isPending ? "Saving..." : "Save Changes"}
-                </Button>
-              </div>
-            </form>
+              isEditMode={true}
+              onCancel={() => setSelectedWallForEdit(null)}
+            />
           )}
         </DialogContent>
       </Dialog>
