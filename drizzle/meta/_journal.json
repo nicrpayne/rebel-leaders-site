@@ -15,6 +15,13 @@
       "when": 1774449911297,
       "tag": "0001_condemned_franklin_storm",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1775694017757,
+      "tag": "0002_solid_luckman",
+      "breakpoints": true
     }
   ]
 }

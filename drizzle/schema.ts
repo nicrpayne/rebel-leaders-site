@@ -1,4 +1,4 @@
-import { decimal, int, json, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
+import { boolean, decimal, int, json, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
 
 /**
  * Core user table backing auth flow.
@@ -55,3 +55,32 @@ export const gravitasResults = mysqlTable("gravitas_results", {
 
 export type GravitasResult = typeof gravitasResults.$inferSelect;
 export type InsertGravitasResult = typeof gravitasResults.$inferInsert;
+
+export const walls = mysqlTable("walls", {
+  id: varchar("id", { length: 36 }).primaryKey(),
+  title: varchar("title", { length: 255 }).notNull(),
+  description: text("description"),
+  wallCode: varchar("wall_code", { length: 10 }).unique().notNull(),
+  isActive: boolean("is_active").default(true),
+  headerImageUrl: text("header_image_url"),
+  promptText: text("prompt_text"),
+  sourceType: varchar("source_type", { length: 50 }),
+  sourceRef: varchar("source_ref", { length: 255 }),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const wallSubmissions = mysqlTable("wall_submissions", {
+  id: varchar("id", { length: 36 }).primaryKey(),
+  wallId: varchar("wall_id", { length: 36 }).notNull(),
+  imageUrl: text("image_url").notNull(),
+  status: mysqlEnum("status", ["pending", "approved", "rejected"]).default("pending"),
+  submittedAt: timestamp("submitted_at").defaultNow(),
+});
+
+export const wallEntries = mysqlTable("wall_entries", {
+  id: varchar("id", { length: 36 }).primaryKey(),
+  wallId: varchar("wall_id", { length: 36 }).notNull(),
+  imageUrl: text("image_url").notNull(),
+  displayOrder: int("display_order").default(0),
+  createdAt: timestamp("created_at").defaultNow(),
+});

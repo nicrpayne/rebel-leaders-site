@@ -8,4 +8,10 @@ export const ENV = {
   forgeApiUrl: process.env.BUILT_IN_FORGE_API_URL ?? "",
   forgeApiKey: process.env.BUILT_IN_FORGE_API_KEY ?? "",
   youtubeApiKey: process.env.YOUTUBE_API_KEY ?? "",
+  r2AccountId: process.env.R2_ACCOUNT_ID ?? "",
+  r2AccessKeyId: process.env.R2_ACCESS_KEY_ID ?? "",
+  r2SecretAccessKey: process.env.R2_SECRET_ACCESS_KEY ?? "",
+  r2BucketName: process.env.R2_BUCKET_NAME ?? "rebel-leaders-wall",
+  r2PublicUrl: process.env.R2_PUBLIC_URL ?? "",
+  wallAdminSecret: process.env.WALL_ADMIN_SECRET ?? "",
 };
