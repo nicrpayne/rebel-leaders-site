@@ -106,7 +106,7 @@ export default function WallPage() {
 
       {/* Main content */}
       {!showGate ? (
-        <WallGrid entries={entries} wallCode={wallCode} />
+        <WallGrid entries={entries} wallCode={wallCode} isAdminMode={isAdminPreview} />
       ) : (
         <WallGate wall={wall} onSuccess={handleSuccess} />
       )}
