@@ -199,7 +199,7 @@ const WallCreationForm = ({
   };
 
   return (
-    <Card className="w-full max-w-md mx-auto bg-white max-h-[85vh] flex flex-col">
+    <Card className="w-full max-w-md mx-auto bg-white text-gray-900 max-h-[85vh] flex flex-col">
       <CardHeader className="flex-shrink-0 pb-4">
         <CardTitle>
           {isEditMode ? "Edit Wall Settings" : "Create New Community Wall"}
