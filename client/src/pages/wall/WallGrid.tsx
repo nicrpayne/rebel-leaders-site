@@ -904,82 +904,18 @@ const CommunityWall = ({
                 <div className="w-full">
                   {photosWithDimensions.length > 0 &&
                   photosWithDimensions.length === entries.length ? (
-                    <div
-                      className="photo-album-container"
-                      style={{
-                        width: "100%",
-                        maxWidth: "none",
-                        display: "block",
-                        overflow: "visible",
-                      }}
-                    >
+                    <div style={{ width: "100%" }}>
                       <ColumnsPhotoAlbum
                         photos={photos}
                         onClick={({ index }) =>
                           !isDeleteMode && openPhotoSwipe(index)
                         }
-                        spacing={32}
+                        spacing={12}
                         padding={0}
                         columns={(containerWidth) => {
-                          console.log(
-                            "📐 [CommunityWall] ColumnsPhotoAlbum columns calculation:",
-                            {
-                              containerWidth,
-                              windowWidth:
-                                typeof window !== "undefined"
-                                  ? window.innerWidth
-                                  : "unknown",
-                              columns:
-                                containerWidth < 640
-                                  ? 2
-                                  : containerWidth < 1024
-                                    ? 3
-                                    : 4,
-                            },
-                          );
-                          // Force recalculation based on actual viewport
-                          const actualWidth =
-                            typeof window !== "undefined"
-                              ? window.innerWidth
-                              : containerWidth;
-                          if (actualWidth < 640) return 2;
-                          if (actualWidth < 1024) return 3;
+                          if (containerWidth < 640) return 2;
+                          if (containerWidth < 1024) return 3;
                           return 4;
-                        }}
-                        render={{
-                          photo: (_props, context) => {
-                            const photo = context.photo;
-                            return (
-                              <div
-                                style={{
-                                  display: "block",
-                                  position: "relative",
-                                  marginBottom: "16px",
-                                  breakInside: "avoid",
-                                  pageBreakInside: "avoid",
-                                  width: context.width,
-                                  height: context.height,
-                                }}
-                                className="photo-wrapper"
-                              >
-                                <img
-                                  src={photo.src}
-                                  alt={photo.alt}
-                                  width={context.width}
-                                  height={context.height}
-                                  style={{
-                                    width: "100%",
-                                    height: "auto",
-                                    objectFit: "cover",
-                                    display: "block",
-                                    borderRadius: "8px",
-                                  }}
-                                  className="shadow-sm hover:shadow-md transition-shadow cursor-pointer"
-                                  loading="lazy"
-                                />
-                              </div>
-                            );
-                          },
                         }}
                       />
                     </div>
