@@ -349,7 +349,7 @@ const WallCreationForm = ({
                     </Button>
                   </div>
                 ) : (
-                  <div className="w-full h-32 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center bg-gray-50 hover:bg-gray-100 transition-colors">
+                  <div className="w-full h-32 rounded-lg border-2 border-dashed border-parchment/20 flex items-center justify-center transition-colors">
                     <div className="text-center">
                       <Image className="h-8 w-8 mx-auto text-gray-400 mb-2" />
                       <p className="text-sm text-gray-500 mb-2">
