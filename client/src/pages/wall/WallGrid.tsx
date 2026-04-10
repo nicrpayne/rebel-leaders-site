@@ -361,8 +361,8 @@ const CommunityWall = ({
     }
   };
 
-  // Normalize all photos to 3:4 portrait ratio for uniform card size
-  const photos = photosWithDimensions.map((p: { src: string; alt: string; key: string; width: number; height: number }) => ({ ...p, width: 3, height: 4 }));
+  // Use real dimensions so masonry can stagger columns; visual crop is handled by CSS
+  const photos = photosWithDimensions;
 
   // PhotoSwipe gallery initialization
   const openPhotoSwipe = (index: number) => {
