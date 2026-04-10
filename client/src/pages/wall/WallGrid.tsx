@@ -29,8 +29,8 @@ import {
 import { Link } from "wouter";
 import JournalUploader from "./WallGate";
 import RichTextDisplay from "@/components/wall/RichTextDisplay";
-import { ColumnsPhotoAlbum } from "react-photo-album";
-import "react-photo-album/columns.css";
+import { MasonryPhotoAlbum } from "react-photo-album";
+import "react-photo-album/masonry.css";
 import PhotoSwipe from "photoswipe";
 import "photoswipe/style.css";
 
@@ -245,7 +245,6 @@ const CommunityWall = ({
             height: number;
           }>((resolve) => {
             const img = new Image();
-            img.crossOrigin = "anonymous"; // Add CORS support
 
             img.onload = () => {
               console.log(
@@ -362,8 +361,8 @@ const CommunityWall = ({
     }
   };
 
-  // Use photos with dimensions for PhotoAlbum masonry layout
-  const photos = photosWithDimensions;
+  // Normalize all photos to 3:4 portrait ratio for uniform card size
+  const photos = photosWithDimensions.map((p: { src: string; alt: string; key: string; width: number; height: number }) => ({ ...p, width: 3, height: 4 }));
 
   // PhotoSwipe gallery initialization
   const openPhotoSwipe = (index: number) => {
@@ -906,13 +905,12 @@ const CommunityWall = ({
                   {photosWithDimensions.length > 0 &&
                   photosWithDimensions.length === entries.length ? (
                     <div style={{ width: "100%" }}>
-                      <ColumnsPhotoAlbum
+                      <MasonryPhotoAlbum
                         photos={photos}
                         onClick={({ index }) =>
                           !isDeleteMode && openPhotoSwipe(index)
                         }
                         spacing={12}
-                        padding={4}
                         defaultContainerWidth={800}
                         columns={(containerWidth) => {
                           if (containerWidth < 640) return 2;
@@ -928,6 +926,7 @@ const CommunityWall = ({
                                 display: "block",
                                 width: "100%",
                                 height: "auto",
+                                aspectRatio: "3 / 4",
                                 objectFit: "cover",
                                 borderRadius: "8px",
                                 cursor: "pointer",
