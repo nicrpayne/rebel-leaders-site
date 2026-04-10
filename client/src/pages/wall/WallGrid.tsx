@@ -29,8 +29,8 @@ import {
 import { Link } from "wouter";
 import JournalUploader from "./WallGate";
 import RichTextDisplay from "@/components/wall/RichTextDisplay";
-import { MasonryPhotoAlbum } from "react-photo-album";
-import "react-photo-album/masonry.css";
+import { RowsPhotoAlbum } from "react-photo-album";
+import "react-photo-album/rows.css";
 import PhotoSwipe from "photoswipe";
 import "photoswipe/style.css";
 
@@ -905,29 +905,20 @@ const CommunityWall = ({
                   {photosWithDimensions.length > 0 &&
                   photosWithDimensions.length === entries.length ? (
                     <div style={{ width: "100%" }}>
-                      <MasonryPhotoAlbum
+                      <RowsPhotoAlbum
                         photos={photos}
                         onClick={({ index }) =>
                           !isDeleteMode && openPhotoSwipe(index)
                         }
                         spacing={12}
                         defaultContainerWidth={800}
-                        columns={(containerWidth) => {
-                          if (containerWidth < 640) return 2;
-                          if (containerWidth < 1024) return 3;
-                          return 4;
-                        }}
+                        targetRowHeight={300}
                         render={{
                           image: (props) => (
                             <img
                               {...props}
                               style={{
                                 ...props.style,
-                                display: "block",
-                                width: "100%",
-                                height: "auto",
-                                aspectRatio: "3 / 4",
-                                objectFit: "cover",
                                 borderRadius: "8px",
                                 cursor: "pointer",
                               }}
