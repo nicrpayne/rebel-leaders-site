@@ -20,7 +20,7 @@ export default function WallPage() {
   });
   const showGate = !hasSubmitted && !isAdminPreview;
 
-  const { data: wall, isLoading: wallLoading } = trpc.wall.getWall.useQuery(
+  const { data: wall, isLoading: wallLoading, refetch: refetchWall } = trpc.wall.getWall.useQuery(
     { wallCode },
     { enabled: Boolean(wallCode) }
   );
@@ -106,7 +106,22 @@ export default function WallPage() {
 
       {/* Main content */}
       {!showGate ? (
-        <WallGrid entries={entries} wallCode={wallCode} isAdminMode={isAdminPreview} />
+        <WallGrid
+          entries={entries}
+          wallCode={wallCode}
+          isAdminMode={isAdminPreview}
+          onWallUpdated={() => refetchWall()}
+          wallId={wall.id}
+          title={wall.title}
+          description={wall.description ?? ""}
+          wallData={{
+            id: wall.id,
+            title: wall.title,
+            description: wall.description ?? "",
+            isPrivate: false,
+            headerImageUrl: wall.headerImageUrl ?? undefined,
+          }}
+        />
       ) : (
         <WallGate wall={wall} onSuccess={handleSuccess} />
       )}

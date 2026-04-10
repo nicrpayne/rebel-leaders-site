@@ -115,6 +115,7 @@ interface CommunityWallProps {
     isPrivate: boolean;
     headerImageUrl?: string;
   }) => Promise<void>;
+  onWallUpdated?: () => void;
   onReorderEntries?: (reorderedEntries: JournalEntry[]) => Promise<void>;
   onDeleteEntries?: (entryIds: string[]) => Promise<void>;
   wallData?: {
@@ -135,6 +136,7 @@ const CommunityWall = ({
   isFirstVisit = false,
   onSubmitEntry = async (files: File | File[]) => {},
   isAdminMode = false,
+  onWallUpdated,
   onReorderEntries = async () => {},
   onDeleteEntries = async () => {},
   wallData,
@@ -148,7 +150,7 @@ const CommunityWall = ({
   // Admin functionality states
   const [showSettings, setShowSettings] = useState(false);
   const updateWallMutation = trpc.wall.adminUpdateWall.useMutation({
-    onSuccess: () => setShowSettings(false),
+    onSuccess: () => { setShowSettings(false); onWallUpdated?.(); },
   });
   const [isRearrangeMode, setIsRearrangeMode] = useState(false);
   const [reorderedEntries, setReorderedEntries] =
