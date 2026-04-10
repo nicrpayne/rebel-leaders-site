@@ -27,6 +27,7 @@ export default function RichTextEditor({
         blockquote: { HTMLAttributes: { class: "blockquote" } },
         bulletList: { keepMarks: true, keepAttributes: false },
         orderedList: { keepMarks: true, keepAttributes: false },
+        underline: false,
       }),
       Placeholder.configure({ placeholder }),
       TextStyle,
@@ -45,7 +46,7 @@ export default function RichTextEditor({
     },
     editorProps: {
       attributes: {
-        class: "prose prose-sm max-w-none focus:outline-none p-3 overflow-y-auto text-white [&_h1]:text-2xl [&_h1]:font-bold [&_h1]:mb-4 [&_h1]:mt-6 [&_h2]:text-xl [&_h2]:font-bold [&_h2]:mb-3 [&_h2]:mt-5 [&_h3]:text-lg [&_h3]:font-bold [&_h3]:mb-2 [&_h3]:mt-4 [&_blockquote]:border-l-4 [&_blockquote]:border-gray-400 [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:text-gray-300 [&_blockquote]:my-4 [&_br]:block [&_br]:my-2",
+        class: "prose prose-sm max-w-none focus:outline-none p-3 overflow-y-auto text-white [&_h1]:text-2xl [&_h1]:font-bold [&_h1]:mb-4 [&_h1]:mt-6 [&_h2]:text-xl [&_h2]:font-bold [&_h2]:mb-3 [&_h2]:mt-5 [&_h3]:text-lg [&_h3]:font-bold [&_h3]:mb-2 [&_h3]:mt-4 [&_blockquote]:border-l-4 [&_blockquote]:border-gray-400 [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:text-gray-300 [&_blockquote]:my-4 [&_br]:block [&_br]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5",
       },
     },
     immediatelyRender: false,
@@ -73,7 +74,7 @@ export default function RichTextEditor({
         <div className="w-px h-5 bg-gray-600 mx-1 self-center" />
         <button type="button" onClick={() => editor.chain().focus().toggleBlockquote().run()} className={`${btnBase} ${editor.isActive("blockquote") ? btnActive : btnInactive}`}>"</button>
       </div>
-      <div className="flex-1 overflow-hidden min-h-[120px]">
+      <div className="flex-1 overflow-y-auto min-h-[120px]">
         <EditorContent editor={editor} />
       </div>
     </div>
