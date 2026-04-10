@@ -30,6 +30,7 @@ import { Link } from "wouter";
 import JournalUploader from "./WallGate";
 import RichTextDisplay from "@/components/wall/RichTextDisplay";
 import { ColumnsPhotoAlbum } from "react-photo-album";
+import "react-photo-album/columns.css";
 import PhotoSwipe from "photoswipe";
 import "photoswipe/style.css";
 
