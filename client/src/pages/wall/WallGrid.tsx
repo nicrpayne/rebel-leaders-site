@@ -911,11 +911,28 @@ const CommunityWall = ({
                           !isDeleteMode && openPhotoSwipe(index)
                         }
                         spacing={12}
-                        padding={0}
+                        padding={4}
+                        defaultContainerWidth={800}
                         columns={(containerWidth) => {
                           if (containerWidth < 640) return 2;
                           if (containerWidth < 1024) return 3;
                           return 4;
+                        }}
+                        render={{
+                          image: (props) => (
+                            <img
+                              {...props}
+                              style={{
+                                ...props.style,
+                                display: "block",
+                                width: "100%",
+                                height: "auto",
+                                objectFit: "cover",
+                                borderRadius: "8px",
+                                cursor: "pointer",
+                              }}
+                            />
+                          ),
                         }}
                       />
                     </div>
