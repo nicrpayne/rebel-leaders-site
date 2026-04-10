@@ -912,7 +912,10 @@ const CommunityWall = ({
                         }
                         spacing={12}
                         defaultContainerWidth={800}
-                        targetRowHeight={300}
+                        targetRowHeight={(containerWidth) => {
+                          if (containerWidth < 640) return 150;
+                          return 300;
+                        }}
                         render={{
                           image: (props) => (
                             <img
