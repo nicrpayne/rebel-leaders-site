@@ -119,7 +119,6 @@ export default function WallPage() {
             title: wall.title,
             description: wall.description ?? "",
             isPrivate: false,
-            headerImageUrl: wall.headerImageUrl ?? undefined,
           }}
         />
       ) : (
