@@ -200,8 +200,7 @@ const WallCreationForm = ({
 
   return (
     <Card
-      className="w-full max-w-md mx-auto max-h-[85vh] flex flex-col"
-      style={{ backgroundColor: '#ffffff', color: '#111827' }}
+      className="w-full max-w-md mx-auto bg-white max-h-[85vh] flex flex-col"
     >
       <CardHeader className="flex-shrink-0 pb-4">
         <CardTitle>
@@ -412,7 +411,7 @@ const WallCreationForm = ({
       </CardContent>
 
       {!shareableLink && (
-        <CardFooter className="flex justify-end items-center gap-2 flex-shrink-0 border-t px-6 py-3">
+        <CardFooter className="flex justify-end items-center gap-2 flex-shrink-0 border-t bg-white px-6 py-3">
           <Button type="button" variant="outline" onClick={handleCancel}>
             Cancel
           </Button>
