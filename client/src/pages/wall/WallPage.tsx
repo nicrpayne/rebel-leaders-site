@@ -103,8 +103,8 @@ export default function WallPage() {
       {/* Post-submission banner */}
       {showSubmitBanner && (
         <div className="px-4 py-3 border-b border-gold/20 bg-gold/5 flex items-center justify-between">
-          <p className="font-pixel text-gold/80 text-[9px] tracking-widest leading-relaxed">
-            YOUR PAGE HAS BEEN RECEIVED — THE COUNCIL WILL REVIEW IT BEFORE IT JOINS THE WALL
+          <p className="font-display text-gold/80 text-sm leading-relaxed">
+            Your page is on its way to the wall. It will appear there shortly.
           </p>
           <button
             onClick={() => setShowSubmitBanner(false)}
