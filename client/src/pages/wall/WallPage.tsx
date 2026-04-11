@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useRoute } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { useGame } from "@/contexts/GameContext";
@@ -18,6 +18,8 @@ export default function WallPage() {
   const [hasSubmitted, setHasSubmitted] = useState(() => {
     return localStorage.getItem(storageKey) === "true";
   });
+  const [showSubmitBanner, setShowSubmitBanner] = useState(false);
+  const bannerTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const showGate = !hasSubmitted && !isAdminPreview;
 
   const { data: wall, isLoading: wallLoading, refetch: refetchWall } = trpc.wall.getWall.useQuery(
@@ -41,9 +43,17 @@ export default function WallPage() {
   function handleSuccess() {
     localStorage.setItem(storageKey, "true");
     setHasSubmitted(true);
+    setShowSubmitBanner(true);
     awardAchievement("wall-witness");
     refetchEntries();
+    bannerTimerRef.current = setTimeout(() => setShowSubmitBanner(false), 6000);
   }
+
+  useEffect(() => {
+    return () => {
+      if (bannerTimerRef.current) clearTimeout(bannerTimerRef.current);
+    };
+  }, []);
 
   if (wallLoading) {
     return (
@@ -89,6 +99,21 @@ export default function WallPage() {
           )}
         </div>
       </div>
+
+      {/* Post-submission banner */}
+      {showSubmitBanner && (
+        <div className="px-4 py-3 border-b border-gold/20 bg-gold/5 flex items-center justify-between">
+          <p className="font-pixel text-gold/80 text-[9px] tracking-widest leading-relaxed">
+            YOUR PAGE HAS BEEN RECEIVED — THE COUNCIL WILL REVIEW IT BEFORE IT JOINS THE WALL
+          </p>
+          <button
+            onClick={() => setShowSubmitBanner(false)}
+            className="font-pixel text-parchment/30 text-[9px] ml-4 shrink-0 active:opacity-70"
+          >
+            ✕
+          </button>
+        </div>
+      )}
 
       {/* Wall description + prompt (shown before submission only) */}
       {(wall.description || wall.promptText) && showGate && (
