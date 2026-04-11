@@ -90,6 +90,7 @@ const WallCreationForm = ({
   useEffect(() => {
     if (shouldResetScroll) {
       resetScrollPosition();
+      setError(null);
     }
   }, [shouldResetScroll]);
 
