@@ -5,7 +5,6 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   Share2,
-  AlertCircle,
   ArrowLeft,
   Upload,
   Move,
@@ -97,15 +96,7 @@ interface CommunityWallProps {
   title?: string;
   description?: string;
   entries?: JournalEntry[];
-  isFirstVisit?: boolean;
-  onSubmitEntry?: (files: File | File[]) => Promise<void>;
   isAdminMode?: boolean;
-  onUpdateWall?: (wallData: {
-    title: string;
-    description: string;
-    isPrivate: boolean;
-    headerImageUrl?: string;
-  }) => Promise<void>;
   onReorderEntries?: (reorderedEntries: JournalEntry[]) => Promise<void>;
   onDeleteEntries?: (entryIds: string[]) => Promise<void>;
   wallData?: {
@@ -123,16 +114,12 @@ const CommunityWall = ({
   title = "Community Journal Wall",
   description = "Share your thoughts and reflections with the community. All entries are anonymous.",
   entries = [],
-  isFirstVisit = false,
-  onSubmitEntry = async (files: File | File[]) => {},
   isAdminMode = false,
   onReorderEntries = async () => {},
   onDeleteEntries = async () => {},
   wallData,
 }: CommunityWallProps) => {
-  const [showUploader, setShowUploader] = useState(isFirstVisit);
-  const [isLoading, setIsLoading] = useState(false);
-  const [hasSubmitted, setHasSubmitted] = useState(false);
+  const [showUploader, setShowUploader] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [isAdditionalSubmission, setIsAdditionalSubmission] = useState(false);
 
@@ -168,25 +155,13 @@ const CommunityWall = ({
   };
 
   useEffect(() => {
-    // Check local storage to see if user has already submitted to this wall
-    // Skip this check in admin mode
-    if (!isAdminMode) {
-      const hasVisited = localStorage.getItem(`wall-visited-${wallId}`);
-      setShowUploader(!hasVisited); // Show uploader if user hasn't visited/submitted
-    } else {
-      setShowUploader(false); // Admin doesn't need to submit first
-    }
-
-    // Check if mobile
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
-
     checkMobile();
     window.addEventListener("resize", checkMobile);
-
     return () => window.removeEventListener("resize", checkMobile);
-  }, [wallId, isFirstVisit, isAdminMode]);
+  }, []);
 
   // Update reordered entries when entries prop changes
   useEffect(() => {
@@ -307,24 +282,6 @@ const CommunityWall = ({
 
     loadImageDimensions();
   }, [entries]);
-
-  const handleSubmit = async (files: File | File[]) => {
-    setIsLoading(true);
-    try {
-      await onSubmitEntry(files);
-      if (!isAdminMode) {
-        // Mark that user has submitted to this wall (only for regular users)
-        localStorage.setItem(`wall-visited-${wallId}`, "true");
-        setHasSubmitted(true);
-      }
-      setShowUploader(false);
-      setIsAdditionalSubmission(false);
-    } catch (error) {
-      console.error("Error submitting entry:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   const handleSubmitAdditionalEntry = () => {
     setIsAdditionalSubmission(true);
@@ -583,10 +540,6 @@ const CommunityWall = ({
                 <JournalUploader
                   wall={{ id: wallId ?? "", wallCode: wallCode ?? wallId ?? "", title: title ?? "" }}
                   onSuccess={() => {
-                    if (!isAdminMode) {
-                      localStorage.setItem(`wall-visited-${wallId}`, "true");
-                      setHasSubmitted(true);
-                    }
                     setShowUploader(false);
                     setIsAdditionalSubmission(false);
                   }}
@@ -719,16 +672,6 @@ const CommunityWall = ({
               </Button>
             </div>
           </div>
-
-          {hasSubmitted && !isAdminMode && (
-            <Alert className="mb-6">
-              <AlertCircle className="h-4 w-4" />
-              <AlertDescription>
-                Thank you for your submission! It has been sent for review and
-                will appear on the wall once approved.
-              </AlertDescription>
-            </Alert>
-          )}
 
           {isRearrangeMode && (
             <Alert className="mb-6">
