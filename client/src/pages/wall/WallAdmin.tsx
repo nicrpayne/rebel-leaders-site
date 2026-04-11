@@ -75,8 +75,8 @@ interface Submission {
 }
 
 const AdminDashboard = () => {
-  const [secret, setSecret] = useState("");
-  const [authenticated, setAuthenticated] = useState(false);
+  const [secret, setSecret] = useState(() => sessionStorage.getItem("wall_admin_secret") ?? "");
+  const [authenticated, setAuthenticated] = useState(() => Boolean(sessionStorage.getItem("wall_admin_secret")));
   const [authError, setAuthError] = useState(false);
   const [activeTab, setActiveTab] = useState("walls");
   const [isCreateWallDialogOpen, setIsCreateWallDialogOpen] = useState(false);
