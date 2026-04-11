@@ -29,7 +29,7 @@ export default function WallPage() {
 
   const { data: rawEntries = [], refetch: refetchEntries } = trpc.wall.getEntries.useQuery(
     { wallId: wall?.id ?? "" },
-    { enabled: Boolean(wall?.id) }
+    { enabled: Boolean(wall?.id), refetchInterval: 15000 }
   );
   const entries: WallEntry[] = rawEntries;
 

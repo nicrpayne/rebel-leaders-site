@@ -149,6 +149,35 @@ const CommunityWall = ({
     }>
   >([]);
 
+  // New entry glow tracking
+  const seenEntryIds = useRef<Set<string>>(new Set(entries.map((e) => e.id)));
+  const hasInitialized = useRef(false);
+  const [newEntryIds, setNewEntryIds] = useState<Set<string>>(new Set());
+
+  useEffect(() => {
+    if (!hasInitialized.current) {
+      seenEntryIds.current = new Set(entries.map((e) => e.id));
+      hasInitialized.current = true;
+      return;
+    }
+    const incoming = new Set(entries.map((e) => e.id));
+    const brandNew = new Set<string>();
+    incoming.forEach((id) => {
+      if (!seenEntryIds.current.has(id)) brandNew.add(id);
+    });
+    if (brandNew.size > 0) {
+      setNewEntryIds((prev: Set<string>) => new Set([...prev, ...brandNew]));
+      setTimeout(() => {
+        setNewEntryIds((prev: Set<string>) => {
+          const next = new Set(prev);
+          brandNew.forEach((id) => next.delete(id));
+          return next;
+        });
+      }, 15000);
+    }
+    seenEntryIds.current = incoming;
+  }, [entries]);
+
   // Handle rearrange mode activation
   const handleRearrangeModeToggle = (enabled: boolean) => {
     setIsRearrangeMode(enabled);
@@ -302,12 +331,21 @@ const CommunityWall = ({
     }
   };
 
-  // Use real dimensions so masonry can stagger columns; visual crop is handled by CSS
-  const photos = photosWithDimensions;
+  // Sort newest-first so new entries appear top-left
+  const sortedEntries = [...entries].sort((a, b) => {
+    const aTime = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+    const bTime = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+    return bTime - aTime;
+  });
+
+  // Build photos array in sorted order
+  const photos = sortedEntries
+    .map((entry) => photosWithDimensions.find((p) => p.key === entry.id))
+    .filter(Boolean) as typeof photosWithDimensions;
 
   // PhotoSwipe gallery initialization
   const openPhotoSwipe = (index: number) => {
-    const currentEntries = isRearrangeMode ? reorderedEntries : entries;
+    const currentEntries = isRearrangeMode ? reorderedEntries : sortedEntries;
 
     console.log("🖼️ [PhotoSwipe] Opening gallery:", {
       index,
@@ -821,8 +859,8 @@ const CommunityWall = ({
               ) : (
                 // Normal mode - use PhotoAlbum masonry layout
                 <div className="w-full">
-                  {photosWithDimensions.length > 0 &&
-                  photosWithDimensions.length === entries.length ? (
+                  {photos.length > 0 &&
+                  photos.length === sortedEntries.length ? (
                     <div style={{ width: "100%" }}>
                       <RowsPhotoAlbum
                         photos={photos}
@@ -846,10 +884,23 @@ const CommunityWall = ({
                               }}
                             />
                           ),
+                          button: (props, context) => (
+                            <button
+                              {...props}
+                              style={{
+                                ...props.style,
+                                borderRadius: "8px",
+                                transition: "box-shadow 1s ease-out",
+                                boxShadow: newEntryIds.has(context.photo.key as string)
+                                  ? "0 0 0 3px #c9a84c, 0 0 20px rgba(201, 168, 76, 0.6)"
+                                  : undefined,
+                              }}
+                            />
+                          ),
                         }}
                       />
                     </div>
-                  ) : entries.length > 0 ? (
+                  ) : sortedEntries.length > 0 ? (
                     <div className="flex items-center justify-center py-8">
                       <div className="text-center">
                         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
