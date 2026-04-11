@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -148,35 +148,6 @@ const CommunityWall = ({
       height: number;
     }>
   >([]);
-
-  // New entry glow tracking
-  const seenEntryIds = useRef<Set<string>>(new Set(entries.map((e) => e.id)));
-  const hasInitialized = useRef(false);
-  const [newEntryIds, setNewEntryIds] = useState<Set<string>>(new Set());
-
-  useEffect(() => {
-    if (!hasInitialized.current) {
-      seenEntryIds.current = new Set(entries.map((e) => e.id));
-      hasInitialized.current = true;
-      return;
-    }
-    const incoming = new Set(entries.map((e) => e.id));
-    const brandNew = new Set<string>();
-    incoming.forEach((id) => {
-      if (!seenEntryIds.current.has(id)) brandNew.add(id);
-    });
-    if (brandNew.size > 0) {
-      setNewEntryIds((prev: Set<string>) => new Set([...prev, ...brandNew]));
-      setTimeout(() => {
-        setNewEntryIds((prev: Set<string>) => {
-          const next = new Set(prev);
-          brandNew.forEach((id) => next.delete(id));
-          return next;
-        });
-      }, 15000);
-    }
-    seenEntryIds.current = incoming;
-  }, [entries]);
 
   // Handle rearrange mode activation
   const handleRearrangeModeToggle = (enabled: boolean) => {
@@ -881,19 +852,6 @@ const CommunityWall = ({
                                 ...props.style,
                                 borderRadius: "8px",
                                 cursor: "pointer",
-                              }}
-                            />
-                          ),
-                          button: (props, context) => (
-                            <button
-                              {...props}
-                              style={{
-                                ...props.style,
-                                borderRadius: "8px",
-                                transition: "box-shadow 1s ease-out",
-                                boxShadow: newEntryIds.has(context.photo.key as string)
-                                  ? "0 0 0 3px #c9a84c, 0 0 20px rgba(201, 168, 76, 0.6)"
-                                  : undefined,
                               }}
                             />
                           ),
