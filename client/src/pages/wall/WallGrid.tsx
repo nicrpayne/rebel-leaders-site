@@ -1,22 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
-import { trpc } from "@/lib/trpc";
-import WallCreationForm from "@/components/wall/WallCreationForm";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   Share2,
   AlertCircle,
   ArrowLeft,
-  Settings,
   Upload,
   Move,
   Save,
@@ -116,7 +106,6 @@ interface CommunityWallProps {
     isPrivate: boolean;
     headerImageUrl?: string;
   }) => Promise<void>;
-  onWallUpdated?: () => void;
   onReorderEntries?: (reorderedEntries: JournalEntry[]) => Promise<void>;
   onDeleteEntries?: (entryIds: string[]) => Promise<void>;
   wallData?: {
@@ -137,7 +126,6 @@ const CommunityWall = ({
   isFirstVisit = false,
   onSubmitEntry = async (files: File | File[]) => {},
   isAdminMode = false,
-  onWallUpdated,
   onReorderEntries = async () => {},
   onDeleteEntries = async () => {},
   wallData,
@@ -149,10 +137,6 @@ const CommunityWall = ({
   const [isAdditionalSubmission, setIsAdditionalSubmission] = useState(false);
 
   // Admin functionality states
-  const [showSettings, setShowSettings] = useState(false);
-  const updateWallMutation = trpc.wall.adminUpdateWall.useMutation({
-    onSuccess: () => { setShowSettings(false); onWallUpdated?.(); },
-  });
   const [isRearrangeMode, setIsRearrangeMode] = useState(false);
   const [reorderedEntries, setReorderedEntries] =
     useState<JournalEntry[]>(entries);
@@ -668,14 +652,6 @@ const CommunityWall = ({
                         <Trash2 className="h-4 w-4 mr-2" />
                         Delete
                       </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => setShowSettings(true)}
-                      >
-                        <Settings className="h-4 w-4 mr-2" />
-                        Settings
-                      </Button>
                     </>
                   ) : isRearrangeMode ? (
                     <>
@@ -959,36 +935,6 @@ const CommunityWall = ({
         </div>
       )}
 
-      {/* Settings Dialog */}
-      <Dialog open={showSettings} onOpenChange={setShowSettings}>
-        <DialogContent className="p-0 max-w-md">
-          <WallCreationForm
-            onSubmit={async (data) => {
-              const adminSecret = sessionStorage.getItem("wall_admin_secret") ?? "";
-              try {
-                await updateWallMutation.mutateAsync({
-                  secret: adminSecret,
-                  wallId: wallData?.id ?? wallId,
-                  title: data.title,
-                  description: data.description || undefined,
-                  headerImageUrl: data.headerImageUrl || undefined,
-                });
-                return { success: true };
-              } catch {
-                return { success: false };
-              }
-            }}
-            initialData={{
-              title: wallData?.title ?? title ?? "",
-              description: wallData?.description ?? description ?? "",
-              isPrivate: wallData?.isPrivate ?? false,
-              headerImageUrl: wallData?.headerImageUrl ?? undefined,
-            }}
-            isEditMode={true}
-            onCancel={() => setShowSettings(false)}
-          />
-        </DialogContent>
-      </Dialog>
     </div>
   );
 };

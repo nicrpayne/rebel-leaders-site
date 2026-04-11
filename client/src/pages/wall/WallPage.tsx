@@ -110,7 +110,6 @@ export default function WallPage() {
           entries={entries}
           wallCode={wallCode}
           isAdminMode={isAdminPreview}
-          onWallUpdated={() => refetchWall()}
           wallId={wall.id}
           title={wall.title}
           description={wall.description ?? ""}
