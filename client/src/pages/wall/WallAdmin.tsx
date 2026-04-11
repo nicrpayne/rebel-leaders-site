@@ -80,6 +80,7 @@ const AdminDashboard = () => {
   const [authError, setAuthError] = useState(false);
   const [activeTab, setActiveTab] = useState("walls");
   const [isCreateWallDialogOpen, setIsCreateWallDialogOpen] = useState(false);
+  const [pendingWallCode, setPendingWallCode] = useState(() => Math.random().toString(36).slice(2, 8).toUpperCase());
   const [selectedSubmission, setSelectedSubmission] =
     useState<Submission | null>(null);
   const [selectedWallForEdit, setSelectedWallForEdit] = useState<Wall | null>(
@@ -193,8 +194,10 @@ const AdminDashboard = () => {
         title: wallData.title,
         description: wallData.description || undefined,
         headerImageUrl: wallData.headerImageUrl || undefined,
+        wallCode: pendingWallCode,
       });
       setIsCreateWallDialogOpen(false);
+      setPendingWallCode(Math.random().toString(36).slice(2, 8).toUpperCase());
       return { success: true, wallCode: result.wallCode, shareableLink: `${window.location.origin}/wall/${result.wallCode}` };
     } catch (error: any) {
       toast({
@@ -478,6 +481,7 @@ const AdminDashboard = () => {
                   <DialogContent className="p-0 max-w-md">
                     <WallCreationForm
                       onSubmit={handleCreateWall}
+                      onUploadHeaderImage={makeUploadHeaderHandler(pendingWallCode)}
                       shouldResetScroll={isCreateWallDialogOpen}
                       onCancel={() => setIsCreateWallDialogOpen(false)}
                     />
