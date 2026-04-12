@@ -62,6 +62,7 @@ export const walls = mysqlTable("walls", {
   description: text("description"),
   wallCode: varchar("wall_code", { length: 10 }).unique().notNull(),
   isActive: boolean("is_active").default(true),
+  isFeatured: boolean("is_featured").default(false),
   headerImageUrl: text("header_image_url"),
   promptText: text("prompt_text"),
   sourceType: varchar("source_type", { length: 50 }),

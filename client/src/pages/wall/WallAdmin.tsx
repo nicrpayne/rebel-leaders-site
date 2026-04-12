@@ -48,6 +48,7 @@ import {
   LogOut,
   AlertTriangle,
   Loader2,
+  Star,
 } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { trpc } from "@/lib/trpc";
@@ -62,6 +63,7 @@ interface Wall {
   description: string | null;
   wallCode: string;
   isActive: boolean;
+  isFeatured: boolean | null;
   headerImageUrl: string | null;
   createdAt: Date | null;
 }
@@ -87,6 +89,7 @@ const AdminDashboard = () => {
     null,
   );
   const [wallToDelete, setWallToDelete] = useState<Wall | null>(null);
+  const [wallToFeature, setWallToFeature] = useState<Wall | null>(null);
   const { toast } = useToast();
   const [previousSubmissionCount, setPreviousSubmissionCount] = useState(0);
 
@@ -117,6 +120,13 @@ const AdminDashboard = () => {
   });
   const deleteWallMutation = trpc.wall.adminDeleteWall.useMutation({
     onSuccess: () => { refetchWalls(); refetchSubmissions(); },
+  });
+  const setFeaturedMutation = trpc.wall.adminSetFeaturedWall.useMutation({
+    onSuccess: () => {
+      refetchWalls();
+      setWallToFeature(null);
+      toast({ title: "Featured wall updated" });
+    },
   });
   const uploadHeaderMutation = trpc.wall.adminUploadHeaderImage.useMutation();
 
@@ -588,6 +598,16 @@ const AdminDashboard = () => {
                           <Trash2 className="h-4 w-4 mr-1" />
                           Delete
                         </Button>
+                        <Button
+                          variant={wall.isFeatured ? "default" : "outline"}
+                          size="sm"
+                          onClick={() => !wall.isFeatured && setWallToFeature(wall)}
+                          disabled={!!wall.isFeatured}
+                          title={wall.isFeatured ? "Currently featured" : "Set as featured wall"}
+                        >
+                          <Star className="h-4 w-4 mr-1" />
+                          {wall.isFeatured ? "Featured" : "Feature"}
+                        </Button>
                       </div>
                       <Button
                         variant="ghost"
@@ -917,6 +937,46 @@ const AdminDashboard = () => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      {/* Feature Confirmation Dialog */}
+      {(() => {
+        const currentFeatured = (walls as Wall[]).find((w) => w.isFeatured);
+        return (
+          <AlertDialog
+            open={!!wallToFeature}
+            onOpenChange={(open: boolean) => !open && setWallToFeature(null)}
+          >
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Set Featured Wall</AlertDialogTitle>
+                <AlertDialogDescription>
+                  {currentFeatured && currentFeatured.id !== wallToFeature?.id ? (
+                    <span>
+                      <strong>{currentFeatured.title}</strong> is currently the featured wall.
+                      Replace it with <strong>{wallToFeature?.title}</strong>?
+                    </span>
+                  ) : (
+                    <span>
+                      Set <strong>{wallToFeature?.title}</strong> as the featured wall on the index page?
+                    </span>
+                  )}
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={() =>
+                    wallToFeature &&
+                    setFeaturedMutation.mutate({ secret, wallId: wallToFeature.id })
+                  }
+                >
+                  {currentFeatured && currentFeatured.id !== wallToFeature?.id ? "Replace" : "Set as Featured"}
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        );
+      })()}
     </div>
   );
 };

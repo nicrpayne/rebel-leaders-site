@@ -3,7 +3,7 @@ import { TRPCError } from "@trpc/server";
 import { publicProcedure, router } from "./_core/trpc";
 import { getDb } from "./db";
 import { walls, wallSubmissions, wallEntries } from "../drizzle/schema";
-import { eq, desc, and } from "drizzle-orm";
+import { eq, desc, and, ne } from "drizzle-orm";
 import { uploadWallImage, uploadWallHeader } from "./r2";
 import { ENV } from "./_core/env";
 import { randomUUID } from "crypto";
@@ -232,6 +232,20 @@ export const wallRouter = router({
       const imageBuffer = Buffer.from(input.imageBase64, "base64");
       const url = await uploadWallHeader(imageBuffer, input.contentType, input.wallCode);
       return { url } as const;
+    }),
+
+  adminSetFeaturedWall: publicProcedure
+    .input(z.object({ secret: z.string(), wallId: z.string() }))
+    .mutation(async ({ input }) => {
+      requireAdmin(input.secret);
+      const db = await getDb();
+      if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Database unavailable" });
+
+      // Clear featured on all other walls, then set on target
+      await db.update(walls).set({ isFeatured: false }).where(ne(walls.id, input.wallId));
+      await db.update(walls).set({ isFeatured: true }).where(eq(walls.id, input.wallId));
+
+      return { success: true } as const;
     }),
 
   adminDeleteWall: publicProcedure
