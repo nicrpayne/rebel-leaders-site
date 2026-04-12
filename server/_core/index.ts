@@ -32,15 +32,17 @@ async function findAvailablePort(startPort: number = 3000): Promise<number> {
 async function runMigrations() {
   const db = await getDb();
   if (!db) {
-    console.log("[Migrations] No database connection — skipping migrations");
+    console.log("[Migrations] No database connection — skipping");
     return;
   }
   try {
+    console.log("[Migrations] Running...");
     await migrate(db, { migrationsFolder: "./drizzle" });
     console.log("[Migrations] Up to date");
-  } catch (error) {
-    console.error("[Migrations] Failed:", error);
-    throw error;
+  } catch (error: any) {
+    // Log clearly but don't crash — a migration failure shouldn't take the whole server down
+    console.error("[Migrations] Error:", error?.message ?? error);
+    console.error("[Migrations] Server will continue but some features may be broken until the migration is resolved");
   }
 }
 
