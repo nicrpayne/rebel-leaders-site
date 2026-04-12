@@ -524,7 +524,7 @@ function PluginCard({ plugin, hasGravitasSignal, hasSubmittedToWall }: {
     </div>
   );
 
-  if (isActive) {
+  if (isActive || isWall) {
     return <Link href={plugin.link}>{cardContent}</Link>;
   }
   return cardContent;
