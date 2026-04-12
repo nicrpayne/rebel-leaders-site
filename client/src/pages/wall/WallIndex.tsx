@@ -23,7 +23,7 @@ export default function WallIndex() {
         ) : (
           <div className="flex flex-col gap-3">
             {walls.map((wall) => (
-              <Link key={wall.id} href={`/wall/${wall.wallCode}`}>
+              <Link key={wall.id} href={`/workbench/wall/${wall.wallCode}`}>
                 <div className="border border-parchment/20 p-4 cursor-pointer active:opacity-70 hover:border-gold/40 transition-colors">
                   <p className="font-pixel text-parchment text-xs tracking-wider mb-1">{wall.title}</p>
                   {wall.promptText && (

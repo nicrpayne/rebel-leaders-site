@@ -7,7 +7,7 @@ import WallGrid, { type WallEntry } from "./WallGrid";
 import RichTextDisplay from "@/components/wall/RichTextDisplay";
 
 export default function WallPage() {
-  const [, params] = useRoute("/wall/:wallCode");
+  const [, params] = useRoute("/workbench/wall/:wallCode");
   const wallCode = params?.wallCode ?? "";
 
   const { awardAchievement } = useGame();

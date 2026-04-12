@@ -198,7 +198,7 @@ const AdminDashboard = () => {
       });
       setIsCreateWallDialogOpen(false);
       setPendingWallCode(Math.random().toString(36).slice(2, 8).toUpperCase());
-      return { success: true, wallCode: result.wallCode, shareableLink: `${window.location.origin}/wall/${result.wallCode}` };
+      return { success: true, wallCode: result.wallCode, shareableLink: `${window.location.origin}/workbench/wall/${result.wallCode}` };
     } catch (error: any) {
       toast({
         title: "Error",
@@ -573,7 +573,7 @@ const AdminDashboard = () => {
                           variant="outline"
                           size="sm"
                           onClick={() => {
-                            window.open(`/wall/${wall.wallCode}?admin=true`, "_blank");
+                            window.open(`/workbench/wall/${wall.wallCode}?admin=true`, "_blank");
                           }}
                         >
                           <Eye className="h-4 w-4 mr-1" />
@@ -594,7 +594,7 @@ const AdminDashboard = () => {
                         size="sm"
                         onClick={() => {
                           navigator.clipboard.writeText(
-                            `${window.location.origin}/wall/${wall.wallCode}`,
+                            `${window.location.origin}/workbench/wall/${wall.wallCode}`,
                           );
                           toast({
                             title: "Success",

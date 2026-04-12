@@ -15,7 +15,7 @@ const HERO_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWM
 
 /* ─── Plugin Data ─── */
 type PluginStatus = "ACTIVE" | "LOCKED" | "SIGNAL_DEPENDENT";
-type PluginCategory = "MIRROR" | "MAP" | "MOVE" | "SIGNAL";
+type PluginCategory = "MIRROR" | "MAP" | "MOVE" | "SIGNAL" | "COMMONS";
 
 interface Plugin {
   id: string;
@@ -62,6 +62,18 @@ const PLUGINS: Plugin[] = [
     link: "/workbench/codex",
     image: "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/6XMovZHp9ctGFaj4XUiVdL/codex_cover-GFY7usmeN4FzNRmJ64c5wD.webp",
     version: "V.1.0.4",
+  },
+  {
+    id: "the-wall",
+    title: "The Wall",
+    category: "COMMONS",
+    desc: "A reflection commons. Share your voice. See you are not alone.",
+    status: "SIGNAL_DEPENDENT",
+    link: "/workbench/wall",
+    image: null,
+    imageDormant: "https://pub-26b8c09d5ff84d568bb62f776d03c004.r2.dev/workbench-cards/the-wall-dormant-v4.png",
+    imageRevealed: "https://pub-26b8c09d5ff84d568bb62f776d03c004.r2.dev/workbench-cards/the-wall-inhabited-v5-2.png",
+    version: "V.1.0.0",
   },
   {
     id: "laas",
@@ -195,7 +207,7 @@ const PLUGINS: Plugin[] = [
   },
 ];
 
-const CATEGORIES = ["ALL", "MIRROR", "SIGNAL", "MAP", "MOVE"] as const;
+const CATEGORIES = ["ALL", "MIRROR", "SIGNAL", "MAP", "MOVE", "COMMONS"] as const;
 const STATUSES = ["ALL", "ACTIVE", "LOCKED"] as const;
 
 export default function Workbench() {
@@ -213,23 +225,28 @@ export default function Workbench() {
     typeof window !== "undefined" &&
     !!localStorage.getItem("gravityCheckResults");
 
+  const hasSubmittedToWall =
+    typeof window !== "undefined" &&
+    Object.keys(localStorage).some((key) => key.startsWith("wall_submitted_"));
+
+  const isPluginActive = (p: Plugin) => {
+    if (p.status === "ACTIVE") return true;
+    if (p.status === "SIGNAL_DEPENDENT") {
+      if (p.id === "the-wall") return hasSubmittedToWall;
+      return hasGravitasSignal;
+    }
+    return false;
+  };
+
   const filtered = PLUGINS.filter((p) => {
     const catMatch = activeCategory === "ALL" || p.category === activeCategory;
-    // Mirror counts as ACTIVE for filter purposes when signal exists
-    const effectiveStatus =
-      p.status === "SIGNAL_DEPENDENT"
-        ? hasGravitasSignal ? "ACTIVE" : "LOCKED"
-        : p.status;
+    const effectiveStatus = isPluginActive(p) ? "ACTIVE" : "LOCKED";
     const statMatch = activeStatus === "ALL" || effectiveStatus === activeStatus;
     return catMatch && statMatch;
   });
 
-  const activeCount = PLUGINS.filter((p) =>
-    p.status === "ACTIVE" || (p.status === "SIGNAL_DEPENDENT" && hasGravitasSignal)
-  ).length;
-  const lockedCount = PLUGINS.filter((p) =>
-    p.status === "LOCKED" || (p.status === "SIGNAL_DEPENDENT" && !hasGravitasSignal)
-  ).length;
+  const activeCount = PLUGINS.filter(isPluginActive).length;
+  const lockedCount = PLUGINS.filter((p) => !isPluginActive(p)).length;
 
   return (
     <PageLayout>
@@ -329,20 +346,50 @@ export default function Workbench() {
 
           {/* Grid */}
           <div className="flex-1">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              {filtered.map((plugin, i) => (
-                <FadeIn key={plugin.id} delay={i * 0.05}>
-                  <PluginCard plugin={plugin} hasGravitasSignal={hasGravitasSignal} />
-                </FadeIn>
-              ))}
-            </div>
-            {filtered.length === 0 && (
-              <div className="text-center py-16">
-                <p className="font-pixel text-[9px] tracking-[0.2em] text-parchment-dim/40">
-                  NO PLUGINS MATCH CURRENT FILTERS
-                </p>
-              </div>
-            )}
+            {(() => {
+              const personalPlugins = filtered.filter((p) => p.category !== "COMMONS");
+              const communalPlugins = filtered.filter((p) => p.category === "COMMONS");
+              const showCommons = communalPlugins.length > 0 && (activeCategory === "ALL" || activeCategory === "COMMONS");
+
+              return (
+                <>
+                  {personalPlugins.length > 0 && (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                      {personalPlugins.map((plugin, i) => (
+                        <FadeIn key={plugin.id} delay={i * 0.05}>
+                          <PluginCard plugin={plugin} hasGravitasSignal={hasGravitasSignal} hasSubmittedToWall={hasSubmittedToWall} />
+                        </FadeIn>
+                      ))}
+                    </div>
+                  )}
+
+                  {showCommons && (
+                    <>
+                      <div className="flex items-center gap-4 my-8">
+                        <div className="flex-1 h-px bg-gold/10" />
+                        <p className="font-pixel text-[8px] tracking-[0.4em] text-gold/30">THE COMMONS</p>
+                        <div className="flex-1 h-px bg-gold/10" />
+                      </div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                        {communalPlugins.map((plugin, i) => (
+                          <FadeIn key={plugin.id} delay={i * 0.05}>
+                            <PluginCard plugin={plugin} hasGravitasSignal={hasGravitasSignal} hasSubmittedToWall={hasSubmittedToWall} />
+                          </FadeIn>
+                        ))}
+                      </div>
+                    </>
+                  )}
+
+                  {filtered.length === 0 && (
+                    <div className="text-center py-16">
+                      <p className="font-pixel text-[9px] tracking-[0.2em] text-parchment-dim/40">
+                        NO PLUGINS MATCH CURRENT FILTERS
+                      </p>
+                    </div>
+                  )}
+                </>
+              );
+            })()}
           </div>
         </div>
       </section>
@@ -351,23 +398,49 @@ export default function Workbench() {
 }
 
 /* ─── Plugin Card ─── */
-function PluginCard({ plugin, hasGravitasSignal }: { plugin: Plugin; hasGravitasSignal: boolean }) {
+function PluginCard({ plugin, hasGravitasSignal, hasSubmittedToWall }: {
+  plugin: Plugin;
+  hasGravitasSignal: boolean;
+  hasSubmittedToWall: boolean;
+}) {
   const isMirror = plugin.id === "mirror";
   const mirrorRevealed = isMirror && hasGravitasSignal;
   const mirrorDormant = isMirror && !hasGravitasSignal;
-  const isActive = plugin.status === "ACTIVE" || mirrorRevealed;
-  const hasImage = !!(plugin.image || (isMirror && (plugin.imageDormant || plugin.imageRevealed)));
+
+  const isWall = plugin.id === "the-wall";
+  const wallRevealed = isWall && hasSubmittedToWall;
+  const wallDormant = isWall && !hasSubmittedToWall;
+
+  const isActive = plugin.status === "ACTIVE" || mirrorRevealed || wallRevealed;
+  const isDormant = mirrorDormant || wallDormant;
+  const hasImage = !!(plugin.image || ((isMirror || isWall) && (plugin.imageDormant || plugin.imageRevealed)));
 
   const effectiveImage = isMirror
     ? mirrorRevealed ? plugin.imageRevealed : plugin.imageDormant
+    : isWall
+    ? wallRevealed ? plugin.imageRevealed : plugin.imageDormant
     : plugin.image;
+
+  const badgeText = mirrorRevealed || wallRevealed
+    ? "SIGNAL RECEIVED"
+    : mirrorDormant
+    ? "AWAITING SIGNAL"
+    : wallDormant
+    ? "AWAITING FIRST VOICE"
+    : plugin.status;
+
+  const footerHint = mirrorDormant
+    ? "RUN GRAVITAS TO UNLOCK"
+    : wallDormant
+    ? "CONTRIBUTE TO UNLOCK"
+    : null;
 
   const cardContent = (
     <div
       className={`group relative bg-card border transition-all duration-500 flex flex-col h-full ${
-        mirrorRevealed
+        mirrorRevealed || wallRevealed
           ? "border-gold/50 cursor-pointer hover:-translate-y-1 hover:shadow-[0_0_40px_-8px_rgba(197,160,89,0.35)] hover:border-gold"
-          : mirrorDormant
+          : isDormant
           ? "border-gold/10 cursor-default opacity-80 animate-pulse"
           : isActive
           ? "border-gold/20 cursor-pointer hover:-translate-y-1 hover:shadow-[0_0_30px_-10px_rgba(197,160,89,0.2)] hover:border-gold/50"
@@ -389,7 +462,7 @@ function PluginCard({ plugin, hasGravitasSignal }: { plugin: Plugin; hasGravitas
             src={effectiveImage}
             alt={plugin.title}
             className={`w-full h-full object-cover transition-all duration-700 ${
-              mirrorDormant
+              isDormant
                 ? "opacity-60 grayscale-[0.2]"
                 : "group-hover:scale-105"
             }`}
@@ -414,16 +487,16 @@ function PluginCard({ plugin, hasGravitasSignal }: { plugin: Plugin; hasGravitas
           </h3>
           <span
             className={`font-pixel text-[7px] tracking-[0.2em] px-2 py-1 shrink-0 ml-2 -mt-1 -mr-1 border ${
-              mirrorRevealed
+              mirrorRevealed || wallRevealed
                 ? "bg-gold/15 text-gold border-gold/40"
-                : mirrorDormant
+                : isDormant
                 ? "bg-card text-gold/30 border-gold/15"
                 : isActive
                 ? "bg-gold/15 text-gold border-gold/30"
                 : "bg-red-900/20 text-red-400/80 border-red-500/30"
             }`}
           >
-            {mirrorRevealed ? "SIGNAL RECEIVED" : mirrorDormant ? "AWAITING SIGNAL" : plugin.status}
+            {badgeText}
           </span>
         </div>
         <p className="font-pixel text-[7px] tracking-[0.15em] text-gold-dim/60 mb-3">
@@ -438,9 +511,9 @@ function PluginCard({ plugin, hasGravitasSignal }: { plugin: Plugin; hasGravitas
         {/* Footer */}
         <div className="flex items-center justify-between mt-4 pt-3 border-t border-gold/10">
           <span className="font-pixel text-[7px] tracking-[0.2em] text-parchment-dim/30">REBEL OS</span>
-          {mirrorDormant ? (
+          {footerHint ? (
             <span className="font-pixel text-[7px] tracking-[0.15em] text-gold/30">
-              RUN GRAVITAS TO UNLOCK
+              {footerHint}
             </span>
           ) : isActive ? (
             <span className="font-pixel text-[8px] tracking-[0.2em] text-gold flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">

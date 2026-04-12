@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { useClaimAnonymousResult } from "@/_core/hooks/useClaimAnonymousResult";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
-import { Route, Switch } from "wouter";
+import { Route, Switch, Redirect } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { GameProvider } from "./contexts/GameContext";
@@ -56,8 +56,16 @@ function Router() {
       <Route path="/hidden-assets" component={HiddenAssets} />
       <Route path="/admin" component={Admin} />
       <Route path="/admin/wall" component={WallAdmin} />
-      <Route path="/wall" component={WallIndex} />
-      <Route path="/wall/:wallCode" component={WallPage} />
+      {/* Legacy redirects — keep old /wall URLs working */}
+      <Route path="/wall/:wallCode">
+        {(params: { wallCode: string }) => <Redirect to={`/workbench/wall/${params.wallCode}`} />}
+      </Route>
+      <Route path="/wall">
+        <Redirect to="/workbench/wall" />
+      </Route>
+      {/* Canonical Wall routes under workbench */}
+      <Route path="/workbench/wall" component={WallIndex} />
+      <Route path="/workbench/wall/:wallCode" component={WallPage} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
     </Switch>
