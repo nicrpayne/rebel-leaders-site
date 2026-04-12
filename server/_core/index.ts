@@ -7,6 +7,8 @@ import { registerOAuthRoutes } from "./oauth";
 import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
+import { getDb } from "../db";
+import { migrate } from "drizzle-orm/mysql2/migrator";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -27,7 +29,23 @@ async function findAvailablePort(startPort: number = 3000): Promise<number> {
   throw new Error(`No available port found starting from ${startPort}`);
 }
 
+async function runMigrations() {
+  const db = await getDb();
+  if (!db) {
+    console.log("[Migrations] No database connection — skipping migrations");
+    return;
+  }
+  try {
+    await migrate(db, { migrationsFolder: "./drizzle" });
+    console.log("[Migrations] Up to date");
+  } catch (error) {
+    console.error("[Migrations] Failed:", error);
+    throw error;
+  }
+}
+
 async function startServer() {
+  await runMigrations();
   const app = express();
   const server = createServer(app);
   // Configure body parser with larger size limit for file uploads
