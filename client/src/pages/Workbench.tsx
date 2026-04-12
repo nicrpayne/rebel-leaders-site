@@ -32,6 +32,18 @@ interface Plugin {
 
 const PLUGINS: Plugin[] = [
   {
+    id: "the-wall",
+    title: "The Wall",
+    category: "COMMONS",
+    desc: "A reflection commons. Share your voice. See you are not alone.",
+    status: "SIGNAL_DEPENDENT",
+    link: "/workbench/wall",
+    image: null,
+    imageDormant: "https://pub-26b8c09d5ff84d568bb62f776d03c004.r2.dev/workbench-cards/the-wall-dormant-v4.png",
+    imageRevealed: "https://pub-26b8c09d5ff84d568bb62f776d03c004.r2.dev/workbench-cards/the-wall-inhabited-v5-2.png",
+    version: "V.1.0.0",
+  },
+  {
     id: "gravity-check",
     title: "GRAVITAS",
     category: "MIRROR",
@@ -62,18 +74,6 @@ const PLUGINS: Plugin[] = [
     link: "/workbench/codex",
     image: "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/6XMovZHp9ctGFaj4XUiVdL/codex_cover-GFY7usmeN4FzNRmJ64c5wD.webp",
     version: "V.1.0.4",
-  },
-  {
-    id: "the-wall",
-    title: "The Wall",
-    category: "COMMONS",
-    desc: "A reflection commons. Share your voice. See you are not alone.",
-    status: "SIGNAL_DEPENDENT",
-    link: "/workbench/wall",
-    image: null,
-    imageDormant: "https://pub-26b8c09d5ff84d568bb62f776d03c004.r2.dev/workbench-cards/the-wall-dormant-v4.png",
-    imageRevealed: "https://pub-26b8c09d5ff84d568bb62f776d03c004.r2.dev/workbench-cards/the-wall-inhabited-v5-2.png",
-    version: "V.1.0.0",
   },
   {
     id: "laas",
@@ -353,6 +353,22 @@ export default function Workbench() {
 
               return (
                 <>
+                  {showCommons && (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                      {communalPlugins.map((plugin, i) => (
+                        <FadeIn key={plugin.id} delay={i * 0.05}>
+                          <PluginCard plugin={plugin} hasGravitasSignal={hasGravitasSignal} hasSubmittedToWall={hasSubmittedToWall} />
+                        </FadeIn>
+                      ))}
+                    </div>
+                  )}
+
+                  {showCommons && personalPlugins.length > 0 && (
+                    <div className="my-6">
+                      <div className="w-full h-px bg-gold/10" />
+                    </div>
+                  )}
+
                   {personalPlugins.length > 0 && (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                       {personalPlugins.map((plugin, i) => (
@@ -361,23 +377,6 @@ export default function Workbench() {
                         </FadeIn>
                       ))}
                     </div>
-                  )}
-
-                  {showCommons && (
-                    <>
-                      <div className="flex items-center gap-4 my-8">
-                        <div className="flex-1 h-px bg-gold/10" />
-                        <p className="font-pixel text-[8px] tracking-[0.4em] text-gold/30">THE COMMONS</p>
-                        <div className="flex-1 h-px bg-gold/10" />
-                      </div>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                        {communalPlugins.map((plugin, i) => (
-                          <FadeIn key={plugin.id} delay={i * 0.05}>
-                            <PluginCard plugin={plugin} hasGravitasSignal={hasGravitasSignal} hasSubmittedToWall={hasSubmittedToWall} />
-                          </FadeIn>
-                        ))}
-                      </div>
-                    </>
                   )}
 
                   {filtered.length === 0 && (
