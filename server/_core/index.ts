@@ -9,6 +9,7 @@ import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
 import { getDb } from "../db";
 import { migrate } from "drizzle-orm/mysql2/migrator";
+import { sql } from "drizzle-orm";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -35,14 +36,36 @@ async function runMigrations() {
     console.log("[Migrations] No database connection — skipping");
     return;
   }
+
+  // Run Drizzle-tracked migrations
   try {
     console.log("[Migrations] Running...");
     await migrate(db, { migrationsFolder: "./drizzle" });
     console.log("[Migrations] Up to date");
   } catch (error: any) {
-    // Log clearly but don't crash — a migration failure shouldn't take the whole server down
-    console.error("[Migrations] Error:", error?.message ?? error);
-    console.error("[Migrations] Server will continue but some features may be broken until the migration is resolved");
+    console.error("[Migrations] Drizzle migrate error:", error?.message ?? error);
+  }
+
+  // Belt-and-suspenders: directly ensure any columns that may have been
+  // missed due to migration tracking getting out of sync with the real schema.
+  const columnFixes: Array<{ label: string; ddl: string }> = [
+    {
+      label: "walls.is_featured",
+      ddl: "ALTER TABLE walls ADD COLUMN is_featured BOOLEAN DEFAULT FALSE",
+    },
+  ];
+  for (const fix of columnFixes) {
+    try {
+      await db.execute(sql.raw(fix.ddl));
+      console.log(`[Migrations] Applied: ${fix.label}`);
+    } catch (e: any) {
+      // errno 1060 = ER_DUP_FIELDNAME — column already exists, nothing to do
+      if (e?.errno === 1060 || e?.message?.includes("Duplicate column name")) {
+        console.log(`[Migrations] Already exists: ${fix.label}`);
+      } else {
+        console.error(`[Migrations] Error applying ${fix.label}:`, e?.message);
+      }
+    }
   }
 }
 
