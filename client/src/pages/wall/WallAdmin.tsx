@@ -446,6 +446,9 @@ const AdminDashboard = () => {
   return (
     <div className="container mx-auto p-4 bg-background">
       <header className="mb-8">
+        <a href="/workbench" className="inline-block font-pixel text-[8px] tracking-[0.25em] text-parchment/30 hover:text-parchment/60 transition-colors mb-4">
+          ← WORKBENCH
+        </a>
         <div className="flex justify-between items-center">
           <div>
             <h1 className="text-3xl font-bold mb-2">Admin Dashboard</h1>
@@ -569,7 +572,7 @@ const AdminDashboard = () => {
                         </div>
                       </div>
                     </CardContent>
-                    <CardFooter className="flex justify-between">
+                    <CardFooter className="flex flex-col items-start gap-2">
                       <div className="flex space-x-2">
                         <Button
                           variant="outline"
@@ -598,6 +601,8 @@ const AdminDashboard = () => {
                           <Trash2 className="h-4 w-4 mr-1" />
                           Delete
                         </Button>
+                      </div>
+                      <div className="flex space-x-2">
                         <Button
                           variant={wall.isFeatured ? "default" : "outline"}
                           size="sm"
@@ -608,23 +613,23 @@ const AdminDashboard = () => {
                           <Star className="h-4 w-4 mr-1" />
                           {wall.isFeatured ? "Featured" : "Feature"}
                         </Button>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => {
+                            navigator.clipboard.writeText(
+                              `${window.location.origin}/workbench/wall/${wall.wallCode}`,
+                            );
+                            toast({
+                              title: "Success",
+                              description: "Wall link copied to clipboard!",
+                            });
+                          }}
+                        >
+                          <ExternalLink className="h-4 w-4 mr-1" />
+                          Copy Link
+                        </Button>
                       </div>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => {
-                          navigator.clipboard.writeText(
-                            `${window.location.origin}/workbench/wall/${wall.wallCode}`,
-                          );
-                          toast({
-                            title: "Success",
-                            description: "Wall link copied to clipboard!",
-                          });
-                        }}
-                      >
-                        <ExternalLink className="h-4 w-4 mr-1" />
-                        Copy Link
-                      </Button>
                     </CardFooter>
                   </Card>
                 ))}

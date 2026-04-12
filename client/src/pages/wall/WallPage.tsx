@@ -86,6 +86,9 @@ export default function WallPage() {
         {/* Title + CONTRIBUTE overlaid on header */}
         <div className="absolute bottom-0 left-0 right-0 flex items-end justify-between px-4 pb-3">
           <div>
+            <a href="/workbench" className="block font-pixel text-[8px] tracking-[0.25em] text-parchment/30 hover:text-parchment/60 transition-colors mb-1">
+              ← WORKBENCH
+            </a>
             <p className="font-pixel text-gold text-[11px] tracking-widest">THE WALL</p>
             <p className="font-pixel text-parchment/30 text-[9px] tracking-widest">COMMUNAL ARCHIVE</p>
           </div>
