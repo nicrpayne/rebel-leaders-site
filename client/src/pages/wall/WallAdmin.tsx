@@ -446,7 +446,7 @@ const AdminDashboard = () => {
   return (
     <div className="container mx-auto p-4 bg-background">
       <header className="mb-8">
-        <a href="/workbench" className="inline-block font-pixel text-[8px] tracking-[0.25em] text-parchment/30 hover:text-parchment/60 transition-colors mb-4">
+        <a href="/workbench" className="inline-block font-pixel text-[8px] tracking-[0.25em] text-gold/50 hover:text-gold transition-colors mb-4">
           ← WORKBENCH
         </a>
         <div className="flex justify-between items-center">
