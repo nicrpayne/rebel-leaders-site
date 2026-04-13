@@ -7,6 +7,13 @@ import { fetchYouTubeFullVideos, fetchYouTubeShorts } from "./youtube-rss";
 import { gravitasRouter } from "./gravitas";
 import { adminRouter } from "./admin";
 import { wallRouter } from "./wall";
+import {
+  getMagicLinkUser,
+  requestMagicLink,
+  verifyToken,
+  logEvent,
+  saveGravitasAssessment,
+} from "./auth";
 
 export const appRouter = router({
   system: systemRouter,
@@ -20,14 +27,22 @@ export const appRouter = router({
   // Wall feature
   wall: wallRouter,
   auth: router({
-    me: publicProcedure.query(opts => opts.ctx.user),
+    // Returns the active user — checks Manus OAuth first, then magic-link JWT.
+    me: publicProcedure.query(async ({ ctx }) => {
+      if (ctx.user) return ctx.user;
+      return getMagicLinkUser(ctx.req.headers.cookie);
+    }),
+    // Clears the Manus OAuth session cookie.
     logout: publicProcedure.mutation(({ ctx }) => {
       const cookieOptions = getSessionCookieOptions(ctx.req);
       ctx.res.clearCookie(COOKIE_NAME, { ...cookieOptions, maxAge: -1 });
-      return {
-        success: true,
-      } as const;
+      return { success: true } as const;
     }),
+    // Magic-link auth procedures
+    requestMagicLink,
+    verifyToken,
+    logEvent,
+    saveGravitasAssessment,
   }),
 
   // Substack RSS feed integration
