@@ -5,7 +5,9 @@ import { ScoringResult } from "@/lib/workbench/scoring";
 import { cn } from "@/lib/utils";
 import { useGame } from "@/contexts/GameContext";
 import DesktopOnly from "@/components/workbench/DesktopOnly";
-import SaveReadingPrompt from "@/components/workbench/SaveReadingPrompt";
+import SaveReadingPrompt from "@/components/SaveReadingPrompt";
+import { useSession } from "@/contexts/SessionContext";
+import { trpc } from "@/lib/trpc";
 
 // ─── Gravitas Profile Library ────────────────────────────────────────
 // Keyed by "ARCHETYPE::LEAK". Only Compensation Orbit profiles have
@@ -313,6 +315,29 @@ export default function Results() {
   const [phase, setPhase] = useState<"loading" | "reveal" | "complete">("loading");
   const [isTransmitting, setIsTransmitting] = useState(false);
   const { awardAchievement } = useGame();
+  const { sessionId } = useSession();
+  const { data: currentUser } = trpc.auth.me.useQuery();
+  const saveAssessment = trpc.auth.saveGravitasAssessment.useMutation();
+
+  // Auto-save for authenticated users once results are loaded
+  useEffect(() => {
+    if (!currentUser || !results) return;
+    saveAssessment.mutate({
+      sessionId,
+      scanType: results.scanMode === "DEEP_SCAN" ? "deep" : "quick",
+      dimensionScores: {
+        identity: results.identity,
+        relationship: results.relationship,
+        vision: results.vision,
+        culture: results.culture,
+      },
+      archetype: results.archetype,
+      leak: results.leak,
+      force: results.force,
+      firstMove: results.firstMove,
+      rawAnswers: {},
+    });
+  }, [currentUser, results]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const stored =
@@ -713,7 +738,30 @@ export default function Results() {
           })()}
 
           {/* Save Reading Prompt */}
-          <SaveReadingPrompt context="gravitas" />
+          {!currentUser ? (
+            <SaveReadingPrompt
+              gravitasResult={{
+                scanType: results.scanMode === "DEEP_SCAN" ? "deep" : "quick",
+                dimensionScores: {
+                  identity: results.identity,
+                  relationship: results.relationship,
+                  vision: results.vision,
+                  culture: results.culture,
+                },
+                archetype: results.archetype,
+                leak: results.leak,
+                force: results.force,
+                firstMove: results.firstMove,
+                rawAnswers: {},
+              }}
+            />
+          ) : (
+            <div className="border border-[rgba(197,160,89,0.12)] bg-[#0a0a0e] rounded-[2px] px-4 py-3 text-center">
+              <p className="text-[9px] tracking-[0.2em] text-[rgba(197,160,89,0.5)]" style={{ fontFamily: "var(--font-pixel, monospace)", margin: 0 }}>
+                READING SAVED TO YOUR RECORD
+              </p>
+            </div>
+          )}
 
           {/* Return link */}
           <div className="text-center pt-1 pb-2">
