@@ -30,6 +30,7 @@ import Admin from "./pages/Admin";
 import WallIndex from "./pages/wall/WallIndex";
 import WallPage from "./pages/wall/WallPage";
 import WallAdmin from "./pages/wall/WallAdmin";
+import AuthVerify from "./pages/AuthVerify";
 
 function Router() {
   return (
@@ -56,6 +57,7 @@ function Router() {
       <Route path="/hidden-assets" component={HiddenAssets} />
       <Route path="/admin" component={Admin} />
       <Route path="/admin/wall" component={WallAdmin} />
+      <Route path="/auth/verify" component={AuthVerify} />
       {/* Legacy redirects — keep old /wall URLs working */}
       <Route path="/wall/:wallCode">
         {(params: { wallCode: string }) => <Redirect to={`/workbench/wall/${params.wallCode}`} />}
