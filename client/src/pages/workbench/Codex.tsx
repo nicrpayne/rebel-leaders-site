@@ -7,6 +7,7 @@ import { codexAudio } from "@/lib/workbench/CodexAudio";
 import CabinetDeck from "@/components/workbench/CabinetDeck";
 import { useGame } from "@/contexts/GameContext";
 import DesktopOnly from "@/components/workbench/DesktopOnly";
+import { events } from "@/lib/analytics";
 
 import { ReaderPanel } from "@/components/workbench/reader";
 import CodexShelf from "@/components/workbench/CodexShelf";
@@ -213,6 +214,7 @@ export default function Codex() {
 
   // Interaction Handlers
   const handleLoad = (entry: CodexEntry) => {
+    events.codexLoaded(entry.id, isReceivingSignal);
     setLoadedEntry(entry);
     addToRecent(entry.id);
     playSound("load");
