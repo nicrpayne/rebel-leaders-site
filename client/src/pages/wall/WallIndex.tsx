@@ -26,6 +26,7 @@ export default function WallIndex() {
           <p className="font-display text-lg text-parchment-dim/70 leading-relaxed max-w-lg">
             A place to learn from others on the journey alongside you.
             Share what the work is teaching you. Witness what it's teaching them.
+            All anonymous.
           </p>
         </FadeIn>
 
