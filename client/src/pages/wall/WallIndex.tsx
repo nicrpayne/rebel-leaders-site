@@ -19,14 +19,13 @@ export default function WallIndex() {
 
         {/* Header */}
         <FadeIn>
-          <p className="font-pixel text-[9px] tracking-[0.3em] text-gold/60 mb-4">COMMONS</p>
           <h1 className="font-display text-4xl md:text-5xl font-semibold text-parchment mb-4 leading-tight">
             The Wall
           </h1>
           <div className="w-12 h-px bg-gold/30 mb-6" />
           <p className="font-display text-lg text-parchment-dim/70 leading-relaxed max-w-lg">
-            A living archive. Leave your mark. Witness the work of others.
-            No likes. No comments. Just honest record.
+            A place to learn from others on the journey alongside you.
+            Share what the work is teaching you. Witness what it's teaching them.
           </p>
         </FadeIn>
 
