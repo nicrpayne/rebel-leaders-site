@@ -2,6 +2,7 @@ import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, router } from "./_core/trpc";
+import { ENV } from "./_core/env";
 import { fetchSubstackArticles } from "./rss";
 import { fetchYouTubeFullVideos, fetchYouTubeShorts } from "./youtube-rss";
 import { gravitasRouter } from "./gravitas";
@@ -36,6 +37,11 @@ export const appRouter = router({
     logout: publicProcedure.mutation(({ ctx }) => {
       const cookieOptions = getSessionCookieOptions(ctx.req);
       ctx.res.clearCookie(COOKIE_NAME, { ...cookieOptions, maxAge: -1 });
+      ctx.res.clearCookie("rl_session", {
+        httpOnly: true,
+        secure: ENV.isProduction,
+        sameSite: "lax",
+      });
       return { success: true } as const;
     }),
     // Magic-link auth procedures
