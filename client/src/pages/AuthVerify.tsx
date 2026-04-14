@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'wouter';
 import { trpc } from '@/lib/trpc';
 import { useSession } from '@/contexts/SessionContext';
+import { identifyUser } from '@/lib/analytics';
 
 export default function AuthVerify() {
   const [, setLocation] = useLocation();
@@ -26,9 +27,10 @@ export default function AuthVerify() {
     verifyMutation.mutate(
       { token, sessionId, pendingGravitasResult: pendingResult },
       {
-        onSuccess: () => {
+        onSuccess: (data) => {
           setStatus('success');
           localStorage.removeItem('gravitas_pending_save');
+          identifyUser(data.user.id, data.user.email);
           setTimeout(() => setLocation('/workbench/results'), 3000);
         },
         onError: () => setStatus('error'),
