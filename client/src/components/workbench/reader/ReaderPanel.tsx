@@ -28,7 +28,7 @@ const LCD_LABEL: React.CSSProperties = {
   fontFamily: "var(--font-lcd)",
   fontSize: "8px",
   letterSpacing: "0.12em",
-  color: "rgba(138, 109, 59, 0.75)",
+  color: "rgba(80, 45, 10, 0.9)",
   marginBottom: "5px",
 };
 
@@ -329,7 +329,7 @@ export default function ReaderPanel({
                   fontFamily: "var(--font-lcd)",
                   fontSize: "9px",
                   letterSpacing: "0.15em",
-                  color: "rgba(100, 65, 30, 0.8)",
+                  color: "rgba(60, 30, 5, 0.85)",
                 }}
               >
                 <span>{entry.category.toUpperCase()}</span>
@@ -503,7 +503,7 @@ export default function ReaderPanel({
                             style={{
                               fontFamily: "var(--font-lcd)",
                               fontSize: "10px",
-                              color: "rgba(138, 109, 59, 0.75)",
+                              color: "rgba(80, 45, 10, 0.9)",
                               minWidth: "18px",
                             }}
                           >
@@ -544,7 +544,7 @@ export default function ReaderPanel({
                               fontFamily: "var(--font-lcd)",
                               fontSize: "8px",
                               letterSpacing: "0.12em",
-                              color: "rgba(138, 109, 59, 0.75)",
+                              color: "rgba(80, 45, 10, 0.9)",
                               padding: "1px 5px",
                               border: "1px solid rgba(138, 109, 59, 0.15)",
                             }}
@@ -577,7 +577,7 @@ export default function ReaderPanel({
                           fontFamily: "var(--font-lcd)",
                           fontSize: "9px",
                           letterSpacing: "0.1em",
-                          color: "rgba(138, 109, 59, 0.75)",
+                          color: "rgba(80, 45, 10, 0.9)",
                         }}
                       >
                         {String(completedCount).padStart(2, "0")} / {String(steps.length).padStart(2, "0")}
