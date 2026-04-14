@@ -23,6 +23,8 @@ import {
   type GravitasPrior,
 } from "@/lib/mirror";
 import SaveReadingPrompt from "@/components/workbench/SaveReadingPrompt";
+import { trpc } from "@/lib/trpc";
+import { useSession } from "@/contexts/SessionContext";
 
 // ─── Design Tokens ──────────────────────────────────────────────────
 
@@ -185,6 +187,10 @@ export default function MirrorReading() {
   const [reading, setReading] = useState<ReadingBlock | null>(null);
   const [isRevealed, setIsRevealed] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const { sessionId } = useSession();
+  const { data: currentUser } = trpc.auth.me.useQuery();
+  const saveMirrorMutation = trpc.auth.saveMirrorReading.useMutation();
+  const savedRef = useRef(false);
 
   // ─── Load Data ───────────────────────────────────────────────────
 
@@ -205,6 +211,18 @@ export default function MirrorReading() {
 
     setTimeout(() => setIsRevealed(true), 400);
   }, [navigate]);
+
+  // ─── Save to DB if authenticated ────────────────────────────────
+
+  useEffect(() => {
+    if (!mirrorResult || !currentUser || !sessionId || savedRef.current) return;
+    savedRef.current = true;
+    saveMirrorMutation.mutate({
+      sessionId,
+      responses: {},
+      result: mirrorResult,
+    });
+  }, [mirrorResult, currentUser, sessionId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // ─── Handle Codex Navigation ─────────────────────────────────────
 

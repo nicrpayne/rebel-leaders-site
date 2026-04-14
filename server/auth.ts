@@ -2,7 +2,7 @@ import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { publicProcedure } from "./_core/trpc";
 import { getDb } from "./db";
-import { authTokens, users, gravitasAssessments, userEvents } from "../drizzle/schema";
+import { authTokens, users, gravitasAssessments, userEvents, mirrorReadings } from "../drizzle/schema";
 import { eq, and, gt } from "drizzle-orm";
 import { Resend } from "resend";
 import { randomBytes } from "crypto";
@@ -87,6 +87,7 @@ export const verifyToken = publicProcedure
     token: z.string(),
     sessionId: z.string(),
     pendingGravitasResult: z.any().optional(),
+    pendingMirrorResult: z.any().optional(),
   }))
   .mutation(async ({ input, ctx }) => {
     const db = await getDb();
@@ -177,6 +178,19 @@ export const verifyToken = publicProcedure
       }
     }
 
+    // Retroactive save of Mirror result if provided
+    if (input.pendingMirrorResult) {
+      const m = input.pendingMirrorResult;
+      if (m?.top_family) {
+        await db.insert(mirrorReadings).values({
+          userId: user.id,
+          sessionId: input.sessionId,
+          responses: {},
+          result: m,
+        });
+      }
+    }
+
     const sessionToken = await signSessionToken(user.id, user.email ?? "");
 
     ctx.res.cookie(RL_SESSION_COOKIE, sessionToken, {
@@ -253,4 +267,39 @@ export const saveGravitasAssessment = publicProcedure
     });
 
     return { saved: true, sessionNumber: prior.length + 1 } as const;
+  });
+
+export const saveMirrorReading = publicProcedure
+  .input(z.object({
+    sessionId: z.string(),
+    responses: z.any(),
+    result: z.object({
+      top_family: z.string(),
+      secondary_family: z.string().nullable(),
+      confidence_band: z.string(),
+      gravitas_combo: z.string(),
+      confirmation_pair_used: z.string().nullable(),
+      adaptive_question_used: z.string().nullable(),
+      reading_tone_flags: z.array(z.string()),
+      codex_framing_flags: z.array(z.string()),
+      resistance_core_key: z.string(),
+      move_logic_family: z.string(),
+      family_scores: z.any(),
+    }),
+  }))
+  .mutation(async ({ input, ctx }) => {
+    const magicUser = await getMagicLinkUser(ctx.req.headers.cookie);
+    if (!magicUser) return { saved: false } as const;
+
+    const db = await getDb();
+    if (!db) return { saved: false } as const;
+
+    await db.insert(mirrorReadings).values({
+      userId: magicUser.id,
+      sessionId: input.sessionId,
+      responses: input.responses,
+      result: input.result,
+    });
+
+    return { saved: true } as const;
   });

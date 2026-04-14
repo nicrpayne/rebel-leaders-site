@@ -24,8 +24,11 @@ export default function AuthVerify() {
     const pending = localStorage.getItem('gravitas_pending_save');
     const pendingResult = pending ? JSON.parse(pending) : undefined;
 
+    const pendingMirror = localStorage.getItem('mirrorResult');
+    const pendingMirrorResult = pendingMirror ? JSON.parse(pendingMirror) : undefined;
+
     verifyMutation.mutate(
-      { token, sessionId, pendingGravitasResult: pendingResult },
+      { token, sessionId, pendingGravitasResult: pendingResult, pendingMirrorResult },
       {
         onSuccess: (data) => {
           setStatus('success');
