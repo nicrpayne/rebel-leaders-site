@@ -286,7 +286,7 @@ function DimensionBar({
 
   return (
     <div className="flex items-center gap-3">
-      <span className="text-[7px] tracking-[0.2em] text-[#3a3a44] uppercase w-[80px] text-right shrink-0">
+      <span className="text-[7px] tracking-[0.2em] text-[#5a5a66] uppercase w-[80px] text-right shrink-0">
         {label}
       </span>
       <div className="flex-1 h-[6px] bg-[#0a0a0e] border border-[#1a1a22] rounded-[1px] overflow-hidden shadow-inner">
@@ -463,7 +463,7 @@ export default function Results() {
         </span>
       </Link>
       <Link href="/workbench/gravitas">
-        <span className="text-[7px] tracking-[0.15em] text-[#3a3a44] hover:text-[#5a5a66] cursor-pointer uppercase transition-colors">
+        <span className="text-[7px] tracking-[0.15em] text-[#5a5a66] hover:text-[#7a7a8a] cursor-pointer uppercase transition-colors">
           RE-SCAN
         </span>
       </Link>
@@ -498,7 +498,7 @@ export default function Results() {
                 }}
               />
               <div className="relative z-10">
-                <div className="text-[6px] tracking-[0.3em] text-[#3a3a44] uppercase mb-1">
+                <div className="text-[6px] tracking-[0.3em] text-[#5a5a66] uppercase mb-1">
                   DETECTED ORBIT
                 </div>
                 <div
@@ -520,7 +520,7 @@ export default function Results() {
                 </div>
                 {/* Total Score */}
                 <div className="mt-2 pt-2 border-t border-white/[0.03] flex items-center gap-2">
-                  <span className="text-[6px] tracking-[0.2em] text-[#3a3a44] uppercase">
+                  <span className="text-[6px] tracking-[0.2em] text-[#5a5a66] uppercase">
                     FIELD STRENGTH
                   </span>
                   <span
@@ -532,14 +532,14 @@ export default function Results() {
                   >
                     {results.total}
                   </span>
-                  <span className="text-[6px] text-[#3a3a44]">/ 5.0</span>
+                  <span className="text-[6px] text-[#5a5a66]">/ 5.0</span>
                 </div>
               </div>
             </div>
 
             {/* Dimension Bars */}
             <div className="bg-gradient-to-b from-[#0e0e12] to-[#0a0a0d] border border-[#1a1a22] rounded p-3 flex flex-col justify-center gap-2.5">
-              <div className="text-[6px] tracking-[0.3em] text-[#3a3a44] uppercase mb-1">
+              <div className="text-[6px] tracking-[0.3em] text-[#5a5a66] uppercase mb-1">
                 DIMENSIONAL FIELD MAP
               </div>
               <DimensionBar
@@ -766,7 +766,7 @@ export default function Results() {
           {/* Return link */}
           <div className="text-center pt-1 pb-2">
             <Link href="/workbench">
-              <span className="text-[6px] tracking-[0.2em] text-[#2a2a32] hover:text-[#3a3a44] cursor-pointer uppercase transition-colors">
+              <span className="text-[6px] tracking-[0.2em] text-[#4a4a55] hover:text-[#5a5a66] cursor-pointer uppercase transition-colors">
                 RETURN TO WORKBENCH
               </span>
             </Link>
