@@ -29,7 +29,7 @@ export default function AuthVerify() {
         onSuccess: () => {
           setStatus('success');
           localStorage.removeItem('gravitas_pending_save');
-          setTimeout(() => setLocation('/workbench/gravitas'), 2000);
+          setTimeout(() => setLocation('/workbench/results'), 3000);
         },
         onError: () => setStatus('error'),
       }
