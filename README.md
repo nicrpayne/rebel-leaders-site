@@ -27,13 +27,13 @@ The palette is drawn from the actual office where the content is created — dee
 
 ### Typography
 
-The project uses three fonts that reinforce the RPG-meets-scholarship tension. **Press Start 2P** handles all UI elements, headings, and navigation in a pixel font. **Cormorant Garamond** provides an elegant serif for body text, quotes, and long-form content. **VT323** is used in the Workbench plugin interfaces for a terminal/hardware monospace aesthetic.
+Three fonts reinforce the RPG-meets-scholarship tension. **Press Start 2P** handles all UI elements, headings, and navigation in a pixel font. **Cormorant Garamond** provides an elegant serif for body text, quotes, and long-form content. **VT323** is used in the Workbench plugin interfaces for a terminal/hardware monospace aesthetic.
 
 ---
 
 ## Site Structure
 
-The site contains 17 pages across three tiers: the main content site, the interactive Workbench, and hidden/utility pages.
+The site contains pages across three tiers: the main content site, the interactive Workbench, and utility/auth pages.
 
 ### Main Site Pages
 
@@ -42,7 +42,7 @@ The site contains 17 pages across three tiers: the main content site, the intera
 | `/` | Home | Hero scene with pixel-art office, RPG narrator typewriter, six-chapter scroll journey through the Rebel Leaders philosophy |
 | `/manifesto` | The Map | The full manifesto — five chapters covering disconnection, formation, and the mission. Includes a scroll-driven side-scroller mini-game |
 | `/start` | New Player | 30-second orientation for newcomers: What is this? Is this for me? What do I do? |
-| `/archives` | Archives | Auto-populated content hub with three tabs: Visions (YouTube videos), Quick Strikes (Shorts), and Scrolls (Substack articles) |
+| `/archives` | Archives | Auto-populated content hub with three tabs: Visions (YouTube full videos), Quick Strikes (Shorts), and Scrolls (Substack articles) |
 | `/shelf` | The Shelf | Curated library of 60+ books across 7 categories with a "Start Here" section of 5 essential reads |
 | `/residency` | Residency | Coaching and consulting intake page |
 | `/about` | About | Nic's story, philosophy, and a skill-tree visualization of intellectual influences |
@@ -56,17 +56,21 @@ The site contains 17 pages across three tiers: the main content site, the intera
 | Route | Page | Description |
 |---|---|---|
 | `/workbench` | Workbench | Plugin hub — 15 plugin cards in a filterable grid with category and status filters |
-| `/workbench/gravitas` | Gravitas | Leadership gravity diagnostic: 15 questions, 3 minutes, 5 dimensions |
-| `/workbench/results` | Results | Gravitas scan results with radar visualization and Side-Chain handoff to Codex |
+| `/workbench/gravitas` | Gravitas | Leadership gravity diagnostic: questions, 3 minutes, 4 dimensions |
+| `/workbench/results` | Results | Gravitas scan results with radar visualization and Side-Chain handoff to Codex. Prompts unauthenticated users to save their reading; auto-saves for authenticated users |
 | `/workbench/codex` | The Codex | Library of 26 leadership protocols in a hardware cabinet UI with audio narration |
+| `/workbench/mirror` | Mirror Flow | Mirror reading flow (personality/archetype reading) |
+| `/workbench/wall/:wallCode` | The Wall | Code-gated community walls for photo submissions |
 
-### Utility Pages
+### Auth & Utility Pages
 
 | Route | Page | Description |
 |---|---|---|
+| `/auth/verify` | Auth Verify | Magic-link verification callback — validates token, sets session cookie, stitches anonymous session events, retroactively saves any pending Gravitas result, then redirects to results |
 | `/hidden-assets` | Asset Vault | Hidden page listing all CDN image assets with download links |
 | `/game-standalone` | Game Standalone | Standalone version of the Manifesto side-scroller |
 | `/armory` | Legacy Redirect | Redirects to `/workbench` (former name) |
+| `/admin` | Admin | Admin dashboard (authenticated Manus session required) |
 
 ---
 
@@ -76,13 +80,13 @@ The Workbench at `/workbench` is the hub for interactive leadership tools. It fo
 
 ### Active Plugins
 
-**Gravitas** (`/workbench/gravitas`) is a leadership gravity diagnostic. It presents 15 questions across 5 dimensions (Identity, Relationship, Vision, Culture, Field Strength) in a hardware-styled interface with dust particle effects. The premium rotary knob component uses Web Audio API to synthesize a satisfying mechanical click sound — a 12ms noise burst through a 4kHz bandpass filter. Results display orbital scores with a radar visualization inside the GravitasShell frame.
+**Gravitas** (`/workbench/gravitas`) is a leadership gravity diagnostic. It presents questions across 4 dimensions (Identity, Relationship, Vision, Culture) in a hardware-styled interface with dust particle effects. The premium rotary knob component uses the Web Audio API to synthesize a satisfying mechanical click sound — a 12ms noise burst through a 4kHz bandpass filter. Results display orbital scores with a radar visualization inside the GravitasShell frame. Analytics events fire on scan start (`gravitas_started`) and completion (`gravitas_completed` with archetype and leak dimension).
 
-**The Codex** (`/workbench/codex`) is a library of 26 high-leverage leadership scripts and protocols. It is displayed in a physical cabinet UI with CRT monitors, cartridge slots, and category filters (Identity, Relationship, Vision, Culture). The ReaderPanel features a typewriter heading animation, word-reveal text, audio narration with a VU meter, and rotary knob controls.
+**The Codex** (`/workbench/codex`) is a library of 26 high-leverage leadership scripts and protocols displayed in a physical cabinet UI with CRT monitors, cartridge slots, and category filters (Identity, Relationship, Vision, Culture). The ReaderPanel features a typewriter heading animation, word-reveal text, audio narration with a VU meter, and rotary knob controls. Loading a cartridge fires a `codex_loaded` analytics event tagged with whether the user arrived from a Gravitas side-chain.
 
 ### Side-Chain Handoff
 
-After completing a Gravitas scan, the Results page offers a "Side-Chain" button that passes the user's lowest-scoring dimension to the Codex as a URL parameter (`?signal=identity`). The Codex auto-filters to protocols matching that dimension and displays a signal banner, creating a guided remediation flow from diagnosis to action.
+After completing a Gravitas scan, the Results page offers a "Side-Chain" button that passes the user's lowest-scoring dimension (the "leak") and full signal data to the Codex via URL params (`?signal=received&bottleneck=IDENTITY&firstMove=...`). The Codex uses a scoring algorithm (`getBestCartridge`) to select the highest-priority protocol for that signal, auto-loads it with a scan animation, and displays a signal banner — creating a guided remediation flow from diagnosis to action.
 
 ### All 15 Plugins
 
@@ -115,9 +119,105 @@ After completing a Gravitas scan, the Results page offers a "Side-Chain" button 
 
 ---
 
+## The Wall
+
+The Wall (`/workbench/wall/:wallCode`) is a code-gated community photo-wall feature. Each wall is accessed by a short code (e.g. `/workbench/wall/REBEL`). Users must submit their own image (photo or upload) through `WallGate` before they can view other submissions — a contribution-first pattern that keeps the wall alive. Submitted images are stored in Cloudflare R2, queued as `pending`, and displayed only after admin approval.
+
+### Wall Flow
+
+1. User arrives at `/workbench/wall/:wallCode`
+2. If not yet submitted (checked via `localStorage`), `WallGate` is shown — a prompt to take/upload a photo
+3. On submit, image is uploaded to R2 via a presigned URL, a `wallEntries` row is created with `status: pending`
+4. After submission, `WallGrid` shows the live wall (approved entries) with 15-second polling for new approvals
+5. Admin moderates at `/workbench/wall/:wallCode?admin=true` using a secret token (`WALL_ADMIN_SECRET`)
+
+### Wall Database Tables
+
+- `walls` — wall definitions (title, description, wallCode, headerImageUrl, promptText)
+- `wallEntries` — per-submission rows (imageUrl, status, displayOrder)
+
+---
+
+## Auth System
+
+The site uses a **dual auth** model: legacy Manus OAuth for admin/Nic's account, and **magic-link email auth** for public users.
+
+### Magic-Link Flow
+
+1. On the Results page, unauthenticated users see `SaveReadingPrompt` — an email input with Cormorant Garamond styling
+2. Before requesting the link, the Gravitas result is stored in `localStorage('gravitas_pending_save')`
+3. `auth.requestMagicLink` inserts a 64-char random hex token into `auth_tokens` (15-minute expiry) and sends a branded HTML email via Resend
+4. User clicks the link → `/auth/verify?token=<token>&sessionId=<id>`
+5. `auth.verifyToken` validates the token, marks it used, creates or updates the `users` row, sets an `rl_session` httpOnly JWT cookie (30-day expiry, signed with `JWT_SECRET`), and triggers session stitching + retroactive Gravitas save
+6. `AuthVerify` calls `identifyUser()` to link the PostHog anonymous identity to the user's ID and email, then redirects to `/workbench/results` after 3 seconds
+
+### Session Stitching
+
+Every browser session has an anonymous `sessionId` (UUID generated at first visit, stored in `localStorage` via `SessionContext`). All `user_events` rows are written with this `sessionId`. When a user authenticates via magic-link, all `user_events` rows matching that `sessionId` have their `userId` backfilled — linking pre-auth behavior to the new user record.
+
+### Retroactive Gravitas Save
+
+If a user completes a Gravitas scan before authenticating, the result sits in `localStorage('gravitas_pending_save')`. When they later verify their magic link, `verifyToken` reads `pendingGravitasResult` from the request payload and inserts a `gravitas_assessments` row. localStorage is cleared on success.
+
+### Session Cookie
+
+The `rl_session` cookie is:
+- **httpOnly** — not accessible to JavaScript
+- **secure** — HTTPS-only in production (`ENV.isProduction`)
+- **sameSite: lax** — protects against CSRF while allowing link-click flows
+- **maxAge: 30 days**
+
+`auth.me` checks the Manus OAuth session first, then falls back to reading and verifying the `rl_session` JWT. `auth.logout` clears both cookies with matching options to ensure the browser actually removes them.
+
+### GameHud Auth Indicator
+
+When a user is signed in (via magic-link), the bottom of the expanded GameHud panel shows their email in dim gold pixel text alongside a `SIGN OUT` button. Clicking it calls `auth.logout`, resets the PostHog identity (`resetUser()`), and reloads the page.
+
+---
+
+## Analytics
+
+The site uses [PostHog](https://posthog.com) for product analytics, initialized in `client/src/lib/analytics.ts` and called once in `main.tsx` before render.
+
+### Configuration
+
+| Env Var | Purpose |
+|---|---|
+| `VITE_POSTHOG_API_KEY` | PostHog project API key (required to enable analytics) |
+| `VITE_POSTHOG_HOST` | PostHog ingestion host (defaults to `https://us.i.posthog.com`) |
+
+Analytics is **silently disabled** if `VITE_POSTHOG_API_KEY` is not set — no errors, no tracking. This means local development has analytics off by default.
+
+### Session Recording
+
+Session recording is enabled with `maskAllInputs: false` and `maskInputOptions: { password: true }` — email inputs are recorded (useful for seeing form abandonment), password fields are masked.
+
+### Typed Event Helpers
+
+All events go through `events.*` in `analytics.ts` to keep property names consistent:
+
+| Event | Trigger | Properties |
+|---|---|---|
+| `gravitas_started` | User selects a scan mode | `scanType` |
+| `gravitas_completed` | Results page loaded | `archetype`, `leak` |
+| `gravitas_abandoned` | User navigates away mid-scan | `questionIndex` |
+| `codex_loaded` | Cartridge loaded into deck | `cartridgeId`, `fromGravitas` |
+| `codex_read` | Read button pressed | `cartridgeId` |
+| `codex_run_started` | Run mode opened | `cartridgeId` |
+| `codex_run_completed` | Run checklist completed | `cartridgeId` |
+| `wall_viewed` | Wall page rendered | `wallCode` |
+| `wall_submitted` | Photo submitted to wall | `wallCode` |
+| `workbench_locked_plugin_clicked` | Locked plugin card clicked | `pluginId` |
+| `easter_egg_found` | Easter egg discovered | `eggId` |
+| `achievement_unlocked` | Achievement awarded | `achievementId` |
+| `auth_created` | New user account created | — |
+| `auth_returned` | Existing user signed in | — |
+
+---
+
 ## Gamification System
 
-The site features a persistent XP and achievement system tracked entirely via localStorage — no server-side state required. The GameHud displays in the bottom-right corner of every page and can be minimized.
+The site features a persistent XP and achievement system tracked entirely via `localStorage` — no server-side state required. The `GameHud` displays in the bottom-right corner of every page and can be minimized. When a user is authenticated, the HUD also shows their email and a sign-out button at the bottom of the expanded panel.
 
 ### XP Breakdown (100 XP Total)
 
@@ -169,20 +269,46 @@ The Map page (`/manifesto`) includes a scroll-driven side-scroller mini-game bui
 
 ---
 
+## Database Schema
+
+The database is MySQL (hosted on Railway) accessed via Drizzle ORM. Migrations are managed as raw SQL files in `drizzle/` alongside a Drizzle journal and snapshot. The server also runs belt-and-suspenders `CREATE TABLE IF NOT EXISTS` guards on startup in `server/_core/index.ts`.
+
+### Tables
+
+| Table | Purpose |
+|---|---|
+| `users` | All users. `openId` is nullable — Manus OAuth users have it set; magic-link users have it null. `loginMethod` is `oauth` or `magic_link`. |
+| `gravitas_results` | Legacy Gravitas scan results (scan mode, 4 dimension scores, archetype, leak, force, full JSON payload) |
+| `auth_tokens` | One-time magic-link tokens. 64-char hex, 15-minute expiry, marked `used` after first verification |
+| `user_events` | Behavioral event log. Written with `sessionId` (anonymous) then backfilled with `userId` on auth via session stitching |
+| `gravitas_assessments` | Normalized Gravitas results with `sessionNumber` for tracking transformation over time. Distinct from `gravitas_results` — this is the authoritative per-user assessment history |
+| `gravitas_deltas` | Computed delta between two `gravitas_assessments` rows (per-dimension change, archetype shift, leak shift) — powers trajectory view |
+| `codex_interactions` | Protocol engagement (load, read, run, checkbox progress, time spent, whether user arrived from Gravitas side-chain) |
+| `mirror_readings` | Mirror plugin reading results stored per session/user |
+| `walls` | Wall definitions (title, wallCode, header image, prompt text, active/featured flags) |
+| `wallEntries` | Per-submission rows for the Wall feature (imageUrl, status, displayOrder) |
+
+---
+
 ## Tech Stack
 
 | Layer | Technology |
 |---|---|
 | Frontend | React 19, Tailwind CSS 4, Wouter (routing), Framer Motion |
 | Backend | Express 4, tRPC 11, Superjson |
-| Database | MySQL / TiDB via Drizzle ORM |
-| Auth | Manus OAuth |
-| Content Feeds | YouTube RSS (via Manus Data API), Substack RSS |
-| Audio | Web Audio API (synthesized mechanical sounds, no audio files) |
+| Database | MySQL on Railway via Drizzle ORM |
+| Auth | Dual: Manus OAuth (admin/legacy) + magic-link email (public users) |
+| Auth JWT | `jose` v6 — `SignJWT` / `jwtVerify` with HS256 |
+| Transactional Email | Resend (`resend` SDK) with branded HTML template |
+| Analytics | PostHog (`posthog-js`) — pageview, session recording, 14 typed events |
+| Content Feeds | YouTube Data API v3 (playlist-based, 2 units/refresh), Substack RSS |
+| Image Storage | Cloudflare R2 (Wall photo submissions via presigned URLs) |
+| Audio | Web Audio API — synthesized mechanical sounds, no audio files |
 | Assets | CloudFront CDN for all static images |
 | Fonts | Google Fonts (Press Start 2P, Cormorant Garamond, VT323) |
-| Testing | Vitest (12 tests across 3 test files) |
-| State | localStorage for gamification, tRPC + React Query for server state |
+| Testing | Vitest (tests across auth, RSS, YouTube modules) |
+| State | `localStorage` for gamification + anonymous session ID; tRPC + React Query for server state |
+| Deployment | Railway |
 
 ---
 
@@ -191,76 +317,175 @@ The Map page (`/manifesto`) includes a scroll-driven side-scroller mini-game bui
 ```
 client/
   src/
-    pages/                  → 17 main site pages
-    pages/workbench/        → Gravitas, Results, Codex plugin pages
-    components/             → 21 custom components (Navigation, Footer, GameHud, DialogueBox, etc.)
-    components/workbench/   → 8 plugin components (GravitasShell, CabinetDeck, CodexShelf, ReaderPanel, etc.)
-    components/ui/          → shadcn/ui component library
-    contexts/               → GameContext (XP/achievements), ThemeContext
-    hooks/                  → usePageTracker, useScrollTracker, useComposition, usePersistFn
-    lib/workbench/          → Plugin data and logic (questions, scoring, codex-data, codex-ranking, audio)
-    index.css               → Global theme with custom Tailwind tokens
-  public/                   → Static assets (favicon, robots.txt)
+    pages/                        → Main site pages (Home, Manifesto, About, Archives, etc.)
+    pages/workbench/              → Plugin pages (GravityCheck, Results, Codex, MirrorFlow, MirrorReading)
+    pages/wall/                   → Wall feature pages (WallPage, WallGate, WallGrid, WallAdmin, WallIndex)
+    pages/AuthVerify.tsx          → Magic-link verification callback
+    components/                   → Shared components (Navigation, Footer, GameHud, DialogueBox, etc.)
+    components/workbench/         → Plugin components (GravitasShell, CabinetDeck, CodexShelf, ReaderPanel, etc.)
+    components/SaveReadingPrompt.tsx → Email capture shown on Results when unauthenticated
+    components/ui/                → shadcn/ui component library
+    contexts/
+      GameContext.tsx             → XP, achievements, toasts — all localStorage
+      ThemeContext.tsx            → Light/dark theme
+      SessionContext.tsx          → Anonymous session ID (UUID, localStorage, lives for session stitching)
+    hooks/                        → usePageTracker, useScrollTracker, useComposition, usePersistFn
+    lib/
+      analytics.ts                → PostHog init, identifyUser, resetUser, 14 typed event helpers
+      trpc.ts                     → tRPC client setup
+      workbench/                  → Plugin data and logic (codex-data, codex-schema, codex-ranking, questions, scoring, CodexAudio)
+    index.css                     → Global theme with custom Tailwind tokens
+    main.tsx                      → App entry: initPostHog() + SessionProvider + createRoot
+  public/                         → Static assets (favicon, robots.txt)
 
 server/
-  routers.ts                → tRPC procedures (auth, substack RSS, YouTube RSS)
-  rss.ts                    → Substack RSS feed parser
-  youtube-rss.ts            → YouTube RSS feed parser
-  db.ts                     → Database query helpers
-  storage.ts                → S3 storage helpers
-  *.test.ts                 → Vitest test files (auth, RSS, YouTube)
+  routers.ts                      → tRPC router (auth, substack, youtube, wall, gravitas, admin, system)
+  auth.ts                         → Magic-link procedures: requestMagicLink, verifyToken, logEvent, saveGravitasAssessment; getMagicLinkUser helper
+  emails/magic-link.ts            → Branded HTML email template for magic-link
+  rss.ts                          → Substack RSS feed parser
+  youtube-rss.ts                  → YouTube Data API v3 (playlist-based, full videos + shorts, 30-min cache)
+  gravitas.ts                     → Gravitas result persistence router
+  wall.ts                         → Wall feature router (getWall, getEntries, submit, admin moderation)
+  admin.ts                        → Admin dashboard router
+  db.ts                           → Drizzle database connection (lazy singleton)
+  storage.ts                      → S3/R2 helpers for Wall image uploads
+  r2.ts                           → Cloudflare R2 client configuration
+  *.test.ts                       → Vitest test files (auth.logout, rss, youtube-rss)
+  _core/
+    index.ts                      → Server startup: Express + tRPC mount + belt-and-suspenders DB migrations
+    env.ts                        → All environment variable bindings (single source of truth)
+    trpc.ts                       → tRPC context, router, publicProcedure setup
+    context.ts                    → Request context (req, res, user from Manus OAuth)
+    cookies.ts                    → Cookie option helpers
+    oauth.ts                      → Manus OAuth handling
 
 drizzle/
-  schema.ts                 → Database schema (users table)
-  relations.ts              → Drizzle relations
-  migrations/               → Generated migrations
+  schema.ts                       → Full database schema (10 tables)
+  relations.ts                    → Drizzle relations
+  0001_*.sql … 0004_*.sql         → Migration files (raw SQL, applied in sequence)
+  meta/_journal.json              → Migration journal
+  meta/*_snapshot.json            → Schema snapshots per migration
 
 shared/
-  const.ts                  → Shared constants
-  types.ts                  → Shared TypeScript types
+  const.ts                        → Shared constants (cookie names, etc.)
+  types.ts                        → Shared TypeScript types
 ```
 
 ---
 
 ## Backend API
 
-The server exposes three tRPC routers through `/api/trpc`:
+The server exposes all procedures through `/api/trpc` via tRPC v11. All procedures use the `publicProcedure` base (Manus OAuth user available via `ctx.user` when present).
 
-**auth** handles Manus OAuth. `auth.me` returns the current user session, and `auth.logout` clears the session cookie.
+### `auth` namespace
 
-**substack** provides `substack.articles`, which fetches and parses the Substack RSS feed to populate the Scrolls tab on the Archives page.
+| Procedure | Type | Description |
+|---|---|---|
+| `auth.me` | query | Returns the current user. Checks Manus OAuth session first, then reads and verifies the `rl_session` JWT cookie |
+| `auth.logout` | mutation | Clears both the Manus OAuth session cookie and the `rl_session` cookie (with matching options) |
+| `auth.requestMagicLink` | mutation | Creates a 15-min token in `auth_tokens`, sends a branded email via Resend. Input: `{ email, sessionId }` |
+| `auth.verifyToken` | mutation | Validates token, creates/updates user, sets `rl_session` JWT cookie (30 days), stitches session events, saves pending Gravitas result. Input: `{ token, sessionId, pendingGravitasResult? }`. Returns `{ success, user: { id, email } }` |
+| `auth.logEvent` | mutation | Inserts a row into `user_events` (anonymous or authenticated). Input: `{ sessionId, eventType, payload? }` |
+| `auth.saveGravitasAssessment` | mutation | Saves a completed Gravitas scan to `gravitas_assessments` for the authenticated user. No-ops if unauthenticated. Increments `sessionNumber` |
 
-**youtube** provides `youtube.videos` (full-length videos for the Visions tab) and `youtube.shorts` (Shorts for the Quick Strikes tab), both parsed from the YouTube channel RSS feed.
+### `youtube` namespace
+
+| Procedure | Type | Description |
+|---|---|---|
+| `youtube.videos` | query | Returns full-length videos from the Uploads playlist (filtered to exclude Shorts) |
+| `youtube.shorts` | query | Returns Shorts from the UUSH playlist |
+
+Both share a single 30-minute in-memory cache. Two parallel `playlistItems` API calls per refresh (2 quota units total). Falls back to stale cache rather than returning empty on API failure.
+
+### `substack` namespace
+
+| Procedure | Type | Description |
+|---|---|---|
+| `substack.articles` | query | Fetches and parses the Substack RSS feed |
+
+### `wall` namespace
+
+Handles wall retrieval, entry listing, photo submission (with R2 presigned URLs), and admin moderation (approve/reject entries). Admin actions require `WALL_ADMIN_SECRET` in the request.
+
+### `gravitas` namespace
+
+Handles persistence of legacy Gravitas scan results (pre-auth system, used by the older `gravitas_results` table).
+
+---
+
+## Environment Variables
+
+All environment variables are centralized in `server/_core/env.ts`. The ones marked **Required** will cause silent failures or missing features if absent.
+
+### Server-side
+
+| Variable | Required | Description |
+|---|---|---|
+| `DATABASE_URL` | ✅ | MySQL connection string |
+| `JWT_SECRET` | ✅ | Secret for signing `rl_session` JWTs. Use a long random string in production |
+| `APP_URL` | ✅ | Full base URL (e.g. `https://rebel-leader.com`). Used to construct magic-link URLs in emails |
+| `RESEND_API_KEY` | ✅ | Resend API key for transactional email. Without this, magic-link URLs are only logged to the console |
+| `YOUTUBE_API_KEY` | ✅ | YouTube Data API v3 key with the YouTube Data API enabled in Google Cloud Console. No IP restrictions — Railway IPs are dynamic |
+| `R2_ACCOUNT_ID` | ✅ (Wall) | Cloudflare account ID for R2 |
+| `R2_ACCESS_KEY_ID` | ✅ (Wall) | R2 access key |
+| `R2_SECRET_ACCESS_KEY` | ✅ (Wall) | R2 secret key |
+| `R2_BUCKET_NAME` | ✅ (Wall) | R2 bucket name (default: `rebel-leaders-wall`) |
+| `R2_PUBLIC_URL` | ✅ (Wall) | Public base URL for serving R2 objects |
+| `WALL_ADMIN_SECRET` | ✅ (Wall) | Secret token for wall admin moderation actions |
+| `OAUTH_SERVER_URL` | Legacy | Manus OAuth server URL |
+| `OWNER_OPEN_ID` | Legacy | Manus `openId` of the admin account |
+| `NODE_ENV` | — | Set to `production` by Railway automatically. Controls cookie `secure` flag and other guards |
+
+### Client-side (Vite env vars — must be prefixed `VITE_`)
+
+| Variable | Required | Description |
+|---|---|---|
+| `VITE_POSTHOG_API_KEY` | — | PostHog project API key. Analytics are silently disabled if absent (safe for local dev) |
+| `VITE_POSTHOG_HOST` | — | PostHog ingestion host. Defaults to `https://us.i.posthog.com` |
+| `VITE_APP_ID` | Legacy | Manus platform app ID |
 
 ---
 
 ## Mobile Strategy
 
-The main site pages (Home, Map, Archives, Shelf, About, Start Here, Workbench landing) are fully responsive and mobile-friendly. Complex interactive tools — Gravitas, Codex, and Results — are gated behind a `DesktopOnly` component that displays a message on screens under 768px, directing users to a desktop browser. This is a deliberate design choice: the hardware-styled plugin interfaces require sufficient screen real estate to function properly.
+The main site pages (Home, Map, Archives, Shelf, About, Start Here, Workbench landing) are fully responsive and mobile-friendly. Complex interactive tools — Gravitas, Codex, and Results — are gated behind a `DesktopOnly` component that displays a redirect message on screens under 768px. This is a deliberate design choice: the hardware-styled plugin interfaces require sufficient screen real estate to function properly.
 
 ---
 
 ## Development
 
 ```bash
-pnpm install        # Install dependencies
-pnpm dev            # Start dev server (Express + Vite)
-pnpm test           # Run vitest tests (12 tests, 3 files)
+pnpm install        # Install dependencies (requires Node 18+, pnpm 10)
+pnpm dev            # Start dev server (Express + Vite HMR)
 pnpm build          # Production build (Vite + esbuild)
-pnpm db:push        # Generate and run database migrations
+pnpm start          # Run production build
+pnpm test           # Run Vitest tests
 pnpm check          # TypeScript type checking
 pnpm format         # Prettier formatting
+pnpm db:push        # Generate and run database migrations
 ```
+
+### Local environment notes
+
+- Requires **Node 18+** (the project specifies `pnpm@10.4.1` as package manager)
+- If using nvm: `nvm use 20`
+- Analytics are disabled locally by default (no `VITE_POSTHOG_API_KEY` in `.env.local`)
+- Without `RESEND_API_KEY`, magic-link URLs are printed to the console — useful for testing the flow without sending real emails
 
 ---
 
-## Domains
+## Deployment
+
+The site is deployed on **Railway** from the `main` branch. Railway runs `pnpm install --frozen-lockfile` then `pnpm build` then `pnpm start`.
+
+The `packageManager` field in `package.json` pins `pnpm@10.4.1` — Railway respects this field and uses that exact version. The lockfile must be generated with the same version to avoid `ERR_PNPM_LOCKFILE_CONFIG_MISMATCH`.
+
+### Domains
 
 | Environment | URL |
 |---|---|
 | Production | [rebel-leader.com](https://www.rebel-leader.com) |
 | Production (www) | [www.rebel-leader.com](https://www.rebel-leader.com) |
-| Staging | [rebelleadrs-7wrwmpfk.manus.space](https://rebelleadrs-7wrwmpfk.manus.space) |
 
 ---
 
