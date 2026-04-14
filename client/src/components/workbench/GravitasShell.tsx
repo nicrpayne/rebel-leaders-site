@@ -308,7 +308,7 @@ export default function GravitasShell({
 
             <div className="flex items-center gap-3">
               {footerControls}
-              <div className="w-px h-2.5 bg-[#2a2a32]" />
+              <div className="ml-4 w-px h-2.5 bg-[#2a2a32]" />
               <span className="text-[7px] tracking-[0.2em] text-[#3a3a44]">
                 V.2.0.0
               </span>

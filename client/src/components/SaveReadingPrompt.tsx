@@ -65,7 +65,7 @@ export default function SaveReadingPrompt({ gravitasResult }: Props) {
             fontFamily: "'Cormorant Garamond', serif",
             fontSize: '15px',
             lineHeight: '1.7',
-            color: 'rgba(197,160,89,0.65)',
+            color: 'var(--color-parchment)',
             margin: 0,
           }}
         >
@@ -115,7 +115,7 @@ export default function SaveReadingPrompt({ gravitasResult }: Props) {
           fontFamily: "'Cormorant Garamond', serif",
           fontSize: '16px',
           lineHeight: '1.7',
-          color: 'rgba(197,160,89,0.65)',
+          color: 'var(--color-parchment)',
           margin: 0,
         }}
       >
@@ -126,7 +126,7 @@ export default function SaveReadingPrompt({ gravitasResult }: Props) {
           fontFamily: "'Cormorant Garamond', serif",
           fontSize: '14px',
           lineHeight: '1.7',
-          color: 'rgba(197,160,89,0.5)',
+          color: 'var(--color-parchment)',
           margin: 0,
         }}
       >
@@ -185,7 +185,7 @@ export default function SaveReadingPrompt({ gravitasResult }: Props) {
           fontSize: '12px',
           textAlign: 'center',
           letterSpacing: '0.1em',
-          color: 'rgba(197,160,89,0.35)',
+          color: 'var(--color-parchment)',
           margin: 0,
         }}
       >
