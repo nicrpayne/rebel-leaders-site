@@ -11,6 +11,8 @@ import { useGame, ACHIEVEMENTS, type ToastItem } from "@/contexts/GameContext";
 import { useLocation } from "wouter";
 import { AnimatePresence, motion } from "framer-motion";
 import AchievementsPanel from "./AchievementsPanel";
+import { trpc } from "@/lib/trpc";
+import { resetUser } from "@/lib/analytics";
 
 /* ─── Time Formatter ─── */
 function formatTime(seconds: number): string {
@@ -96,6 +98,8 @@ function XpBar({ percent }: { percent: number }) {
 /* ─── Main HUD Component ─── */
 export default function GameHud() {
   const { state, xpPercent, toggleHud, setHudMinimized, toasts, dismissToast } = useGame();
+  const { data: currentUser } = trpc.auth.me.useQuery();
+  const logoutMutation = trpc.auth.logout.useMutation();
   const [showAchievements, setShowAchievements] = useState(false);
   const [location] = useLocation();
   const wasMinimizedBeforeMap = useRef<boolean | null>(null);
@@ -230,6 +234,21 @@ export default function GameHud() {
                     </span>
                   </button>
                 </div>
+
+                {/* Signed-in indicator + logout */}
+                {currentUser && (
+                  <div className="px-3 pb-2.5 border-t border-gold/10 pt-2 flex items-center justify-between gap-2">
+                    <span className="font-pixel text-[7px] text-gold/30 truncate tracking-wide" title={currentUser.email}>
+                      {currentUser.email}
+                    </span>
+                    <button
+                      onClick={() => logoutMutation.mutate(undefined, { onSuccess: () => { resetUser(); window.location.reload(); } })}
+                      className="font-pixel text-[7px] text-parchment-dim/30 hover:text-gold/60 tracking-wider transition-colors shrink-0"
+                    >
+                      SIGN OUT
+                    </button>
+                  </div>
+                )}
               </div>
             </motion.div>
           )}
