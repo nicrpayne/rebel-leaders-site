@@ -65,7 +65,7 @@ export default function TypewriterHeading({
       className={`font-[var(--font-lcd)] uppercase tracking-[0.15em] select-none ${className}`}
       style={{
         fontFamily: "var(--font-lcd)",
-        color: "#8a6d3b",
+        color: "#5c3d0e",
         textShadow: "0 0 4px rgba(138,109,59,0.5), 0 0 1px rgba(138,109,59,0.7)",
       }}
     >
@@ -76,7 +76,7 @@ export default function TypewriterHeading({
             opacity: showCursor ? 0.9 : 0,
             transition: "opacity 0.08s",
             marginLeft: "2px",
-            color: "#8a6d3b",
+            color: "#5c3d0e",
             textShadow: "0 0 4px rgba(138,109,59,0.5)"
           }}
         >
