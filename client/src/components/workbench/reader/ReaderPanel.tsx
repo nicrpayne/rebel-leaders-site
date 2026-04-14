@@ -333,9 +333,9 @@ export default function ReaderPanel({
                 }}
               >
                 <span>{entry.category.toUpperCase()}</span>
-                <span style={{ opacity: 0.4 }}>|</span>
+                <span style={{ opacity: 0.6 }}>|</span>
                 <span>{entry.difficulty}/5</span>
-                <span style={{ opacity: 0.4 }}>|</span>
+                <span style={{ opacity: 0.6 }}>|</span>
                 <span>{entry.time_commitment}</span>
               </div>
             </div>
@@ -544,9 +544,9 @@ export default function ReaderPanel({
                               fontFamily: "var(--font-lcd)",
                               fontSize: "8px",
                               letterSpacing: "0.12em",
-                              color: "rgba(80, 45, 10, 0.9)",
+                              color: "rgba(50, 25, 5, 0.95)",
                               padding: "1px 5px",
-                              border: "1px solid rgba(138, 109, 59, 0.15)",
+                              border: "1px solid rgba(80, 45, 10, 0.35)",
                             }}
                           >
                             {key.toUpperCase()}
@@ -577,7 +577,7 @@ export default function ReaderPanel({
                           fontFamily: "var(--font-lcd)",
                           fontSize: "9px",
                           letterSpacing: "0.1em",
-                          color: "rgba(80, 45, 10, 0.9)",
+                          color: "rgba(50, 25, 5, 0.95)",
                         }}
                       >
                         {String(completedCount).padStart(2, "0")} / {String(steps.length).padStart(2, "0")}
