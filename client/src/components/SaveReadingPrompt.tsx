@@ -185,7 +185,7 @@ export default function SaveReadingPrompt({ gravitasResult }: Props) {
           fontSize: '12px',
           textAlign: 'center',
           letterSpacing: '0.1em',
-          color: 'var(--color-parchment)',
+          color: 'oklch(0.93 0.03 80)',
           margin: 0,
         }}
       >
