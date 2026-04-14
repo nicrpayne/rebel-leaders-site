@@ -462,7 +462,7 @@ export default function Results() {
           </span>
         </span>
       </Link>
-      <div className="ml-3 pl-3 border-l border-white/[0.08] flex items-center justify-center">
+      <div className="w-24 border-l border-white/[0.08] flex items-center justify-center">
         <Link href="/workbench/gravitas" className="flex items-center">
           <span className="text-[6px] tracking-[0.3em] text-[#4a4a55] hover:text-[#6a6a7a] cursor-pointer uppercase transition-colors leading-none">
             RE-SCAN
