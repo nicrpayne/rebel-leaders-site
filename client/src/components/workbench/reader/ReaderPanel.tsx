@@ -90,7 +90,23 @@ export default function ReaderPanel({
       setIsClosing(false);
       setIsEntering(skipEnterAnimation ? false : true);
       setScriptCopied(false);
-      setChecklist(new Array(steps.length).fill(false));
+      try {
+        const saved = localStorage.getItem("codex_run_progress");
+        if (saved) {
+          const parsed = JSON.parse(saved) as { cartridgeId: string; checkedSteps: number[] };
+          if (parsed.cartridgeId === entry.id) {
+            const restored = new Array(steps.length).fill(false);
+            parsed.checkedSteps.forEach((i) => { if (i < steps.length) restored[i] = true; });
+            setChecklist(restored);
+          } else {
+            setChecklist(new Array(steps.length).fill(false));
+          }
+        } else {
+          setChecklist(new Array(steps.length).fill(false));
+        }
+      } catch {
+        setChecklist(new Array(steps.length).fill(false));
+      }
       document.body.style.overflow = "hidden";
       if (!skipEnterAnimation) {
         requestAnimationFrame(() => {
@@ -137,6 +153,18 @@ export default function ReaderPanel({
 
     setActiveSection(closest);
   }, []);
+
+  // Persist checklist progress to localStorage whenever it changes
+  useEffect(() => {
+    if (!isOpen || checklist.length === 0) return;
+    const checkedSteps = checklist.reduce<number[]>((acc, val, i) => {
+      if (val) acc.push(i);
+      return acc;
+    }, []);
+    try {
+      localStorage.setItem("codex_run_progress", JSON.stringify({ cartridgeId: entry.id, checkedSteps }));
+    } catch {}
+  }, [checklist, isOpen, entry.id]);
 
   const toggleStep = (index: number) => {
     const newChecklist = [...checklist];
