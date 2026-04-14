@@ -28,7 +28,7 @@ const LCD_LABEL: React.CSSProperties = {
   fontFamily: "var(--font-lcd)",
   fontSize: "8px",
   letterSpacing: "0.12em",
-  color: "rgba(138, 109, 59, 0.4)",
+  color: "rgba(138, 109, 59, 0.75)",
   marginBottom: "5px",
 };
 
@@ -503,7 +503,7 @@ export default function ReaderPanel({
                             style={{
                               fontFamily: "var(--font-lcd)",
                               fontSize: "10px",
-                              color: "rgba(138, 109, 59, 0.4)",
+                              color: "rgba(138, 109, 59, 0.75)",
                               minWidth: "18px",
                             }}
                           >
@@ -544,7 +544,7 @@ export default function ReaderPanel({
                               fontFamily: "var(--font-lcd)",
                               fontSize: "8px",
                               letterSpacing: "0.12em",
-                              color: "rgba(138, 109, 59, 0.45)",
+                              color: "rgba(138, 109, 59, 0.75)",
                               padding: "1px 5px",
                               border: "1px solid rgba(138, 109, 59, 0.15)",
                             }}
@@ -577,7 +577,7 @@ export default function ReaderPanel({
                           fontFamily: "var(--font-lcd)",
                           fontSize: "9px",
                           letterSpacing: "0.1em",
-                          color: "rgba(138, 109, 59, 0.5)",
+                          color: "rgba(138, 109, 59, 0.75)",
                         }}
                       >
                         {String(completedCount).padStart(2, "0")} / {String(steps.length).padStart(2, "0")}
@@ -825,7 +825,7 @@ export default function ReaderPanel({
                                   style={{
                                     fontFamily: "var(--font-lcd)",
                                     fontSize: "8px",
-                                    color: "rgba(138, 109, 59, 0.4)",
+                                    color: "rgba(138, 109, 59, 0.7)",
                                     marginLeft: "8px",
                                   }}
                                 >
@@ -904,7 +904,7 @@ export default function ReaderPanel({
                                 fontFamily: "var(--font-lcd)",
                                 fontSize: "7px",
                                 letterSpacing: "0.1em",
-                                color: "rgba(138, 109, 59, 0.4)",
+                                color: "rgba(138, 109, 59, 0.7)",
                                 textTransform: "uppercase",
                               }}
                             >
@@ -927,7 +927,7 @@ export default function ReaderPanel({
                 {!hasProof && !hasResources && !hasReflectionContent && (
                   <p
                     className="font-serif font-medium text-sm italic"
-                    style={{ color: "rgba(138, 109, 59, 0.35)" }}
+                    style={{ color: "rgba(138, 109, 59, 0.7)" }}
                   >
                     Resources gathering. More to come.
                   </p>
@@ -938,7 +938,7 @@ export default function ReaderPanel({
                   <div className="mt-4 pt-3" style={{ borderTop: DIVIDER }}>
                     <p
                       className="font-serif font-medium text-sm italic"
-                      style={{ color: "rgba(138, 109, 59, 0.3)" }}
+                      style={{ color: "rgba(138, 109, 59, 0.7)" }}
                     >
                       Videos, writings, and deeper resources arriving soon.
                     </p>
