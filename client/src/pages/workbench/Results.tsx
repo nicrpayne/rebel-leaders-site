@@ -462,11 +462,13 @@ export default function Results() {
           </span>
         </span>
       </Link>
-      <Link href="/workbench/gravitas">
-        <span className="text-[7px] tracking-[0.15em] text-[#5a5a66] hover:text-[#7a7a8a] cursor-pointer uppercase transition-colors">
-          RE-SCAN
-        </span>
-      </Link>
+      <div className="ml-2 pl-2 border-l border-white/[0.08]">
+        <Link href="/workbench/gravitas">
+          <span className="text-[7px] tracking-[0.15em] text-[#5a5a66] hover:text-[#7a7a8a] cursor-pointer uppercase transition-colors">
+            RE-SCAN
+          </span>
+        </Link>
+      </div>
     </div>
   );
 
@@ -515,7 +517,7 @@ export default function Results() {
                 >
                   {results.archetype}
                 </div>
-                <div className="text-[8px] leading-[1.9] text-[#8a8a96] tracking-[0.05em]">
+                <div className="text-[8px] leading-[1.9] text-parchment-dim tracking-[0.05em]">
                   {results.description}
                 </div>
                 {/* Total Score */}
@@ -583,7 +585,7 @@ export default function Results() {
                     PRIMARY LEAK DETECTED
                   </span>
                 </div>
-                <div className="text-[8px] leading-[1.9] text-[#8a8a96] tracking-[0.05em]">
+                <div className="text-[8px] leading-[1.9] text-parchment-dim tracking-[0.05em]">
                   {results.leakDescription}
                 </div>
               </div>
@@ -601,7 +603,7 @@ export default function Results() {
                     DOMINANT FORCE
                   </span>
                 </div>
-                <div className="text-[8px] leading-[1.9] text-[#8a8a96] tracking-[0.05em]">
+                <div className="text-[8px] leading-[1.9] text-parchment-dim tracking-[0.05em]">
                   {results.forceDescription}
                 </div>
               </div>
@@ -626,7 +628,7 @@ export default function Results() {
               >
                 {results.firstMove}
               </div>
-              <div className="text-[8px] leading-[1.9] text-[#8a8a96] tracking-[0.05em]">
+              <div className="text-[8px] leading-[1.9] text-parchment-dim tracking-[0.05em]">
                 {results.firstMoveDescription}
               </div>
             </div>
@@ -641,7 +643,7 @@ export default function Results() {
                 <div className="bg-gradient-to-b from-[#0e0e12] to-[#0a0a0d] border border-[#1a1a22] rounded p-3 relative overflow-hidden">
                   <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at center, rgba(197,160,89,0.03) 0%, transparent 70%)" }} />
                   <div className="relative z-10 flex flex-col items-center gap-2 py-1">
-                    <p className="text-[8px] leading-[1.9] text-[#5a5a66] tracking-[0.05em] italic text-center">
+                    <p className="text-[8px] leading-[1.9] text-parchment-dim tracking-[0.05em] italic text-center">
                       The full reading is available with the Deep Scan — 52 questions, ~12 min.
                     </p>
                     <Link href="/workbench/gravitas?continue=true">
@@ -663,7 +665,7 @@ export default function Results() {
                       <div className="w-1.5 h-1.5 rounded-full bg-[#c5a059] shadow-[0_0_6px_rgba(197,160,89,0.5)]" />
                       <span className="text-[6px] tracking-[0.3em] text-[#c5a059]/60 uppercase">The Compensation Pattern</span>
                     </div>
-                    <div className="text-[8px] leading-[1.9] text-[#8a8a96] tracking-[0.05em] space-y-2">
+                    <div className="text-[8px] leading-[1.9] text-parchment-dim tracking-[0.05em] space-y-2">
                       {profile.compensationPattern.split('\n\n').map((p, i) => <p key={i}>{p}</p>)}
                     </div>
                   </div>
@@ -679,13 +681,13 @@ export default function Results() {
                     </div>
                     <div className="mb-2">
                       <p className="text-[6px] tracking-[0.2em] text-red-400/40 uppercase mb-1">What it costs the people around you</p>
-                      <div className="text-[8px] leading-[1.9] text-[#8a8a96] tracking-[0.05em] space-y-2">
+                      <div className="text-[8px] leading-[1.9] text-parchment-dim tracking-[0.05em] space-y-2">
                         {profile.costsOthers.split('\n\n').map((p, i) => <p key={i}>{p}</p>)}
                       </div>
                     </div>
                     <div className="pt-2 border-t border-white/[0.03]">
                       <p className="text-[6px] tracking-[0.2em] text-red-400/40 uppercase mb-1">What it costs you</p>
-                      <div className="text-[8px] leading-[1.9] text-[#8a8a96] tracking-[0.05em] space-y-2">
+                      <div className="text-[8px] leading-[1.9] text-parchment-dim tracking-[0.05em] space-y-2">
                         {profile.costsYou.split('\n\n').map((p, i) => <p key={i}>{p}</p>)}
                       </div>
                     </div>
@@ -700,7 +702,7 @@ export default function Results() {
                       <div className="w-1.5 h-1.5 rounded-full bg-[#a78bfa] shadow-[0_0_6px_rgba(167,139,250,0.5)]" />
                       <span className="text-[6px] tracking-[0.3em] text-[#a78bfa]/60 uppercase">What This Protects</span>
                     </div>
-                    <div className="text-[8px] leading-[1.9] text-[#8a8a96] tracking-[0.05em] space-y-2">
+                    <div className="text-[8px] leading-[1.9] text-parchment-dim tracking-[0.05em] space-y-2">
                       {profile.whatThisProtects.split('\n\n').map((p, i) => <p key={i}>{p}</p>)}
                     </div>
                   </div>
@@ -714,7 +716,7 @@ export default function Results() {
                       <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_rgba(34,211,238,0.5)]" />
                       <span className="text-[6px] tracking-[0.3em] text-cyan-400/60 uppercase">The Primary Invitation</span>
                     </div>
-                    <div className="text-[8px] leading-[1.9] text-[#8a8a96] tracking-[0.05em] space-y-2">
+                    <div className="text-[8px] leading-[1.9] text-parchment-dim tracking-[0.05em] space-y-2">
                       {profile.primaryInvitation.split('\n\n').map((p, i) => <p key={i}>{p}</p>)}
                     </div>
                   </div>
@@ -728,7 +730,7 @@ export default function Results() {
                       <div className="w-1.5 h-1.5 rounded-full bg-green-400 shadow-[0_0_6px_rgba(74,222,128,0.5)]" />
                       <span className="text-[6px] tracking-[0.3em] text-green-400/60 uppercase">Why Codex Recommended This</span>
                     </div>
-                    <div className="text-[8px] leading-[1.9] text-[#8a8a96] tracking-[0.05em] space-y-2">
+                    <div className="text-[8px] leading-[1.9] text-parchment-dim tracking-[0.05em] space-y-2">
                       {profile.codexRationale.split('\n\n').map((p, i) => <p key={i}>{p}</p>)}
                     </div>
                   </div>
@@ -766,7 +768,7 @@ export default function Results() {
           {/* Return link */}
           <div className="text-center pt-1 pb-2">
             <Link href="/workbench">
-              <span className="text-[6px] tracking-[0.2em] text-[#4a4a55] hover:text-[#5a5a66] cursor-pointer uppercase transition-colors">
+              <span className="text-[6px] tracking-[0.2em] text-[#7a7a8a] hover:text-[#a0a0b0] cursor-pointer uppercase transition-colors">
                 RETURN TO WORKBENCH
               </span>
             </Link>
