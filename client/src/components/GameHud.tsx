@@ -118,6 +118,9 @@ export default function GameHud() {
       return raw ? JSON.parse(raw) : null;
     } catch { return null; }
   })();
+
+  console.log('[GameHud] currentUser:', currentUser, 'lastAssessment:', lastAssessment);
+
   const [showAchievements, setShowAchievements] = useState(false);
   const [location] = useLocation();
   const wasMinimizedBeforeMap = useRef<boolean | null>(null);
