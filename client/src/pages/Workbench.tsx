@@ -241,6 +241,8 @@ export default function Workbench() {
     } catch { return null; }
   })();
 
+  console.log('ACTIVE SESSION debug:', { currentUser: !!currentUser, lastAssessment, lastCartridgeId, lastMirrorResult });
+
   const [activeCategory, setActiveCategory] = useState<string>("ALL");
   const [activeStatus, setActiveStatus] = useState<string>("ALL");
 
