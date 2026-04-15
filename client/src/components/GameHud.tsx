@@ -8,7 +8,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useGame, ACHIEVEMENTS, type ToastItem } from "@/contexts/GameContext";
-import { useLocation } from "wouter";
+import { useLocation, Link } from "wouter";
 import { AnimatePresence, motion } from "framer-motion";
 import AchievementsPanel from "./AchievementsPanel";
 import { trpc } from "@/lib/trpc";
@@ -99,7 +99,25 @@ function XpBar({ percent }: { percent: number }) {
 export default function GameHud() {
   const { state, xpPercent, toggleHud, setHudMinimized, toasts, dismissToast } = useGame();
   const { data: currentUser } = trpc.auth.me.useQuery();
+  const { data: lastAssessment } = trpc.auth.getLastGravitasAssessment.useQuery(
+    undefined,
+    { enabled: !!currentUser }
+  );
   const logoutMutation = trpc.auth.logout.useMutation();
+
+  const lastCartridgeId = (() => {
+    try {
+      const entries = JSON.parse(localStorage.getItem('codexRecentEntries') || '[]');
+      return entries[0] || null;
+    } catch { return null; }
+  })();
+
+  const lastMirrorResult = (() => {
+    try {
+      const raw = localStorage.getItem('mirrorResult');
+      return raw ? JSON.parse(raw) : null;
+    } catch { return null; }
+  })();
   const [showAchievements, setShowAchievements] = useState(false);
   const [location] = useLocation();
   const wasMinimizedBeforeMap = useRef<boolean | null>(null);
@@ -185,6 +203,64 @@ export default function GameHud() {
                     ▾
                   </button>
                 </div>
+
+                {/* YOUR OS — fast travel panel, authenticated users only */}
+                {currentUser && (
+                  <div className="px-3 pt-2.5 pb-2 border-b border-gold/10">
+                    <p className="font-pixel text-[8px] text-gold/60 tracking-[0.3em] mb-2">
+                      YOUR OS
+                    </p>
+
+                    {/* FIELD */}
+                    <Link href="/workbench/results" className="block">
+                      <div className="flex items-center justify-between py-1 group cursor-pointer">
+                        <div className="flex items-center gap-2">
+                          <span className="font-pixel text-[7px] text-parchment-dim/50 tracking-widest w-16">
+                            FIELD
+                          </span>
+                          <span className="font-pixel text-[8px] text-parchment/80 group-hover:text-gold transition-colors truncate max-w-[80px]">
+                            {lastAssessment?.archetype?.replace(/_/g, ' ') || '—'}
+                          </span>
+                        </div>
+                        <span className="font-pixel text-[8px] text-gold/40 group-hover:text-gold transition-colors">→</span>
+                      </div>
+                    </Link>
+
+                    {/* CARTRIDGE */}
+                    {lastCartridgeId && (
+                      <Link href={`/workbench/codex?cartridge=${lastCartridgeId}`} className="block">
+                        <div className="flex items-center justify-between py-1 group cursor-pointer">
+                          <div className="flex items-center gap-2">
+                            <span className="font-pixel text-[7px] text-parchment-dim/50 tracking-widest w-16">
+                              CARTRIDGE
+                            </span>
+                            <span className="font-pixel text-[8px] text-parchment/80 group-hover:text-gold transition-colors truncate max-w-[80px]">
+                              {lastCartridgeId.replace(/-/g, ' ').toUpperCase()}
+                            </span>
+                          </div>
+                          <span className="font-pixel text-[8px] text-gold/40 group-hover:text-gold transition-colors">→</span>
+                        </div>
+                      </Link>
+                    )}
+
+                    {/* MIRROR */}
+                    {lastMirrorResult && (
+                      <Link href="/workbench/mirror" className="block">
+                        <div className="flex items-center justify-between py-1 group cursor-pointer">
+                          <div className="flex items-center gap-2">
+                            <span className="font-pixel text-[7px] text-parchment-dim/50 tracking-widest w-16">
+                              MIRROR
+                            </span>
+                            <span className="font-pixel text-[8px] text-parchment/80 group-hover:text-gold transition-colors truncate max-w-[80px]">
+                              {lastMirrorResult.top_family?.replace(/_/g, ' ') || '—'}
+                            </span>
+                          </div>
+                          <span className="font-pixel text-[8px] text-gold/40 group-hover:text-gold transition-colors">→</span>
+                        </div>
+                      </Link>
+                    )}
+                  </div>
+                )}
 
                 {/* XP Bar */}
                 <div className="px-3 pt-2.5 pb-1.5">

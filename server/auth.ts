@@ -3,7 +3,7 @@ import { TRPCError } from "@trpc/server";
 import { publicProcedure } from "./_core/trpc";
 import { getDb } from "./db";
 import { authTokens, users, gravitasAssessments, userEvents, mirrorReadings } from "../drizzle/schema";
-import { eq, and, gt } from "drizzle-orm";
+import { eq, and, gt, desc } from "drizzle-orm";
 import { Resend } from "resend";
 import { randomBytes } from "crypto";
 import { magicLinkEmail } from "./emails/magic-link";
@@ -268,6 +268,22 @@ export const saveGravitasAssessment = publicProcedure
 
     return { saved: true, sessionNumber: prior.length + 1 } as const;
   });
+
+export const getLastGravitasAssessment = publicProcedure.query(async ({ ctx }) => {
+  const magicUser = await getMagicLinkUser(ctx.req.headers.cookie);
+  if (!magicUser) return null;
+
+  const db = await getDb();
+  if (!db) return null;
+
+  const [last] = await db
+    .select()
+    .from(gravitasAssessments)
+    .where(eq(gravitasAssessments.userId, magicUser.id))
+    .orderBy(desc(gravitasAssessments.createdAt))
+    .limit(1);
+  return last || null;
+});
 
 export const saveMirrorReading = publicProcedure
   .input(z.object({
