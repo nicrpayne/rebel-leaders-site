@@ -13,6 +13,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import AchievementsPanel from "./AchievementsPanel";
 import { trpc } from "@/lib/trpc";
 import { resetUser } from "@/lib/analytics";
+import { CODEX_ENTRIES } from "@/lib/workbench/codex-data";
 
 /* ─── Time Formatter ─── */
 function formatTime(seconds: number): string {
@@ -221,7 +222,7 @@ export default function GameHud() {
                               <span className="font-pixel text-[7px] text-parchment-dim/50 tracking-widest w-16">
                                 FIELD
                               </span>
-                              <span className="font-pixel text-[8px] text-parchment/80 group-hover:text-gold transition-colors truncate max-w-[80px]">
+                              <span className="font-pixel text-[8px] text-parchment/80 group-hover:text-gold transition-colors truncate max-w-[96px]">
                                 {lastAssessment.archetype?.replace(/_/g, ' ')}
                               </span>
                             </div>
@@ -238,8 +239,8 @@ export default function GameHud() {
                               <span className="font-pixel text-[7px] text-parchment-dim/50 tracking-widest w-16">
                                 CARTRIDGE
                               </span>
-                              <span className="font-pixel text-[8px] text-parchment/80 group-hover:text-gold transition-colors truncate max-w-[80px]">
-                                {lastCartridgeId.replace(/-/g, ' ').toUpperCase()}
+                              <span className="font-pixel text-[8px] text-parchment/80 group-hover:text-gold transition-colors truncate max-w-[96px]">
+                                {CODEX_ENTRIES.find(e => e.id === lastCartridgeId)?.title ?? lastCartridgeId.replace(/-/g, ' ').toUpperCase()}
                               </span>
                             </div>
                             <span className="font-pixel text-[8px] text-gold/40 group-hover:text-gold transition-colors">→</span>
@@ -255,7 +256,7 @@ export default function GameHud() {
                               <span className="font-pixel text-[7px] text-parchment-dim/50 tracking-widest w-16">
                                 MIRROR
                               </span>
-                              <span className="font-pixel text-[8px] text-parchment/80 group-hover:text-gold transition-colors truncate max-w-[80px]">
+                              <span className="font-pixel text-[8px] text-parchment/80 group-hover:text-gold transition-colors truncate max-w-[96px]">
                                 {lastMirrorResult.top_family?.replace(/_/g, ' ') || '—'}
                               </span>
                             </div>
