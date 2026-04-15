@@ -119,8 +119,6 @@ export default function GameHud() {
     } catch { return null; }
   })();
 
-  console.log('[GameHud] currentUser:', currentUser, 'lastAssessment:', lastAssessment);
-
   const [showAchievements, setShowAchievements] = useState(false);
   const [location] = useLocation();
   const wasMinimizedBeforeMap = useRef<boolean | null>(null);
@@ -207,61 +205,65 @@ export default function GameHud() {
                   </button>
                 </div>
 
-                {/* YOUR OS — fast travel panel, authenticated users only */}
-                {currentUser && (
-                  <div className="px-3 pt-2.5 pb-2 border-b border-gold/10">
-                    <p className="font-pixel text-[8px] text-gold/60 tracking-[0.3em] mb-2">
+                {/* YOUR OS — progressive fast travel, unlocks row by row as user explores */}
+                {currentUser && (lastAssessment || lastCartridgeId || lastMirrorResult) && (
+                  <div className="px-3 pt-2.5 pb-3 border-b border-gold/10">
+                    <p className="font-pixel text-[8px] text-gold/60 tracking-[0.3em] mb-2.5">
                       YOUR OS
                     </p>
 
-                    {/* FIELD */}
-                    <Link href="/workbench/results" className="block">
-                      <div className="flex items-center justify-between py-1 group cursor-pointer">
-                        <div className="flex items-center gap-2">
-                          <span className="font-pixel text-[7px] text-parchment-dim/50 tracking-widest w-16">
-                            FIELD
-                          </span>
-                          <span className="font-pixel text-[8px] text-parchment/80 group-hover:text-gold transition-colors truncate max-w-[80px]">
-                            {lastAssessment?.archetype?.replace(/_/g, ' ') || '—'}
-                          </span>
-                        </div>
-                        <span className="font-pixel text-[8px] text-gold/40 group-hover:text-gold transition-colors">→</span>
-                      </div>
-                    </Link>
-
-                    {/* CARTRIDGE */}
-                    {lastCartridgeId && (
-                      <Link href={`/workbench/codex?cartridge=${lastCartridgeId}`} className="block">
-                        <div className="flex items-center justify-between py-1 group cursor-pointer">
-                          <div className="flex items-center gap-2">
-                            <span className="font-pixel text-[7px] text-parchment-dim/50 tracking-widest w-16">
-                              CARTRIDGE
-                            </span>
-                            <span className="font-pixel text-[8px] text-parchment/80 group-hover:text-gold transition-colors truncate max-w-[80px]">
-                              {lastCartridgeId.replace(/-/g, ' ').toUpperCase()}
-                            </span>
+                    <div className="space-y-1.5">
+                      {/* FIELD — appears after first Gravitas completion */}
+                      {lastAssessment && (
+                        <Link href="/workbench/results" className="block">
+                          <div className="flex items-center justify-between py-1 group cursor-pointer">
+                            <div className="flex items-center gap-2">
+                              <span className="font-pixel text-[7px] text-parchment-dim/50 tracking-widest w-16">
+                                FIELD
+                              </span>
+                              <span className="font-pixel text-[8px] text-parchment/80 group-hover:text-gold transition-colors truncate max-w-[80px]">
+                                {lastAssessment.archetype?.replace(/_/g, ' ')}
+                              </span>
+                            </div>
+                            <span className="font-pixel text-[8px] text-gold/40 group-hover:text-gold transition-colors">→</span>
                           </div>
-                          <span className="font-pixel text-[8px] text-gold/40 group-hover:text-gold transition-colors">→</span>
-                        </div>
-                      </Link>
-                    )}
+                        </Link>
+                      )}
 
-                    {/* MIRROR */}
-                    {lastMirrorResult && (
-                      <Link href="/workbench/mirror" className="block">
-                        <div className="flex items-center justify-between py-1 group cursor-pointer">
-                          <div className="flex items-center gap-2">
-                            <span className="font-pixel text-[7px] text-parchment-dim/50 tracking-widest w-16">
-                              MIRROR
-                            </span>
-                            <span className="font-pixel text-[8px] text-parchment/80 group-hover:text-gold transition-colors truncate max-w-[80px]">
-                              {lastMirrorResult.top_family?.replace(/_/g, ' ') || '—'}
-                            </span>
+                      {/* CARTRIDGE — appears after first Codex cartridge load */}
+                      {lastCartridgeId && (
+                        <Link href={`/workbench/codex?cartridge=${lastCartridgeId}`} className="block">
+                          <div className="flex items-center justify-between py-1 group cursor-pointer">
+                            <div className="flex items-center gap-2">
+                              <span className="font-pixel text-[7px] text-parchment-dim/50 tracking-widest w-16">
+                                CARTRIDGE
+                              </span>
+                              <span className="font-pixel text-[8px] text-parchment/80 group-hover:text-gold transition-colors truncate max-w-[80px]">
+                                {lastCartridgeId.replace(/-/g, ' ').toUpperCase()}
+                              </span>
+                            </div>
+                            <span className="font-pixel text-[8px] text-gold/40 group-hover:text-gold transition-colors">→</span>
                           </div>
-                          <span className="font-pixel text-[8px] text-gold/40 group-hover:text-gold transition-colors">→</span>
-                        </div>
-                      </Link>
-                    )}
+                        </Link>
+                      )}
+
+                      {/* MIRROR — appears after first Mirror reading */}
+                      {lastMirrorResult && (
+                        <Link href="/workbench/mirror" className="block">
+                          <div className="flex items-center justify-between py-1 group cursor-pointer">
+                            <div className="flex items-center gap-2">
+                              <span className="font-pixel text-[7px] text-parchment-dim/50 tracking-widest w-16">
+                                MIRROR
+                              </span>
+                              <span className="font-pixel text-[8px] text-parchment/80 group-hover:text-gold transition-colors truncate max-w-[80px]">
+                                {lastMirrorResult.top_family?.replace(/_/g, ' ') || '—'}
+                              </span>
+                            </div>
+                            <span className="font-pixel text-[8px] text-gold/40 group-hover:text-gold transition-colors">→</span>
+                          </div>
+                        </Link>
+                      )}
+                    </div>
                   </div>
                 )}
 
