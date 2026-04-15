@@ -11,8 +11,6 @@ import DialogueBox from "@/components/DialogueBox";
 import { usePageTracker } from "@/hooks/usePageTracker";
 import { useGame } from "@/contexts/GameContext";
 import { events } from "@/lib/analytics";
-import { trpc } from "@/lib/trpc";
-import { CODEX_ENTRIES } from "@/lib/workbench/codex-data";
 
 const HERO_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/workbench-hero-desk_30c9a78e.png";
 
@@ -221,28 +219,6 @@ export default function Workbench() {
     awardAchievement("toolsmith");
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const { data: currentUser } = trpc.auth.me.useQuery();
-  const { data: lastAssessment } = trpc.auth.getLastGravitasAssessment.useQuery(
-    undefined,
-    { enabled: !!currentUser }
-  );
-
-  const lastCartridgeId = (() => {
-    try {
-      const entries = JSON.parse(localStorage.getItem('codexRecentEntries') || '[]');
-      return entries[0] || null;
-    } catch { return null; }
-  })();
-
-  const lastMirrorResult = (() => {
-    try {
-      const raw = localStorage.getItem('mirrorResult');
-      return raw ? JSON.parse(raw) : null;
-    } catch { return null; }
-  })();
-
-  console.log('ACTIVE SESSION debug:', { currentUser: !!currentUser, lastAssessment, lastCartridgeId, lastMirrorResult });
-
   const [activeCategory, setActiveCategory] = useState<string>("ALL");
   const [activeStatus, setActiveStatus] = useState<string>("ALL");
 
@@ -312,55 +288,6 @@ export default function Workbench() {
           </DialogueBox>
         </FadeIn>
       </section>
-
-      {/* ACTIVE SESSION — authenticated users with at least one assessment */}
-      {currentUser && lastAssessment && (
-        <section className="container py-6">
-          <FadeIn>
-            <div className="border border-gold/20 bg-forest-deep/40 rounded-sm p-5">
-              <p className="font-pixel text-[9px] tracking-[0.3em] text-gold/60 mb-5">ACTIVE SESSION</p>
-              <div className="grid grid-cols-3 gap-6">
-
-                {/* FIELD */}
-                <Link href="/workbench/results">
-                  <div className="group cursor-pointer">
-                    <p className="font-pixel text-[7px] tracking-widest text-parchment-dim/50 mb-1.5">FIELD</p>
-                    <p className="font-pixel text-[9px] text-parchment group-hover:text-gold transition-colors leading-relaxed">
-                      {lastAssessment.archetype?.replace(/_/g, ' ')}
-                    </p>
-                    <p className="font-pixel text-[7px] text-parchment-dim/30 mt-1">
-                      {new Date(lastAssessment.createdAt).toLocaleDateString()}
-                    </p>
-                  </div>
-                </Link>
-
-                {/* CARTRIDGE */}
-                <Link href={lastCartridgeId ? `/workbench/codex?cartridge=${lastCartridgeId}` : '/workbench/codex'}>
-                  <div className="group cursor-pointer">
-                    <p className="font-pixel text-[7px] tracking-widest text-parchment-dim/50 mb-1.5">CARTRIDGE</p>
-                    <p className="font-pixel text-[9px] text-parchment group-hover:text-gold transition-colors leading-relaxed">
-                      {lastCartridgeId
-                        ? (CODEX_ENTRIES.find(e => e.id === lastCartridgeId)?.title ?? lastCartridgeId.replace(/-/g, ' ').toUpperCase())
-                        : '—'}
-                    </p>
-                  </div>
-                </Link>
-
-                {/* MIRROR */}
-                <Link href="/workbench/mirror">
-                  <div className="group cursor-pointer">
-                    <p className="font-pixel text-[7px] tracking-widest text-parchment-dim/50 mb-1.5">MIRROR</p>
-                    <p className="font-pixel text-[9px] text-parchment group-hover:text-gold transition-colors leading-relaxed">
-                      {lastMirrorResult?.top_family?.replace(/_/g, ' ') || '—'}
-                    </p>
-                  </div>
-                </Link>
-
-              </div>
-            </div>
-          </FadeIn>
-        </section>
-      )}
 
       {/* Filter + Cards */}
       <section className="container pb-24">
