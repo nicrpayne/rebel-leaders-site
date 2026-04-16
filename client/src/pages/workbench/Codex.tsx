@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useLayoutEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 import { CodexEntry } from "@/lib/workbench/codex-schema";
 import { CODEX_ENTRIES } from "@/lib/workbench/codex-data";
@@ -91,7 +91,6 @@ export default function Codex() {
     const savedResults = localStorage.getItem("gravityCheckResults");
 
     if (signal === "received") {
-      window.scrollTo(0, 0);
       setIsReceivingSignal(true);
       setBottleneckCategory(bottleneck);
       if (firstMoveParam) setFirstMove(decodeURIComponent(firstMoveParam));
@@ -143,7 +142,6 @@ export default function Codex() {
           targetEntry = CODEX_ENTRIES.find((e) => e.id === targetId) || CODEX_ENTRIES[0];
         }
         setTimeout(() => {
-          window.scrollTo(0, 0);
           handleLoad(targetEntry);
           setIsReceivingSignal(false);
         }, 3000);
@@ -213,6 +211,16 @@ export default function Codex() {
       window.removeEventListener("keydown", initAudio);
     };
   }, []);
+
+  // Prevent browser scroll restoration from snapping the page mid-render
+  useLayoutEffect(() => {
+    history.scrollRestoration = "manual";
+  }, []);
+
+  // Scroll to top synchronously after DOM mutation, before browser paints
+  useLayoutEffect(() => {
+    if (loadedEntry) window.scrollTo(0, 0);
+  }, [loadedEntry]);
 
   // Interaction Handlers
   const handleLoad = (entry: CodexEntry) => {
