@@ -864,6 +864,7 @@ startTicker(msg, 14000, () => {
       <button
         onClick={() => { if (canRead) onRead(); }}
         disabled={!canRead}
+        data-tour="codex-read"
         className={cn(
           "absolute z-40 transition-all",
           canRead ? "cursor-pointer active:scale-95" : "cursor-default"

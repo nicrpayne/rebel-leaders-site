@@ -18,9 +18,16 @@ const STEPS: TourStep[] = [
   },
   {
     selector: '[data-tour="codex-controls"]',
-    title: "SCAN & READ",
+    title: "SCAN",
     description:
-      "SCAN to study the protocol. READ to run it in the field. EJECT to return to the archive.",
+      "Study the full protocol before you run it. Objective, script, steps, and the psychology behind it.",
+    popoverSide: "left",
+  },
+  {
+    selector: '[data-tour="codex-read"]',
+    title: "READ",
+    description:
+      "Run the protocol in the field. A live checklist that tracks your progress through each step.",
     popoverSide: "left",
     doneBtnText: "ENTER ARCHIVE",
   },
@@ -75,6 +82,9 @@ export function CodexTour({ onComplete }: CodexTourProps) {
 
   useEffect(() => {
     if (!visible) return;
+    // Scroll target into view before clip-path renders so element is in viewport
+    const el = document.querySelector(step.selector);
+    if (el) el.scrollIntoView({ behavior: "instant" as ScrollBehavior, block: "center" });
     setPopoverReady(false);
     rafRef.current = requestAnimationFrame(measureRect);
     const t = setTimeout(() => setPopoverReady(true), 100);
@@ -82,7 +92,7 @@ export function CodexTour({ onComplete }: CodexTourProps) {
       clearTimeout(t);
       if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
     };
-  }, [visible, measureRect, stepIndex]);
+  }, [visible, measureRect, stepIndex, step.selector]);
 
   const handleNext = useCallback(() => {
     if (stepIndex < STEPS.length - 1) {
