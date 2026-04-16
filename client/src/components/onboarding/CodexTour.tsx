@@ -10,24 +10,17 @@ interface TourStep {
 
 const STEPS: TourStep[] = [
   {
-    selector: '[data-tour="codex-shelf"]',
-    title: "THE ARCHIVE",
-    description:
-      "27 protocols organized by situation. Browse freely or let your Gravitas signal load the best match.",
-    popoverSide: "top",
-  },
-  {
     selector: '[data-tour="codex-cartridge"]',
     title: "THE CARTRIDGE",
     description:
-      "Each entry contains a complete intervention — a script, a protocol, and the psychology behind it. Click any cartridge to load it into the reader.",
-    popoverSide: "bottom",
+      "Each entry is a complete field protocol — a script, steps, and the psychology behind it. Click any cartridge to load it into the reader.",
+    popoverSide: "top",
   },
   {
     selector: '[data-tour="codex-controls"]',
     title: "SCAN & READ",
     description:
-      "SCAN to study the cartridge. READ to run the protocol in the field. Start here.",
+      "SCAN to study the protocol. READ to run it in the field. EJECT to return to the archive.",
     popoverSide: "left",
     doneBtnText: "ENTER ARCHIVE",
   },
@@ -68,6 +61,12 @@ export function CodexTour({ onComplete }: CodexTourProps) {
     if (r) setRect(r);
     rafRef.current = requestAnimationFrame(measureRect);
   }, [step]);
+
+  useEffect(() => {
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = prev; };
+  }, []);
 
   useEffect(() => {
     const t = setTimeout(() => setVisible(true), 400);

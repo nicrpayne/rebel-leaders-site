@@ -333,7 +333,7 @@ export default function Codex() {
         />
       )}
     </div>
-    <OnboardingUI />
+    {OnboardingUI()}
     </DesktopOnly>
   );
 }
