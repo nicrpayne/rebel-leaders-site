@@ -214,6 +214,7 @@ export default function Codex() {
 
   // Interaction Handlers
   const handleLoad = (entry: CodexEntry) => {
+    window.scrollTo(0, 0);
     events.codexLoaded(entry.id, isReceivingSignal);
     setLoadedEntry(entry);
     addToRecent(entry.id);
