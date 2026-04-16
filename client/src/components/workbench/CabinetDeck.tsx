@@ -898,6 +898,7 @@ startTicker(msg, 14000, () => {
       <button
         onClick={handleScan}
         disabled={!canScan}
+        data-tour="codex-controls"
         className={cn(
           "absolute z-40 transition-all",
           canScan ? "cursor-pointer active:scale-95" : "cursor-default"

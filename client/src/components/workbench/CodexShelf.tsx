@@ -170,6 +170,7 @@ interface SpineProps {
   gapBefore?: number;
   useCenter?: boolean;
   zIndex?: number;
+  tourId?: string;
 }
 
 function CartridgeSpine({
@@ -182,6 +183,7 @@ function CartridgeSpine({
   gapBefore,
   useCenter = false,
   zIndex,
+  tourId,
 }: SpineProps) {
   const marginLeft = gapBefore !== undefined
     ? `${gapBefore}px`
@@ -194,6 +196,7 @@ function CartridgeSpine({
   return (
     <div
       className="relative flex-shrink-0 group/spine pointer-events-none"
+      data-tour={tourId}
       style={{
         width: `${SPINE_WIDTH}px`,
         height: `${SPINE_HEIGHT}px`,
@@ -656,7 +659,7 @@ export default function CodexShelf({
             className="flex items-end gap-0 overflow-visible pb-0 pt-0"
             style={{ minHeight: `${SPINE_HEIGHT + 30}px` }}
           >
-            {topVisible.map((section) => {
+            {topVisible.map((section, sectionIdx) => {
               const sectionEntries = grouped[section.key];
               if (sectionEntries.length === 0) return null;
               return (
@@ -675,6 +678,7 @@ export default function CodexShelf({
                         gapBefore={a.gapBefore}
                         useCenter={a.useCenter}
                         zIndex={sectionEntries.length - idx}
+                        tourId={sectionIdx === 0 && idx === 0 ? "codex-cartridge" : undefined}
                       />
                     );
                   })}

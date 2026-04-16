@@ -11,6 +11,7 @@ import { events } from "@/lib/analytics";
 
 import { ReaderPanel } from "@/components/workbench/reader";
 import CodexShelf from "@/components/workbench/CodexShelf";
+import { useCodexOnboarding } from "@/components/onboarding";
 
 /* ─────────────────────────────────────────────
    CODEX V5 — Full Cabinet Layout
@@ -26,6 +27,7 @@ interface GravitasScores {
 }
 
 export default function Codex() {
+  const { OnboardingUI } = useCodexOnboarding();
   const { awardAchievement } = useGame();
   const [activeCategory, setActiveCategory] = useState<string>("ALL");
   const [loadedEntry, setLoadedEntry] = useState<CodexEntry | null>(null);
@@ -279,10 +281,12 @@ export default function Codex() {
         />
 
         {/* ── SHELVES (directly below cabinet, no gap) ── */}
-        <div className={cn(
-          "relative -mt-1 transition-all duration-500",
-          isReaderOpen ? "opacity-40 pointer-events-none blur-[1px]" : "opacity-100"
-        )}>
+        <div
+          data-tour="codex-shelf"
+          className={cn(
+            "relative -mt-1 transition-all duration-500",
+            isReaderOpen ? "opacity-40 pointer-events-none blur-[1px]" : "opacity-100"
+          )}>
           <CodexShelf
             entries={CODEX_ENTRIES}
             loadedEntryId={loadedEntry?.id || null}
@@ -329,6 +333,7 @@ export default function Codex() {
         />
       )}
     </div>
+    <OnboardingUI />
     </DesktopOnly>
   );
 }

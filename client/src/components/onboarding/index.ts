@@ -8,3 +8,6 @@
 export { useGravitasOnboarding } from "./useGravitasOnboarding";
 export { GravitasWelcome } from "./GravitasWelcome";
 export { GravitasTour } from "./GravitasTour";
+export { useCodexOnboarding } from "./useCodexOnboarding";
+export { CodexWelcome } from "./CodexWelcome";
+export { CodexTour } from "./CodexTour";
