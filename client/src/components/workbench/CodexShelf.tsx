@@ -678,7 +678,7 @@ export default function CodexShelf({
                         gapBefore={a.gapBefore}
                         useCenter={a.useCenter}
                         zIndex={sectionEntries.length - idx}
-                        tourId={sectionIdx === 0 && idx === 0 ? "codex-cartridge" : undefined}
+                        tourId={sectionIdx === 0 && idx === 2 ? "codex-cartridge" : undefined}
                       />
                     );
                   })}

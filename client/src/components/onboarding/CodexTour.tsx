@@ -46,6 +46,7 @@ function getRect(selector: string): Rect | null {
   const el = document.querySelector(selector);
   if (!el) return null;
   const r = el.getBoundingClientRect();
+  console.log(`[CodexTour] rect for "${selector}":`, { top: r.top, left: r.left, width: r.width, height: r.height });
   return { top: r.top, left: r.left, width: r.width, height: r.height };
 }
 
