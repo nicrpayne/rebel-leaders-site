@@ -196,7 +196,6 @@ function CartridgeSpine({
   return (
     <div
       className="relative flex-shrink-0 group/spine pointer-events-none"
-      data-tour={tourId}
       style={{
         width: `${SPINE_WIDTH}px`,
         height: `${SPINE_HEIGHT}px`,
@@ -264,6 +263,7 @@ function CartridgeSpine({
           {/* Inner image container: horizontal image rotated 90° to stand upright */}
           <div
             className="absolute top-1/2 left-1/2 overflow-hidden rounded-[3px]"
+            data-tour={tourId}
             style={{
               zIndex: 1,
               width: `${_CTR_W}px`,

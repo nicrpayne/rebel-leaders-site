@@ -70,27 +70,26 @@ export function CodexTour({ onComplete }: CodexTourProps) {
   }, [step]);
 
   useEffect(() => {
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => { document.body.style.overflow = prev; };
-  }, []);
-
-  useEffect(() => {
     const t = setTimeout(() => setVisible(true), 400);
     return () => clearTimeout(t);
   }, []);
 
   useEffect(() => {
     if (!visible) return;
-    // Scroll target into view before clip-path renders so element is in viewport
+    // Scroll target into view first (no scroll lock yet)
     const el = document.querySelector(step.selector);
     if (el) el.scrollIntoView({ behavior: "instant" as ScrollBehavior, block: "center" });
+    // Lock scroll at settled position after scroll completes
+    const lockedY = window.scrollY;
+    const lockScroll = () => window.scrollTo(0, lockedY);
+    window.addEventListener("scroll", lockScroll);
     setPopoverReady(false);
     rafRef.current = requestAnimationFrame(measureRect);
     const t = setTimeout(() => setPopoverReady(true), 100);
     return () => {
       clearTimeout(t);
       if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
+      window.removeEventListener("scroll", lockScroll);
     };
   }, [visible, measureRect, stepIndex, step.selector]);
 
