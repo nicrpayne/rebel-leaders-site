@@ -91,6 +91,7 @@ export default function Codex() {
     const savedResults = localStorage.getItem("gravityCheckResults");
 
     if (signal === "received") {
+      window.scrollTo(0, 0);
       setIsReceivingSignal(true);
       setBottleneckCategory(bottleneck);
       if (firstMoveParam) setFirstMove(decodeURIComponent(firstMoveParam));
@@ -142,6 +143,7 @@ export default function Codex() {
           targetEntry = CODEX_ENTRIES.find((e) => e.id === targetId) || CODEX_ENTRIES[0];
         }
         setTimeout(() => {
+          window.scrollTo(0, 0);
           handleLoad(targetEntry);
           setIsReceivingSignal(false);
         }, 3000);
@@ -214,7 +216,6 @@ export default function Codex() {
 
   // Interaction Handlers
   const handleLoad = (entry: CodexEntry) => {
-    window.scrollTo(0, 0);
     events.codexLoaded(entry.id, isReceivingSignal);
     setLoadedEntry(entry);
     addToRecent(entry.id);
