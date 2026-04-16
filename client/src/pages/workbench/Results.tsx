@@ -520,6 +520,11 @@ export default function Results() {
                 <div className="text-[8px] leading-[1.9] text-parchment-dim tracking-[0.05em]">
                   {results.description}
                 </div>
+                {results.archetypeRootHint && (
+                  <div className="mt-1.5 pt-1.5 border-t border-white/[0.03] text-[7px] leading-[1.8] text-[#5a5a66] tracking-[0.04em] italic">
+                    {results.archetypeRootHint}
+                  </div>
+                )}
                 {/* Total Score */}
                 <div className="mt-2 pt-2 border-t border-white/[0.03] flex items-center gap-2">
                   <span className="text-[6px] tracking-[0.2em] text-[#5a5a66] uppercase">
@@ -588,6 +593,11 @@ export default function Results() {
                 <div className="text-[8px] leading-[1.9] text-parchment-dim tracking-[0.05em]">
                   {results.leakDescription}
                 </div>
+                {results.leakRootHint && (
+                  <div className="mt-1.5 pt-1.5 border-t border-white/[0.03] text-[7px] leading-[1.8] text-[#5a5a66] tracking-[0.04em] italic">
+                    {results.leakRootHint}
+                  </div>
+                )}
               </div>
             </div>
 
@@ -606,6 +616,11 @@ export default function Results() {
                 <div className="text-[8px] leading-[1.9] text-parchment-dim tracking-[0.05em]">
                   {results.forceDescription}
                 </div>
+                {results.forceRootHint && (
+                  <div className="mt-1.5 pt-1.5 border-t border-white/[0.03] text-[7px] leading-[1.8] text-[#5a5a66] tracking-[0.04em] italic">
+                    {results.forceRootHint}
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -631,6 +646,11 @@ export default function Results() {
               <div className="text-[8px] leading-[1.9] text-parchment-dim tracking-[0.05em]">
                 {results.firstMoveDescription}
               </div>
+              {results.firstMoveRootHint && (
+                <div className="mt-1.5 pt-1.5 border-t border-white/[0.03] text-[7px] leading-[1.8] text-[#5a5a66] tracking-[0.04em] italic">
+                  {results.firstMoveRootHint}
+                </div>
+              )}
             </div>
           </div>
 

@@ -190,6 +190,64 @@ const MOVE_LOGIC_KEYS: Record<PatternFamily, string> = {
   map_maker: "act_before_full_clarity",
 };
 
+// ─── 5 Keys Area Map ─────────────────────────────────────────────────
+// Maps each pattern family to its primary/secondary root-health area
+// and a family-specific expression note.
+
+interface KeyAreaEntry {
+  primary: string;
+  secondary: string;
+  note: string;
+}
+
+const KEY_AREA_MAP: Record<PatternFamily, KeyAreaEntry> = {
+  performance_carrier: {
+    primary: "Leading",
+    secondary: "Physical",
+    note: "What is showing up as a performance pattern in you appears to be a way of sustaining the system through personal output when the structure beneath it has not yet been made stronger.",
+  },
+  silence_stabilizer: {
+    primary: "Emotional",
+    secondary: "Leading",
+    note: "What is showing up as stabilizing silence in you appears to be a way of preserving the relational field when speaking into it feels more costly than carrying the truth privately.",
+  },
+  standard_bearer: {
+    primary: "Spiritual",
+    secondary: "Leading",
+    note: "What is showing up as a standards pattern in you appears to be a way of protecting integrity and coherence in a field that has not yet agreed to the line you are already holding.",
+  },
+  power_holder: {
+    primary: "Leading",
+    secondary: "Spiritual",
+    note: "What is showing up as a power-holding pattern in you appears to be a way of stewarding quality and direction in a system that feels too fragile to trust with real authority.",
+  },
+  warmth_protector: {
+    primary: "Emotional",
+    secondary: "Spiritual",
+    note: "What is showing up as warmth and relational protection in you appears to be a way of holding the field together when directness feels too costly to the belonging it would disturb.",
+  },
+  bandwidth_conserver: {
+    primary: "Physical",
+    secondary: "Emotional",
+    note: "What is showing up as careful boundary-keeping in you appears to be a way of staying coherent and intact in a relational field that has historically cost more than it has returned.",
+  },
+  significance_seeker: {
+    primary: "Spiritual",
+    secondary: "Emotional",
+    note: "What is showing up as depth-protection in you appears to be a way of preserving what is most alive in you from being reduced by a field that does not yet feel worthy of it.",
+  },
+  velocity_defender: {
+    primary: "Technical",
+    secondary: "Leading",
+    note: "What is showing up as momentum and drive in you appears to be a way of staying ahead of what would become heavy if you slowed down long enough to feel its full weight.",
+  },
+  map_maker: {
+    primary: "Technical",
+    secondary: "Spiritual",
+    note: "What is showing up as pattern-reading and sense-making in you appears to be a way of staying honest about complexity in a field that keeps asking for premature clarity.",
+  },
+};
+
 // ─── Full Scoring Pipeline ───────────────────────────────────────────
 
 export interface ScoringInput {
@@ -252,5 +310,8 @@ export function scoreMirror(input: ScoringInput): MirrorResult {
     resistance_core_key: RESISTANCE_KEYS[topFamily],
     move_logic_family: MOVE_LOGIC_KEYS[topFamily],
     family_scores: { ...scores },
+    primary_key_area: KEY_AREA_MAP[topFamily].primary,
+    secondary_key_area: KEY_AREA_MAP[topFamily].secondary,
+    key_expression_note: KEY_AREA_MAP[topFamily].note,
   };
 }

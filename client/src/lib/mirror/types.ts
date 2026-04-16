@@ -166,6 +166,10 @@ export interface MirrorResult {
   move_logic_family: string;
   /** Raw family scores for debugging / future use */
   family_scores: FamilyScores;
+  /** 5 Keys root-health layer */
+  primary_key_area: string;
+  secondary_key_area: string;
+  key_expression_note: string;
 }
 
 // ─── Reading Content ─────────────────────────────────────────────────

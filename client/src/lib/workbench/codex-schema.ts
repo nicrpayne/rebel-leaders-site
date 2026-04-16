@@ -34,6 +34,9 @@ export interface CodexEntry {
   keys_primary?: string[];
   keys_secondary?: string[];
   keys_notes?: string;
+  root_distortion?: string;
+  before_you_run?: string;
+  what_this_nourishes?: string;
   why_it_works?: string;
   
   // Proof / Research / Resources
