@@ -24,6 +24,7 @@ const STEPS: TourStep[] = [
     description:
       "Study the full protocol before you run it. Objective, script, steps, and the psychology behind it.",
     popoverSide: "left",
+    spotAdjust: { left: 8 },
   },
   {
     selector: '[data-tour="codex-read"]',
