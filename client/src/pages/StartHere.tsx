@@ -12,6 +12,7 @@ import DialogueBox from "@/components/DialogueBox";
 import PixelDivider from "@/components/PixelDivider";
 import SubstackSignup from "@/components/SubstackSignup";
 import EasterEgg from "@/components/EasterEgg";
+import FieldBriefing from "@/components/FieldBriefing";
 
 const RPG_OFFICE = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/zlNQJQinSxaqyYjB.png";
 const RPG_SPRITE = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/oCdVePFazaeRgvNO.png";
@@ -50,6 +51,8 @@ export default function StartHere() {
           </FadeIn>
         </div>
       </section>
+
+      <FieldBriefing />
 
       <PixelDivider />
 
@@ -149,6 +152,12 @@ export default function StartHere() {
             <FadeIn delay={0.25}>
               <div className="space-y-3">
                 {[
+                  {
+                    label: "Read the field you're already standing in",
+                    desc: "Run your first Gravitas scan. Three minutes. Answer honestly.",
+                    dest: "/workbench/gravitas",
+                    tag: "GRAVITAS",
+                  },
                   {
                     label: "Read the full story",
                     desc: "The landing page walks you through everything.",
