@@ -16,7 +16,7 @@ const STEPS: TourStep[] = [
     description:
       "Each entry is a complete field protocol — a script, steps, and the psychology behind it. Click any cartridge to load it into the reader.",
     popoverSide: "top",
-    spotAdjust: { left: -20, width: -30 },
+    spotAdjust: { left: -20, width: -30, top: 30, height: -30 },
   },
   {
     selector: '[data-tour="codex-controls"]',
@@ -127,7 +127,7 @@ export function CodexTour({ onComplete }: CodexTourProps) {
     spotTop    = Math.max(0, rect.top - PAD + (adj.top ?? 0));
     spotLeft   = Math.max(0, rect.left - PAD + (adj.left ?? 0));
     spotRight  = Math.min(vw, rect.left + rect.width + PAD + (adj.left ?? 0) + (adj.width ?? 0));
-    spotBottom = Math.min(vh, rect.top + rect.height + PAD + (adj.top ?? 0) + (adj.height ?? 0));
+    spotBottom = Math.min(vh, rect.top + rect.height + PAD + (adj.height ?? 0));
 
     clipPath = `polygon(
       0px 0px, ${vw}px 0px, ${vw}px ${vh}px, 0px ${vh}px, 0px 0px,
