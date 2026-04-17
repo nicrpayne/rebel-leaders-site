@@ -6,6 +6,7 @@ interface TourStep {
   description: string;
   popoverSide: "top" | "bottom" | "left" | "right";
   doneBtnText?: string;
+  spotAdjust?: { left?: number; width?: number; top?: number; height?: number };
 }
 
 const STEPS: TourStep[] = [
@@ -15,6 +16,7 @@ const STEPS: TourStep[] = [
     description:
       "Each entry is a complete field protocol — a script, steps, and the psychology behind it. Click any cartridge to load it into the reader.",
     popoverSide: "top",
+    spotAdjust: { left: -20, width: -60 },
   },
   {
     selector: '[data-tour="codex-controls"]',
@@ -121,10 +123,11 @@ export function CodexTour({ onComplete }: CodexTourProps) {
   let spotTop = 0, spotLeft = 0, spotRight = 0, spotBottom = 0;
 
   if (rect) {
-    spotTop    = Math.max(0, rect.top - PAD);
-    spotLeft   = Math.max(0, rect.left - PAD);
-    spotRight  = Math.min(vw, rect.left + rect.width + PAD);
-    spotBottom = Math.min(vh, rect.top + rect.height + PAD);
+    const adj = step.spotAdjust ?? {};
+    spotTop    = Math.max(0, rect.top - PAD + (adj.top ?? 0));
+    spotLeft   = Math.max(0, rect.left - PAD + (adj.left ?? 0));
+    spotRight  = Math.min(vw, rect.left + rect.width + PAD + (adj.left ?? 0) + (adj.width ?? 0));
+    spotBottom = Math.min(vh, rect.top + rect.height + PAD + (adj.top ?? 0) + (adj.height ?? 0));
 
     clipPath = `polygon(
       0px 0px, ${vw}px 0px, ${vw}px ${vh}px, 0px ${vh}px, 0px 0px,
