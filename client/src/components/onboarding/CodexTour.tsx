@@ -16,7 +16,7 @@ const STEPS: TourStep[] = [
     description:
       "Each entry is a complete field protocol — a script, steps, and the psychology behind it. Click any cartridge to load it into the reader.",
     popoverSide: "top",
-    spotAdjust: { left: -20, width: -35, top: 30, height: -30 },
+    spotAdjust: { left: -20, width: -37, top: 38, height: -40 },
   },
   {
     selector: '[data-tour="codex-controls"]',
