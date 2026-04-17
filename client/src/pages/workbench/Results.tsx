@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from "react";
+import { createPortal } from "react-dom";
 import { Link, useLocation } from "wouter";
 import GravitasShell from "@/components/workbench/GravitasShell";
 import { ScoringResult } from "@/lib/workbench/scoring";
@@ -270,11 +271,13 @@ function DimensionBar({
   value,
   color,
   delay,
+  tooltip,
 }: {
   label: string;
   value: number;
   color: string;
   delay: number;
+  tooltip?: string;
 }) {
   const [animatedWidth, setAnimatedWidth] = useState(0);
   useEffect(() => {
@@ -286,8 +289,9 @@ function DimensionBar({
 
   return (
     <div className="flex items-center gap-3">
-      <span className="text-[7px] tracking-[0.2em] text-[#5a5a66] uppercase w-[80px] text-right shrink-0">
-        {label}
+      <span className="w-[80px] shrink-0 flex items-center justify-end gap-0.5">
+        {tooltip && <InfoTooltip content={tooltip} />}
+        <span className="text-[7px] tracking-[0.2em] text-[#5a5a66] uppercase">{label}</span>
       </span>
       <div className="flex-1 h-[6px] bg-[#0a0a0e] border border-[#1a1a22] rounded-[1px] overflow-hidden shadow-inner">
         <div
@@ -307,6 +311,84 @@ function DimensionBar({
       </span>
     </div>
   );
+}
+
+function InfoTooltip({ content }: { content: string }) {
+  const [open, setOpen] = useState(false);
+  const [pos, setPos] = useState({ top: 0, left: 0 });
+  const btnRef = useRef<HTMLButtonElement>(null);
+
+  const measure = () => {
+    if (btnRef.current) {
+      const r = btnRef.current.getBoundingClientRect();
+      setPos({ top: r.top, left: r.left + r.width / 2 });
+    }
+  };
+
+  useEffect(() => {
+    if (!open) return;
+    const handler = (e: MouseEvent | TouchEvent) => {
+      if (btnRef.current && !btnRef.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    document.addEventListener("touchstart", handler);
+    return () => {
+      document.removeEventListener("mousedown", handler);
+      document.removeEventListener("touchstart", handler);
+    };
+  }, [open]);
+
+  const TIP_W = 210;
+  const vw = typeof window !== "undefined" ? window.innerWidth : 800;
+  const clampedLeft = Math.max(8, Math.min(vw - TIP_W - 8, pos.left - TIP_W / 2));
+
+  return (
+    <span className="inline-block align-middle">
+      <button
+        ref={btnRef}
+        onMouseEnter={() => { measure(); setOpen(true); }}
+        onMouseLeave={() => setOpen(false)}
+        onClick={(e) => { e.stopPropagation(); measure(); setOpen((o) => !o); }}
+        className="text-[9px] text-[#5a5a66] hover:text-[#c5a059] transition-colors cursor-pointer leading-none select-none px-0.5"
+        aria-label="More info"
+      >
+        ⓘ
+      </button>
+      {open && createPortal(
+        <div
+          style={{
+            position: "fixed",
+            top: pos.top - 6,
+            left: clampedLeft,
+            transform: "translateY(-100%)",
+            width: TIP_W,
+            zIndex: 9000,
+            background: "#0c0a07",
+            border: "1px solid rgba(197,160,89,0.3)",
+            borderRadius: 3,
+            boxShadow: "0 8px 32px rgba(0,0,0,0.9)",
+            padding: "10px 12px",
+            pointerEvents: "none",
+          }}
+        >
+          <p style={{ color: "#8a7a60", fontFamily: "var(--font-display)", fontSize: 11, lineHeight: 1.7, letterSpacing: "0.02em", margin: 0 }}>
+            {content}
+          </p>
+        </div>,
+        document.body
+      )}
+    </span>
+  );
+}
+
+function getArchetypeBandDef(total: number): string {
+  if (total < 2.0) return "COLLAPSED ORBIT — The field has lost coherence. Systems in this range are experiencing active breakdown in at least three dimensions.";
+  if (total < 2.8) return "FRACTURED ORBIT — Significant structural stress. One or more dimensions are in crisis and compensating patterns are under strain.";
+  if (total < 3.5) return "STRESSED ORBIT — The field is functional but costly. Compensation patterns are active and consuming energy.";
+  if (total < 4.2) return "STABLE ORBIT — The field has healthy structural integrity. Growth is possible from here.";
+  return "RESONANT ORBIT — The field is generating genuine pull. This is the zone where culture becomes formative.";
 }
 
 export default function Results() {
@@ -500,12 +582,13 @@ export default function Results() {
                 }}
               />
               <div className="relative z-10">
-                <div className="text-[6px] tracking-[0.3em] text-[#5a5a66] uppercase mb-1">
+                <div className="text-[6px] tracking-[0.3em] text-[#5a5a66] uppercase mb-1 flex items-center gap-1">
                   DETECTED ORBIT
+                  <InfoTooltip content="Your orbit describes the overall gravitational pattern your field is producing. It's derived from your total field strength and shapes how energy moves (or doesn't) through your system." />
                 </div>
                 <div
                   className={cn(
-                    "text-[14px] tracking-[0.2em] uppercase font-bold mb-2 transition-all duration-1000",
+                    "text-[14px] tracking-[0.2em] uppercase font-bold mb-2 transition-all duration-1000 flex items-center gap-1.5",
                     phase === "reveal" || phase === "complete"
                       ? "opacity-100 translate-y-0"
                       : "opacity-0 translate-y-2"
@@ -516,6 +599,7 @@ export default function Results() {
                   }}
                 >
                   {results.archetype}
+                  <InfoTooltip content={getArchetypeBandDef(results.total)} />
                 </div>
                 <div className="text-[8px] leading-[1.9] text-parchment-dim tracking-[0.05em]">
                   {results.description}
@@ -554,25 +638,37 @@ export default function Results() {
                 value={results.identity}
                 color="#4ade80"
                 delay={400}
+                tooltip="How clearly are people forming a coherent sense of who they are in this system? Identity is the root of agency, ownership, and genuine leadership presence."
               />
               <DimensionBar
                 label="RELATIONSHIP"
                 value={results.relationship}
                 color="#22d3ee"
                 delay={600}
+                tooltip="How much trust bandwidth exists for honest exchange? Relationship is the channel through which truth moves — or doesn't."
               />
               <DimensionBar
                 label="VISION"
                 value={results.vision}
                 color="#c5a059"
                 delay={800}
+                tooltip="How alive is the shared sense of where this is going? Vision is not the mission statement — it's the felt pull of a destination that still matters."
               />
               <DimensionBar
                 label="CULTURE"
                 value={results.culture}
                 color="#a78bfa"
                 delay={1000}
+                tooltip="Culture is the field produced when Identity, Relationship, and Vision gain mass. It's not a program you install — it's the gravity generated by what you've built."
               />
+              <a
+                href="https://leaderrebellion.substack.com/p/you-have-a-culture-problem"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[6px] tracking-[0.2em] text-[#3a3a44] hover:text-[#5a5a66] transition-colors uppercase mt-0.5 inline-block"
+              >
+                read: culture as gravity →
+              </a>
             </div>
           </div>
 
@@ -586,8 +682,9 @@ export default function Results() {
               <div className="relative z-10">
                 <div className="flex items-center gap-2 mb-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-red-500 shadow-[0_0_6px_rgba(239,68,68,0.5)] animate-pulse" />
-                  <span className="text-[6px] tracking-[0.3em] text-red-400/60 uppercase">
+                  <span className="text-[6px] tracking-[0.3em] text-red-400/60 uppercase flex items-center gap-1">
                     PRIMARY LEAK DETECTED
+                    <InfoTooltip content="A Leak is the dimension where your field is losing the most energy. Not broken — constrained. This is where the pull is weakest and where the most compensation is happening." />
                   </span>
                 </div>
                 <div className="text-[8px] leading-[1.9] text-parchment-dim tracking-[0.05em]">
@@ -609,8 +706,9 @@ export default function Results() {
               <div className="relative z-10">
                 <div className="flex items-center gap-2 mb-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-green-400 shadow-[0_0_6px_rgba(74,222,128,0.5)]" />
-                  <span className="text-[6px] tracking-[0.3em] text-green-400/60 uppercase">
+                  <span className="text-[6px] tracking-[0.3em] text-green-400/60 uppercase flex items-center gap-1">
                     DOMINANT FORCE
+                    <InfoTooltip content="A Force is what holds orbit even while the Leak bleeds. It's the dimension generating the most gravitational mass right now — the thing keeping this system alive." />
                   </span>
                 </div>
                 <div className="text-[8px] leading-[1.9] text-parchment-dim tracking-[0.05em]">
@@ -633,8 +731,9 @@ export default function Results() {
             <div className="relative z-10">
               <div className="flex items-center gap-2 mb-1.5">
                 <div className="w-1.5 h-1.5 rounded-full bg-[#c5a059] shadow-[0_0_6px_rgba(197,160,89,0.5)]" />
-                <span className="text-[6px] tracking-[0.3em] text-[#c5a059]/60 uppercase">
+                <span className="text-[6px] tracking-[0.3em] text-[#c5a059]/60 uppercase flex items-center gap-1">
                   PRESCRIBED FIRST MOVE
+                  <InfoTooltip content="The First Move is the single highest-leverage protocol for your specific orbit and leak combination. Not the only move — the first one. Where to put your attention before everything else." />
                 </span>
               </div>
               <div
