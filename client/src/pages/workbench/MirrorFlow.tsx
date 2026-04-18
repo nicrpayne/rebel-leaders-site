@@ -227,6 +227,7 @@ function BasinQuestion({
     dragStartY.current = e.clientY;
     dragAccumulated.current = 0;
     e.preventDefault();
+    document.body.style.userSelect = 'none';
   }, [isTransitioning, confirmed]);
 
   useEffect(() => {
@@ -250,6 +251,7 @@ function BasinQuestion({
 
     const handleMouseUp = () => {
       isDragging.current = false;
+      document.body.style.userSelect = '';
     };
 
     window.addEventListener("mousemove", handleMouseMove);
@@ -257,6 +259,7 @@ function BasinQuestion({
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseup", handleMouseUp);
+      document.body.style.userSelect = '';
     };
   }, [options.length, isTransitioning, confirmed]);
 
@@ -549,6 +552,7 @@ function BasinPair({
     dragStartY.current = e.clientY;
     dragAccumulated.current = 0;
     e.preventDefault();
+    document.body.style.userSelect = 'none';
   }, [isTransitioning, confirmed]);
 
   useEffect(() => {
@@ -567,6 +571,7 @@ function BasinPair({
 
     const handleMouseUp = () => {
       isDragging.current = false;
+      document.body.style.userSelect = '';
     };
 
     window.addEventListener("mousemove", handleMouseMove);
@@ -574,6 +579,7 @@ function BasinPair({
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseup", handleMouseUp);
+      document.body.style.userSelect = '';
     };
   }, [isTransitioning, confirmed]);
 

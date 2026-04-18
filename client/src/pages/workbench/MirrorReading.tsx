@@ -192,6 +192,12 @@ export default function MirrorReading() {
   const saveMirrorMutation = trpc.auth.saveMirrorReading.useMutation();
   const savedRef = useRef(false);
 
+  // Clear any drag-selection that survived the page transition from MirrorFlow
+  useEffect(() => {
+    document.body.style.userSelect = '';
+    document.getSelection()?.removeAllRanges();
+  }, []);
+
   // ─── Load Data ───────────────────────────────────────────────────
 
   useEffect(() => {
