@@ -41,7 +41,7 @@ The site contains pages across three tiers: the main content site, the interacti
 |---|---|---|
 | `/` | Home | Hero scene with pixel-art office, RPG narrator typewriter, six-chapter scroll journey through the Rebel Leaders philosophy |
 | `/manifesto` | The Map | The full manifesto — five chapters covering disconnection, formation, and the mission. Includes a scroll-driven side-scroller mini-game |
-| `/start` | New Player | 30-second orientation for newcomers: What is this? Is this for me? What do I do? |
+| `/start` | New Player | 30-second orientation for newcomers: What is this? Is this for me? What do I do? Includes a five-panel Field Briefing (The Disturbance, The Field, The Instrument, The Roots, The Stewardship Turn) that walks first-time visitors through the conceptual framework before sending them into the tools. |
 | `/archives` | Archives | Auto-populated content hub with three tabs: Visions (YouTube full videos), Quick Strikes (Shorts), and Scrolls (Substack articles) |
 | `/shelf` | The Shelf | Curated library of 60+ books across 7 categories with a "Start Here" section of 5 essential reads |
 | `/residency` | Residency | Coaching and consulting intake page |
@@ -57,8 +57,8 @@ The site contains pages across three tiers: the main content site, the interacti
 |---|---|---|
 | `/workbench` | Workbench | Plugin hub — 15 plugin cards in a filterable grid with category and status filters |
 | `/workbench/gravitas` | Gravitas | Leadership gravity diagnostic: questions, 3 minutes, 4 dimensions |
-| `/workbench/results` | Results | Gravitas scan results with radar visualization and Side-Chain handoff to Codex. Prompts unauthenticated users to save their reading; auto-saves for authenticated users |
-| `/workbench/codex` | The Codex | Library of 26 leadership protocols in a hardware cabinet UI with audio narration |
+| `/workbench/results` | Results | Gravitas scan results: archetype card, animated dimension bars (Identity, Relationship, Vision, Culture), Leak, Force, and First Move cards. Every label carries an inline ⓘ tooltip (portal-based, hover/tap) with a plain-language definition. Deep Scan results also render five interpretive reading sections (Compensation Pattern, What This Costs, What This Protects, Primary Invitation, Why Codex Recommended This) — one profile per Archetype × Leak combination. Side-Chain button handoff to Codex. Prompts unauthenticated users to save their reading; auto-saves for authenticated users. |
+| `/workbench/codex` | The Codex | Library of 27 leadership protocols in a hardware cabinet UI with audio narration |
 | `/workbench/mirror` | Mirror Flow | Mirror reading flow (personality/archetype reading) |
 | `/workbench/wall/:wallCode` | The Wall | Code-gated community walls for photo submissions |
 
@@ -80,9 +80,9 @@ The Workbench at `/workbench` is the hub for interactive leadership tools. It fo
 
 ### Active Plugins
 
-**Gravitas** (`/workbench/gravitas`) is a leadership gravity diagnostic. It presents questions across 4 dimensions (Identity, Relationship, Vision, Culture) in a hardware-styled interface with dust particle effects. The premium rotary knob component uses the Web Audio API to synthesize a satisfying mechanical click sound — a 12ms noise burst through a 4kHz bandpass filter. Results display orbital scores with a radar visualization inside the GravitasShell frame. Analytics events fire on scan start (`gravitas_started`) and completion (`gravitas_completed` with archetype and leak dimension).
+**Gravitas** (`/workbench/gravitas`) is a leadership gravity diagnostic. It presents questions across 4 dimensions (Identity, Relationship, Vision, Culture) in a hardware-styled interface with dust particle effects. The premium rotary knob component uses the Web Audio API to synthesize a satisfying mechanical click sound — a 12ms noise burst through a 4kHz bandpass filter. Results display an archetype card, animated dimension bars, and Leak/Force/First Move cards — all with inline ⓘ tooltips (`InfoTooltip`, portal-rendered via `createPortal` to escape `overflow-hidden` card boundaries). The archetype name carries a second tooltip with the band definition (Collapsed/Fractured/Stressed/Stable/Resonant Orbit). Deep Scan results add five interpretive reading sections written for each Archetype × Leak combination. All four `ScoringResult` fields include root health hints (`archetypeRootHint`, `leakRootHint`, `forceRootHint`, `firstMoveRootHint`) from the 5 Keys root health system. Analytics events fire on scan start (`gravitas_started`) and completion (`gravitas_completed` with archetype and leak dimension).
 
-**The Codex** (`/workbench/codex`) is a library of 26 high-leverage leadership scripts and protocols displayed in a physical cabinet UI with CRT monitors, cartridge slots, and category filters (Identity, Relationship, Vision, Culture). The ReaderPanel features a typewriter heading animation, word-reveal text, audio narration with a VU meter, and rotary knob controls. Loading a cartridge fires a `codex_loaded` analytics event tagged with whether the user arrived from a Gravitas side-chain.
+**The Codex** (`/workbench/codex`) is a library of 27 high-leverage leadership scripts and protocols displayed in a physical cabinet UI with CRT monitors, cartridge slots, and category filters (Identity, Relationship, Vision, Culture). The ReaderPanel features a typewriter heading animation, word-reveal text, audio narration with a VU meter, and rotary knob controls. First-time visitors see a first-run onboarding flow: a `CodexWelcome` modal (full-screen, dark/gold palette, ARCHIVE ACCESS GRANTED header, vault readouts) followed by a three-step `CodexTour` spotlight that highlights the cartridge shelf, SCAN button, and READ button in sequence. Onboarding state is stored in `localStorage` under `codex_intro_seen`. Each cartridge entry includes 5 Keys root health fields (`root_distortion`, `before_you_run`, `what_this_nourishes`, `keys_primary`, `keys_secondary`, `keys_notes`). Loading a cartridge fires a `codex_loaded` analytics event tagged with whether the user arrived from a Gravitas side-chain.
 
 ### Side-Chain Handoff
 
