@@ -7,6 +7,8 @@ import { eq, and, gt, desc } from "drizzle-orm";
 import { Resend } from "resend";
 import { randomBytes } from "crypto";
 import { magicLinkEmail } from "./emails/magic-link";
+import { gravitas_reading_email } from "./emails/gravitas-reading";
+import { getGravitasEmailContent } from "./lib/gravitas-hints";
 import { SignJWT, jwtVerify } from "jose";
 import { ENV } from "./_core/env";
 import { parse as parseCookies } from "cookie";
@@ -265,6 +267,37 @@ export const saveGravitasAssessment = publicProcedure
       rawAnswers: input.rawAnswers,
       sessionNumber: prior.length + 1,
     });
+
+    try {
+      if (ENV.resendApiKey && magicUser.email) {
+        const emailContent = getGravitasEmailContent(
+          input.archetype,
+          input.leak,
+          input.force,
+          input.firstMove,
+        );
+        const resend = new Resend(ENV.resendApiKey);
+        await resend.emails.send({
+          from: "Rebel Leaders <hello@rebel-leader.com>",
+          to: magicUser.email,
+          subject: `Your field reading — ${input.archetype}`,
+          html: gravitas_reading_email({
+            name: magicUser.email,
+            archetype: input.archetype,
+            leak: input.leak,
+            force: input.force,
+            firstMove: input.firstMove,
+            identity: input.dimensionScores.identity,
+            relationship: input.dimensionScores.relationship,
+            vision: input.dimensionScores.vision,
+            culture: input.dimensionScores.culture,
+            ...emailContent,
+          }),
+        });
+      }
+    } catch (err) {
+      console.error("[saveGravitasAssessment] email send failed:", err);
+    }
 
     return { saved: true, sessionNumber: prior.length + 1 } as const;
   });
