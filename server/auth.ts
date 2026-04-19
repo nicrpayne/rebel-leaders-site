@@ -2,8 +2,8 @@ import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { publicProcedure } from "./_core/trpc";
 import { getDb } from "./db";
-import { authTokens, users, gravitasAssessments, userEvents, mirrorReadings } from "../drizzle/schema";
-import { eq, and, gt, desc } from "drizzle-orm";
+import { authTokens, users, gravitasAssessments, gravitasDeltas, userEvents, mirrorReadings } from "../drizzle/schema";
+import { eq, and, gt, desc, aliasedTable } from "drizzle-orm";
 import { Resend } from "resend";
 import { randomBytes } from "crypto";
 import { magicLinkEmail } from "./emails/magic-link";
@@ -255,6 +255,8 @@ export const saveGravitasAssessment = publicProcedure
       .from(gravitasAssessments)
       .where(eq(gravitasAssessments.userId, magicUser.id));
 
+    const sessionNumber = prior.length + 1;
+
     await db.insert(gravitasAssessments).values({
       userId: magicUser.id,
       sessionId: input.sessionId,
@@ -265,8 +267,54 @@ export const saveGravitasAssessment = publicProcedure
       force: input.force,
       firstMove: input.firstMove,
       rawAnswers: input.rawAnswers,
-      sessionNumber: prior.length + 1,
+      sessionNumber,
     });
+
+    // Delta computation — only when this is a return scan
+    try {
+      if (sessionNumber > 1) {
+        const [newRow] = await db
+          .select({ id: gravitasAssessments.id })
+          .from(gravitasAssessments)
+          .where(and(
+            eq(gravitasAssessments.userId, magicUser.id),
+            eq(gravitasAssessments.sessionNumber, sessionNumber),
+          ))
+          .limit(1);
+
+        const [prevRow] = await db
+          .select({
+            id: gravitasAssessments.id,
+            archetype: gravitasAssessments.archetype,
+            leak: gravitasAssessments.leak,
+            dimensionScores: gravitasAssessments.dimensionScores,
+          })
+          .from(gravitasAssessments)
+          .where(and(
+            eq(gravitasAssessments.userId, magicUser.id),
+            eq(gravitasAssessments.sessionNumber, sessionNumber - 1),
+          ))
+          .limit(1);
+
+        if (newRow && prevRow) {
+          const prev = prevRow.dimensionScores as { identity: number; relationship: number; vision: number; culture: number };
+          const curr = input.dimensionScores;
+          await db.insert(gravitasDeltas).values({
+            userId: magicUser.id,
+            assessmentAId: prevRow.id,
+            assessmentBId: newRow.id,
+            identityDelta: String(curr.identity - prev.identity),
+            relationshipDelta: String(curr.relationship - prev.relationship),
+            visionDelta: String(curr.vision - prev.vision),
+            cultureDelta: String(curr.culture - prev.culture),
+            archetypeShift: input.archetype !== prevRow.archetype,
+            leakShift: input.leak !== prevRow.leak,
+          });
+        }
+      }
+    } catch (err) {
+      console.error("[saveGravitasAssessment] delta computation failed:", err);
+    }
 
     try {
       if (ENV.resendApiKey && magicUser.email) {
@@ -299,7 +347,7 @@ export const saveGravitasAssessment = publicProcedure
       console.error("[saveGravitasAssessment] email send failed:", err);
     }
 
-    return { saved: true, sessionNumber: prior.length + 1 } as const;
+    return { saved: true, sessionNumber } as const;
   });
 
 export const getLastGravitasAssessment = publicProcedure.query(async ({ ctx }) => {
@@ -316,6 +364,132 @@ export const getLastGravitasAssessment = publicProcedure.query(async ({ ctx }) =
     .orderBy(desc(gravitasAssessments.createdAt))
     .limit(1);
   return last || null;
+});
+
+export const getPraxisState = publicProcedure.query(async ({ ctx }) => {
+  const magicUser = await getMagicLinkUser(ctx.req.headers.cookie);
+  if (!magicUser) return null;
+
+  const db = await getDb();
+  if (!db) return null;
+
+  const assessments = await db
+    .select({
+      id: gravitasAssessments.id,
+      sessionNumber: gravitasAssessments.sessionNumber,
+      archetype: gravitasAssessments.archetype,
+      leak: gravitasAssessments.leak,
+      force: gravitasAssessments.force,
+      firstMove: gravitasAssessments.firstMove,
+      dimensionScores: gravitasAssessments.dimensionScores,
+      createdAt: gravitasAssessments.createdAt,
+    })
+    .from(gravitasAssessments)
+    .where(eq(gravitasAssessments.userId, magicUser.id))
+    .orderBy(desc(gravitasAssessments.createdAt));
+
+  const sessionCount = assessments.length;
+  const latestAssessment = assessments[0] || null;
+  const hasHistory = sessionCount > 1;
+
+  let latestDelta = null;
+  if (hasHistory) {
+    const assessmentA = aliasedTable(gravitasAssessments, "pa");
+    const assessmentB = aliasedTable(gravitasAssessments, "pb");
+
+    const [deltaRow] = await db
+      .select({
+        identityDelta: gravitasDeltas.identityDelta,
+        relationshipDelta: gravitasDeltas.relationshipDelta,
+        visionDelta: gravitasDeltas.visionDelta,
+        cultureDelta: gravitasDeltas.cultureDelta,
+        archetypeShift: gravitasDeltas.archetypeShift,
+        leakShift: gravitasDeltas.leakShift,
+        previousDate: assessmentA.createdAt,
+        currentDate: assessmentB.createdAt,
+        previousArchetype: assessmentA.archetype,
+        currentArchetype: assessmentB.archetype,
+        previousLeak: assessmentA.leak,
+        currentLeak: assessmentB.leak,
+      })
+      .from(gravitasDeltas)
+      .innerJoin(assessmentA, eq(gravitasDeltas.assessmentAId, assessmentA.id))
+      .innerJoin(assessmentB, eq(gravitasDeltas.assessmentBId, assessmentB.id))
+      .where(eq(gravitasDeltas.userId, magicUser.id))
+      .orderBy(desc(gravitasDeltas.createdAt))
+      .limit(1);
+
+    latestDelta = deltaRow || null;
+  }
+
+  return {
+    hasHistory,
+    sessionCount,
+    latestAssessment,
+    latestDelta,
+    activeSeason: null,
+  };
+});
+
+export const getLatestGravitasDelta = publicProcedure.query(async ({ ctx }) => {
+  const magicUser = await getMagicLinkUser(ctx.req.headers.cookie);
+  if (!magicUser) return null;
+
+  const db = await getDb();
+  if (!db) return null;
+
+  // Alias the two assessment joins so we can pull fields from both
+  const assessmentA = aliasedTable(gravitasAssessments, "assessment_a");
+  const assessmentB = aliasedTable(gravitasAssessments, "assessment_b");
+
+  const [row] = await db
+    .select({
+      identityDelta: gravitasDeltas.identityDelta,
+      relationshipDelta: gravitasDeltas.relationshipDelta,
+      visionDelta: gravitasDeltas.visionDelta,
+      cultureDelta: gravitasDeltas.cultureDelta,
+      archetypeShift: gravitasDeltas.archetypeShift,
+      leakShift: gravitasDeltas.leakShift,
+      previousDate: assessmentA.createdAt,
+      currentDate: assessmentB.createdAt,
+      previousArchetype: assessmentA.archetype,
+      currentArchetype: assessmentB.archetype,
+      previousLeak: assessmentA.leak,
+      currentLeak: assessmentB.leak,
+    })
+    .from(gravitasDeltas)
+    .innerJoin(assessmentA, eq(gravitasDeltas.assessmentAId, assessmentA.id))
+    .innerJoin(assessmentB, eq(gravitasDeltas.assessmentBId, assessmentB.id))
+    .where(eq(gravitasDeltas.userId, magicUser.id))
+    .orderBy(desc(gravitasDeltas.createdAt))
+    .limit(1);
+
+  return row || null;
+});
+
+export const getGravitasHistory = publicProcedure.query(async ({ ctx }) => {
+  const magicUser = await getMagicLinkUser(ctx.req.headers.cookie);
+  if (!magicUser) return [];
+
+  const db = await getDb();
+  if (!db) return [];
+
+  const rows = await db
+    .select({
+      id: gravitasAssessments.id,
+      sessionNumber: gravitasAssessments.sessionNumber,
+      archetype: gravitasAssessments.archetype,
+      leak: gravitasAssessments.leak,
+      force: gravitasAssessments.force,
+      firstMove: gravitasAssessments.firstMove,
+      dimensionScores: gravitasAssessments.dimensionScores,
+      createdAt: gravitasAssessments.createdAt,
+    })
+    .from(gravitasAssessments)
+    .where(eq(gravitasAssessments.userId, magicUser.id))
+    .orderBy(gravitasAssessments.createdAt);
+
+  return rows;
 });
 
 export const saveMirrorReading = publicProcedure

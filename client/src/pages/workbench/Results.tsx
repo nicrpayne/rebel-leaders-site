@@ -400,6 +400,9 @@ export default function Results() {
   const { sessionId } = useSession();
   const { data: currentUser } = trpc.auth.me.useQuery();
   const saveAssessment = trpc.auth.saveGravitasAssessment.useMutation();
+  const { data: praxisState } = trpc.auth.getPraxisState.useQuery(undefined, {
+    enabled: !!currentUser,
+  });
 
   // Auto-save for authenticated users once results are loaded
   useEffect(() => {
@@ -857,6 +860,22 @@ export default function Results() {
               </>
             );
           })()}
+
+          {/* Praxis return banner — shown when user has prior scans */}
+          {currentUser && praxisState?.hasHistory && (
+            <div className="border border-[rgba(197,160,89,0.15)] bg-[#0a0a0e] rounded-[2px] px-4 py-3">
+              <p className="text-[7px] tracking-[0.25em] text-[#c5a059]/50 uppercase mb-1" style={{ fontFamily: "var(--font-pixel, monospace)" }}>
+                SECOND PASS DETECTED
+              </p>
+              <p className="text-[8px] leading-[1.8] text-[#5a5a66]" style={{ fontFamily: "var(--font-display, serif)" }}>
+                Your trajectory is now visible.{" "}
+                <a href="/workbench/praxis" className="text-[#c5a059]/60 hover:text-[#c5a059] transition-colors">
+                  Open Praxis
+                </a>{" "}
+                to compare.
+              </p>
+            </div>
+          )}
 
           {/* Save Reading Prompt */}
           {!currentUser ? (

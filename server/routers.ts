@@ -16,6 +16,9 @@ import {
   saveGravitasAssessment,
   saveMirrorReading,
   getLastGravitasAssessment,
+  getGravitasHistory,
+  getLatestGravitasDelta,
+  getPraxisState,
 } from "./auth";
 
 export const appRouter = router({
@@ -53,6 +56,9 @@ export const appRouter = router({
     saveGravitasAssessment,
     saveMirrorReading,
     getLastGravitasAssessment,
+    getGravitasHistory,
+    getLatestGravitasDelta,
+    getPraxisState,
   }),
 
   // Substack RSS feed integration
