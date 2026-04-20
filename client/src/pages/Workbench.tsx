@@ -77,6 +77,16 @@ const PLUGINS: Plugin[] = [
     version: "V.1.0.4",
   },
   {
+    id: "praxis-builder",
+    title: "Praxis Builder",
+    category: "MOVE",
+    desc: "The return loop. Where repeated practice becomes visible trajectory.",
+    status: "ACTIVE",
+    link: "/workbench/praxis",
+    image: "https://pub-26b8c09d5ff84d568bb62f776d03c004.r2.dev/workbench-cards/Praxis%20workbench%20card.png",
+    version: "V.1.0.0",
+  },
+  {
     id: "laas",
     title: "LaaS Calibrator",
     category: "MAP",
@@ -194,16 +204,6 @@ const PLUGINS: Plugin[] = [
     status: "LOCKED",
     link: "#",
     image: "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/field_notes_cover_v3_8603f66f.jpg",
-    version: "—",
-  },
-  {
-    id: "praxis-builder",
-    title: "Praxis Builder",
-    category: "MOVE",
-    desc: "Action sequencer. Transformation through repeated embodied practice.",
-    status: "LIVE",
-    link: "/workbench/praxis",
-    image: "https://pub-26b8c09d5ff84d568bb62f776d03c004.r2.dev/workbench-cards/Praxis%20workbench%20card.png",
     version: "—",
   },
 ];

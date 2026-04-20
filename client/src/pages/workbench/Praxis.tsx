@@ -1,9 +1,27 @@
-import React from "react";
+import React, { useState, useCallback, useRef, useEffect } from "react";
+import { motion } from "framer-motion";
 import { trpc } from "@/lib/trpc";
 import { useLocation } from "wouter";
 import { FIRST_MOVE_CONTEXT, FIRST_MOVE_TO_CARTRIDGE, DELTA_FIELD_NOTES, getDeltaNoteIndex, PRAXIS_REPS } from "@/lib/praxis-data";
 
 const BG_IMAGE = "https://pub-26b8c09d5ff84d568bb62f776d03c004.r2.dev/Praxis%20Plugin/rebel_leaders_praxis_interactive_final.png";
+
+const AMBIENT_LIGHTS = [
+  { x: "8%",  y: "28%", duration: 2.5, delay: 0   },
+  { x: "9%",  y: "37%", duration: 3.2, delay: 0.8 },
+  { x: "8%",  y: "46%", duration: 3.8, delay: 1.6 },
+  { x: "92%", y: "28%", duration: 2.9, delay: 2.3 },
+  { x: "91%", y: "37%", duration: 3.5, delay: 3.1 },
+  { x: "8%",  y: "72%", duration: 4.0, delay: 0.4 },
+];
+
+const PULSE_KEYFRAMES = `
+@keyframes ambientPulse {
+  0%   { opacity: 0.3; }
+  50%  { opacity: 0.7; }
+  100% { opacity: 0.3; }
+}
+`;
 
 const PANEL: React.CSSProperties = {
   position: "absolute",
@@ -15,8 +33,18 @@ const PANEL: React.CSSProperties = {
   overflowY: "auto",
 };
 
+const PRAXIS_INTRO_KEY = "praxis_intro_seen";
+
 export default function Praxis() {
   const [, navigate] = useLocation();
+  const [introSeen, setIntroSeen] = useState<boolean>(() => {
+    try { return localStorage.getItem(PRAXIS_INTRO_KEY) === "complete"; } catch { return false; }
+  });
+  const handleIntroEnter = useCallback(() => {
+    try { localStorage.setItem(PRAXIS_INTRO_KEY, "complete"); } catch {}
+    setIntroSeen(true);
+  }, []);
+
   const { data: currentUser } = trpc.auth.me.useQuery();
   const { data: praxisState, isLoading, refetch } = trpc.auth.getPraxisState.useQuery(
     undefined,
@@ -60,10 +88,10 @@ export default function Praxis() {
     }
   }
 
-  console.log("[Praxis] BG_IMAGE:", BG_IMAGE);
-
   return (
     <div style={{ minHeight: "100vh", background: "#0a0a0d", padding: "40px 24px" }}>
+      <style>{PULSE_KEYFRAMES}</style>
+      {!introSeen && <PraxisWelcome onEnter={handleIntroEnter} />}
       {/* Back nav */}
       <div style={{ maxWidth: 900, margin: "0 auto 32px" }}>
         <button
@@ -75,7 +103,12 @@ export default function Praxis() {
       </div>
 
       {/* Device frame — always renders regardless of auth state */}
-      <div style={{ maxWidth: 900, margin: "0 auto", position: "relative" }}>
+      <motion.div
+        initial={{ scale: 1.05, opacity: 0 }}
+        animate={{ scale: 1.0, opacity: 1 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        style={{ width: "90vw", maxWidth: 1400, margin: "0 auto", position: "relative" }}
+      >
         <div style={{ position: "relative", width: "100%", paddingBottom: "66.667%", background: "#111d13", borderRadius: 4, overflow: "hidden" }}>
           {/* Background image */}
           <img
@@ -85,12 +118,30 @@ export default function Praxis() {
             onError={(e) => console.error("[Praxis] Image failed to load:", (e.target as HTMLImageElement).src)}
           />
 
+          {/* Ambient light pulses over indicator LEDs in the background image */}
+          {AMBIENT_LIGHTS.map((light, i) => (
+            <div
+              key={i}
+              style={{
+                position: "absolute",
+                left: light.x,
+                top: light.y,
+                width: "3%",
+                height: "4.5%",
+                background: "radial-gradient(circle, rgba(255,160,50,0.4) 0%, transparent 70%)",
+                borderRadius: "50%",
+                animation: `ambientPulse ${light.duration}s ease-in-out ${light.delay}s infinite`,
+                pointerEvents: "none",
+              }}
+            />
+          ))}
+
           {/* Screen panel — content depends on auth/state */}
           <div style={PANEL}>
             {panelContent}
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }
@@ -101,7 +152,7 @@ export default function Praxis() {
 
 function PanelMessage({ text }: { text: string }) {
   return (
-    <div style={{ width: "100%", height: "100%", background: "#0a100a", display: "flex", alignItems: "center", justifyContent: "center", padding: "8%" }}>
+    <div style={{ width: "100%", height: "100%", background: "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.85) 12%)", display: "flex", alignItems: "center", justifyContent: "center", padding: "8%" }}>
       <p style={{ fontFamily: "'Courier New', monospace", fontSize: "clamp(7px, 1.2cqw, 11px)", letterSpacing: "0.25em", color: "#4a5e4c", textTransform: "uppercase", textAlign: "center", margin: 0 }}>
         {text}
       </p>
@@ -129,7 +180,7 @@ function LockScreen({ latestAssessment, onLock, locking }: LockScreenProps) {
   const panelBg: React.CSSProperties = {
     width: "100%",
     height: "100%",
-    background: "#0a100a",
+    background: "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.85) 12%)",
     padding: "10% 8%",
     boxSizing: "border-box",
     display: "flex",
@@ -219,7 +270,7 @@ function ActiveScreen({ season }: { season: any }) {
   const panelBg: React.CSSProperties = {
     width: "100%",
     height: "100%",
-    background: "#0a100a",
+    background: "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.85) 12%)",
     padding: "10% 8%",
     boxSizing: "border-box",
     display: "flex",
@@ -290,7 +341,7 @@ function ComparatorScreen({ delta, latestAssessment }: { delta: any; latestAsses
   const panelBg: React.CSSProperties = {
     width: "100%",
     height: "100%",
-    background: "#0a100a",
+    background: "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.85) 12%)",
     padding: "10% 8%",
     boxSizing: "border-box",
     display: "flex",
@@ -334,5 +385,148 @@ function ComparatorScreen({ delta, latestAssessment }: { delta: any; latestAsses
         ))}
       </div>
     </div>
+  );
+}
+
+// ─────────────────────────────────────────────────
+// Onboarding modal — first visit only
+// ─────────────────────────────────────────────────
+
+function PraxisWelcome({ onEnter }: { onEnter: () => void }) {
+  const btnRef = useRef<HTMLButtonElement>(null);
+  useEffect(() => { btnRef.current?.focus(); }, []);
+
+  return (
+    <>
+      <style>{`
+        @keyframes praxis-fade-in {
+          from { opacity: 0; transform: translateY(6px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes praxis-scan-line {
+          0%   { opacity: 0.05; }
+          50%  { opacity: 0.12; }
+          100% { opacity: 0.05; }
+        }
+      `}</style>
+      <div
+        style={{
+          position: "fixed", inset: 0, zIndex: 9999,
+          display: "flex", alignItems: "center", justifyContent: "center",
+          backdropFilter: "blur(8px)",
+          background: "rgba(0,0,0,0.82)",
+          animation: "praxis-fade-in 0.5s ease forwards",
+        }}
+        aria-modal="true"
+        role="dialog"
+        aria-labelledby="praxis-welcome-title"
+      >
+        <div
+          style={{
+            position: "relative", display: "flex", flexDirection: "column",
+            width: 480, maxWidth: "92vw", overflow: "hidden",
+            background: "#0c0a07",
+            border: "1px solid #3d2e14",
+            borderRadius: 3,
+            boxShadow: "0 0 0 1px rgba(196,148,60,0.08), 0 24px 64px rgba(0,0,0,0.9), inset 0 1px 0 rgba(255,255,255,0.02)",
+          }}
+        >
+          {/* Scan-line texture */}
+          <div
+            style={{
+              position: "absolute", inset: 0, pointerEvents: "none",
+              backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.08) 2px, rgba(0,0,0,0.08) 4px)",
+              animation: "praxis-scan-line 4s ease-in-out infinite",
+            }}
+          />
+
+          {/* Header bar */}
+          <div
+            style={{
+              position: "relative", display: "flex", alignItems: "center",
+              justifyContent: "space-between", padding: "8px 16px",
+              background: "#0f0c08", borderBottom: "1px solid #2a1f0a",
+              borderRadius: "3px 3px 0 0",
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <span style={{ display: "inline-block", width: 8, height: 8, borderRadius: "50%", background: "#c4943c", boxShadow: "0 0 6px #c4943c88" }} />
+              <span style={{ display: "inline-block", width: 8, height: 8, borderRadius: "50%", background: "#5a4a2a", boxShadow: "0 0 3px #5a4a2a66" }} />
+            </div>
+            <span style={{ fontFamily: "var(--font-pixel)", fontSize: 9, letterSpacing: "0.22em", textTransform: "uppercase", color: "#3d2e14" }}>
+              PRAXIS ● LONG WORK ROOM
+            </span>
+          </div>
+
+          {/* Body */}
+          <div style={{ position: "relative", display: "flex", flexDirection: "column", alignItems: "center", padding: "32px 32px 28px" }}>
+            <h2
+              id="praxis-welcome-title"
+              style={{
+                fontFamily: "var(--font-pixel)", fontSize: 10, letterSpacing: "0.3em",
+                textTransform: "uppercase", color: "#c4943c", margin: "0 0 4px",
+                textShadow: "0 0 14px rgba(196,148,60,0.35)",
+              }}
+            >
+              LONG WORK ROOM — PATCH TABLE
+            </h2>
+
+            {/* Dot divider */}
+            <div style={{ display: "flex", gap: 6, margin: "8px 0 24px" }}>
+              {[0,1,2,3,4].map(i => (
+                <span key={i} style={{ display: "inline-block", width: 3, height: 3, borderRadius: "50%", background: "#2a1f0a" }} />
+              ))}
+            </div>
+
+            <p style={{ fontFamily: "var(--font-display)", fontSize: 19, color: "#b8a07a", lineHeight: 1.8, textAlign: "center", maxWidth: 360, letterSpacing: "0.015em", margin: "0 0 12px" }}>
+              This is where the work compounds.
+            </p>
+            <p style={{ fontFamily: "var(--font-display)", fontSize: 17, color: "#7a6a4a", lineHeight: 1.8, textAlign: "center", maxWidth: 360, letterSpacing: "0.015em", margin: "0 0 12px" }}>
+              Praxis holds your active season — one move, practiced over time. Every return surfaces your next rep. Every reflection closes a loop. When you run Gravitas again, the Comparator shows what actually changed.
+            </p>
+            <p style={{ fontFamily: "var(--font-display)", fontSize: 15, color: "#5a4a3a", lineHeight: 1.8, textAlign: "center", maxWidth: 360, letterSpacing: "0.015em", margin: "0 0 28px" }}>
+              The instrument has three states: the Lock Screen before a season begins, the Active Season during practice, and the Comparator after your second reading.
+            </p>
+
+            {/* Readout strip */}
+            <div
+              style={{
+                width: "100%", display: "flex", justifyContent: "space-around",
+                padding: "8px 0", marginBottom: 24,
+                background: "#0a0805", border: "1px solid #2a1f0a", borderRadius: 2,
+              }}
+            >
+              {[
+                { label: "SEASON", value: "READY", valueColor: "#c4943c" },
+                { label: "REPS", value: "27 CARTRIDGES", valueColor: "#8a7040" },
+                { label: "LOOP", value: "STANDING BY", valueColor: "#5a4a2a" },
+              ].map(({ label, value, valueColor }) => (
+                <div key={label} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 3 }}>
+                  <span style={{ fontFamily: "var(--font-pixel)", fontSize: 7, letterSpacing: "0.2em", textTransform: "uppercase", color: "#3d2e14" }}>{label}</span>
+                  <span style={{ fontFamily: "var(--font-pixel)", fontSize: 8, letterSpacing: "0.15em", textTransform: "uppercase", color: valueColor }}>{value}</span>
+                </div>
+              ))}
+            </div>
+
+            <button
+              ref={btnRef}
+              onClick={onEnter}
+              style={{
+                width: "100%", padding: "11px 0",
+                fontFamily: "var(--font-pixel)", fontSize: 10, letterSpacing: "0.28em",
+                textTransform: "uppercase", cursor: "pointer",
+                background: "#1a1005", border: "1px solid #c4943c", borderRadius: 2,
+                color: "#c4943c", boxShadow: "0 0 12px rgba(196,148,60,0.08)",
+                transition: "background 0.15s, box-shadow 0.15s",
+              }}
+              onMouseEnter={e => { e.currentTarget.style.background = "#221507"; e.currentTarget.style.boxShadow = "0 0 22px rgba(196,148,60,0.2)"; }}
+              onMouseLeave={e => { e.currentTarget.style.background = "#1a1005"; e.currentTarget.style.boxShadow = "0 0 12px rgba(196,148,60,0.08)"; }}
+            >
+              ENTER THE LONG WORK ROOM →
+            </button>
+          </div>
+        </div>
+      </div>
+    </>
   );
 }
