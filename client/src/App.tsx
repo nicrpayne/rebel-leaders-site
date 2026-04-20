@@ -24,6 +24,7 @@ import Results from "./pages/workbench/Results";
 import Codex from "./pages/workbench/Codex";
 import MirrorFlow from "./pages/workbench/MirrorFlow";
 import MirrorReading from "./pages/workbench/MirrorReading";
+import Praxis from "./pages/workbench/Praxis";
 import GameStandalone from "./pages/GameStandalone";
 import HiddenAssets from "./pages/HiddenAssets";
 import Admin from "./pages/Admin";
@@ -52,6 +53,7 @@ function Router() {
       <Route path="/workbench/codex" component={Codex} />
       <Route path="/workbench/mirror" component={MirrorFlow} />
       <Route path="/workbench/mirror/reading" component={MirrorReading} />
+      <Route path="/workbench/praxis" component={Praxis} />
       <Route path="/armory">{() => { window.location.href = "/workbench"; return null; }}</Route>
       <Route path="/game-standalone" component={GameStandalone} />
       <Route path="/hidden-assets" component={HiddenAssets} />

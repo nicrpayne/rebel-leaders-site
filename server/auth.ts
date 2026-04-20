@@ -2,7 +2,7 @@ import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { publicProcedure } from "./_core/trpc";
 import { getDb } from "./db";
-import { authTokens, users, gravitasAssessments, gravitasDeltas, userEvents, mirrorReadings } from "../drizzle/schema";
+import { authTokens, users, gravitasAssessments, gravitasDeltas, userEvents, mirrorReadings, praxisSeasons, praxisReflections } from "../drizzle/schema";
 import { eq, and, gt, desc, aliasedTable } from "drizzle-orm";
 import { Resend } from "resend";
 import { randomBytes } from "crypto";
@@ -422,12 +422,30 @@ export const getPraxisState = publicProcedure.query(async ({ ctx }) => {
     latestDelta = deltaRow || null;
   }
 
+  const [activeSeason] = await db
+    .select()
+    .from(praxisSeasons)
+    .where(and(eq(praxisSeasons.userId, magicUser.id), eq(praxisSeasons.status, "active")))
+    .orderBy(desc(praxisSeasons.lockedAt))
+    .limit(1);
+
+  let seasonReflections: typeof praxisReflections.$inferSelect[] = [];
+  if (activeSeason) {
+    seasonReflections = await db
+      .select()
+      .from(praxisReflections)
+      .where(eq(praxisReflections.seasonId, activeSeason.id))
+      .orderBy(praxisReflections.day);
+  }
+
   return {
     hasHistory,
     sessionCount,
     latestAssessment,
     latestDelta,
-    activeSeason: null,
+    activeSeason: activeSeason
+      ? { ...activeSeason, reflections: seasonReflections }
+      : null,
   };
 });
 
@@ -491,6 +509,59 @@ export const getGravitasHistory = publicProcedure.query(async ({ ctx }) => {
 
   return rows;
 });
+
+export const lockPraxisSeason = publicProcedure
+  .input(z.object({
+    cartridgeId: z.string(),
+    firstMove: z.string(),
+    sessionNumberAtLock: z.number().int(),
+  }))
+  .mutation(async ({ ctx, input }) => {
+    const magicUser = await getMagicLinkUser(ctx.req.headers.cookie);
+    if (!magicUser) throw new TRPCError({ code: "UNAUTHORIZED" });
+
+    const db = await getDb();
+    if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
+
+    // Complete any existing active season before creating a new one
+    await db
+      .update(praxisSeasons)
+      .set({ status: "complete", completedAt: new Date() })
+      .where(and(eq(praxisSeasons.userId, magicUser.id), eq(praxisSeasons.status, "active")));
+
+    await db.insert(praxisSeasons).values({
+      userId: magicUser.id,
+      cartridgeId: input.cartridgeId,
+      firstMove: input.firstMove,
+      status: "active",
+      sessionNumberAtLock: input.sessionNumberAtLock,
+    });
+
+    return { locked: true } as const;
+  });
+
+export const saveReflection = publicProcedure
+  .input(z.object({
+    seasonId: z.number().int(),
+    day: z.union([z.literal(1), z.literal(7), z.literal(14)]),
+    response: z.string().min(1),
+  }))
+  .mutation(async ({ ctx, input }) => {
+    const magicUser = await getMagicLinkUser(ctx.req.headers.cookie);
+    if (!magicUser) throw new TRPCError({ code: "UNAUTHORIZED" });
+
+    const db = await getDb();
+    if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
+
+    await db.insert(praxisReflections).values({
+      seasonId: input.seasonId,
+      userId: magicUser.id,
+      day: input.day,
+      response: input.response,
+    });
+
+    return { saved: true } as const;
+  });
 
 export const saveMirrorReading = publicProcedure
   .input(z.object({

@@ -201,9 +201,9 @@ const PLUGINS: Plugin[] = [
     title: "Praxis Builder",
     category: "MOVE",
     desc: "Action sequencer. Transformation through repeated embodied practice.",
-    status: "LOCKED",
-    link: "#",
-    image: "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/praxis_builder_cover_v2_b60dcd75.jpg",
+    status: "LIVE",
+    link: "/workbench/praxis",
+    image: "https://pub-26b8c09d5ff84d568bb62f776d03c004.r2.dev/workbench-cards/Praxis%20workbench%20card.png",
     version: "—",
   },
 ];

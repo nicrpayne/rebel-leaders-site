@@ -148,6 +148,28 @@ export const mirrorReadings = mysqlTable("mirror_readings", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
+// ─── Praxis Tables ───────────────────────────────────────────────────────────
+
+export const praxisSeasons = mysqlTable("praxis_seasons", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("user_id").references(() => users.id).notNull(),
+  cartridgeId: varchar("cartridge_id", { length: 64 }).notNull(),
+  firstMove: varchar("first_move", { length: 64 }).notNull(),
+  status: mysqlEnum("status", ["active", "complete"]).default("active").notNull(),
+  sessionNumberAtLock: int("session_number_at_lock").notNull(),
+  lockedAt: timestamp("locked_at").defaultNow().notNull(),
+  completedAt: timestamp("completed_at"),
+});
+
+export const praxisReflections = mysqlTable("praxis_reflections", {
+  id: int("id").autoincrement().primaryKey(),
+  seasonId: int("season_id").references(() => praxisSeasons.id).notNull(),
+  userId: int("user_id").references(() => users.id).notNull(),
+  day: int("day").notNull(),
+  response: text("response").notNull(),
+  completedAt: timestamp("completed_at").defaultNow().notNull(),
+});
+
 // ─── Wall Tables ──────────────────────────────────────────────────────────────
 
 export const wallEntries = mysqlTable("wall_entries", {

@@ -19,7 +19,23 @@
       "Bash(curl -s https://raw.githubusercontent.com/nicrpayne/the-wall/main/src/components/JournalUploader.tsx)",
       "Bash(curl -s https://raw.githubusercontent.com/nicrpayne/the-wall/main/src/components/WallPage.tsx)",
       "Bash(curl -s https://raw.githubusercontent.com/nicrpayne/the-wall/main/src/lib/supabase.ts)",
-      "WebFetch(domain:github.com)"
+      "WebFetch(domain:github.com)",
+      "Bash(gh api:*)",
+      "Bash(gh auth:*)",
+      "Bash(gh repo:*)",
+      "Bash(curl -s https://rebel-leader.com/)",
+      "Bash(git commit:*)",
+      "Bash(echo \"EXIT:$?\")",
+      "Bash(grep -r \"color\" node_modules/@tiptap/extension-placeholder/dist/*.css)",
+      "Bash(node -e ':*)",
+      "Bash(pnpm add:*)",
+      "Bash(node node_modules/.ignored/typescript/bin/tsc --noEmit)",
+      "Bash(pnpm tsc:*)",
+      "Bash(node_modules/.ignored/typescript/bin/tsc --noEmit)",
+      "Bash(pnpm db:push)",
+      "Bash(pnpm check *)",
+      "Bash(NODE_ENV=development ~/.nvm/versions/node/v20.20.2/bin/node node_modules/.pnpm/tsx@4.20.6/node_modules/tsx/dist/cli.mjs watch server/_core/index.ts)",
+      "Bash(echo \"PID: $!\")"
     ]
   }
 }

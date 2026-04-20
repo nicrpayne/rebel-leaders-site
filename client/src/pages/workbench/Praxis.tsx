@@ -1,0 +1,338 @@
+import React from "react";
+import { trpc } from "@/lib/trpc";
+import { useLocation } from "wouter";
+import { FIRST_MOVE_CONTEXT, FIRST_MOVE_TO_CARTRIDGE, DELTA_FIELD_NOTES, getDeltaNoteIndex, PRAXIS_REPS } from "@/lib/praxis-data";
+
+const BG_IMAGE = "https://pub-26b8c09d5ff84d568bb62f776d03c004.r2.dev/Praxis%20Plugin/rebel_leaders_praxis_interactive_final.png";
+
+const PANEL: React.CSSProperties = {
+  position: "absolute",
+  left: "27.6%",
+  top: "22.95%",
+  width: "44.53%",
+  height: "52.73%",
+  padding: "3px",
+  overflowY: "auto",
+};
+
+export default function Praxis() {
+  const [, navigate] = useLocation();
+  const { data: currentUser } = trpc.auth.me.useQuery();
+  const { data: praxisState, isLoading, refetch } = trpc.auth.getPraxisState.useQuery(
+    undefined,
+    { enabled: !!currentUser }
+  );
+
+  const lockMutation = trpc.auth.lockPraxisSeason.useMutation({
+    onSuccess: () => refetch(),
+  });
+
+  // Determine panel content — auth/loading handled inside the panel, not at page level
+  let panelContent: React.ReactNode;
+  if (!currentUser) {
+    panelContent = <PanelMessage text="Sign in to access Praxis" />;
+  } else if (isLoading || !praxisState) {
+    panelContent = <PanelMessage text="Reading field…" />;
+  } else {
+    const { activeSeason, latestAssessment, latestDelta } = praxisState;
+    let screen: "lock" | "active" | "compare";
+    if (!activeSeason) {
+      screen = "lock";
+    } else if (latestDelta) {
+      screen = "compare";
+    } else {
+      screen = "active";
+    }
+    if (screen === "lock") {
+      panelContent = (
+        <LockScreen
+          latestAssessment={latestAssessment}
+          onLock={(cartridgeId, firstMove, sessionNumber) =>
+            lockMutation.mutate({ cartridgeId, firstMove, sessionNumberAtLock: sessionNumber })
+          }
+          locking={lockMutation.isPending}
+        />
+      );
+    } else if (screen === "active" && activeSeason) {
+      panelContent = <ActiveScreen season={activeSeason} />;
+    } else if (screen === "compare" && activeSeason && latestDelta) {
+      panelContent = <ComparatorScreen delta={latestDelta} latestAssessment={latestAssessment} />;
+    }
+  }
+
+  console.log("[Praxis] BG_IMAGE:", BG_IMAGE);
+
+  return (
+    <div style={{ minHeight: "100vh", background: "#0a0a0d", padding: "40px 24px" }}>
+      {/* Back nav */}
+      <div style={{ maxWidth: 900, margin: "0 auto 32px" }}>
+        <button
+          onClick={() => navigate("/workbench")}
+          style={{ background: "none", border: "none", cursor: "pointer", fontFamily: "'Courier New', monospace", fontSize: 9, letterSpacing: 3, color: "#4a5e4c", textTransform: "uppercase", padding: 0 }}
+        >
+          ← Workbench
+        </button>
+      </div>
+
+      {/* Device frame — always renders regardless of auth state */}
+      <div style={{ maxWidth: 900, margin: "0 auto", position: "relative" }}>
+        <div style={{ position: "relative", width: "100%", paddingBottom: "66.667%", background: "#111d13", borderRadius: 4, overflow: "hidden" }}>
+          {/* Background image */}
+          <img
+            src={BG_IMAGE}
+            alt=""
+            style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
+            onError={(e) => console.error("[Praxis] Image failed to load:", (e.target as HTMLImageElement).src)}
+          />
+
+          {/* Screen panel — content depends on auth/state */}
+          <div style={PANEL}>
+            {panelContent}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────
+// Shared: Panel message (auth / loading states)
+// ─────────────────────────────────────────────────
+
+function PanelMessage({ text }: { text: string }) {
+  return (
+    <div style={{ width: "100%", height: "100%", background: "#0a100a", display: "flex", alignItems: "center", justifyContent: "center", padding: "8%" }}>
+      <p style={{ fontFamily: "'Courier New', monospace", fontSize: "clamp(7px, 1.2cqw, 11px)", letterSpacing: "0.25em", color: "#4a5e4c", textTransform: "uppercase", textAlign: "center", margin: 0 }}>
+        {text}
+      </p>
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────
+// Screen 1a — Lock Screen
+// ─────────────────────────────────────────────────
+
+interface LockScreenProps {
+  latestAssessment: { firstMove: string; sessionNumber: number } | null;
+  onLock: (cartridgeId: string, firstMove: string, sessionNumber: number) => void;
+  locking: boolean;
+}
+
+function LockScreen({ latestAssessment, onLock, locking }: LockScreenProps) {
+  const firstMove = latestAssessment?.firstMove ?? null;
+  const sessionNumber = latestAssessment?.sessionNumber ?? 1;
+  const ctx = firstMove ? FIRST_MOVE_CONTEXT.find(c => c.firstMove === firstMove) : null;
+  const cartridgeId = firstMove ? FIRST_MOVE_TO_CARTRIDGE[firstMove] : null;
+  const rep = cartridgeId ? PRAXIS_REPS[cartridgeId] : null;
+
+  const panelBg: React.CSSProperties = {
+    width: "100%",
+    height: "100%",
+    background: "#0a100a",
+    padding: "10% 8%",
+    boxSizing: "border-box",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    overflow: "hidden",
+  };
+
+  if (!firstMove || !ctx) {
+    return (
+      <div style={panelBg}>
+        <p style={{ fontFamily: "'Courier New', monospace", fontSize: "1.2cqw", letterSpacing: "0.25em", color: "#4a5e4c", textTransform: "uppercase", margin: 0 }}>
+          Run Gravitas first to unlock Praxis.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div style={panelBg}>
+      {/* Header */}
+      <div>
+        <p style={{ margin: "0 0 4% 0", fontFamily: "'Courier New', monospace", fontSize: "clamp(6px, 1.1cqw, 10px)", letterSpacing: "0.35em", color: "#b8860b", textTransform: "uppercase" }}>
+          Praxis — Season Ready
+        </p>
+        <p style={{ margin: "0 0 2% 0", fontFamily: "'Courier New', monospace", fontSize: "clamp(7px, 1.5cqw, 13px)", letterSpacing: "0.2em", color: "#d4a853", textTransform: "uppercase", fontWeight: "bold", lineHeight: 1.2 }}>
+          {firstMove}
+        </p>
+        <p style={{ margin: 0, fontFamily: "Georgia, serif", fontSize: "clamp(7px, 1.2cqw, 11px)", fontStyle: "italic", color: "#6a7e6c", lineHeight: 1.5 }}>
+          {ctx.seasonSummary}
+        </p>
+      </div>
+
+      {/* Intent */}
+      <div>
+        <p style={{ margin: 0, fontFamily: "Georgia, serif", fontSize: "clamp(6px, 1.05cqw, 10px)", color: "#4a5e4c", lineHeight: 1.6 }}>
+          {ctx.intent}
+        </p>
+      </div>
+
+      {/* Rep preview */}
+      {rep && (
+        <div style={{ borderTop: "1px solid #1a2a1a", paddingTop: "4%", marginTop: "2%" }}>
+          <p style={{ margin: "0 0 2% 0", fontFamily: "'Courier New', monospace", fontSize: "clamp(5px, 0.9cqw, 8px)", letterSpacing: "0.3em", color: "#4a5e4c", textTransform: "uppercase" }}>
+            Day 1 Rep
+          </p>
+          <p style={{ margin: 0, fontFamily: "Georgia, serif", fontSize: "clamp(6px, 1.05cqw, 10px)", color: "#6a7e6c", lineHeight: 1.5 }}>
+            {rep.day1}
+          </p>
+        </div>
+      )}
+
+      {/* Lock button */}
+      <button
+        onClick={() => cartridgeId && onLock(cartridgeId, firstMove, sessionNumber)}
+        disabled={locking || !cartridgeId}
+        style={{
+          marginTop: "4%",
+          background: "none",
+          border: "1px solid #b8860b",
+          borderRadius: 2,
+          padding: "4% 6%",
+          cursor: locking ? "default" : "pointer",
+          fontFamily: "'Courier New', monospace",
+          fontSize: "clamp(5px, 1cqw, 9px)",
+          letterSpacing: "0.3em",
+          color: locking ? "#4a5e4c" : "#d4a853",
+          textTransform: "uppercase",
+          opacity: locking ? 0.5 : 1,
+          transition: "opacity 0.15s",
+        }}
+      >
+        {locking ? "Locking…" : "Begin This Season →"}
+      </button>
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────
+// Screen 1b — Active Season (stub)
+// ─────────────────────────────────────────────────
+
+function ActiveScreen({ season }: { season: any }) {
+  const rep = PRAXIS_REPS[season.cartridgeId];
+  const ctx = FIRST_MOVE_CONTEXT.find(c => c.firstMove === season.firstMove);
+
+  const panelBg: React.CSSProperties = {
+    width: "100%",
+    height: "100%",
+    background: "#0a100a",
+    padding: "10% 8%",
+    boxSizing: "border-box",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    overflow: "hidden",
+  };
+
+  return (
+    <div style={panelBg}>
+      <div>
+        <p style={{ margin: "0 0 4% 0", fontFamily: "'Courier New', monospace", fontSize: "clamp(6px, 1.1cqw, 10px)", letterSpacing: "0.35em", color: "#4ade80", textTransform: "uppercase" }}>
+          Season Active
+        </p>
+        <p style={{ margin: "0 0 2% 0", fontFamily: "'Courier New', monospace", fontSize: "clamp(7px, 1.5cqw, 13px)", letterSpacing: "0.2em", color: "#d4a853", textTransform: "uppercase", fontWeight: "bold", lineHeight: 1.2 }}>
+          {season.firstMove}
+        </p>
+        {ctx && (
+          <p style={{ margin: 0, fontFamily: "Georgia, serif", fontSize: "clamp(6px, 1.05cqw, 10px)", fontStyle: "italic", color: "#6a7e6c", lineHeight: 1.5 }}>
+            {ctx.seasonSummary}
+          </p>
+        )}
+      </div>
+
+      {rep && (
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "4%", marginTop: "6%" }}>
+          {[{ label: "Day 1", text: rep.day1 }, { label: "Day 7", text: rep.day7 }, { label: "Day 14", text: rep.day14 }].map(({ label, text }) => (
+            <div key={label}>
+              <p style={{ margin: "0 0 1.5% 0", fontFamily: "'Courier New', monospace", fontSize: "clamp(5px, 0.9cqw, 8px)", letterSpacing: "0.3em", color: "#b8860b", textTransform: "uppercase" }}>
+                {label}
+              </p>
+              <p style={{ margin: 0, fontFamily: "Georgia, serif", fontSize: "clamp(6px, 1cqw, 9px)", color: "#6a7e6c", lineHeight: 1.5 }}>
+                {text}
+              </p>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {rep && (
+        <div style={{ borderTop: "1px solid #1a2a1a", paddingTop: "4%", marginTop: "2%" }}>
+          <p style={{ margin: 0, fontFamily: "Georgia, serif", fontSize: "clamp(6px, 0.95cqw, 9px)", fontStyle: "italic", color: "#4a5e4c", lineHeight: 1.5 }}>
+            {rep.rootNote}
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────
+// Screen 3 — Comparator (below frame, stub)
+// ─────────────────────────────────────────────────
+
+function ComparatorScreen({ delta, latestAssessment }: { delta: any; latestAssessment: any }) {
+  const noteIndex = getDeltaNoteIndex({
+    identityDelta: parseFloat(delta.identityDelta),
+    relationshipDelta: parseFloat(delta.relationshipDelta),
+    visionDelta: parseFloat(delta.visionDelta),
+    cultureDelta: parseFloat(delta.cultureDelta),
+    archetypeShift: delta.archetypeShift,
+    leakShift: delta.leakShift,
+    previousArchetype: delta.previousArchetype ?? "",
+    currentArchetype: delta.currentArchetype ?? "",
+  });
+  const note = DELTA_FIELD_NOTES[noteIndex];
+
+  const panelBg: React.CSSProperties = {
+    width: "100%",
+    height: "100%",
+    background: "#0a100a",
+    padding: "10% 8%",
+    boxSizing: "border-box",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    overflow: "hidden",
+  };
+
+  return (
+    <div style={panelBg}>
+      <div>
+        <p style={{ margin: "0 0 4% 0", fontFamily: "'Courier New', monospace", fontSize: "clamp(6px, 1.1cqw, 10px)", letterSpacing: "0.35em", color: "#38bdf8", textTransform: "uppercase" }}>
+          Field Intelligence
+        </p>
+        {latestAssessment && (
+          <p style={{ margin: "0 0 4% 0", fontFamily: "'Courier New', monospace", fontSize: "clamp(7px, 1.5cqw, 13px)", letterSpacing: "0.2em", color: "#d4a853", textTransform: "uppercase", fontWeight: "bold", lineHeight: 1.2 }}>
+            {latestAssessment.archetype}
+          </p>
+        )}
+      </div>
+
+      <p style={{ margin: 0, fontFamily: "Georgia, serif", fontSize: "clamp(6px, 1.1cqw, 10px)", color: "#c8b898", lineHeight: 1.7 }}>
+        {note}
+      </p>
+
+      <div style={{ borderTop: "1px solid #1a2a1a", paddingTop: "4%", marginTop: "2%", display: "flex", gap: "8%" }}>
+        {[
+          { label: "Identity", delta: parseFloat(delta.identityDelta), color: "#4ade80" },
+          { label: "Relation", delta: parseFloat(delta.relationshipDelta), color: "#38bdf8" },
+          { label: "Vision", delta: parseFloat(delta.visionDelta), color: "#facc15" },
+          { label: "Culture", delta: parseFloat(delta.cultureDelta), color: "#a78bfa" },
+        ].map(({ label, delta: d, color }) => (
+          <div key={label} style={{ flex: 1, textAlign: "center" }}>
+            <p style={{ margin: "0 0 2% 0", fontFamily: "'Courier New', monospace", fontSize: "clamp(4px, 0.8cqw, 7px)", letterSpacing: "0.25em", color: "#4a5e4c", textTransform: "uppercase" }}>
+              {label}
+            </p>
+            <p style={{ margin: 0, fontFamily: "Georgia, serif", fontSize: "clamp(6px, 1.2cqw, 11px)", color: d >= 0 ? color : "#ef4444" }}>
+              {d >= 0 ? "+" : ""}{d.toFixed(1)}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}

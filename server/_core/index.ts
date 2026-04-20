@@ -148,6 +148,32 @@ async function runMigrations() {
         PRIMARY KEY (\`id\`)
       )`,
     },
+    {
+      label: "praxis_seasons",
+      ddl: `CREATE TABLE IF NOT EXISTS \`praxis_seasons\` (
+        \`id\` int AUTO_INCREMENT NOT NULL,
+        \`user_id\` int NOT NULL,
+        \`cartridge_id\` varchar(64) NOT NULL,
+        \`first_move\` varchar(64) NOT NULL,
+        \`status\` enum('active','complete') NOT NULL DEFAULT 'active',
+        \`session_number_at_lock\` int NOT NULL,
+        \`locked_at\` timestamp NOT NULL DEFAULT (now()),
+        \`completed_at\` timestamp,
+        PRIMARY KEY (\`id\`)
+      )`,
+    },
+    {
+      label: "praxis_reflections",
+      ddl: `CREATE TABLE IF NOT EXISTS \`praxis_reflections\` (
+        \`id\` int AUTO_INCREMENT NOT NULL,
+        \`season_id\` int NOT NULL,
+        \`user_id\` int NOT NULL,
+        \`day\` int NOT NULL,
+        \`response\` text NOT NULL,
+        \`completed_at\` timestamp NOT NULL DEFAULT (now()),
+        PRIMARY KEY (\`id\`)
+      )`,
+    },
   ];
 
   for (const fix of tableFixes) {
