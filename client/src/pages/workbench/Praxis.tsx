@@ -104,7 +104,7 @@ export default function Praxis() {
         <img
           src={BG_IMAGE}
           alt=""
-          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "contain", objectPosition: "center" }}
+          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }}
           onError={(e) => console.error("[Praxis] Image failed to load:", (e.target as HTMLImageElement).src)}
         />
 
