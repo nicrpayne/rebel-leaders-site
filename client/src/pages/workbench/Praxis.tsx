@@ -25,10 +25,10 @@ const PULSE_KEYFRAMES = `
 
 const PANEL: React.CSSProperties = {
   position: "absolute",
-  left: "29.39%",
-  top: "18.14%",
-  width: "41.11%",
-  height: "57.64%",
+  left: "31%",
+  top: "13%",
+  width: "37%",
+  height: "61%",
   padding: "3px",
   overflowY: "auto",
   boxShadow: "inset 0 0 10px rgba(0,0,0,0.8)",
@@ -96,6 +96,7 @@ export default function Praxis() {
 
       {/* Instrument — fills viewport via object-fit: cover */}
       <motion.div
+        data-praxis-container
         initial={{ scale: 1.05, opacity: 0 }}
         animate={{ scale: 1.0, opacity: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
@@ -129,7 +130,7 @@ export default function Praxis() {
         ))}
 
         {/* Screen panel — content depends on auth/state */}
-        <div style={PANEL}>
+        <div data-praxis-overlay style={PANEL}>
           {panelContent}
         </div>
       </motion.div>
@@ -143,7 +144,7 @@ export default function Praxis() {
 
 function PanelMessage({ text }: { text: string }) {
   return (
-    <div style={{ width: "100%", height: "100%", background: "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.85) 12%)", display: "flex", alignItems: "center", justifyContent: "center", padding: "8%" }}>
+    <div style={{ width: "100%", height: "100%", background: "linear-gradient(to bottom, rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.15) 12%, rgba(0,0,0,0.88) 22%)", display: "flex", alignItems: "center", justifyContent: "center", padding: "8%" }}>
       <p style={{ fontFamily: "'Courier New', monospace", fontSize: "clamp(7px, 1.2cqw, 11px)", letterSpacing: "0.25em", color: "#4a5e4c", textTransform: "uppercase", textAlign: "center", margin: 0 }}>
         {text}
       </p>
@@ -171,7 +172,7 @@ function LockScreen({ latestAssessment, onLock, locking }: LockScreenProps) {
   const panelBg: React.CSSProperties = {
     width: "100%",
     height: "100%",
-    background: "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.85) 12%)",
+    background: "linear-gradient(to bottom, rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.15) 12%, rgba(0,0,0,0.88) 22%)",
     padding: "10% 8%",
     boxSizing: "border-box",
     display: "flex",
@@ -261,7 +262,7 @@ function ActiveScreen({ season }: { season: any }) {
   const panelBg: React.CSSProperties = {
     width: "100%",
     height: "100%",
-    background: "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.85) 12%)",
+    background: "linear-gradient(to bottom, rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.15) 12%, rgba(0,0,0,0.88) 22%)",
     padding: "10% 8%",
     boxSizing: "border-box",
     display: "flex",
@@ -332,7 +333,7 @@ function ComparatorScreen({ delta, latestAssessment }: { delta: any; latestAsses
   const panelBg: React.CSSProperties = {
     width: "100%",
     height: "100%",
-    background: "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.85) 12%)",
+    background: "linear-gradient(to bottom, rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.15) 12%, rgba(0,0,0,0.88) 22%)",
     padding: "10% 8%",
     boxSizing: "border-box",
     display: "flex",
