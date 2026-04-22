@@ -6,22 +6,7 @@ import { FIRST_MOVE_CONTEXT, FIRST_MOVE_TO_CARTRIDGE, DELTA_FIELD_NOTES, getDelt
 
 const BG_IMAGE = "https://pub-26b8c09d5ff84d568bb62f776d03c004.r2.dev/Praxis%20Plugin/Praxis%20Final%20Interactive%20Upscaled%202x.png";
 
-const AMBIENT_LIGHTS = [
-  { x: "8%",  y: "28%", duration: 2.5, delay: 0   },
-  { x: "9%",  y: "37%", duration: 3.2, delay: 0.8 },
-  { x: "8%",  y: "46%", duration: 3.8, delay: 1.6 },
-  { x: "92%", y: "28%", duration: 2.9, delay: 2.3 },
-  { x: "91%", y: "37%", duration: 3.5, delay: 3.1 },
-  { x: "8%",  y: "72%", duration: 4.0, delay: 0.4 },
-];
-
-const PULSE_KEYFRAMES = `
-@keyframes ambientPulse {
-  0%   { opacity: 0.3; }
-  50%  { opacity: 0.7; }
-  100% { opacity: 0.3; }
-}
-`;
+const AMBIENT_LIGHTS: { left: string; top: string; duration: number; delay: number }[] = [];
 
 const PANEL: React.CSSProperties = {
   position: "absolute",
@@ -147,7 +132,6 @@ export default function Praxis() {
 
   return (
     <div style={{ position: "fixed", inset: 0, overflow: "hidden", background: "#0a0a0d" }}>
-      <style>{PULSE_KEYFRAMES}</style>
       {!introSeen && <PraxisWelcome onEnter={handleIntroEnter} />}
 
       {IS_DEV && (
@@ -173,29 +157,29 @@ export default function Praxis() {
           onError={(e) => console.error("[Praxis] Image failed to load:", (e.target as HTMLImageElement).src)}
         />
 
+        {/* Screen panel — content depends on auth/state */}
+        <div data-praxis-overlay style={PANEL}>
+          {panelContent}
+        </div>
+
         {/* Ambient light pulses over indicator LEDs */}
         {AMBIENT_LIGHTS.map((light, i) => (
           <div
             key={i}
             style={{
               position: "absolute",
-              left: light.x,
-              top: light.y,
-              width: 24,
-              height: 24,
-              background: "radial-gradient(circle, rgba(255,160,50,0.5) 0%, transparent 70%)",
+              left: light.left,
+              top: light.top,
+              transform: "translate(-50%, -50%)",
+              width: "28px",
+              height: "28px",
               borderRadius: "50%",
+              background: "radial-gradient(circle, #c4943c 0%, rgba(196,148,60,0.3) 70%, transparent 100%)",
               animation: `ambientPulse ${light.duration}s ease-in-out ${light.delay}s infinite`,
               pointerEvents: "none",
-              zIndex: 2,
             }}
           />
         ))}
-
-        {/* Screen panel — content depends on auth/state */}
-        <div data-praxis-overlay style={PANEL}>
-          {panelContent}
-        </div>
 
         {/* Sticky note overlay */}
         <img
