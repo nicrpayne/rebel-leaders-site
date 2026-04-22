@@ -89,57 +89,47 @@ export default function Praxis() {
   }
 
   return (
-    <div style={{ minHeight: "100vh", background: "#0a0a0d", padding: "40px 24px" }}>
+    <div style={{ position: "fixed", inset: 0, overflow: "hidden", background: "#0a0a0d" }}>
       <style>{PULSE_KEYFRAMES}</style>
       {!introSeen && <PraxisWelcome onEnter={handleIntroEnter} />}
-      {/* Back nav */}
-      <div style={{ maxWidth: 900, margin: "0 auto 32px" }}>
-        <button
-          onClick={() => navigate("/workbench")}
-          style={{ background: "none", border: "none", cursor: "pointer", fontFamily: "'Courier New', monospace", fontSize: 9, letterSpacing: 3, color: "#4a5e4c", textTransform: "uppercase", padding: 0 }}
-        >
-          ← Workbench
-        </button>
-      </div>
 
-      {/* Device frame — always renders regardless of auth state */}
+      {/* Instrument — fills viewport via object-fit: cover */}
       <motion.div
         initial={{ scale: 1.05, opacity: 0 }}
         animate={{ scale: 1.0, opacity: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        style={{ width: "90vw", maxWidth: 1400, margin: "0 auto", position: "relative" }}
+        style={{ position: "absolute", inset: 0 }}
       >
-        <div style={{ position: "relative", width: "100%", paddingBottom: "66.667%", background: "#111d13", borderRadius: 4, overflow: "hidden" }}>
-          {/* Background image */}
-          <img
-            src={BG_IMAGE}
-            alt=""
-            style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
-            onError={(e) => console.error("[Praxis] Image failed to load:", (e.target as HTMLImageElement).src)}
+        {/* Background image */}
+        <img
+          src={BG_IMAGE}
+          alt=""
+          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }}
+          onError={(e) => console.error("[Praxis] Image failed to load:", (e.target as HTMLImageElement).src)}
+        />
+
+        {/* Ambient light pulses over indicator LEDs */}
+        {AMBIENT_LIGHTS.map((light, i) => (
+          <div
+            key={i}
+            style={{
+              position: "absolute",
+              left: light.x,
+              top: light.y,
+              width: 24,
+              height: 24,
+              background: "radial-gradient(circle, rgba(255,160,50,0.5) 0%, transparent 70%)",
+              borderRadius: "50%",
+              animation: `ambientPulse ${light.duration}s ease-in-out ${light.delay}s infinite`,
+              pointerEvents: "none",
+              zIndex: 2,
+            }}
           />
+        ))}
 
-          {/* Ambient light pulses over indicator LEDs in the background image */}
-          {AMBIENT_LIGHTS.map((light, i) => (
-            <div
-              key={i}
-              style={{
-                position: "absolute",
-                left: light.x,
-                top: light.y,
-                width: "3%",
-                height: "4.5%",
-                background: "radial-gradient(circle, rgba(255,160,50,0.4) 0%, transparent 70%)",
-                borderRadius: "50%",
-                animation: `ambientPulse ${light.duration}s ease-in-out ${light.delay}s infinite`,
-                pointerEvents: "none",
-              }}
-            />
-          ))}
-
-          {/* Screen panel — content depends on auth/state */}
-          <div style={PANEL}>
-            {panelContent}
-          </div>
+        {/* Screen panel — content depends on auth/state */}
+        <div style={PANEL}>
+          {panelContent}
         </div>
       </motion.div>
     </div>
