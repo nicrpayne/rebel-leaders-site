@@ -36,6 +36,46 @@ const PANEL: React.CSSProperties = {
 
 const PRAXIS_INTRO_KEY = "praxis_intro_seen";
 
+const IS_DEV = typeof window !== "undefined" && window.location.hostname === "localhost";
+
+const MOCK_SEASON = {
+  id: 999,
+  cartridgeId: "MOVE_TRUTH_WEATHER",
+  firstMove: "THE OXYGEN PROTOCOL",
+  seasonThesis: "This season I am practicing honest weather.",
+  witnessEmail: null as null,
+  lockedAt: new Date(Date.now() - 8 * 24 * 60 * 60 * 1000),
+  status: "active" as const,
+  reflections: [] as any[],
+};
+
+const MOCK_ASSESSMENT = {
+  archetype: "COMPENSATION ORBIT",
+  leak: "VISION",
+  force: "IDENTITY",
+  firstMove: "THE WEIGHT REDISTRIBUTION",
+  dimensionScores: { identity: 3.6, relationship: 3.2, vision: 2.8, culture: 3.1 },
+  sessionNumber: 1,
+  createdAt: new Date(),
+};
+
+const MOCK_DELTA = {
+  identityDelta: "0.4",
+  relationshipDelta: "-0.3",
+  visionDelta: "0.7",
+  cultureDelta: "0.1",
+  archetypeShift: false,
+  leakShift: true,
+  previousArchetype: "FRICTION BELT",
+  currentArchetype: "COMPENSATION ORBIT",
+  previousLeak: "RELATIONSHIP",
+  currentLeak: "VISION",
+  previousDate: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
+  currentDate: new Date(),
+};
+
+type DevScreen = "1a" | "1b" | "2" | "3" | null;
+
 export default function Praxis() {
   const [, navigate] = useLocation();
   const [introSeen, setIntroSeen] = useState<boolean>(() => {
@@ -45,6 +85,8 @@ export default function Praxis() {
     try { localStorage.setItem(PRAXIS_INTRO_KEY, "complete"); } catch {}
     setIntroSeen(true);
   }, []);
+
+  const [devScreen, setDevScreen] = useState<DevScreen>(null);
 
   const { data: currentUser } = trpc.auth.me.useQuery();
   const { data: praxisState, isLoading, refetch } = trpc.auth.getPraxisState.useQuery(
@@ -56,9 +98,23 @@ export default function Praxis() {
     onSuccess: () => refetch(),
   });
 
-  // Determine panel content — auth/loading handled inside the panel, not at page level
+  // Dev overrides — local only, no DB
   let panelContent: React.ReactNode;
-  if (!currentUser) {
+  if (IS_DEV && devScreen === "1a") {
+    panelContent = (
+      <LockScreen
+        latestAssessment={MOCK_ASSESSMENT}
+        onLock={() => {}}
+        locking={false}
+      />
+    );
+  } else if (IS_DEV && devScreen === "1b") {
+    panelContent = <ActiveScreen season={MOCK_SEASON} />;
+  } else if (IS_DEV && devScreen === "2") {
+    panelContent = <ReflectionRoom season={MOCK_SEASON} onBack={() => setDevScreen("1b")} isDev />;
+  } else if (IS_DEV && devScreen === "3") {
+    panelContent = <ComparatorScreen delta={MOCK_DELTA} latestAssessment={praxisState?.latestAssessment ?? null} />;
+  } else if (!currentUser) {
     panelContent = <PanelMessage text="Sign in to access Praxis" />;
   } else if (isLoading || !praxisState) {
     panelContent = <PanelMessage text="Reading field…" />;
@@ -93,6 +149,13 @@ export default function Praxis() {
     <div style={{ position: "fixed", inset: 0, overflow: "hidden", background: "#0a0a0d" }}>
       <style>{PULSE_KEYFRAMES}</style>
       {!introSeen && <PraxisWelcome onEnter={handleIntroEnter} />}
+
+      {IS_DEV && (
+        <DevPanel
+          current={devScreen}
+          onSelect={setDevScreen}
+        />
+      )}
 
       {/* Instrument — fills viewport via object-fit: cover */}
       <motion.div
@@ -314,6 +377,108 @@ function ActiveScreen({ season }: { season: any }) {
 }
 
 // ─────────────────────────────────────────────────
+// Screen 2 — Reflection Room
+// ─────────────────────────────────────────────────
+
+const REFLECTION_PROMPTS = [
+  "WHAT HAPPENED?",
+  "WHAT RESISTED YOU?",
+  "WHAT SURPRISED YOU?",
+  "DID THE FIELD SHIFT?",
+] as const;
+
+interface ReflectionRoomProps {
+  season: any;
+  onBack: () => void;
+  isDev?: boolean;
+}
+
+function ReflectionRoom({ season, onBack, isDev }: ReflectionRoomProps) {
+  const [answers, setAnswers] = useState<Record<string, string>>({});
+
+  const panelBg: React.CSSProperties = {
+    width: "100%",
+    height: "100%",
+    background: "linear-gradient(to bottom, rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.15) 12%, rgba(0,0,0,0.88) 22%)",
+    padding: "8% 7% 6%",
+    boxSizing: "border-box",
+    display: "flex",
+    flexDirection: "column",
+    gap: "3%",
+    overflow: "hidden",
+  };
+
+  const taStyle: React.CSSProperties = {
+    width: "100%",
+    background: "rgba(0,0,0,0.55)",
+    border: "1px solid rgba(196,148,60,0.3)",
+    borderRadius: 1,
+    color: "#c8b898",
+    fontFamily: "Georgia, serif",
+    fontSize: "clamp(6px, 1cqw, 9px)",
+    lineHeight: 1.5,
+    padding: "4px 6px",
+    resize: "none",
+    outline: "none",
+    rows: 3,
+  } as React.CSSProperties;
+
+  const btnBase: React.CSSProperties = {
+    flex: 1,
+    background: "transparent",
+    border: "1px solid rgba(196,148,60,0.35)",
+    borderRadius: 1,
+    color: "rgba(196,148,60,0.7)",
+    fontFamily: "var(--font-pixel)",
+    fontSize: "clamp(4px, 0.75cqw, 7px)",
+    letterSpacing: "0.15em",
+    textTransform: "uppercase",
+    padding: "5px 3px",
+    cursor: "pointer",
+  };
+
+  function handleAction(mode: "private" | "witness" | "wall") {
+    if (isDev) {
+      console.log("[Dev] ReflectionRoom submit:", mode, answers);
+      onBack();
+      return;
+    }
+    // TODO: wire tRPC saveReflection
+  }
+
+  return (
+    <div style={panelBg}>
+      <p style={{ margin: 0, fontFamily: "var(--font-pixel)", fontSize: "clamp(5px, 0.9cqw, 8px)", letterSpacing: "0.3em", color: "#b8860b", textTransform: "uppercase" }}>
+        REFLECTION ROOM — CLOSE THE LOOP
+      </p>
+
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "4%", overflow: "hidden" }}>
+        {REFLECTION_PROMPTS.map((prompt) => (
+          <div key={prompt} style={{ display: "flex", flexDirection: "column", gap: "2%" }}>
+            <p style={{ margin: 0, fontFamily: "var(--font-pixel)", fontSize: "clamp(4px, 0.7cqw, 6px)", letterSpacing: "0.25em", color: "#4a5e4c", textTransform: "uppercase" }}>
+              {prompt}
+            </p>
+            <textarea
+              rows={2}
+              value={answers[prompt] ?? ""}
+              onChange={(e) => setAnswers(prev => ({ ...prev, [prompt]: e.target.value }))}
+              style={taStyle}
+              placeholder=""
+            />
+          </div>
+        ))}
+      </div>
+
+      <div style={{ display: "flex", gap: "3%", marginTop: "2%" }}>
+        <button style={btnBase} onClick={() => handleAction("private")}>KEEP PRIVATE</button>
+        <button style={btnBase} onClick={() => handleAction("witness")}>SEND TO WITNESS</button>
+        <button style={{ ...btnBase, color: "rgba(196,148,60,0.9)", borderColor: "rgba(196,148,60,0.55)" }} onClick={() => handleAction("wall")}>POST TO THE WALL →</button>
+      </div>
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────
 // Screen 3 — Comparator (below frame, stub)
 // ─────────────────────────────────────────────────
 
@@ -374,6 +539,68 @@ function ComparatorScreen({ delta, latestAssessment }: { delta: any; latestAsses
               {d >= 0 ? "+" : ""}{d.toFixed(1)}
             </p>
           </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────
+// Dev-only: screen-forcing utility panel
+// ─────────────────────────────────────────────────
+
+interface DevPanelProps {
+  current: DevScreen;
+  onSelect: (s: DevScreen) => void;
+}
+
+function DevPanel({ current, onSelect }: DevPanelProps) {
+  const buttons: { id: DevScreen; label: string }[] = [
+    { id: "1a", label: "1a — LOCK" },
+    { id: "1b", label: "1b — ACTIVE" },
+    { id: "2",  label: "2 — REFLECT" },
+    { id: "3",  label: "3 — COMPARE" },
+  ];
+  return (
+    <div
+      style={{
+        position: "fixed",
+        bottom: 12,
+        left: 12,
+        zIndex: 9999,
+        background: "rgba(0,0,0,0.8)",
+        border: "1px solid rgba(196,148,60,0.5)",
+        borderRadius: 2,
+        padding: 6,
+        display: "flex",
+        flexDirection: "column",
+        gap: 4,
+      }}
+    >
+      <span style={{ fontFamily: "var(--font-pixel)", fontSize: 6, color: "#ef4444", letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 2 }}>
+        DEV
+      </span>
+      <div style={{ display: "flex", gap: 4 }}>
+        {buttons.map(({ id, label }) => (
+          <button
+            key={id}
+            onClick={() => onSelect(current === id ? null : id)}
+            style={{
+              fontFamily: "var(--font-pixel)",
+              fontSize: 8,
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              color: current === id ? "#000" : "rgba(196,148,60,0.8)",
+              background: current === id ? "rgba(196,148,60,0.8)" : "transparent",
+              border: "1px solid rgba(196,148,60,0.4)",
+              borderRadius: 1,
+              padding: "3px 5px",
+              cursor: "pointer",
+              whiteSpace: "nowrap",
+            }}
+          >
+            {label}
+          </button>
         ))}
       </div>
     </div>
