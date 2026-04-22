@@ -60,6 +60,7 @@ The site contains pages across three tiers: the main content site, the interacti
 | `/workbench/results` | Results | Gravitas scan results: archetype card, animated dimension bars (Identity, Relationship, Vision, Culture), Leak, Force, and First Move cards. Every label carries an inline ⓘ tooltip (portal-based, hover/tap) with a plain-language definition. Deep Scan results also render five interpretive reading sections (Compensation Pattern, What This Costs, What This Protects, Primary Invitation, Why Codex Recommended This) — one profile per Archetype × Leak combination. Side-Chain button handoff to Codex. Prompts unauthenticated users to save their reading; auto-saves for authenticated users. |
 | `/workbench/codex` | The Codex | Library of 27 leadership protocols in a hardware cabinet UI with audio narration |
 | `/workbench/mirror` | Mirror Flow | Mirror reading flow (personality/archetype reading) |
+| `/workbench/praxis` | Praxis | The active practice layer — lock a season (one Codex cartridge), build reps across three checkpoints, reflect, and surface trajectory after a second Gravitas scan |
 | `/workbench/wall/:wallCode` | The Wall | Code-gated community walls for photo submissions |
 
 ### Auth & Utility Pages
@@ -84,9 +85,13 @@ The Workbench at `/workbench` is the hub for interactive leadership tools. It fo
 
 **The Codex** (`/workbench/codex`) is a library of 27 high-leverage leadership scripts and protocols displayed in a physical cabinet UI with CRT monitors, cartridge slots, and category filters (Identity, Relationship, Vision, Culture). The ReaderPanel features a typewriter heading animation, word-reveal text, audio narration with a VU meter, and rotary knob controls. First-time visitors see a first-run onboarding flow: a `CodexWelcome` modal (full-screen, dark/gold palette, ARCHIVE ACCESS GRANTED header, vault readouts) followed by a three-step `CodexTour` spotlight that highlights the cartridge shelf, SCAN button, and READ button in sequence. Onboarding state is stored in `localStorage` under `codex_intro_seen`. Each cartridge entry includes 5 Keys root health fields (`root_distortion`, `before_you_run`, `what_this_nourishes`, `keys_primary`, `keys_secondary`, `keys_notes`). Loading a cartridge fires a `codex_loaded` analytics event tagged with whether the user arrived from a Gravitas side-chain.
 
-### Side-Chain Handoff
+**Praxis** (`/workbench/praxis`) is the active practice layer and the third stage of the instrument loop. After Gravitas diagnoses a leader's gravity and the Codex surfaces the right protocol, Praxis is where the work actually happens. A user locks a season by selecting one Codex cartridge as their active protocol, then works through three rep checkpoints (Day 1, Day 7, Day 14). At each checkpoint, the Reflection Room presents four guided prompts. After a second Gravitas scan, the Comparator screen surfaces the user's delta across all four dimensions — rendering transformation as data rather than aspiration. First-time visitors see a `PraxisWelcome` onboarding modal (localStorage key: `praxis_intro_seen`). Season and reflection data is persisted server-side via `auth.getPraxisState`, `auth.lockPraxisSeason`, and `auth.saveReflection`. Client-side content lives in `client/src/lib/praxis-data.ts` — DELTA_FIELD_NOTES (19 narrative strings), FIRST_MOVE_CONTEXT (5 entries), PRAXIS_REPS (27 cartridge rep plans with Day 1/7/14 reps and rootNote), and FIRST_MOVE_TO_CARTRIDGE mapping.
+
+### The Instrument Chain: Gravitas → Codex → Praxis
 
 After completing a Gravitas scan, the Results page offers a "Side-Chain" button that passes the user's lowest-scoring dimension (the "leak") and full signal data to the Codex via URL params (`?signal=received&bottleneck=IDENTITY&firstMove=...`). The Codex uses a scoring algorithm (`getBestCartridge`) to select the highest-priority protocol for that signal, auto-loads it with a scan animation, and displays a signal banner — creating a guided remediation flow from diagnosis to action.
+
+Once a protocol is identified, the user can proceed to Praxis to lock that cartridge as their active season. After completing the three-rep sequence and running Gravitas a second time, the Comparator closes the loop by surfacing dimension-level deltas — turning the full instrument chain into a measurable transformation arc.
 
 ### All 15 Plugins
 
@@ -106,7 +111,7 @@ After completing a Gravitas scan, the Results page offers a "Side-Chain" button 
 | Signal Decoder | SIGNAL | Locked | Signal analysis. Translating recurring tensions into truth. |
 | Move Matcher | MOVE | Locked | Tactical routing. Fitting the right move to the actual rupture. |
 | Field Notes | SIGNAL | Locked | Expedition log. Reflection as formation. |
-| Praxis Builder | MOVE | Locked | Action sequencer. Transformation through repeated embodied practice. |
+| Praxis | MOVE | Active | The return loop. Lock a season, build reps, reflect, and surface trajectory after a second scan. |
 
 ### Plugin Categories
 
@@ -114,7 +119,7 @@ After completing a Gravitas scan, the Results page offers a "Side-Chain" button 
 |---|---|---|---|
 | MIRROR | Self-reflection and diagnostic tools | 1 | 3 |
 | MAP | Assessment, measurement, and terrain mapping | 0 | 4 |
-| MOVE | Action-oriented protocols and frameworks | 1 | 2 |
+| MOVE | Action-oriented protocols and frameworks | 2 | 1 |
 | SIGNAL | Communication, influence, and pattern detection | 0 | 4 |
 
 ---
@@ -287,6 +292,8 @@ The database is MySQL (hosted on Railway) accessed via Drizzle ORM. Migrations a
 | `mirror_readings` | Mirror plugin reading results stored per session/user |
 | `walls` | Wall definitions (title, wallCode, header image, prompt text, active/featured flags) |
 | `wallEntries` | Per-submission rows for the Wall feature (imageUrl, status, displayOrder) |
+| `praxis_seasons` | Active Praxis season per user — cartridgeId, firstMove, status (active/complete), sessionNumberAtLock, lockedAt, completedAt |
+| `praxis_reflections` | Per-checkpoint reflections for a Praxis season — seasonId, userId, day (1/7/14), response text, completedAt |
 
 ---
 
@@ -318,7 +325,7 @@ The database is MySQL (hosted on Railway) accessed via Drizzle ORM. Migrations a
 client/
   src/
     pages/                        → Main site pages (Home, Manifesto, About, Archives, etc.)
-    pages/workbench/              → Plugin pages (GravityCheck, Results, Codex, MirrorFlow, MirrorReading)
+    pages/workbench/              → Plugin pages (GravityCheck, Results, Codex, MirrorFlow, MirrorReading, Praxis)
     pages/wall/                   → Wall feature pages (WallPage, WallGate, WallGrid, WallAdmin, WallIndex)
     pages/AuthVerify.tsx          → Magic-link verification callback
     components/                   → Shared components (Navigation, Footer, GameHud, DialogueBox, etc.)
@@ -334,6 +341,7 @@ client/
       analytics.ts                → PostHog init, identifyUser, resetUser, 14 typed event helpers
       trpc.ts                     → tRPC client setup
       workbench/                  → Plugin data and logic (codex-data, codex-schema, codex-ranking, questions, scoring, CodexAudio)
+      praxis-data.ts              → Praxis content: DELTA_FIELD_NOTES, FIRST_MOVE_CONTEXT, PRAXIS_REPS (27 cartridge rep plans), FIRST_MOVE_TO_CARTRIDGE
     index.css                     → Global theme with custom Tailwind tokens
     main.tsx                      → App entry: initPostHog() + SessionProvider + createRoot
   public/                         → Static assets (favicon, robots.txt)
@@ -360,7 +368,7 @@ server/
     oauth.ts                      → Manus OAuth handling
 
 drizzle/
-  schema.ts                       → Full database schema (10 tables)
+  schema.ts                       → Full database schema (12 tables)
   relations.ts                    → Drizzle relations
   0001_*.sql … 0004_*.sql         → Migration files (raw SQL, applied in sequence)
   meta/_journal.json              → Migration journal
@@ -387,6 +395,9 @@ The server exposes all procedures through `/api/trpc` via tRPC v11. All procedur
 | `auth.verifyToken` | mutation | Validates token, creates/updates user, sets `rl_session` JWT cookie (30 days), stitches session events, saves pending Gravitas result. Input: `{ token, sessionId, pendingGravitasResult? }`. Returns `{ success, user: { id, email } }` |
 | `auth.logEvent` | mutation | Inserts a row into `user_events` (anonymous or authenticated). Input: `{ sessionId, eventType, payload? }` |
 | `auth.saveGravitasAssessment` | mutation | Saves a completed Gravitas scan to `gravitas_assessments` for the authenticated user. No-ops if unauthenticated. Increments `sessionNumber` |
+| `auth.getPraxisState` | query | Returns the user's Praxis state: active season (with reflections), latest Gravitas assessment, latest delta, and session count. No-ops if unauthenticated |
+| `auth.lockPraxisSeason` | mutation | Closes any existing active season and opens a new one. Input: `{ cartridgeId, firstMove, sessionNumberAtLock }` |
+| `auth.saveReflection` | mutation | Saves a checkpoint reflection for the active season. Input: `{ seasonId, day: 1 | 7 | 14, response }` |
 
 ### `youtube` namespace
 
@@ -448,7 +459,7 @@ All environment variables are centralized in `server/_core/env.ts`. The ones mar
 
 ## Mobile Strategy
 
-The main site pages (Home, Map, Archives, Shelf, About, Start Here, Workbench landing) are fully responsive and mobile-friendly. Complex interactive tools — Gravitas, Codex, and Results — are gated behind a `DesktopOnly` component that displays a redirect message on screens under 768px. This is a deliberate design choice: the hardware-styled plugin interfaces require sufficient screen real estate to function properly.
+The main site pages (Home, Map, Archives, Shelf, About, Start Here, Workbench landing) are fully responsive and mobile-friendly. Complex interactive tools — Gravitas, Codex, Results, and Praxis — are gated behind a `DesktopOnly` component that displays a redirect message on screens under 768px. This is a deliberate design choice: the hardware-styled plugin interfaces require sufficient screen real estate to function properly.
 
 ---
 

@@ -196,6 +196,21 @@ export default function Praxis() {
         <div data-praxis-overlay style={PANEL}>
           {panelContent}
         </div>
+
+        {/* Sticky note overlay */}
+        <img
+          src="https://pub-26b8c09d5ff84d568bb62f776d03c004.r2.dev/Praxis%20Plugin/praxis_navigation_lined_strip_v2-removebg.png"
+          alt=""
+          style={{
+            position: "absolute",
+            left: "50%",
+            transform: "translateX(-50%)",
+            top: "90%",
+            width: "14%",
+            pointerEvents: "none",
+            userSelect: "none",
+          }}
+        />
       </motion.div>
     </div>
   );
