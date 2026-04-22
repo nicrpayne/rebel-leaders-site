@@ -4,7 +4,7 @@ import { trpc } from "@/lib/trpc";
 import { useLocation } from "wouter";
 import { FIRST_MOVE_CONTEXT, FIRST_MOVE_TO_CARTRIDGE, DELTA_FIELD_NOTES, getDeltaNoteIndex, PRAXIS_REPS } from "@/lib/praxis-data";
 
-const BG_IMAGE = "https://pub-26b8c09d5ff84d568bb62f776d03c004.r2.dev/Praxis%20Plugin/rebel_leaders_praxis_interactive_final.png";
+const BG_IMAGE = "https://pub-26b8c09d5ff84d568bb62f776d03c004.r2.dev/Praxis%20Plugin/Praxis%20Final%20Interactive%20Upscaled%202x.png";
 
 const AMBIENT_LIGHTS = [
   { x: "8%",  y: "28%", duration: 2.5, delay: 0   },
@@ -25,12 +25,13 @@ const PULSE_KEYFRAMES = `
 
 const PANEL: React.CSSProperties = {
   position: "absolute",
-  left: "27.6%",
-  top: "22.95%",
-  width: "44.53%",
-  height: "52.73%",
+  left: "29.39%",
+  top: "18.14%",
+  width: "41.11%",
+  height: "57.64%",
   padding: "3px",
   overflowY: "auto",
+  boxShadow: "inset 0 0 10px rgba(0,0,0,0.8)",
 };
 
 const PRAXIS_INTRO_KEY = "praxis_intro_seen";
