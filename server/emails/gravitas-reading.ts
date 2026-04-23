@@ -188,10 +188,25 @@ export function gravitas_reading_email(data: GravitasReadingEmailData): string {
             <table cellpadding="0" cellspacing="0">
               <tr>
                 <td style="border:1px solid #b8860b;border-radius:2px;">
-                  <a href="https://rebel-leader.com/workbench/gravitas"
+                  <a href="https://rebel-leader.com/workbench/results"
                      style="display:inline-block;padding:14px 32px;color:#d4a853;font-size:11px;letter-spacing:3px;text-decoration:none;font-family:'Courier New',monospace;font-weight:bold;text-transform:uppercase;">
                     Return to the Field →
                   </a>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- ── Codex Bridge ── -->
+        <tr>
+          <td style="padding:20px 40px;">
+            <table cellpadding="0" cellspacing="0" width="100%">
+              <tr>
+                <td style="padding:20px 24px;background-color:#0d1f0d;border:1px solid #1a3a1a;">
+                  <p style="margin:0 0 8px 0;font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.3em;color:#4ade80;">YOUR MOVE IS WAITING</p>
+                  <p style="margin:0 0 16px 0;font-family:Georgia,serif;font-size:14px;line-height:1.7;color:#86efac;">Your first move has been matched to a protocol in the Codex. Go see what the field is asking you to do with this reading.</p>
+                  <a href="https://rebel-leader.com/workbench/codex" style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.25em;color:#4ade80;text-decoration:none;">→ OPEN THE CODEX</a>
                 </td>
               </tr>
             </table>

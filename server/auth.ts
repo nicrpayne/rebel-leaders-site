@@ -7,140 +7,14 @@ import { eq, and, gt, desc, aliasedTable } from "drizzle-orm";
 import { Resend } from "resend";
 import { randomBytes } from "crypto";
 import { magicLinkEmail } from "./emails/magic-link";
+import { gravitas_reading_email } from "./emails/gravitas-reading";
+import { getGravitasEmailContent } from "./lib/gravitas-hints";
 import { SignJWT, jwtVerify } from "jose";
 import { ENV } from "./_core/env";
 import { parse as parseCookies } from "cookie";
 
 const RL_SESSION_COOKIE = "rl_session";
 
-function buildGravitasEmailHtml(data: {
-  archetype: string;
-  leak: string;
-  force: string;
-  firstMove: string;
-  sessionNumber: number;
-  dimensionScores: {
-    identity: number;
-    relationship: number;
-    vision: number;
-    culture: number;
-  };
-}): string {
-  const { archetype, leak, force, firstMove, sessionNumber, dimensionScores } = data;
-
-  const bar = (score: number) => {
-    const filled = Math.round((score / 5) * 12);
-    return "█".repeat(filled) + "░".repeat(12 - filled);
-  };
-
-  const fmt = (n: number) => n.toFixed(2);
-
-  return `<!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Gravitas Field Report</title>
-</head>
-<body style="margin:0;padding:0;background-color:#050c05;font-family:'Courier New',Courier,monospace;color:#4ade80;">
-<table width="100%" cellpadding="0" cellspacing="0" style="background-color:#050c05;padding:40px 20px;">
-  <tr>
-    <td align="center">
-      <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
-
-        <!-- Header -->
-        <tr>
-          <td style="padding:0 0 32px 0;border-bottom:1px solid #1a3a1a;">
-            <p style="margin:0 0 6px 0;font-size:10px;letter-spacing:0.4em;color:#2d6a2d;">REBEL-LEADER.COM // GRAVITAS INSTRUMENT</p>
-            <p style="margin:0 0 6px 0;font-size:10px;letter-spacing:0.3em;color:#2d6a2d;">SESSION ${sessionNumber.toString().padStart(3,"0")} // FIELD REPORT</p>
-            <p style="margin:0;font-size:22px;letter-spacing:0.2em;color:#4ade80;font-weight:normal;">SIGNAL ACQUIRED</p>
-          </td>
-        </tr>
-
-        <!-- Opening -->
-        <tr>
-          <td style="padding:32px 0 24px 0;border-bottom:1px solid #1a3a1a;">
-            <p style="margin:0;font-size:15px;line-height:1.8;color:#86efac;letter-spacing:0.05em;">The field was read. Here is what it found.</p>
-          </td>
-        </tr>
-
-        <!-- Archetype -->
-        <tr>
-          <td style="padding:32px 0 0 0;">
-            <p style="margin:0 0 6px 0;font-size:9px;letter-spacing:0.4em;color:#2d6a2d;">GRAVITATIONAL STATE</p>
-            <p style="margin:0 0 24px 0;font-size:24px;letter-spacing:0.15em;color:#4ade80;">${archetype.toUpperCase()}</p>
-          </td>
-        </tr>
-
-        <!-- Dimension Scores -->
-        <tr>
-          <td style="padding:0 0 32px 0;border-bottom:1px solid #1a3a1a;">
-            <p style="margin:0 0 20px 0;font-size:9px;letter-spacing:0.4em;color:#2d6a2d;">DIMENSIONAL SCAN</p>
-            <table width="100%" cellpadding="0" cellspacing="0">
-              ${["identity","relationship","vision","culture"].map(dim => `
-              <tr>
-                <td style="padding:6px 0;">
-                  <p style="margin:0;font-size:11px;letter-spacing:0.25em;color:#4ade80;">
-                    ${dim.toUpperCase().padEnd(14," ")} ${bar(dimensionScores[dim as keyof typeof dimensionScores])} ${fmt(dimensionScores[dim as keyof typeof dimensionScores])}
-                  </p>
-                </td>
-              </tr>`).join("")}
-            </table>
-          </td>
-        </tr>
-
-        <!-- Leak + Force -->
-        <tr>
-          <td style="padding:32px 0;border-bottom:1px solid #1a3a1a;">
-            <table width="100%" cellpadding="0" cellspacing="0">
-              <tr>
-                <td width="50%" style="padding-right:20px;">
-                  <p style="margin:0 0 8px 0;font-size:9px;letter-spacing:0.4em;color:#2d6a2d;">LEAK DETECTED</p>
-                  <p style="margin:0;font-size:14px;letter-spacing:0.15em;color:#fbbf24;">${leak.toUpperCase()}</p>
-                  <p style="margin:8px 0 0 0;font-size:11px;line-height:1.7;color:#86efac;">Where the system is losing energy. Where to begin.</p>
-                </td>
-                <td width="50%" style="padding-left:20px;border-left:1px solid #1a3a1a;">
-                  <p style="margin:0 0 8px 0;font-size:9px;letter-spacing:0.4em;color:#2d6a2d;">FORCE ACTIVE</p>
-                  <p style="margin:0;font-size:14px;letter-spacing:0.15em;color:#4ade80;">${force.toUpperCase()}</p>
-                  <p style="margin:8px 0 0 0;font-size:11px;line-height:1.7;color:#86efac;">The strongest current in the field. Build from here.</p>
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-
-        <!-- First Move -->
-        <tr>
-          <td style="padding:32px 0;border-bottom:1px solid #1a3a1a;">
-            <p style="margin:0 0 8px 0;font-size:9px;letter-spacing:0.4em;color:#2d6a2d;">FIRST MOVE</p>
-            <p style="margin:0 0 16px 0;font-size:18px;letter-spacing:0.15em;color:#4ade80;">${firstMove.toUpperCase()}</p>
-            <p style="margin:0;font-size:12px;line-height:1.8;color:#86efac;">This is your posture for what comes next. Not a destination — a direction. The Codex will tell you what to do with it.</p>
-          </td>
-        </tr>
-
-        <!-- CTA -->
-        <tr>
-          <td style="padding:32px 0;border-bottom:1px solid #1a3a1a;">
-            <p style="margin:0 0 20px 0;font-size:12px;line-height:1.8;color:#86efac;">The field doesn't lie. What it named is real. The question now is what you do with the reading.</p>
-            <a href="https://rebel-leader.com/workbench/gravitas" style="display:inline-block;padding:12px 28px;background-color:transparent;border:1px solid #4ade80;color:#4ade80;font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.3em;text-decoration:none;">RETURN TO THE FIELD →</a>
-          </td>
-        </tr>
-
-        <!-- Footer -->
-        <tr>
-          <td style="padding:32px 0 0 0;">
-            <p style="margin:0;font-size:9px;letter-spacing:0.25em;color:#1a3a1a;">REBEL LEADERS // rebel-leader.com</p>
-            <p style="margin:6px 0 0 0;font-size:9px;letter-spacing:0.15em;color:#1a3a1a;">You received this because you ran a Gravitas scan. No tracking. No drip sequence. Just the reading.</p>
-          </td>
-        </tr>
-
-      </table>
-    </td>
-  </tr>
-</table>
-</body>
-</html>`;
-}
 const COOKIE_MAX_AGE_MS = 30 * 24 * 60 * 60 * 1000; // 30 days
 
 function getJwtSecret() {
@@ -446,17 +320,27 @@ export const saveGravitasAssessment = publicProcedure
     try {
       if (ENV.resendApiKey && magicUser.email) {
         const resend = new Resend(ENV.resendApiKey);
+        const emailContent = getGravitasEmailContent(
+          input.archetype,
+          input.leak,
+          input.force,
+          input.firstMove,
+        );
         await resend.emails.send({
           from: "Rebel Leaders <hello@rebel-leader.com>",
           to: magicUser.email,
           subject: `Your field reading — ${input.archetype}`,
-          html: buildGravitasEmailHtml({
+          html: gravitas_reading_email({
+            name: magicUser.name ?? magicUser.email ?? "",
             archetype: input.archetype,
             leak: input.leak,
             force: input.force,
             firstMove: input.firstMove,
-            sessionNumber,
-            dimensionScores: input.dimensionScores,
+            identity: input.dimensionScores.identity,
+            relationship: input.dimensionScores.relationship,
+            vision: input.dimensionScores.vision,
+            culture: input.dimensionScores.culture,
+            ...emailContent,
           }),
         });
       }
