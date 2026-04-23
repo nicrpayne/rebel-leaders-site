@@ -10,6 +10,8 @@ import { magicLinkEmail } from "./emails/magic-link";
 import { gravitas_reading_email } from "./emails/gravitas-reading";
 import { getGravitasEmailContent } from "./lib/gravitas-hints";
 import { mirror_reading_email } from "./emails/mirror-reading";
+import { codex_reading_email } from "./emails/codex-reading";
+import { CODEX_ENTRIES } from "../client/src/lib/workbench/codex-data";
 import { SignJWT, jwtVerify } from "jose";
 import { ENV } from "./_core/env";
 import { parse as parseCookies } from "cookie";
@@ -575,6 +577,27 @@ export const saveReflection = publicProcedure
     });
 
     return { saved: true } as const;
+  });
+
+export const sendCodexEmail = publicProcedure
+  .input(z.object({ email: z.string().email(), cartridgeId: z.string() }))
+  .mutation(async ({ input }) => {
+    const cartridge = CODEX_ENTRIES.find(c => c.id === input.cartridgeId);
+    if (!cartridge) return { success: false, error: "Cartridge not found" };
+
+    try {
+      const resend = new Resend(ENV.resendApiKey);
+      await resend.emails.send({
+        from: "Rebel Leaders <hello@rebel-leader.com>",
+        to: input.email,
+        subject: `Your cartridge — ${cartridge.title}`,
+        html: codex_reading_email(cartridge),
+      });
+      return { success: true };
+    } catch (err) {
+      console.error("[sendCodexEmail] failed:", err);
+      return { success: false };
+    }
   });
 
 export const saveMirrorReading = publicProcedure
