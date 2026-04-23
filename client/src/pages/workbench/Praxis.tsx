@@ -195,6 +195,78 @@ export default function Praxis() {
             userSelect: "none",
           }}
         />
+
+        {/* Knob 1 — Navigate (DEV: red hitbox visible) */}
+        <div
+          onClick={() => console.log('NAVIGATE clicked')}
+          style={{
+            position: "absolute",
+            left: "44.53%",
+            top: "84.8%",
+            width: "40px",
+            height: "40px",
+            transform: "translate(-50%, -50%)",
+            backgroundColor: "rgba(255, 0, 0, 0.5)",
+            border: "2px solid red",
+            borderRadius: "50%",
+            cursor: "pointer",
+            zIndex: 10,
+          }}
+        />
+
+        {/* Knob 2 — Commit */}
+        <div
+          onClick={() => console.log('COMMIT clicked')}
+          style={{
+            position: "absolute",
+            left: "49.56%",
+            top: "84.8%",
+            width: "40px",
+            height: "40px",
+            transform: "translate(-50%, -50%)",
+            backgroundColor: "rgba(255, 0, 0, 0.5)",
+            border: "2px solid red",
+            borderRadius: "50%",
+            cursor: "pointer",
+            zIndex: 10,
+          }}
+        />
+
+        {/* Knob 3 — Return */}
+        <div
+          onClick={() => console.log('RETURN clicked')}
+          style={{
+            position: "absolute",
+            left: "54.59%",
+            top: "84.8%",
+            width: "40px",
+            height: "40px",
+            transform: "translate(-50%, -50%)",
+            backgroundColor: "rgba(255, 0, 0, 0.5)",
+            border: "2px solid red",
+            borderRadius: "50%",
+            cursor: "pointer",
+            zIndex: 10,
+          }}
+        />
+
+        {/* Knob 4 — Power */}
+        <div
+          onClick={() => console.log('POWER clicked')}
+          style={{
+            position: "absolute",
+            left: "58.2%",
+            top: "84.8%",
+            width: "40px",
+            height: "40px",
+            transform: "translate(-50%, -50%)",
+            backgroundColor: "rgba(255, 0, 0, 0.5)",
+            border: "2px solid red",
+            borderRadius: "50%",
+            cursor: "pointer",
+            zIndex: 10,
+          }}
+        />
       </motion.div>
     </div>
   );
