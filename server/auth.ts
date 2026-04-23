@@ -9,11 +9,24 @@ import { randomBytes } from "crypto";
 import { magicLinkEmail } from "./emails/magic-link";
 import { gravitas_reading_email } from "./emails/gravitas-reading";
 import { getGravitasEmailContent } from "./lib/gravitas-hints";
+import { mirror_reading_email } from "./emails/mirror-reading";
 import { SignJWT, jwtVerify } from "jose";
 import { ENV } from "./_core/env";
 import { parse as parseCookies } from "cookie";
 
 const RL_SESSION_COOKIE = "rl_session";
+
+const MIRROR_FAMILY_LABELS: Record<string, string> = {
+  performance_carrier: "Performance Carrier",
+  silence_stabilizer: "Silence Stabilizer",
+  standard_bearer: "Standard-Bearer",
+  power_holder: "Power-Holder",
+  warmth_protector: "Warmth Protector",
+  bandwidth_conserver: "Bandwidth Conserver",
+  significance_seeker: "Significance Seeker",
+  velocity_defender: "Velocity Defender",
+  map_maker: "Map-Maker",
+};
 
 const COOKIE_MAX_AGE_MS = 30 * 24 * 60 * 60 * 1000; // 30 days
 
@@ -580,6 +593,9 @@ export const saveMirrorReading = publicProcedure
       resistance_core_key: z.string(),
       move_logic_family: z.string(),
       family_scores: z.any(),
+      primary_key_area: z.string(),
+      secondary_key_area: z.string(),
+      key_expression_note: z.string(),
     }),
   }))
   .mutation(async ({ input, ctx }) => {
@@ -595,6 +611,31 @@ export const saveMirrorReading = publicProcedure
       responses: input.responses,
       result: input.result,
     });
+
+    try {
+      if (ENV.resendApiKey && magicUser?.email) {
+        const resend = new Resend(ENV.resendApiKey);
+        await resend.emails.send({
+          from: "Rebel Leaders <hello@rebel-leader.com>",
+          to: magicUser.email,
+          subject: `Your Mirror reading — ${MIRROR_FAMILY_LABELS[input.result.top_family] ?? input.result.top_family}`,
+          html: mirror_reading_email({
+            top_family_label: MIRROR_FAMILY_LABELS[input.result.top_family] ?? input.result.top_family,
+            secondary_family_label: input.result.secondary_family
+              ? (MIRROR_FAMILY_LABELS[input.result.secondary_family] ?? input.result.secondary_family)
+              : null,
+            primary_key_area: input.result.primary_key_area,
+            secondary_key_area: input.result.secondary_key_area,
+            key_expression_note: input.result.key_expression_note,
+            resistance_core_key: input.result.resistance_core_key,
+            confidence_band: input.result.confidence_band as "high" | "medium" | "low",
+            gravitas_combo: input.result.gravitas_combo ?? "",
+          }),
+        });
+      }
+    } catch (err) {
+      console.error("[saveMirrorReading] email send failed:", err);
+    }
 
     return { saved: true } as const;
   });
