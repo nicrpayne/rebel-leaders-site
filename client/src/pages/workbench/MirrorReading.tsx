@@ -189,6 +189,7 @@ export default function MirrorReading() {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const { sessionId } = useSession();
   const { data: currentUser } = trpc.auth.me.useQuery();
+  const { data: dbReading, isLoading: dbLoading } = trpc.auth.getLatestMirrorReading.useQuery();
   const saveMirrorMutation = trpc.auth.saveMirrorReading.useMutation();
   const savedRef = useRef(false);
 
@@ -204,19 +205,29 @@ export default function MirrorReading() {
     const result = loadMirrorResult();
     const prior = loadGravitasPrior();
 
-    if (!result) {
-      navigate("/workbench/mirror");
+    if (result) {
+      // Fast path — came straight from the flow
+      setMirrorResult(result);
+      setGravitasPrior(prior);
+      setReading(getReadingBlock(result));
+      setTimeout(() => setIsRevealed(true), 400);
       return;
     }
 
-    setMirrorResult(result);
-    setGravitasPrior(prior);
+    // DB fallback — direct link, authenticated user
+    if (dbLoading) return;
 
-    const block = getReadingBlock(result);
-    setReading(block);
+    if (dbReading?.result) {
+      const parsed = dbReading.result as MirrorResult;
+      setMirrorResult(parsed);
+      setReading(getReadingBlock(parsed));
+      setTimeout(() => setIsRevealed(true), 400);
+      return;
+    }
 
-    setTimeout(() => setIsRevealed(true), 400);
-  }, [navigate]);
+    // Nothing in localStorage or DB — send back to flow
+    navigate("/workbench/mirror");
+  }, [navigate, dbLoading, dbReading]);
 
   // ─── Save to DB if authenticated ────────────────────────────────
 
@@ -414,8 +425,10 @@ style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: "italic", fontSiz
               ))}
             </div>
 
-            {/* Save Reading Prompt */}
-            <SaveReadingPrompt context="mirror" />
+            {/* Save Reading Prompt — magic-link, unauthenticated users only */}
+            {!currentUser && sessionId && (
+              <MirrorSavePrompt sessionId={sessionId} />
+            )}
 
             {/* Bottom CTA */}
             <div
@@ -521,5 +534,75 @@ style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: "italic", fontSiz
         }
       `}</style>
     </DesktopOnly>
+  );
+}
+
+// ─── Mirror Save Prompt ──────────────────────────────────────────────
+
+function MirrorSavePrompt({ sessionId }: { sessionId: string }) {
+  const [email, setEmail] = useState('');
+  const [sent, setSent] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const requestLink = trpc.auth.requestMagicLink.useMutation();
+
+  const handleSubmit = () => {
+    if (!email || loading) return;
+    setLoading(true);
+    requestLink.mutate(
+      { email, sessionId },
+      {
+        onSuccess: () => setSent(true),
+        onError: () => setLoading(false),
+      }
+    );
+  };
+
+  if (sent) {
+    return (
+      <div style={{ border: '1px solid rgba(197,160,89,0.25)', backgroundColor: '#0a0a0e', borderRadius: '2px', padding: '24px', textAlign: 'center' }}>
+        <p style={{ fontFamily: 'var(--font-pixel, monospace)', fontSize: '10px', letterSpacing: '0.2em', color: 'rgba(197,160,89,0.9)', marginBottom: '12px' }}>
+          LINK SENT
+        </p>
+        <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '15px', lineHeight: '1.7', color: PARCHMENT.mid, margin: 0 }}>
+          Check your email. Click the link to save this reading and access it later.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div style={{ backgroundColor: '#0a0a0e', border: '1px solid rgba(197,160,89,0.12)', borderRadius: '2px', padding: '24px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <div style={{ width: '4px', height: '4px', borderRadius: '50%', backgroundColor: 'rgba(197,160,89,0.6)' }} />
+        <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '15px', letterSpacing: '0.2em', color: 'rgba(197,160,89,0.9)' }}>
+          Save Your Reading
+        </span>
+      </div>
+      <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '16px', lineHeight: '1.7', color: PARCHMENT.mid, margin: 0 }}>
+        Save this reading to access it later and compare with future scans.
+      </p>
+      <div style={{ display: 'flex', gap: '8px' }}>
+        <input
+          type="email"
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+          onKeyDown={e => e.key === 'Enter' && handleSubmit()}
+          placeholder="your@email.com"
+          style={{ flex: 1, backgroundColor: '#0f0f14', border: '1px solid rgba(197,160,89,0.2)', borderRadius: '2px', padding: '8px 12px', color: 'rgba(232,213,163,0.85)', fontFamily: "'Cormorant Garamond', serif", fontSize: '14px', outline: 'none' }}
+          onFocus={e => { e.currentTarget.style.borderColor = 'rgba(197,160,89,0.5)'; }}
+          onBlur={e => { e.currentTarget.style.borderColor = 'rgba(197,160,89,0.2)'; }}
+        />
+        <button
+          onClick={handleSubmit}
+          disabled={loading || !email}
+          style={{ padding: '8px 20px', backgroundColor: loading || !email ? 'rgba(197,160,89,0.2)' : '#b8860b', border: 'none', borderRadius: '2px', color: loading || !email ? 'rgba(197,160,89,0.4)' : '#0f1a12', fontFamily: 'var(--font-pixel, monospace)', fontSize: '10px', letterSpacing: '0.2em', cursor: loading || !email ? 'not-allowed' : 'pointer', whiteSpace: 'nowrap' as const }}
+        >
+          {loading ? '...' : 'SEND'}
+        </button>
+      </div>
+      <p style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic', fontSize: '12px', textAlign: 'center' as const, letterSpacing: '0.1em', color: 'rgba(197,160,89,0.45)', margin: 0 }}>
+        Your reading stays even if you don't
+      </p>
+    </div>
   );
 }

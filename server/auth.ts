@@ -597,3 +597,20 @@ export const saveMirrorReading = publicProcedure
 
     return { saved: true } as const;
   });
+
+export const getLatestMirrorReading = publicProcedure.query(async ({ ctx }) => {
+  const magicUser = await getMagicLinkUser(ctx.req.headers.cookie);
+  if (!magicUser) return null;
+
+  const db = await getDb();
+  if (!db) return null;
+
+  const [last] = await db
+    .select()
+    .from(mirrorReadings)
+    .where(eq(mirrorReadings.userId, magicUser.id))
+    .orderBy(desc(mirrorReadings.createdAt))
+    .limit(1);
+
+  return last || null;
+});
