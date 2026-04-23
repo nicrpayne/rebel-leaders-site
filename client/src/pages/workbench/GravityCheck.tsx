@@ -374,12 +374,13 @@ export default function GravityCheck() {
     <button
       data-tour="gravitas-next"
       onClick={handleNext}
+      disabled={!knobTouched}
       className={cn(
         "group flex items-center gap-1.5 px-2.5 py-1 bg-gradient-to-b from-[#1a1a20] to-[#141418] border rounded-[2px] shadow-[0_2px_4px_rgba(0,0,0,0.4)] transition-all duration-300",
         knobTouched
-          ? "border-green-400/50 shadow-[0_0_12px_rgba(74,222,128,0.15)]"
-          : "border-[#2a2a32]",
-        "hover:border-[rgba(74,222,128,0.5)] hover:shadow-[0_0_16px_rgba(74,222,128,0.2)]",
+          ? "border-green-400/50 shadow-[0_0_12px_rgba(74,222,128,0.15)] cursor-pointer"
+          : "border-[#2a2a32] opacity-30 cursor-not-allowed",
+        knobTouched && "hover:border-[rgba(74,222,128,0.5)] hover:shadow-[0_0_16px_rgba(74,222,128,0.2)]",
         "active:translate-y-[1px] active:shadow-none"
       )}
       style={knobTouched ? { animation: "gravitas-next-pulse 2s ease-in-out infinite" } : undefined}
