@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 import { CodexEntry } from "@/lib/workbench/codex-schema";
 import ReaderSection from "./ReaderSection";
 import SectionIndicator from "./SectionIndicator";
+import { trpc } from "@/lib/trpc";
 
 // Asset URLs
 const PANEL_FRAME_URL =
@@ -67,6 +68,21 @@ export default function ReaderPanel({
   const [isClosing, setIsClosing] = useState(false);
   const [isEntering, setIsEntering] = useState(!skipEnterAnimation);
   const [scriptCopied, setScriptCopied] = useState(false);
+  const [codexEmail, setCodexEmail] = useState('');
+  const [codexEmailSent, setCodexEmailSent] = useState(false);
+  const [codexEmailLoading, setCodexEmailLoading] = useState(false);
+  const sendCodexEmailMutation = trpc.auth.sendCodexEmail.useMutation();
+  const handleSendCodexEmail = () => {
+    if (!codexEmail || codexEmailLoading) return;
+    setCodexEmailLoading(true);
+    sendCodexEmailMutation.mutate(
+      { email: codexEmail, cartridgeId: entry.id },
+      {
+        onSuccess: () => { setCodexEmailSent(true); setCodexEmailLoading(false); },
+        onError: () => setCodexEmailLoading(false),
+      }
+    );
+  };
   const scrollRef = useRef<HTMLDivElement>(null);
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
   const practiceRef = useRef<HTMLDivElement | null>(null);
@@ -973,6 +989,55 @@ export default function ReaderPanel({
                   </div>
                 )}
               </ReaderSection>
+            </div>
+
+            {/* ── Save cartridge ── */}
+            <div style={{ borderTop: "1px solid rgba(90,60,20,0.4)", marginTop: "40px", paddingTop: "36px", display: "flex", flexDirection: "column", gap: "14px" }}>
+              <p style={{ fontFamily: "var(--font-pixel)", fontSize: "9px", letterSpacing: "0.25em", color: "rgba(90,60,20,0.6)", margin: 0, textTransform: "uppercase" as const }}>
+                Save This Cartridge
+              </p>
+              <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "16px", lineHeight: "1.7", color: "rgba(60,40,10,0.8)", margin: 0 }}>
+                Get this protocol in your inbox — the script, the steps, and a link back to this reader.
+              </p>
+              {!codexEmailSent ? (
+                <div style={{ display: "flex", gap: "8px" }}>
+                  <input
+                    type="email"
+                    value={codexEmail}
+                    onChange={e => setCodexEmail(e.target.value)}
+                    onKeyDown={e => e.key === "Enter" && handleSendCodexEmail()}
+                    placeholder="your@email.com"
+                    style={{ flex: 1, backgroundColor: "rgba(255,255,255,0.3)", border: "1px solid rgba(90,60,20,0.3)", padding: "10px 14px", color: "rgba(60,40,10,0.9)", fontFamily: "'Cormorant Garamond', serif", fontSize: "15px", outline: "none" }}
+                  />
+                  <button
+                    onClick={handleSendCodexEmail}
+                    disabled={codexEmailLoading || !codexEmail}
+                    style={{ padding: "10px 24px", backgroundColor: codexEmailLoading || !codexEmail ? "rgba(90,60,20,0.15)" : "rgba(90,60,20,0.7)", border: "none", color: codexEmailLoading || !codexEmail ? "rgba(90,60,20,0.4)" : "#f5e8c8", fontFamily: "var(--font-pixel)", fontSize: "9px", letterSpacing: "0.2em", cursor: codexEmailLoading || !codexEmail ? "not-allowed" : "pointer" as const }}
+                  >
+                    {codexEmailLoading ? "..." : "SEND"}
+                  </button>
+                </div>
+              ) : (
+                <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "15px", color: "rgba(60,40,10,0.7)", fontStyle: "italic", margin: 0 }}>
+                  Cartridge sent. Check your inbox.
+                </p>
+              )}
+            </div>
+
+            {/* ── Lock in Praxis ── */}
+            <div style={{ borderTop: "1px solid rgba(90,60,20,0.4)", marginTop: "40px", paddingTop: "36px", marginBottom: "24px", display: "flex", flexDirection: "column", gap: "14px" }}>
+              <p style={{ fontFamily: "var(--font-pixel)", fontSize: "9px", letterSpacing: "0.25em", color: "rgba(90,60,20,0.6)", margin: 0, textTransform: "uppercase" as const }}>
+                Ready To Run This?
+              </p>
+              <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "16px", lineHeight: "1.7", color: "rgba(60,40,10,0.8)", margin: 0 }}>
+                Lock this cartridge into Praxis and begin a 21-day season. The Patch Table will hold your commitment and track the field.
+              </p>
+              <a
+                href={`/workbench/praxis?cartridge=${entry.id}`}
+                style={{ display: "inline-block", padding: "12px 24px", backgroundColor: "rgba(90,60,20,0.7)", color: "#f5e8c8", fontFamily: "var(--font-pixel)", fontSize: "9px", letterSpacing: "0.25em", textDecoration: "none", alignSelf: "flex-start" as const }}
+              >
+                LOCK THIS IN PRAXIS →
+              </a>
             </div>
 
             {/* ── End of File marker ── */}
