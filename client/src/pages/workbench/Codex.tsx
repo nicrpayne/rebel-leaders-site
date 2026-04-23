@@ -214,6 +214,18 @@ export default function Codex() {
     };
   }, []);
 
+  // Auto-load cartridge from URL hash on mount
+  useEffect(() => {
+    const hash = window.location.hash.replace('#', '');
+    if (!hash) return;
+    const match = CODEX_ENTRIES.find(e => e.id === hash);
+    if (match) {
+      setLoadedEntry(match);
+      setReaderMode("READ");
+      setIsReaderOpen(true);
+    }
+  }, []);
+
   // Prevent browser scroll restoration from snapping the page mid-render
   useLayoutEffect(() => {
     history.scrollRestoration = "manual";
