@@ -71,6 +71,7 @@ export default function ReaderPanel({
   const [codexEmail, setCodexEmail] = useState('');
   const [codexEmailSent, setCodexEmailSent] = useState(false);
   const [codexEmailLoading, setCodexEmailLoading] = useState(false);
+  const [codexAlreadySaved, setCodexAlreadySaved] = useState(false);
   const sendCodexEmailMutation = trpc.auth.sendCodexEmail.useMutation();
   const handleSendCodexEmail = () => {
     if (!codexEmail || codexEmailLoading) return;
@@ -78,7 +79,17 @@ export default function ReaderPanel({
     sendCodexEmailMutation.mutate(
       { email: codexEmail, cartridgeId: entry.id },
       {
-        onSuccess: () => { setCodexEmailSent(true); setCodexEmailLoading(false); },
+        onSuccess: () => {
+          setCodexEmailSent(true);
+          setCodexEmailLoading(false);
+          try {
+            const alreadySaved = JSON.parse(localStorage.getItem("codex_saved_cartridges") ?? "[]") as string[];
+            if (!alreadySaved.includes(entry.id)) {
+              localStorage.setItem("codex_saved_cartridges", JSON.stringify([...alreadySaved, entry.id]));
+            }
+          } catch {}
+          setCodexAlreadySaved(true);
+        },
         onError: () => setCodexEmailLoading(false),
       }
     );
@@ -106,6 +117,12 @@ export default function ReaderPanel({
       setIsClosing(false);
       setIsEntering(skipEnterAnimation ? false : true);
       setScriptCopied(false);
+      try {
+        const alreadySaved = JSON.parse(localStorage.getItem("codex_saved_cartridges") ?? "[]") as string[];
+        setCodexAlreadySaved(alreadySaved.includes(entry.id));
+      } catch {
+        setCodexAlreadySaved(false);
+      }
       try {
         const saved = localStorage.getItem("codex_run_progress");
         if (saved) {
@@ -999,7 +1016,7 @@ export default function ReaderPanel({
               <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "16px", lineHeight: "1.7", color: "rgba(60,40,10,0.8)", margin: 0 }}>
                 Get this protocol in your inbox — the script, the steps, and a link back to this reader.
               </p>
-              {!codexEmailSent ? (
+              {!(codexEmailSent || codexAlreadySaved) ? (
                 <div style={{ display: "flex", gap: "8px" }}>
                   <input
                     type="email"
@@ -1018,8 +1035,8 @@ export default function ReaderPanel({
                   </button>
                 </div>
               ) : (
-                <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "15px", color: "rgba(60,40,10,0.7)", fontStyle: "italic", margin: 0 }}>
-                  Cartridge sent. Check your inbox.
+                <p style={{ fontFamily: "var(--font-pixel)", fontSize: "9px", letterSpacing: "0.15em", color: "rgba(197, 160, 89, 0.9)", margin: 0 }}>
+                  SAVED
                 </p>
               )}
             </div>
