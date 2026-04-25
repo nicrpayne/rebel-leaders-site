@@ -69,7 +69,7 @@ export default function AuthVerify() {
               SIGNAL CONFIRMED
             </p>
             <p className="font-display text-parchment-dim text-sm">
-              Your reading has been saved. Returning to the field...
+              Your work has been saved. Reconnecting you now...
             </p>
           </>
         )}
