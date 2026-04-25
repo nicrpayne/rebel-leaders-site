@@ -67,7 +67,7 @@ The site contains pages across three tiers: the main content site, the interacti
 
 | Route | Page | Description |
 |---|---|---|
-| `/auth/verify` | Auth Verify | Magic-link verification callback — validates token, sets session cookie, stitches anonymous session events, retroactively saves any pending Gravitas result, then redirects to results |
+| `/auth/verify` | Auth Verify | Magic-link verification callback — validates token, sets session cookie, stitches anonymous session events, retroactively saves any pending Gravitas, Mirror, or Codex data, then redirects to the originating plugin page |
 | `/hidden-assets` | Asset Vault | Hidden page listing all CDN image assets with download links |
 | `/game-standalone` | Game Standalone | Standalone version of the Manifesto side-scroller |
 | `/armory` | Legacy Redirect | Redirects to `/workbench` (former name) |
@@ -149,20 +149,26 @@ The site uses a **dual auth** model: legacy Manus OAuth for admin/Nic's account,
 
 ### Magic-Link Flow
 
-1. On the Results page, unauthenticated users see `SaveReadingPrompt` — an email input with Cormorant Garamond styling
-2. Before requesting the link, the Gravitas result is stored in `localStorage('gravitas_pending_save')`
+1. On the Results/Mirror/Codex page, unauthenticated users see a save prompt — an email input with Cormorant Garamond styling
+2. Before requesting the link, the pending data is stored in localStorage: `gravitas_pending_save`, `mirrorResult`, or `pending_save_codex`. The originating page path is stored in `auth_redirect_after_verify`
 3. `auth.requestMagicLink` inserts a 64-char random hex token into `auth_tokens` (15-minute expiry) and sends a branded HTML email via Resend
 4. User clicks the link → `/auth/verify?token=<token>&sessionId=<id>`
-5. `auth.verifyToken` validates the token, marks it used, creates or updates the `users` row, sets an `rl_session` httpOnly JWT cookie (30-day expiry, signed with `JWT_SECRET`), and triggers session stitching + retroactive Gravitas save
-6. `AuthVerify` calls `identifyUser()` to link the PostHog anonymous identity to the user's ID and email, then redirects to `/workbench/results` after 3 seconds
+5. `auth.verifyToken` validates the token, marks it used, creates or updates the `users` row, sets an `rl_session` httpOnly JWT cookie (30-day expiry, signed with `JWT_SECRET`), and triggers session stitching + retroactive saves for any pending plugin data
+6. `AuthVerify` calls `identifyUser()` to link the PostHog anonymous identity to the user's ID and email, clears all pending localStorage keys, then redirects to the originating page (from `auth_redirect_after_verify`) after 3 seconds
 
 ### Session Stitching
 
 Every browser session has an anonymous `sessionId` (UUID generated at first visit, stored in `localStorage` via `SessionContext`). All `user_events` rows are written with this `sessionId`. When a user authenticates via magic-link, all `user_events` rows matching that `sessionId` have their `userId` backfilled — linking pre-auth behavior to the new user record.
 
-### Retroactive Gravitas Save
+### Retroactive Plugin Data Save
 
-If a user completes a Gravitas scan before authenticating, the result sits in `localStorage('gravitas_pending_save')`. When they later verify their magic link, `verifyToken` reads `pendingGravitasResult` from the request payload and inserts a `gravitas_assessments` row. localStorage is cleared on success.
+All three active plugins support anonymous-to-authenticated data promotion. If a user interacts before signing in, their data is held in localStorage and promoted on magic-link verification:
+
+- **Gravitas** — result stored in `localStorage('gravitas_pending_save')`; `verifyToken` inserts a `gravitas_assessments` row
+- **Mirror** — result stored in `localStorage('mirrorResult')`; `verifyToken` inserts a `mirror_readings` row
+- **Codex** — saved cartridge IDs stored in `localStorage('pending_save_codex')` as `{ cartridgeIds: string[] }`; `verifyToken` deduplicates and inserts into `codex_interactions` with `action: "saved"`
+
+All pending keys are cleared from localStorage on successful verification. The `useSaveWithAuth` hook (`client/src/hooks/useSaveWithAuth.ts`) provides a unified interface: authenticated users get a direct DB write; anonymous users get the localStorage + magic-link prompt flow.
 
 ### Session Cookie
 
@@ -336,7 +342,7 @@ client/
       GameContext.tsx             → XP, achievements, toasts — all localStorage
       ThemeContext.tsx            → Light/dark theme
       SessionContext.tsx          → Anonymous session ID (UUID, localStorage, lives for session stitching)
-    hooks/                        → usePageTracker, useScrollTracker, useComposition, usePersistFn
+    hooks/                        → usePageTracker, useScrollTracker, useComposition, usePersistFn, useSaveWithAuth
     lib/
       analytics.ts                → PostHog init, identifyUser, resetUser, 14 typed event helpers
       trpc.ts                     → tRPC client setup
@@ -392,9 +398,14 @@ The server exposes all procedures through `/api/trpc` via tRPC v11. All procedur
 | `auth.me` | query | Returns the current user. Checks Manus OAuth session first, then reads and verifies the `rl_session` JWT cookie |
 | `auth.logout` | mutation | Clears both the Manus OAuth session cookie and the `rl_session` cookie (with matching options) |
 | `auth.requestMagicLink` | mutation | Creates a 15-min token in `auth_tokens`, sends a branded email via Resend. Input: `{ email, sessionId }` |
-| `auth.verifyToken` | mutation | Validates token, creates/updates user, sets `rl_session` JWT cookie (30 days), stitches session events, saves pending Gravitas result. Input: `{ token, sessionId, pendingGravitasResult? }`. Returns `{ success, user: { id, email } }` |
+| `auth.verifyToken` | mutation | Validates token, creates/updates user, sets `rl_session` JWT cookie (30 days), stitches session events, retroactively saves any pending plugin data. Input: `{ token, sessionId, pendingGravitasResult?, pendingMirrorResult?, pendingCodexInteractions? }`. Returns `{ success, user: { id, email } }` |
 | `auth.logEvent` | mutation | Inserts a row into `user_events` (anonymous or authenticated). Input: `{ sessionId, eventType, payload? }` |
 | `auth.saveGravitasAssessment` | mutation | Saves a completed Gravitas scan to `gravitas_assessments` for the authenticated user. No-ops if unauthenticated. Increments `sessionNumber` |
+| `auth.saveMirrorReading` | mutation | Saves a Mirror reading result to `mirror_readings` for the authenticated user |
+| `auth.getLatestMirrorReading` | query | Returns the most recent `mirror_readings` row for the authenticated user |
+| `auth.sendCodexEmail` | mutation | Sends a Codex cartridge email (script + steps + reader link) via Resend. Input: `{ email, cartridgeId }` |
+| `auth.saveCodexInteraction` | mutation | Deduplicates and inserts `action: "saved"` rows into `codex_interactions`. Input: `{ cartridgeIds: string[] }`. No-ops if unauthenticated |
+| `auth.getSavedCodexCartridges` | query | Returns all cartridgeIds the authenticated user has saved. Returns `[]` if unauthenticated |
 | `auth.getPraxisState` | query | Returns the user's Praxis state: active season (with reflections), latest Gravitas assessment, latest delta, and session count. No-ops if unauthenticated |
 | `auth.lockPraxisSeason` | mutation | Closes any existing active season and opens a new one. Input: `{ cartridgeId, firstMove, sessionNumberAtLock }` |
 | `auth.saveReflection` | mutation | Saves a checkpoint reflection for the active season. Input: `{ seasonId, day: 1 | 7 | 14, response }` |
