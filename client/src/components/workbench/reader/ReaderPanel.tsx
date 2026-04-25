@@ -4,6 +4,7 @@ import { CodexEntry } from "@/lib/workbench/codex-schema";
 import ReaderSection from "./ReaderSection";
 import SectionIndicator from "./SectionIndicator";
 import { trpc } from "@/lib/trpc";
+import { useSaveWithAuth } from "@/hooks/useSaveWithAuth";
 
 // Asset URLs
 const PANEL_FRAME_URL =
@@ -82,18 +83,27 @@ export default function ReaderPanel({
         onSuccess: () => {
           setCodexEmailSent(true);
           setCodexEmailLoading(false);
-          try {
-            const alreadySaved = JSON.parse(localStorage.getItem("codex_saved_cartridges") ?? "[]") as string[];
-            if (!alreadySaved.includes(entry.id)) {
-              localStorage.setItem("codex_saved_cartridges", JSON.stringify([...alreadySaved, entry.id]));
-            }
-          } catch {}
-          setCodexAlreadySaved(true);
         },
         onError: () => setCodexEmailLoading(false),
       }
     );
   };
+
+  const saveCodexMutation = trpc.auth.saveCodexInteraction.useMutation();
+  const savedCartridgesQuery = trpc.auth.getSavedCodexCartridges.useQuery();
+  const {
+    saveStatus: codexSaveStatus,
+    promptEmail: codexPromptEmail,
+    emailSent: codexSaveEmailSent,
+    emailLoading: codexSaveEmailLoading,
+    handleEmailSubmit: codexHandleEmailSubmit,
+    triggerSave: codexTriggerSave,
+  } = useSaveWithAuth(
+    "codex",
+    { cartridgeIds: [entry.id] },
+    saveCodexMutation,
+    { localStorageKey: "pending_save_codex" }
+  );
   const scrollRef = useRef<HTMLDivElement>(null);
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
   const practiceRef = useRef<HTMLDivElement | null>(null);
@@ -117,6 +127,9 @@ export default function ReaderPanel({
       setIsClosing(false);
       setIsEntering(skipEnterAnimation ? false : true);
       setScriptCopied(false);
+      setCodexEmail('');
+      setCodexEmailSent(false);
+      setCodexEmailLoading(false);
       try {
         const alreadySaved = JSON.parse(localStorage.getItem("codex_saved_cartridges") ?? "[]") as string[];
         setCodexAlreadySaved(alreadySaved.includes(entry.id));
@@ -155,6 +168,13 @@ export default function ReaderPanel({
       document.body.style.overflow = "";
     };
   }, [isOpen, initialMode, entry]);
+
+  // Step 5: override localStorage check with authoritative DB result for authenticated users
+  useEffect(() => {
+    if (savedCartridgesQuery.data?.includes(entry.id)) {
+      setCodexAlreadySaved(true);
+    }
+  }, [savedCartridgesQuery.data, entry.id]);
 
   // Throttle ref — scroll handler runs at most every 16ms (60fps budget)
   const scrollThrottleRef = useRef<number>(0);
@@ -1008,15 +1028,67 @@ export default function ReaderPanel({
               </ReaderSection>
             </div>
 
-            {/* ── Save cartridge ── */}
+            {/* ── Save cartridge (DB / magic-link) ── */}
             <div style={{ borderTop: "1px solid rgba(90,60,20,0.4)", marginTop: "40px", paddingTop: "36px", display: "flex", flexDirection: "column", gap: "14px" }}>
               <p style={{ fontFamily: "var(--font-pixel)", fontSize: "9px", letterSpacing: "0.25em", color: "rgba(90,60,20,0.6)", margin: 0, textTransform: "uppercase" as const }}>
                 Save This Cartridge
               </p>
+              {(codexSaveStatus === "saved" || codexAlreadySaved) ? (
+                <p style={{ fontFamily: "var(--font-pixel)", fontSize: "9px", letterSpacing: "0.15em", color: "rgba(197,160,89,0.9)", margin: 0 }}>
+                  SAVED
+                </p>
+              ) : codexPromptEmail ? (
+                codexSaveEmailSent ? (
+                  <p style={{ fontFamily: "var(--font-pixel)", fontSize: "9px", letterSpacing: "0.15em", color: "rgba(197,160,89,0.9)", margin: 0 }}>
+                    CHECK YOUR EMAIL
+                  </p>
+                ) : (
+                  <div style={{ display: "flex", flexDirection: "column" as const, gap: "8px" }}>
+                    <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "14px", color: "rgba(60,40,10,0.7)", margin: 0 }}>
+                      Enter your email to save this cartridge to your account.
+                    </p>
+                    <div style={{ display: "flex", gap: "8px" }}>
+                      <input
+                        type="email"
+                        onKeyDown={e => { if (e.key === "Enter") codexHandleEmailSubmit((e.target as HTMLInputElement).value); }}
+                        placeholder="your@email.com"
+                        style={{ flex: 1, backgroundColor: "rgba(255,255,255,0.3)", border: "1px solid rgba(90,60,20,0.3)", padding: "10px 14px", color: "rgba(60,40,10,0.9)", fontFamily: "'Cormorant Garamond', serif", fontSize: "15px", outline: "none" }}
+                        id="codex-save-email"
+                      />
+                      <button
+                        onClick={() => { const el = document.getElementById("codex-save-email") as HTMLInputElement | null; if (el) codexHandleEmailSubmit(el.value); }}
+                        disabled={codexSaveEmailLoading}
+                        style={{ padding: "10px 24px", backgroundColor: codexSaveEmailLoading ? "rgba(90,60,20,0.15)" : "rgba(90,60,20,0.7)", border: "none", color: codexSaveEmailLoading ? "rgba(90,60,20,0.4)" : "#f5e8c8", fontFamily: "var(--font-pixel)", fontSize: "9px", letterSpacing: "0.2em", cursor: codexSaveEmailLoading ? "not-allowed" : "pointer" as const }}
+                      >
+                        {codexSaveEmailLoading ? "..." : "SEND LINK"}
+                      </button>
+                    </div>
+                  </div>
+                )
+              ) : (
+                <button
+                  onClick={codexTriggerSave}
+                  disabled={codexSaveStatus === "saving"}
+                  style={{ alignSelf: "flex-start" as const, padding: "10px 24px", backgroundColor: codexSaveStatus === "saving" ? "rgba(90,60,20,0.15)" : "rgba(90,60,20,0.7)", border: "none", color: codexSaveStatus === "saving" ? "rgba(90,60,20,0.4)" : "#f5e8c8", fontFamily: "var(--font-pixel)", fontSize: "9px", letterSpacing: "0.25em", cursor: codexSaveStatus === "saving" ? "not-allowed" : "pointer" as const }}
+                >
+                  {codexSaveStatus === "saving" ? "..." : "SAVE"}
+                </button>
+              )}
+            </div>
+
+            {/* ── Email me this cartridge ── */}
+            <div style={{ borderTop: "1px solid rgba(90,60,20,0.4)", marginTop: "28px", paddingTop: "28px", display: "flex", flexDirection: "column", gap: "14px" }}>
+              <p style={{ fontFamily: "var(--font-pixel)", fontSize: "9px", letterSpacing: "0.25em", color: "rgba(90,60,20,0.6)", margin: 0, textTransform: "uppercase" as const }}>
+                Email Me This Cartridge
+              </p>
               <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "16px", lineHeight: "1.7", color: "rgba(60,40,10,0.8)", margin: 0 }}>
                 Get this protocol in your inbox — the script, the steps, and a link back to this reader.
               </p>
-              {!(codexEmailSent || codexAlreadySaved) ? (
+              {codexEmailSent ? (
+                <p style={{ fontFamily: "var(--font-pixel)", fontSize: "9px", letterSpacing: "0.15em", color: "rgba(197,160,89,0.9)", margin: 0 }}>
+                  SENT
+                </p>
+              ) : (
                 <div style={{ display: "flex", gap: "8px" }}>
                   <input
                     type="email"
@@ -1034,10 +1106,6 @@ export default function ReaderPanel({
                     {codexEmailLoading ? "..." : "SEND"}
                   </button>
                 </div>
-              ) : (
-                <p style={{ fontFamily: "var(--font-pixel)", fontSize: "9px", letterSpacing: "0.15em", color: "rgba(197, 160, 89, 0.9)", margin: 0 }}>
-                  SAVED
-                </p>
               )}
             </div>
 

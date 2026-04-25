@@ -23,6 +23,8 @@ import {
   lockPraxisSeason,
   saveReflection,
   sendCodexEmail,
+  saveCodexInteraction,
+  getSavedCodexCartridges,
 } from "./auth";
 
 export const appRouter = router({
@@ -67,6 +69,8 @@ export const appRouter = router({
     lockPraxisSeason,
     saveReflection,
     sendCodexEmail,
+    saveCodexInteraction,
+    getSavedCodexCartridges,
   }),
 
   // Substack RSS feed integration

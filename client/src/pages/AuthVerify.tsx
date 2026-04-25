@@ -27,12 +27,19 @@ export default function AuthVerify() {
     const pendingMirror = localStorage.getItem('mirrorResult');
     const pendingMirrorResult = pendingMirror ? JSON.parse(pendingMirror) : undefined;
 
+    const pendingCodexRaw = localStorage.getItem('pending_save_codex');
+    const pendingCodexInteractions: string[] | undefined = pendingCodexRaw
+      ? (() => { try { const p = JSON.parse(pendingCodexRaw); return Array.isArray(p?.cartridgeIds) ? p.cartridgeIds : undefined; } catch { return undefined; } })()
+      : undefined;
+
     verifyMutation.mutate(
-      { token, sessionId, pendingGravitasResult: pendingResult, pendingMirrorResult },
+      { token, sessionId, pendingGravitasResult: pendingResult, pendingMirrorResult, pendingCodexInteractions },
       {
         onSuccess: (data) => {
           setStatus('success');
           localStorage.removeItem('gravitas_pending_save');
+          localStorage.removeItem('mirrorResult');
+          localStorage.removeItem('pending_save_codex');
           identifyUser(data.user.id, data.user.email);
           const redirectTo = localStorage.getItem("auth_redirect_after_verify") ?? "/workbench/results";
           localStorage.removeItem("auth_redirect_after_verify");

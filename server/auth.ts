@@ -2,7 +2,7 @@ import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { publicProcedure } from "./_core/trpc";
 import { getDb } from "./db";
-import { authTokens, users, gravitasAssessments, gravitasDeltas, userEvents, mirrorReadings, praxisSeasons, praxisReflections } from "../drizzle/schema";
+import { authTokens, users, gravitasAssessments, gravitasDeltas, userEvents, mirrorReadings, praxisSeasons, praxisReflections, codexInteractions } from "../drizzle/schema";
 import { eq, and, gt, desc, aliasedTable } from "drizzle-orm";
 import { Resend } from "resend";
 import { randomBytes } from "crypto";
@@ -106,6 +106,7 @@ export const verifyToken = publicProcedure
     sessionId: z.string(),
     pendingGravitasResult: z.any().optional(),
     pendingMirrorResult: z.any().optional(),
+    pendingCodexInteractions: z.array(z.string()).optional(),
   }))
   .mutation(async ({ input, ctx }) => {
     const db = await getDb();
@@ -206,6 +207,29 @@ export const verifyToken = publicProcedure
           responses: {},
           result: m,
         });
+      }
+    }
+
+    // Retroactive save of Codex interactions if provided
+    if (input.pendingCodexInteractions?.length) {
+      for (const cartridgeId of input.pendingCodexInteractions) {
+        const [existing] = await db
+          .select({ id: codexInteractions.id })
+          .from(codexInteractions)
+          .where(and(
+            eq(codexInteractions.userId, user.id),
+            eq(codexInteractions.cartridgeId, cartridgeId),
+            eq(codexInteractions.action, "saved"),
+          ))
+          .limit(1);
+        if (!existing) {
+          await db.insert(codexInteractions).values({
+            userId: user.id,
+            sessionId: input.sessionId,
+            cartridgeId,
+            action: "saved",
+          });
+        }
       }
     }
 
@@ -599,6 +623,57 @@ export const sendCodexEmail = publicProcedure
       return { success: false };
     }
   });
+
+export const saveCodexInteraction = publicProcedure
+  .input(z.object({ cartridgeIds: z.array(z.string()) }))
+  .mutation(async ({ input, ctx }) => {
+    const magicUser = await getMagicLinkUser(ctx.req.headers.cookie);
+    if (!magicUser) return { persisted: false } as const;
+
+    const db = await getDb();
+    if (!db) return { persisted: false } as const;
+
+    for (const cartridgeId of input.cartridgeIds) {
+      const [existing] = await db
+        .select({ id: codexInteractions.id })
+        .from(codexInteractions)
+        .where(and(
+          eq(codexInteractions.userId, magicUser.id),
+          eq(codexInteractions.cartridgeId, cartridgeId),
+          eq(codexInteractions.action, "saved"),
+        ))
+        .limit(1);
+
+      if (!existing) {
+        await db.insert(codexInteractions).values({
+          userId: magicUser.id,
+          sessionId: "",
+          cartridgeId,
+          action: "saved",
+        });
+      }
+    }
+
+    return { persisted: true } as const;
+  });
+
+export const getSavedCodexCartridges = publicProcedure.query(async ({ ctx }) => {
+  const magicUser = await getMagicLinkUser(ctx.req.headers.cookie);
+  if (!magicUser) return [] as string[];
+
+  const db = await getDb();
+  if (!db) return [] as string[];
+
+  const rows = await db
+    .select({ cartridgeId: codexInteractions.cartridgeId })
+    .from(codexInteractions)
+    .where(and(
+      eq(codexInteractions.userId, magicUser.id),
+      eq(codexInteractions.action, "saved"),
+    ));
+
+  return rows.map(r => r.cartridgeId);
+});
 
 export const saveMirrorReading = publicProcedure
   .input(z.object({
