@@ -238,6 +238,8 @@ export default function MirrorReading() {
       sessionId,
       responses: {},
       result: mirrorResult,
+    }, {
+      onSuccess: () => { localStorage.removeItem("mirrorResult"); },
     });
   }, [mirrorResult, currentUser, sessionId]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -548,6 +550,7 @@ function MirrorSavePrompt({ sessionId }: { sessionId: string }) {
   const handleSubmit = () => {
     if (!email || loading) return;
     setLoading(true);
+    localStorage.setItem("auth_redirect_after_verify", "/workbench/mirror/reading");
     requestLink.mutate(
       { email, sessionId },
       {
