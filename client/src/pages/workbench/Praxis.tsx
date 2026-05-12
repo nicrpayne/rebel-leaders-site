@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { trpc } from "@/lib/trpc";
 import { useLocation } from "wouter";
 import { FIRST_MOVE_CONTEXT, FIRST_MOVE_TO_CARTRIDGE, DELTA_FIELD_NOTES, getDeltaNoteIndex, PRAXIS_REPS } from "@/lib/praxis-data";
+import { CODEX_ENTRIES } from "@/lib/workbench/codex-data";
 
 const BG_IMAGE = "https://pub-26b8c09d5ff84d568bb62f776d03c004.r2.dev/Praxis%20Plugin/Praxis%20Final%20Interactive%20Upscaled%202x.png";
 
@@ -72,6 +73,9 @@ export default function Praxis() {
   }, []);
 
   const [devScreen, setDevScreen] = useState<DevScreen>(null);
+  const [showReflect, setShowReflect] = useState(false);
+  const [navigateView, setNavigateView] = useState<"rep" | "root" | "script">("rep");
+  const [promptIndex, setPromptIndex] = useState(0);
 
   const { data: currentUser } = trpc.auth.me.useQuery();
   const { data: praxisState, isLoading, refetch } = trpc.auth.getPraxisState.useQuery(
@@ -94,9 +98,9 @@ export default function Praxis() {
       />
     );
   } else if (IS_DEV && devScreen === "1b") {
-    panelContent = <ActiveScreen season={MOCK_SEASON} />;
+    panelContent = <ActiveScreen season={MOCK_SEASON} navigateView={navigateView} onReflect={() => { setDevScreen("2"); setPromptIndex(0); }} />;
   } else if (IS_DEV && devScreen === "2") {
-    panelContent = <ReflectionRoom season={MOCK_SEASON} onBack={() => setDevScreen("1b")} isDev />;
+    panelContent = <ReflectionRoom season={MOCK_SEASON} onBack={() => setDevScreen("1b")} isDev promptIndex={promptIndex} />;
   } else if (IS_DEV && devScreen === "3") {
     panelContent = <ComparatorScreen delta={MOCK_DELTA} latestAssessment={praxisState?.latestAssessment ?? null} />;
   } else if (!currentUser) {
@@ -124,7 +128,11 @@ export default function Praxis() {
         />
       );
     } else if (screen === "active" && activeSeason) {
-      panelContent = <ActiveScreen season={activeSeason} />;
+      if (showReflect) {
+        panelContent = <ReflectionRoom season={activeSeason} onBack={() => setShowReflect(false)} promptIndex={promptIndex} />;
+      } else {
+        panelContent = <ActiveScreen season={activeSeason} navigateView={navigateView} onReflect={() => { setShowReflect(true); setPromptIndex(0); }} />;
+      }
     } else if (screen === "compare" && activeSeason && latestDelta) {
       panelContent = <ComparatorScreen delta={latestDelta} latestAssessment={latestAssessment} />;
     }
@@ -198,7 +206,14 @@ export default function Praxis() {
 
         {/* Knob 1 — Navigate (DEV: red hitbox visible) */}
         <div
-          onClick={() => console.log('NAVIGATE clicked')}
+          onClick={() => {
+            if (showReflect || (IS_DEV && devScreen === "2")) {
+              setPromptIndex(prev => (prev + 1) % 4);
+            } else {
+              const order = ["rep", "root", "script"] as const;
+              setNavigateView(prev => order[(order.indexOf(prev) + 1) % 3]);
+            }
+          }}
           style={{
             position: "absolute",
             left: "44.53%",
@@ -216,7 +231,10 @@ export default function Praxis() {
 
         {/* Knob 2 — Commit */}
         <div
-          onClick={() => console.log('COMMIT clicked')}
+          onClick={() => {
+            if (IS_DEV && devScreen === "1b") { setDevScreen("2"); setPromptIndex(0); }
+            else { setShowReflect(true); setPromptIndex(0); }
+          }}
           style={{
             position: "absolute",
             left: "49.56%",
@@ -389,61 +407,147 @@ function LockScreen({ latestAssessment, onLock, locking }: LockScreenProps) {
 // Screen 1b — Active Season (stub)
 // ─────────────────────────────────────────────────
 
-function ActiveScreen({ season }: { season: any }) {
+function ActiveScreen({ season, navigateView, onReflect }: {
+  season: any;
+  navigateView: "rep" | "root" | "script";
+  onReflect: () => void;
+}) {
+  const [displayedView, setDisplayedView] = useState(navigateView);
+  const [textVisible, setTextVisible] = useState(true);
+  const prevViewRef = useRef(navigateView);
+
+  useEffect(() => {
+    if (navigateView !== prevViewRef.current) {
+      prevViewRef.current = navigateView;
+      setTextVisible(false);
+      const t = setTimeout(() => {
+        setDisplayedView(navigateView);
+        setTextVisible(true);
+      }, 150);
+      return () => clearTimeout(t);
+    }
+  }, [navigateView]);
+
+  const daysSinceLock = Math.floor((Date.now() - new Date(season.lockedAt).getTime()) / 86400000);
+  const currentRep = daysSinceLock < 7 ? "day1" : daysSinceLock < 14 ? "day7" : "day14";
+  const repLabel = daysSinceLock < 7 ? "DAY 1" : daysSinceLock < 14 ? "DAY 7" : "DAY 14";
   const rep = PRAXIS_REPS[season.cartridgeId];
-  const ctx = FIRST_MOVE_CONTEXT.find(c => c.firstMove === season.firstMove);
+  const script = CODEX_ENTRIES.find(e => e.id === season.cartridgeId)?.script ?? "";
+
+  const viewLabel = displayedView === "rep" ? "FIELD REP" : displayedView === "root" ? "ROOT NOTE" : "THE SCRIPT";
+  const viewText = displayedView === "rep"
+    ? (rep?.[currentRep] ?? "")
+    : displayedView === "root"
+    ? (rep?.rootNote ?? "")
+    : script;
+
+  // Progress ring: 21 marks around a full circle, starting at 12 o'clock
+  const TOTAL = 21;
+  const allComplete = daysSinceLock >= TOTAL;
+  const todayMark = allComplete ? TOTAL - 1 : Math.min(daysSinceLock, TOTAL - 1);
+  const marks = Array.from({ length: TOTAL }, (_, i) => {
+    const angle = (i / TOTAL) * 2 * Math.PI - Math.PI / 2;
+    return {
+      x: 32 + 24 * Math.cos(angle),
+      y: 32 + 24 * Math.sin(angle),
+      isPast: allComplete || i < daysSinceLock,
+      isToday: !allComplete && i === todayMark,
+    };
+  });
 
   const panelBg: React.CSSProperties = {
     width: "100%",
     height: "100%",
     background: "linear-gradient(to bottom, rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.15) 12%, rgba(0,0,0,0.88) 22%)",
-    padding: "10% 8%",
+    padding: "8% 8% 5%",
     boxSizing: "border-box",
     display: "flex",
     flexDirection: "column",
-    justifyContent: "space-between",
+    gap: "5%",
     overflow: "hidden",
   };
 
   return (
-    <div style={panelBg}>
-      <div>
-        <p style={{ margin: "0 0 4% 0", fontFamily: "'Courier New', monospace", fontSize: "clamp(6px, 1.1cqw, 10px)", letterSpacing: "0.35em", color: "#4ade80", textTransform: "uppercase" }}>
-          Season Active
+    <>
+      <style>{`
+        @keyframes praxis-mark-pulse {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.35; }
+        }
+      `}</style>
+      <div style={panelBg}>
+        {/* Header: firstMove + repLabel (left) · progress ring (right) */}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexShrink: 0 }}>
+          <div style={{ flex: 1, paddingRight: "4%" }}>
+            <p style={{ margin: 0, fontFamily: "'Courier New', monospace", fontSize: "clamp(7px, 1.4cqw, 12px)", letterSpacing: "0.2em", color: "#d4a853", textTransform: "uppercase", fontWeight: "bold", lineHeight: 1.2 }}>
+              {season.firstMove}
+            </p>
+            <p style={{ margin: "5% 0 0", fontFamily: "'Courier New', monospace", fontSize: "clamp(5px, 0.9cqw, 8px)", letterSpacing: "0.35em", color: "#b8860b", textTransform: "uppercase" }}>
+              {repLabel}
+            </p>
+          </div>
+          <svg width={64} height={64} style={{ flexShrink: 0, overflow: "visible" }}>
+            {marks.map(({ x, y, isPast, isToday }, i) => (
+              <circle
+                key={i}
+                cx={x}
+                cy={y}
+                r={isToday ? 3.5 : 2.5}
+                fill={isPast || isToday ? "#c4943c" : "rgba(255,255,255,0.1)"}
+                style={isToday ? { animation: "praxis-mark-pulse 2s ease-in-out infinite" } : undefined}
+              />
+            ))}
+          </svg>
+        </div>
+
+        {/* Navigate view label */}
+        <p style={{ margin: 0, flexShrink: 0, fontFamily: "'Courier New', monospace", fontSize: "clamp(4px, 0.75cqw, 7px)", letterSpacing: "0.4em", color: "#4a5e4c", textTransform: "uppercase" }}>
+          {viewLabel}
         </p>
-        <p style={{ margin: "0 0 2% 0", fontFamily: "'Courier New', monospace", fontSize: "clamp(7px, 1.5cqw, 13px)", letterSpacing: "0.2em", color: "#d4a853", textTransform: "uppercase", fontWeight: "bold", lineHeight: 1.2 }}>
-          {season.firstMove}
-        </p>
-        {ctx && (
-          <p style={{ margin: 0, fontFamily: "Georgia, serif", fontSize: "clamp(6px, 1.05cqw, 10px)", fontStyle: "italic", color: "#6a7e6c", lineHeight: 1.5 }}>
-            {ctx.seasonSummary}
+
+        {/* Main text — fades out 150ms / in 300ms on view change */}
+        <div
+          style={{
+            flex: 1,
+            overflow: "hidden",
+            opacity: textVisible ? 1 : 0,
+            transition: textVisible ? "opacity 0.3s ease" : "opacity 0.15s ease",
+          }}
+        >
+          <p style={{ margin: 0, fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(9px, 1.6cqw, 15px)", color: "#c8b898", lineHeight: 1.7 }}>
+            {viewText}
+          </p>
+        </div>
+
+        {/* Reflect button */}
+        <button
+          onClick={onReflect}
+          style={{
+            flexShrink: 0,
+            background: "none",
+            border: "1px solid #b8860b",
+            borderRadius: 2,
+            padding: "4% 6%",
+            cursor: "pointer",
+            fontFamily: "'Courier New', monospace",
+            fontSize: "clamp(5px, 1cqw, 9px)",
+            letterSpacing: "0.3em",
+            color: "#d4a853",
+            textTransform: "uppercase",
+            transition: "opacity 0.15s",
+          }}
+        >
+          I SHOWED UP — REFLECT →
+        </button>
+
+        {/* rootNote — persistent formation reminder, hidden when root view is already showing it */}
+        {rep && displayedView !== "root" && (
+          <p style={{ margin: 0, flexShrink: 0, fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(6px, 0.95cqw, 9px)", fontStyle: "italic", color: "#3a4e3c", lineHeight: 1.5 }}>
+            {rep.rootNote}
           </p>
         )}
       </div>
-
-      {rep && (
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "4%", marginTop: "6%" }}>
-          {[{ label: "Day 1", text: rep.day1 }, { label: "Day 7", text: rep.day7 }, { label: "Day 14", text: rep.day14 }].map(({ label, text }) => (
-            <div key={label}>
-              <p style={{ margin: "0 0 1.5% 0", fontFamily: "'Courier New', monospace", fontSize: "clamp(5px, 0.9cqw, 8px)", letterSpacing: "0.3em", color: "#b8860b", textTransform: "uppercase" }}>
-                {label}
-              </p>
-              <p style={{ margin: 0, fontFamily: "Georgia, serif", fontSize: "clamp(6px, 1cqw, 9px)", color: "#6a7e6c", lineHeight: 1.5 }}>
-                {text}
-              </p>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {rep && (
-        <div style={{ borderTop: "1px solid #1a2a1a", paddingTop: "4%", marginTop: "2%" }}>
-          <p style={{ margin: 0, fontFamily: "Georgia, serif", fontSize: "clamp(6px, 0.95cqw, 9px)", fontStyle: "italic", color: "#4a5e4c", lineHeight: 1.5 }}>
-            {rep.rootNote}
-          </p>
-        </div>
-      )}
-    </div>
+    </>
   );
 }
 
@@ -452,20 +556,35 @@ function ActiveScreen({ season }: { season: any }) {
 // ─────────────────────────────────────────────────
 
 const REFLECTION_PROMPTS = [
-  "WHAT HAPPENED?",
-  "WHAT RESISTED YOU?",
-  "WHAT SURPRISED YOU?",
-  "DID THE FIELD SHIFT?",
-] as const;
+  "What happened when you ran this?",
+  "What resisted you?",
+  "What surprised you?",
+  "Did the field shift?",
+];
 
 interface ReflectionRoomProps {
   season: any;
   onBack: () => void;
   isDev?: boolean;
+  promptIndex: number;
 }
 
-function ReflectionRoom({ season, onBack, isDev }: ReflectionRoomProps) {
-  const [answers, setAnswers] = useState<Record<string, string>>({});
+function ReflectionRoom({ season, onBack, isDev, promptIndex }: ReflectionRoomProps) {
+  const [, navigate] = useLocation();
+  const [hasSeenAll, setHasSeenAll] = useState(false);
+
+  const saveReflectionMutation = trpc.auth.saveReflection.useMutation({
+    onSuccess: () => onBack(),
+  });
+
+  const daysSinceLock = Math.floor((Date.now() - new Date(season.lockedAt).getTime()) / 86400000);
+  const currentDay: 1 | 7 | 14 = daysSinceLock < 7 ? 1 : daysSinceLock < 14 ? 7 : 14;
+
+  useEffect(() => {
+    if (promptIndex === 3) setHasSeenAll(true);
+  }, [promptIndex]);
+
+  const prompt = REFLECTION_PROMPTS[promptIndex];
 
   const panelBg: React.CSSProperties = {
     width: "100%",
@@ -475,24 +594,9 @@ function ReflectionRoom({ season, onBack, isDev }: ReflectionRoomProps) {
     boxSizing: "border-box",
     display: "flex",
     flexDirection: "column",
-    gap: "3%",
+    gap: "4%",
     overflow: "hidden",
   };
-
-  const taStyle: React.CSSProperties = {
-    width: "100%",
-    background: "rgba(0,0,0,0.55)",
-    border: "1px solid rgba(196,148,60,0.3)",
-    borderRadius: 1,
-    color: "#c8b898",
-    fontFamily: "Georgia, serif",
-    fontSize: "clamp(6px, 1cqw, 9px)",
-    lineHeight: 1.5,
-    padding: "4px 6px",
-    resize: "none",
-    outline: "none",
-    rows: 3,
-  } as React.CSSProperties;
 
   const btnBase: React.CSSProperties = {
     flex: 1,
@@ -510,41 +614,67 @@ function ReflectionRoom({ season, onBack, isDev }: ReflectionRoomProps) {
 
   function handleAction(mode: "private" | "witness" | "wall") {
     if (isDev) {
-      console.log("[Dev] ReflectionRoom submit:", mode, answers);
+      console.log("[Dev] ReflectionRoom submit:", mode);
       onBack();
       return;
     }
-    // TODO: wire tRPC saveReflection
+    if (mode === "private") {
+      // response: "private" is a sentinel — candidate for a proper action column when schema gets a migration pass (same time as witnessEmail)
+      saveReflectionMutation.mutate({ seasonId: season.id, day: currentDay, response: "private" });
+      return;
+    }
+    if (mode === "wall") {
+      try { localStorage.setItem("praxis_wall_return_season", String(season.id)); } catch {}
+      navigate("/workbench/wall");
+      return;
+    }
+    // TODO: witness (send email to season.witnessEmail)
   }
 
   return (
     <div style={panelBg}>
-      <p style={{ margin: 0, fontFamily: "var(--font-pixel)", fontSize: "clamp(5px, 0.9cqw, 8px)", letterSpacing: "0.3em", color: "#b8860b", textTransform: "uppercase" }}>
+      {/* Header */}
+      <p style={{ margin: 0, flexShrink: 0, fontFamily: "var(--font-pixel)", fontSize: "clamp(5px, 0.9cqw, 8px)", letterSpacing: "0.3em", color: "#b8860b", textTransform: "uppercase" }}>
         REFLECTION ROOM — CLOSE THE LOOP
       </p>
 
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "4%", overflow: "hidden" }}>
-        {REFLECTION_PROMPTS.map((prompt) => (
-          <div key={prompt} style={{ display: "flex", flexDirection: "column", gap: "2%" }}>
-            <p style={{ margin: 0, fontFamily: "var(--font-pixel)", fontSize: "clamp(4px, 0.7cqw, 6px)", letterSpacing: "0.25em", color: "#4a5e4c", textTransform: "uppercase" }}>
-              {prompt}
-            </p>
-            <textarea
-              rows={2}
-              value={answers[prompt] ?? ""}
-              onChange={(e) => setAnswers(prev => ({ ...prev, [prompt]: e.target.value }))}
-              style={taStyle}
-              placeholder=""
-            />
-          </div>
+      {/* Prompt label */}
+      <p style={{ margin: 0, flexShrink: 0, fontFamily: "'Courier New', monospace", fontSize: "clamp(4px, 0.75cqw, 7px)", letterSpacing: "0.4em", color: "#4a5e4c", textTransform: "uppercase" }}>
+        PROMPT {promptIndex + 1} OF 4
+      </p>
+
+      {/* Prompt text — centered, large */}
+      <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
+        <p style={{ margin: 0, fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(14px, 2.4cqw, 22px)", color: "#c8b898", lineHeight: 1.7, textAlign: "center" }}>
+          {prompt}
+        </p>
+      </div>
+
+      {/* Dot indicators */}
+      <div style={{ display: "flex", gap: "8px", justifyContent: "center", flexShrink: 0 }}>
+        {[0, 1, 2, 3].map(i => (
+          <span
+            key={i}
+            style={{
+              display: "inline-block",
+              width: 6,
+              height: 6,
+              borderRadius: "50%",
+              background: i <= promptIndex ? "#c4943c" : "rgba(255,255,255,0.12)",
+              transition: "background 0.2s ease",
+            }}
+          />
         ))}
       </div>
 
-      <div style={{ display: "flex", gap: "3%", marginTop: "2%" }}>
-        <button style={btnBase} onClick={() => handleAction("private")}>KEEP PRIVATE</button>
-        <button style={btnBase} onClick={() => handleAction("witness")}>SEND TO WITNESS</button>
-        <button style={{ ...btnBase, color: "rgba(196,148,60,0.9)", borderColor: "rgba(196,148,60,0.55)" }} onClick={() => handleAction("wall")}>POST TO THE WALL →</button>
-      </div>
+      {/* Exit buttons — only after all four prompts seen */}
+      {hasSeenAll && (
+        <div style={{ display: "flex", gap: "3%", flexShrink: 0 }}>
+          <button style={btnBase} onClick={() => handleAction("private")}>KEEP PRIVATE</button>
+          <button style={btnBase} onClick={() => handleAction("witness")}>SEND TO WITNESS</button>
+          <button style={{ ...btnBase, color: "rgba(196,148,60,0.9)", borderColor: "rgba(196,148,60,0.55)" }} onClick={() => handleAction("wall")}>POST TO THE WALL →</button>
+        </div>
+      )}
     </div>
   );
 }
