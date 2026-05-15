@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { trpc } from "@/lib/trpc";
-import { useLocation } from "wouter";
+import { useLocation, useSearch } from "wouter";
 import { FIRST_MOVE_CONTEXT, FIRST_MOVE_TO_CARTRIDGE, DELTA_FIELD_NOTES, getDeltaNoteIndex, PRAXIS_REPS } from "@/lib/praxis-data";
 import { CODEX_ENTRIES } from "@/lib/workbench/codex-data";
 
@@ -87,6 +87,9 @@ export default function Praxis() {
     onSuccess: () => refetch(),
   });
 
+  const searchString = useSearch();
+  const urlCartridgeId = new URLSearchParams(searchString).get("cartridge") ?? undefined;
+
   // Dev overrides — local only, no DB
   let panelContent: React.ReactNode;
   if (IS_DEV && devScreen === "1a") {
@@ -95,6 +98,7 @@ export default function Praxis() {
         latestAssessment={MOCK_ASSESSMENT}
         onLock={() => {}}
         locking={false}
+        urlCartridgeId={urlCartridgeId}
       />
     );
   } else if (IS_DEV && devScreen === "1b") {
@@ -125,6 +129,7 @@ export default function Praxis() {
             lockMutation.mutate({ cartridgeId, firstMove, sessionNumberAtLock: sessionNumber })
           }
           locking={lockMutation.isPending}
+          urlCartridgeId={urlCartridgeId}
         />
       );
     } else if (screen === "active" && activeSeason) {
@@ -312,13 +317,16 @@ interface LockScreenProps {
   latestAssessment: { firstMove: string; sessionNumber: number } | null;
   onLock: (cartridgeId: string, firstMove: string, sessionNumber: number) => void;
   locking: boolean;
+  urlCartridgeId?: string;
 }
 
-function LockScreen({ latestAssessment, onLock, locking }: LockScreenProps) {
+function LockScreen({ latestAssessment, onLock, locking, urlCartridgeId }: LockScreenProps) {
   const firstMove = latestAssessment?.firstMove ?? null;
   const sessionNumber = latestAssessment?.sessionNumber ?? 1;
   const ctx = firstMove ? FIRST_MOVE_CONTEXT.find(c => c.firstMove === firstMove) : null;
-  const cartridgeId = firstMove ? FIRST_MOVE_TO_CARTRIDGE[firstMove] : null;
+  const cartridgeId = (urlCartridgeId && CODEX_ENTRIES.some(e => e.id === urlCartridgeId))
+    ? urlCartridgeId
+    : (firstMove ? FIRST_MOVE_TO_CARTRIDGE[firstMove] : null);
   const rep = cartridgeId ? PRAXIS_REPS[cartridgeId] : null;
 
   const panelBg: React.CSSProperties = {

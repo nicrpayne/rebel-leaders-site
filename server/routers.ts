@@ -25,6 +25,7 @@ import {
   sendCodexEmail,
   saveCodexInteraction,
   getSavedCodexCartridges,
+  getFormationPortrait,
 } from "./auth";
 
 export const appRouter = router({
@@ -71,6 +72,7 @@ export const appRouter = router({
     sendCodexEmail,
     saveCodexInteraction,
     getSavedCodexCartridges,
+    getFormationPortrait,
   }),
 
   // Substack RSS feed integration

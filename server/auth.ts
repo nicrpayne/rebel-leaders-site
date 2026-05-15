@@ -3,7 +3,7 @@ import { TRPCError } from "@trpc/server";
 import { publicProcedure } from "./_core/trpc";
 import { getDb } from "./db";
 import { authTokens, users, gravitasAssessments, gravitasDeltas, userEvents, mirrorReadings, praxisSeasons, praxisReflections, codexInteractions } from "../drizzle/schema";
-import { eq, and, gt, desc, aliasedTable } from "drizzle-orm";
+import { eq, and, gt, desc, aliasedTable, count } from "drizzle-orm";
 import { Resend } from "resend";
 import { randomBytes } from "crypto";
 import { magicLinkEmail } from "./emails/magic-link";
@@ -753,4 +753,69 @@ export const getLatestMirrorReading = publicProcedure.query(async ({ ctx }) => {
     .limit(1);
 
   return last || null;
+});
+
+export const getFormationPortrait = publicProcedure.query(async ({ ctx }) => {
+  const magicUser = await getMagicLinkUser(ctx.req.headers.cookie);
+  if (!magicUser) return null;
+
+  const db = await getDb();
+  if (!db) return null;
+
+  // All assessments ascending — dimensionScores JSON holds { identity, relationship, vision, culture }
+  const assessments = await db
+    .select({
+      id: gravitasAssessments.id,
+      sessionNumber: gravitasAssessments.sessionNumber,
+      dimensionScores: gravitasAssessments.dimensionScores,
+      archetype: gravitasAssessments.archetype,
+      leak: gravitasAssessments.leak,
+      force: gravitasAssessments.force,
+      firstMove: gravitasAssessments.firstMove,
+      createdAt: gravitasAssessments.createdAt,
+    })
+    .from(gravitasAssessments)
+    .where(eq(gravitasAssessments.userId, magicUser.id))
+    .orderBy(gravitasAssessments.createdAt);
+
+  // All deltas ascending
+  const deltas = await db
+    .select()
+    .from(gravitasDeltas)
+    .where(eq(gravitasDeltas.userId, magicUser.id))
+    .orderBy(gravitasDeltas.createdAt);
+
+  // All seasons ascending
+  const seasons = await db
+    .select({
+      id: praxisSeasons.id,
+      cartridgeId: praxisSeasons.cartridgeId,
+      firstMove: praxisSeasons.firstMove,
+      status: praxisSeasons.status,
+      lockedAt: praxisSeasons.lockedAt,
+      completedAt: praxisSeasons.completedAt,
+    })
+    .from(praxisSeasons)
+    .where(eq(praxisSeasons.userId, magicUser.id))
+    .orderBy(praxisSeasons.lockedAt);
+
+  // Reflection count per season for this user
+  const reflectionRows = await db
+    .select({
+      seasonId: praxisReflections.seasonId,
+      count: count(),
+    })
+    .from(praxisReflections)
+    .where(eq(praxisReflections.userId, magicUser.id))
+    .groupBy(praxisReflections.seasonId);
+
+  const reflectionCounts: Record<number, number> = {};
+  for (const row of reflectionRows) {
+    reflectionCounts[row.seasonId] = row.count;
+  }
+
+  // wallSubmissions has no userId column — offering count pending schema migration
+  const wallOfferingCount = 0;
+
+  return { assessments, deltas, seasons, reflectionCounts, wallOfferingCount };
 });
