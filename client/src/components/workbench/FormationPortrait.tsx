@@ -99,11 +99,8 @@ export default function FormationPortrait({ data }: { data: FormationData | null
 
   if (!data || data.assessments.length === 0) {
     return (
-      <div
-        className="w-full rounded-lg flex items-center justify-center py-16 px-6"
-        style={{ background: "#09100a", border: "1px solid rgba(196,148,60,0.12)" }}
-      >
-        <p style={{ ...MONO, color: "rgba(196,148,60,0.45)", fontSize: 10, letterSpacing: "0.22em", textTransform: "uppercase" }}>
+      <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <p style={{ fontFamily: "'Courier New', monospace", fontSize: "clamp(6px, 1.1cqw, 10px)", letterSpacing: "0.35em", color: "rgba(196,148,60,0.4)", textTransform: "uppercase", margin: 0 }}>
           Run Gravitas to begin your formation record
         </p>
       </div>

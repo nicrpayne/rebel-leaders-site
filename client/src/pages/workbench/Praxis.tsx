@@ -2,7 +2,8 @@ import React, { useState, useCallback, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { trpc } from "@/lib/trpc";
 import { useLocation, useSearch } from "wouter";
-import { FIRST_MOVE_CONTEXT, FIRST_MOVE_TO_CARTRIDGE, DELTA_FIELD_NOTES, getDeltaNoteIndex, PRAXIS_REPS } from "@/lib/praxis-data";
+import { FIRST_MOVE_CONTEXT, FIRST_MOVE_TO_CARTRIDGE, PRAXIS_REPS } from "@/lib/praxis-data";
+import FormationPortrait from "@/components/workbench/FormationPortrait";
 import { CODEX_ENTRIES } from "@/lib/workbench/codex-data";
 
 const BG_IMAGE = "https://pub-26b8c09d5ff84d568bb62f776d03c004.r2.dev/Praxis%20Plugin/Praxis%20Final%20Interactive%20Upscaled%202x.png";
@@ -45,20 +46,6 @@ const MOCK_ASSESSMENT = {
   createdAt: new Date(),
 };
 
-const MOCK_DELTA = {
-  identityDelta: "0.4",
-  relationshipDelta: "-0.3",
-  visionDelta: "0.7",
-  cultureDelta: "0.1",
-  archetypeShift: false,
-  leakShift: true,
-  previousArchetype: "FRICTION BELT",
-  currentArchetype: "COMPENSATION ORBIT",
-  previousLeak: "RELATIONSHIP",
-  currentLeak: "VISION",
-  previousDate: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
-  currentDate: new Date(),
-};
 
 type DevScreen = "1a" | "1b" | "2" | "3" | null;
 
@@ -78,6 +65,10 @@ export default function Praxis() {
   const [promptIndex, setPromptIndex] = useState(0);
 
   const { data: currentUser } = trpc.auth.me.useQuery();
+  const { data: portraitData } = trpc.auth.getFormationPortrait.useQuery(
+    undefined,
+    { enabled: !!currentUser }
+  );
   const { data: praxisState, isLoading, refetch } = trpc.auth.getPraxisState.useQuery(
     undefined,
     { enabled: !!currentUser }
@@ -106,7 +97,7 @@ export default function Praxis() {
   } else if (IS_DEV && devScreen === "2") {
     panelContent = <ReflectionRoom season={MOCK_SEASON} onBack={() => setDevScreen("1b")} isDev promptIndex={promptIndex} />;
   } else if (IS_DEV && devScreen === "3") {
-    panelContent = <ComparatorScreen delta={MOCK_DELTA} latestAssessment={praxisState?.latestAssessment ?? null} />;
+    panelContent = <FormationPortrait data={portraitData as any} />;
   } else if (!currentUser) {
     panelContent = <PanelMessage text="Sign in to access Praxis" />;
   } else if (isLoading || !praxisState) {
@@ -139,7 +130,7 @@ export default function Praxis() {
         panelContent = <ActiveScreen season={activeSeason} navigateView={navigateView} onReflect={() => { setShowReflect(true); setPromptIndex(0); }} />;
       }
     } else if (screen === "compare" && activeSeason && latestDelta) {
-      panelContent = <ComparatorScreen delta={latestDelta} latestAssessment={latestAssessment} />;
+      panelContent = <FormationPortrait data={portraitData as any} />;
     }
   }
 
@@ -688,71 +679,6 @@ function ReflectionRoom({ season, onBack, isDev, promptIndex }: ReflectionRoomPr
 }
 
 // ─────────────────────────────────────────────────
-// Screen 3 — Comparator (below frame, stub)
-// ─────────────────────────────────────────────────
-
-function ComparatorScreen({ delta, latestAssessment }: { delta: any; latestAssessment: any }) {
-  const noteIndex = getDeltaNoteIndex({
-    identityDelta: parseFloat(delta.identityDelta),
-    relationshipDelta: parseFloat(delta.relationshipDelta),
-    visionDelta: parseFloat(delta.visionDelta),
-    cultureDelta: parseFloat(delta.cultureDelta),
-    archetypeShift: delta.archetypeShift,
-    leakShift: delta.leakShift,
-    previousArchetype: delta.previousArchetype ?? "",
-    currentArchetype: delta.currentArchetype ?? "",
-  });
-  const note = DELTA_FIELD_NOTES[noteIndex];
-
-  const panelBg: React.CSSProperties = {
-    width: "100%",
-    height: "100%",
-    background: "linear-gradient(to bottom, rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.15) 12%, rgba(0,0,0,0.88) 22%)",
-    padding: "10% 8%",
-    boxSizing: "border-box",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
-    overflow: "hidden",
-  };
-
-  return (
-    <div style={panelBg}>
-      <div>
-        <p style={{ margin: "0 0 4% 0", fontFamily: "'Courier New', monospace", fontSize: "clamp(6px, 1.1cqw, 10px)", letterSpacing: "0.35em", color: "#38bdf8", textTransform: "uppercase" }}>
-          Field Intelligence
-        </p>
-        {latestAssessment && (
-          <p style={{ margin: "0 0 4% 0", fontFamily: "'Courier New', monospace", fontSize: "clamp(7px, 1.5cqw, 13px)", letterSpacing: "0.2em", color: "#d4a853", textTransform: "uppercase", fontWeight: "bold", lineHeight: 1.2 }}>
-            {latestAssessment.archetype}
-          </p>
-        )}
-      </div>
-
-      <p style={{ margin: 0, fontFamily: "Georgia, serif", fontSize: "clamp(6px, 1.1cqw, 10px)", color: "#c8b898", lineHeight: 1.7 }}>
-        {note}
-      </p>
-
-      <div style={{ borderTop: "1px solid #1a2a1a", paddingTop: "4%", marginTop: "2%", display: "flex", gap: "8%" }}>
-        {[
-          { label: "Identity", delta: parseFloat(delta.identityDelta), color: "#4ade80" },
-          { label: "Relation", delta: parseFloat(delta.relationshipDelta), color: "#38bdf8" },
-          { label: "Vision", delta: parseFloat(delta.visionDelta), color: "#facc15" },
-          { label: "Culture", delta: parseFloat(delta.cultureDelta), color: "#a78bfa" },
-        ].map(({ label, delta: d, color }) => (
-          <div key={label} style={{ flex: 1, textAlign: "center" }}>
-            <p style={{ margin: "0 0 2% 0", fontFamily: "'Courier New', monospace", fontSize: "clamp(4px, 0.8cqw, 7px)", letterSpacing: "0.25em", color: "#4a5e4c", textTransform: "uppercase" }}>
-              {label}
-            </p>
-            <p style={{ margin: 0, fontFamily: "Georgia, serif", fontSize: "clamp(6px, 1.2cqw, 11px)", color: d >= 0 ? color : "#ef4444" }}>
-              {d >= 0 ? "+" : ""}{d.toFixed(1)}
-            </p>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
 
 // ─────────────────────────────────────────────────
 // Dev-only: screen-forcing utility panel
