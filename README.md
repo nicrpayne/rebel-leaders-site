@@ -85,13 +85,37 @@ The Workbench at `/workbench` is the hub for interactive leadership tools. It fo
 
 **The Codex** (`/workbench/codex`) is a library of 27 high-leverage leadership scripts and protocols displayed in a physical cabinet UI with CRT monitors, cartridge slots, and category filters (Identity, Relationship, Vision, Culture). The ReaderPanel features a typewriter heading animation, word-reveal text, audio narration with a VU meter, and rotary knob controls. First-time visitors see a first-run onboarding flow: a `CodexWelcome` modal (full-screen, dark/gold palette, ARCHIVE ACCESS GRANTED header, vault readouts) followed by a three-step `CodexTour` spotlight that highlights the cartridge shelf, SCAN button, and READ button in sequence. Onboarding state is stored in `localStorage` under `codex_intro_seen`. Each cartridge entry includes 5 Keys root health fields (`root_distortion`, `before_you_run`, `what_this_nourishes`, `keys_primary`, `keys_secondary`, `keys_notes`). Loading a cartridge fires a `codex_loaded` analytics event tagged with whether the user arrived from a Gravitas side-chain.
 
-**Praxis** (`/workbench/praxis`) is the active practice layer and the third stage of the instrument loop. After Gravitas diagnoses a leader's gravity and the Codex surfaces the right protocol, Praxis is where the work actually happens. A user locks a season by selecting one Codex cartridge as their active protocol, then works through three rep checkpoints (Day 1, Day 7, Day 14). At each checkpoint, the Reflection Room presents four guided prompts. After a second Gravitas scan, the Comparator screen surfaces the user's delta across all four dimensions — rendering transformation as data rather than aspiration. First-time visitors see a `PraxisWelcome` onboarding modal (localStorage key: `praxis_intro_seen`). Season and reflection data is persisted server-side via `auth.getPraxisState`, `auth.lockPraxisSeason`, and `auth.saveReflection`. Client-side content lives in `client/src/lib/praxis-data.ts` — DELTA_FIELD_NOTES (19 narrative strings), FIRST_MOVE_CONTEXT (5 entries), PRAXIS_REPS (27 cartridge rep plans with Day 1/7/14 reps and rootNote), and FIRST_MOVE_TO_CARTRIDGE mapping.
+**Praxis** (`/workbench/praxis`) is the active practice layer and the third stage of the instrument loop. After Gravitas diagnoses a leader's gravity and the Codex surfaces the right protocol, Praxis is where the work actually happens. A user locks a season by selecting one Codex cartridge as their active protocol, then works through three rep checkpoints (Day 1, Day 7, Day 14). Each checkpoint shows one rep at a time — the current rep based on days since the season was locked — with a 21-mark progress ring showing where they are in the season. The Navigate knob cycles between three views: the Field Rep, the Root Note, and The Script. When ready to reflect, the user hits "I SHOWED UP — REFLECT →" which routes to the Reflection Room. The Reflection Room presents four guided prompts one at a time (What happened when you ran this? / What resisted you? / What surprised you? / Did the field shift?) — display-only, no text inputs. The user writes in their physical journal and returns to close the loop via KEEP PRIVATE (saves a reflection row with a sentinel response), POST TO THE WALL (routes to The Wall with a return flag in localStorage), or SEND TO WITNESS (button present, pending witnessEmail schema migration). After a second Gravitas scan, Screen 3 renders the Formation Portrait — a seismograph-style visualization of the user's formation arc across all scans, with three tabs: Formation Arc (four dimension lines animated across scan points, season bands, delta summary cards, field offerings count), Season Log (per-season cards that expand to show reps, root note, and reflection count), and Field Intelligence (pattern detection card + archetype reading). First-time visitors see a `PraxisWelcome` onboarding modal (localStorage key: `praxis_intro_seen`). Season and reflection data is persisted server-side via `auth.getPraxisState`, `auth.lockPraxisSeason`, `auth.saveReflection`, and `auth.getFormationPortrait`. Client-side content lives in `client/src/lib/praxis-data.ts` — FIRST_MOVE_CONTEXT (5 entries), PRAXIS_REPS (27 cartridge rep plans with Day 1/7/14 reps and rootNote), and FIRST_MOVE_TO_CARTRIDGE mapping.
 
 ### The Instrument Chain: Gravitas → Codex → Praxis
 
 After completing a Gravitas scan, the Results page offers a "Side-Chain" button that passes the user's lowest-scoring dimension (the "leak") and full signal data to the Codex via URL params (`?signal=received&bottleneck=IDENTITY&firstMove=...`). The Codex uses a scoring algorithm (`getBestCartridge`) to select the highest-priority protocol for that signal, auto-loads it with a scan animation, and displays a signal banner — creating a guided remediation flow from diagnosis to action.
 
-Once a protocol is identified, the user can proceed to Praxis to lock that cartridge as their active season. After completing the three-rep sequence and running Gravitas a second time, the Comparator closes the loop by surfacing dimension-level deltas — turning the full instrument chain into a measurable transformation arc.
+Once a protocol is identified, the user can proceed to Praxis to lock that cartridge as their active season. After completing the three-rep sequence and running Gravitas a second time, Screen 3 opens the Formation Portrait — a seismograph of formation across all scans, turning the full instrument chain into a visible arc of change.
+
+### The Instrument Chain: Full User Journey
+
+A first-time visitor typically arrives through content — an essay, a video, a LinkedIn post that names something they couldn't name. They land on the site and find a world, not a product page. They might spend time on the Manifesto, explore the Shelf, play the side-scroller. At some point, something pulls them toward the Workbench.
+
+They run Gravitas. Fifteen questions, three minutes. They turn a rotary knob for each one — a small tactile ritual that slows them down enough to answer honestly. The results name their archetype, their leak, their force. For many users, this is the first moment: *this named something I couldn't name.* The Results page offers to save their reading. They enter their email. A magic link arrives. They click it. An account exists now — their formation record has begun.
+
+The Side-Chain button passes their signal to the Codex. The Codex loads a cartridge — the highest-ranked protocol for their specific bottleneck. They read it. They recognize the situation it describes. They save it. They might run it in their next meeting that afternoon.
+
+Later — days or weeks — they come back. They lock the cartridge into Praxis. This is the commitment: not just reading a protocol, but choosing to practice it for 21 days. The instrument acknowledges the season has begun.
+
+Each day they return to Praxis, Screen 1b shows them where they are. Day 7 looks different from Day 1 — more relational risk, more exposure required. The Navigate knob lets them revisit the Root Note (what this season is tending at the root level) or The Script (the verbatim line they carry into the field). The 21-mark progress ring shows how far they've come. When they've done the work, they hit I SHOWED UP — REFLECT →.
+
+The Reflection Room holds four questions. They write in their physical journal. They return and close the loop — keeping it private, sending it to the Wall, or naming a witness. The instrument records that they showed up.
+
+After the season — or partway through if something shifts — they run Gravitas again. The second scan is different from the first. They know what the questions mean now. They've been in the field.
+
+Screen 3 opens the Formation Portrait. The seismograph draws in — four dimension lines across two scan points, the season band between them, the delta made visible. Identity moved. Relationship moved. Vision dipped — the system getting honest before it gets clear. A pattern is detected and named. Season 2 is already being shaped by what Season 1 revealed.
+
+Over months and years, the Formation Portrait becomes something genuinely rare: a record of a person becoming someone different. Not a fitness tracker. Not a compliance log. A seismograph of formation — honest about the nonlinear nature of growth, built for the long arc, designed to be carried across jobs and organizations and seasons of life.
+
+The Wall runs alongside all of this. At any point in a season, if something breaks open — a conversation that moved something, a truth that cost something — the user can leave an offering. Anonymous, handwritten, given to whoever needs it. The field receives it. Someone they'll never meet may find their footing because of what was left.
+
+This is the full instrument. Diagnosis. Interpretation. Practice. Reflection. Witness. Formation made visible over time.
 
 ### All 15 Plugins
 
@@ -336,6 +360,7 @@ client/
     pages/AuthVerify.tsx          → Magic-link verification callback
     components/                   → Shared components (Navigation, Footer, GameHud, DialogueBox, etc.)
     components/workbench/         → Plugin components (GravitasShell, CabinetDeck, CodexShelf, ReaderPanel, etc.)
+    components/workbench/FormationPortrait.tsx → Formation Portrait visualization — three-tab seismograph view of the user's formation arc (Formation Arc, Season Log, Field Intelligence)
     components/SaveReadingPrompt.tsx → Email capture shown on Results when unauthenticated
     components/ui/                → shadcn/ui component library
     contexts/
@@ -409,6 +434,7 @@ The server exposes all procedures through `/api/trpc` via tRPC v11. All procedur
 | `auth.getPraxisState` | query | Returns the user's Praxis state: active season (with reflections), latest Gravitas assessment, latest delta, and session count. No-ops if unauthenticated |
 | `auth.lockPraxisSeason` | mutation | Closes any existing active season and opens a new one. Input: `{ cartridgeId, firstMove, sessionNumberAtLock }` |
 | `auth.saveReflection` | mutation | Saves a checkpoint reflection for the active season. Input: `{ seasonId, day: 1 | 7 | 14, response }` |
+| `auth.getFormationPortrait` | query | Returns full formation history for the authenticated user: all `gravitas_assessments` (with `dimensionScores` JSON), all `gravitas_deltas`, all `praxis_seasons`, reflection counts per season, and wall offering count (0 until `wallSubmissions` gets a `userId` column). Returns null if unauthenticated. Powers the Formation Portrait component. |
 
 ### `youtube` namespace
 
