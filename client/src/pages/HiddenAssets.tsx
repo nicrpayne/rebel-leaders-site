@@ -164,7 +164,7 @@ const ASSETS: Asset[] = [
     name: "Hope Is Rebellious (8-bit)",
     description: "Pixel art 'Hope Is Rebellious' banner image used in the Manifesto.",
     category: "texture",
-    url: "https://private-us-east-1.manuscdn.com/sessionFile/xhIF6cqEZNRR3ezVrvcq6V/sandbox/XEp7JhlUZSYOHCylU47BD6-img-1_1771697605000_na1fn_aG9wZS1pcy1yZWJlbGxpb3VzLThiaXQ.png?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUveGhJRjZjcUVaTlJSM2V6VnJ2Y3E2Vi9zYW5kYm94L1hFcDdKaGxVWlNZT0hDeWxVNDdCRDYtaW1nLTFfMTc3MTY5NzYwNTAwMF9uYTFmbl9hRzl3WlMxcGN5MXlaV0psYkd4cGIzVnpMVGhpYVhRLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSx3XzE5MjAsaF8xOTIwL2Zvcm1hdCx3ZWJwL3F1YWxpdHkscV84MCIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5ODc2MTYwMH19fV19&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=lH4pj8IuTDz9V4l5t11urTdwZmR9CfGvggQo5mmZXCFAeXukFYnVCXDtB4E7K1CWCC76~MxTT5rGi0NzR7ufrH9pxayb0hJp6zip4w2dBiiNoT5Zc3F~dCOlXbHLzZcg6UpUdhlhNStkT~5xZPi2lMfh0QDdG~9ZVio6KKd4GFHhm-GVgFyVBQ6LpN6cMQhseN72xgKBnWS-6nCfL0CXECfXkRqAPDxZXb2LZA7YAbEs7ng06wDxJ6MpWHXoz6spI1XkCUXDObZftbQgOrl2AJ6BaG2zIdpRZcaH-4h4rLFjrwRz97YZucLplxgPuYjRipSt0cB3oZkzSWpTDJKIoA__",
+    url: "/assets/hope-is-rebellious.png",
     usedIn: ["Manifesto"],
   },
   {
@@ -172,7 +172,7 @@ const ASSETS: Asset[] = [
     name: "Ember Section Texture",
     description: "Warm ember/fire texture used as section background on the Home page.",
     category: "texture",
-    url: "https://private-us-east-1.manuscdn.com/sessionFile/xhIF6cqEZNRR3ezVrvcq6V/sandbox/cLlPwzBL30WhHHj2soLbdt-img-2_1771637252000_na1fn_c2VjdGlvbi1lbWJlci10ZXh0dXJl.png?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUveGhJRjZjcUVaTlJSM2V6VnJ2Y3E2Vi9zYW5kYm94L2NMbFB3ekJMMzBXaEhIajJzb0xiZHQtaW1nLTJfMTc3MTYzNzI1MjAwMF9uYTFmbl9jMlZqZEdsdmJpMWxiV0psY2kxMFpYaDBkWEpsLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSx3XzE5MjAsaF8xOTIwL2Zvcm1hdCx3ZWJwL3F1YWxpdHkscV84MCIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5ODc2MTYwMH19fV19&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=M4WZy1Lubw4lUZg-xkYa~3KnlMQoGJlZcqOujMhLv-HZHaL3oWFqAgMHgwZFQS~uvVL-uAX4opiGGBzwFXqZlaKDMyYmbKfbzwZy9X4UiX-LIZy~ymHGGhW8mAFRQk1zNs-ROgt8ftpo~5yP~DVqQFXqN3tM7pjR6ZKorjnOj61QGAhF-El0hjRIRFC30KZW1f7X7TQPADPpcb5PtstkU4yxTflVp1wZci9ho0t5UQL90u~yfcpxBV-6H9wJaYbxrs2YRRgAiCQ7bCEZVJ6e~4SE7Zl5Tx2J5q6pjLM4H62p~4CEX8T-47eqdNCVuNUsleO8w~IpN-axBxa09K12YQ__",
+    url: "/assets/ember-texture.png",
     usedIn: ["Home"],
   },
   {
@@ -180,7 +180,7 @@ const ASSETS: Asset[] = [
     name: "Stained Glass Divider",
     description: "Decorative stained glass section divider element.",
     category: "texture",
-    url: "https://private-us-east-1.manuscdn.com/sessionFile/xhIF6cqEZNRR3ezVrvcq6V/sandbox/cLlPwzBL30WhHHj2soLbdt-img-4_1771637262000_na1fn_c3RhaW5lZC1nbGFzcy1kaXZpZGVy.png?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUveGhJRjZjcUVaTlJSM2V6VnJ2Y3E2Vi9zYW5kYm94L2NMbFB3ekJMMzBXaEhIajJzb0xiZHQtaW1nLTRfMTc3MTYzNzI2MjAwMF9uYTFmbl9jM1JoYVc1bFpDMW5iR0Z6Y3kxa2FYWnBaR1Z5LnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSx3XzE5MjAsaF8xOTIwL2Zvcm1hdCx3ZWJwL3F1YWxpdHkscV84MCIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5ODc2MTYwMH19fV19&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=PSUTSPgRrwSLsgxvNGnLDiFx60fCFrFXZB8zX29uLck28Q7jxlKFlePatFsMu8PPAc8-sSJYHnWowvNj9vly9gxAcxqAX7II9tNFVBzE6tQgQsQXSRP2YorHp7q-~hBoQ17ntfxgiSHdcy89sQiTs0Vye26wlpRxnVdI7SwtLkBy6FTlHOW-XBiEmQkxWlgdZciiPpdWvUlbsxK84c-aG0AWi02MYDCV5XhZ75LOUQ-hwEnSjP7AlJkzz3KZR08CEUsjMVgqAWyLvROu95fvaVI2n3k9jhclKPCNwYuNzJv~VSWK0TeqO0GLw5332fVQNhCQUE8WkQeSj1mZCJU0nw__",
+    url: "/assets/stained-glass-divider.png",
     usedIn: ["StainedGlassDivider"],
   },
   // ── Standalone / Not Yet In Site ──
@@ -464,7 +464,7 @@ export default function HiddenAssets() {
             className="text-parchment-dim/30 text-[10px] tracking-wider"
             style={{ fontFamily: "var(--font-pixel)" }}
           >
-            All images link to original full-quality files. Right-click or use
+            All images use production-safe source paths. Right-click or use
             Download to save at full resolution.
           </p>
         </div>
