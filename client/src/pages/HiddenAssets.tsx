@@ -161,27 +161,11 @@ const ASSETS: Asset[] = [
   // ── Textures & Decorative ──
   {
     id: "hope-rebellious",
-    name: "Hope Is Rebellious (8-bit)",
-    description: "Pixel art 'Hope Is Rebellious' banner image used in the Manifesto.",
+    name: "Hope Is Rebellious",
+    description: "Original banner image used in the Manifesto.",
     category: "texture",
-    url: "/assets/hope-is-rebellious.png",
+    url: "/assets/hope-is-rebellious.jpg",
     usedIn: ["Manifesto"],
-  },
-  {
-    id: "ember-texture",
-    name: "Ember Section Texture",
-    description: "Warm ember/fire texture used as section background on the Home page.",
-    category: "texture",
-    url: "/assets/ember-texture.png",
-    usedIn: ["Home"],
-  },
-  {
-    id: "stained-glass",
-    name: "Stained Glass Divider",
-    description: "Decorative stained glass section divider element.",
-    category: "texture",
-    url: "/assets/stained-glass-divider.png",
-    usedIn: ["StainedGlassDivider"],
   },
   // ── Standalone / Not Yet In Site ──
   {
@@ -464,7 +448,7 @@ export default function HiddenAssets() {
             className="text-parchment-dim/30 text-[10px] tracking-wider"
             style={{ fontFamily: "var(--font-pixel)" }}
           >
-            All images use production-safe source paths. Right-click or use
+            All images link to original full-quality files. Right-click or use
             Download to save at full resolution.
           </p>
         </div>

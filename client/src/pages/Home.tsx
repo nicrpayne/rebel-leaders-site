@@ -21,10 +21,9 @@ import SubstackSignup from "@/components/SubstackSignup";
 import { usePageTracker } from "@/hooks/usePageTracker";
 import EasterEgg from "@/components/EasterEgg";
 
-/* ─── Repository-managed image assets ─── */
+/* ─── CDN Image URLs ─── */
 const RPG_OFFICE = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/zlNQJQinSxaqyYjB.png";
 const RPG_BOOKSHELF = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/ytcCyobGtInvqMUp.png";
-const EMBER_IMG = "/assets/ember-texture.png";
 
 /* ─── Substack Article URLs ─── */
 const SUBSTACK_GREAT_TRANSFER = "https://open.substack.com/pub/leaderrebellion/p/why-work-cant-be-your-church?r=5ubsq&utm_campaign=post&utm_medium=web&showWelcomeOnShare=true";
@@ -243,11 +242,6 @@ export default function Home() {
       ═══════════════════════════════════════════════════════════ */}
       <section className="relative py-20 md:py-32 overflow-hidden">
         {/* Subtle pixel bookshelf background */}
-        <div className="absolute inset-0 opacity-10">
-          <img src={RPG_BOOKSHELF} alt="" className="w-full h-full object-cover pixel-render" loading="lazy" />
-        </div>
-        <div className="absolute inset-0 bg-background/90" />
-
         <div className="relative z-10 container">
           <div className="max-w-3xl mx-auto md:mr-[8%] lg:mr-[12%] md:ml-auto">
             <FadeIn>
