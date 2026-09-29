@@ -162,9 +162,9 @@ const ASSETS: Asset[] = [
   {
     id: "hope-rebellious",
     name: "Hope Is Rebellious",
-    description: "Original banner image used in the Manifesto.",
+    description: "Original 8-bit banner image used in the Manifesto.",
     category: "texture",
-    url: "/assets/hope-is-rebellious.jpg",
+    url: "/assets/hope-is-rebellious-8bit.jpg",
     usedIn: ["Manifesto"],
   },
   // ── Standalone / Not Yet In Site ──
