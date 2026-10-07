@@ -11,15 +11,32 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Share+Tech+Mono&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <script>
+      window.__rebelAppLoadFailed = function () {
+        window.__rebelAppLoadFailure = true;
+        var fallback = document.getElementById("app-load-fallback");
+        if (fallback) fallback.hidden = false;
+      };
+      window.addEventListener("error", function (event) {
+        var target = event.target;
+        if (!(target instanceof HTMLScriptElement) && !(target instanceof HTMLLinkElement)) return;
+        var assetUrl = target.src || target.href;
+        if (assetUrl && assetUrl.indexOf("/assets/") !== -1) window.__rebelAppLoadFailed();
+      }, true);
+      document.addEventListener("DOMContentLoaded", function () {
+        if (window.__rebelAppLoadFailure) window.__rebelAppLoadFailed();
+      });
+    </script>
   </head>
 
   <body>
+    <div id="app-load-fallback" hidden role="alert" style="max-width: 32rem; margin: 18vh auto; padding: 1.5rem; color: #efe6c9; background: #07150f; font-family: system-ui, sans-serif; text-align: center;">
+      <p style="margin: 0 0 0.75rem; font-size: 1.1rem;">Rebel Leaders is taking longer than expected to load.</p>
+      <p style="margin: 0 0 1rem; color: #c9b78e;">Please check your connection and try again.</p>
+      <button type="button" onclick="window.location.reload()" style="padding: 0.65rem 1rem; color: #07150f; background: #d4a017; border: 0; cursor: pointer;">Reload page</button>
+    </div>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    <script
-      defer
-      src="%VITE_ANALYTICS_ENDPOINT%/umami"
-      data-website-id="%VITE_ANALYTICS_WEBSITE_ID%"></script>
   </body>
 
 </html>

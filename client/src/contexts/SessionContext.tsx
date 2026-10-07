@@ -8,14 +8,30 @@ interface SessionContextType {
 
 const SessionContext = createContext<SessionContextType>({ sessionId: '' });
 
+function createSessionId() {
+  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+    return crypto.randomUUID();
+  }
+  return `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+}
+
 export function SessionProvider({ children }: { children: ReactNode }) {
   const [sessionId, setSessionId] = useState('');
 
   useEffect(() => {
-    let id = localStorage.getItem(SESSION_KEY);
+    let id: string | null = null;
+    try {
+      id = localStorage.getItem(SESSION_KEY);
+    } catch {
+      // Storage can be disabled by browser privacy settings; keep a session in memory instead.
+    }
     if (!id) {
-      id = crypto.randomUUID();
-      localStorage.setItem(SESSION_KEY, id);
+      id = createSessionId();
+      try {
+        localStorage.setItem(SESSION_KEY, id);
+      } catch {
+        // The generated ID remains usable for this page session without persistence.
+      }
     }
     setSessionId(id);
   }, []);

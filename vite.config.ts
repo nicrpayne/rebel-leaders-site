@@ -165,6 +165,7 @@ export default defineConfig({
   root: path.resolve(import.meta.dirname, "client"),
   publicDir: path.resolve(import.meta.dirname, "client", "public"),
   build: {
+    target: "safari15.4",
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
   },

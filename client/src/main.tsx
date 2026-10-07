@@ -12,6 +12,25 @@ import "./index.css";
 
 initPostHog();
 
+const preloadRetryParam = "__asset_retry";
+const currentUrl = new URL(window.location.href);
+const hadPreloadRetryParam = currentUrl.searchParams.has(preloadRetryParam);
+if (hadPreloadRetryParam) {
+  currentUrl.searchParams.delete(preloadRetryParam);
+  window.history.replaceState({}, "", `${currentUrl.pathname}${currentUrl.search}${currentUrl.hash}`);
+}
+
+window.addEventListener("vite:preloadError", (event) => {
+  event.preventDefault();
+  const retryUrl = new URL(window.location.href);
+  if (retryUrl.searchParams.has(preloadRetryParam)) {
+    console.error("[Asset loading] Reload retry already attempted", event);
+    return;
+  }
+  retryUrl.searchParams.set(preloadRetryParam, "1");
+  window.location.replace(retryUrl.toString());
+});
+
 const queryClient = new QueryClient();
 
 const redirectToLoginIfUnauthorized = (error: unknown) => {
