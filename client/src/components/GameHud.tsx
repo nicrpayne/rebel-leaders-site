@@ -322,7 +322,7 @@ export default function GameHud() {
                 {/* Signed-in indicator + logout */}
                 {currentUser && (
                   <div className="px-3 pb-2.5 border-t border-gold/10 pt-2 flex items-center justify-between gap-2">
-                    <span className="font-pixel text-[7px] text-gold/30 truncate tracking-wide" title={currentUser.email}>
+                    <span className="font-pixel text-[7px] text-gold/30 truncate tracking-wide" title={currentUser.email ?? undefined}>
                       {currentUser.email}
                     </span>
                     <button

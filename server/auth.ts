@@ -281,7 +281,7 @@ export const saveGravitasAssessment = publicProcedure
     leak: z.string(),
     force: z.string(),
     firstMove: z.string(),
-    rawAnswers: z.record(z.number()),
+    rawAnswers: z.record(z.string(), z.number()),
   }))
   .mutation(async ({ input, ctx }) => {
     const magicUser = await getMagicLinkUser(ctx.req.headers.cookie);

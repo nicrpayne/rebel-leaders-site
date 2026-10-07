@@ -570,11 +570,6 @@ export default function Home() {
            renumbered from old Chapter VI)
       ═══════════════════════════════════════════════════════════ */}
       <section className="relative py-20 md:py-32">
-        <div className="absolute inset-0 opacity-10">
-          <img src={EMBER_IMG} alt="" className="w-full h-full object-cover" loading="lazy" />
-        </div>
-        <div className="absolute inset-0 bg-background/90" />
-
         <div className="relative z-10 container">
           <div className="max-w-3xl mx-auto text-center">
             <FadeIn>
