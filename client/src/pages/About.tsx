@@ -12,8 +12,8 @@ import PixelDivider from "@/components/PixelDivider";
 import RebelLogo from "@/components/RebelLogo";
 import EasterEgg from "@/components/EasterEgg";
 
-const RPG_SPRITE = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/oCdVePFazaeRgvNO.png";
-const RPG_BOOKSHELF = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/yIOHdhgRJwHhvBLy.png";
+const RPG_SPRITE = "/assets/legacy/manus/oCdVePFazaeRgvNO.png";
+const RPG_BOOKSHELF = "/assets/legacy/manus/yIOHdhgRJwHhvBLy.png";
 
 export default function About() {
   usePageTracker("about", true);

@@ -74,7 +74,7 @@ export default function LoadBay({
         
         {/* Deck Faceplate Image - z-20 */}
         <img 
-          src="https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/6XMovZHp9ctGFaj4XUiVdL/codex_deck_face_wide-5wRwynP7E8tErdVLcFv4Nz.webp"
+          src="/assets/workbench/codex/deck-face.webp"
           alt="Codex Deck"
           className="absolute inset-0 w-full h-full object-contain z-20 pointer-events-none"
         />
@@ -106,7 +106,7 @@ export default function LoadBay({
             >
               {/* Spine Image - FORCED STRETCH to fill the expanded slot */}
               <img 
-                src="https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/6XMovZHp9ctGFaj4XUiVdL/codex_cartridge_spine_transparent_95539dfa.png"
+                src="/assets/workbench/codex/cartridge-spine.webp"
                 alt="Cartridge Spine"
                 className="absolute inset-0 w-full h-full object-fill drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)] scale-[1.02]" 
               />

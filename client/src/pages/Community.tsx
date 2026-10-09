@@ -1,6 +1,6 @@
 import ComingSoon from "@/components/ComingSoon";
 
-const TAVERN = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/ZrwcxbsbnbgzlVax.png";
+const TAVERN = "/assets/legacy/manus/ZrwcxbsbnbgzlVax.png";
 
 export default function Community() {
   return (

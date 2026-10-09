@@ -68,7 +68,7 @@ export default function GravitasShell({
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: "url('https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/gravitas-frame_6ecc332f.webp')",
+            backgroundImage: "url('/assets/workbench/gravitas/frame.webp')",
             backgroundSize: "100% 100%",
           }}
         />
@@ -330,7 +330,7 @@ export default function GravitasShell({
           }}
         >
           <img
-            src="https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/nic-sticker_ecd09125.webp"
+            src="/assets/workbench/gravitas/nic-sticker.webp"
             alt="Nic Sword Bearer"
             className="w-[120px] h-auto drop-shadow-[2px_4px_6px_rgba(0,0,0,0.6)]"
           />

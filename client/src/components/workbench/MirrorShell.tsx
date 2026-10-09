@@ -23,7 +23,7 @@ interface MirrorShellProps {
 }
 
 const BASIN_CLOSE_URL =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/5e5kxa7Hxu2DiYaSmWbPxb/mirror-basin-close_697b33ca.png";
+  "/assets/workbench/mirror/basin-close.jpg";
 
 export default function MirrorShell({ children, footer }: MirrorShellProps) {
   return (

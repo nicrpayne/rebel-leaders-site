@@ -23,7 +23,7 @@ import { usePageTracker } from "@/hooks/usePageTracker";
 import ManifestoRunner from "@/components/ManifestoRunner";
 import EasterEgg from "@/components/EasterEgg";
 
-const SCROLL_MAP = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/LJSaRbdurtjnmgoI.png";
+const SCROLL_MAP = "/assets/legacy/manus/LJSaRbdurtjnmgoI.png";
 const HOPE_IMG = "/assets/hope-is-rebellious-8bit.jpg";
 
 export default function Manifesto() {

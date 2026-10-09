@@ -11,7 +11,7 @@ import DialogueBox from "@/components/DialogueBox";
 import PixelDivider from "@/components/PixelDivider";
 import RebelLogo from "@/components/RebelLogo";
 
-const RPG_OFFICE = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/zlNQJQinSxaqyYjB.png";
+const RPG_OFFICE = "/assets/legacy/manus/zlNQJQinSxaqyYjB.png";
 
 export default function Residency() {
   usePageTracker("residency");

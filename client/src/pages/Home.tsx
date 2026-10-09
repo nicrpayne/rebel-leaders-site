@@ -22,8 +22,8 @@ import { usePageTracker } from "@/hooks/usePageTracker";
 import EasterEgg from "@/components/EasterEgg";
 
 /* ─── CDN Image URLs ─── */
-const RPG_OFFICE = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/zlNQJQinSxaqyYjB.png";
-const RPG_BOOKSHELF = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/ytcCyobGtInvqMUp.png";
+const RPG_OFFICE = "/assets/legacy/manus/zlNQJQinSxaqyYjB.png";
+const RPG_BOOKSHELF = "/assets/legacy/manus/ytcCyobGtInvqMUp.png";
 
 /* ─── Substack Article URLs ─── */
 const SUBSTACK_GREAT_TRANSFER = "https://open.substack.com/pub/leaderrebellion/p/why-work-cant-be-your-church?r=5ubsq&utm_campaign=post&utm_medium=web&showWelcomeOnShare=true";

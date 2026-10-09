@@ -42,7 +42,7 @@ import {
 // ─── CDN Assets ─────────────────────────────────────────────────────
 
 const BASIN_WIDE_URL =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/5e5kxa7Hxu2DiYaSmWbPxb/mirror-basin-wide_1b4e8990.png";
+  "/assets/workbench/mirror/basin-wide.jpg";
 
 // ─── Design Tokens ──────────────────────────────────────────────────
 

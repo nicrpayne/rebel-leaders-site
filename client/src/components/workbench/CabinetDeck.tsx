@@ -13,9 +13,9 @@ import type { RankingRationale, GravitasSignal } from "@/lib/workbench/codex-ran
    - Ticker tape triggers on load, scan complete, and idle ambient
    ───────────────────────────────────────────── */
 
-const SPINE_CDN_OLD = "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/6XMovZHp9ctGFaj4XUiVdL/codex_cartridge_spine_transparent_95539dfa.png";
-const SPINE_CDN = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/CsmUKCVLeilIqNNJ.png";
-const CABINET_HERO_CDN = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/fLHdQJImZxvFSNJX.webp";
+const SPINE_CDN_OLD = "/assets/workbench/codex/cartridge-spine.webp";
+const SPINE_CDN = "/assets/workbench/codex/cartridge-spine-cabinet.png";
+const CABINET_HERO_CDN = "/assets/workbench/codex/cabinet-hero.webp";
 
 /* ── Pager screen positions (% of hero image) ── */
 const PAGER_SCREENS = [
@@ -882,7 +882,7 @@ startTicker(msg, 14000, () => {
         title="READ PROTOCOL"
       >
         <img
-          src="https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/label_read_a7058f5a.png"
+          src="/assets/workbench/codex/label-read.png"
           alt="READ"
           className="absolute pointer-events-none select-none"
           style={{
@@ -917,7 +917,7 @@ startTicker(msg, 14000, () => {
         title="SCAN CARTRIDGE"
       >
         <img
-          src="https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/label_scan_9c357f8b.png"
+          src="/assets/workbench/codex/label-scan.png"
           alt="SCAN"
           className="absolute pointer-events-none select-none"
           style={{
@@ -951,7 +951,7 @@ startTicker(msg, 14000, () => {
         title="EJECT CARTRIDGE"
       >
         <img
-          src="https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/label_eject_b5224993.png"
+          src="/assets/workbench/codex/label-eject.png"
           alt="EJECT"
           className="absolute pointer-events-none select-none"
           style={{

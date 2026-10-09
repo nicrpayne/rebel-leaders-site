@@ -26,7 +26,7 @@ export default function PluginShell({
       {/* Main Chassis - The "Physical" Unit */}
       <div className={cn(
         "relative w-full max-w-5xl bg-[#111] rounded-sm shadow-[0_0_50px_rgba(0,0,0,0.8),inset_0_1px_1px_rgba(255,255,255,0.1)] border border-[#222]",
-        "before:absolute before:inset-0 before:bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] before:opacity-[0.03] before:pointer-events-none", // Subtle texture
+        "before:absolute before:inset-0 before:bg-[url('/assets/workbench/textures/stardust.png')] before:opacity-[0.03] before:pointer-events-none", // Subtle texture
         className
       )}>
         
@@ -82,9 +82,9 @@ export default function PluginShell({
             */}
             <div className="hidden md:block relative w-24 h-8 ml-4 opacity-90 hover:opacity-100 transition-opacity">
                {/* Placeholder using current logo - Replace src with 'horizon_plate.png' later */}
-               <img 
-                 src="https://cdn.manus.space/2026-03-06-17-48-36-398032/RebelLogo.png" 
-                 alt="Rebel Leaders Nameplate" 
+               <img
+                 src="/assets/workbench/brand/rebel-horizon-logo-light.png"
+                 alt="Rebel Leaders Nameplate"
                  className="w-full h-full object-contain drop-shadow-[0_2px_3px_rgba(0,0,0,0.6)]"
                  style={{ transform: 'rotate(0deg)' }}
                />
@@ -116,9 +116,9 @@ export default function PluginShell({
           */}
           <div className="absolute bottom-4 left-4 w-16 md:bottom-10 md:left-10 md:w-24 z-20 pointer-events-none mix-blend-normal opacity-80 md:opacity-90">
              {/* Placeholder using current sprite - Replace src with 'nic_sticker_worn.png' later */}
-             <img 
-               src="https://cdn.manus.space/2026-03-06-17-48-36-398032/nic_victory_v4-3.png" 
-               alt="Nic Sticker" 
+             <img
+               src="/assets/workbench/brand/nic-victory.jpg"
+               alt="Nic Sticker"
                className="w-full h-auto drop-shadow-[2px_4px_6px_rgba(0,0,0,0.5)]"
                style={{ transform: 'rotate(-8deg)' }}
              />

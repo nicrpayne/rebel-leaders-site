@@ -11,8 +11,9 @@ import DialogueBox from "@/components/DialogueBox";
 import { usePageTracker } from "@/hooks/usePageTracker";
 import { useGame } from "@/contexts/GameContext";
 import { events } from "@/lib/analytics";
-
-const HERO_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/workbench-hero-desk_30c9a78e.png";
+// Original Workbench desk art is awaiting recovery. Keep the branded gradient
+// rather than requesting an unavailable temporary-host image.
+const HERO_IMG: string | null = null;
 
 /* ─── Plugin Data ─── */
 type PluginStatus = "ACTIVE" | "LOCKED" | "SIGNAL_DEPENDENT";
@@ -51,7 +52,7 @@ const PLUGINS: Plugin[] = [
     desc: "15 questions. 3 minutes. Reveal the hidden forces shaping your team's orbit.",
     status: "ACTIVE",
     link: "/workbench/gravitas",
-    image: "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/6XMovZHp9ctGFaj4XUiVdL/gravity_check_field_cover-hq3AnpZqCJZFJU9Wrxiwic.webp",
+    image: "/assets/workbench/covers/gravitas.webp",
     version: "V.1.0.4",
   },
   {
@@ -62,8 +63,8 @@ const PLUGINS: Plugin[] = [
     status: "SIGNAL_DEPENDENT",
     link: "/workbench/mirror",
     image: null,
-    imageDormant: "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/5e5kxa7Hxu2DiYaSmWbPxb/mirror-cover-dormant-AbLZh9Kevt6HfMAgTuECyw.webp",
-    imageRevealed: "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/5e5kxa7Hxu2DiYaSmWbPxb/mirror-cover-revealed-Fyp6UxnGXZmTbrZBVjBb6Y.webp",
+    imageDormant: "/assets/workbench/mirror/cover-dormant.jpg",
+    imageRevealed: "/assets/workbench/mirror/cover-revealed.jpg",
     version: "V.1.0.0",
   },
   {
@@ -73,7 +74,7 @@ const PLUGINS: Plugin[] = [
     desc: "A library of high-leverage leadership scripts and protocols.",
     status: "ACTIVE",
     link: "/workbench/codex",
-    image: "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/6XMovZHp9ctGFaj4XUiVdL/codex_cover-GFY7usmeN4FzNRmJ64c5wD.webp",
+    image: "/assets/workbench/covers/codex.webp",
     version: "V.1.0.4",
   },
   {
@@ -93,7 +94,7 @@ const PLUGINS: Plugin[] = [
     desc: "Leadership As A Service. Measure your team's dependency ratio.",
     status: "LOCKED",
     link: "#",
-    image: "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/6XMovZHp9ctGFaj4XUiVdL/laas_calibrator_cover-YcDCAQRmWtFr53Pcpd8CL5.webp",
+    image: "/assets/workbench/covers/laas.webp",
     version: "V.1.0.4",
   },
   {
@@ -103,7 +104,7 @@ const PLUGINS: Plugin[] = [
     desc: "Depth analysis. Measures if work is touching roots or just symptoms.",
     status: "LOCKED",
     link: "#",
-    image: "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/hid_scan_cover_a8e27ebf.webp",
+    image: "/assets/workbench/covers/hid-scan.webp",
     version: "V.1.0.4",
   },
   {
@@ -113,7 +114,7 @@ const PLUGINS: Plugin[] = [
     desc: "Mythic cartography. Organizations are landscapes, not flat charts.",
     status: "LOCKED",
     link: "#",
-    image: "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/terrain_cover_1e056580.jpg",
+    image: "/assets/workbench/covers/terrain.webp",
     version: "—",
   },
   {
@@ -123,7 +124,7 @@ const PLUGINS: Plugin[] = [
     desc: "Leadership culture analysis. Map the root system beneath your team's surface.",
     status: "LOCKED",
     link: "#",
-    image: "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/underground_cover_31183985.jpg",
+    image: "/assets/workbench/covers/underground.jpg",
     version: "—",
   },
   {
@@ -133,7 +134,7 @@ const PLUGINS: Plugin[] = [
     desc: "Vocational bearing. Find true north when everything around you is spinning.",
     status: "LOCKED",
     link: "#",
-    image: "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/astrolabe_cover_95fbbeb7.jpg",
+    image: "/assets/workbench/covers/astrolabe.webp",
     version: "—",
   },
   {
@@ -143,7 +144,7 @@ const PLUGINS: Plugin[] = [
     desc: "Orbital alignment. Declared center vs. actual center. See where the system is really pulling.",
     status: "LOCKED",
     link: "#",
-    image: "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/drift_cover_dc876c35.jpg",
+    image: "/assets/workbench/covers/drift-provisional.webp",
     version: "—",
   },
   {
@@ -153,7 +154,7 @@ const PLUGINS: Plugin[] = [
     desc: "Fault detection. Where the system is bleeding trust, clarity, or energy.",
     status: "LOCKED",
     link: "#",
-    image: "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/leak_finder_cover_v2_5efb7e41.jpg",
+    image: "/assets/workbench/covers/leak-finder.webp",
     version: "—",
   },
   {
@@ -163,7 +164,7 @@ const PLUGINS: Plugin[] = [
     desc: "Inner climate scan. Read the pressure system moving through you before it moves through your team.",
     status: "LOCKED",
     link: "#",
-    image: "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/eye_cover_v2_c9db526c.jpg",
+    image: "/assets/workbench/covers/eye.webp",
     version: "—",
   },
   {
@@ -173,7 +174,7 @@ const PLUGINS: Plugin[] = [
     desc: "Conflict refraction. See what's really hiding inside the signal before you react.",
     status: "LOCKED",
     link: "#",
-    image: "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/prism_cover_v2_7264cb05.jpg",
+    image: "/assets/workbench/covers/prism.webp",
     version: "—",
   },
   {
@@ -183,7 +184,7 @@ const PLUGINS: Plugin[] = [
     desc: "Signal analysis. Translating recurring tensions into truth.",
     status: "LOCKED",
     link: "#",
-    image: "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/signal_decoder_cover_v1_e83fe0fa.jpg",
+    image: "/assets/workbench/covers/signal-decoder.webp",
     version: "—",
   },
   {
@@ -193,7 +194,7 @@ const PLUGINS: Plugin[] = [
     desc: "Tactical routing. Fitting the right move to the actual rupture.",
     status: "LOCKED",
     link: "#",
-    image: "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/move_matcher_cover_v2_4efd9f3f.jpg",
+    image: "/assets/workbench/covers/move-matcher.webp",
     version: "—",
   },
   {
@@ -203,7 +204,7 @@ const PLUGINS: Plugin[] = [
     desc: "Expedition log. Reflection as formation.",
     status: "LOCKED",
     link: "#",
-    image: "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/field_notes_cover_v3_8603f66f.jpg",
+    image: "/assets/workbench/covers/field-notes.webp",
     version: "—",
   },
 ];
@@ -253,9 +254,11 @@ export default function Workbench() {
     <PageLayout>
       {/* Hero */}
       <section className="relative py-20 md:py-28">
-        <div className="absolute inset-0 opacity-50">
-          <img src={HERO_IMG} alt="" className="w-full h-full object-cover pixel-render" loading="lazy" />
-        </div>
+        {HERO_IMG && (
+          <div className="absolute inset-0 opacity-50">
+            <img src={HERO_IMG} alt="" className="w-full h-full object-cover pixel-render" loading="lazy" />
+          </div>
+        )}
         <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/55 to-background" />
         <div className="relative z-10 container text-center">
           <FadeIn>
@@ -531,4 +534,3 @@ function PluginCard({ plugin, hasGravitasSignal, hasSubmittedToWall }: {
   }
   return cardContent;
 }
-

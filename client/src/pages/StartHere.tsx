@@ -14,8 +14,8 @@ import SubstackSignup from "@/components/SubstackSignup";
 import EasterEgg from "@/components/EasterEgg";
 import FieldBriefing from "@/components/FieldBriefing";
 
-const RPG_OFFICE = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/zlNQJQinSxaqyYjB.png";
-const RPG_SPRITE = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/oCdVePFazaeRgvNO.png";
+const RPG_OFFICE = "/assets/legacy/manus/zlNQJQinSxaqyYjB.png";
+const RPG_SPRITE = "/assets/legacy/manus/oCdVePFazaeRgvNO.png";
 
 export default function StartHere() {
   usePageTracker("new-player");

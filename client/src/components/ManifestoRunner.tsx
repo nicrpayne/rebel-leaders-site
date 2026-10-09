@@ -31,15 +31,15 @@ import { useGame } from "@/contexts/GameContext";
    ═══════════════════════════════════════════════════════════════ */
 
 const SPRITES = {
-  nicRun:   "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/UpbgmXKMNsNjpnpu.png",
-  nicJump:  "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/XLuyIUSYWidBHSap.png",
-  nicIdle:  "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/WHwqHpqvQUlZmkTM.png",
-  goomba:   "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/nBERaIlYpCEOiWnP.png",
-  bat:      "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/SYHEtkMnhFfFNKbp.png",
-  turtle:   "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/tAUdctTTtbAZnbfH.png",
-  brick:    "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/CZIKNFXWjzlvpjEI.png",
-  flag:     "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/XErroFrcgEbnlBdi.png",
-  nicVictory: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/gEUSBozlhzsCUQVp.png",
+  nicRun:   "/assets/legacy/manus/UpbgmXKMNsNjpnpu.png",
+  nicJump:  "/assets/legacy/manus/XLuyIUSYWidBHSap.png",
+  nicIdle:  "/assets/legacy/manus/WHwqHpqvQUlZmkTM.png",
+  goomba:   "/assets/legacy/manus/nBERaIlYpCEOiWnP.png",
+  bat:      "/assets/legacy/manus/SYHEtkMnhFfFNKbp.png",
+  turtle:   "/assets/legacy/manus/tAUdctTTtbAZnbfH.png",
+  brick:    "/assets/legacy/manus/CZIKNFXWjzlvpjEI.png",
+  flag:     "/assets/legacy/manus/XErroFrcgEbnlBdi.png",
+  nicVictory: "/assets/legacy/manus/gEUSBozlhzsCUQVp.png",
 };
 
 /* ═══════════════════════════════════════════════════════════════

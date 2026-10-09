@@ -25,7 +25,7 @@ const ASSETS: Asset[] = [
     name: "RPG Office / Study",
     description: "Isometric pixel art of Nic's study — desk, guitar, bookshelves, lamp. The primary hero scene.",
     category: "scene",
-    url: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/zlNQJQinSxaqyYjB.png",
+    url: "/assets/legacy/manus/zlNQJQinSxaqyYjB.png",
     usedIn: ["Home", "Mirror", "Residency", "StartHere"],
   },
   {
@@ -33,7 +33,7 @@ const ASSETS: Asset[] = [
     name: "RPG Bookshelf Close-up",
     description: "Pixel art close-up of the bookshelf wall with framed art and collectibles.",
     category: "scene",
-    url: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/ytcCyobGtInvqMUp.png",
+    url: "/assets/legacy/manus/ytcCyobGtInvqMUp.png",
     usedIn: ["Home"],
   },
   {
@@ -41,7 +41,7 @@ const ASSETS: Asset[] = [
     name: "RPG Banner / Landscape",
     description: "Wide pixel art banner scene used for Archives and Game pages.",
     category: "scene",
-    url: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/NOhnYtwgYOzpzngc.png",
+    url: "/assets/legacy/manus/NOhnYtwgYOzpzngc.png",
     usedIn: ["Archives", "Game"],
   },
   {
@@ -49,7 +49,7 @@ const ASSETS: Asset[] = [
     name: "Bookshelf (The Shelf)",
     description: "Straight-on bookshelf photograph/art for The Shelf page header.",
     category: "scene",
-    url: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/fHPXctuxSsjvwkhg.png",
+    url: "/assets/legacy/manus/fHPXctuxSsjvwkhg.png",
     usedIn: ["Shelf"],
   },
   {
@@ -57,7 +57,7 @@ const ASSETS: Asset[] = [
     name: "Bookshelf (About)",
     description: "Bookshelf scene used on the About page.",
     category: "scene",
-    url: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/yIOHdhgRJwHhvBLy.png",
+    url: "/assets/legacy/manus/yIOHdhgRJwHhvBLy.png",
     usedIn: ["About"],
   },
   {
@@ -65,7 +65,7 @@ const ASSETS: Asset[] = [
     name: "Scroll / Map",
     description: "Parchment scroll or map image used on Book and Manifesto pages.",
     category: "scene",
-    url: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/LJSaRbdurtjnmgoI.png",
+    url: "/assets/legacy/manus/LJSaRbdurtjnmgoI.png",
     usedIn: ["Book", "Manifesto"],
   },
   {
@@ -73,7 +73,7 @@ const ASSETS: Asset[] = [
     name: "Tavern / Gathering",
     description: "Pixel art tavern scene for the Community (coming soon) page.",
     category: "scene",
-    url: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/ZrwcxbsbnbgzlVax.png",
+    url: "/assets/legacy/manus/ZrwcxbsbnbgzlVax.png",
     usedIn: ["Community"],
   },
   // ── Character Art ──
@@ -82,7 +82,7 @@ const ASSETS: Asset[] = [
     name: "Nic Pixel Portrait",
     description: "Pixel art portrait of Nic — transparent background, used as character sprite on About and StartHere.",
     category: "sprite",
-    url: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/oCdVePFazaeRgvNO.png",
+    url: "/assets/legacy/manus/oCdVePFazaeRgvNO.png",
     usedIn: ["About", "StartHere"],
   },
   // ── Game Sprites ──
@@ -91,7 +91,7 @@ const ASSETS: Asset[] = [
     name: "Nic Run Sprite Sheet",
     description: "4-frame running animation sprite sheet — Nic with lightsaber.",
     category: "sprite",
-    url: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/UpbgmXKMNsNjpnpu.png",
+    url: "/assets/legacy/manus/UpbgmXKMNsNjpnpu.png",
     usedIn: ["ManifestoRunner"],
   },
   {
@@ -99,7 +99,7 @@ const ASSETS: Asset[] = [
     name: "Nic Jump Sprite Sheet",
     description: "Jump animation sprite sheet for the side-scroller game.",
     category: "sprite",
-    url: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/XLuyIUSYWidBHSap.png",
+    url: "/assets/legacy/manus/XLuyIUSYWidBHSap.png",
     usedIn: ["ManifestoRunner"],
   },
   {
@@ -107,7 +107,7 @@ const ASSETS: Asset[] = [
     name: "Nic Idle Sprite Sheet",
     description: "Idle stance sprite sheet for the side-scroller game.",
     category: "sprite",
-    url: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/WHwqHpqvQUlZmkTM.png",
+    url: "/assets/legacy/manus/WHwqHpqvQUlZmkTM.png",
     usedIn: ["ManifestoRunner"],
   },
   {
@@ -115,7 +115,7 @@ const ASSETS: Asset[] = [
     name: "Nic Victory Pose",
     description: "Victory celebration sprite for end-of-level in the side-scroller.",
     category: "sprite",
-    url: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/gEUSBozlhzsCUQVp.png",
+    url: "/assets/legacy/manus/gEUSBozlhzsCUQVp.png",
     usedIn: ["ManifestoRunner"],
   },
   {
@@ -123,7 +123,7 @@ const ASSETS: Asset[] = [
     name: "Quick Meeting Goomba",
     description: "Enemy sprite — the 'Quick Meeting' goomba that walks toward you.",
     category: "sprite",
-    url: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/nBERaIlYpCEOiWnP.png",
+    url: "/assets/legacy/manus/nBERaIlYpCEOiWnP.png",
     usedIn: ["ManifestoRunner"],
   },
   {
@@ -131,7 +131,7 @@ const ASSETS: Asset[] = [
     name: "Slack Ping Bat",
     description: "Enemy sprite — the 'Slack Ping' bat that flies overhead.",
     category: "sprite",
-    url: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/SYHEtkMnhFfFNKbp.png",
+    url: "/assets/legacy/manus/SYHEtkMnhFfFNKbp.png",
     usedIn: ["ManifestoRunner"],
   },
   {
@@ -139,7 +139,7 @@ const ASSETS: Asset[] = [
     name: "Policy Turtle",
     description: "Enemy sprite — the 'Policy Turtle' that blocks your path.",
     category: "sprite",
-    url: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/tAUdctTTtbAZnbfH.png",
+    url: "/assets/legacy/manus/tAUdctTTtbAZnbfH.png",
     usedIn: ["ManifestoRunner"],
   },
   {
@@ -147,7 +147,7 @@ const ASSETS: Asset[] = [
     name: "Buzzword Brick",
     description: "Block sprite — breakable 'Buzzword Brick' blocks in the side-scroller.",
     category: "sprite",
-    url: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/CZIKNFXWjzlvpjEI.png",
+    url: "/assets/legacy/manus/CZIKNFXWjzlvpjEI.png",
     usedIn: ["ManifestoRunner"],
   },
   {
@@ -155,7 +155,7 @@ const ASSETS: Asset[] = [
     name: "Victory Flag",
     description: "End-of-level victory flag sprite.",
     category: "sprite",
-    url: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/XErroFrcgEbnlBdi.png",
+    url: "/assets/legacy/manus/XErroFrcgEbnlBdi.png",
     usedIn: ["ManifestoRunner"],
   },
   // ── Textures & Decorative ──
@@ -173,7 +173,7 @@ const ASSETS: Asset[] = [
     name: "Collectible Sword on Stand",
     description: "16-bit pixel art of a glowing golden lightsaber on a V-shaped display stand. 'Solar Blade' collectible.",
     category: "standalone",
-    url: "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/collectible-sword-shelf-TT6s5y6jYZVDCSiQYzjaok.png",
+    url: "/assets/workbench/codex/statue-sword-bearer.png",
     usedIn: [],
   },
 ];

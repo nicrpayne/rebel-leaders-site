@@ -2,7 +2,7 @@ import ComingSoon from "@/components/ComingSoon";
 
 import { usePageTracker } from "@/hooks/usePageTracker";
 
-const BOOKSHELF = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/yIOHdhgRJwHhvBLy.png";
+const BOOKSHELF = "/assets/legacy/manus/yIOHdhgRJwHhvBLy.png";
 
 export default function Armory() {
   usePageTracker("armory");

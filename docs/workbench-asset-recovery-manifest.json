@@ -1,0 +1,90 @@
+{
+  "purpose": "Source-controlled recovery of static visual/audio assets previously dependent on temporary Manus or CloudFront URLs.",
+  "restored_cloudfront_assets": {
+    "5e5kxa7Hxu2DiYaSmWbPxb/mirror-basin-close_697b33ca.png": "/assets/workbench/mirror/basin-close.jpg",
+    "5e5kxa7Hxu2DiYaSmWbPxb/mirror-basin-wide_1b4e8990.png": "/assets/workbench/mirror/basin-wide.jpg",
+    "5e5kxa7Hxu2DiYaSmWbPxb/mirror-cover-dormant-AbLZh9Kevt6HfMAgTuECyw.webp": "/assets/workbench/mirror/cover-dormant.jpg",
+    "5e5kxa7Hxu2DiYaSmWbPxb/mirror-cover-revealed-Fyp6UxnGXZmTbrZBVjBb6Y.webp": "/assets/workbench/mirror/cover-revealed.jpg",
+    "6XMovZHp9ctGFaj4XUiVdL/codex_cartridge_spine_transparent_95539dfa.png": "/assets/workbench/codex/cartridge-spine.webp",
+    "6XMovZHp9ctGFaj4XUiVdL/codex_cover-GFY7usmeN4FzNRmJ64c5wD.webp": "/assets/workbench/covers/codex.webp",
+    "6XMovZHp9ctGFaj4XUiVdL/codex_deck_face_wide-5wRwynP7E8tErdVLcFv4Nz.webp": "/assets/workbench/codex/deck-face.webp",
+    "6XMovZHp9ctGFaj4XUiVdL/gravity_check_field_cover-hq3AnpZqCJZFJU9Wrxiwic.webp": "/assets/workbench/covers/gravitas.webp",
+    "6XMovZHp9ctGFaj4XUiVdL/laas_calibrator_cover-YcDCAQRmWtFr53Pcpd8CL5.webp": "/assets/workbench/covers/laas.webp",
+    "7WRWMpfknMabtFgkWWC7KJ/astrolabe_cover_95fbbeb7.jpg": "/assets/workbench/covers/astrolabe.webp",
+    "7WRWMpfknMabtFgkWWC7KJ/cartridge-eject_0ffa518d.mp3": "/assets/workbench/audio/cartridge-eject.mp3",
+    "7WRWMpfknMabtFgkWWC7KJ/cartridge-load_dd1976d9.mp3": "/assets/workbench/audio/cartridge-load.mp3",
+    "7WRWMpfknMabtFgkWWC7KJ/codex_shelf_bg_95d77a97.png": "/assets/workbench/codex/shelf.png",
+    "7WRWMpfknMabtFgkWWC7KJ/collectible-sword-shelf-TT6s5y6jYZVDCSiQYzjaok.png": "/assets/workbench/codex/statue-sword-bearer.png",
+    "7WRWMpfknMabtFgkWWC7KJ/device-button-press_1c26ae48.mp3": "/assets/workbench/audio/device-button-press.mp3",
+    "7WRWMpfknMabtFgkWWC7KJ/eye_cover_v2_c9db526c.jpg": "/assets/workbench/covers/eye.webp",
+    "7WRWMpfknMabtFgkWWC7KJ/field_notes_cover_v3_8603f66f.jpg": "/assets/workbench/covers/field-notes.webp",
+    "7WRWMpfknMabtFgkWWC7KJ/gravitas-frame_6ecc332f.webp": "/assets/workbench/gravitas/frame.webp",
+    "7WRWMpfknMabtFgkWWC7KJ/hid_scan_cover_a8e27ebf.webp": "/assets/workbench/covers/hid-scan.webp",
+    "7WRWMpfknMabtFgkWWC7KJ/label_eject_b5224993.png": "/assets/workbench/codex/label-eject.png",
+    "7WRWMpfknMabtFgkWWC7KJ/label_read_a7058f5a.png": "/assets/workbench/codex/label-read.png",
+    "7WRWMpfknMabtFgkWWC7KJ/label_scan_9c357f8b.png": "/assets/workbench/codex/label-scan.png",
+    "7WRWMpfknMabtFgkWWC7KJ/leak_finder_cover_v2_5efb7e41.jpg": "/assets/workbench/covers/leak-finder.webp",
+    "7WRWMpfknMabtFgkWWC7KJ/move_matcher_cover_v2_4efd9f3f.jpg": "/assets/workbench/covers/move-matcher.webp",
+    "7WRWMpfknMabtFgkWWC7KJ/nic-sticker_ecd09125.webp": "/assets/workbench/gravitas/nic-sticker.webp",
+    "7WRWMpfknMabtFgkWWC7KJ/prism_cover_v2_7264cb05.jpg": "/assets/workbench/covers/prism.webp",
+    "7WRWMpfknMabtFgkWWC7KJ/signal_decoder_cover_v1_e83fe0fa.jpg": "/assets/workbench/covers/signal-decoder.webp",
+    "7WRWMpfknMabtFgkWWC7KJ/terrain_cover_1e056580.jpg": "/assets/workbench/covers/terrain.webp",
+    "7WRWMpfknMabtFgkWWC7KJ/trim_bar_texture_708bc46b.png": "/assets/workbench/codex/trim-bar.png",
+    "7WRWMpfknMabtFgkWWC7KJ/underground_cover_31183985.jpg": "/assets/workbench/covers/underground.jpg",
+    "7WRWMpfknMabtFgkWWC7KJ/vhs-button-press_7dd8335c.mp3": "/assets/workbench/audio/vhs-button-press.mp3"
+  },
+  "preserved_manus_cdn_assets": {
+    "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/CZIKNFXWjzlvpjEI.png": "/assets/legacy/manus/CZIKNFXWjzlvpjEI.png",
+    "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/CsmUKCVLeilIqNNJ.png": "/assets/workbench/codex/cartridge-spine-cabinet.png",
+    "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/FLleLCCpIbXNFGAi.png": "/assets/legacy/manus/FLleLCCpIbXNFGAi.png",
+    "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/KWcjkbZRoapBmsUL.png": "/assets/legacy/manus/KWcjkbZRoapBmsUL.png",
+    "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/LJSaRbdurtjnmgoI.png": "/assets/legacy/manus/LJSaRbdurtjnmgoI.png",
+    "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/NOhnYtwgYOzpzngc.png": "/assets/legacy/manus/NOhnYtwgYOzpzngc.png",
+    "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/SYHEtkMnhFfFNKbp.png": "/assets/legacy/manus/SYHEtkMnhFfFNKbp.png",
+    "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/UpbgmXKMNsNjpnpu.png": "/assets/legacy/manus/UpbgmXKMNsNjpnpu.png",
+    "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/WHwqHpqvQUlZmkTM.png": "/assets/legacy/manus/WHwqHpqvQUlZmkTM.png",
+    "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/XErroFrcgEbnlBdi.png": "/assets/legacy/manus/XErroFrcgEbnlBdi.png",
+    "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/XLuyIUSYWidBHSap.png": "/assets/legacy/manus/XLuyIUSYWidBHSap.png",
+    "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/ZrwcxbsbnbgzlVax.png": "/assets/legacy/manus/ZrwcxbsbnbgzlVax.png",
+    "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/azSuVoekkFnNjqzv.png": "/assets/legacy/manus/azSuVoekkFnNjqzv.png",
+    "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/fHPXctuxSsjvwkhg.png": "/assets/legacy/manus/fHPXctuxSsjvwkhg.png",
+    "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/fLHdQJImZxvFSNJX.webp": "/assets/workbench/codex/cabinet-hero.webp",
+    "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/gEUSBozlhzsCUQVp.png": "/assets/legacy/manus/gEUSBozlhzsCUQVp.png",
+    "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/nBERaIlYpCEOiWnP.png": "/assets/legacy/manus/nBERaIlYpCEOiWnP.png",
+    "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/oCdVePFazaeRgvNO.png": "/assets/legacy/manus/oCdVePFazaeRgvNO.png",
+    "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/sIVygxbdzRPJyTkp.png": "/assets/legacy/manus/sIVygxbdzRPJyTkp.png",
+    "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/tAUdctTTtbAZnbfH.png": "/assets/legacy/manus/tAUdctTTtbAZnbfH.png",
+    "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/yIOHdhgRJwHhvBLy.png": "/assets/legacy/manus/yIOHdhgRJwHhvBLy.png",
+    "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/ytcCyobGtInvqMUp.png": "/assets/legacy/manus/ytcCyobGtInvqMUp.png",
+    "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/zWRQfTmONtObpdxL.png": "/assets/legacy/manus/zWRQfTmONtObpdxL.png",
+    "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/zlNQJQinSxaqyYjB.png": "/assets/legacy/manus/zlNQJQinSxaqyYjB.png"
+  },
+  "fixed_404_cdn_assets": {
+    "https://cdn.manus.space/2026-03-06-17-48-36-398032/RebelLogo.png": "/assets/workbench/brand/rebel-horizon-logo-light.png",
+    "https://cdn.manus.space/2026-03-06-17-48-36-398032/nic_victory_v4-3.png": "/assets/workbench/brand/nic-victory.jpg"
+  },
+  "pending_user_originals": [
+    {
+      "original_url": "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/workbench-hero-desk_30c9a78e.png",
+      "destination": "client/public/assets/workbench/hero/workbench-desk.png"
+    },
+    {
+      "original_url": "https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/drift_cover_dc876c35.jpg",
+      "destination": "client/public/assets/workbench/covers/drift.jpg"
+    }
+  ],
+  "staging_records": "/home/ubuntu/rebel-artwork-recovery",
+  "provisional_fallbacks": [
+    {
+      "component": "Workbench hero",
+      "current_treatment": "Neutral dark gradient; original desk hero still pending.",
+      "original_status": "Awaiting the original workbench-desk image."
+    },
+    {
+      "component": "Drift card",
+      "current_asset": "/assets/workbench/covers/drift-provisional.webp",
+      "asset_origin": "The original Org Orbit cover preserved in rebel-leaders-plugins; used only until the original Drift cover is found.",
+      "original_status": "Awaiting the original Drift cover."
+    }
+  ]
+}

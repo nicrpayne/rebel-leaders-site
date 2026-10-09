@@ -1,6 +1,6 @@
 import ComingSoon from "@/components/ComingSoon";
 
-const RPG_BANNER = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/NOhnYtwgYOzpzngc.png";
+const RPG_BANNER = "/assets/legacy/manus/NOhnYtwgYOzpzngc.png";
 
 export default function Game() {
   return (

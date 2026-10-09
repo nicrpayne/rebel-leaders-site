@@ -8,9 +8,9 @@ import { useSaveWithAuth } from "@/hooks/useSaveWithAuth";
 
 // Asset URLs
 const PANEL_FRAME_URL =
-  "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/KWcjkbZRoapBmsUL.png";
+  "/assets/legacy/manus/KWcjkbZRoapBmsUL.png";
 const BACKGROUND_URL =
-  "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/sIVygxbdzRPJyTkp.png";
+  "/assets/legacy/manus/sIVygxbdzRPJyTkp.png";
 
 /*
   Panel image analysis (1792 x 2400):

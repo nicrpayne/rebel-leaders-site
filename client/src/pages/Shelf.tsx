@@ -12,7 +12,7 @@ import PixelDivider from "@/components/PixelDivider";
 import DialogueBox from "@/components/DialogueBox";
 import EasterEgg from "@/components/EasterEgg";
 
-const BOOKSHELF_IMG = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/fHPXctuxSsjvwkhg.png";
+const BOOKSHELF_IMG = "/assets/legacy/manus/fHPXctuxSsjvwkhg.png";
 
 interface BookEntry {
   title: string;

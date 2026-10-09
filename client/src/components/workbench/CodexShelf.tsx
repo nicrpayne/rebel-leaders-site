@@ -38,10 +38,10 @@ function groupByFlywheel(entries: CodexEntry[]): Record<FlywheelNode, CodexEntry
 /* ─────────────────────────────────────────────
    ASSET URLs
    ───────────────────────────────────────────── */
-const SPINE_CDN = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/CsmUKCVLeilIqNNJ.png";
-const STATUE_CDN = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/FLleLCCpIbXNFGAi.png";
-const JOURNAL_1_CDN = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/zWRQfTmONtObpdxL.png";
-const JOURNAL_2_CDN = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663030438402/azSuVoekkFnNjqzv.png";
+const SPINE_CDN = "/assets/workbench/codex/cartridge-spine-cabinet.png";
+const STATUE_CDN = "/assets/legacy/manus/FLleLCCpIbXNFGAi.png";
+const JOURNAL_1_CDN = "/assets/legacy/manus/zWRQfTmONtObpdxL.png";
+const JOURNAL_2_CDN = "/assets/legacy/manus/azSuVoekkFnNjqzv.png";
 
 /* ─────────────────────────────────────────────
    GLOBAL CARTRIDGE SIZING
@@ -373,7 +373,7 @@ function ShelfFilterBar({
       <div
         className="relative flex items-stretch justify-center gap-0 overflow-hidden"
         style={{
-          backgroundImage: "url('https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/trim_bar_texture_708bc46b.png')",
+          backgroundImage: "url('/assets/workbench/codex/trim-bar.png')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           boxShadow: [
@@ -640,7 +640,7 @@ export default function CodexShelf({
       {/* Shelf background */}
       <div
         className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/codex_shelf_bg_95d77a97.png')", backgroundSize: "cover" }}
+        style={{ backgroundImage: "url('/assets/workbench/codex/shelf.png')", backgroundSize: "cover" }}
       />
 
       {/* Vignette overlays */}

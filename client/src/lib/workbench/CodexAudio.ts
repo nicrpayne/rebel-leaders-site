@@ -30,10 +30,10 @@ class CodexAudioEngine {
     if (!this.ctx) return;
     try {
       const [loadRes, ejectRes, vhsRes, deviceRes] = await Promise.all([
-        fetch("https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/cartridge-load_dd1976d9.mp3"),
-        fetch("https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/cartridge-eject_0ffa518d.mp3"),
-        fetch("https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/vhs-button-press_7dd8335c.mp3"),
-        fetch("https://d2xsxph8kpxj0f.cloudfront.net/310419663030438402/7WRWMpfknMabtFgkWWC7KJ/device-button-press_1c26ae48.mp3"),
+        fetch("/assets/workbench/audio/cartridge-load.mp3"),
+        fetch("/assets/workbench/audio/cartridge-eject.mp3"),
+        fetch("/assets/workbench/audio/vhs-button-press.mp3"),
+        fetch("/assets/workbench/audio/device-button-press.mp3"),
       ]);
       const [loadArr, ejectArr, vhsArr, deviceArr] = await Promise.all([
         loadRes.arrayBuffer(),
