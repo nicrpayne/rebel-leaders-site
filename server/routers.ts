@@ -8,6 +8,7 @@ import { fetchYouTubeFullVideos, fetchYouTubeShorts } from "./youtube-rss";
 import { gravitasRouter } from "./gravitas";
 import { adminRouter } from "./admin";
 import { wallRouter } from "./wall";
+import { fieldToolsRouter } from "./field-tools";
 import {
   getMagicLinkUser,
   requestMagicLink,
@@ -39,6 +40,9 @@ export const appRouter = router({
 
   // Wall feature
   wall: wallRouter,
+
+  // Standalone Field Tools + assessment funnel
+  fieldTools: fieldToolsRouter,
   auth: router({
     // Returns the active user — checks Manus OAuth first, then magic-link JWT.
     me: publicProcedure.query(async ({ ctx }) => {
