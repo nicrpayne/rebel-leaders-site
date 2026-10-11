@@ -14,7 +14,6 @@ export type FieldTool = {
   cards: Array<{ title: string; copy: string }>;
   who: string;
   nextTools: string[];
-  checkoutUrl?: string;
 };
 
 export const FIELD_TOOLS: FieldTool[] = [

@@ -39,6 +39,8 @@ const FieldToolLanding = lazy(() => import("./pages/FieldToolLanding"));
 const PressureTest = lazy(() => import("./pages/PressureTest"));
 const FieldToolLab = lazy(() => import("./pages/FieldToolLab"));
 const FieldToolGuide = lazy(() => import("./pages/FieldToolGuide"));
+const FieldToolPurchase = lazy(() => import("./pages/FieldToolPurchase"));
+const FieldToolAccess = lazy(() => import("./pages/FieldToolAccess"));
 
 function RouteLoading() {
   return (
@@ -64,6 +66,12 @@ function Router() {
         <Route path="/community" component={Community} />
         <Route path="/mirror" component={Mirror} />
         <Route path="/field-tools" component={FieldTools} />
+        <Route path="/field-tools/:slug/buy">
+          {(params: { slug: string }) => <FieldToolPurchase slug={params.slug} />}
+        </Route>
+        <Route path="/field-tools/:slug/access">
+          {(params: { slug: string }) => <FieldToolAccess slug={params.slug} />}
+        </Route>
         <Route path="/field-tools/:slug/lab">
           {(params: { slug: string }) => <FieldToolLab slug={params.slug} />}
         </Route>

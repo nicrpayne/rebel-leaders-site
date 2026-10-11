@@ -4,6 +4,7 @@ import { publicProcedure, router } from "./_core/trpc";
 import { getDb } from "./db";
 import { userEvents } from "../drizzle/schema";
 import { ENV } from "./_core/env";
+import { getFieldToolCheckout } from "./field-tool-checkout";
 
 const resultSchema = z.enum([
   "ai",
@@ -30,6 +31,9 @@ const TOOL_SLUGS: Record<z.infer<typeof resultSchema>, string> = {
 };
 
 export const fieldToolsRouter = router({
+  checkout: publicProcedure
+    .input(z.object({ slug: z.string().min(1).max(100) }))
+    .query(({ input }) => getFieldToolCheckout(input.slug, process.env)),
   capturePressureTestLead: publicProcedure
     .input(z.object({
       email: z.string().email(),
