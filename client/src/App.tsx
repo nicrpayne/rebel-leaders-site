@@ -38,6 +38,7 @@ const FieldTools = lazy(() => import("./pages/FieldTools"));
 const FieldToolLanding = lazy(() => import("./pages/FieldToolLanding"));
 const PressureTest = lazy(() => import("./pages/PressureTest"));
 const FieldToolLab = lazy(() => import("./pages/FieldToolLab"));
+const FieldToolGuide = lazy(() => import("./pages/FieldToolGuide"));
 
 function RouteLoading() {
   return (
@@ -65,6 +66,9 @@ function Router() {
         <Route path="/field-tools" component={FieldTools} />
         <Route path="/field-tools/:slug/lab">
           {(params: { slug: string }) => <FieldToolLab slug={params.slug} />}
+        </Route>
+        <Route path="/field-tools/:slug/guide">
+          {(params: { slug: string }) => <FieldToolGuide slug={params.slug} />}
         </Route>
         <Route path="/field-tools/:slug">
           {(params: { slug: string }) => <FieldToolLanding slug={params.slug} />}
