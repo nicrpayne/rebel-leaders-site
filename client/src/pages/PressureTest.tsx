@@ -1,5 +1,7 @@
 import { useMemo, useState } from "react";
 import { Link } from "wouter";
+import { trpc } from "@/lib/trpc";
+import { useSession } from "@/contexts/SessionContext";
 import FieldToolsNav from "@/components/field-tools/FieldToolsNav";
 import { getFieldTool } from "@/lib/field-tools";
 
@@ -151,6 +153,10 @@ export default function PressureTest() {
   const [questionIndex, setQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<Option[]>([]);
   const [finished, setFinished] = useState(false);
+  const [email, setEmail] = useState("");
+  const [leadCaptured, setLeadCaptured] = useState(false);
+  const { sessionId } = useSession();
+  const captureLead = trpc.fieldTools.capturePressureTestLead.useMutation();
 
   const result = useMemo(() => {
     const scores: Record<Pressure, number> = {
@@ -168,7 +174,7 @@ export default function PressureTest() {
     const winner = (Object.entries(scores) as Array<[Pressure, number]>)
       .sort((a, b) => b[1] - a[1])[0]?.[0] ?? "translation";
 
-    return { pressure: winner, ...RESULTS[winner] };
+    return { pressure: winner, scores, ...RESULTS[winner] };
   }, [answers]);
 
   const tool = getFieldTool(result.toolSlug);
@@ -189,6 +195,18 @@ export default function PressureTest() {
     setAnswers([]);
     setQuestionIndex(0);
     setFinished(false);
+    setLeadCaptured(false);
+  }
+
+  async function revealResult() {
+    if (!email.trim()) return;
+    await captureLead.mutateAsync({
+      email: email.trim(),
+      sessionId: sessionId || "pressure-test-anon",
+      result: result.pressure,
+      scoreSummary: result.scores,
+    });
+    setLeadCaptured(true);
   }
 
   return (
@@ -240,6 +258,43 @@ export default function PressureTest() {
                 </div>
               </div>
             </>
+          ) : !leadCaptured ? (
+            <div className="mx-auto max-w-2xl border border-white/12 bg-white/[0.035] p-6 md:p-9">
+              <p className="font-pixel text-[8px] tracking-[0.24em] text-[#a5bea0]">YOUR RESULT IS READY</p>
+              <h1 className="mt-5 font-ui text-4xl font-semibold tracking-[-0.04em] md:text-5xl">
+                Where should I send your result?
+              </h1>
+              <p className="mt-4 font-ui text-base leading-7 text-[#b9c8be]">
+                I'll show it here immediately too. You'll get the pressure pattern, one useful move, and the Field Tool that fits it best.
+              </p>
+              <div className="mt-7">
+                <label className="font-ui text-sm font-semibold text-[#e8efe9]">Email</label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  onKeyDown={(e) => { if (e.key === "Enter") revealResult(); }}
+                  placeholder="you@company.com"
+                  className="mt-2 w-full border border-white/15 bg-[#0c1d16] px-4 py-4 font-ui text-sm text-white outline-none focus:border-[#a5bea0]"
+                />
+                <button
+                  type="button"
+                  onClick={revealResult}
+                  disabled={!email.trim() || captureLead.isPending}
+                  className="mt-3 w-full bg-[#b9d5ad] px-5 py-4 font-ui text-sm font-semibold text-[#07130f] disabled:opacity-50"
+                >
+                  {captureLead.isPending ? "Getting your result…" : "Show my result →"}
+                </button>
+                {captureLead.error && (
+                  <p className="mt-3 font-ui text-xs text-[#e7aaa0]">
+                    I couldn't save that right now. Try once more.
+                  </p>
+                )}
+              </div>
+              <p className="mt-5 font-ui text-xs leading-5 text-[#72857a]">
+                No newsletter bait-and-switch. This captures your assessment result so Rebel Leaders can send the result and improve the tools.
+              </p>
+            </div>
           ) : (
             <div className="mx-auto max-w-4xl">
               <p className="font-pixel text-[8px] tracking-[0.24em] text-[#a5bea0]">YOUR DOMINANT PRESSURE</p>
