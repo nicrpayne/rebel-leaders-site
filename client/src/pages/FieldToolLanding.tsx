@@ -70,6 +70,12 @@ export default function FieldToolLanding({ slug }: { slug: string }) {
                 Open the Lab preview
               </Link>
               <Link
+                href={"/field-tools/" + slug + "/guide"}
+                className="px-2 py-4 font-ui text-sm font-medium text-[#d1ddd4] hover:underline"
+              >
+                Read the Field Guide
+              </Link>
+              <Link
                 href="/assessment"
                 className="px-2 py-4 font-ui text-sm font-medium text-[#b9d5ad] hover:underline"
               >
@@ -154,8 +160,11 @@ export default function FieldToolLanding({ slug }: { slug: string }) {
                 One problem. One working process. One useful output.
               </h2>
               <p className="mt-4 max-w-2xl font-ui text-sm leading-6 text-[#59665e]">
-                Includes the Field Guide, interactive Lab, walkthrough, and Working Edition updates.
+                Includes the printable Field Guide, interactive Lab, walkthrough, and Working Edition updates.
               </p>
+              <Link href={"/field-tools/" + slug + "/guide"} className="mt-3 inline-block font-ui text-sm font-semibold text-[#45634b] hover:underline">
+                Preview the Field Guide →
+              </Link>
             </div>
             <div className="shrink-0 md:text-right">
               <p className="font-display text-5xl font-semibold text-[#173c2a]">{"$"}{tool.price}</p>
