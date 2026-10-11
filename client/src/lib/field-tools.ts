@@ -23,12 +23,12 @@ export const FIELD_TOOLS: FieldTool[] = [
     number: "01",
     name: "AI Stalemate",
     eyebrow: "FIELD TOOL 01",
-    headline: "Your team is stuck on AI.",
-    accentLine: "Start here.",
+    headline: "My PM won't shut up about AI.",
+    accentLine: "AI Stalemate",
     subhead:
-      "For product and engineering leaders who need to turn a recurring AI argument into one bounded test and a useful decision.",
+      "When Product and Engineering are fighting about AI, the problem usually isn't the tool. It's the unworked tension underneath it.",
     price: 47,
-    chips: ["Name the tension", "Run one shared test", "Make a useful decision"],
+    chips: ["Reduce friction", "Run a real test", "Make a decision"],
     sectionEyebrow: "TWO LEADERS. SAME TEAM. DIFFERENT RISK.",
     sectionHeadline: "Stop having the same AI conversation.",
     sectionCopy:
