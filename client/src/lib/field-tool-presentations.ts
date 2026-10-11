@@ -18,7 +18,7 @@ export const FIELD_TOOL_PRESENTATIONS: Record<string, Presentation> = {
     lead: "My PM won't shut up",
     accent: "about AI.",
     promise:
-      "Stop having the same AI argument. Design one test you could both believe.",
+      "Turn the AI argument into a shared ambition and a next move you can both stand behind.",
     session:
       "Allow 5–10 minutes of private preparation, 30 minutes together, and about 15 minutes after the trial to review the evidence.",
     benefits: [
@@ -44,6 +44,8 @@ export const FIELD_TOOL_PRESENTATIONS: Record<string, Presentation> = {
       "Product wants faster test writing. Engineering expects more review. They agree on one approved task and count the work on both sides of the handoff.",
     sampleValues: {
       outcome: "Reduce the full effort of producing accepted unit tests.",
+      sharedVision:
+        "Build a responsible test-writing practice the team can trust, giving people more time for judgment and helping other teams learn from our evidence.",
       task: "One isolated unit-test task. Production code and customer data are out of scope.",
       comparator:
         "A recent unit-test task of similar size, using the same author, reviewer, and acceptance checks.",

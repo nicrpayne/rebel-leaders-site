@@ -26,7 +26,81 @@ export const AI_STALEMATE_GUIDE_PAGES = [
       "No villain. The proposal is allowed to change. A justified STOP is a useful leadership outcome.",
   },
   {
-    eyebrow: "02 / PRIVATE PREPARATION",
+    eyebrow: "02 / CAST A SHARED VISION",
+    title: "Paint a future worth working toward.",
+    intro:
+      "Before proposing a tool, get clear about your Why. Give the other leader a concrete picture of what could improve and an invitation to help shape it.",
+    sections: [
+      {
+        title: "Name the improvement you care about",
+        body: "Whose work or experience could improve? What is costly or frustrating now? Why does it matter enough to invest time? Faster output becomes meaningful when it serves a worthwhile outcome.",
+      },
+      {
+        title: "Paint a recognizable before and after",
+        body: "Describe the future in everyday work: shorter customer waits, fewer repetitive tasks, more time for judgment, or patterns other teams can trust. Make the picture specific enough to question and improve.",
+      },
+      {
+        title: "Connect it to a shared stake",
+        body: "The company could gain a useful capability. The team could gain mastery and influence over its standards. Building something others trust could also create professional opportunities for both leaders.",
+      },
+      {
+        title: "Invite authorship",
+        body: "Ask: What would responsible use look like here? What would you change in this picture? Give the other leader room to shape the outcome, the conditions, and the approach.",
+      },
+      {
+        title: "Connect the picture to the next move",
+        body: "A vision gives the work direction. The next move makes it credible: clarify a concern, resolve permission or capacity, use existing evidence, or agree on one bounded test.",
+      },
+    ],
+    callout:
+      "Try: If we can show where AI genuinely improves our work, we could help this company set a standard others trust. That could open opportunities for the team and for both of us. I'd like us to shape that together. What would make it worth pursuing from your side?",
+  },
+  {
+    eyebrow: "03 / CONCERNS INTO CONDITIONS",
+    title: "Make the concern workable.",
+    intro:
+      "Use these as questions and options to discuss. Engineering determines technical suitability; the relevant owner determines permission. A concern can change the proposal.",
+    sections: [
+      {
+        title: "The quality is not good enough",
+        body: "Which checks or standards fail? Consider a smaller task, clearer acceptance criteria, repository conventions, automated tests, and human review. Keep the existing quality bar.",
+      },
+      {
+        title: "Reviewing it takes longer",
+        body: "Where does effort increase? Consider smaller changes, explicit author verification, and protected review time. Measure accepted work across the whole workflow rather than the first draft.",
+      },
+      {
+        title: "Our data or code cannot go into that tool",
+        body: "Which inputs and approvals are involved? Establish the permitted tool and input boundary with the approval owner. Synthetic or non-sensitive inputs may be an option; permission comes first.",
+      },
+      {
+        title: "It does not understand our codebase",
+        body: "Which context or conventions are missing? Consider explicit repository instructions, a known example, and a contained task. Check whether the available context actually supports that use.",
+      },
+      {
+        title: "We do not have capacity",
+        body: "What work would this replace, and who must review it? Ask the priority owner to protect time or decline the investment. Unplanned overtime is not the trial budget.",
+      },
+      {
+        title: "We tried it and it was worse",
+        body: "Which task, conditions, and result? Use that evidence. If a materially different use is proposed, name what changed and why another test would answer a useful question.",
+      },
+    ],
+    sources: [
+      {
+        name: "GitHub: Copilot best practices",
+        url: "https://docs.github.com/en/copilot/get-started/best-practices",
+      },
+      {
+        name: "Thoughtworks: reducing AI development friction",
+        url: "https://martinfowler.com/articles/reduce-friction-ai/",
+      },
+    ],
+    callout:
+      "The useful question is: Which condition would make this proposal workable, and who can decide it? Keep a specific no and an unsupported yes open to the same scrutiny.",
+  },
+  {
+    eyebrow: "04 / PRIVATE PREPARATION",
     title: "Get clear about your own side.",
     intro:
       "Allow 5-10 minutes before the shared conversation. This preparation is for you. Bring agreed observations into shared work, rather than forwarding your assumptions about the other person.",
@@ -60,11 +134,15 @@ export const AI_STALEMATE_GUIDE_PAGES = [
       "The Lab excludes every private-preparation field from the Trial Card, Evidence Record, and Decision Brief.",
   },
   {
-    eyebrow: "03 / SHARED TRIAL DESIGN",
+    eyebrow: "05 / SHARED TRIAL DESIGN",
     title: "One test you could both believe.",
     intro:
       "Allow about 30 minutes together. Use existing evidence if it already answers the question. Run a trial only when a useful uncertainty, approval, capacity, and ownership are present.",
     sections: [
+      {
+        title: "Agree on the ambition",
+        body: "Share the future you hope to help create and why it matters. Ask the other leader to shape it. Record only the ambition you both agree to pursue in shared work.",
+      },
       {
         title: "Bound the work",
         body: "Name the work outcome, exact task, and work that is out of scope. Choose a comparator without AI and say why the task size, experience, and acceptance bar are comparable.",
@@ -90,7 +168,7 @@ export const AI_STALEMATE_GUIDE_PAGES = [
       "A good trial: one approved unit-test task with comparable work and reserved review time. A weak trial: Everyone use AI this week and report whether it felt faster.",
   },
   {
-    eyebrow: "04 / FULL-WORKFLOW EVIDENCE",
+    eyebrow: "06 / FULL-WORKFLOW EVIDENCE",
     title: "Count the work on both sides.",
     intro:
       "Record person-minutes for everyone involved. Effort is not elapsed time. Enter 0 when no effort occurred; leave unknown effort blank. Compare quality alongside the totals.",
@@ -122,7 +200,7 @@ export const AI_STALEMATE_GUIDE_PAGES = [
       "A complete total is useful evidence. It is not a universal AI productivity claim, a quality verdict, or proof of causation.",
   },
   {
-    eyebrow: "05 / THE DECISION",
+    eyebrow: "07 / THE DECISION",
     title: "Four legitimate next moves.",
     intro:
       "Allow about 15 minutes after the trial. Compare the evidence with the bar agreed beforehand. Choose the move explicitly; the instrument does not make the decision for you.",
@@ -148,7 +226,7 @@ export const AI_STALEMATE_GUIDE_PAGES = [
       "Every decision needs a reason, the limits of the evidence, an accountable next-action owner, and a date. Record unresolved disagreement rather than claiming consensus.",
   },
   {
-    eyebrow: "06 / A WORKED DECISION",
+    eyebrow: "08 / A WORKED DECISION",
     title: "From an argument to a defensible move.",
     intro:
       "Fictional case: Product wants faster test writing. Engineering expects a larger review burden. Both leaders agree to examine one task rather than debate AI in general.",
@@ -178,7 +256,7 @@ export const AI_STALEMATE_GUIDE_PAGES = [
       "They did not leave with agreement about AI in general. They left with a specific decision, its evidence, and a next action.",
   },
   {
-    eyebrow: "07 / PLAY THE INSTRUMENT",
+    eyebrow: "09 / PLAY THE INSTRUMENT",
     title: "Take this into the work.",
     intro:
       "The guide gives you language and judgment. The Lab sequences your actual situation. The artifact carries the agreed work into the organization.",

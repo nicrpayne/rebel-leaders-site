@@ -95,6 +95,9 @@ describe("AI trial evidence and shared artifacts", () => {
       observed: "PRIVATE_OBSERVATION",
       prediction: "PRIVATE_PREDICTION",
       changeMind: "PRIVATE_VIEW",
+      why: "PRIVATE_WHY",
+      futurePicture: "PRIVATE_FUTURE",
+      askOther: "PRIVATE_QUESTION",
       task: "Shared task",
     };
     for (const build of [
@@ -105,6 +108,16 @@ describe("AI trial evidence and shared artifacts", () => {
     ]) {
       expect(build(v)).toContain("Shared task");
       expect(build(v)).not.toContain("PRIVATE_");
+    }
+  });
+  it("exports only the ambition agreed in shared work", () => {
+    for (const build of [buildTrialCard, buildDecisionBrief]) {
+      expect(
+        build({ sharedVision: "Shared ambition", why: "Private why" })
+      ).toContain("Shared ambition");
+      expect(
+        build({ why: "Private why", futurePicture: "Private future" })
+      ).not.toMatch(/Private why|Private future/);
     }
   });
   it("supports a pause with a named prerequisite before evidence exists", () => {

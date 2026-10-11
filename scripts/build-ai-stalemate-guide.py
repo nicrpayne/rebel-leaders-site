@@ -64,7 +64,7 @@ def footer(c, page):
     c.setFillColor(MUTED)
     c.setFont("GuideSans", 7.5)
     c.drawString(M, 30, "REBEL LEADERS / AI STALEMATE / WORKING EDITION")
-    c.drawRightString(W - M, 30, f"{page:02d} / 08")
+    c.drawRightString(W - M, 30, f"{page:02d} / {len(PAGES)+1:02d}")
 
 
 def callout(c, text, y):
@@ -101,7 +101,7 @@ def cover(c):
     c.setFillColor(GOLD)
     c.setFont("GuideSans", 10)
     c.drawString(M, 441, "THE FIELD GUIDE")
-    y = paragraph(c, "Stop having the same AI argument. Design one test you could both believe.", M, 300, CW, "cover")
+    y = paragraph(c, "Turn the AI argument into a shared ambition and a next move you can both stand behind.", M, 300, CW, "cover")
     c.setStrokeColor(GOLD)
     c.line(M, y - 26, W - M, y - 26)
     c.setFillColor(CREAM)
@@ -149,6 +149,13 @@ def chapter(c, data, number):
     for section in data["sections"]:
         y = paragraph(c, section["title"], M, y, style="heading") - 5
         y = paragraph(c, section["body"], M, y, style="body") - 17
+    if data.get("sources"):
+        for source in data["sources"]:
+            c.setFillColor(MUTED)
+            c.setFont("GuideSans", 7)
+            c.drawString(M, y, source["name"])
+            c.linkURL(source["url"], (M, y-2, W-M, y+9), relative=0)
+            y -= 14
     callout(c, data["callout"], y - 5)
     footer(c, number)
     c.showPage()

@@ -17,7 +17,7 @@ export default function AIStalemateGuide() {
             AI Stalemate
           </h1>
           <p className="mt-5 max-w-3xl font-display text-3xl leading-tight text-[#e4bc59]">
-            Two leaders. Different consequences. One useful decision.
+            One shared ambition. One useful next move.
           </p>
           <p className="mt-6 max-w-2xl font-ui text-sm leading-7 text-[#b6c7b8]">
             Build the language and judgment for the conversation. Then use the
@@ -30,7 +30,7 @@ export default function AIStalemateGuide() {
               download
               className="ft-button ft-button-gold"
             >
-              Download the 8-page Field Guide ↓
+              Download the Field Guide ↓
             </a>
             <Link
               href="/field-tools/ai-stalemate/lab"
@@ -142,6 +142,21 @@ export default function AIStalemateGuide() {
                   </div>
                 ))}
               </div>
+              {"sources" in chapter && (
+                <div className="mt-6 flex flex-col gap-2 font-ui text-xs text-[#667e66]">
+                  {chapter.sources.map(source => (
+                    <a
+                      key={source.url}
+                      href={source.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="underline underline-offset-4"
+                    >
+                      {source.name} ↗
+                    </a>
+                  ))}
+                </div>
+              )}
               <div className="mt-8 border-l-[3px] border-[#c3a14b] bg-[#153625] px-6 py-5 font-ui text-sm leading-7 text-[#f3efe4]">
                 {chapter.callout}
               </div>

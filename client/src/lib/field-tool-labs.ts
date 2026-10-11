@@ -51,6 +51,7 @@ export const FIELD_LABS: Record<string, LabConfig> = {
           },
           {
             id: "happened",
+            section: "01 / UNDERSTAND THE MOMENT",
             label: "What actually happened?",
             type: "textarea",
             hint: "Use actual words, requests, or events where you can.",
@@ -65,6 +66,19 @@ export const FIELD_LABS: Record<string, LabConfig> = {
             label:
               "What opportunity, cost, or responsibility are you protecting?",
             type: "textarea",
+          },
+          {
+            id: "why",
+            section: "02 / CLARIFY YOUR WHY",
+            label: "Why is this improvement worth pursuing?",
+            type: "textarea",
+            hint: "Whose work or experience could improve? Why does that matter to you?",
+          },
+          {
+            id: "futurePicture",
+            label: "What better future could you help create together?",
+            type: "textarea",
+            hint: "Paint a specific before and after for customers, the team, or the company. Treat career opportunities as a possibility, not a guarantee.",
           },
           {
             id: "observed",
@@ -96,9 +110,15 @@ export const FIELD_LABS: Record<string, LabConfig> = {
         fields: [
           {
             id: "outcome",
-            section: "01 / BOUND THE WORK",
+            section: "01 / THE SHARED AMBITION",
             label: "What work outcome are we trying to improve?",
             type: "textarea",
+          },
+          {
+            id: "sharedVision",
+            label: "What ambition and Why do you both agree to pursue?",
+            type: "textarea",
+            hint: "Invite the other leader to shape the picture. Record the shared version here; your private vision notes stay out of exports.",
           },
           {
             id: "task",

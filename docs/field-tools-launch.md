@@ -1,6 +1,6 @@
 # Field Tools preview and launch
 
-Each $47 tool combines a Field Guide, an interactive Lab, and an exported work artifact. AI Stalemate now has an eight-page PDF and web reader built from the same chapter data, with document-style Lab outputs. Five distinct wide photographic heroes sit behind the coded UI (smiling, standing, couch, angled standing, and armchair portraits). Nic's walkthrough is the fourth part of the experience. Customer-facing copy describes the completed product; internal release checks cover media and checkout configuration.
+Each $47 tool combines a Field Guide, an interactive Lab, and an exported work artifact. AI Stalemate now has an ten-page PDF and web reader built from the same chapter data, with document-style Lab outputs. Five distinct wide photographic heroes sit behind the coded UI (smiling, standing, couch, angled standing, and armchair portraits). Nic's walkthrough is the fourth part of the experience. Customer-facing copy describes the completed product; internal release checks cover media and checkout configuration.
 
 ## Routes
 
@@ -54,3 +54,7 @@ Keep changes on `field-tools-launch` and PR #3. Merge to `main` only after Nic a
 Nic explicitly authorized publishing code and assets to `nicrpayne/rebel-leaders-site` on October 11, 2026. Changes remain on the `field-tools-launch` preview branch; production merge still awaits review.
 
 Rebuild the portable guide with `python3 scripts/build-ai-stalemate-guide.py` (Python/ReportLab plus Node with TypeScript stripping). Its source chapters are in `client/src/lib/ai-stalemate-guide.ts`.
+
+## Shared vision
+
+The Guide teaches Why, a concrete future, shared professional stakes, an invitation to co-author, and a credible next move. Private Why and future reflections stay out of exports. Only the agreed shared ambition appears in the Trial Card and Decision Brief. A concerns chapter turns common objections into questions and locally appropriate conditions, with primary-source reading links.

@@ -46,6 +46,9 @@ export function buildTrialCard(v: Values) {
 WORK OUTCOME
 ${answer(v, "outcome")}
 
+SHARED AMBITION / WHY THIS MATTERS
+${answer(v, "sharedVision")}
+
 BOUNDED TASK / OUT OF SCOPE
 ${answer(v, "task")}
 
@@ -135,6 +138,9 @@ export function buildDecisionBrief(v: Values) {
 WORK OUTCOME / TESTED TASK
 ${answer(v, "outcome")}
 ${answer(v, "task")}
+
+SHARED AMBITION
+${answer(v, "sharedVision")}
 
 CONDITIONS / COMPARATOR
 ${answer(v, "tool")} — ${answer(v, "toolVersion")}
