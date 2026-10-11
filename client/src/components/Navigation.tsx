@@ -8,6 +8,7 @@ const navItems = [
   { label: "Archives", href: "/archives" },
   { label: "The Shelf", href: "/shelf" },
   { label: "Workbench", href: "/workbench" },
+  { label: "Field Tools", href: "/field-tools" },
   { label: "Residency", href: "/residency" },
   { label: "About", href: "/about" },
 ];
