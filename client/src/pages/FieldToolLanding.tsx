@@ -64,8 +64,14 @@ export default function FieldToolLanding({ slug }: { slug: string }) {
                 Get the Field Tool — {"$"}{tool.price} →
               </a>
               <Link
-                href="/assessment"
+                href={"/field-tools/" + slug + "/lab"}
                 className="border border-[#78907a] px-6 py-4 font-ui text-sm font-medium text-[#e4eee6] transition-colors hover:bg-white/5"
+              >
+                Open the Lab preview
+              </Link>
+              <Link
+                href="/assessment"
+                className="px-2 py-4 font-ui text-sm font-medium text-[#b9d5ad] hover:underline"
               >
                 Not sure? Take the Pressure Test
               </Link>
@@ -153,16 +159,22 @@ export default function FieldToolLanding({ slug }: { slug: string }) {
             </div>
             <div className="shrink-0 md:text-right">
               <p className="font-display text-5xl font-semibold text-[#173c2a]">{"$"}{tool.price}</p>
-              <button
-                type="button"
-                className="mt-3 w-full rounded-sm bg-[#173c2a] px-6 py-4 font-ui text-sm font-semibold text-white transition-colors hover:bg-[#214f39] md:w-auto"
-                onClick={() => {
-                  if (tool.checkoutUrl) window.location.href = tool.checkoutUrl;
-                  else window.alert("Checkout is the next connection. This page is ready for the payment URL.");
-                }}
-              >
-                Get the Field Tool →
-              </button>
+              {tool.checkoutUrl ? (
+                <button
+                  type="button"
+                  className="mt-3 w-full rounded-sm bg-[#173c2a] px-6 py-4 font-ui text-sm font-semibold text-white transition-colors hover:bg-[#214f39] md:w-auto"
+                  onClick={() => { window.location.href = tool.checkoutUrl!; }}
+                >
+                  Get the Field Tool →
+                </button>
+              ) : (
+                <Link
+                  href={"/field-tools/" + slug + "/lab"}
+                  className="mt-3 inline-block w-full rounded-sm bg-[#173c2a] px-6 py-4 text-center font-ui text-sm font-semibold text-white transition-colors hover:bg-[#214f39] md:w-auto"
+                >
+                  Open Lab Preview →
+                </Link>
+              )}
             </div>
           </div>
         </div>
