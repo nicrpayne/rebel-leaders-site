@@ -3,7 +3,7 @@ import { useClaimAnonymousResult } from "@/_core/hooks/useClaimAnonymousResult";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
 import { lazy, Suspense } from "react";
-import { Route, Switch, Redirect } from "wouter";
+import { Route, Switch, Redirect, useLocation } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { GameProvider } from "./contexts/GameContext";
@@ -34,6 +34,9 @@ const WallIndex = lazy(() => import("./pages/wall/WallIndex"));
 const WallPage = lazy(() => import("./pages/wall/WallPage"));
 const WallAdmin = lazy(() => import("./pages/wall/WallAdmin"));
 const AuthVerify = lazy(() => import("./pages/AuthVerify"));
+const FieldTools = lazy(() => import("./pages/FieldTools"));
+const FieldToolLanding = lazy(() => import("./pages/FieldToolLanding"));
+const PressureTest = lazy(() => import("./pages/PressureTest"));
 
 function RouteLoading() {
   return (
@@ -58,6 +61,11 @@ function Router() {
         <Route path="/book" component={Book} />
         <Route path="/community" component={Community} />
         <Route path="/mirror" component={Mirror} />
+        <Route path="/field-tools" component={FieldTools} />
+        <Route path="/field-tools/:slug">
+          {(params: { slug: string }) => <FieldToolLanding slug={params.slug} />}
+        </Route>
+        <Route path="/assessment" component={PressureTest} />
         <Route path="/workbench" component={Workbench} />
         <Route path="/workbench/gravitas" component={GravityCheck} />
         <Route path="/workbench/results" component={Results} />
@@ -88,6 +96,12 @@ function Router() {
   );
 }
 
+function ContextualGameHud() {
+  const [location] = useLocation();
+  if (location.startsWith("/field-tools") || location === "/assessment") return null;
+  return <GameHud />;
+}
+
 function App() {
   useClaimAnonymousResult();
   return (
@@ -97,7 +111,7 @@ function App() {
           <TooltipProvider>
             <Toaster />
             <Router />
-            <GameHud />
+            <ContextualGameHud />
           </TooltipProvider>
         </GameProvider>
       </ThemeProvider>
