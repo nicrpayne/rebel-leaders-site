@@ -599,7 +599,10 @@ export default function FieldToolLab({ slug }: { slug: string }) {
       <footer className="px-5 py-8 md:px-8">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 font-ui text-xs text-[#667369]">
           <Link href={"/field-tools/" + slug}>← Back to {tool.name}</Link>
-          <Link href="/field-tools">All Field Tools →</Link>
+          <div className="flex gap-4">
+            <Link href={"/field-tools/" + slug + "/guide"}>Field Guide</Link>
+            <Link href="/field-tools">All Field Tools →</Link>
+          </div>
         </div>
       </footer>
     </main>
