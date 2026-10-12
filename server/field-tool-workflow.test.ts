@@ -53,6 +53,17 @@ describe("AI trial evidence and shared artifacts", () => {
     expect(buildEvidenceRecord(v)).toContain("Target missed");
     expect(buildDecisionBrief(v)).toContain("Review cost increased");
   });
+  it("does not imply a trial result when an accepted proposal was never attempted", () => {
+    const v = {
+      task: "Proposed task",
+      readinessDecision: "READY FOR A BOUNDED TEST",
+      betStatus: "NOT ATTEMPTED",
+      decision: "STOP",
+      reason: "Priority changed",
+    };
+    expect(buildDecisionBrief(v)).toContain("No trial result is recorded");
+    expect(buildAITrialPackage(v)).not.toContain("EVIDENCE RECORD");
+  });
   it("reports descriptive effort reduction only with complete evidence and a positive baseline", () => {
     const v = { ...allStages("baseline", "10"), ...allStages("ai", "8") };
     expect(buildEvidenceRecord(v)).toContain("Observed effort reduction: 20%");

@@ -215,7 +215,9 @@ export function buildDecisionBrief(v: Values) {
     Boolean(v.quality?.trim() || v.withoutAi?.trim() || v.withAi?.trim());
   const preTrial =
     !hasEvidence &&
-    (!v.readinessDecision ||
+    (v.betStatus === "NOT ATTEMPTED" ||
+      v.betStatus === "NOT ACCEPTED" ||
+      !v.readinessDecision ||
       [
         "CLARIFY THE CONVERSATION",
         "ASK A SPECIALIST",
@@ -281,7 +283,9 @@ ${answer(v, "leadershipUpdate")}`;
 export function buildAITrialPackage(v: Values) {
   return [
     buildReadinessBrief(v),
-    ...(((!v.readinessDecision && !v.task?.trim()) ||
+    ...((v.betStatus === "NOT ATTEMPTED" ||
+      v.betStatus === "NOT ACCEPTED" ||
+      (!v.readinessDecision && !v.task?.trim()) ||
       [
         "CLARIFY THE CONVERSATION",
         "ASK A SPECIALIST",
