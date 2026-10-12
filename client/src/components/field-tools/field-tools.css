@@ -138,6 +138,10 @@
   object-fit: contain;
   object-position: right center;
 }
+.ft-catalog .ft-hero--wide .ft-hero-photo img {
+  object-fit: contain;
+  object-position: right center;
+}
 .ft-hero--wide .ft-hero-photo::after {
   background:
     linear-gradient(

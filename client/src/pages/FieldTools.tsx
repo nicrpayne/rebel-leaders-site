@@ -4,7 +4,7 @@ import { FIELD_TOOLS } from "@/lib/field-tools";
 
 export default function FieldTools() {
   return (
-    <main className="min-h-screen bg-[#07130f] text-[#f2f3ec]">
+    <main className="ft-catalog min-h-screen bg-[#07130f] text-[#f2f3ec]">
       <FieldToolHero
         eyebrow="REBEL LEADERS / FIELD TOOLS"
         headline={
@@ -14,7 +14,7 @@ export default function FieldTools() {
           </>
         }
         description="Practical tools for modern product work inside organizations that still demand certainty. Start with the pressure you are carrying today."
-        image="/assets/field-tools/ai-stalemate-hero-v2.webp"
+        image="/assets/field-tools/field-tools-catalog-hero-v1.webp"
         imageLayout="wide"
         primary={{ label: "Take the free Pressure Test", href: "/assessment" }}
         secondary={{ label: "Browse the five tools", href: "#tools" }}
