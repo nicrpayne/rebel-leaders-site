@@ -17,7 +17,7 @@ export function fieldToolPresentation(slug: string, audience: Audience = "pm") {
             "Start with 10 minutes of PM preparation. Then bring your lead into a focused conversation and agree one useful next move.",
         }
       : {
-          lead: "Your PM wants to use AI.",
+          lead: "My PM won’t shut up about AI.",
           accent: "Let's make your judgment count.",
           promise:
             "Shape responsible AI use with your PM, protect the standards you own, and make the next move clear.",
