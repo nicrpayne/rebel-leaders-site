@@ -15,7 +15,7 @@ const products: {
     audience: "pm",
     edition: "PM path",
     pages: 13,
-    image: "ai-stalemate-pm-hero-v4.webp",
+    image: "ai-stalemate-pm-hero-v5.webp",
   },
   {
     slug: "ai-stalemate",

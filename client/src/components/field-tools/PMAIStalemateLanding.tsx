@@ -5,7 +5,7 @@ import { fieldToolPresentation } from "@/lib/field-tool-paths";
 
 const base = "/field-tools/ai-stalemate/pm";
 export const PM_AI_HERO_IMAGE =
-  "/assets/field-tools/ai-stalemate-pm-hero-v4.webp";
+  "/assets/field-tools/ai-stalemate-pm-hero-v5.webp";
 
 export default function PMAIStalemateLanding() {
   const presentation = fieldToolPresentation("ai-stalemate", "pm");
