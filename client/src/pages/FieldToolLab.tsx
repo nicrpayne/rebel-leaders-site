@@ -139,6 +139,19 @@ function LabSession({ slug }: { slug: string }) {
   const [storageStatus, setStorageStatus] = useState("");
 
   useEffect(() => {
+    // A Guide link selects a phase once; later refreshes resume the saved phase.
+    const url = new URL(window.location.href);
+    if (url.searchParams.has("step")) {
+      url.searchParams.delete("step");
+      window.history.replaceState(
+        window.history.state,
+        "",
+        url.pathname + url.search + url.hash
+      );
+    }
+  }, []);
+
+  useEffect(() => {
     try {
       window.localStorage.setItem(
         storageKey,
@@ -472,7 +485,10 @@ function LabSession({ slug }: { slug: string }) {
                 </details>
               )}
               {current.fields.some(field => optionalIds.has(field.id)) && (
-                <details className="border-t border-[#cbd4c6] pt-5">
+                <details
+                  key={`optional-${step}`}
+                  className="border-t border-[#cbd4c6] pt-5"
+                >
                   <summary className="cursor-pointer font-ui text-sm font-semibold">
                     {step === 0
                       ? "Picture six months from now · optional, private"
