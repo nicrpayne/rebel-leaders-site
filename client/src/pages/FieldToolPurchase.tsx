@@ -10,6 +10,7 @@ import { trpc } from "@/lib/trpc";
 import { getFieldTool } from "@/lib/field-tools";
 import { FIELD_TOOL_PRESENTATIONS } from "@/lib/field-tool-presentations";
 import FieldToolsNav from "@/components/field-tools/FieldToolsNav";
+import RelatedFieldTools from "@/components/field-tools/RelatedFieldTools";
 
 export default function FieldToolPurchase({
   slug,
@@ -162,6 +163,7 @@ export default function FieldToolPurchase({
           </aside>
         </div>
       </section>
+      <RelatedFieldTools slug={slug} audience={audience} />
     </main>
   );
 }
