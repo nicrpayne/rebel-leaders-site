@@ -272,6 +272,41 @@ export function readinessChapters(audience: Audience) {
   ];
 }
 export const AI_READINESS_SAMPLE: Record<string, string> = {
+  betBasis:
+    "Fictional case: the team has identified unverified route permissions and repetitive test-writing work. No AI productivity result has been measured. Readiness must be established before this proposed experiment.",
+  betHypothesis:
+    "After access boundaries and qualified review are in place, AI-assisted drafting of one isolated authorization-test task may reduce total accepted-work effort while preserving allowed/denied-access checks.",
+  expectedLift:
+    "Fictional prediction for a future test: 20% less total person-time than a matched without-AI task. Record the comparator's baseline first; the prediction is not a delivery commitment.",
+  betQualitative:
+    "Ask the author and reviewer whether verification is easier or harder and whether they can explain the resulting tests.",
+  task: "Proposed future task: draft tests for one isolated API route using synthetic fixtures. Production connections, live customer data, role redesign, and unrelated refactoring are out of scope.",
+  comparator:
+    "A matched without-AI authorization-test task with comparable route complexity, author experience, reviewer, and acceptance checks. Record any limits to the comparison.",
+  tool: "A team-approved coding assistant; approval still needs confirmation before the test.",
+  toolVersion: "Record the approved model/version before starting.",
+  inputs:
+    "Synthetic fixtures and explicitly approved non-production code only.",
+  approvalOwner:
+    "The accountable engineering/security owner confirms tool and input permission.",
+  qualityBar:
+    "Qualified engineering owner reviews tests for allowed and denied access, resource boundaries, repository conventions, and passing CI.",
+  capacity:
+    "Proposed appetite: four total person-hours, including at most one reviewer hour. PM asks the priority owner which documentation task can move; the budget is not yet accepted.",
+  betTimebox:
+    "Proposed one-week window after prerequisites are verified. Agree actual start/end dates and review on the final day before accepting the bet.",
+  betRabbitHoles:
+    "If access-policy design or production integration becomes necessary, stop this task and return that decision to its owner.",
+  success:
+    "Proposed minimum: at least 10% lower full-workflow effort than the comparator, unchanged quality checks, and no more than one reviewer hour. Agree these conditions before starting.",
+  stop: "Stop for unapproved data or tool access, failed permission checks, or the agreed effort/reviewer budget being exhausted.",
+  owners:
+    "Proposed author: paired developer. Reviewer: qualified engineer. The accountable engineering owner decides technical acceptance; the priority owner decides displaced work. Confirm names and review date before starting.",
+  betStatus: "PROPOSED — NOT YET ACCEPTED",
+  betResult:
+    "This proposed bet has not been attempted. No improvement or quality result can be concluded; the current next move is preparation.",
+  betLearning:
+    "The conversation exposed access and engineering-readiness prerequisites. These are preparation findings, not evidence of an AI productivity gain or loss.",
   happened:
     "We have discussed AI in planning twice. The PM wants faster delivery; the lead has asked for clear boundaries and review capacity. Neither has proposed a next move they both understand.",
   story:
