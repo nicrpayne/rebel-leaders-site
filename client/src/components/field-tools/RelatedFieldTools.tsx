@@ -30,9 +30,9 @@ export default function RelatedFieldTools({
             <Link
               key={tool.slug}
               href={fieldToolBase(tool.slug, audience)}
-              className="group block focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#d9b34d]"
+              className="group block cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#d9b34d]"
             >
-              <div className="flex h-28 items-center justify-center overflow-hidden rounded-sm bg-[#13231b]">
+              <div className="flex h-52 items-center justify-center overflow-hidden rounded-sm bg-[#13231b] transition-colors group-hover:bg-[#1c3225] md:h-56">
                 <img
                   src={
                     tool.slug === "ai-stalemate"
@@ -50,7 +50,7 @@ export default function RelatedFieldTools({
                   className={
                     tool.slug === "ai-stalemate"
                       ? "h-full w-full object-cover object-right"
-                      : "h-24 w-auto rotate-[-3deg] object-contain shadow-md"
+                      : "h-44 w-auto max-w-[90%] rotate-[-3deg] object-contain shadow-md transition-transform duration-200 group-hover:scale-105 md:h-48"
                   }
                 />
               </div>
