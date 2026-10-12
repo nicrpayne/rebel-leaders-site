@@ -15,6 +15,7 @@ import {
   Compass,
 } from "lucide-react";
 import FieldToolHero from "@/components/field-tools/FieldToolHero";
+import FocusedFieldToolLanding from "@/components/field-tools/FocusedFieldToolLanding";
 import { getFieldTool } from "@/lib/field-tools";
 import { FIELD_TOOL_PUBLIC_GUIDE_EXCERPTS } from "@/lib/field-tool-public-samples";
 import { FIELD_TOOL_PUBLIC_SAMPLES } from "@/lib/field-tool-public-samples";
@@ -55,6 +56,8 @@ export default function FieldToolLanding({
       </main>
     );
   }
+  if (!["ai-stalemate"].includes(slug))
+    return <FocusedFieldToolLanding slug={slug} />;
   const related = tool.nextTools.map(getFieldTool).filter(Boolean);
   const icons = [MessageSquare, FlaskConical, Compass];
   const sample = FIELD_TOOL_PUBLIC_SAMPLES[slug];

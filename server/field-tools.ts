@@ -1,6 +1,8 @@
 import { AI_READINESS_SAMPLE } from "./field-tool-content/ai-readiness";
 import { FIELD_TOOL_PRESENTATIONS } from "../client/src/lib/field-tool-presentations";
 import { aiGuideFor, aiLabFor } from "./field-tool-content/ai-paths";
+import { LEADERSHIP_GUIDE_PAGES } from "./field-tool-content/leadership-guides";
+import { LEADERSHIP_SAMPLES } from "./field-tool-content/leadership-samples";
 import { TRPCError } from "@trpc/server";
 import { FIELD_LABS } from "./field-tool-content/labs";
 import { FIELD_GUIDES } from "./field-tool-content/guides";
@@ -132,15 +134,31 @@ export const fieldToolsRouter = router({
           : FIELD_LABS[input.slug];
       return {
         audience: input.audience,
+        firstMove: (
+          {
+            "deadline-reset":
+              "Bring one promised date. Skim the Guide's opening, then start Reality in the Lab. Check the constraint, shape options with your lead, and build a Stakeholder Update for the person who can make the tradeoff.",
+            "priority-whiplash":
+              "Bring one new urgent request and the commitments it competes with. Start The Stack in the Lab. Name what would change, then build a Tradeoff Brief for the decision owner. Return to record what they actually decide.",
+            "mandate-reset":
+              "Bring one outcome and one decision you cannot make. Start Accountability in the Lab, then verify the decision-rights map. Build a specific Reset Request with boundaries, an owner, and a response date.",
+            "product-project-translator":
+              "Bring the exact sentence a stakeholder asked you. Start The Request in the Lab. Confirm the need behind it, shape a bounded offer, and leave with a short Stakeholder Response and Commitment Card.",
+          } as Record<string, string>
+        )[input.slug],
         sampleValues:
           input.slug === "ai-stalemate"
             ? AI_READINESS_SAMPLE
-            : FIELD_TOOL_PRESENTATIONS[input.slug]?.sampleValues,
+            : LEADERSHIP_SAMPLES[input.slug],
         lab: {
           steps: lab.steps,
           outputs: lab.outputs?.map(({ build, ...output }) => output),
         },
         guide: FIELD_GUIDES[input.slug],
+        guidePages:
+          input.slug === "ai-stalemate"
+            ? aiGuideFor(input.audience)
+            : LEADERSHIP_GUIDE_PAGES[input.slug],
         aiPages:
           input.slug === "ai-stalemate" ? aiGuideFor(input.audience) : null,
         walkthroughUrl:

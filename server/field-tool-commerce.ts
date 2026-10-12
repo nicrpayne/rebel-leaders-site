@@ -275,7 +275,16 @@ export function registerFieldToolCommerce(app: Express) {
   );
   app.get("/api/field-tools/:slug/pdf", async (req, res) => {
     res.set("Cache-Control", "private, no-store");
-    if (req.params.slug !== "ai-stalemate") return void res.sendStatus(404);
+    const pdfNames: Record<string, string> = {
+      "ai-stalemate": `ai-stalemate-${req.query.audience === "lead-dev" ? "lead-dev" : "pm"}-field-guide.pdf`,
+      "deadline-reset": "deadline-reset-field-guide.pdf",
+      "priority-whiplash": "priority-whiplash-field-guide.pdf",
+      "mandate-reset": "mandate-reset-field-guide.pdf",
+      "product-project-translator":
+        "product-project-translator-field-guide.pdf",
+    };
+    if (!Object.hasOwn(pdfNames, req.params.slug))
+      return void res.sendStatus(404);
     try {
       if (!(await hasFieldTool(req, req.params.slug)))
         return void res
@@ -284,10 +293,8 @@ export function registerFieldToolCommerce(app: Express) {
             "Sign in with your purchase email to download this Field Guide."
           );
       res.download(
-        path.resolve(
-          `private/field-tools/ai-stalemate-${req.query.audience === "lead-dev" ? "lead-dev" : "pm"}-field-guide.pdf`
-        ),
-        `AI-Stalemate-${req.query.audience === "lead-dev" ? "Lead-Developer" : "PM"}-Field-Guide.pdf`
+        path.resolve(`private/field-tools/${pdfNames[req.params.slug]}`),
+        pdfNames[req.params.slug]
       );
     } catch {
       res.sendStatus(503);

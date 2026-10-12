@@ -116,7 +116,7 @@ export const FIELD_TOOL_PRESENTATIONS: Record<string, Presentation> = {
         copy: "The communicated promise, actual constraint, assumptions, and unknowns.",
       },
       {
-        name: "Explicit Tradeoff",
+        name: "Options Brief",
         copy: "What can change in scope or capacity, and what quality must stay protected.",
       },
       {
@@ -195,7 +195,7 @@ export const FIELD_TOOL_PRESENTATIONS: Record<string, Presentation> = {
     },
   },
   "mandate-reset": {
-    image: "/assets/field-tools/mandate-reset-hero-v2.webp",
+    image: "/assets/field-tools/mandate-reset-hero-v3.webp",
     imageLayout: "wide",
     lead: "You're accountable.",
     accent: "You can't decide.",
@@ -262,11 +262,11 @@ export const FIELD_TOOL_PRESENTATIONS: Record<string, Presentation> = {
         copy: "The exact words and the coordination need underneath them.",
       },
       {
-        name: "Product Reality Translation",
+        name: "Commitment Card",
         copy: "The project assumption beside what is known, unknown, and responsibly committable.",
       },
       {
-        name: "Response Brief",
+        name: "Stakeholder Response",
         copy: "A clear response and evidence checkpoint to take into the next meeting.",
       },
     ],

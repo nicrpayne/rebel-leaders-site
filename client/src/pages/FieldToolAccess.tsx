@@ -48,23 +48,19 @@ export default function FieldToolAccess({ slug }: { slug: string }) {
         <div className="mt-8 border-l-2 border-[#d9b34d] bg-[#12281b] p-6">
           <h2 className="font-display text-3xl">Your first useful move</h2>
           <p className="mt-3 font-ui text-sm leading-7 text-[#b8c9b8]">
-            Skim the Guide for the reframe, then open Private Prep in the Lab.
-            Bring one real disagreement.
-            {slug === "ai-stalemate" &&
-              " Then use Readiness together to share the business context and agree the system and team prerequisites."}
-            Return to the Guide whenever a question needs explanation.
+            {slug === "ai-stalemate"
+              ? "Skim the Guide for the reframe, then open Private Prep in the Lab. Bring one real disagreement. Then use Readiness together to share the business context and agree the system and team prerequisites. Return to the Guide whenever a question needs explanation."
+              : content.firstMove}
           </p>
           <Link href={`${base}/lab`} className="ft-button ft-button-gold mt-5">
             Start with my situation →
           </Link>
-          {slug === "ai-stalemate" && (
-            <a
-              href={`/api/field-tools/ai-stalemate/pdf?audience=${content.audience}`}
-              className="ml-5 inline-block text-sm underline"
-            >
-              Download the Field Guide ↓
-            </a>
-          )}
+          <a
+            href={`/api/field-tools/${slug}/pdf?audience=${content.audience}`}
+            className="ml-5 inline-block text-sm underline"
+          >
+            Download the Field Guide ↓
+          </a>
         </div>
         {content.walkthroughUrl && (
           <section className="mt-8 border border-[#60775a] p-6">

@@ -5,6 +5,7 @@ import { Link } from "wouter";
 import FieldToolsNav from "@/components/field-tools/FieldToolsNav";
 import FieldToolArtifact from "@/components/field-tools/FieldToolArtifact";
 import AIEffortComparison from "@/components/field-tools/AIEffortComparison";
+import LeadershipWorkSurface from "@/components/field-tools/LeadershipWorkSurface";
 import { getFieldTool } from "@/lib/field-tools";
 
 import {
@@ -15,6 +16,7 @@ import type { FieldDef } from "../../../server/field-tool-content/labs";
 import {
   FIELD_OUTPUT_BUILDERS,
   AI_OUTPUT_BUILDERS,
+  TOOL_ARTIFACT_BUILDERS,
 } from "@/lib/field-tool-output-builders";
 import { useFieldToolContent } from "@/components/field-tools/FieldToolGate";
 import { FIELD_TOOL_PRESENTATIONS } from "@/lib/field-tool-presentations";
@@ -87,7 +89,9 @@ function LabSession({ slug }: { slug: string }) {
       buildOutput: FIELD_OUTPUT_BUILDERS[slug],
       outputs: content.lab.outputs?.map(item => ({
         ...item,
-        build: AI_OUTPUT_BUILDERS[item.id as keyof typeof AI_OUTPUT_BUILDERS],
+        build:
+          TOOL_ARTIFACT_BUILDERS[item.id] ??
+          AI_OUTPUT_BUILDERS[item.id as keyof typeof AI_OUTPUT_BUILDERS],
       })),
     }),
     [content, slug]
@@ -283,7 +287,14 @@ function LabSession({ slug }: { slug: string }) {
             </div>
           </div>
 
-          <div className="mt-8 grid grid-cols-4 gap-2">
+          <div
+            className={
+              "mt-8 grid gap-2 " +
+              (config.steps.length === 5
+                ? "grid-cols-2 sm:grid-cols-5"
+                : "grid-cols-2 sm:grid-cols-4")
+            }
+          >
             {config.steps.map((item, index) => (
               <button
                 type="button"
@@ -325,6 +336,14 @@ function LabSession({ slug }: { slug: string }) {
           </aside>
 
           <div className="border border-[#c8d0c5] bg-[#fbf9f3] p-5 md:p-8">
+            <LeadershipWorkSurface
+              slug={slug}
+              step={step}
+              values={values}
+              onChange={(id, value) =>
+                setValues(prev => ({ ...prev, [id]: value }))
+              }
+            />
             {slug === "ai-stalemate" && step === 3 && (
               <AIEffortComparison
                 values={values}
@@ -381,22 +400,30 @@ function LabSession({ slug }: { slug: string }) {
                 <button
                   type="button"
                   onClick={() =>
-                    openOutput(config.outputs ? "decision-brief" : "output")
+                    openOutput(
+                      slug === "ai-stalemate"
+                        ? "decision-brief"
+                        : (config.outputs?.at(-1)?.id ?? "output")
+                    )
                   }
                   className="bg-[#173c2a] px-6 py-3 font-ui text-sm font-semibold text-white"
                 >
                   {config.outputs
-                    ? "Build the Decision Brief →"
+                    ? slug === "ai-stalemate"
+                      ? "Build the Decision Brief →"
+                      : `Build ${config.outputs.at(-1)?.title} →`
                     : "Generate the output →"}
                 </button>
               )}
             </div>
-            {config.outputs && step > 0 && (
+            {config.outputs && (slug !== "ai-stalemate" || step > 0) && (
               <div className="mt-6 border-t border-[#d7ddd3] pt-5">
                 <p className="font-ui text-xs leading-6 text-[#657268]">
-                  {atReadiness
-                    ? "Export the Readiness Brief to coordinate the prerequisites and next move. You can write a preparation decision without running a trial."
-                    : "Export the Trial Card before an approved test. Return for evidence and the decision; private preparation stays out of shared outputs."}
+                  {slug !== "ai-stalemate"
+                    ? "Build a record for the conversation. It updates from your shared inputs; private preparation stays out of every output."
+                    : atReadiness
+                      ? "Export the Readiness Brief to coordinate the prerequisites and next move. You can write a preparation decision without running a trial."
+                      : "Export the Trial Card before an approved test. Return for evidence and the decision; private preparation stays out of shared outputs."}
                 </p>
                 <div className="mt-3 flex flex-wrap gap-3">
                   {config.outputs
