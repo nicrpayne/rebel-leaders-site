@@ -37,6 +37,7 @@ const WallAdmin = lazy(() => import("./pages/wall/WallAdmin"));
 const AuthVerify = lazy(() => import("./pages/AuthVerify"));
 const FieldToolSignIn = lazy(() => import("./pages/FieldToolSignIn"));
 const FieldTools = lazy(() => import("./pages/FieldTools"));
+const FieldToolsReview = lazy(() => import("./pages/FieldToolsReview"));
 const FieldToolLanding = lazy(() => import("./pages/FieldToolLanding"));
 const PressureTest = lazy(() => import("./pages/PressureTest"));
 const FieldToolLab = lazy(() => import("./pages/FieldToolLab"));
@@ -70,6 +71,7 @@ function Router() {
         <Route path="/community" component={Community} />
         <Route path="/mirror" component={Mirror} />
         <Route path="/field-tools" component={FieldTools} />
+        <Route path="/field-tools/review" component={FieldToolsReview} />
         <Route path="/field-tools/sign-in" component={FieldToolSignIn} />
         <Route path="/field-tools/:slug/buy">
           {(params: { slug: string }) => (
