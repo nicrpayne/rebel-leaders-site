@@ -1,8 +1,12 @@
+import { fieldToolBase } from "@/lib/field-tool-paths";
 import { Link } from "wouter";
 import FieldToolsNav from "./FieldToolsNav";
-import { AI_STALEMATE_GUIDE_PAGES } from "@/lib/ai-stalemate-guide";
+import { useFieldToolContent } from "./FieldToolGate";
 
 export default function AIStalemateGuide() {
+  const content = useFieldToolContent();
+  const base = fieldToolBase("ai-stalemate", content.audience);
+  const AI_STALEMATE_GUIDE_PAGES = content.aiPages ?? [];
   return (
     <main className="ft-guide min-h-screen bg-[#f3efe4] text-[#193025]">
       <div className="print:hidden">
@@ -17,7 +21,9 @@ export default function AIStalemateGuide() {
             AI Stalemate
           </h1>
           <p className="mt-5 max-w-3xl font-display text-3xl leading-tight text-[#e4bc59]">
-            One shared ambition. One useful next move.
+            {content.audience === "pm"
+              ? "A PM’s guide to moving the opportunity forward."
+              : "A lead developer’s guide to shaping responsible use."}
           </p>
           <p className="mt-6 max-w-2xl font-ui text-sm leading-7 text-[#b6c7b8]">
             Build the language and judgment for the conversation. Then use the
@@ -26,16 +32,13 @@ export default function AIStalemateGuide() {
           </p>
           <div className="mt-8 flex flex-wrap gap-4 print:hidden">
             <a
-              href="/assets/field-tools/ai-stalemate-field-guide.pdf"
+              href={`/api/field-tools/ai-stalemate/pdf?audience=${content.audience}`}
               download
               className="ft-button ft-button-gold"
             >
               Download the Field Guide ↓
             </a>
-            <Link
-              href="/field-tools/ai-stalemate/lab"
-              className="ft-button ft-button-outline"
-            >
+            <Link href={`${base}/lab`} className="ft-button ft-button-outline">
               Open the Lab →
             </Link>
           </div>
@@ -80,7 +83,7 @@ export default function AIStalemateGuide() {
               <p className="mt-5 font-ui text-base leading-8 text-[#536659]">
                 {chapter.intro}
               </p>
-              {"table" in chapter && (
+              {chapter.table && (
                 <div className="mt-7 overflow-x-auto">
                   <table className="w-full font-ui text-sm">
                     <thead className="bg-[#153625] text-[#f3efe4]">
@@ -142,7 +145,7 @@ export default function AIStalemateGuide() {
                   </div>
                 ))}
               </div>
-              {"sources" in chapter && (
+              {chapter.sources && (
                 <div className="mt-6 flex flex-col gap-2 font-ui text-xs text-[#667e66]">
                   {chapter.sources.map(source => (
                     <a
@@ -164,13 +167,13 @@ export default function AIStalemateGuide() {
           ))}
           <div className="flex flex-wrap gap-4 print:hidden">
             <Link
-              href="/field-tools/ai-stalemate/lab"
+              href={`${base}/lab`}
               className="ft-button bg-[#153625] text-[#f3efe4]"
             >
               Work your situation in the Lab →
             </Link>
             <Link
-              href="/field-tools/ai-stalemate/access"
+              href={`${base}/access`}
               className="ft-button border-[#a8b59d]"
             >
               Your Field Tool →

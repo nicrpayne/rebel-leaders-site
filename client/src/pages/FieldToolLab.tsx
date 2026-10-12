@@ -1,3 +1,5 @@
+import { fieldToolForPath } from "@/lib/field-tool-paths";
+import { fieldToolBase, fieldToolPresentation } from "@/lib/field-tool-paths";
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import FieldToolsNav from "@/components/field-tools/FieldToolsNav";
@@ -6,7 +8,12 @@ import AIEffortComparison from "@/components/field-tools/AIEffortComparison";
 import { getFieldTool } from "@/lib/field-tools";
 
 import { readFieldToolDraft } from "@/lib/field-tool-drafts";
-import { FIELD_LABS, type FieldDef } from "@/lib/field-tool-labs";
+import type { FieldDef } from "../../../server/field-tool-content/labs";
+import {
+  FIELD_OUTPUT_BUILDERS,
+  AI_OUTPUT_BUILDERS,
+} from "@/lib/field-tool-output-builders";
+import { useFieldToolContent } from "@/components/field-tools/FieldToolGate";
 import { FIELD_TOOL_PRESENTATIONS } from "@/lib/field-tool-presentations";
 
 function FieldInput({
@@ -63,18 +70,34 @@ function FieldInput({
 }
 
 export default function FieldToolLab({ slug }: { slug: string }) {
-  return <LabSession key={slug} slug={slug} />;
+  const { audience } = useFieldToolContent();
+  return <LabSession key={slug + "/" + audience} slug={slug} />;
 }
 
 function LabSession({ slug }: { slug: string }) {
-  const tool = getFieldTool(slug);
-  const config = FIELD_LABS[slug];
-  const storageKey = "rl_field_lab_" + slug;
+  const content = useFieldToolContent();
+  const tool = fieldToolForPath(slug, content.audience);
+  const base = fieldToolBase(slug, content.audience);
+  const config = useMemo(
+    () => ({
+      ...content.lab,
+      buildOutput: FIELD_OUTPUT_BUILDERS[slug],
+      outputs: content.lab.outputs?.map(item => ({
+        ...item,
+        build: AI_OUTPUT_BUILDERS[item.id as keyof typeof AI_OUTPUT_BUILDERS],
+      })),
+    }),
+    [content, slug]
+  );
+  const storageKey = "rl_field_lab_" + slug + "_" + content.audience;
   const [initialDraft] = useState(() => {
     try {
       return readFieldToolDraft(
         window.localStorage,
-        storageKey,
+        content.audience === "pm" &&
+          window.localStorage.getItem(storageKey) === null
+          ? "rl_field_lab_" + slug
+          : storageKey,
         config?.steps.length ?? 1
       );
     } catch {
@@ -198,10 +221,15 @@ function LabSession({ slug }: { slug: string }) {
               </p>
               <h1 className="mt-4 font-ui text-4xl font-semibold tracking-[-0.04em] md:text-5xl">
                 {tool.name}
+                {slug === "ai-stalemate"
+                  ? content.audience === "pm"
+                    ? " / PM"
+                    : " / Lead Developer"
+                  : ""}
               </h1>
               <p className="mt-3 max-w-2xl font-ui text-sm leading-6 text-[#acbdb1]">
                 Your draft stays in this browser on this device. Export anything
-                you need to keep. No account required.
+                you need to keep. Export before switching devices.
               </p>
               {storageStatus && (
                 <p
@@ -376,7 +404,14 @@ function LabSession({ slug }: { slug: string }) {
             <div className="mt-5 grid gap-5 lg:grid-cols-[1fr_auto] lg:items-start">
               <FieldToolArtifact
                 text={output}
-                toolName={tool.name}
+                toolName={
+                  tool.name +
+                  (slug === "ai-stalemate"
+                    ? content.audience === "pm"
+                      ? " / PM"
+                      : " / Lead Developer"
+                    : "")
+                }
                 title={selectedOutput?.title ?? "Your working brief"}
               />
               <div className="flex flex-wrap gap-2 lg:flex-col print:hidden">
@@ -412,9 +447,9 @@ function LabSession({ slug }: { slug: string }) {
 
       <footer className="px-5 py-8 md:px-8">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 font-ui text-xs text-[#667369]">
-          <Link href={"/field-tools/" + slug}>← Back to {tool.name}</Link>
+          <Link href={base}>← Back to {tool.name}</Link>
           <div className="flex gap-4">
-            <Link href={"/field-tools/" + slug + "/guide"}>Field Guide</Link>
+            <Link href={base + "/guide"}>Field Guide</Link>
             <Link href="/field-tools">All Field Tools →</Link>
           </div>
         </div>

@@ -1,3 +1,9 @@
+import { fieldToolForPath } from "@/lib/field-tool-paths";
+import {
+  fieldToolBase,
+  fieldToolPresentation,
+  type Audience,
+} from "@/lib/field-tool-paths";
 import { Link } from "wouter";
 import { ArrowLeft, ArrowRight, Check, LockKeyhole } from "lucide-react";
 import { trpc } from "@/lib/trpc";
@@ -5,11 +11,18 @@ import { getFieldTool } from "@/lib/field-tools";
 import { FIELD_TOOL_PRESENTATIONS } from "@/lib/field-tool-presentations";
 import FieldToolsNav from "@/components/field-tools/FieldToolsNav";
 
-export default function FieldToolPurchase({ slug }: { slug: string }) {
-  const tool = getFieldTool(slug);
-  const presentation = FIELD_TOOL_PRESENTATIONS[slug];
+export default function FieldToolPurchase({
+  slug,
+  audience = "pm",
+}: {
+  slug: string;
+  audience?: Audience;
+}) {
+  const base = fieldToolBase(slug, audience);
+  const tool = fieldToolForPath(slug, audience);
+  const presentation = fieldToolPresentation(slug, audience);
   const checkout = trpc.fieldTools.checkout.useQuery(
-    { slug },
+    { slug, audience },
     { enabled: Boolean(tool), retry: false }
   );
   if (!tool || !presentation)
@@ -26,7 +39,7 @@ export default function FieldToolPurchase({ slug }: { slug: string }) {
       <FieldToolsNav />
       <section className="mx-auto max-w-6xl px-5 pb-20 pt-28 md:px-10 md:pt-36">
         <Link
-          href={`/field-tools/${slug}`}
+          href={base}
           className="inline-flex items-center gap-2 font-ui text-xs text-[#afc0af]"
         >
           <ArrowLeft size={14} aria-hidden="true" />
@@ -65,10 +78,12 @@ export default function FieldToolPurchase({ slug }: { slug: string }) {
             <div className="mt-9 border-t border-[#435a46] pt-6 font-ui text-sm leading-7 text-[#adbfaf]">
               <p>
                 Includes the interactive Lab, printable Field Guide, and your
-                shareable output. No account or AI subscription required.
+                shareable output. Secure access through your purchase email. No
+                AI subscription required.
               </p>
               <p className="mt-3">
-                The walkthrough shows how to use the process on a realistic case.
+                The walkthrough shows how to use the process on a realistic
+                case.
               </p>
               <p className="mt-3">{presentation.session}</p>
             </div>
@@ -119,8 +134,8 @@ export default function FieldToolPurchase({ slug }: { slug: string }) {
                     : "Checkout is being prepared."}
                 </p>
                 <p className="mt-2 font-ui text-xs leading-6 text-[#c0ccb7]">
-                  You can explore the Lab and Field Guide while the purchase
-                  option is being connected.
+                  Return to the product page to see the example and what is
+                  included.
                 </p>
                 {checkout.error && (
                   <button
@@ -135,16 +150,13 @@ export default function FieldToolPurchase({ slug }: { slug: string }) {
             )}
             <div className="mt-7 flex flex-col gap-4 border-t border-[#435a46] pt-6 font-ui text-xs text-[#c0cfb9]">
               <Link
-                href={`/field-tools/${slug}/lab`}
+                href={`${base}/access`}
                 className="underline underline-offset-4"
               >
-                Try the Lab preview →
+                Already bought it? Open your tool →
               </Link>
-              <Link
-                href={`/field-tools/${slug}/guide`}
-                className="underline underline-offset-4"
-              >
-                Read the Field Guide →
+              <Link href={base} className="underline underline-offset-4">
+                See the product →
               </Link>
             </div>
           </aside>

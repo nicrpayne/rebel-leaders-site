@@ -1,13 +1,22 @@
+import { fieldToolForPath } from "@/lib/field-tool-paths";
+import { trpc } from "@/lib/trpc";
+import { fieldToolBase, fieldToolPresentation } from "@/lib/field-tool-paths";
+import { useFieldToolContent } from "@/components/field-tools/FieldToolGate";
 import { Link } from "wouter";
 import { ArrowRight, FileText, FlaskConical } from "lucide-react";
 import FieldToolsNav from "@/components/field-tools/FieldToolsNav";
 import { getFieldTool } from "@/lib/field-tools";
 import { FIELD_TOOL_PRESENTATIONS } from "@/lib/field-tool-presentations";
 
-// A lightweight start page, not payment verification or an entitlement boundary.
+// Content is rendered only within the server-authorized FieldToolGate.
 export default function FieldToolAccess({ slug }: { slug: string }) {
-  const tool = getFieldTool(slug);
-  const presentation = FIELD_TOOL_PRESENTATIONS[slug];
+  const signOut = trpc.fieldTools.signOut.useMutation({
+    onSuccess: () => window.location.reload(),
+  });
+  const content = useFieldToolContent();
+  const base = fieldToolBase(slug, content.audience);
+  const tool = fieldToolForPath(slug, content.audience);
+  const presentation = fieldToolPresentation(slug, content.audience);
   if (!tool || !presentation)
     return (
       <main className="min-h-screen bg-[#07110d] p-10 text-white">
@@ -26,14 +35,56 @@ export default function FieldToolAccess({ slug }: { slug: string }) {
         </p>
         <h1 className="mt-5 font-display text-5xl font-semibold md:text-7xl">
           {tool.name}
+          {slug === "ai-stalemate"
+            ? content.audience === "pm"
+              ? " / PM"
+              : " / Lead Developer"
+            : ""}
         </h1>
         <p className="mt-5 max-w-2xl font-ui text-base leading-7 text-[#b8c9b8]">
-          {presentation.promise} Bookmark this page so you can come back to the
-          process.
+          {presentation.promise} Start with one situation you want to move
+          forward. Bookmark this page to return to your tool.
         </p>
+        <div className="mt-8 border-l-2 border-[#d9b34d] bg-[#12281b] p-6">
+          <h2 className="font-display text-3xl">Your first useful move</h2>
+          <p className="mt-3 font-ui text-sm leading-7 text-[#b8c9b8]">
+            Skim the Guide for the reframe, then open Private Prep in the Lab.
+            Bring one real disagreement. You can return to the Guide whenever a
+            question needs explanation.
+          </p>
+          <Link href={`${base}/lab`} className="ft-button ft-button-gold mt-5">
+            Start with my situation →
+          </Link>
+          {slug === "ai-stalemate" && (
+            <a
+              href={`/api/field-tools/ai-stalemate/pdf?audience=${content.audience}`}
+              className="ml-5 inline-block text-sm underline"
+            >
+              Download the Field Guide ↓
+            </a>
+          )}
+        </div>
+        {content.walkthroughUrl && (
+          <section className="mt-8 border border-[#60775a] p-6">
+            <h2 className="font-display text-3xl">
+              Watch Nic work the example
+            </h2>
+            <p className="mt-3 text-sm leading-7 text-[#b8c9b8]">
+              See the whole process, then work your own situation.
+            </p>
+            <a
+              href={content.walkthroughUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="ft-button ft-button-gold mt-5"
+            >
+              Watch the walkthrough ↗
+            </a>
+          </section>
+        )}
         <div className="mt-10 grid gap-5 md:grid-cols-2">
           <Link
-            href={`/field-tools/${slug}/guide`}
+            href={`${base}/guide`}
             className="border border-[#617857] bg-[#12281b] p-7"
           >
             <FileText size={26} className="text-[#d9b34d]" aria-hidden="true" />
@@ -54,7 +105,7 @@ export default function FieldToolAccess({ slug }: { slug: string }) {
             />
           </Link>
           <Link
-            href={`/field-tools/${slug}/lab`}
+            href={`${base}/lab`}
             className="border border-[#a38f49] bg-[#1a2b1b] p-7"
           >
             <FlaskConical
@@ -82,14 +133,21 @@ export default function FieldToolAccess({ slug }: { slug: string }) {
         <div className="mt-9 border-t border-[#435a46] pt-7 font-ui text-sm leading-7 text-[#acbfaa]">
           <p>{presentation.session}</p>
           <p className="mt-3">
-            Use the walkthrough to see Nic work one realistic case from conversation to decision.
+            The Guide explains the thinking. The Lab sequences your work. Your
+            exported record is what you share with colleagues.
           </p>
           <p className="mt-3">
             Your draft lives in this browser on this device. Export anything you
-            need to keep. This page does not show order or payment status; use
-            the receipt from your checkout provider for that.
+            need to keep. Keep your Lemon Squeezy receipt for order and payment
+            details. Use your purchase email to sign in on another device.
           </p>
         </div>
+        <button
+          onClick={() => signOut.mutate()}
+          className="mt-8 block text-xs underline"
+        >
+          Sign out on this device
+        </button>
         <Link
           href="/field-tools"
           className="mt-9 inline-block font-ui text-xs text-[#c6d7c1] underline underline-offset-4"

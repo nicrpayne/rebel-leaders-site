@@ -3,7 +3,7 @@ import {
   buildTrialCard,
   buildEvidenceRecord,
   buildDecisionBrief,
-} from "./ai-trial";
+} from "../../client/src/lib/ai-trial.ts";
 
 type FieldType = "text" | "textarea" | "select";
 

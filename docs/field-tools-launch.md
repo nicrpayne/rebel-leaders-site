@@ -1,6 +1,6 @@
 # Field Tools preview and launch
 
-Each $47 tool combines a Field Guide, an interactive Lab, and an exported work artifact. AI Stalemate now has an ten-page PDF and web reader built from the same chapter data, with document-style Lab outputs. Five distinct wide photographic heroes sit behind the coded UI (smiling, standing, couch, angled standing, and armchair portraits). Nic's walkthrough is the fourth part of the experience. Customer-facing copy describes the completed product; internal release checks cover media and checkout configuration.
+Each $47 tool combines a Field Guide, an interactive Lab, and an exported work artifact. AI Stalemate now has a ten-page PDF and web reader built from the same chapter data, with document-style Lab outputs. Five distinct wide photographic heroes sit behind the coded UI (smiling, standing, couch, angled standing, and armchair portraits). Nic's walkthrough is the fourth part of the experience. Customer-facing copy describes the completed product; internal release checks cover media and checkout configuration.
 
 ## Routes
 
@@ -58,3 +58,7 @@ Rebuild the portable guide with `python3 scripts/build-ai-stalemate-guide.py` (P
 ## Shared vision
 
 The Guide teaches Why, a concrete future, shared professional stakes, an invitation to co-author, and a credible next move. Private Why and future reflections stay out of exports. Only the agreed shared ambition appears in the Trial Card and Decision Brief. A concerns chapter turns common objections into questions and locally appropriate conditions, with primary-source reading links.
+
+## Purchase integration and distinct reader paths
+
+See `docs/field-tools-commerce.md` for the current implementation and exact account setup. The earlier public/no-account preview description above is superseded: paid content is now server-authorized, with explicit review-mode access on the preview service. AI Stalemate has separate `/pm` and `/lead-dev` landing pages, Guides, PDFs, Labs, and welcome pages. Current PDF sources are server-side.

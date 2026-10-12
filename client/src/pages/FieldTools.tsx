@@ -26,6 +26,35 @@ export default function FieldTools() {
         ]}
       />
 
+      <section className="bg-[#e9ebdf] px-5 py-8 text-[#193025]">
+        <div className="mx-auto max-w-6xl">
+          <h2 className="font-display text-3xl">
+            AI Stalemate: start with your situation
+          </h2>
+          <div className="mt-5 grid gap-4 md:grid-cols-2">
+            <Link
+              href="/field-tools/ai-stalemate/pm"
+              className="border border-[#9baa8e] bg-[#fbf9f3] p-5"
+            >
+              <span className="font-display text-2xl">I'm the PM →</span>
+              <p className="mt-2 text-sm">
+                I see an opportunity. My lead isn't convinced.
+              </p>
+            </Link>
+            <Link
+              href="/field-tools/ai-stalemate/lead-dev"
+              className="border border-[#9baa8e] bg-[#fbf9f3] p-5"
+            >
+              <span className="font-display text-2xl">
+                I'm the lead developer →
+              </span>
+              <p className="mt-2 text-sm">
+                My PM wants AI. I carry the consequences.
+              </p>
+            </Link>
+          </div>
+        </div>
+      </section>
       <section
         id="tools"
         className="bg-[#f3efe4] px-5 py-16 text-[#102019] md:px-8 md:py-24"

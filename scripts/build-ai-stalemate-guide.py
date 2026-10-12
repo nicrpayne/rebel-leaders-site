@@ -1,5 +1,7 @@
 """Build the portable guide from the same chapter data used in the web reader."""
 import json
+import os
+import sys
 from io import BytesIO
 import subprocess
 from pathlib import Path
@@ -17,10 +19,15 @@ from reportlab.pdfgen import canvas
 from reportlab.platypus import Paragraph, Table, TableStyle
 
 ROOT = Path(__file__).resolve().parents[1]
-DEST = ROOT / "client/public/assets/field-tools/ai-stalemate-field-guide.pdf"
+AUDIENCE = sys.argv[1] if len(sys.argv)>1 else "pm"
+assert AUDIENCE in ("pm", "lead-dev")
+ROLE = "PRODUCT MANAGER" if AUDIENCE == "pm" else "LEAD DEVELOPER"
+DEST = ROOT / f"private/field-tools/ai-stalemate-{AUDIENCE}-field-guide.pdf"
+BASE_URL = os.environ.get("GUIDE_APP_URL", "https://rebel-leaders-field-tools-preview-production.up.railway.app")
+LAB_URL = f"{BASE_URL}/field-tools/ai-stalemate/{AUDIENCE}/lab"
 PAGES = json.loads(subprocess.check_output([
     "node", "--experimental-strip-types", "--input-type=module", "-e",
-    "import { AI_STALEMATE_GUIDE_PAGES } from './client/src/lib/ai-stalemate-guide.ts'; console.log(JSON.stringify(AI_STALEMATE_GUIDE_PAGES));",
+    f"import {{ aiGuideFor }} from './server/field-tool-content/ai-paths.ts'; console.log(JSON.stringify(aiGuideFor('{AUDIENCE}')));",
 ], cwd=ROOT))
 
 for name, filename in [
@@ -63,7 +70,7 @@ def footer(c, page):
     c.line(M, 47, W - M, 47)
     c.setFillColor(MUTED)
     c.setFont("GuideSans", 7.5)
-    c.drawString(M, 30, "REBEL LEADERS / AI STALEMATE / WORKING EDITION")
+    c.drawString(M, 30, f"REBEL LEADERS / AI STALEMATE / {ROLE} EDITION")
     c.drawRightString(W - M, 30, f"{page:02d} / {len(PAGES)+1:02d}")
 
 
@@ -100,17 +107,19 @@ def cover(c):
     c.drawString(M, 487, "Stalemate")
     c.setFillColor(GOLD)
     c.setFont("GuideSans", 10)
-    c.drawString(M, 441, "THE FIELD GUIDE")
-    y = paragraph(c, "Turn the AI argument into a shared ambition and a next move you can both stand behind.", M, 300, CW, "cover")
+    c.drawString(M, 441, f"THE {ROLE} FIELD GUIDE")
+    y = paragraph(c, ("Make a credible case for the opportunity. Shape the next move with your lead." if AUDIENCE == "pm" else "Make your judgment count. Shape responsible use with your PM."), M, 300, CW, "cover")
     c.setStrokeColor(GOLD)
     c.line(M, y - 26, W - M, y - 26)
     c.setFillColor(CREAM)
     c.setFont("GuideBold", 11)
     c.drawString(M, 136, "Nic Payne")
     c.setFont("GuideSans", 9)
-    c.drawString(M, 117, "For Product and Engineering leaders")
+    c.drawString(M, 117, f"For you, the {ROLE.lower()}")
     c.setFillColor(colors.HexColor("#a9bba9"))
     c.setFont("GuideSans", 8)
+    c.linkURL(LAB_URL, (M, 25, W-M, 76), relative=0)
+    c.drawString(M, 76, "OPEN YOUR " + ROLE + " LAB >")
     c.drawString(M, 58, "UNDERSTAND THE PRESSURE. WORK THE SITUATION. LEAVE WITH A MOVE.")
     c.drawString(M, 39, "WORKING EDITION / REBEL-LEADER.COM")
     c.showPage()
@@ -157,6 +166,7 @@ def chapter(c, data, number):
             c.linkURL(source["url"], (M, y-2, W-M, y+9), relative=0)
             y -= 14
     callout(c, data["callout"], y - 5)
+    c.linkURL(LAB_URL, (M, 21, W-M, 41), relative=0)
     footer(c, number)
     c.showPage()
 
@@ -164,7 +174,7 @@ def chapter(c, data, number):
 def main():
     DEST.parent.mkdir(parents=True, exist_ok=True)
     c = canvas.Canvas(str(DEST), pagesize=A4, pageCompression=1)
-    c.setTitle("AI Stalemate - Rebel Leaders Field Guide")
+    c.setTitle(f"AI Stalemate - {ROLE} Field Guide")
     c.setAuthor("Nic Payne / Rebel Leaders")
     cover(c)
     for page, data in enumerate(PAGES, 2):

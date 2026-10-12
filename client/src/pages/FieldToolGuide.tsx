@@ -1,13 +1,16 @@
+import { fieldToolBase, fieldToolPresentation } from "@/lib/field-tool-paths";
 import { Link } from "wouter";
 import FieldToolsNav from "@/components/field-tools/FieldToolsNav";
 import { getFieldTool } from "@/lib/field-tools";
-import { getFieldGuide } from "@/lib/field-tool-guides";
+import { useFieldToolContent } from "@/components/field-tools/FieldToolGate";
 import AIStalemateGuide from "@/components/field-tools/AIStalemateGuide";
 
 export default function FieldToolGuide({ slug }: { slug: string }) {
+  const content = useFieldToolContent();
   if (slug === "ai-stalemate") return <AIStalemateGuide />;
+  const base = fieldToolBase(slug, content.audience);
   const tool = getFieldTool(slug);
-  const guide = getFieldGuide(slug);
+  const guide = content.guide;
 
   if (!tool || !guide) {
     return (
@@ -36,7 +39,7 @@ export default function FieldToolGuide({ slug }: { slug: string }) {
           </p>
           <div className="mt-8 flex flex-wrap gap-3 print:hidden">
             <Link
-              href={"/field-tools/" + slug + "/lab"}
+              href={base + "/lab"}
               className="bg-[#b9d5ad] px-5 py-3 font-ui text-sm font-semibold text-[#07130f]"
             >
               Open the Lab →
@@ -151,13 +154,13 @@ export default function FieldToolGuide({ slug }: { slug: string }) {
             </div>
             <div className="flex items-center gap-3 md:justify-end">
               <Link
-                href={"/field-tools/" + slug + "/lab"}
+                href={base + "/lab"}
                 className="bg-[#173c2a] px-5 py-3 font-ui text-sm font-semibold text-white"
               >
                 Open the Lab →
               </Link>
               <Link
-                href={"/field-tools/" + slug}
+                href={base}
                 className="border border-[#aab6a7] px-5 py-3 font-ui text-sm"
               >
                 Product page

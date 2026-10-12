@@ -1,3 +1,9 @@
+import { fieldToolForPath } from "@/lib/field-tool-paths";
+import {
+  fieldToolBase,
+  fieldToolPresentation,
+  type Audience,
+} from "@/lib/field-tool-paths";
 import { Link } from "wouter";
 import {
   ArrowRight,
@@ -10,16 +16,32 @@ import {
 } from "lucide-react";
 import FieldToolHero from "@/components/field-tools/FieldToolHero";
 import { getFieldTool } from "@/lib/field-tools";
-import { getFieldGuide } from "@/lib/field-tool-guides";
-import { FIELD_LABS } from "@/lib/field-tool-labs";
+import { FIELD_TOOL_PUBLIC_GUIDE_EXCERPTS } from "@/lib/field-tool-public-samples";
+import { FIELD_TOOL_PUBLIC_SAMPLES } from "@/lib/field-tool-public-samples";
 import { FIELD_TOOL_PRESENTATIONS } from "@/lib/field-tool-presentations";
 
-export default function FieldToolLanding({ slug }: { slug: string }) {
-  const tool = getFieldTool(slug);
-  const presentation = FIELD_TOOL_PRESENTATIONS[slug];
-  const guide = getFieldGuide(slug);
-  const lab = FIELD_LABS[slug];
-  if (!tool || !presentation || !guide || !lab) {
+export default function FieldToolLanding({
+  slug,
+  audience = "pm",
+}: {
+  slug: string;
+  audience?: Audience;
+}) {
+  const base = fieldToolBase(slug, audience);
+  const tool = fieldToolForPath(slug, audience);
+  const presentation = fieldToolPresentation(slug, audience);
+  const guide =
+    slug === "ai-stalemate"
+      ? {
+          reframe:
+            audience === "pm"
+              ? "You see a customer or team opportunity. Your lead sees the consequences of what ships. Get both into the conversation so you can shape a proposal worth pursuing together."
+              : "Your PM sees potential. You carry quality, review, and maintenance. Make your judgment concrete so you can help shape responsible use together.",
+          rules: FIELD_TOOL_PUBLIC_GUIDE_EXCERPTS[slug].rules,
+        }
+      : FIELD_TOOL_PUBLIC_GUIDE_EXCERPTS[slug];
+
+  if (!tool || !presentation || !guide) {
     return (
       <main className="min-h-screen bg-[#07110d] px-6 py-24 text-[#f5f0e6]">
         <div className="mx-auto max-w-2xl">
@@ -35,7 +57,7 @@ export default function FieldToolLanding({ slug }: { slug: string }) {
   }
   const related = tool.nextTools.map(getFieldTool).filter(Boolean);
   const icons = [MessageSquare, FlaskConical, Compass];
-  const sample = lab.buildOutput(presentation.sampleValues);
+  const sample = FIELD_TOOL_PUBLIC_SAMPLES[slug];
   const faqs = [
     [
       "Is this a course or a subscription?",
@@ -48,7 +70,7 @@ export default function FieldToolLanding({ slug }: { slug: string }) {
     ],
     [
       "Do I need an account or an AI subscription?",
-      "No account is required for the Lab. These are guided working tools; they do not call an AI model or require an AI subscription.",
+      "Sign in with your purchase email to open the Lab. These are guided working tools; they do not call an AI model or require an AI subscription.",
     ],
     [
       "Where does my work go?",
@@ -68,12 +90,18 @@ export default function FieldToolLanding({ slug }: { slug: string }) {
             {presentation.lead} <em>{presentation.accent}</em>
           </>
         }
-        description={tool.subhead}
+        description={
+          slug === "ai-stalemate"
+            ? audience === "pm"
+              ? "PM to PM: get clear about your Why, invite your lead to shape the opportunity, and leave with a decision you can take back to leadership."
+              : "Lead developer to lead developer: make the costs concrete, help shape a worthwhile opportunity with your PM, and leave with a decision you can both defend."
+            : tool.subhead
+        }
         image={presentation.image}
         imageLayout={presentation.imageLayout}
         primary={{
           label: `Get the Field Tool — $${tool.price}`,
-          href: `/field-tools/${slug}/buy`,
+          href: `${base}/buy`,
         }}
         secondary={{
           label: "Take the free Pressure Test",
@@ -83,10 +111,17 @@ export default function FieldToolLanding({ slug }: { slug: string }) {
           "One-time $47 purchase",
           "Interactive Lab + Field Guide",
           "Copy, download, or print",
-          "No account required",
+          "Secure email access",
         ]}
       >
-        <p className="ft-product-label">{tool.name}</p>
+        <p className="ft-product-label">
+          {tool.name}
+          {slug === "ai-stalemate"
+            ? audience === "pm"
+              ? " / FOR PRODUCT MANAGERS"
+              : " / FOR LEAD DEVELOPERS"
+            : ""}
+        </p>
         {(slug === "priority-whiplash" ||
           slug === "product-project-translator") && (
           <p className="mt-2 font-display text-xl text-[#c7d2c9]">
@@ -211,10 +246,10 @@ export default function FieldToolLanding({ slug }: { slug: string }) {
               Illustrative example, using the same output builder as the Lab.
             </p>
             <Link
-              href={`/field-tools/${slug}/lab`}
+              href={`${base}/lab`}
               className="mt-7 inline-flex items-center gap-2 font-ui text-sm font-semibold text-[#264c32] underline underline-offset-4"
             >
-              Try the Lab preview <ArrowRight size={16} aria-hidden="true" />
+              Open your Lab <ArrowRight size={16} aria-hidden="true" />
             </Link>
           </div>
           <div className="min-w-0 border border-[#a7b89f] bg-[#fbf9f3] shadow-[8px_8px_0_#d2dacb]">
@@ -316,20 +351,20 @@ export default function FieldToolLanding({ slug }: { slug: string }) {
               carrying. No subscription. No course portal.
             </p>
             <Link
-              href={`/field-tools/${slug}/buy`}
+              href={`${base}/buy`}
               className="ft-button ft-button-gold mt-7 w-full"
             >
               Get the Field Tool <ArrowRight size={17} aria-hidden="true" />
             </Link>
             <div className="mt-6 flex flex-wrap gap-x-5 gap-y-3 font-ui text-xs text-[#b6c9b2]">
               <Link
-                href={`/field-tools/${slug}/lab`}
+                href={`${base}/lab`}
                 className="underline underline-offset-4"
               >
-                Try the Lab preview
+                Open your Lab
               </Link>
               <Link
-                href={`/field-tools/${slug}/guide`}
+                href={`${base}/guide`}
                 className="underline underline-offset-4"
               >
                 Read the Field Guide
@@ -465,10 +500,7 @@ export default function FieldToolLanding({ slug }: { slug: string }) {
               Rebel Leaders / All Field Tools
             </Link>
           </div>
-          <Link
-            href={`/field-tools/${slug}/buy`}
-            className="ft-button ft-button-gold"
-          >
+          <Link href={`${base}/buy`} className="ft-button ft-button-gold">
             Get {tool.name} — ${tool.price}
             <ArrowRight size={17} aria-hidden="true" />
           </Link>

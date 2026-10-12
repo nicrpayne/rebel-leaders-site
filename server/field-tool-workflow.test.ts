@@ -9,7 +9,7 @@ import {
 } from "../client/src/lib/ai-trial";
 import { readFieldToolDraft } from "../client/src/lib/field-tool-drafts";
 import { getFieldToolCheckout } from "./field-tool-checkout";
-import { FIELD_LABS } from "../client/src/lib/field-tool-labs";
+import { FIELD_LABS } from "./field-tool-content/labs";
 import { FIELD_TOOL_PRESENTATIONS } from "../client/src/lib/field-tool-presentations";
 
 const allStages = (method: string, minutes: string) =>

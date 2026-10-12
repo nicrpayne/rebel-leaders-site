@@ -285,4 +285,4 @@ export const AI_STALEMATE_GUIDE_PAGES = [
     callout:
       "Want to rehearse first? Watch Nic work through a complete case, then load the fictional example in the Lab before bringing your own situation.",
   },
-] as const;
+];

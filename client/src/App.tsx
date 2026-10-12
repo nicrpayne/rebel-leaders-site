@@ -1,3 +1,4 @@
+import FieldToolGate from "./components/field-tools/FieldToolGate";
 import { Toaster } from "@/components/ui/sonner";
 import { useClaimAnonymousResult } from "@/_core/hooks/useClaimAnonymousResult";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -34,6 +35,7 @@ const WallIndex = lazy(() => import("./pages/wall/WallIndex"));
 const WallPage = lazy(() => import("./pages/wall/WallPage"));
 const WallAdmin = lazy(() => import("./pages/wall/WallAdmin"));
 const AuthVerify = lazy(() => import("./pages/AuthVerify"));
+const FieldToolSignIn = lazy(() => import("./pages/FieldToolSignIn"));
 const FieldTools = lazy(() => import("./pages/FieldTools"));
 const FieldToolLanding = lazy(() => import("./pages/FieldToolLanding"));
 const PressureTest = lazy(() => import("./pages/PressureTest"));
@@ -45,7 +47,9 @@ const FieldToolAccess = lazy(() => import("./pages/FieldToolAccess"));
 function RouteLoading() {
   return (
     <main className="flex min-h-screen items-center justify-center bg-background px-6 text-center text-foreground">
-      <p className="font-mono text-sm tracking-wider text-primary">LOADING NEXT AREA...</p>
+      <p className="font-mono text-sm tracking-wider text-primary">
+        LOADING NEXT AREA...
+      </p>
     </main>
   );
 }
@@ -66,20 +70,70 @@ function Router() {
         <Route path="/community" component={Community} />
         <Route path="/mirror" component={Mirror} />
         <Route path="/field-tools" component={FieldTools} />
+        <Route path="/field-tools/sign-in" component={FieldToolSignIn} />
         <Route path="/field-tools/:slug/buy">
-          {(params: { slug: string }) => <FieldToolPurchase slug={params.slug} />}
+          {(params: { slug: string }) => (
+            <FieldToolPurchase slug={params.slug} />
+          )}
         </Route>
         <Route path="/field-tools/:slug/access">
-          {(params: { slug: string }) => <FieldToolAccess slug={params.slug} />}
+          {(params: { slug: string }) => (
+            <FieldToolGate slug={params.slug}>
+              <FieldToolAccess slug={params.slug} />
+            </FieldToolGate>
+          )}
         </Route>
         <Route path="/field-tools/:slug/lab">
-          {(params: { slug: string }) => <FieldToolLab slug={params.slug} />}
+          {(params: { slug: string }) => (
+            <FieldToolGate slug={params.slug}>
+              <FieldToolLab slug={params.slug} />
+            </FieldToolGate>
+          )}
         </Route>
         <Route path="/field-tools/:slug/guide">
-          {(params: { slug: string }) => <FieldToolGuide slug={params.slug} />}
+          {(params: { slug: string }) => (
+            <FieldToolGate slug={params.slug}>
+              <FieldToolGuide slug={params.slug} />
+            </FieldToolGate>
+          )}
+        </Route>
+        <Route path="/field-tools/ai-stalemate/:audience/:view">
+          {(p: { audience: string; view: string }) => {
+            if (p.audience !== "pm" && p.audience !== "lead-dev")
+              return <NotFound />;
+            const audience = p.audience;
+            if (p.view === "buy")
+              return (
+                <FieldToolPurchase slug="ai-stalemate" audience={audience} />
+              );
+            return (
+              <FieldToolGate slug="ai-stalemate" audience={audience}>
+                {p.view === "lab" ? (
+                  <FieldToolLab slug="ai-stalemate" />
+                ) : p.view === "guide" ? (
+                  <FieldToolGuide slug="ai-stalemate" />
+                ) : p.view === "access" ? (
+                  <FieldToolAccess slug="ai-stalemate" />
+                ) : (
+                  <NotFound />
+                )}
+              </FieldToolGate>
+            );
+          }}
+        </Route>
+        <Route path="/field-tools/ai-stalemate/:audience">
+          {(p: { audience: string }) =>
+            p.audience === "pm" || p.audience === "lead-dev" ? (
+              <FieldToolLanding slug="ai-stalemate" audience={p.audience} />
+            ) : (
+              <NotFound />
+            )
+          }
         </Route>
         <Route path="/field-tools/:slug">
-          {(params: { slug: string }) => <FieldToolLanding slug={params.slug} />}
+          {(params: { slug: string }) => (
+            <FieldToolLanding slug={params.slug} />
+          )}
         </Route>
         <Route path="/assessment" component={PressureTest} />
         <Route path="/workbench" component={Workbench} />
@@ -89,7 +143,12 @@ function Router() {
         <Route path="/workbench/mirror" component={MirrorFlow} />
         <Route path="/workbench/mirror/reading" component={MirrorReading} />
         <Route path="/workbench/praxis" component={Praxis} />
-        <Route path="/armory">{() => { window.location.href = "/workbench"; return null; }}</Route>
+        <Route path="/armory">
+          {() => {
+            window.location.href = "/workbench";
+            return null;
+          }}
+        </Route>
         <Route path="/game-standalone" component={GameStandalone} />
         <Route path="/hidden-assets" component={HiddenAssets} />
         <Route path="/admin" component={Admin} />
@@ -97,7 +156,9 @@ function Router() {
         <Route path="/auth/verify" component={AuthVerify} />
         {/* Legacy redirects — keep old /wall URLs working */}
         <Route path="/wall/:wallCode">
-          {(params: { wallCode: string }) => <Redirect to={`/workbench/wall/${params.wallCode}`} />}
+          {(params: { wallCode: string }) => (
+            <Redirect to={`/workbench/wall/${params.wallCode}`} />
+          )}
         </Route>
         <Route path="/wall">
           <Redirect to="/workbench/wall" />
@@ -114,7 +175,8 @@ function Router() {
 
 function ContextualGameHud() {
   const [location] = useLocation();
-  if (location.startsWith("/field-tools") || location === "/assessment") return null;
+  if (location.startsWith("/field-tools") || location === "/assessment")
+    return null;
   return <GameHud />;
 }
 

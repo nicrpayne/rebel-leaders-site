@@ -1,8 +1,28 @@
+import { aiGuideFor, aiLabFor } from "./field-tool-content/ai-paths";
+import { TRPCError } from "@trpc/server";
+import { FIELD_LABS } from "./field-tool-content/labs";
+import { FIELD_GUIDES } from "./field-tool-content/guides";
+import { AI_STALEMATE_GUIDE_PAGES } from "./field-tool-content/ai-guide";
+import {
+  previewEnabled,
+  buyerEmail,
+  purchasedSlugs,
+  hasFieldTool,
+  requestBuyerLink,
+  redeemBuyerLink,
+  buyerCookie,
+  BUYER_COOKIE,
+  revokeBuyerSession,
+} from "./field-tool-commerce";
 import { z } from "zod";
 import { Resend } from "resend";
 import { publicProcedure, router } from "./_core/trpc";
 import { getDb } from "./db";
-import { userEvents } from "../drizzle/schema";
+import {
+  userEvents,
+  fieldToolOrders,
+  fieldToolAccessTokens,
+} from "../drizzle/schema";
 import { ENV } from "./_core/env";
 import { getFieldToolCheckout } from "./field-tool-checkout";
 
@@ -31,16 +51,160 @@ const TOOL_SLUGS: Record<z.infer<typeof resultSchema>, string> = {
 };
 
 export const fieldToolsRouter = router({
+  access: publicProcedure.query(async ({ ctx }) => {
+    ctx.res.setHeader("Cache-Control", "private, no-store");
+    const email = await buyerEmail(ctx.req);
+    return {
+      preview: previewEnabled(),
+      signedIn: Boolean(email),
+      slugs: await purchasedSlugs(email),
+    };
+  }),
+  requestAccess: publicProcedure
+    .input(
+      z.object({
+        email: z
+          .string()
+          .email()
+          .transform(v => v.trim().toLowerCase()),
+        slug: z.string().max(64),
+        audience: z.enum(["pm", "lead-dev"]).default("pm"),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      if (!Object.hasOwn(FIELD_LABS, input.slug))
+        throw new TRPCError({ code: "NOT_FOUND" });
+      try {
+        await requestBuyerLink(
+          input.email,
+          input.slug,
+          ctx.req.ip ?? ctx.req.socket.remoteAddress ?? "unknown",
+          input.audience
+        );
+      } catch (e) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: (e as Error).message,
+        });
+      }
+      return { success: true };
+    }),
+  redeemAccess: publicProcedure
+    .input(z.object({ token: z.string().regex(/^[a-f0-9]{64}$/) }))
+    .mutation(async ({ input, ctx }) => {
+      try {
+        const result = await redeemBuyerLink(input.token);
+        ctx.res.cookie(BUYER_COOKIE, result.session, buyerCookie);
+        return { slug: result.slug };
+      } catch (e) {
+        throw new TRPCError({
+          code: "UNAUTHORIZED",
+          message: (e as Error).message,
+        });
+      }
+    }),
+  signOut: publicProcedure.mutation(async ({ ctx }) => {
+    await revokeBuyerSession(ctx.req);
+    ctx.res.clearCookie(BUYER_COOKIE, { ...buyerCookie, maxAge: undefined });
+    return { success: true };
+  }),
+  content: publicProcedure
+    .input(
+      z.object({
+        slug: z.string().max(64),
+        audience: z.enum(["pm", "lead-dev"]).default("pm"),
+      })
+    )
+    .query(async ({ input, ctx }) => {
+      ctx.res.setHeader("Cache-Control", "private, no-store");
+      if (!Object.hasOwn(FIELD_LABS, input.slug))
+        throw new TRPCError({ code: "NOT_FOUND" });
+      if (!(await hasFieldTool(ctx.req, input.slug)))
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: "Sign in with your purchase email.",
+        });
+      const lab =
+        input.slug === "ai-stalemate"
+          ? aiLabFor(input.audience)
+          : FIELD_LABS[input.slug];
+      return {
+        audience: input.audience,
+        lab: {
+          steps: lab.steps,
+          outputs: lab.outputs?.map(({ build, ...output }) => output),
+        },
+        guide: FIELD_GUIDES[input.slug],
+        aiPages:
+          input.slug === "ai-stalemate" ? aiGuideFor(input.audience) : null,
+        walkthroughUrl:
+          process.env[
+            "FIELD_TOOL_" +
+              input.slug.replaceAll("-", "_").toUpperCase() +
+              "_WALKTHROUGH_URL"
+          ] || null,
+      };
+    }),
   checkout: publicProcedure
-    .input(z.object({ slug: z.string().min(1).max(100) }))
-    .query(({ input }) => getFieldToolCheckout(input.slug, process.env)),
+    .input(
+      z.object({
+        slug: z.string().min(1).max(100),
+        audience: z.enum(["pm", "lead-dev"]).default("pm"),
+      })
+    )
+    .query(async ({ input }) => {
+      const env = process.env;
+      let map: Record<string, string> = {};
+      try {
+        map = JSON.parse(env.LEMONSQUEEZY_VARIANT_MAP ?? "{}");
+      } catch {}
+      let databaseReady = false;
+      try {
+        const db = await getDb();
+        if (db) {
+          await db.select().from(fieldToolOrders).limit(1);
+          await db.select().from(fieldToolAccessTokens).limit(1);
+          databaseReady = true;
+        }
+      } catch {}
+      const ready = Boolean(
+        databaseReady &&
+          env.DATABASE_URL &&
+          env.RESEND_API_KEY &&
+          env.APP_URL &&
+          env.LEMONSQUEEZY_WEBHOOK_SECRET &&
+          env.LEMONSQUEEZY_STORE_ID &&
+          ["live", "test"].includes(env.LEMONSQUEEZY_MODE ?? "") &&
+          Object.values(map).includes(input.slug) &&
+          !previewEnabled()
+      );
+      const key =
+        "FIELD_TOOL_" +
+        input.slug.replaceAll("-", "_").toUpperCase() +
+        "_CHECKOUT_URL";
+      const roleKey =
+        "FIELD_TOOL_" +
+        input.slug.replaceAll("-", "_").toUpperCase() +
+        "_" +
+        input.audience.replaceAll("-", "_").toUpperCase() +
+        "_CHECKOUT_URL";
+      const checkout = getFieldToolCheckout(input.slug, {
+        ...env,
+        [key]: env[roleKey] ?? env[key],
+      });
+      return ready && checkout.provider === "Lemon Squeezy"
+        ? checkout
+        : { checkoutUrl: null, provider: null };
+    }),
   capturePressureTestLead: publicProcedure
-    .input(z.object({
-      email: z.string().email(),
-      sessionId: z.string().min(1),
-      result: resultSchema,
-      scoreSummary: z.record(z.string(), z.number()).optional(),
-    }))
+    .input(
+      z.object({
+        email: z.string().email(),
+        sessionId: z.string().min(1),
+        result: resultSchema,
+        scoreSummary: z.record(z.string(), z.number()).optional(),
+      })
+    )
     .mutation(async ({ input }) => {
       const normalizedEmail = input.email.trim().toLowerCase();
       const db = await getDb();
