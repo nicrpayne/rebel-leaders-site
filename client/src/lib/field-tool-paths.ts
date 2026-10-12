@@ -2,6 +2,15 @@ import { FIELD_TOOL_PRESENTATIONS } from "./field-tool-presentations";
 export type Audience = "pm" | "lead-dev";
 export const fieldToolBase = (slug: string, audience: Audience = "pm") =>
   `/field-tools/${slug}${slug === "ai-stalemate" ? "/" + audience : ""}`;
+export function fieldToolAccessPath(location: string) {
+  const parts = location.split("/");
+  const slug = parts[1] === "field-tools" ? parts[2] : "";
+  if (!slug || !Object.hasOwn(FIELD_TOOL_PRESENTATIONS, slug))
+    return "/field-tools";
+  return (
+    fieldToolBase(slug, parts[3] === "lead-dev" ? "lead-dev" : "pm") + "/access"
+  );
+}
 export function fieldToolPresentation(slug: string, audience: Audience = "pm") {
   const base = FIELD_TOOL_PRESENTATIONS[slug];
   if (!base || slug !== "ai-stalemate") return base;

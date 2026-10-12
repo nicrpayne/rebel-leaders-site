@@ -11,6 +11,7 @@ import {
   buildStakeholderResponse,
 } from "../client/src/lib/leadership-output";
 import { readFieldToolDraft } from "../client/src/lib/field-tool-drafts";
+import { fieldToolAccessPath } from "../client/src/lib/field-tool-paths";
 
 describe("four complete working kits", () => {
   for (const [slug, lab] of Object.entries(LEADERSHIP_LABS)) {
@@ -138,5 +139,32 @@ describe("capacity assumptions", () => {
         requestLoad: "0",
       })
     ).toEqual({ available: 10, existing: 0, request: 0, total: 0, gap: 0 });
+  });
+});
+
+describe("returning to the purchased tool", () => {
+  it("keeps each product's landing, checkout, Guide, and Lab on its own access path", () => {
+    for (const slug of Object.keys(LEADERSHIP_LABS)) {
+      for (const suffix of ["", "/buy", "/guide", "/lab", "/access"]) {
+        expect(fieldToolAccessPath(`/field-tools/${slug}${suffix}`)).toBe(
+          `/field-tools/${slug}/access`
+        );
+      }
+    }
+  });
+  it("preserves both AI audiences and routes unknown tools to the catalog", () => {
+    expect(fieldToolAccessPath("/field-tools/ai-stalemate/lead-dev/lab")).toBe(
+      "/field-tools/ai-stalemate/lead-dev/access"
+    );
+    expect(fieldToolAccessPath("/field-tools/ai-stalemate/pm/guide")).toBe(
+      "/field-tools/ai-stalemate/pm/access"
+    );
+    for (const location of [
+      "/field-tools",
+      "/about",
+      "/field-tools/__proto__",
+      "/field-tools/unknown",
+    ])
+      expect(fieldToolAccessPath(location)).toBe("/field-tools");
   });
 });
