@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import FieldToolHero from "@/components/field-tools/FieldToolHero";
 import FocusedFieldToolLanding from "@/components/field-tools/FocusedFieldToolLanding";
+import PMAIStalemateLanding from "@/components/field-tools/PMAIStalemateLanding";
 import { getFieldTool } from "@/lib/field-tools";
 import { FIELD_TOOL_PUBLIC_GUIDE_EXCERPTS } from "@/lib/field-tool-public-samples";
 import { FIELD_TOOL_PUBLIC_SAMPLES } from "@/lib/field-tool-public-samples";
@@ -58,6 +59,7 @@ export default function FieldToolLanding({
   }
   if (!["ai-stalemate"].includes(slug))
     return <FocusedFieldToolLanding slug={slug} />;
+  if (audience === "pm") return <PMAIStalemateLanding />;
   const related = tool.nextTools.map(getFieldTool).filter(Boolean);
   const icons = [MessageSquare, FlaskConical, Compass];
   const sample = FIELD_TOOL_PUBLIC_SAMPLES[slug];
@@ -93,13 +95,7 @@ export default function FieldToolLanding({
             {presentation.lead} <em>{presentation.accent}</em>
           </>
         }
-        description={
-          slug === "ai-stalemate"
-            ? audience === "pm"
-              ? "PM to PM: get clear about your Why, invite your lead to shape the opportunity, and leave with a decision you can take back to leadership."
-              : "Help your PM understand the risks—and agree what your team needs to move forward."
-            : tool.subhead
-        }
+        description="Help your PM understand the risks—and agree what your team needs to move forward."
         image={presentation.image}
         imageLayout={presentation.imageLayout}
         primary={{
@@ -117,14 +113,7 @@ export default function FieldToolLanding({
           "Secure email access",
         ]}
       >
-        <p className="ft-product-label">
-          {tool.name}
-          {slug === "ai-stalemate"
-            ? audience === "pm"
-              ? " / FOR PRODUCT MANAGERS"
-              : " / FOR LEAD DEVELOPERS"
-            : ""}
-        </p>
+        <p className="ft-product-label">AI Stalemate / FOR LEAD DEVELOPERS</p>
         {(slug === "priority-whiplash" ||
           slug === "product-project-translator") && (
           <p className="mt-2 font-display text-xl text-[#c7d2c9]">

@@ -14,6 +14,7 @@ export default function FieldToolHero({
   primary,
   secondary,
   facts,
+  showCaption = true,
 }: {
   eyebrow: string;
   headline: ReactNode;
@@ -22,8 +23,9 @@ export default function FieldToolHero({
   imageLayout?: "portrait" | "wide";
   children?: ReactNode;
   primary: { label: string; href: string; onClick?: () => void };
-  secondary: { label: string; href: string };
+  secondary?: { label: string; href: string };
   facts: string[];
+  showCaption?: boolean;
 }) {
   return (
     <div className={`ft-hero ft-hero--${imageLayout}`}>
@@ -35,9 +37,11 @@ export default function FieldToolHero({
           height={imageLayout === "wide" ? 941 : 1402}
           fetchPriority="high"
         />
-        <div className="ft-photo-caption">
-          <span /> BETTER LEADERS. BRIGHTER WORK.
-        </div>
+        {showCaption && (
+          <div className="ft-photo-caption">
+            <span /> BETTER LEADERS. BRIGHTER WORK.
+          </div>
+        )}
       </div>
       <FieldToolsNav />
       <section className="ft-hero-inner">
@@ -65,18 +69,22 @@ export default function FieldToolHero({
                 <ArrowRight size={17} aria-hidden="true" />
               </Link>
             )}
-            {secondary.href.startsWith("#") ? (
-              <a href={secondary.href} className="ft-button ft-button-outline">
-                {secondary.label}
-              </a>
-            ) : (
-              <Link
-                href={secondary.href}
-                className="ft-button ft-button-outline"
-              >
-                {secondary.label}
-              </Link>
-            )}
+            {secondary &&
+              (secondary.href.startsWith("#") ? (
+                <a
+                  href={secondary.href}
+                  className="ft-button ft-button-outline"
+                >
+                  {secondary.label}
+                </a>
+              ) : (
+                <Link
+                  href={secondary.href}
+                  className="ft-button ft-button-outline"
+                >
+                  {secondary.label}
+                </Link>
+              ))}
           </div>
           <p className="ft-founder-note">
             Built by Nic Payne · Working product leader, founder of Rebel
