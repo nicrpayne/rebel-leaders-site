@@ -49,7 +49,7 @@ export default function PMAIStalemateLanding() {
     ],
   ];
   return (
-    <main className="min-h-screen bg-[#f3efe4] text-[#193025]">
+    <main className="ft-pm-landing min-h-screen bg-[#f3efe4] text-[#193025]">
       <FieldToolHero
         eyebrow="FIELD TOOL 01"
         headline={

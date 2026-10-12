@@ -134,6 +134,10 @@
 .ft-hero--wide .ft-hero-photo img {
   object-position: 78% center;
 }
+.ft-pm-landing .ft-hero--wide .ft-hero-photo img {
+  object-fit: contain;
+  object-position: right center;
+}
 .ft-hero--wide .ft-hero-photo::after {
   background:
     linear-gradient(
