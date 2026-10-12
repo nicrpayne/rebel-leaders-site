@@ -1,6 +1,6 @@
 import { Link } from "wouter";
 import { ArrowRight } from "lucide-react";
-import { getFieldTool, type FieldTool } from "@/lib/field-tools";
+import { FIELD_TOOLS } from "@/lib/field-tools";
 import { FIELD_TOOL_PRESENTATIONS } from "@/lib/field-tool-presentations";
 import { fieldToolBase, type Audience } from "@/lib/field-tool-paths";
 
@@ -11,30 +11,28 @@ export default function RelatedFieldTools({
   slug: string;
   audience?: Audience;
 }) {
-  const related = (getFieldTool(slug)?.nextTools ?? [])
-    .map(getFieldTool)
-    .filter((tool): tool is FieldTool => tool !== undefined && tool.slug !== slug);
+  const related = FIELD_TOOLS.filter(tool => tool.slug !== slug);
   if (!related.length) return null;
   return (
     <section
       aria-labelledby="related-field-tools"
-      className="border-t border-[#cbd4c6] bg-[#f3efe4] px-5 py-12 text-[#193025] md:px-10"
+      className="border-t border-[#435a46] bg-[#07110d] px-5 py-8 text-[#f5f0e6] md:px-10"
     >
       <div className="mx-auto max-w-6xl">
         <h2
           id="related-field-tools"
-          className="font-display text-3xl font-semibold"
+          className="font-display text-2xl"
         >
           Related products
         </h2>
-        <div className="mt-6 grid gap-6 sm:grid-cols-2">
+        <div className="mt-5 grid grid-cols-2 gap-x-5 gap-y-6 md:grid-cols-4">
           {related.map(tool => (
             <Link
               key={tool.slug}
               href={fieldToolBase(tool.slug, audience)}
-              className="group block overflow-hidden border border-[#cbd4c6] bg-[#fffdf7] transition-colors hover:border-[#6e8056] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#6e8056]"
+              className="group block focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#d9b34d]"
             >
-              <div className="flex h-48 items-center justify-center overflow-hidden bg-[#e7eadf]">
+              <div className="flex h-28 items-center justify-center overflow-hidden rounded-sm bg-[#13231b]">
                 <img
                   src={
                     tool.slug === "ai-stalemate"
@@ -52,19 +50,19 @@ export default function RelatedFieldTools({
                   className={
                     tool.slug === "ai-stalemate"
                       ? "h-full w-full object-cover object-right"
-                      : "h-40 w-auto rotate-[-3deg] object-contain shadow-lg"
+                      : "h-24 w-auto rotate-[-3deg] object-contain shadow-md"
                   }
                 />
               </div>
-              <div className="flex items-center justify-between gap-4 p-5">
+              <div className="mt-3 flex items-start justify-between gap-2">
                 <div>
-                  <h3 className="font-display text-2xl">{tool.name}</h3>
-                  <p className="mt-2 font-ui text-sm text-[#607063]">
-                    ${tool.price} · one time
+                  <h3 className="font-display text-lg leading-tight">{tool.name}</h3>
+                  <p className="mt-1 font-ui text-xs text-[#afbfaa]">
+                    ${tool.price}
                   </p>
                 </div>
                 <ArrowRight
-                  size={20}
+                  size={14}
                   aria-hidden="true"
                   className="shrink-0 transition-transform group-hover:translate-x-1"
                 />
