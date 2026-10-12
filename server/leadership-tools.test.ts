@@ -51,14 +51,17 @@ describe("four complete working kits", () => {
           "existing",
           lab.steps.length
         )
-      ).toEqual(earlier);
+      ).toEqual({
+        step: earlier.step,
+        values: { finalDecision: "Keep the actual response" },
+      });
     });
     it(`${slug} teaches the buyer how to use this exact Lab and export its records`, () => {
       const pages = LEADERSHIP_GUIDE_PAGES[slug];
       const text = JSON.stringify(pages);
       expect(pages).toHaveLength(9);
       expect(text).toContain("private");
-      expect(text).toContain("fictional example");
+      expect(text).toContain("Load Examples");
       expect(text).toContain("browser");
       for (const output of lab.outputs!) expect(text).toContain(output.title);
     });

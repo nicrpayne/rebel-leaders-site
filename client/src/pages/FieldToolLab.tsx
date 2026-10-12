@@ -1,3 +1,4 @@
+import FieldToolsFooter from "@/components/field-tools/FieldToolsFooter";
 import { fieldToolForPath } from "@/lib/field-tool-paths";
 import { fieldToolBase, fieldToolPresentation } from "@/lib/field-tool-paths";
 import { useEffect, useMemo, useState } from "react";
@@ -11,6 +12,9 @@ import { getFieldTool } from "@/lib/field-tools";
 import {
   readFieldToolDraft,
   readAIFieldToolDraft,
+  sharedDraftValues,
+  purgeSavedReflection,
+  PRIVATE_FIELD_IDS,
 } from "@/lib/field-tool-drafts";
 import type { FieldDef } from "../../../server/field-tool-content/labs";
 import {
@@ -99,6 +103,10 @@ function LabSession({ slug }: { slug: string }) {
   const storageKey = "rl_field_lab_" + slug + "_" + content.audience;
   const [initialDraft] = useState(() => {
     try {
+      purgeSavedReflection(window.localStorage, [
+        storageKey,
+        "rl_field_lab_" + slug,
+      ]);
       const key =
         content.audience === "pm" &&
         window.localStorage.getItem(storageKey) === null
@@ -111,7 +119,17 @@ function LabSession({ slug }: { slug: string }) {
       return { values: {}, step: 0 };
     }
   });
-  const [step, setStep] = useState(initialDraft.step);
+  const [step, setStep] = useState(() => {
+    const requested = Number(
+      new URLSearchParams(window.location.search).get("step")
+    );
+    return new URLSearchParams(window.location.search).has("step") &&
+      Number.isInteger(requested) &&
+      requested >= 0 &&
+      requested < config.steps.length
+      ? requested
+      : initialDraft.step;
+  });
   const [values, setValues] = useState<Record<string, string>>(
     initialDraft.values
   );
@@ -124,7 +142,7 @@ function LabSession({ slug }: { slug: string }) {
     try {
       window.localStorage.setItem(
         storageKey,
-        JSON.stringify({ values, step, version: 2 })
+        JSON.stringify({ values: sharedDraftValues(values), step, version: 2 })
       );
       setStorageStatus("");
     } catch {
@@ -153,7 +171,12 @@ function LabSession({ slug }: { slug: string }) {
   const isLast = step === config.steps.length - 1;
   const preparationDecision =
     slug === "ai-stalemate" &&
-    ["PREPARE FIRST", "STOP THIS USE"].includes(values.readinessDecision);
+    [
+      "CLARIFY THE CONVERSATION",
+      "ASK A SPECIALIST",
+      "PREPARE FIRST",
+      "STOP THIS USE",
+    ].includes(values.readinessDecision);
   const atReadiness = slug === "ai-stalemate" && step === 1;
   function continueWork() {
     if (atReadiness && preparationDecision) {
@@ -166,6 +189,10 @@ function LabSession({ slug }: { slug: string }) {
     }
     if (atReadiness && values.readinessDecision === "USE EXISTING EVIDENCE") {
       setStep(3);
+      return;
+    }
+    if (atReadiness && !values.readinessDecision) {
+      setStep(4);
       return;
     }
     setStep(Math.min(config.steps.length - 1, step + 1));
@@ -220,17 +247,62 @@ function LabSession({ slug }: { slug: string }) {
   function loadExample() {
     const sample = content.sampleValues;
     if (!sample) return;
+    const ids = new Set(current.fields.map(field => field.id));
+    if (slug === "ai-stalemate" && step === 3)
+      Object.keys(sample)
+        .filter(id => /^(ai|baseline)_/.test(id))
+        .forEach(id => ids.add(id));
+    // Supplementary working surfaces use sample values alongside the visible fields.
+    if (slug === "priority-whiplash" && step === 0)
+      Object.keys(sample)
+        .filter(id => /capacity|effort|days/i.test(id))
+        .forEach(id => ids.add(id));
     if (
-      Object.values(values).some(value => value.trim()) &&
+      Array.from(ids).some(id => values[id]?.trim()) &&
       !window.confirm(
-        "Replace this local draft with the fictional example? Export any work you need first."
+        "Replace the answers in this step with examples? Your other steps will stay as they are."
       )
     )
       return;
-    setValues({ ...sample });
-    setStep(slug === "ai-stalemate" ? 1 : 0);
+    setValues(prev => ({
+      ...prev,
+      ...Object.fromEntries(Array.from(ids).map(id => [id, sample[id] ?? ""])),
+    }));
     setShowOutput(false);
   }
+
+  const optionalIds = new Set(
+    slug === "ai-stalemate" && step === 1
+      ? [
+          "businessBasis",
+          "growthOpportunity",
+          "accessModel",
+          "securityChecks",
+          "automationBoundary",
+          "teamReadiness",
+          "readinessSupport",
+        ]
+      : ["visionTeam", "visionProduct", "visionCompany"]
+  );
+  const renderFields = (fields: FieldDef[]) =>
+    fields.map(field => (
+      <div key={field.id}>
+        {field.section && (
+          <h3 className="mb-5 border-b border-[#cbd4c6] pb-3 pt-3 font-ui text-[10px] font-semibold tracking-[.16em] text-[#6a7d64]">
+            {field.section}
+          </h3>
+        )}
+        <FieldInput
+          field={field}
+          value={values[field.id] || ""}
+          onChange={value =>
+            setValues(prev => ({ ...prev, [field.id]: value }))
+          }
+        />
+      </div>
+    ));
+  const guideChapter =
+    slug === "ai-stalemate" ? [3, 4, 7, 8, 9][step] : [1, 2, 4, 7][step];
 
   return (
     <main
@@ -257,8 +329,9 @@ function LabSession({ slug }: { slug: string }) {
                   : ""}
               </h1>
               <p className="mt-3 max-w-2xl font-ui text-sm leading-6 text-[#acbdb1]">
-                Your draft stays in this browser on this device. Export anything
-                you need to keep. Export before switching devices.
+                Use the Field Guide for the thinking and this Lab for your
+                situation. Start where you are; complete only what helps with
+                the next move.
               </p>
               {storageStatus && (
                 <p
@@ -270,13 +343,6 @@ function LabSession({ slug }: { slug: string }) {
               )}
             </div>
             <div className="flex flex-wrap gap-3">
-              <button
-                type="button"
-                onClick={loadExample}
-                className="self-start border border-[#9aa76b] px-4 py-2 font-ui text-xs text-[#ead69a]"
-              >
-                Load fictional example
-              </button>
               <button
                 type="button"
                 onClick={clearDraft}
@@ -330,12 +396,35 @@ function LabSession({ slug }: { slug: string }) {
             </p>
 
             <div className="mt-8 border-l-2 border-[#a1b89d] pl-4 font-ui text-xs leading-5 text-[#657268]">
-              This is a working instrument, not a course. Complete only what
-              helps you make the next decision.
+              Private reflection is optional: think it through without typing,
+              or use the private fields. Those notes stay only in this open tab
+              and disappear when you refresh or leave the Lab. Shared fields
+              save on this device and feed the records you can review before
+              sharing.
             </div>
+            <Link
+              href={`${base}/guide#guide-${guideChapter}`}
+              className="mt-5 inline-block font-ui text-sm underline underline-offset-4"
+            >
+              Read the matching Field Guide chapter →
+            </Link>
           </aside>
 
           <div className="border border-[#c8d0c5] bg-[#fbf9f3] p-5 md:p-8">
+            <div className="mb-6 flex flex-wrap items-center justify-between gap-3 border-b border-[#cbd4c6] pb-4">
+              <p className="font-ui text-xs text-[#657268]">
+                {step === 0 && slug === "ai-stalemate"
+                  ? "Private reflection · not saved or exported"
+                  : "Shared work · saved on this device"}
+              </p>
+              <button
+                type="button"
+                onClick={loadExample}
+                className="border border-[#aeb8aa] px-4 py-2 font-ui text-xs"
+              >
+                Load Examples
+              </button>
+            </div>
             <LeadershipWorkSurface
               slug={slug}
               step={step}
@@ -353,22 +442,49 @@ function LabSession({ slug }: { slug: string }) {
               />
             )}
             <div className="space-y-6">
-              {current.fields.map(field => (
-                <div key={field.id}>
-                  {field.section && (
-                    <h3 className="mb-5 border-b border-[#cbd4c6] pb-3 pt-3 font-ui text-[10px] font-semibold tracking-[.16em] text-[#6a7d64]">
-                      {field.section}
-                    </h3>
-                  )}
-                  <FieldInput
-                    field={field}
-                    value={values[field.id] || ""}
-                    onChange={value =>
-                      setValues(prev => ({ ...prev, [field.id]: value }))
-                    }
-                  />
-                </div>
-              ))}
+              {renderFields(
+                current.fields.filter(
+                  field =>
+                    !optionalIds.has(field.id) &&
+                    !PRIVATE_FIELD_IDS.has(field.id)
+                )
+              )}
+              {current.fields.some(
+                field =>
+                  PRIVATE_FIELD_IDS.has(field.id) && !optionalIds.has(field.id)
+              ) && (
+                <details
+                  open={slug === "ai-stalemate"}
+                  className="border-l-2 border-[#a1b89d] pl-4"
+                >
+                  <summary className="cursor-pointer font-ui text-sm font-semibold">
+                    Private reflection · optional, not saved or exported
+                  </summary>
+                  <div className="mt-5 space-y-6">
+                    {renderFields(
+                      current.fields.filter(
+                        field =>
+                          PRIVATE_FIELD_IDS.has(field.id) &&
+                          !optionalIds.has(field.id)
+                      )
+                    )}
+                  </div>
+                </details>
+              )}
+              {current.fields.some(field => optionalIds.has(field.id)) && (
+                <details className="border-t border-[#cbd4c6] pt-5">
+                  <summary className="cursor-pointer font-ui text-sm font-semibold">
+                    {step === 0
+                      ? "Picture six months from now · optional, private"
+                      : "Explore business, technical, or team conditions · optional"}
+                  </summary>
+                  <div className="mt-5 space-y-6">
+                    {renderFields(
+                      current.fields.filter(field => optionalIds.has(field.id))
+                    )}
+                  </div>
+                </details>
+              )}
             </div>
 
             <div className="mt-9 flex flex-wrap justify-between gap-3 border-t border-[#d7ddd3] pt-6">
@@ -390,7 +506,7 @@ function LabSession({ slug }: { slug: string }) {
                   {atReadiness && preparationDecision
                     ? values.readinessDecision === "STOP THIS USE"
                       ? "Write a STOP decision →"
-                      : "Write a PAUSE decision →"
+                      : "Record the next move →"
                     : atReadiness &&
                         values.readinessDecision === "USE EXISTING EVIDENCE"
                       ? "Review existing evidence →"
@@ -422,7 +538,7 @@ function LabSession({ slug }: { slug: string }) {
                   {slug !== "ai-stalemate"
                     ? "Build a record for the conversation. It updates from your shared inputs; private preparation stays out of every output."
                     : atReadiness
-                      ? "Export the Readiness Brief to coordinate the prerequisites and next move. You can write a preparation decision without running a trial."
+                      ? "Build a Shared Next-Step Brief to take into the conversation or record what you have agreed. Clarifying or preparing can be the right next move; a trial is optional."
                       : "Export the Trial Card before an approved test. Return for evidence and the decision; private preparation stays out of shared outputs."}
                 </p>
                 <div className="mt-3 flex flex-wrap gap-3">
@@ -518,6 +634,7 @@ function LabSession({ slug }: { slug: string }) {
           </div>
         </div>
       </footer>
+      <FieldToolsFooter />
     </main>
   );
 }

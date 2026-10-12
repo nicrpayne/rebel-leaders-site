@@ -1,3 +1,4 @@
+import FieldToolsFooter from "./FieldToolsFooter";
 import { getFieldTool } from "@/lib/field-tools";
 import { fieldToolBase } from "@/lib/field-tool-paths";
 import { Link } from "wouter";
@@ -167,6 +168,12 @@ export default function ChapterGuide({ slug }: { slug: string }) {
               <div className="mt-8 border-l-[3px] border-[#c3a14b] bg-[#153625] px-6 py-5 font-ui text-sm leading-7 text-[#f3efe4]">
                 {chapter.callout}
               </div>
+              <Link
+                href={`${base}/lab?step=${slug === "ai-stalemate" ? (index <= 3 ? 0 : index <= 6 ? 1 : index === 7 ? 2 : index === 8 ? 3 : 4) : index <= 1 ? 0 : index <= 3 ? 1 : index <= 5 ? 2 : 3}`}
+                className="mt-5 inline-block font-ui text-sm underline underline-offset-4 print:hidden"
+              >
+                Use this in the Lab →
+              </Link>
             </section>
           ))}
           <div className="flex flex-wrap gap-4 print:hidden">
@@ -185,6 +192,7 @@ export default function ChapterGuide({ slug }: { slug: string }) {
           </div>
         </article>
       </div>
+      <FieldToolsFooter />
     </main>
   );
 }

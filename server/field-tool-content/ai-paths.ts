@@ -118,6 +118,14 @@ export function aiGuideFor(audience: Audience) {
     pages[8].sections[0].body =
       "Open Private Prep in the Lead Developer Lab. Write the event, the cost you carry, your Why, the future you could help create, and what you still need to ask your PM.";
   }
+  pages[3].callout =
+    "You can reflect without typing. Any private notes you type stay only in this open tab: they are not saved by the Lab or included in shared exports. Refreshing or leaving the Lab clears them.";
+  pages[8].sections.at(-1)!.body =
+    "Shared drafts stay in this browser on this device. Private reflection stays only in the open tab and is not saved or exported. Export shared work before changing devices. There is no cloud synchronization.";
+  if (audience === "pm") {
+    pages[1].sections[1].body =
+      "Optional: picture six months from now. What can the team do confidently? What is better for customers? What could responsible progress enable for the company, your lead, and you? One sentence for each is enough. Use the short vision prompts in Private Prep, then invite your lead to improve the picture.";
+  }
   const privateStep = aiLabFor(audience).steps[0];
   pages[3].title = privateStep.title;
   const prompts = privateStep.fields.filter(
@@ -145,7 +153,7 @@ export function aiGuideFor(audience: Audience) {
         body: "Access roles and record boundaries across apps are unresolved. Routes need allowed/denied-access tests. Developers need pairing, qualified review, and practice explaining, testing, deploying, and rolling back a change.",
       },
       {
-        title: "The Readiness Brief",
+        title: "The Shared Next-Step Brief",
         body: "PREPARE FIRST. No production connection or agent write/deploy permissions. The data/security owner defines access policy. The engineering manager leads a supervised exercise. The PM protects capacity and validates the business assumptions.",
       },
       {
@@ -160,15 +168,17 @@ export function aiGuideFor(audience: Audience) {
     callout:
       "They leave with a responsible investment and an accountable next move. The opportunity stays visible, and the prerequisites receive owners.",
   };
+  pages[8].callout =
+    "Use Load Examples in each Lab step to see the expected kind of answer. It replaces only that step. Watch Nic work a realistic case to see how the thinking connects.";
   pages[8].sections.splice(1, 0, {
-    title: "2. Share context and check readiness",
-    body: "Open Readiness together. Record the business context and its evidence, system access decisions, agent boundaries, and team support. Export the Readiness Brief. Prepare first, use existing evidence, or stop this use when appropriate.",
+    title: "2. Understand each other and choose a move",
+    body: "Open Conversation. Share the outcome, ask what your counterpart is concerned about, and name what remains unresolved. Export the Shared Next-Step Brief as a proposal or an agreement. Clarifying, asking a specialist, preparing, reviewing evidence, testing, and stopping are all possible next moves.",
   });
   pages[8].sections[2].title = "3. Build a Trial Card when appropriate";
   pages[8].sections[3].title = "4. Return with evidence";
   pages[8].sections[4].title = "5. Write the decision";
   pages[8].sections[4].body =
-    "Choose Continue, Revise, Stop, or Pause. A preparation decision can go straight from Readiness to Decision without a trial. Name the reason, limits, next action, owner, date, and leadership update.";
+    "Choose Continue, Revise, Stop, or Pause. A conversation or preparation decision can go straight to Decision without a trial. Name the reason, limits, next action, owner, date, and leadership update.";
   pages.splice(4, 0, ...readinessChapters(audience));
   pages.forEach((page, index) => {
     page.eyebrow =
@@ -191,7 +201,8 @@ export function aiLabFor(audience: Audience) {
   steps[0].fields = steps[0].fields.filter(f => f.id !== "side");
   const labels: Record<string, string> = pm
     ? {
-        happened: "What happened with your lead developer?",
+        happened:
+          "What conversations have you and your lead already had, and where do things stand?",
         story: "What are you assuming about your lead's motives?",
         protecting: "What customer or team outcome are you trying to protect?",
         why: "Why does this improvement matter to you as the PM?",
@@ -200,10 +211,12 @@ export function aiLabFor(audience: Audience) {
         observed: "What evidence have you seen yourself?",
         prediction: "What are you still predicting?",
         changeMind: "What would change your mind about this use of AI?",
-        askOther: "What do you need to ask your lead before proposing a trial?",
+        askOther:
+          "What do you need to ask your lead to understand where they are?",
       }
     : {
-        happened: "What did your PM ask for, and what happened?",
+        happened:
+          "What conversations have you and your PM already had, and where do things stand?",
         story: "What are you assuming about your PM's motives?",
         protecting:
           "What quality, review, or maintenance responsibility are you protecting?",
@@ -217,6 +230,30 @@ export function aiLabFor(audience: Audience) {
           "What do you need to ask your PM about the outcome or priority?",
       };
   for (const f of steps[0].fields) f.label = labels[f.id] ?? f.label;
+  if (pm) {
+    const future = steps[0].fields.find(f => f.id === "futurePicture");
+    if (future)
+      future.hint =
+        "Optional: picture six months from now. What would be better for the team, product, company, and both of you? Expand the short prompts below if that helps.";
+    steps[0].fields.push(
+      {
+        id: "visionTeam",
+        section: "OPTIONAL / SIX MONTHS FROM NOW",
+        label: "What would your team’s daily work and skills look like?",
+        hint: "Picture a normal week: what can they do confidently, and what takes less effort? A sentence is enough.",
+      },
+      {
+        id: "visionProduct",
+        label: "What would be better for customers and the product?",
+        hint: "Name a visible improvement rather than an AI adoption target.",
+      },
+      {
+        id: "visionCompany",
+        label: "What could this mean for the company, your lead, and you?",
+        hint: "Possible standards, influence, learning, or career opportunities. Invite your lead to help shape this future; avoid promising rewards.",
+      }
+    );
+  }
   steps[1].title = pm
     ? "Invite your lead to shape one credible test."
     : "Shape one credible test with your PM.";
@@ -236,7 +273,7 @@ export function aiLabFor(audience: Audience) {
     outputs: [
       {
         id: "readiness-brief",
-        title: "Readiness Brief",
+        title: "Shared Next-Step Brief",
         fromStep: 1,
         build: buildReadinessBrief,
       },

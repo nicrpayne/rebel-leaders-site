@@ -1,4 +1,4 @@
-import { AI_READINESS_SAMPLE } from "./field-tool-content/ai-readiness";
+import { aiSampleFor } from "./field-tool-content/ai-readiness";
 import { FIELD_TOOL_PRESENTATIONS } from "../client/src/lib/field-tool-presentations";
 import { aiGuideFor, aiLabFor } from "./field-tool-content/ai-paths";
 import { LEADERSHIP_GUIDE_PAGES } from "./field-tool-content/leadership-guides";
@@ -148,7 +148,7 @@ export const fieldToolsRouter = router({
         )[input.slug],
         sampleValues:
           input.slug === "ai-stalemate"
-            ? AI_READINESS_SAMPLE
+            ? aiSampleFor(input.audience)
             : LEADERSHIP_SAMPLES[input.slug],
         lab: {
           steps: lab.steps,

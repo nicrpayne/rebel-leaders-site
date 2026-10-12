@@ -38,7 +38,7 @@ const privateChapter = (situation: string, outcome: string) =>
       ],
       [
         "Keep private preparation private",
-        "The Lab saves these notes in your browser and excludes them from shared outputs. Export the working brief you want others to see; don't send your untested motive story.",
+        "Private notes stay only in the open Lab tab: they are not saved or exported. Refreshing or leaving clears them. You can reflect without typing. Export the working brief you want others to see; don't send your untested motive story.",
       ],
     ],
     "Try: I want us to make this work. Can we look together at the outcome, the constraints, and the decision we need?"
@@ -56,7 +56,7 @@ const practiceChapter = (next: string) =>
       ],
       [
         "Keep a record you can return to",
-        "Lab drafts stay in this browser on this device. Copy, download, or print your outputs. Export before clearing browser data or moving devices. The tool does not send messages, update your roadmap, or create authority.",
+        "Shared Lab drafts stay in this browser on this device. Private reflection is not saved or exported. Copy, download, or print your outputs. Export before clearing browser data or moving devices. The tool does not send messages, update your roadmap, or create authority.",
       ],
       [
         "Judge the change by what happens",
@@ -115,7 +115,7 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
         ],
         [
           "Use delivery evidence",
-          "Work with your lead on completed work, remaining work, team capacity, and dependencies. A desired date is not evidence of feasibility. The Lab records your assessment; it does not generate a schedule.",
+          "Work with your lead on completed work, remaining work, team capacity, and dependencies. An AI-generated prototype can make a date feel closer while integration, access decisions, testing, and review remain. A desired date is not evidence of feasibility. The Lab records your assessment; it does not generate a schedule.",
         ],
       ],
       "Reality Map: what was promised, what is genuinely constrained, and what still needs evidence."
@@ -238,7 +238,7 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
           "Name the decision, owner, needed-by date, and communication plan. Record the actual response when it happens. Copy, download, or print the Stakeholder Update for your existing work tools.",
         ],
       ],
-      "To rehearse, choose Load fictional example. Export your current draft first if you need to keep it."
+      "Use Load Examples in a Lab step to see the expected kind of answer. It replaces only that step; export those answers first if you need to keep them."
     ),
     practiceChapter(
       "After the decision, make sure the sponsor updates the people who relied on the original promise. Revisit confidence when the agreed evidence arrives. A revised plan without revised communication leaves the old commitment alive."
@@ -284,7 +284,7 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
         ],
         [
           "Include the work outside the roadmap",
-          "Support, maintenance, review, incidents, and required approvals use capacity too. Leave room for other commitments beyond the top three in the Lab.",
+          "A request to adopt an AI workflow competes for learning, verification, and reviewer time alongside delivery. Support, maintenance, review, incidents, and required approvals use capacity too. Leave room for other commitments beyond the top three in the Lab.",
         ],
         [
           "Check the urgent request",
@@ -415,7 +415,7 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
           "Set the decision status and enter what was actually agreed. Name communication and review owners. Export the Tradeoff Brief to your team's existing work tools; the Lab doesn't change the backlog itself.",
         ],
       ],
-      "Load the fictional example to rehearse. Keep your own important draft by exporting it before replacement."
+      "Use Load Examples in a Lab step to rehearse. It replaces only that step; export those answers first if you need to keep them."
     ),
     practiceChapter(
       "Check that the new choice changed the actual plan and the affected stakeholder communication. Review whether the displacement was sufficient. If new work enters again, reuse the same visible tradeoff rather than starting a hidden plan."
@@ -589,10 +589,10 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
         ],
         [
           "Request",
-          "Name the action owner, response date, decision status, actual response, interim action, and review. Copy, download, or print the Reset Request. The tool doesn't change your organization's permissions.",
+          "Name the action owner, response date, decision status, actual response, interim action, and review. Copy, download, or print the Reset Request. If you are accountable for a new app but cannot approve its data access or change its permissions, name the owner of those decisions. The tool doesn't change your organization's permissions.",
         ],
       ],
-      "Load the fictional example to rehearse the request. Export your own draft first if you need to preserve it."
+      "Use Load Examples in a Lab step to rehearse the request. It replaces only that step; export those answers first if you need to keep them."
     ),
     practiceChapter(
       "Confirm the agreed decision rule with the people it affects. Check the next actual decision: who chose, how long it took, and which plan changed. Revisit a mismatch that continues rather than compensating for it indefinitely."
@@ -742,7 +742,7 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
         ],
         [
           "The decision and follow-through",
-          "In this fictional case, Finance approves the capped phase Thursday. PM records the agreement and schedules the two-week evidence review. Full-build funding remains open; a negative result can justify revising or stopping. The Lab example starts with the proposal so you can rehearse the funding conversation.",
+          "In this fictional case, Finance approves the capped phase Thursday. PM records the agreement and schedules the two-week evidence review. A prototype can help people see the possibility; it does not resolve integration, permissions, review, or production operation. Full-build funding remains open; a negative result can justify revising or stopping. The Lab example starts with the proposal so you can rehearse the funding conversation.",
         ],
       ],
       "Finance can reserve a bounded investment. Product has a learning commitment and a clear next funding decision."
@@ -769,7 +769,7 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
           "Draft the short message, decision request, owner, and date. Keep status as a proposal until agreement. Record the response and next action, then copy, download, or print the Stakeholder Response.",
         ],
       ],
-      "Load the fictional example to rehearse. It is clearly labeled and does not pretend a real stakeholder has agreed."
+      "Use Load Examples in a Lab step to rehearse. These are illustrative answers; they do not mean a real stakeholder has agreed."
     ),
     practiceChapter(
       "Check whether the response helped the stakeholder make their actual decision. Bring the promised evidence on the agreed date. If the need was misunderstood or the commitment was too vague, revise the offer and confirm it again."

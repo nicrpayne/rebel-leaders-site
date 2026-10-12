@@ -41,43 +41,42 @@ const answer = (v: Values, key: string, fallback = "[not entered]") =>
   v[key]?.trim() || fallback;
 
 export function buildReadinessBrief(v: Values) {
-  return `AI STALEMATE — READINESS BRIEF
+  const optional = [
+    ["WORK OUTCOME / SHARED AMBITION", [v.outcome, v.sharedVision]],
+    ["BUSINESS BASIS / VALIDATION OWNER", [v.businessBasis]],
+    ["TEAM / COMPANY OPPORTUNITY", [v.growthOpportunity]],
+    ["ACCESS MODEL / POLICY OWNER", [v.accessModel]],
+    ["API / PERMISSION VERIFICATION", [v.securityChecks]],
+    ["AI / AGENT OPERATING BOUNDARIES", [v.automationBoundary]],
+    ["DEMONSTRATED TEAM CAPABILITY", [v.teamReadiness]],
+    ["TRAINING / PAIRING / QUALIFIED REVIEW", [v.readinessSupport]],
+  ] as const;
+  return `AI STALEMATE — SHARED NEXT-STEP BRIEF
 
-WORK OUTCOME / SHARED AMBITION
-${answer(v, "outcome")}
-${answer(v, "sharedVision")}
+CONVERSATION STATUS
+${answer(v, "conversationStatus", "PROPOSED — NOT YET AGREED")}
 
-REPORTED BUSINESS CONTEXT
+OUTCOME / CONTEXT
 ${answer(v, "businessContext")}
 
-SOURCE / ASSUMPTIONS / VALIDATION OWNER
-${answer(v, "businessBasis")}
+COUNTERPART'S CONCERN / NEED
+${answer(v, "counterpartConcern")}
 
-TEAM / COMPANY OPPORTUNITY
-${answer(v, "growthOpportunity")}
+SHARED UNDERSTANDING / OPEN QUESTIONS
+${answer(v, "openQuestions")}
 
-ACCESS MODEL / POLICY OWNER
-${answer(v, "accessModel")}
-
-API / PERMISSION VERIFICATION
-${answer(v, "securityChecks")}
-
-AI / AGENT OPERATING BOUNDARIES
-${answer(v, "automationBoundary")}
-
-DEMONSTRATED TEAM CAPABILITY
-${answer(v, "teamReadiness")}
-
-TRAINING / PAIRING / QUALIFIED REVIEW
-${answer(v, "readinessSupport")}
-
-AGREED NEXT MOVE
+PROPOSED OR AGREED NEXT MOVE
 ${answer(v, "readinessDecision", "[not selected]")}
 
-PREREQUISITES / OWNERS / REVIEW DATES
+NEXT ACTION / OWNERS / REVIEW DATE
 ${answer(v, "prerequisitePlan")}
-
-This record coordinates the decision. It does not certify security or team readiness; the appropriate owners must verify the implementation and conditions. Private preparation is excluded.`;
+${optional
+  .map(([title, entries]) => {
+    const text = entries.filter(value => value?.trim()).join("\n");
+    return text ? "\n" + title + "\n" + text + "\n" : "";
+  })
+  .join("")}
+This record supports the conversation; it does not create agreement or certify security or team readiness. Appropriate owners must verify technical conditions. Private preparation is excluded.`;
 }
 
 export function buildTrialCard(v: Values) {
@@ -184,14 +183,23 @@ export function buildDecisionBrief(v: Values) {
     ai.entered > 0 ||
     Boolean(v.quality?.trim() || v.withoutAi?.trim() || v.withAi?.trim());
   const preTrial =
-    ["PREPARE FIRST", "STOP THIS USE"].includes(v.readinessDecision) &&
-    !hasEvidence;
+    !hasEvidence &&
+    (!v.readinessDecision ||
+      [
+        "CLARIFY THE CONVERSATION",
+        "ASK A SPECIALIST",
+        "PREPARE FIRST",
+        "STOP THIS USE",
+      ].includes(v.readinessDecision));
   const effort = preTrial
     ? "No trial result is recorded for this preparation decision."
     : baseline.complete && ai.complete
       ? `${baseline.minutes} person-minutes without AI; ${ai.minutes} with AI.`
       : "Effort comparison remains incomplete. See the Evidence Record.";
   return `AI STALEMATE — DECISION BRIEF
+
+CONVERSATION STATUS
+${answer(v, "conversationStatus", "PROPOSED — NOT YET AGREED")}
 
 WORK OUTCOME / ${preTrial ? "PROPOSED USE" : "TESTED TASK"}
 ${answer(v, "outcome")}
@@ -239,7 +247,13 @@ ${answer(v, "leadershipUpdate")}`;
 export function buildAITrialPackage(v: Values) {
   return [
     buildReadinessBrief(v),
-    ...(["PREPARE FIRST", "STOP THIS USE"].includes(v.readinessDecision) &&
+    ...(((!v.readinessDecision && !v.task?.trim()) ||
+      [
+        "CLARIFY THE CONVERSATION",
+        "ASK A SPECIALIST",
+        "PREPARE FIRST",
+        "STOP THIS USE",
+      ].includes(v.readinessDecision)) &&
     !AI_EFFORT_STAGES.some(
       stage => v[`ai_${stage.id}`]?.trim() || v[`baseline_${stage.id}`]?.trim()
     ) &&

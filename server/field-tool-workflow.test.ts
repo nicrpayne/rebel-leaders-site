@@ -128,7 +128,7 @@ describe("AI trial evidence and shared artifacts", () => {
     });
     expect(brief).toContain("PAUSE");
     expect(brief).toContain("Approval missing");
-    expect(brief).toContain("comparison remains incomplete");
+    expect(brief).toContain("No trial result is recorded");
   });
 });
 

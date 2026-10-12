@@ -1,5 +1,54 @@
 export type FieldToolDraft = { values: Record<string, string>; step: number };
 
+// Reflection is ephemeral. Only deliberately shared work belongs in a saved draft.
+export const PRIVATE_FIELD_IDS = new Set([
+  "side",
+  "happened",
+  "story",
+  "protecting",
+  "why",
+  "futurePicture",
+  "observed",
+  "prediction",
+  "changeMind",
+  "askOther",
+  "visionTeam",
+  "visionProduct",
+  "visionCompany",
+  "privateReaction",
+  "privateAssumption",
+]);
+export function sharedDraftValues(values: Record<string, string>) {
+  return Object.fromEntries(
+    Object.entries(values).filter(([id]) => !PRIVATE_FIELD_IDS.has(id))
+  );
+}
+
+/** Remove previously saved reflection while retaining the person's shared work. */
+export function purgeSavedReflection(
+  storage: Pick<Storage, "getItem" | "setItem">,
+  keys: string[]
+) {
+  for (const key of keys) {
+    const raw = storage.getItem(key);
+    if (!raw) continue;
+    try {
+      const draft = JSON.parse(raw);
+      if (
+        draft?.values &&
+        typeof draft.values === "object" &&
+        !Array.isArray(draft.values)
+      ) {
+        const values = sharedDraftValues(draft.values);
+        if (Object.keys(values).length !== Object.keys(draft.values).length)
+          storage.setItem(key, JSON.stringify({ ...draft, values }));
+      }
+    } catch {
+      /* A malformed draft is not rewritten. */
+    }
+  }
+}
+
 export function readFieldToolDraft(
   storage: Pick<Storage, "getItem">,
   key: string,
@@ -17,7 +66,8 @@ export function readFieldToolDraft(
       !Array.isArray(draft.values)
         ? (Object.fromEntries(
             Object.entries(draft.values).filter(
-              ([, value]) => typeof value === "string"
+              ([id, value]) =>
+                typeof value === "string" && !PRIVATE_FIELD_IDS.has(id)
             )
           ) as Record<string, string>)
         : {};

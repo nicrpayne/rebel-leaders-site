@@ -49,3 +49,12 @@ Prompt: Preserve Nic's face, age, brown eyes, swept dark hair with grey, neatly 
 ## Deployment boundary
 
 Publish to the existing `field-tools-launch` branch and the dedicated review-preview service. Keep PR #3 in draft; no production merge. Review mode allows product inspection without purchasing. Real Lemon Squeezy variants/checkout links, MySQL, Resend, verified email sender, receipt destinations, and hosted walkthrough URLs still require account configuration before live selling. Do not claim the actual payment-to-email journey has been tested.
+
+
+## Conversation-first refinement
+
+AI preparation now asks where ongoing conversations stand. The PM can optionally picture six months from now across team skills, customer/product outcomes, and possibilities for the company and both leaders. These notes are private and ephemeral. Conversation starts with the shared context, counterpart’s concern, unresolved questions, proposed-versus-agreed status, and the next action. Business validation, access design, agent boundaries, and team support remain optional detail. Clarifying the conversation or asking a specialist can go directly to a next-move decision without a trial. The Shared Next-Step Brief distinguishes a proposal from an agreement.
+
+Across all five tools, private reflection is excluded from local-storage serialization as well as exports. Legacy reflection is removed from that tool’s existing browser drafts while shared answers and phase are retained. Private notes persist only in the mounted Lab session. Shared work saves on the current device; there is no synchronization. “Load Examples” fills the current step and confirms before replacing answers there, preserving other steps. Guide chapters link to the relevant Lab phase, and Lab phases link back to the matching Guide chapter. Working navigation is Start / Field Guide / Lab; broader Rebel Leaders links sit in the footer.
+
+Real conversation themes inform existing situations: a prototype does not establish delivery feasibility; verification, training, and reviewer time compete for capacity; accountability for an app requires access-decision owners; prototypes leave production questions unresolved. Examples remain illustrations, not assertions that every team has these concerns.

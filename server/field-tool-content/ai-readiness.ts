@@ -2,6 +2,8 @@ import type { Audience } from "./ai-paths";
 import type { FieldDef } from "./labs";
 
 export const READINESS_CHOICES = [
+  "CLARIFY THE CONVERSATION",
+  "ASK A SPECIALIST",
   "READY FOR A BOUNDED TEST",
   "PREPARE FIRST",
   "USE EXISTING EVIDENCE",
@@ -12,11 +14,34 @@ export function readinessStep(audience: Audience) {
   const fields: FieldDef[] = [
     {
       id: "businessContext",
-      section: "01 / SHARE THE BUSINESS CONTEXT",
+      section: "01 / SHARE THE CONTEXT",
       label: pm
-        ? "What business urgency does your lead need to understand?"
-        : "What business urgency have you clarified with your PM?",
-      hint: "Describe the outcome, cost of delay, and who is affected. Attribute reported figures; keep assumptions visible.",
+        ? "What outcome matters to you, and what context would help your lead understand it?"
+        : "What outcome and context have you understood from your PM?",
+      hint: "Use the conversation you are already having. Describe who benefits and why it matters; include urgency only when it is relevant.",
+    },
+    {
+      id: "counterpartConcern",
+      label: pm
+        ? "How would your lead describe their concern?"
+        : "How would your PM describe what they need?",
+      hint: "Use their words where possible. If you have not asked, record the question instead of filling in their motives.",
+    },
+    {
+      id: "openQuestions",
+      label: "What do you understand together, and what is still unresolved?",
+      hint: "Include disagreement fairly. What do you need to ask, learn, or have someone qualified verify?",
+    },
+    {
+      id: "conversationStatus",
+      label: "Is this a proposal or a next move you have both agreed?",
+      type: "select",
+      options: [
+        "PROPOSED — NOT YET AGREED",
+        "AGREED TOGETHER",
+        "STILL DISAGREE",
+      ],
+      hint: "Preparing a brief does not create an agreement. You can return and update it after talking.",
     },
     {
       id: "businessBasis",
@@ -34,7 +59,7 @@ export function readinessStep(audience: Audience) {
     },
     {
       id: "accessModel",
-      section: "02 / PROTECT THE SYSTEM",
+      section: "OPTIONAL / TECHNICAL CONDITIONS",
       label: pm
         ? "What access decisions need your lead and the data owner?"
         : "What access model needs to be agreed across these apps?",
@@ -56,7 +81,7 @@ export function readinessStep(audience: Audience) {
     },
     {
       id: "teamReadiness",
-      section: "03 / PREPARE THE TEAM",
+      section: "OPTIONAL / TEAM SUPPORT",
       label: pm
         ? "What engineering capabilities can your team demonstrate today?"
         : "What can your team confidently explain, test, review, and maintain?",
@@ -71,13 +96,13 @@ export function readinessStep(audience: Audience) {
     },
     {
       id: "readinessDecision",
-      section: "04 / CHOOSE THE NEXT MOVE",
+      section: "02 / CHOOSE THE NEXT MOVE",
       label: pm
-        ? "What next move do you and your lead agree is responsible?"
-        : "What next move do you and your PM agree is responsible?",
+        ? "What next move would you propose or agree with your lead?"
+        : "What next move would you propose or agree with your PM?",
       type: "select",
       options: READINESS_CHOICES,
-      hint: "A readiness record coordinates the decision. The appropriate engineering/security owners must verify implementation and approve the use.",
+      hint: "Clarify the conversation, ask a specialist, prepare the team, review existing evidence, design a bounded test, or stop this use. Choose what fits where you are.",
     },
     {
       id: "prerequisitePlan",
@@ -86,14 +111,38 @@ export function readinessStep(audience: Audience) {
     },
   ];
   return {
-    eyebrow: "READINESS",
+    eyebrow: "CONVERSATION",
     title: pm
-      ? "Bring the opportunity and the prerequisites into one conversation."
-      : "Make the opportunity and the prerequisites visible together.",
+      ? "Understand what matters to each of you."
+      : "Understand what matters to each of you.",
     intro: pm
-      ? "Your lead needs the business context you hear. You need the system and team conditions they see. Agree what needs to be true before a trial is worthwhile."
-      : "Your PM may be hearing urgency you haven't heard. You see system and team conditions they may not see. Put both on the table before committing to a trial.",
-    fields,
+      ? "Start wherever the ongoing conversation stands. Share the outcome you care about, hear your lead’s concerns, and choose one useful next move. A trial is one possibility."
+      : "Start wherever the ongoing conversation stands. Ask what your PM hopes to improve, make your concerns concrete, and choose one useful next move together.",
+    fields: [
+      ...fields.filter(
+        f =>
+          ![
+            "businessBasis",
+            "growthOpportunity",
+            "accessModel",
+            "securityChecks",
+            "automationBoundary",
+            "teamReadiness",
+            "readinessSupport",
+          ].includes(f.id)
+      ),
+      ...fields.filter(f =>
+        [
+          "businessBasis",
+          "growthOpportunity",
+          "accessModel",
+          "securityChecks",
+          "automationBoundary",
+          "teamReadiness",
+          "readinessSupport",
+        ].includes(f.id)
+      ),
+    ],
   };
 }
 export function readinessChapters(audience: Audience) {
@@ -223,6 +272,34 @@ export function readinessChapters(audience: Audience) {
   ];
 }
 export const AI_READINESS_SAMPLE: Record<string, string> = {
+  happened:
+    "We have discussed AI in planning twice. The PM wants faster delivery; the lead has asked for clear boundaries and review capacity. Neither has proposed a next move they both understand.",
+  story:
+    "I am treating their hesitation as resistance, but I have not asked what would make progress worthwhile for them.",
+  protecting:
+    "A worthwhile customer outcome and a team that can stand behind what it ships.",
+  why: "I want the team to spend less time on repetitive work and more time solving the hard problems.",
+  futurePicture:
+    "Six months from now, we could have a few trustworthy practices that create room for better work.",
+  observed:
+    "The lead identified missing authorization checks; we have not measured full effort in this workflow.",
+  prediction:
+    "AI may shorten drafting, but total effort and quality are still unknown here.",
+  changeMind:
+    "A full-effort comparison and demonstrated quality checks could change my view.",
+  askOther:
+    "What would you need to understand or protect before we choose a next move?",
+  visionTeam:
+    "The team can explain and verify its changes, and reviewers have protected time.",
+  visionProduct:
+    "Customers wait less for reliable improvements to their workflow.",
+  visionCompany:
+    "We could establish a useful standard and create opportunities for both leaders to coach other teams.",
+  counterpartConcern:
+    "Unverified route permissions and review work that the current plan does not account for.",
+  openQuestions:
+    "We both want reliable delivery. We need to validate the urgency, resolve access ownership, and make review capacity explicit.",
+  conversationStatus: "PROPOSED — NOT YET AGREED",
   outcome:
     "Reduce the delay in an internal workflow app while protecting access to operational data.",
   sharedVision:
@@ -255,3 +332,18 @@ export const AI_READINESS_SAMPLE: Record<string, string> = {
   leadershipUpdate:
     "We propose protected preparation time to establish access boundaries and team readiness, then decide whether an approved synthetic-data trial is worthwhile.",
 };
+
+export function aiSampleFor(audience: Audience): Record<string, string> {
+  return {
+    ...AI_READINESS_SAMPLE,
+    ...(audience === "lead-dev"
+      ? {
+          story:
+            "I am assuming my PM does not care about quality. I have not asked what is driving their request.",
+          counterpartConcern:
+            "Customers are waiting for an operational improvement; the sponsor expects us to find a responsible way to move faster.",
+          why: "I would like our team to become confident engineers who can use helpful tools and stand behind their work.",
+        }
+      : {}),
+  };
+}

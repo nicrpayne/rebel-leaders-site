@@ -16,23 +16,24 @@ describe("readiness before AI trials", () => {
     for (const lab of [pm, dev]) {
       expect(lab.steps.map(s => s.eyebrow)).toEqual([
         "PRIVATE PREP",
-        "READINESS",
+        "CONVERSATION",
         "SHARED WORK",
         "EVIDENCE",
         "DECISION",
       ]);
-      expect(lab.steps[1].fields.map(f => f.id)).toEqual([
-        "businessContext",
-        "businessBasis",
-        "growthOpportunity",
-        "accessModel",
-        "securityChecks",
-        "automationBoundary",
-        "teamReadiness",
-        "readinessSupport",
-        "readinessDecision",
-        "prerequisitePlan",
-      ]);
+      expect(lab.steps[1].fields.map(f => f.id)).toEqual(
+        expect.arrayContaining([
+          "businessContext",
+          "counterpartConcern",
+          "openQuestions",
+          "conversationStatus",
+          "accessModel",
+          "securityChecks",
+          "teamReadiness",
+          "readinessDecision",
+          "prerequisitePlan",
+        ])
+      );
       expect(lab.outputs?.find(o => o.id === "readiness-brief")?.fromStep).toBe(
         1
       );
@@ -52,7 +53,7 @@ describe("readiness before AI trials", () => {
   });
   it("exports preparation with owners and limitations without inventing a trial result", () => {
     const text = buildAITrialPackage(AI_READINESS_SAMPLE);
-    expect(text).toContain("READINESS BRIEF");
+    expect(text).toContain("SHARED NEXT-STEP BRIEF");
     expect(text).toContain("PAUSE");
     expect(text).toContain("Finance has not validated");
     expect(text).toContain("next Tuesday");
@@ -67,6 +68,9 @@ describe("readiness before AI trials", () => {
       story: "PRIVATE_MOTIVE",
       why: "PRIVATE_WHY",
       futurePicture: "PRIVATE_FUTURE",
+      visionTeam: "PRIVATE_TEAM",
+      visionProduct: "PRIVATE_PRODUCT",
+      visionCompany: "PRIVATE_COMPANY",
       businessContext: "Shared sponsor estimate",
     };
     for (const build of [

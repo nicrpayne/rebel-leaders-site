@@ -279,7 +279,7 @@ export const AI_STALEMATE_GUIDE_PAGES = [
       },
       {
         title: "Keep what matters",
-        body: "Drafts live in this browser on this device. Export important work before clearing browser data or changing devices. There is no cloud backup or synchronized team workspace in this edition.",
+        body: "Shared drafts live in this browser on this device. Private reflection is not saved or exported. Export important work before clearing browser data or changing devices. There is no cloud backup or synchronized team workspace in this edition.",
       },
     ],
     callout:

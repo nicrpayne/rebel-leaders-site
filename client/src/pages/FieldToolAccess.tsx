@@ -1,3 +1,4 @@
+import FieldToolsFooter from "@/components/field-tools/FieldToolsFooter";
 import { fieldToolForPath } from "@/lib/field-tool-paths";
 import { trpc } from "@/lib/trpc";
 import { fieldToolBase, fieldToolPresentation } from "@/lib/field-tool-paths";
@@ -49,7 +50,7 @@ export default function FieldToolAccess({ slug }: { slug: string }) {
           <h2 className="font-display text-3xl">Your first useful move</h2>
           <p className="mt-3 font-ui text-sm leading-7 text-[#b8c9b8]">
             {slug === "ai-stalemate"
-              ? "Skim the Guide for the reframe, then open Private Prep in the Lab. Bring one real disagreement. Then use Readiness together to share the business context and agree the system and team prerequisites. Return to the Guide whenever a question needs explanation."
+              ? "Skim the Field Guide or open the Lab and follow its chapter links as you work. Start with where your ongoing conversation stands. Reflect privately, understand each other, and choose a useful next move. A trial is optional."
               : content.firstMove}
           </p>
           <Link href={`${base}/lab`} className="ft-button ft-button-gold mt-5">
@@ -135,9 +136,10 @@ export default function FieldToolAccess({ slug }: { slug: string }) {
             exported record is what you share with colleagues.
           </p>
           <p className="mt-3">
-            Your draft lives in this browser on this device. Export anything you
-            need to keep. Keep your Lemon Squeezy receipt for order and payment
-            details. Use your purchase email to sign in on another device.
+            Your shared draft saves on this device. Private reflection is not
+            saved or exported. Export anything you need to keep. Keep your Lemon
+            Squeezy receipt for order and payment details. Use your purchase
+            email to sign in on another device.
           </p>
         </div>
         <button
@@ -153,6 +155,7 @@ export default function FieldToolAccess({ slug }: { slug: string }) {
           All Field Tools →
         </Link>
       </section>
+      <FieldToolsFooter />
     </main>
   );
 }

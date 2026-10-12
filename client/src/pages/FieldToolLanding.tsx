@@ -97,7 +97,7 @@ export default function FieldToolLanding({
           slug === "ai-stalemate"
             ? audience === "pm"
               ? "PM to PM: get clear about your Why, invite your lead to shape the opportunity, and leave with a decision you can take back to leadership."
-              : "Lead developer to lead developer: make the costs concrete, help shape a worthwhile opportunity with your PM, and leave with a decision you can both defend."
+              : "Help your PM understand the risks—and agree what your team needs to move forward."
             : tool.subhead
         }
         image={presentation.image}
