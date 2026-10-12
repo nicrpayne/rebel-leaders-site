@@ -18,7 +18,7 @@ export function fieldToolPresentation(slug: string, audience: Audience = "pm") {
         }
       : {
           lead: "My PM won’t shut up about AI.",
-          accent: "Let's make your judgment count.",
+          accent: "",
           promise:
             "Shape responsible AI use with your PM, protect the standards you own, and make the next move clear.",
           session:
