@@ -40,6 +40,46 @@ export function summarizeEffort(
 const answer = (v: Values, key: string, fallback = "[not entered]") =>
   v[key]?.trim() || fallback;
 
+export function buildReadinessBrief(v: Values) {
+  return `AI STALEMATE — READINESS BRIEF
+
+WORK OUTCOME / SHARED AMBITION
+${answer(v, "outcome")}
+${answer(v, "sharedVision")}
+
+REPORTED BUSINESS CONTEXT
+${answer(v, "businessContext")}
+
+SOURCE / ASSUMPTIONS / VALIDATION OWNER
+${answer(v, "businessBasis")}
+
+TEAM / COMPANY OPPORTUNITY
+${answer(v, "growthOpportunity")}
+
+ACCESS MODEL / POLICY OWNER
+${answer(v, "accessModel")}
+
+API / PERMISSION VERIFICATION
+${answer(v, "securityChecks")}
+
+AI / AGENT OPERATING BOUNDARIES
+${answer(v, "automationBoundary")}
+
+DEMONSTRATED TEAM CAPABILITY
+${answer(v, "teamReadiness")}
+
+TRAINING / PAIRING / QUALIFIED REVIEW
+${answer(v, "readinessSupport")}
+
+AGREED NEXT MOVE
+${answer(v, "readinessDecision", "[not selected]")}
+
+PREREQUISITES / OWNERS / REVIEW DATES
+${answer(v, "prerequisitePlan")}
+
+This record coordinates the decision. It does not certify security or team readiness; the appropriate owners must verify the implementation and conditions. Private preparation is excluded.`;
+}
+
 export function buildTrialCard(v: Values) {
   return `AI STALEMATE — TRIAL CARD
 
@@ -48,6 +88,16 @@ ${answer(v, "outcome")}
 
 SHARED AMBITION / WHY THIS MATTERS
 ${answer(v, "sharedVision")}
+
+READINESS / PREREQUISITES
+${answer(v, "readinessDecision", "[readiness decision not recorded]")}
+${answer(v, "prerequisitePlan")}
+
+SYSTEM / TEAM CONDITIONS
+Access: ${answer(v, "accessModel")}
+Verification: ${answer(v, "securityChecks")}
+Agent boundaries: ${answer(v, "automationBoundary")}
+Team support: ${answer(v, "readinessSupport")}
 
 BOUNDED TASK / OUT OF SCOPE
 ${answer(v, "task")}
@@ -129,22 +179,42 @@ These totals describe recorded effort for this task. They do not establish quali
 export function buildDecisionBrief(v: Values) {
   const baseline = summarizeEffort(v, "baseline");
   const ai = summarizeEffort(v, "ai");
-  const effort =
-    baseline.complete && ai.complete
+  const hasEvidence =
+    baseline.entered > 0 ||
+    ai.entered > 0 ||
+    Boolean(v.quality?.trim() || v.withoutAi?.trim() || v.withAi?.trim());
+  const preTrial =
+    ["PREPARE FIRST", "STOP THIS USE"].includes(v.readinessDecision) &&
+    !hasEvidence;
+  const effort = preTrial
+    ? "No trial result is recorded for this preparation decision."
+    : baseline.complete && ai.complete
       ? `${baseline.minutes} person-minutes without AI; ${ai.minutes} with AI.`
       : "Effort comparison remains incomplete. See the Evidence Record.";
   return `AI STALEMATE — DECISION BRIEF
 
-WORK OUTCOME / TESTED TASK
+WORK OUTCOME / ${preTrial ? "PROPOSED USE" : "TESTED TASK"}
 ${answer(v, "outcome")}
-${answer(v, "task")}
+${answer(v, "task", preTrial ? "No trial has been agreed or run." : "[not entered]")}
 
 SHARED AMBITION
 ${answer(v, "sharedVision")}
 
+REPORTED BUSINESS CONTEXT / BASIS
+${answer(v, "businessContext")}
+${answer(v, "businessBasis")}
+
+READINESS / REQUIRED INVESTMENT
+${answer(v, "readinessDecision")}
+${answer(v, "prerequisitePlan")}
+Access: ${answer(v, "accessModel")}
+Verification: ${answer(v, "securityChecks")}
+Agent boundaries: ${answer(v, "automationBoundary")}
+Team support: ${answer(v, "readinessSupport")}
+
 CONDITIONS / COMPARATOR
-${answer(v, "tool")} — ${answer(v, "toolVersion")}
-${answer(v, "comparator")}
+${answer(v, "tool", preTrial ? "[tool/use not approved for a trial]" : "[not entered]")} — ${answer(v, "toolVersion")}
+${answer(v, "comparator", preTrial ? "[no trial comparator agreed]" : "[not entered]")}
 
 EVIDENCE
 ${effort}
@@ -168,8 +238,14 @@ ${answer(v, "leadershipUpdate")}`;
 
 export function buildAITrialPackage(v: Values) {
   return [
-    buildTrialCard(v),
-    buildEvidenceRecord(v),
+    buildReadinessBrief(v),
+    ...(["PREPARE FIRST", "STOP THIS USE"].includes(v.readinessDecision) &&
+    !AI_EFFORT_STAGES.some(
+      stage => v[`ai_${stage.id}`]?.trim() || v[`baseline_${stage.id}`]?.trim()
+    ) &&
+    !v.quality?.trim()
+      ? []
+      : [buildTrialCard(v), buildEvidenceRecord(v)]),
     buildDecisionBrief(v),
   ].join("\n\n\n");
 }

@@ -9,6 +9,10 @@ AI Stalemate has two distinct paths:
 
 Each has its own copy, private questions, PDF, and browser-local draft. The trial and evidence fields align across paths. One AI Stalemate purchase unlocks the tool; the path controls the reader experience, not a second charge. Sharing exported records with a colleague is the intended use. Live co-editing and cross-device draft synchronization are not included.
 
+The AI Stalemate Lab has five stages: Private Prep, Readiness, Shared Work, Evidence, and Decision. Readiness brings together business context, the basis for cost-of-delay claims, growth opportunities, access and agent boundaries, and team capability and support. Its shareable Readiness Brief excludes private preparation. Prepare First leads directly to a PAUSE decision with prerequisites, owners, and a review date; Stop This Use leads to STOP; Use Existing Evidence opens the evidence stage. A bounded test is one possible next move. Existing drafts retain their original stage after this addition.
+
+Both role-specific PDFs have 13 pages (cover plus 12 chapters), including business context, access design, team preparation, and a fictional preparation-first example. The example treats the sponsor's $500k-per-week estimate as unvalidated and records no measured AI productivity result. Landing-page headlines and subtitles are unchanged by these additions.
+
 Buy -> hosted Lemon Squeezy checkout -> confirmation/receipt links to the matching `/access` page -> enter purchase email -> secure sign-in email -> click Open my Field Tool -> welcome -> Guide/PDF and Lab -> shareable outputs.
 
 The receipt comes from Lemon Squeezy. The app sends access emails on request, avoiding duplicate welcome emails on webhook retries. Email links expire after 15 minutes and require a button click to redeem, protecting them from simple email link scanners. Sessions last 30 days. Only token hashes are stored; link redemption is serialized in a database transaction. Sign-out revokes the server session. Full refunds/fraud revoke that order's access; partial refunds retain access. Another active purchase of the same tool still grants access.

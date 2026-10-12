@@ -1,3 +1,5 @@
+import { AI_READINESS_SAMPLE } from "./field-tool-content/ai-readiness";
+import { FIELD_TOOL_PRESENTATIONS } from "../client/src/lib/field-tool-presentations";
 import { aiGuideFor, aiLabFor } from "./field-tool-content/ai-paths";
 import { TRPCError } from "@trpc/server";
 import { FIELD_LABS } from "./field-tool-content/labs";
@@ -130,6 +132,10 @@ export const fieldToolsRouter = router({
           : FIELD_LABS[input.slug];
       return {
         audience: input.audience,
+        sampleValues:
+          input.slug === "ai-stalemate"
+            ? AI_READINESS_SAMPLE
+            : FIELD_TOOL_PRESENTATIONS[input.slug]?.sampleValues,
         lab: {
           steps: lab.steps,
           outputs: lab.outputs?.map(({ build, ...output }) => output),

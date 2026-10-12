@@ -1,3 +1,5 @@
+import { readinessStep, readinessChapters } from "./ai-readiness.ts";
+import { buildReadinessBrief } from "../../client/src/lib/ai-trial.ts";
 import { AI_STALEMATE_GUIDE_PAGES } from "./ai-guide.ts";
 import { FIELD_LABS } from "./labs.ts";
 export type Audience = "pm" | "lead-dev";
@@ -125,6 +127,55 @@ export function aiGuideFor(audience: Audience) {
     ...section,
     title: prompts[index]?.label ?? section.title,
   }));
+  pages[5].sections[0].title = "A separate effort example";
+  pages[7] = {
+    ...pages[7],
+    title: "A worthwhile opportunity. Preparation first.",
+    intro:
+      audience === "pm"
+        ? "Fictional case: your sponsor reports a costly delay. Your lead identifies unverified API permissions and gaps in the team's engineering practice. You bring both into one investment decision."
+        : "Fictional case: your PM hears a costly delay from the sponsor. You identify unverified API permissions and gaps in the team's engineering practice. Together, you define what responsible progress requires.",
+    sections: [
+      {
+        title: "The business context",
+        body: "The sponsor estimates $500,000 per week in operational opportunity. The figure is not yet validated. The PM will clarify the assumptions with Finance. The team sees why the outcome matters.",
+      },
+      {
+        title: "The system and team prerequisites",
+        body: "Access roles and record boundaries across apps are unresolved. Routes need allowed/denied-access tests. Developers need pairing, qualified review, and practice explaining, testing, deploying, and rolling back a change.",
+      },
+      {
+        title: "The Readiness Brief",
+        body: "PREPARE FIRST. No production connection or agent write/deploy permissions. The data/security owner defines access policy. The engineering manager leads a supervised exercise. The PM protects capacity and validates the business assumptions.",
+      },
+      {
+        title: "The Decision Brief",
+        body: "PAUSE this proposed use. Review readiness next Tuesday, with access-test evidence and a demonstrated engineering workflow. Then decide whether an approved synthetic-data trial would answer a useful question.",
+      },
+      {
+        title: "The update to leadership",
+        body: "We propose preparation time to resolve access boundaries and build team readiness. This protects a worthwhile opportunity while making the conditions for responsible delivery explicit. No AI productivity result has been measured.",
+      },
+    ],
+    callout:
+      "They leave with a responsible investment and an accountable next move. The opportunity stays visible, and the prerequisites receive owners.",
+  };
+  pages[8].sections.splice(1, 0, {
+    title: "2. Share context and check readiness",
+    body: "Open Readiness together. Record the business context and its evidence, system access decisions, agent boundaries, and team support. Export the Readiness Brief. Prepare first, use existing evidence, or stop this use when appropriate.",
+  });
+  pages[8].sections[2].title = "3. Build a Trial Card when appropriate";
+  pages[8].sections[3].title = "4. Return with evidence";
+  pages[8].sections[4].title = "5. Write the decision";
+  pages[8].sections[4].body =
+    "Choose Continue, Revise, Stop, or Pause. A preparation decision can go straight from Readiness to Decision without a trial. Name the reason, limits, next action, owner, date, and leadership update.";
+  pages.splice(4, 0, ...readinessChapters(audience));
+  pages.forEach((page, index) => {
+    page.eyebrow =
+      String(index + 1).padStart(2, "0") +
+      " / " +
+      page.eyebrow.replace(/^\d+ \/ /, "");
+  });
   return pages;
 }
 export function aiLabFor(audience: Audience) {
@@ -178,5 +229,21 @@ export function aiLabFor(audience: Audience) {
   steps[3].title = pm
     ? "Make the next move clear to leadership."
     : "Help your PM carry a defensible decision forward.";
-  return { ...base, steps };
+  steps.splice(1, 0, readinessStep(audience));
+  return {
+    ...base,
+    steps,
+    outputs: [
+      {
+        id: "readiness-brief",
+        title: "Readiness Brief",
+        fromStep: 1,
+        build: buildReadinessBrief,
+      },
+      ...(base.outputs ?? []).map(output => ({
+        ...output,
+        fromStep: output.fromStep + 1,
+      })),
+    ],
+  };
 }

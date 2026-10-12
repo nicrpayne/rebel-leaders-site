@@ -49,8 +49,10 @@ export default function FieldToolAccess({ slug }: { slug: string }) {
           <h2 className="font-display text-3xl">Your first useful move</h2>
           <p className="mt-3 font-ui text-sm leading-7 text-[#b8c9b8]">
             Skim the Guide for the reframe, then open Private Prep in the Lab.
-            Bring one real disagreement. You can return to the Guide whenever a
-            question needs explanation.
+            Bring one real disagreement.
+            {slug === "ai-stalemate" &&
+              " Then use Readiness together to share the business context and agree the system and team prerequisites."}
+            Return to the Guide whenever a question needs explanation.
           </p>
           <Link href={`${base}/lab`} className="ft-button ft-button-gold mt-5">
             Start with my situation →

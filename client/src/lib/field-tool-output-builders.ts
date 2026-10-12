@@ -1,5 +1,6 @@
 import {
   buildAITrialPackage,
+  buildReadinessBrief,
   buildTrialCard,
   buildEvidenceRecord,
   buildDecisionBrief,
@@ -129,6 +130,7 @@ RESPONSIBLE RESPONSE
 ${v.response || "[not entered]"}`,
 };
 export const AI_OUTPUT_BUILDERS = {
+  "readiness-brief": buildReadinessBrief,
   "trial-card": buildTrialCard,
   "evidence-record": buildEvidenceRecord,
   "decision-brief": buildDecisionBrief,

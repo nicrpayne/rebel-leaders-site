@@ -7,7 +7,10 @@ import FieldToolArtifact from "@/components/field-tools/FieldToolArtifact";
 import AIEffortComparison from "@/components/field-tools/AIEffortComparison";
 import { getFieldTool } from "@/lib/field-tools";
 
-import { readFieldToolDraft } from "@/lib/field-tool-drafts";
+import {
+  readFieldToolDraft,
+  readAIFieldToolDraft,
+} from "@/lib/field-tool-drafts";
 import type { FieldDef } from "../../../server/field-tool-content/labs";
 import {
   FIELD_OUTPUT_BUILDERS,
@@ -92,14 +95,14 @@ function LabSession({ slug }: { slug: string }) {
   const storageKey = "rl_field_lab_" + slug + "_" + content.audience;
   const [initialDraft] = useState(() => {
     try {
-      return readFieldToolDraft(
-        window.localStorage,
+      const key =
         content.audience === "pm" &&
-          window.localStorage.getItem(storageKey) === null
+        window.localStorage.getItem(storageKey) === null
           ? "rl_field_lab_" + slug
-          : storageKey,
-        config?.steps.length ?? 1
-      );
+          : storageKey;
+      return slug === "ai-stalemate"
+        ? readAIFieldToolDraft(window.localStorage, key)
+        : readFieldToolDraft(window.localStorage, key, config.steps.length);
     } catch {
       return { values: {}, step: 0 };
     }
@@ -115,7 +118,10 @@ function LabSession({ slug }: { slug: string }) {
 
   useEffect(() => {
     try {
-      window.localStorage.setItem(storageKey, JSON.stringify({ values, step }));
+      window.localStorage.setItem(
+        storageKey,
+        JSON.stringify({ values, step, version: 2 })
+      );
       setStorageStatus("");
     } catch {
       setStorageStatus(
@@ -141,6 +147,25 @@ function LabSession({ slug }: { slug: string }) {
 
   const current = config.steps[step];
   const isLast = step === config.steps.length - 1;
+  const preparationDecision =
+    slug === "ai-stalemate" &&
+    ["PREPARE FIRST", "STOP THIS USE"].includes(values.readinessDecision);
+  const atReadiness = slug === "ai-stalemate" && step === 1;
+  function continueWork() {
+    if (atReadiness && preparationDecision) {
+      setValues(v => ({
+        ...v,
+        decision: v.readinessDecision === "STOP THIS USE" ? "STOP" : "PAUSE",
+      }));
+      setStep(4);
+      return;
+    }
+    if (atReadiness && values.readinessDecision === "USE EXISTING EVIDENCE") {
+      setStep(3);
+      return;
+    }
+    setStep(Math.min(config.steps.length - 1, step + 1));
+  }
 
   async function copyOutput() {
     try {
@@ -189,7 +214,7 @@ function LabSession({ slug }: { slug: string }) {
   }
 
   function loadExample() {
-    const sample = FIELD_TOOL_PRESENTATIONS[slug]?.sampleValues;
+    const sample = content.sampleValues;
     if (!sample) return;
     if (
       Object.values(values).some(value => value.trim()) &&
@@ -300,7 +325,7 @@ function LabSession({ slug }: { slug: string }) {
           </aside>
 
           <div className="border border-[#c8d0c5] bg-[#fbf9f3] p-5 md:p-8">
-            {slug === "ai-stalemate" && step === 2 && (
+            {slug === "ai-stalemate" && step === 3 && (
               <AIEffortComparison
                 values={values}
                 onChange={(id, value) =>
@@ -340,12 +365,17 @@ function LabSession({ slug }: { slug: string }) {
               {!isLast ? (
                 <button
                   type="button"
-                  onClick={() =>
-                    setStep(Math.min(config.steps.length - 1, step + 1))
-                  }
+                  onClick={continueWork}
                   className="bg-[#173c2a] px-6 py-3 font-ui text-sm font-semibold text-white"
                 >
-                  Continue →
+                  {atReadiness && preparationDecision
+                    ? values.readinessDecision === "STOP THIS USE"
+                      ? "Write a STOP decision →"
+                      : "Write a PAUSE decision →"
+                    : atReadiness &&
+                        values.readinessDecision === "USE EXISTING EVIDENCE"
+                      ? "Review existing evidence →"
+                      : "Continue →"}
                 </button>
               ) : (
                 <button
@@ -364,13 +394,20 @@ function LabSession({ slug }: { slug: string }) {
             {config.outputs && step > 0 && (
               <div className="mt-6 border-t border-[#d7ddd3] pt-5">
                 <p className="font-ui text-xs leading-6 text-[#657268]">
-                  Export the Trial Card before running the test. Return here for
-                  evidence and the decision; your private preparation stays out
-                  of every shared output.
+                  {atReadiness
+                    ? "Export the Readiness Brief to coordinate the prerequisites and next move. You can write a preparation decision without running a trial."
+                    : "Export the Trial Card before an approved test. Return for evidence and the decision; private preparation stays out of shared outputs."}
                 </p>
                 <div className="mt-3 flex flex-wrap gap-3">
                   {config.outputs
-                    .filter(item => item.fromStep <= step)
+                    .filter(
+                      item =>
+                        item.fromStep <= step &&
+                        !(
+                          preparationDecision &&
+                          ["trial-card", "evidence-record"].includes(item.id)
+                        )
+                    )
                     .map(item => (
                       <button
                         type="button"

@@ -30,3 +30,19 @@ export function readFieldToolDraft(
     return { values: {}, step: 0 };
   }
 }
+
+/** Preserve the phase when inserting Readiness into older four-phase AI drafts. */
+export function readAIFieldToolDraft(
+  storage: Pick<Storage, "getItem">,
+  key: string
+): FieldToolDraft {
+  const draft = readFieldToolDraft(storage, key, 5);
+  try {
+    const raw = storage.getItem(key);
+    if (!raw) return draft;
+    const parsed = JSON.parse(raw);
+    if (parsed?.version !== 2 && draft.step > 0)
+      return { ...draft, step: Math.min(4, draft.step + 1) };
+  } catch {}
+  return draft;
+}
