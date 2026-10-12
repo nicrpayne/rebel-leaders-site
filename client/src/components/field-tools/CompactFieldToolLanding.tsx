@@ -42,7 +42,7 @@ export default function CompactFieldToolLanding({
     ],
     [
       engineering
-        ? "Trial Card, Evidence Record & Decision Brief"
+        ? "Bet Brief, Evidence Record & Decision Brief"
         : p.artifacts
             .slice(0, 2)
             .map(a => a.name)

@@ -41,7 +41,7 @@ export default function PMAIStalemateLanding() {
       "A proposal or agreement with a next action, owner, and date.",
     ],
     [
-      "Trial Card, Evidence Record & Decision Brief",
+      "Bet Brief, Evidence Record & Decision Brief",
       "For when a bounded test is the right move.",
     ],
     [

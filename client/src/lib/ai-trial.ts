@@ -80,7 +80,21 @@ This record supports the conversation; it does not create agreement or certify s
 }
 
 export function buildTrialCard(v: Values) {
-  return `AI STALEMATE — TRIAL CARD
+  return `AI STALEMATE — BET BRIEF
+
+THE PITCH
+
+OBSERVED PROBLEM / EVIDENCE BASIS
+${answer(v, "betBasis")}
+
+HYPOTHESIS / WHY WE EXPECT THIS
+${answer(v, "betHypothesis")}
+
+PREDICTED IMPROVEMENT / BASELINE / MEASURE
+${answer(v, "expectedLift")}
+
+EXPECTED QUALITATIVE CHANGES
+${answer(v, "betQualitative", "[not specified]")}
 
 WORK OUTCOME
 ${answer(v, "outcome")}
@@ -118,6 +132,12 @@ ${answer(v, "qualityBar")}
 PROTECTED CAPACITY / DISPLACED WORK
 ${answer(v, "capacity")}
 
+TIMEBOX / EVIDENCE CHECKPOINT
+${answer(v, "betTimebox")}
+
+RABBIT HOLES / CONTAINMENT
+${answer(v, "betRabbitHoles", "[none recorded]")}
+
 SUCCESS BAR
 ${answer(v, "success")}
 
@@ -126,6 +146,9 @@ ${answer(v, "stop")}
 
 TASK / REVIEWER / DECISION OWNERS / REVIEW DATE
 ${answer(v, "owners")}
+
+BET ACCEPTANCE
+${answer(v, "betStatus", "PROPOSED — NOT YET ACCEPTED")}
 
 Record these shared conditions before the trial. Private preparation is excluded.`;
 }
@@ -148,6 +171,13 @@ export function buildEvidenceRecord(v: Values) {
 TESTED TASK
 ${answer(v, "task")}
 
+PREDICTION / MINIMUM WORTHWHILE RESULT
+${answer(v, "expectedLift")}
+${answer(v, "success")}
+
+RESULT AGAINST THE BET
+${answer(v, "betResult")}
+
 COMPARATOR / COMPARABILITY LIMITS
 ${answer(v, "comparator")}
 ${answer(v, "comparability", "[comparability limits not entered]")}
@@ -158,6 +188,7 @@ ${rows}
 TOTAL RECORDED EFFORT
 ${totals}
 ${difference}
+${baseline.complete && ai.complete && baseline.minutes > 0 ? `Observed effort reduction: ${Math.round(((baseline.minutes - ai.minutes) / baseline.minutes) * 1000) / 10}%. Negative means more effort with AI. This is a descriptive comparison, not a causal estimate.` : "Observed percentage reduction unavailable: both methods need complete effort and a positive baseline."}
 
 AUTHOR / COMPARATOR NOTES
 ${answer(v, "withoutAi")}
@@ -233,6 +264,9 @@ ${answer(v, "decision", "[not selected]")}
 
 WHY / UNRESOLVED DISAGREEMENT
 ${answer(v, "reason")}
+
+LEARNING / POSSIBLE EXPLANATIONS
+${answer(v, "betLearning")}
 
 LIMITS OF THIS EVIDENCE
 ${answer(v, "limits")}

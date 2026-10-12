@@ -28,8 +28,8 @@ export const FIELD_TOOL_PRESENTATIONS: Record<string, Presentation> = {
     ],
     artifacts: [
       {
-        name: "Trial Card",
-        copy: "A bounded task, agreed quality bar, protected reviewer time, success criteria, and stop rule.",
+        name: "Bet Brief",
+        copy: "Your hypothesis, predicted improvement, timebox, effort budget, quality checks, and stop rule.",
       },
       {
         name: "Evidence Record",
@@ -43,6 +43,23 @@ export const FIELD_TOOL_PRESENTATIONS: Record<string, Presentation> = {
     example:
       "Product wants faster test writing. Engineering expects more review. They agree on one approved task and count the work on both sides of the handoff.",
     sampleValues: {
+      betBasis:
+        "Fictional case: a comparable accepted unit-test task took 90 person-minutes, including review and rework. Repetitive drafting is worth investigating, but the full workflow cost is unknown.",
+      betHypothesis:
+        "If we use the approved AI tool to draft an isolated unit-test task, we expect lower total accepted-work effort because repetitive drafting may take less time.",
+      expectedLift:
+        "Predict 20% less total effort than the 90-person-minute comparator: 72 person-minutes, with unchanged acceptance checks. This is a prediction for this task, not a guarantee.",
+      betQualitative:
+        "The author may find repetitive drafting easier; the reviewer may need more verification. Ask both about their experience.",
+      betTimebox:
+        "Start Monday; finish one isolated task and collect effort evidence by Friday. Check later defects one week afterward.",
+      betRabbitHoles:
+        "Production integration, role redesign, and unrelated refactoring are out of scope. Stop and raise any unexpected permission boundary with the engineering lead.",
+      betStatus: "ACCEPTED — CONDITIONS AGREED",
+      betResult:
+        "Observed 97 versus 90 person-minutes: about 7.8% more effort. The predicted 20% reduction and minimum worthwhile improvement were not achieved. Acceptance checks passed after rework.",
+      betLearning:
+        "Faster drafting was offset by verification, review, and rework. Review effort may explain the result; one task cannot establish the cause or generalize to other uses.",
       outcome: "Reduce the full effort of producing accepted unit tests.",
       sharedVision:
         "Build a responsible test-writing practice the team can trust, giving people more time for judgment and helping other teams learn from our evidence.",
@@ -57,9 +74,9 @@ export const FIELD_TOOL_PRESENTATIONS: Record<string, Presentation> = {
       qualityBar:
         "Existing test review and CI checks stay intact. Engineering lead owns acceptance.",
       capacity:
-        "One author and one reviewer; time is reserved before work starts.",
+        "Budget up to two total person-hours for this isolated task, including no more than 15 reviewer minutes; protect the time by moving one low-priority documentation task with the PM.",
       success:
-        "Lower total effort than the comparator, without lowering the quality bar or moving extra work to the reviewer.",
+        "At least 10% lower total effort than the 90-minute comparator (81 minutes or less), with the same quality bar and no more than 15 reviewer minutes.",
       stop: "Stop for unapproved inputs, a missed quality check, or reviewer effort beyond the agreed limit.",
       owners:
         "Author: developer. Reviewer and decision owner: engineering lead. Review: Friday.",

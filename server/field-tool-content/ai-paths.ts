@@ -51,7 +51,7 @@ export function aiGuideFor(audience: Audience) {
     pages[4].sections[2].body =
       "Ask your lead to confirm the tool, model/version, permitted inputs, and approval owner. A leadership request does not grant permission to use an unapproved tool or sensitive inputs.";
     pages[4].sections[3].body =
-      "Ask your lead to define acceptance checks. Help protect author and reviewer time by naming what work moves. If the priority decision belongs to someone else, take that tradeoff to them.";
+      "Ask your lead to define acceptance checks. Agree an effort budget, timebox, rabbit holes, and what work moves to protect author and reviewer time. If the priority decision belongs to someone else, take that tradeoff to them.";
     pages[5].intro =
       "When the result comes back, ask about everyone's work. Count setup, verification, review, rework, and follow-up alongside drafting. You need accepted work at a defensible full cost to make a case to leadership.";
     pages[6].intro =
@@ -106,7 +106,7 @@ export function aiGuideFor(audience: Audience) {
     pages[4].sections[2].body =
       "Confirm the approved tool, model/version, allowed inputs, and approval owner. If permission is missing, name exactly what must be resolved before work can start.";
     pages[4].sections[3].body =
-      "Define the acceptance checks and accountable engineering owner. Estimate and protect author and reviewer time. Ask your PM to make the displaced work visible to the priority owner.";
+      "Define the acceptance checks and accountable engineering owner. Set an effort budget and timebox, including protected author and reviewer time. Ask your PM to make the displaced work visible to the priority owner.";
     pages[5].intro =
       "Record the work you and the reviewer actually do, including checks, rework, and later defects. Give your PM a full picture of cost and quality that they can responsibly communicate.";
     pages[6].intro =
@@ -174,7 +174,7 @@ export function aiGuideFor(audience: Audience) {
     title: "2. Understand each other and choose a move",
     body: "Open Conversation. Share the outcome, ask what your counterpart is concerned about, and name what remains unresolved. Export the Shared Next-Step Brief as a proposal or an agreement. Clarifying, asking a specialist, preparing, reviewing evidence, testing, and stopping are all possible next moves.",
   });
-  pages[8].sections[2].title = "3. Build a Trial Card when appropriate";
+  pages[8].sections[2].title = "3. Shape a Bet Brief when appropriate";
   pages[8].sections[3].title = "4. Return with evidence";
   pages[8].sections[4].title = "5. Write the decision";
   pages[8].sections[4].body =
@@ -255,11 +255,11 @@ export function aiLabFor(audience: Audience) {
     );
   }
   steps[1].title = pm
-    ? "Invite your lead to shape one credible test."
-    : "Shape one credible test with your PM.";
+    ? "Shape a worthwhile bet with your lead."
+    : "Shape a worthwhile bet with your PM.";
   steps[1].intro = pm
-    ? "Bring your outcome and shared vision. Ask your lead to define technical conditions, then agree the capacity, evidence, and decision owners together."
-    : "Bring your technical judgment. Agree the outcome with your PM, define the conditions you can support, and make the capacity tradeoff explicit.";
+    ? "Bring your outcome and invite your lead to shape the approach. Agree what you expect to improve, how much effort you will invest, and what evidence would earn another bet."
+    : "Bring your technical judgment and shape the approach with your PM. Agree the hypothesis, effort budget, timebox, and quality conditions before you accept the bet.";
   steps[2].title = pm
     ? "Ask what the whole workflow cost."
     : "Make the real effort and quality visible.";

@@ -131,17 +131,17 @@ export const AI_STALEMATE_GUIDE_PAGES = [
       },
     ],
     callout:
-      "The Lab excludes every private-preparation field from the Trial Card, Evidence Record, and Decision Brief.",
+      "The Lab excludes every private-preparation field from the Bet Brief, Evidence Record, and Decision Brief.",
   },
   {
-    eyebrow: "05 / SHARED TRIAL DESIGN",
-    title: "One test you could both believe.",
+    eyebrow: "05 / SHAPE THE BET",
+    title: "Shape a worthwhile bet.",
     intro:
       "Allow about 30 minutes together. Use existing evidence if it already answers the question. Run a trial only when a useful uncertainty, approval, capacity, and ownership are present.",
     sections: [
       {
-        title: "Agree on the ambition",
-        body: "Share the future you hope to help create and why it matters. Ask the other leader to shape it. Record only the ambition you both agree to pursue in shared work.",
+        title: "Pitch the problem and the hypothesis",
+        body: "Name the observed problem and evidence. Shape the ambition together. Write: If we try this approach, we expect this improvement because... Keep predictions separate from facts.",
       },
       {
         title: "Bound the work",
@@ -153,19 +153,19 @@ export const AI_STALEMATE_GUIDE_PAGES = [
       },
       {
         title: "Protect quality and capacity",
-        body: "Write the acceptance checks and accountable engineering owner. Reserve author and reviewer time. State which other work is displaced.",
+        body: "Keep the acceptance checks and engineering owner explicit. Set the appetite: the effort and tool budget you will invest in learning, including reviewer time and displaced work. Set start and end dates. Flag rabbit holes that could exhaust the budget.",
       },
       {
         title: "Agree on the bar beforehand",
-        body: "Define success across the full workflow, not just generation speed. Write a stop rule that can be acted on during the trial.",
+        body: "Predict a change against the comparator, with units. Separately agree the minimum worthwhile result across the full workflow and a stop rule. Record expected qualitative changes. A small test can support or challenge a belief without proving it universally.",
       },
       {
         title: "Make ownership explicit",
-        body: "Name the task owner, reviewer, decision owner, and review date. Export the Trial Card now, before the test. If a prerequisite is missing, name it and choose PAUSE.",
+        body: "Name the task owner, reviewer, decision owner, and review date. Record whether they have accepted the bet; a brief does not create agreement. Export it before starting. If a prerequisite is missing, name it and choose PAUSE.",
       },
     ],
     callout:
-      "A good trial: one approved unit-test task with comparable work and reserved review time. A weak trial: Everyone use AI this week and report whether it felt faster.",
+      "Adapted from Ryan Singer's Shape Up (basecamp.com/shapeup). A missed target can teach you something useful. A bet never attempted has no result.",
   },
   {
     eyebrow: "06 / FULL-WORKFLOW EVIDENCE",
@@ -232,7 +232,7 @@ export const AI_STALEMATE_GUIDE_PAGES = [
       "Fictional case: Product wants faster test writing. Engineering expects a larger review burden. Both leaders agree to examine one task rather than debate AI in general.",
     sections: [
       {
-        title: "The Trial Card",
+        title: "The Bet Brief",
         body: "Outcome: reduce the effort of producing accepted unit tests. Task: one isolated unit-test task; production code and customer data are out of scope. Use an approved tool with synthetic fixtures and a recorded version.",
       },
       {
@@ -266,8 +266,8 @@ export const AI_STALEMATE_GUIDE_PAGES = [
         body: "Open AI Stalemate through your Field Tool access page. Start on the side you carry. Your private notes stay out of shared exports.",
       },
       {
-        title: "2. Build and export the Trial Card",
-        body: "Move to Shared Work. Agree on the task, comparator, permission, quality, capacity, bar, stop rule, owners, and review date. Export the Trial Card before the test.",
+        title: "2. Build and export the Bet Brief",
+        body: "Move to Shared Work. Agree on the task, comparator, permission, quality, capacity, bar, stop rule, owners, and review date. Export the Bet Brief before the test.",
       },
       {
         title: "3. Return with evidence",

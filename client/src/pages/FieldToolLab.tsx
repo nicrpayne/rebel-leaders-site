@@ -295,7 +295,9 @@ function LabSession({ slug }: { slug: string }) {
           "teamReadiness",
           "readinessSupport",
         ]
-      : ["visionTeam", "visionProduct", "visionCompany"]
+      : slug === "ai-stalemate" && step === 2
+        ? ["betQualitative", "betRabbitHoles"]
+        : ["visionTeam", "visionProduct", "visionCompany"]
   );
   const renderFields = (fields: FieldDef[]) =>
     fields.map(field => (
@@ -492,7 +494,9 @@ function LabSession({ slug }: { slug: string }) {
                   <summary className="cursor-pointer font-ui text-sm font-semibold">
                     {step === 0
                       ? "Picture six months from now · optional, private"
-                      : "Explore business, technical, or team conditions · optional"}
+                      : step === 2
+                        ? "Qualitative changes and rabbit holes · optional"
+                        : "Explore business, technical, or team conditions · optional"}
                   </summary>
                   <div className="mt-5 space-y-6">
                     {renderFields(
@@ -555,7 +559,7 @@ function LabSession({ slug }: { slug: string }) {
                     ? "Build a record for the conversation. It updates from your shared inputs; private preparation stays out of every output."
                     : atReadiness
                       ? "Build a Shared Next-Step Brief to take into the conversation or record what you have agreed. Clarifying or preparing can be the right next move; a trial is optional."
-                      : "Export the Trial Card before an approved test. Return for evidence and the decision; private preparation stays out of shared outputs."}
+                      : "Export the Bet Brief before an approved test. Return for evidence and the decision; private preparation stays out of shared outputs."}
                 </p>
                 <div className="mt-3 flex flex-wrap gap-3">
                   {config.outputs

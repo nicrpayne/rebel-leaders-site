@@ -105,7 +105,7 @@ export const FIELD_LABS: Record<string, LabConfig> = {
       },
       {
         eyebrow: "SHARED WORK",
-        title: "Design one test you could both believe.",
+        title: "Shape a bet you can learn from.",
         intro:
           "If existing evidence already answers the question, use it. If approval or ownership is missing, pause and name the prerequisite.",
         fields: [
@@ -125,6 +125,30 @@ export const FIELD_LABS: Record<string, LabConfig> = {
             id: "task",
             label: "Exact task — and what is explicitly out of scope",
             type: "textarea",
+          },
+          {
+            id: "betBasis",
+            label: "What observed problem makes this bet worth considering?",
+            type: "textarea",
+            hint: "Share facts and their source. Keep your interpretation separate; private preparation is never copied here automatically.",
+          },
+          {
+            id: "betHypothesis",
+            label: "What are you betting will happen, and why?",
+            type: "textarea",
+            hint: "If we try this approach on this task, we expect this outcome because... Name the uncertainty you want to resolve.",
+          },
+          {
+            id: "expectedLift",
+            label: "What improvement do you predict?",
+            type: "textarea",
+            hint: "Name the baseline, expected change, unit, and measurement. A reasoned range is fine. Record qualitative changes separately; this is a prediction, not a promised result.",
+          },
+          {
+            id: "betQualitative",
+            label: "What else might change for the team or customers?",
+            type: "textarea",
+            hint: "Optional: confidence, review experience, clarity, or learning. Say how you would notice it.",
           },
           {
             id: "comparator",
@@ -158,20 +182,47 @@ export const FIELD_LABS: Record<string, LabConfig> = {
           },
           {
             id: "capacity",
-            label: "Protected time, reviewer time, and work displaced",
+            label:
+              "Appetite — effort budget, reviewer time, and work displaced",
             type: "textarea",
+            hint: "How much effort are you willing to invest in learning? Set author and reviewer limits, any tool budget, and the work that moves. This is a budget, not a delivery estimate.",
+          },
+          {
+            id: "betTimebox",
+            label: "When does the experiment start and end?",
+            type: "textarea",
+            hint: "Set a start, end, and evidence checkpoint. Calendar time and person-hours are different constraints.",
+          },
+          {
+            id: "betRabbitHoles",
+            label: "Rabbit holes — what could pull this beyond the budget?",
+            type: "textarea",
+            hint: "Optional: flag known complications and how you will contain them. Put excluded work in the task's out-of-scope boundary.",
           },
           {
             id: "success",
-            label: "Success bar",
+            label: "What result would make this bet worth continuing?",
             type: "textarea",
             section: "04 / THE BAR AND OWNERS",
+            hint: "Agree the minimum worthwhile improvement before running the experiment, plus quality and reviewer guardrails. It can differ from your predicted improvement.",
           },
           { id: "stop", label: "Stop rule", type: "textarea" },
           {
             id: "owners",
             label: "Task owner, reviewer, decision owner, review date",
             type: "textarea",
+          },
+          {
+            id: "betStatus",
+            label: "Has this bet been accepted by the accountable owners?",
+            type: "select",
+            options: [
+              "PROPOSED — NOT YET ACCEPTED",
+              "ACCEPTED — CONDITIONS AGREED",
+              "NOT ACCEPTED",
+              "NOT ATTEMPTED",
+            ],
+            hint: "A completed brief does not create agreement. Record acceptance with the owners before starting.",
           },
         ],
       },
@@ -181,6 +232,13 @@ export const FIELD_LABS: Record<string, LabConfig> = {
         intro:
           "Drafting speed is not team productivity if the burden simply moves to verification, review, rework, or later defects.",
         fields: [
+          {
+            id: "betResult",
+            label:
+              "How close were the results to your prediction and success bar?",
+            type: "textarea",
+            hint: "Compare the expected improvement with observed effort, quality, and qualitative changes. Say supported, not supported, or inconclusive; a small local experiment does not prove a universal claim.",
+          },
           {
             id: "comparability",
             label: "What limits the comparison?",
@@ -229,6 +287,12 @@ export const FIELD_LABS: Record<string, LabConfig> = {
             type: "textarea",
           },
           {
+            id: "betLearning",
+            label: "What did you learn, and what might explain the result?",
+            type: "textarea",
+            hint: "Separate observations from possible explanations. If the bet was never attempted, say so; that is not a failed experiment.",
+          },
+          {
             id: "limits",
             label: "What this evidence does not establish",
             type: "textarea",
@@ -250,7 +314,7 @@ export const FIELD_LABS: Record<string, LabConfig> = {
     outputs: [
       {
         id: "trial-card",
-        title: "Trial Card",
+        title: "Bet Brief",
         fromStep: 1,
         build: buildTrialCard,
       },

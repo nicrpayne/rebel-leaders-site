@@ -35,6 +35,37 @@ describe("the five Field Tool examples", () => {
 });
 
 describe("AI trial evidence and shared artifacts", () => {
+  it("keeps the prediction, investment, and acceptance distinct from observed results", () => {
+    const v = {
+      betHypothesis: "Hypothesis",
+      expectedLift: "20 percent prediction",
+      betTimebox: "One week",
+      capacity: "Two person-hours",
+      betResult: "Target missed",
+      betLearning: "Review cost increased",
+    };
+    const brief = buildTrialCard(v);
+    expect(brief).toContain("20 percent prediction");
+    expect(brief).toContain("One week");
+    expect(brief).toContain("Two person-hours");
+    expect(brief).toContain("PROPOSED — NOT YET ACCEPTED");
+    expect(brief).not.toContain("Target missed");
+    expect(buildEvidenceRecord(v)).toContain("Target missed");
+    expect(buildDecisionBrief(v)).toContain("Review cost increased");
+  });
+  it("reports descriptive effort reduction only with complete evidence and a positive baseline", () => {
+    const v = { ...allStages("baseline", "10"), ...allStages("ai", "8") };
+    expect(buildEvidenceRecord(v)).toContain("Observed effort reduction: 20%");
+    expect(buildEvidenceRecord({ ...v, baseline_review: "" })).toContain(
+      "percentage reduction unavailable"
+    );
+    expect(
+      buildEvidenceRecord({
+        ...allStages("baseline", "0"),
+        ...allStages("ai", "0"),
+      })
+    ).toContain("percentage reduction unavailable");
+  });
   it("keeps missing effort unknown and recognizes explicit zero", () => {
     expect(summarizeEffort({}, "ai")).toEqual({
       minutes: 0,
