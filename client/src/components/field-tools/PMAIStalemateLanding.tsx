@@ -5,7 +5,7 @@ import { fieldToolPresentation } from "@/lib/field-tool-paths";
 
 const base = "/field-tools/ai-stalemate/pm";
 export const PM_AI_HERO_IMAGE =
-  "/assets/field-tools/ai-stalemate-pm-real-portrait-v1.webp";
+  "/assets/field-tools/ai-stalemate-pm-hero-v4.webp";
 
 export default function PMAIStalemateLanding() {
   const presentation = fieldToolPresentation("ai-stalemate", "pm");
@@ -59,7 +59,7 @@ export default function PMAIStalemateLanding() {
         }
         description="Get clear about your Why, invite your lead to shape the opportunity, and leave with a decision you can take back to leadership."
         image={PM_AI_HERO_IMAGE}
-        imageLayout="portrait"
+        imageLayout="wide"
         showCaption={false}
         primary={{ label: "Get the Field Tool — $47", href: `${base}/buy` }}
         facts={[

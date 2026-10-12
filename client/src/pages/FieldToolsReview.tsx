@@ -15,7 +15,7 @@ const products: {
     audience: "pm",
     edition: "PM path",
     pages: 13,
-    image: "ai-stalemate-pm-real-portrait-v1.webp",
+    image: "ai-stalemate-pm-hero-v4.webp",
   },
   {
     slug: "ai-stalemate",
@@ -115,7 +115,7 @@ export default function FieldToolsReview() {
                 <img
                   src={`/assets/field-tools/${product.image}`}
                   alt=""
-                  className={`h-[78px] w-[66px] shrink-0 object-cover ${product.slug === "ai-stalemate" && product.audience === "pm" ? "object-center" : "object-right"}`}
+                  className="h-[78px] w-[66px] shrink-0 object-cover object-right"
                 />
               </div>
               <div className="mt-5 grid grid-cols-2 gap-2">
