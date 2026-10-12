@@ -1,6 +1,7 @@
 import { Link } from "wouter";
 import { ArrowRight, Check, Compass, MessageSquare, Users } from "lucide-react";
 import FieldToolHero from "./FieldToolHero";
+import RelatedFieldTools from "./RelatedFieldTools";
 import { fieldToolPresentation } from "@/lib/field-tool-paths";
 
 const base = "/field-tools/ai-stalemate/pm";
@@ -131,6 +132,7 @@ export default function PMAIStalemateLanding() {
           </div>
         </div>
       </section>
+      <RelatedFieldTools slug="ai-stalemate" audience="pm" />
       <footer className="border-t border-[#cbd4c6] px-5 py-7 font-ui text-xs text-[#607063] md:px-10">
         <div className="mx-auto flex max-w-6xl flex-wrap justify-between gap-4">
           <span>Nic Payne · Rebel Leaders</span>
