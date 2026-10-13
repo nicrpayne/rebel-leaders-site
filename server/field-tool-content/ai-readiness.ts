@@ -22,6 +22,11 @@ export function readinessStep(audience: Audience) {
       hint: "Use the conversation you are already having. Describe who benefits and why it matters; include urgency only when it is relevant.",
     },
     {
+      id: "sharedVision",
+      label: pm ? "What future would you invite your lead to help shape?" : "What future could you and your PM want to build together?",
+      hint: "Make a short invitation: what could improve for users, the team, and the company? Ask what they would add or change. Identify it as an aspiration until you have shaped it together.",
+    },
+    {
       id: "counterpartConcern",
       label: pm
         ? "How would your lead describe their concern?"
@@ -384,10 +389,10 @@ export function aiSampleFor(audience: Audience): Record<string, string> {
   };
   return {
     ...sample,
-    conversationLeadershipUpdate: communicationDraft(sample, audience, "conversation", "leadership"),
-    conversationTeamUpdate: communicationDraft(sample, audience, "conversation", "team"),
-    leadershipUpdate: communicationDraft(sample, audience, "decision", "leadership"),
-    teamUpdate: communicationDraft(sample, audience, "decision", "team"),
+    conversationLeadershipUpdate: communicationDraft(sample, audience, "conversation", "leadership").replace("[specific request, decision owner, and response date]", "Priority owner: confirm protected pairing and qualified review capacity by Friday, including which documentation work may move. We will bring a readiness recommendation next Tuesday."),
+    conversationTeamUpdate: communicationDraft(sample, audience, "conversation", "team").replace("[work, capacity, review, permissions, or no change yet]", "No trial or production access is approved yet. We propose pairing on permission tests and a rollback exercise; the priority owner must confirm the capacity tradeoff."),
+    leadershipUpdate: communicationDraft(sample, audience, "decision", "leadership").replace("[specific request, decision owner, and response date]", "Priority owner: confirm protected pairing and qualified review capacity by Friday. Technical/data owners: verify the access-model decision and acceptance conditions before the Tuesday readiness review."),
+    teamUpdate: communicationDraft(sample, audience, "decision", "team").replace("[work, capacity, review, permissions, or no change yet]", "The proposed next move is preparation. Tool access and production permissions remain unapproved for this use. Pairing, qualified review, and displaced work need confirmation before scheduling."),
     qualityChecks: JSON.stringify([{ id: "allowed", check: "Approved user can access the permitted record", expected: "Approved role succeeds for the assigned resource.", status: "NOT CHECKED", observed: "", evidence: "", verifier: "Qualified engineering owner—name to be confirmed" }, { id: "denied", check: "Unauthorized user cannot access another group's record", expected: "Direct API requests enforce the resource boundary.", status: "NOT CHECKED", observed: "", evidence: "", verifier: "Qualified engineering owner—name to be confirmed" }]),
     returnRecord: "Not yet reviewed. Return after the access-model decision and supervised exercise; record the evidence, revised next move, owner, and review date.",
   };
