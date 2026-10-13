@@ -332,11 +332,11 @@ export const LEADERSHIP_LABS: Record<string, LabConfig> = {
           ),
           field(
             "approve",
-            "Who has the final decision right?",
+            "Who has the final decision right? (D)",
             undefined,
             "text"
           ),
-          field("execute", "Who executes the decision?", undefined, "text"),
+          field("execute", "Who executes the decision? (P)", undefined, "text"),
           field("block", "Who can constrain or block it?", undefined, "text"),
           field(
             "accountable",

@@ -91,13 +91,15 @@ export default function LeadershipWorkSurface({
         className="mb-8 border border-[#bac8b4] bg-[#e9eddf] p-5"
       >
         <h3 className="font-display text-2xl">
-          One decision. Five different roles.
+          One decision. Confirm each right.
         </h3>
         <dl className="mt-4 space-y-2 text-sm">
           {[
-            ["recommend", "Recommends"],
-            ["approve", "Decides"],
-            ["execute", "Executes"],
+            ["recommend", "Recommend (R)"],
+            ["consult", "Input (I)"],
+            ["requiredApprovals", "Agree (A)"],
+            ["approve", "Decide (D)"],
+            ["execute", "Perform (P)"],
             ["block", "Constrains"],
             ["accountable", "Accountable"],
           ].map(([id, label]) => (
