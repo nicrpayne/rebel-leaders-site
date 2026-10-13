@@ -156,7 +156,7 @@ ${answer(v, "owners")}
 BET ACCEPTANCE
 ${answer(v, "betStatus", "PROPOSED — NOT YET ACCEPTED")}
 
-Record these shared conditions before the trial. Private preparation is excluded.${optionalRecord(v, "decisionRights", "DECISION RIGHTS / AFFECTED PEOPLE")}${optionalRecord(v, "deploymentPermission", "FURTHER APPROVAL FOR DEPLOYMENT OR EXPANSION")}`;
+Record these shared conditions before the experiment. Private preparation is excluded.${optionalRecord(v, "decisionRights", "DECISION RIGHTS / AFFECTED PEOPLE")}${optionalRecord(v, "deploymentPermission", "FURTHER APPROVAL FOR DEPLOYMENT OR EXPANSION")}`;
 }
 
 export function buildEvidenceRecord(v: Values) {
@@ -234,7 +234,7 @@ export function buildDecisionBrief(v: Values) {
         "STOP THIS USE",
       ].includes(v.readinessDecision));
   const effort = preTrial
-    ? "No trial result is recorded for this preparation decision."
+    ? "No experiment result is recorded for this preparation decision."
     : baseline.complete && ai.complete
       ? `${baseline.minutes} person-minutes without AI; ${ai.minutes} with AI.`
       : "Effort comparison remains incomplete. See the Evidence Record.";
@@ -245,7 +245,7 @@ ${answer(v, "conversationStatus", "PROPOSED — NOT YET AGREED")}
 
 WORK OUTCOME / ${preTrial ? "PROPOSED USE" : "TESTED TASK"}
 ${answer(v, "outcome")}
-${answer(v, "task", preTrial ? "No trial has been agreed or run." : "[not entered]")}
+${answer(v, "task", preTrial ? "No experiment has been agreed or run." : "[not entered]")}
 
 SHARED AMBITION
 ${answer(v, "sharedVision")}
@@ -263,8 +263,8 @@ Agent boundaries: ${answer(v, "automationBoundary")}
 Team support: ${answer(v, "readinessSupport")}
 
 CONDITIONS / COMPARATOR
-${answer(v, "tool", preTrial ? "[tool/use not approved for a trial]" : "[not entered]")} — ${answer(v, "toolVersion")}
-${answer(v, "comparator", preTrial ? "[no trial comparator agreed]" : "[not entered]")}
+${answer(v, "tool", preTrial ? "[tool/use not approved for an experiment]" : "[not entered]")} — ${answer(v, "toolVersion")}
+${answer(v, "comparator", preTrial ? "[no experiment comparator agreed]" : "[not entered]")}
 
 EVIDENCE
 ${effort}

@@ -9,7 +9,7 @@ import {
 } from "../client/src/lib/ai-trial";
 import { readAIFieldToolDraft } from "../client/src/lib/field-tool-drafts";
 
-describe("readiness before AI trials", () => {
+describe("readiness before AI experiments", () => {
   it("offers distinct role language and aligned business/system/team decisions", () => {
     const pm = aiLabFor("pm"),
       dev = aiLabFor("lead-dev");
@@ -51,16 +51,16 @@ describe("readiness before AI trials", () => {
       dev.steps[2].fields.map(f => f.id)
     );
   });
-  it("exports preparation with owners and limitations without inventing a trial result", () => {
+  it("exports preparation with owners and limitations without inventing an experiment result", () => {
     const text = buildAITrialPackage(AI_READINESS_SAMPLE);
     expect(text).toContain("SHARED NEXT-STEP BRIEF");
     expect(text).toContain("PAUSE");
     expect(text).toContain("Finance has not validated");
     expect(text).toContain("next Tuesday");
-    expect(text).not.toContain("TRIAL CARD");
+    expect(text).not.toContain("BET BRIEF");
     expect(text).not.toContain("EVIDENCE RECORD");
     expect(text).not.toContain("97 person-minutes");
-    expect(text).toContain("No trial result is recorded");
+    expect(text).toContain("No experiment result is recorded");
   });
   it("keeps private motives and Why out of every new shared record", () => {
     const values = {
@@ -83,7 +83,7 @@ describe("readiness before AI trials", () => {
     }
     expect(buildReadinessBrief(values)).toContain("Shared sponsor estimate");
   });
-  it("carries access boundaries and reviewer support into an approved trial design", () => {
+  it("carries access boundaries and reviewer support into an approved experiment design", () => {
     const card = buildTrialCard({
       ...AI_READINESS_SAMPLE,
       readinessDecision: "READY FOR A BOUNDED TEST",
@@ -97,7 +97,7 @@ describe("readiness before AI trials", () => {
     const values = {
       ...AI_READINESS_SAMPLE,
       quality: "Prior test passed",
-      task: "Previous trial",
+      task: "Previous experiment",
       ...Object.fromEntries(
         [
           "setup",

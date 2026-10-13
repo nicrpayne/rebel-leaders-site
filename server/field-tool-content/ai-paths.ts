@@ -24,7 +24,7 @@ export function aiGuideFor(audience: Audience) {
         },
         {
           title: "Keep the event separate from your story",
-          body: "Your lead declined a trial using customer data. That is an observation. They are afraid of change is an interpretation. Take the observable event into the conversation and ask for their account.",
+          body: "Your lead declined an experiment using customer data. That is an observation. They are afraid of change is an interpretation. Take the observable event into the conversation and ask for their account.",
         },
         {
           title: "Make a proposal they can help shape",
@@ -47,7 +47,7 @@ export function aiGuideFor(audience: Audience) {
     pages[3].intro =
       "Take 5-10 minutes before you talk with your lead. These notes are yours. Get clear about your outcome and assumptions so you can arrive curious, with a proposal worth discussing.";
     pages[4].intro =
-      "Invite your lead into about 30 minutes of shared design. Bring the outcome and make room for their conditions. Use existing evidence if it answers the question; ask for a trial when there is a useful uncertainty to resolve.";
+      "Invite your lead into about 30 minutes of shared design. Bring the outcome and make room for their conditions. Use existing evidence if it answers the question; ask for an experiment when there is a useful uncertainty to resolve.";
     pages[4].sections[2].body =
       "Ask your lead to confirm the tool, model/version, permitted inputs, and approval owner. A leadership request does not grant permission to use an unapproved tool or sensitive inputs.";
     pages[4].sections[3].body =
@@ -79,7 +79,7 @@ export function aiGuideFor(audience: Audience) {
         },
         {
           title: "Check your story about the request",
-          body: "Your PM asked for a trial by Friday. That is an event. They do not care about quality is an interpretation. Ask what is driving the request before treating your interpretation as their intent.",
+          body: "Your PM asked for an experiment by Friday. That is an event. They do not care about quality is an interpretation. Ask what is driving the request before treating your interpretation as their intent.",
         },
         {
           title: "Help author the approach",
@@ -158,7 +158,7 @@ export function aiGuideFor(audience: Audience) {
       },
       {
         title: "The Decision Brief",
-        body: "PAUSE this proposed use. Review readiness next Tuesday, with access-test evidence and a demonstrated engineering workflow. Then decide whether an approved synthetic-data trial would answer a useful question.",
+        body: "PAUSE this proposed use. Review readiness next Tuesday, with access-test evidence and a demonstrated engineering workflow. Then decide whether an approved synthetic-data experiment would answer a useful question.",
       },
       {
         title: "The update to leadership",
@@ -178,7 +178,7 @@ export function aiGuideFor(audience: Audience) {
   pages[8].sections[3].title = "4. Return with evidence";
   pages[8].sections[4].title = "5. Write the decision";
   pages[8].sections[4].body =
-    "Choose Continue, Revise, Stop, or Pause. A conversation or preparation decision can go straight to Decision without a trial. Name the reason, limits, next action, owner, date, and leadership update.";
+    "Choose Continue, Revise, Stop, or Pause. A conversation or preparation decision can go straight to Decision without an experiment. Name the reason, limits, next action, owner, date, and leadership update.";
   pages.splice(4, 0, ...readinessChapters(audience));
   pages.forEach((page, index) => {
     page.eyebrow =

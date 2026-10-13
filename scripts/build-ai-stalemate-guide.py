@@ -34,10 +34,12 @@ PAGES = CONTENT["pages"]
 COMPANION = CONTENT["companion"]
 TOTAL_PAGES = len(PAGES) + len(COMPANION) + 1
 
+FONT_DIR = Path(os.environ.get("GUIDE_FONT_DIR", "/usr/share/fonts/truetype/dejavu"))
+
 for name, filename in [
-    ("GuideSerif", "/usr/share/fonts/truetype/dejavu/DejaVuSerif.ttf"),
-    ("GuideSans", "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"),
-    ("GuideBold", "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"),
+    ("GuideSerif", str(FONT_DIR / "DejaVuSerif.ttf")),
+    ("GuideSans", str(FONT_DIR / "DejaVuSans.ttf")),
+    ("GuideBold", str(FONT_DIR / "DejaVuSans-Bold.ttf")),
 ]:
     pdfmetrics.registerFont(TTFont(name, filename))
 

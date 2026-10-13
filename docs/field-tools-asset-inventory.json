@@ -221,14 +221,14 @@
     },
     {
       "path": "private/field-tools/ai-stalemate-lead-dev-field-guide.pdf",
-      "bytes": 423318,
-      "sha256": "9163e31bfab4dd398086eb10dc94c607695aae9f9633e096389ba5dbe6f367ed",
+      "bytes": 423438,
+      "sha256": "30196799635965fc7f30346f0394ed3e6752f397f6810e29f99c9ee64ae05327",
       "pages": 18
     },
     {
       "path": "private/field-tools/ai-stalemate-pm-field-guide.pdf",
-      "bytes": 423419,
-      "sha256": "5b7c39b3c72a462574380dd7896632e4e243f2868af4ca6c5f87ad6e3115dd38",
+      "bytes": 423540,
+      "sha256": "f5b4b6e7e99308747673a93361d6a9dd95656607350568fcbcb3ed7e3d4f8ebb",
       "pages": 18
     },
     {
@@ -275,6 +275,27 @@
       "sha256": "373fe503a4a61fa9a3a8224e90121a1c73ee35f3dc7f0d2c1301f8ab50c420ba",
       "width": 1536,
       "height": 1024
+    },
+    {
+      "path": "client/public/assets/field-tools/ai-stalemate-pm-lab-preview-v2.webp",
+      "width": 1347,
+      "height": 850,
+      "bytes": 97366,
+      "sha256": "a131cc0e013d8c0faf64bbfde819ba65fae76a147c5343c5d4cfec9313c8a785"
+    },
+    {
+      "path": "client/public/assets/field-tools/ai-stalemate-pm-mobile-lab-preview-v1.webp",
+      "width": 390,
+      "height": 1000,
+      "bytes": 57980,
+      "sha256": "516af5c9dc2bec565aa04b737f03482adebd108df2edb03253a73380b0c3b431"
+    },
+    {
+      "path": "client/public/assets/field-tools/ai-stalemate-lead-dev-lab-preview-v2.webp",
+      "width": 1347,
+      "height": 850,
+      "bytes": 99374,
+      "sha256": "1e39e785654231f83305381c63fe52cf47cd35e23d0eeb59a1a5cfeb24232b18"
     }
   ],
   "original_png_recovery": "The six cloud-generated originals remain pending; the user-supplied portrait is a separately preserved surviving copy."

@@ -2,13 +2,13 @@ import { useId, useLayoutEffect, useRef, useState } from "react";
 import "./ai-pm-kit-preview.css";
 
 const scene = "/assets/field-tools/ai-stalemate-pm-kit-v2.webp";
-const screenshot = "/assets/field-tools/ai-stalemate-pm-lab-preview.webp";
+const screenshot = "/assets/field-tools/ai-stalemate-pm-lab-preview-v2.webp";
 
 // Map the 1347 × 850 screenshot onto the display's four corners in the
-// 1536 × 1024 photograph: (584,142), (1401,124), (1382,703), (550,674).
+// 1536 × 1024 photograph: (584,142), (1401,124), (1362,703), (530,674).
 // One projective transform keeps the header, body, rules and text on one plane.
 const screenTransform =
-  "matrix3d(0.523138974227,-0.020744087987,0,-0.000059524670, -0.052850506474,0.610134641371,0,-0.000023364557, 0,0,1,0, 584,142,0,1)";
+  "matrix3d(0.523239145407,-0.020735222016,0,-0.000059453170, -0.077111601085,0.608609908410,0,-0.000025626772, 0,0,1,0, 584,142,0,1)";
 
 export default function AIPMKitPreview() {
   const container = useRef<HTMLDivElement>(null);
@@ -56,6 +56,17 @@ export default function AIPMKitPreview() {
           </defs>
           <image href={scene} width={1536} height={1024} clipPath={`url(#${foregroundId})`} />
         </svg>
+        {/* A fresh mobile capture keeps the phone copy in sync with the Lab. */}
+        <div className="ai-pm-photo-kit-layer" style={{ clipPath: "path('M1332 408 L1354 408 L1355 415 Q1355 426 1366 426 L1432 426 Q1443 426 1443 413 L1443 408 L1471 408 Q1493 408 1493 432 L1477 880 Q1476 903 1455 901 L1310 890 Q1286 888 1289 864 L1308 433 Q1308 410 1332 408 Z')" }}>
+          <img
+            className="ai-pm-photo-kit-display"
+            src="/assets/field-tools/ai-stalemate-pm-mobile-lab-preview-v1.webp"
+            alt=""
+            width={390}
+            height={1000}
+            style={{ width: 390, height: 1000, transform: "matrix3d(0.406419169861,-0.010952484707,0,-0.000045475103, -0.051411935110,0.462660744174,0,-0.000022853096, 0,0,1,0, 1309,407,0,1)" }}
+          />
+        </div>
       </div>
     </div>
   );

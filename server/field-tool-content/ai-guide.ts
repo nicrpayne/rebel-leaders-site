@@ -15,7 +15,7 @@ export const AI_STALEMATE_GUIDE_PAGES = [
       },
       {
         title: "Observation before motive",
-        body: "Observation: The lead declined a trial using customer data. Interpretation: They are afraid of change. The first can be checked. The second is a story that needs examination.",
+        body: "Observation: The lead declined an experiment using customer data. Interpretation: They are afraid of change. The first can be checked. The second is a story that needs examination.",
       },
       {
         title: "Choose a useful question",
@@ -79,7 +79,7 @@ export const AI_STALEMATE_GUIDE_PAGES = [
       },
       {
         title: "We do not have capacity",
-        body: "What work would this replace, and who must review it? Ask the priority owner to protect time or decline the investment. Unplanned overtime is not the trial budget.",
+        body: "What work would this replace, and who must review it? Ask the priority owner to protect time or decline the investment. Unplanned overtime is not the bet budget.",
       },
       {
         title: "We tried it and it was worse",
@@ -123,7 +123,7 @@ export const AI_STALEMATE_GUIDE_PAGES = [
       },
       {
         title: "What would change my mind?",
-        body: "Name the evidence that could alter your view. A trial is not useful if neither side would reconsider anything.",
+        body: "Name the evidence that could alter your view. An experiment is not useful if neither side would reconsider anything.",
       },
       {
         title: "What do I still need to ask?",
@@ -137,7 +137,7 @@ export const AI_STALEMATE_GUIDE_PAGES = [
     eyebrow: "05 / SHAPE THE BET",
     title: "Shape a worthwhile bet.",
     intro:
-      "Allow about 30 minutes together. Use existing evidence if it already answers the question. Run a trial only when a useful uncertainty, approval, capacity, and ownership are present.",
+      "Allow about 30 minutes together. Use existing evidence if it already answers the question. Run an experiment only when a useful uncertainty, approval, capacity, and ownership are present.",
     sections: [
       {
         title: "Pitch the problem and the hypothesis",
@@ -149,7 +149,7 @@ export const AI_STALEMATE_GUIDE_PAGES = [
       },
       {
         title: "Set the permission boundary",
-        body: "Record the AI tool and model/version, allowed inputs, and approval owner. A trial does not grant permission to use an unapproved tool or sensitive inputs.",
+        body: "Record the AI tool and model/version, allowed inputs, and approval owner. An experiment does not grant permission to use an unapproved tool or sensitive inputs.",
       },
       {
         title: "Protect quality and capacity",
@@ -203,7 +203,7 @@ export const AI_STALEMATE_GUIDE_PAGES = [
     eyebrow: "07 / THE DECISION",
     title: "Four legitimate next moves.",
     intro:
-      "Allow about 15 minutes after the trial. Compare the evidence with the bar agreed beforehand. Choose the move explicitly; the instrument does not make the decision for you.",
+      "Allow about 15 minutes after the experiment. Compare the evidence with the bar agreed beforehand. Choose the move explicitly; the instrument does not make the decision for you.",
     sections: [
       {
         title: "CONTINUE",
@@ -211,7 +211,7 @@ export const AI_STALEMATE_GUIDE_PAGES = [
       },
       {
         title: "REVISE",
-        body: "The use may have value, but the task, inputs, review workflow, or boundaries need to change. Name what will change before another approved trial.",
+        body: "The use may have value, but the task, inputs, review workflow, or boundaries need to change. Name what will change before another approved experiment.",
       },
       {
         title: "STOP",
@@ -219,7 +219,7 @@ export const AI_STALEMATE_GUIDE_PAGES = [
       },
       {
         title: "PAUSE",
-        body: "A prerequisite, approval, owner, capacity, or useful evidence is missing. Name the prerequisite and who will resolve it. Pause can be chosen before a trial starts.",
+        body: "A prerequisite, approval, owner, capacity, or useful evidence is missing. Name the prerequisite and who will resolve it. Pause can be chosen before an experiment starts.",
       },
     ],
     callout:
@@ -245,7 +245,7 @@ export const AI_STALEMATE_GUIDE_PAGES = [
       },
       {
         title: "The Decision Brief",
-        body: "REVISE. The current workflow transfers too much work to review. The engineering lead will narrow the task and review workflow before approving another trial, with a named review date.",
+        body: "REVISE. The current workflow transfers too much work to review. The engineering lead will narrow the task and review workflow before approving another experiment, with a named review date.",
       },
       {
         title: "The update to leadership",

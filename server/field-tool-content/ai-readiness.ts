@@ -122,7 +122,7 @@ export function readinessStep(audience: Audience) {
       ? "Understand what matters to each of you."
       : "Understand what matters to each of you.",
     intro: pm
-      ? "Start wherever the ongoing conversation stands. Share the outcome you care about, hear your lead’s concerns, and choose one useful next move. A trial is one possibility."
+      ? "Start wherever the ongoing conversation stands. Share the outcome you care about, hear your lead’s concerns, and choose one useful next move. An experiment is one possibility."
       : "Start wherever the ongoing conversation stands. Ask what your PM hopes to improve, make your concerns concrete, and choose one useful next move together.",
     fields: [
       ...fields.filter(
@@ -371,7 +371,7 @@ export const AI_READINESS_SAMPLE: Record<string, string> = {
     "No AI productivity result has been measured. The sponsor's delay-cost figure is unvalidated. This decision applies to this proposed use and environment.",
   next: "Complete the access-model decision, permission tests, and supervised engineering exercise; review with PM and engineering manager next Tuesday.",
   leadershipUpdate:
-    "We propose protected preparation time to establish access boundaries and team readiness, then decide whether an approved synthetic-data trial is worthwhile.",
+    "We propose protected preparation time to establish access boundaries and team readiness, then decide whether an approved synthetic-data experiment is worthwhile.",
 };
 
 export function aiSampleFor(audience: Audience): Record<string, string> {
@@ -390,7 +390,7 @@ export function aiSampleFor(audience: Audience): Record<string, string> {
   return {
     ...sample,
     conversationLeadershipUpdate: communicationDraft(sample, audience, "conversation", "leadership").replace("[specific request, decision owner, and response date]", "Priority owner: confirm protected pairing and qualified review capacity by Friday, including which documentation work may move. We will bring a readiness recommendation next Tuesday."),
-    conversationTeamUpdate: communicationDraft(sample, audience, "conversation", "team").replace("[work, capacity, review, permissions, or no change yet]", "No trial or production access is approved yet. We propose pairing on permission tests and a rollback exercise; the priority owner must confirm the capacity tradeoff."),
+    conversationTeamUpdate: communicationDraft(sample, audience, "conversation", "team").replace("[work, capacity, review, permissions, or no change yet]", "No experiment or production access is approved yet. We propose pairing on permission tests and a rollback exercise; the priority owner must confirm the capacity tradeoff."),
     leadershipUpdate: communicationDraft(sample, audience, "decision", "leadership").replace("[specific request, decision owner, and response date]", "Priority owner: confirm protected pairing and qualified review capacity by Friday. Technical/data owners: verify the access-model decision and acceptance conditions before the Tuesday readiness review."),
     teamUpdate: communicationDraft(sample, audience, "decision", "team").replace("[work, capacity, review, permissions, or no change yet]", "The proposed next move is preparation. Tool access and production permissions remain unapproved for this use. Pairing, qualified review, and displaced work need confirmation before scheduling."),
     qualityChecks: JSON.stringify([{ id: "allowed", check: "Approved user can access the permitted record", expected: "Approved role succeeds for the assigned resource.", status: "NOT CHECKED", observed: "", evidence: "", verifier: "Qualified engineering owner—name to be confirmed" }, { id: "denied", check: "Unauthorized user cannot access another group's record", expected: "Direct API requests enforce the resource boundary.", status: "NOT CHECKED", observed: "", evidence: "", verifier: "Qualified engineering owner—name to be confirmed" }]),

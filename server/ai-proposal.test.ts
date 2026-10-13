@@ -41,10 +41,10 @@ describe("AI proposal: usable communication without invented agreement or result
     expect(record).toContain("Acceptance: NOT CHECKED");
     expect(record).toContain("Comparison pending");
   });
-  it("does not turn a not-checked checklist into a trial result", () => {
+  it("does not turn a not-checked checklist into an experiment result", () => {
     const sample = aiSampleFor("pm");
     const record = buildAITrialPackage(sample);
-    expect(record).toContain("No trial result is recorded");
+    expect(record).toContain("No experiment result is recorded");
     expect(record).not.toContain("— EVIDENCE RECORD");
     expect(record).not.toContain("— BET BRIEF");
   });
