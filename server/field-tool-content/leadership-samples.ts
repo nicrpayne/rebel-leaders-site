@@ -28,7 +28,7 @@ export const LEADERSHIP_SAMPLES: Record<string, Record<string, string>> = {
     confidenceScope:
       "Core workflow by November 1, conditional on Thursday's integration check.",
     forecastBasis:
-      "Engineering assessed the core workflow from completed work; the integration remains the principal open condition. This is qualitative judgment, not a computed probability.",
+      "Engineering assessed the core workflow from completed work; the integration remains the principal open condition.",
     evidenceNext:
       "Engineering lead tests the integration and confirms the remaining acceptance work on Thursday.",
     checkpoint: "Thursday, after integration review",

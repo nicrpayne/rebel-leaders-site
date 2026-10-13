@@ -38,8 +38,11 @@ export function summarizeEffort(
   };
 }
 
-const answer = (v: Values, key: string, fallback = "[not entered]") =>
-  v[key]?.trim() || fallback;
+const answer = (
+  v: Values,
+  key: string,
+  fallback = "To complete before sharing."
+) => v[key]?.trim() || fallback;
 
 export function buildReadinessBrief(v: Values) {
   const optional = [
@@ -69,7 +72,7 @@ SHARED UNDERSTANDING / OPEN QUESTIONS
 ${answer(v, "openQuestions")}
 
 PROPOSED OR AGREED NEXT MOVE
-${answer(v, "readinessDecision", "[not selected]")}
+${answer(v, "readinessDecision", "Choose and record the next move.")}
 
 NEXT ACTION / OWNERS / REVIEW DATE
 ${answer(v, "prerequisitePlan")}
@@ -100,7 +103,7 @@ PREDICTED IMPROVEMENT / BASELINE / MEASURE
 ${answer(v, "expectedLift")}
 
 EXPECTED QUALITATIVE CHANGES
-${answer(v, "betQualitative", "[not specified]")}
+${answer(v, "betQualitative", "Describe if relevant.")}
 
 WORK OUTCOME
 ${answer(v, "outcome")}
@@ -109,7 +112,7 @@ SHARED AMBITION / WHY THIS MATTERS
 ${answer(v, "sharedVision")}
 
 READINESS / PREREQUISITES
-${answer(v, "readinessDecision", "[readiness decision not recorded]")}
+${answer(v, "readinessDecision", "Record the readiness decision.")}
 ${answer(v, "prerequisitePlan")}
 
 SYSTEM / TEAM CONDITIONS
@@ -142,7 +145,7 @@ TIMEBOX / EVIDENCE CHECKPOINT
 ${answer(v, "betTimebox")}
 
 RABBIT HOLES / CONTAINMENT
-${answer(v, "betRabbitHoles", "[none recorded]")}
+${answer(v, "betRabbitHoles", "None recorded; check before sharing.")}
 
 SUCCESS BAR
 ${answer(v, "success")}
@@ -165,7 +168,7 @@ export function buildEvidenceRecord(v: Values) {
   const rows = AI_EFFORT_STAGES.map(stage => {
     const without = effortMinutes(v[`baseline_${stage.id}`]);
     const withAi = effortMinutes(v[`ai_${stage.id}`]);
-    return `${stage.label}\n  Without AI: ${without === null ? "[not entered]" : without + " min"}\n  With AI: ${withAi === null ? "[not entered]" : withAi + " min"}`;
+    return `${stage.label}\n  Without AI: ${without === null ? "To complete before sharing." : without + " min"}\n  With AI: ${withAi === null ? "To complete before sharing." : withAi + " min"}`;
   }).join("\n\n");
   const totals = `Without AI: ${baseline.minutes} min${baseline.complete ? "" : " (partial; " + baseline.entered + "/6 stages)"}\nWith AI: ${ai.minutes} min${ai.complete ? "" : " (partial; " + ai.entered + "/6 stages)"}`;
   const difference =
@@ -186,7 +189,7 @@ ${answer(v, "betResult")}
 
 COMPARATOR / COMPARABILITY LIMITS
 ${answer(v, "comparator")}
-${answer(v, "comparability", "[comparability limits not entered]")}
+${answer(v, "comparability", "Record the limits of this comparison.")}
 
 RECORDED PERSON-MINUTES
 ${rows}
@@ -221,7 +224,12 @@ export function buildDecisionBrief(v: Values) {
   const hasEvidence =
     baseline.entered > 0 ||
     ai.entered > 0 ||
-    Boolean(v.quality?.trim() || v.withoutAi?.trim() || v.withAi?.trim() || qualityChecksObserved(v.qualityChecks));
+    Boolean(
+      v.quality?.trim() ||
+        v.withoutAi?.trim() ||
+        v.withAi?.trim() ||
+        qualityChecksObserved(v.qualityChecks)
+    );
   const preTrial =
     !hasEvidence &&
     (v.betStatus === "NOT ATTEMPTED" ||
@@ -245,7 +253,7 @@ ${answer(v, "conversationStatus", "PROPOSED — NOT YET AGREED")}
 
 WORK OUTCOME / ${preTrial ? "PROPOSED USE" : "TESTED TASK"}
 ${answer(v, "outcome")}
-${answer(v, "task", preTrial ? "No experiment has been agreed or run." : "[not entered]")}
+${answer(v, "task", preTrial ? "No experiment has been agreed or run." : "To complete before sharing.")}
 
 SHARED AMBITION
 ${answer(v, "sharedVision")}
@@ -263,8 +271,8 @@ Agent boundaries: ${answer(v, "automationBoundary")}
 Team support: ${answer(v, "readinessSupport")}
 
 CONDITIONS / COMPARATOR
-${answer(v, "tool", preTrial ? "[tool/use not approved for an experiment]" : "[not entered]")} — ${answer(v, "toolVersion")}
-${answer(v, "comparator", preTrial ? "[no experiment comparator agreed]" : "[not entered]")}
+${answer(v, "tool", preTrial ? "No tool or use approved for an experiment." : "To complete before sharing.")}${v.toolVersion?.trim() ? " — " + v.toolVersion.trim() : ""}
+${answer(v, "comparator", preTrial ? "No experiment comparator agreed." : "To complete before sharing.")}
 
 EVIDENCE
 ${effort}
@@ -272,7 +280,7 @@ ${answer(v, "quality")}
 ${qualityChecksRecord(v.qualityChecks)}
 
 DECISION
-${answer(v, "decision", "[not selected]")}
+${answer(v, "decision", "Choose and record the decision.")}
 
 WHY / UNRESOLVED DISAGREEMENT
 ${answer(v, "reason")}
@@ -305,8 +313,8 @@ export function buildAITrialPackage(v: Values) {
     !AI_EFFORT_STAGES.some(
       stage => v[`ai_${stage.id}`]?.trim() || v[`baseline_${stage.id}`]?.trim()
     ) &&
-    !v.quality?.trim()
-    && !qualityChecksObserved(v.qualityChecks)
+    !v.quality?.trim() &&
+    !qualityChecksObserved(v.qualityChecks)
       ? []
       : [buildTrialCard(v), buildEvidenceRecord(v)]),
     buildDecisionBrief(v),

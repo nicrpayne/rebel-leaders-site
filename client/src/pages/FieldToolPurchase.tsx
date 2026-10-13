@@ -51,7 +51,7 @@ export default function FieldToolPurchase({
         <div className="mt-9 grid gap-10 lg:grid-cols-[1.2fr_.8fr] lg:items-start">
           <div>
             <p className="font-ui text-[11px] tracking-[.2em] text-[#b7c8ae]">
-              {tool.eyebrow} / WORKING EDITION
+              {tool.eyebrow} / FIELD GUIDE + LAB
             </p>
             <h1 className="mt-5 font-display text-5xl font-semibold leading-tight md:text-6xl">
               {tool.name}
@@ -110,7 +110,7 @@ export default function FieldToolPurchase({
               ONE-TIME PURCHASE
             </p>
             <p className="mt-5 font-display text-7xl font-semibold text-[#e4bc59]">
-              ${tool.price}
+              ${tool.price}{" "}
               <span className="ml-3 font-ui text-sm font-normal text-[#afbfaa]">
                 USD
               </span>

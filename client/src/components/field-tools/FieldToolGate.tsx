@@ -107,9 +107,23 @@ export default function FieldToolGate({
     <main className="min-h-screen bg-[#07110d] px-5 pb-20 pt-32">
       <FieldToolsNav />
       {access.isPending || (allowed && content.isPending) ? (
-        <p role="status" className="text-center text-[#f3efe4]">
-          Opening your Field Tool…
-        </p>
+        <div
+          role="status"
+          aria-live="polite"
+          className="mx-auto max-w-4xl border border-[#60775a] bg-[#12281b] p-8 text-[#f3efe4]"
+        >
+          <p className="font-display text-3xl">Opening your Field Tool…</p>
+          <p className="mt-3 font-ui text-sm text-[#b8c9b8]">
+            Checking access and loading your Guide and Lab.
+          </p>
+          <div
+            aria-hidden="true"
+            className="mt-8 grid gap-5 md:grid-cols-[1fr_2fr]"
+          >
+            <div className="h-28 bg-white/5" />
+            <div className="h-56 bg-white/10" />
+          </div>
+        </div>
       ) : access.error || content.error ? (
         <div className="mx-auto max-w-xl text-[#f3efe4]">
           <p role="alert">We couldn’t open your tool. Please try again.</p>
