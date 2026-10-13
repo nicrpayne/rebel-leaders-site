@@ -1,5 +1,6 @@
 import type { Audience } from "./ai-paths";
 import type { FieldDef } from "./labs";
+import { communicationDraft } from "../../client/src/lib/ai-communication.ts";
 
 export const READINESS_CHOICES = [
   "CLARIFY THE CONVERSATION",
@@ -369,7 +370,7 @@ export const AI_READINESS_SAMPLE: Record<string, string> = {
 };
 
 export function aiSampleFor(audience: Audience): Record<string, string> {
-  return {
+  const sample = {
     ...AI_READINESS_SAMPLE,
     ...(audience === "lead-dev"
       ? {
@@ -380,5 +381,14 @@ export function aiSampleFor(audience: Audience): Record<string, string> {
           why: "I would like our team to become confident engineers who can use helpful tools and stand behind their work.",
         }
       : {}),
+  };
+  return {
+    ...sample,
+    conversationLeadershipUpdate: communicationDraft(sample, audience, "conversation", "leadership"),
+    conversationTeamUpdate: communicationDraft(sample, audience, "conversation", "team"),
+    leadershipUpdate: communicationDraft(sample, audience, "decision", "leadership"),
+    teamUpdate: communicationDraft(sample, audience, "decision", "team"),
+    qualityChecks: JSON.stringify([{ id: "allowed", check: "Approved user can access the permitted record", expected: "Approved role succeeds for the assigned resource.", status: "NOT CHECKED", observed: "", evidence: "", verifier: "Qualified engineering owner—name to be confirmed" }, { id: "denied", check: "Unauthorized user cannot access another group's record", expected: "Direct API requests enforce the resource boundary.", status: "NOT CHECKED", observed: "", evidence: "", verifier: "Qualified engineering owner—name to be confirmed" }]),
+    returnRecord: "Not yet reviewed. Return after the access-model decision and supervised exercise; record the evidence, revised next move, owner, and review date.",
   };
 }

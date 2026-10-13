@@ -44,6 +44,9 @@ const FieldToolLab = lazy(() => import("./pages/FieldToolLab"));
 const FieldToolGuide = lazy(() => import("./pages/FieldToolGuide"));
 const FieldToolPurchase = lazy(() => import("./pages/FieldToolPurchase"));
 const FieldToolAccess = lazy(() => import("./pages/FieldToolAccess"));
+const AIResources = lazy(() => import("./pages/AIResources"));
+const AIWalkthrough = lazy(() => import("./pages/AIWalkthrough"));
+const AIProposalReview = lazy(() => import("./pages/AIProposalReview"));
 
 function RouteLoading() {
   return (
@@ -72,6 +75,7 @@ function Router() {
         <Route path="/mirror" component={Mirror} />
         <Route path="/field-tools" component={FieldTools} />
         <Route path="/field-tools/review" component={FieldToolsReview} />
+        <Route path="/field-tools/proposal" component={AIProposalReview} />
         <Route path="/field-tools/sign-in" component={FieldToolSignIn} />
         <Route path="/field-tools/:slug/buy">
           {(params: { slug: string }) => (
@@ -106,7 +110,7 @@ function Router() {
             const audience = p.audience;
             if (p.view === "buy")
               return (
-                <FieldToolPurchase slug="ai-stalemate" audience={audience} />
+                <Redirect to={`/field-tools/ai-stalemate/${audience}#purchase`} />
               );
             return (
               <FieldToolGate slug="ai-stalemate" audience={audience}>
@@ -114,6 +118,10 @@ function Router() {
                   <FieldToolLab slug="ai-stalemate" />
                 ) : p.view === "guide" ? (
                   <FieldToolGuide slug="ai-stalemate" />
+                ) : p.view === "resources" ? (
+                  <AIResources />
+                ) : p.view === "walkthrough" ? (
+                  <AIWalkthrough />
                 ) : p.view === "access" ? (
                   <FieldToolAccess slug="ai-stalemate" />
                 ) : (

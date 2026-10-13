@@ -25,10 +25,14 @@ ROLE = "PRODUCT MANAGER" if AUDIENCE == "pm" else "LEAD DEVELOPER"
 DEST = ROOT / f"private/field-tools/ai-stalemate-{AUDIENCE}-field-guide.pdf"
 BASE_URL = os.environ.get("GUIDE_APP_URL", "https://rebel-leaders-field-tools-preview-production.up.railway.app")
 LAB_URL = f"{BASE_URL}/field-tools/ai-stalemate/{AUDIENCE}/lab"
-PAGES = json.loads(subprocess.check_output([
+CONTENT = json.loads(subprocess.check_output([
     "node", "--experimental-strip-types", "--input-type=module", "-e",
-    f"import {{ aiGuideFor }} from './server/field-tool-content/ai-paths.ts'; console.log(JSON.stringify(aiGuideFor('{AUDIENCE}')));",
+    f"import {{ aiGuideFor }} from './server/field-tool-content/ai-paths.ts'; import {{ aiCompanionFor }} from './server/field-tool-content/ai-companion.ts'; import {{ AI_STUDY }} from './server/field-tool-content/ai-resources.ts'; console.log(JSON.stringify({{pages:aiGuideFor('{AUDIENCE}'),companion:aiCompanionFor('{AUDIENCE}'),study:AI_STUDY}}));",
 ], cwd=ROOT))
+
+PAGES = CONTENT["pages"]
+COMPANION = CONTENT["companion"]
+TOTAL_PAGES = len(PAGES) + len(COMPANION) + 1
 
 for name, filename in [
     ("GuideSerif", "/usr/share/fonts/truetype/dejavu/DejaVuSerif.ttf"),
@@ -71,7 +75,7 @@ def footer(c, page):
     c.setFillColor(MUTED)
     c.setFont("GuideSans", 7.5)
     c.drawString(M, 30, f"REBEL LEADERS / AI STALEMATE / {ROLE} EDITION")
-    c.drawRightString(W - M, 30, f"{page:02d} / {len(PAGES)+1:02d}")
+    c.drawRightString(W - M, 30, f"{page:02d} / {TOTAL_PAGES:02d}")
 
 
 def callout(c, text, y):
@@ -90,7 +94,7 @@ def cover(c):
     c.setFillColor(DARK)
     c.rect(0, 0, W, H, fill=1, stroke=0)
     # The actual photographic hero remains a background layer; all type is vector text.
-    image = ROOT / "client/public/assets/field-tools/ai-stalemate-hero-v2.webp"
+    image = ROOT / "client/public/assets/field-tools/ai-stalemate-library-hero-v1.webp"
     photograph = BytesIO()
     with Image.open(image) as source:
         source.convert("RGB").save(photograph, "JPEG", quality=92)
@@ -108,7 +112,7 @@ def cover(c):
     c.setFillColor(GOLD)
     c.setFont("GuideSans", 10)
     c.drawString(M, 441, f"THE {ROLE} FIELD GUIDE")
-    y = paragraph(c, ("Make a credible case for the opportunity. Shape the next move with your lead." if AUDIENCE == "pm" else "Shape responsible use with your PM."), M, 300, CW, "cover")
+    y = paragraph(c, ("Get clear on the opportunity. Shape the next move with your lead." if AUDIENCE == "pm" else "Shape responsible use with your PM."), M, 300, CW, "cover")
     c.setStrokeColor(GOLD)
     c.line(M, y - 26, W - M, y - 26)
     c.setFillColor(CREAM)
@@ -171,14 +175,78 @@ def chapter(c, data, number):
     c.showPage()
 
 
+
+def companion(c, data, number):
+    c.setFillColor(CREAM)
+    c.rect(0, 0, W, H, fill=1, stroke=0)
+    c.setFillColor(FOREST)
+    c.rect(0, H-212, W, 212, fill=1, stroke=0)
+    c.setFillColor(GOLD)
+    c.setFont("GuideBold", 8)
+    c.drawString(M, H-48, data["eyebrow"])
+    white_title = ParagraphStyle("white_title", parent=styles["title"], textColor=CREAM, fontSize=27, leading=33)
+    title = Paragraph(escape(data["title"]), white_title)
+    _, th = title.wrap(CW, H)
+    title.drawOn(c, M, H-72-th)
+    intro_style = ParagraphStyle("white_intro", parent=styles["body"], textColor=CREAM, fontSize=9.5, leading=14)
+    intro = Paragraph(escape(data["intro"]), intro_style)
+    _, ih = intro.wrap(CW, H)
+    intro.drawOn(c, M, H-92-th-ih)
+    assert 92+th+ih <= 195, data["title"]
+    top = H-240
+    gap = 14
+    cardw = (CW-gap)/2
+    cardh = 171
+    for i, card in enumerate(data["cards"]):
+        x = M+(i%2)*(cardw+gap)
+        y = top-(i//2)*(cardh+gap)
+        c.setFillColor(colors.HexColor("#fffcf4"))
+        c.setStrokeColor(LINE)
+        c.rect(x, y-cardh, cardw, cardh, fill=1, stroke=1)
+        c.setFillColor(GOLD)
+        c.rect(x, y-3, cardw, 3, fill=1, stroke=0)
+        yy = paragraph(c, card["title"], x+14, y-18, cardw-28, "heading")-10
+        yy = paragraph(c, card["body"], x+14, yy, cardw-28, "body")
+        assert yy >= y-cardh+10, f"Card overflow: {card['title']}"
+    y = top-2*(cardh+gap)-5
+    y = paragraph(c, data["takeaway"], M, y, style="intro")-16
+    if data["after"] == 11:
+        for resource_id in ["patterns", "shape-up", "owasp"]:
+            resource = next(r for r in CONTENT["study"] if r["id"] == resource_id)
+            c.setFillColor(FOREST)
+            c.setFont("GuideBold", 8)
+            c.drawString(M, y, resource["name"]+" >")
+            c.linkURL(resource["url"], (M,y-2,W-M,y+10), relative=0)
+            y -= 17
+        c.setFont("GuideSans", 8)
+        c.drawString(M, y, "OPEN THE TOOLS & STUDY LIBRARY >  |  SOURCES REVIEWED 12 OCT 2026")
+        c.linkURL(f"{BASE_URL}/field-tools/ai-stalemate/{AUDIENCE}/resources", (M,y-4,W-M,y+10), relative=0)
+        y -= 18
+    else:
+        c.setFillColor(FOREST)
+        c.setFont("GuideBold", 8)
+        c.drawString(M, y, "USE THESE QUESTIONS IN YOUR LAB >")
+        c.linkURL(LAB_URL+f"?step={data['step']}", (M,y-4,W-M,y+10), relative=0)
+        y -= 18
+    assert y >= 65, f"Companion overlaps footer: {data['title']}"
+    footer(c, number)
+    c.showPage()
+
 def main():
     DEST.parent.mkdir(parents=True, exist_ok=True)
     c = canvas.Canvas(str(DEST), pagesize=A4, pageCompression=1)
     c.setTitle(f"AI Stalemate - {ROLE} Field Guide")
     c.setAuthor("Nic Payne / Rebel Leaders")
     cover(c)
-    for page, data in enumerate(PAGES, 2):
-        chapter(c, data, page)
+    number = 2
+    for index, data in enumerate(PAGES):
+        chapter(c, data, number)
+        number += 1
+        for extra in COMPANION:
+            if extra["after"] == index:
+                companion(c, extra, number)
+                number += 1
+    assert number - 1 == TOTAL_PAGES
     c.save()
     print(DEST)
 

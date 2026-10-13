@@ -4,7 +4,7 @@ import {
   fieldToolPresentation,
   type Audience,
 } from "@/lib/field-tool-paths";
-import { Link } from "wouter";
+import { Link, Redirect } from "wouter";
 import { ArrowLeft, ArrowRight, Check, LockKeyhole } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { getFieldTool } from "@/lib/field-tools";
@@ -26,6 +26,7 @@ export default function FieldToolPurchase({
     { slug, audience },
     { enabled: Boolean(tool), retry: false }
   );
+  if (slug === "ai-stalemate") return <Redirect to={`${base}#purchase`} />;
   if (!tool || !presentation)
     return (
       <main className="min-h-screen bg-[#07110d] p-10 text-white">
