@@ -1,11 +1,27 @@
 import {
+  examplePatch,
+  editLabValues,
+  labReviewPrompts,
+  withLabDefaults,
+  type LabValues,
+} from "@/lib/field-tool-session";
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from "@/components/ui/alert-dialog";
+import {
   FIELD_TOOL_GUIDE_CHAPTERS,
   FIELD_TOOL_START,
 } from "@/lib/field-tool-workflow";
 import FieldToolsFooter from "@/components/field-tools/FieldToolsFooter";
 import { fieldToolForPath } from "@/lib/field-tool-paths";
 import { fieldToolBase, fieldToolPresentation } from "@/lib/field-tool-paths";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "wouter";
 import FieldToolsNav from "@/components/field-tools/FieldToolsNav";
 import FieldToolArtifact from "@/components/field-tools/FieldToolArtifact";
@@ -134,13 +150,42 @@ function LabSession({ slug }: { slug: string }) {
       ? requested
       : initialDraft.step;
   });
-  const [values, setValues] = useState<Record<string, string>>(
-    initialDraft.values
+  const [values, setValues] = useState<Record<string, string>>(() =>
+    withLabDefaults(slug, initialDraft.values)
   );
   const [showOutput, setShowOutput] = useState(false);
   const [outputId, setOutputId] = useState("working-record");
   const [copyStatus, setCopyStatus] = useState("");
   const [storageStatus, setStorageStatus] = useState("");
+  const [pendingAction, setPendingAction] = useState<
+    "examples" | "clear" | null
+  >(null);
+  const [undo, setUndo] = useState<{ values: LabValues; step: number } | null>(
+    null
+  );
+  const [editNotice, setEditNotice] = useState("");
+  const priorStep = useRef(step);
+  const actionTrigger = useRef<HTMLButtonElement | null>(null);
+  useEffect(() => {
+    if (priorStep.current === step) return;
+    priorStep.current = step;
+    setShowOutput(false);
+    const heading = document.getElementById("lab-step-heading");
+    heading?.focus({ preventScroll: true });
+    heading?.scrollIntoView({ behavior: "auto", block: "start" });
+  }, [step]);
+  function editValue(id: string, value: string) {
+    setValues(previous =>
+      withLabDefaults(slug, editLabValues(previous, { [id]: value }))
+    );
+    setShowOutput(false);
+    setUndo(null);
+    setEditNotice(
+      id === "readinessDecision"
+        ? "Next move changed. Review the decision and any earlier bet before sharing. Your evidence and notes are still here."
+        : ""
+    );
+  }
 
   useEffect(() => {
     // A Guide link selects a phase once; later refreshes resume the saved phase.
@@ -231,15 +276,19 @@ function LabSession({ slug }: { slug: string }) {
     const url = URL.createObjectURL(blob);
     const anchor = document.createElement("a");
     anchor.href = url;
-    const fileLabel = selectedOutput?.id === "trial-card" ? "bet-brief" : (selectedOutput?.id ?? "output");
+    const fileLabel =
+      selectedOutput?.id === "trial-card"
+        ? "bet-brief"
+        : (selectedOutput?.id ?? "output");
     anchor.download = slug + "-" + fileLabel + ".txt";
     anchor.click();
     URL.revokeObjectURL(url);
   }
 
   function clearDraft() {
-    if (!window.confirm("Clear this local draft and start over?")) return;
-    setValues({});
+    setValues(withLabDefaults(slug, {}));
+    setUndo(null);
+    setEditNotice("Local draft cleared.");
     setStep(0);
     setShowOutput(false);
     try {
@@ -263,30 +312,42 @@ function LabSession({ slug }: { slug: string }) {
   }
 
   function loadExample() {
-    const sample = content.sampleValues;
-    if (!sample) return;
-    const ids = new Set(current.fields.map(field => field.id));
-    if (slug === "ai-stalemate" && step === 3)
-      Object.keys(sample)
-        .filter(id => /^(ai|baseline)_/.test(id))
-        .forEach(id => ids.add(id));
-    // Supplementary working surfaces use sample values alongside the visible fields.
-    if (slug === "priority-whiplash" && step === 0)
-      Object.keys(sample)
-        .filter(id => /capacity|effort|days/i.test(id))
-        .forEach(id => ids.add(id));
-    if (
-      Array.from(ids).some(id => values[id]?.trim()) &&
-      !window.confirm(
-        "Replace the answers in this step with examples? Your other steps will stay as they are."
-      )
-    )
-      return;
-    setValues(prev => ({
-      ...prev,
-      ...Object.fromEntries(Array.from(ids).map(id => [id, sample[id] ?? ""])),
-    }));
+    if (!content.sampleValues) return;
+    const patch = examplePatch(
+      slug,
+      step,
+      current.fields,
+      content.sampleValues
+    );
+    if (Object.keys(patch).some(id => values[id]?.trim())) {
+      setPendingAction("examples");
+    } else {
+      replaceWithExample();
+    }
+  }
+  function replaceWithExample() {
+    const patch = examplePatch(
+      slug,
+      step,
+      current.fields,
+      content.sampleValues ?? {}
+    );
+    setUndo({ values: { ...values }, step });
+    setValues(previous =>
+      withLabDefaults(slug, editLabValues(previous, patch))
+    );
     setShowOutput(false);
+    setEditNotice(
+      "Fictional example loaded into this step. Other steps are unchanged, except any decision that needs review after a changed next move."
+    );
+  }
+  function restoreDraft() {
+    if (!undo) return;
+    setValues(undo.values);
+    setStep(undo.step);
+    setUndo(null);
+    setShowOutput(false);
+    setEditNotice("Your answers have been restored.");
   }
 
   const optionalIds = new Set(
@@ -326,9 +387,7 @@ function LabSession({ slug }: { slug: string }) {
         <FieldInput
           field={field}
           value={values[field.id] || ""}
-          onChange={value =>
-            setValues(prev => ({ ...prev, [field.id]: value }))
-          }
+          onChange={value => editValue(field.id, value)}
         />
       </div>
     ));
@@ -374,7 +433,10 @@ function LabSession({ slug }: { slug: string }) {
             <div className="flex flex-wrap gap-3">
               <button
                 type="button"
-                onClick={clearDraft}
+                onClick={event => {
+                  actionTrigger.current = event.currentTarget;
+                  setPendingAction("clear");
+                }}
                 className="self-start border border-white/15 px-4 py-2 font-ui text-xs text-[#bdcbbf]"
               >
                 Clear local draft
@@ -417,7 +479,11 @@ function LabSession({ slug }: { slug: string }) {
             <p className="font-pixel text-[8px] tracking-[0.2em] text-[#607b64]">
               {current.eyebrow}
             </p>
-            <h2 className="mt-4 font-display text-3xl font-semibold leading-tight tracking-[-0.03em] md:text-4xl">
+            <h2
+              id="lab-step-heading"
+              tabIndex={-1}
+              className="scroll-mt-24 mt-4 font-display text-3xl font-semibold leading-tight tracking-[-0.03em] md:text-4xl"
+            >
               {current.title}
             </h2>
             <p className="mt-4 font-ui text-sm leading-6 text-[#5c6960]">
@@ -448,27 +514,40 @@ function LabSession({ slug }: { slug: string }) {
               </p>
               <button
                 type="button"
-                onClick={loadExample}
+                onClick={event => {
+                  actionTrigger.current = event.currentTarget;
+                  loadExample();
+                }}
                 className="border border-[#aeb8aa] px-4 py-2 font-ui text-xs"
               >
                 Load Examples
               </button>
             </div>
+            {editNotice && (
+              <div
+                role="status"
+                className="mb-6 border-l-2 border-[#78946b] bg-[#edf1e5] p-4 font-ui text-sm leading-6"
+              >
+                {editNotice}{" "}
+                {undo && (
+                  <button
+                    type="button"
+                    onClick={restoreDraft}
+                    className="ml-2 font-semibold underline"
+                  >
+                    Undo example
+                  </button>
+                )}
+              </div>
+            )}
             <LeadershipWorkSurface
               slug={slug}
               step={step}
               values={values}
-              onChange={(id, value) =>
-                setValues(prev => ({ ...prev, [id]: value }))
-              }
+              onChange={editValue}
             />
             {slug === "ai-stalemate" && step === 3 && (
-              <AIEffortComparison
-                values={values}
-                onChange={(id, value) =>
-                  setValues(prev => ({ ...prev, [id]: value }))
-                }
-              />
+              <AIEffortComparison values={values} onChange={editValue} />
             )}
             <div className="space-y-6">
               {renderFields(
@@ -617,6 +696,24 @@ function LabSession({ slug }: { slug: string }) {
             <h2 className="mt-4 font-display text-3xl font-semibold print:hidden">
               {selectedOutput?.title ?? "Your working brief"}
             </h2>
+            <p className="mt-3 font-ui text-sm leading-6 print:hidden">
+              Review before sharing. Missing information appears as a prompt; a
+              proposal does not record agreement. Editing an answer closes this
+              preview so you can rebuild it.
+            </p>
+            {labReviewPrompts(slug, values).length > 0 && (
+              <div
+                className="mt-5 border border-[#adc3a1] p-4 font-ui text-sm leading-6"
+                aria-label="Questions before sharing"
+              >
+                <p className="font-semibold">Before sharing</p>
+                <ul className="mt-2 list-disc pl-5">
+                  {labReviewPrompts(slug, values).map(prompt => (
+                    <li key={prompt}>{prompt}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
             <div className="mt-5 grid gap-5 lg:grid-cols-[1fr_auto] lg:items-start">
               <FieldToolArtifact
                 text={output}
@@ -670,6 +767,43 @@ function LabSession({ slug }: { slug: string }) {
           </div>
         </div>
       </footer>
+      <AlertDialog
+        open={pendingAction !== null}
+        onOpenChange={open => {
+          if (!open) setPendingAction(null);
+        }}
+      >
+        <AlertDialogContent
+          className="bg-[#fbf9f3] text-[#193025]"
+          onCloseAutoFocus={event => {
+            event.preventDefault();
+            actionTrigger.current?.focus({ preventScroll: true });
+          }}
+        >
+          <AlertDialogTitle>
+            {pendingAction === "clear"
+              ? "Clear this local draft?"
+              : "Replace this step with the example?"}
+          </AlertDialogTitle>
+          <AlertDialogDescription className="text-[#536058] leading-6">
+            {pendingAction === "clear"
+              ? "This removes the saved shared answers and private notes in this Lab. Export anything you want to keep first. This cannot be undone."
+              : "The fictional example replaces the answers in this step. Other steps keep their answers; if the next move changes, its decision must be reviewed. You can undo the replacement before editing again."}
+          </AlertDialogDescription>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-[#173c2a] text-white"
+              onClick={() => {
+                if (pendingAction === "clear") clearDraft();
+                else replaceWithExample();
+              }}
+            >
+              {pendingAction === "clear" ? "Clear draft" : "Replace this step"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
       <FieldToolsFooter />
     </main>
   );

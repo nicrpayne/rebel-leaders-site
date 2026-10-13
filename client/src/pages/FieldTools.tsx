@@ -1,3 +1,4 @@
+import FieldToolChooser from "@/components/field-tools/FieldToolChooser";
 import { Link } from "wouter";
 import FieldToolHero from "@/components/field-tools/FieldToolHero";
 import { FIELD_TOOLS } from "@/lib/field-tools";
@@ -20,7 +21,7 @@ export default function FieldTools() {
         secondary={{ label: "Browse the five tools", href: "#tools" }}
         facts={[
           "Five focused Field Tools",
-          "$47 each · one time",
+          "$47 USD each · one time",
           "Interactive Lab + Field Guide",
           "No course portal required",
         ]}
@@ -49,12 +50,13 @@ export default function FieldTools() {
                 I'm the lead developer →
               </span>
               <p className="mt-2 text-sm">
-                My PM wants AI. I carry the consequences.
+                My PM sees potential. I need to make the conditions clear.
               </p>
             </Link>
           </div>
         </div>
       </section>
+      <FieldToolChooser />
       <section
         id="tools"
         className="bg-[#f3efe4] px-5 py-16 text-[#102019] md:px-8 md:py-24"

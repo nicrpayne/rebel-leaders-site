@@ -15,8 +15,8 @@ export const FIELD_TOOL_PRESENTATIONS: Record<string, Presentation> = {
   "ai-stalemate": {
     image: "/assets/field-tools/ai-stalemate-hero-v2.webp",
     imageLayout: "wide",
-    lead: "My PM won't shut up",
-    accent: "about AI.",
+    lead: "Your PM sees an AI opportunity.",
+    accent: "You see what needs to be true.",
     promise:
       "Turn the AI argument into a shared ambition and a next move you can both stand behind.",
     session:

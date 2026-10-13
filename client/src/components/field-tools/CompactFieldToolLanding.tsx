@@ -1,3 +1,6 @@
+import FieldToolSalesProof, {
+  FieldToolBuyerQuestions,
+} from "./FieldToolSalesProof";
 import { Link } from "wouter";
 import { ArrowRight, Check, Compass, MessageSquare, Users } from "lucide-react";
 import FieldToolHero from "./FieldToolHero";
@@ -55,8 +58,8 @@ export default function CompactFieldToolLanding({
             .join(" "),
     ],
     [
-      "Nic’s walkthrough",
-      "Watch the whole kit used in a realistic conversation.",
+      "Worked walkthrough",
+      "Follow the fictional case in the Guide and load its examples into each Lab step.",
     ],
   ];
   return (
@@ -87,7 +90,7 @@ export default function CompactFieldToolLanding({
           href: `${base}/buy`,
         }}
         facts={[
-          "One-time $47 purchase",
+          "One-time $47 USD purchase",
           "Field Guide + interactive Lab",
           "Copy, download, or print",
           "Use on phone or PC",
@@ -109,6 +112,7 @@ export default function CompactFieldToolLanding({
           })}
         </div>
       </FieldToolHero>
+      <FieldToolSalesProof slug={slug} audience={audience} />
       <section id="included" className="px-5 py-12 md:px-10 md:py-16">
         <div className="mx-auto grid max-w-6xl gap-8 md:grid-cols-[1.4fr_.8fr] md:items-start">
           <div>
@@ -162,6 +166,7 @@ export default function CompactFieldToolLanding({
           </div>
         </div>
       </section>
+      <FieldToolBuyerQuestions />
       <RelatedFieldTools slug={slug} audience={audience} />
       <footer className="border-t border-[#cbd4c6] px-5 py-7 font-ui text-xs text-[#607063] md:px-10">
         <div className="mx-auto flex max-w-6xl flex-wrap justify-between gap-4">

@@ -1,6 +1,27 @@
 export type WorkingValues = Record<string, string>;
-const value = (v: WorkingValues, key: string, fallback = "[not recorded]") =>
-  v[key]?.trim() || fallback;
+const prompts: Record<string, string> = {
+  outcome: "Name the outcome this decision should protect.",
+  owner: "Name who can make this decision.",
+  decisionOwner: "Name who can make this decision.",
+  decisionBy: "Record when the decision is needed.",
+  decisionDate: "Record when the decision is needed.",
+  date: "Record the date and what it applies to.",
+  decisionNeeded: "State the decision you are asking for.",
+  p1: "Record the first current commitment.",
+  p2: "Record another commitment, or mark none.",
+  p3: "Record another commitment, or mark none.",
+  otherWork: "Account for support, review, and other work, or mark none.",
+  newAsk: "Describe the new request.",
+  whyNow: "Explain why it is needed now.",
+  urgencyBasis: "Record the evidence for urgency.",
+  requiredApprovals: "Confirm the required approvals and their owners.",
+  checkpoint: "Name the next evidence checkpoint.",
+};
+const value = (
+  v: WorkingValues,
+  key: string,
+  fallback = prompts[key] ?? "To complete before sharing."
+) => v[key]?.trim() || fallback;
 const section = (title: string, body: string) => `${title}\n${body}`;
 const record = (title: string, sections: string[]) =>
   `${title}\n\n${sections.filter(Boolean).join("\n\n")}\n\nWorking record from your inputs. Verify before sharing. Private preparation is excluded.`;
@@ -33,7 +54,7 @@ function capacityText(v: WorkingValues) {
   const c = capacitySnapshot(v);
   if (!c)
     return "Capacity is not fully quantified. Do not interpret missing estimates as spare capacity.";
-  return `For ${value(v, "capacityWindow", "[window not recorded]")}, using entered person-days:\nAvailable: ${c.available}; existing work: ${c.existing}; new request: ${c.request}.\nBefore displacement, demand: ${c.total}; demand beyond entered capacity: ${Number(c.gap.toFixed(2))}.\nThese are planning assumptions, not a delivery forecast. Basis: ${value(v, "capacityBasis")}`;
+  return `Planning window: ${value(v, "capacityWindow", "Record the planning window.")}\nUsing entered person-days:\nAvailable: ${c.available}; existing work: ${c.existing}; new request: ${c.request}.\nBefore displacement, demand: ${c.total}; demand beyond entered capacity: ${Number(c.gap.toFixed(2))}.\nThese are planning assumptions, not a delivery forecast. Basis: ${value(v, "capacityBasis")}`;
 }
 export function buildDeadlineReality(v: WorkingValues) {
   return record("DEADLINE RESET — REALITY MAP", [
@@ -285,7 +306,7 @@ export function buildRequestDecoder(v: WorkingValues) {
       `${value(v, "need")}\n${value(v, "context")}`
     ),
     section(
-      "WHAT WE ASKED / WHAT THEY CONFIRMED",
+      "CONFIRMED NEED / BASIS",
       value(
         v,
         "needEvidence",
