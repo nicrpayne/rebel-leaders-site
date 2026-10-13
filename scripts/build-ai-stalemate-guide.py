@@ -108,7 +108,7 @@ def cover(c):
     c.setFillColor(GOLD)
     c.setFont("GuideSans", 10)
     c.drawString(M, 441, f"THE {ROLE} FIELD GUIDE")
-    y = paragraph(c, ("Make a credible case for the opportunity. Shape the next move with your lead." if AUDIENCE == "pm" else "Make your judgment count. Shape responsible use with your PM."), M, 300, CW, "cover")
+    y = paragraph(c, ("Make a credible case for the opportunity. Shape the next move with your lead." if AUDIENCE == "pm" else "Shape responsible use with your PM."), M, 300, CW, "cover")
     c.setStrokeColor(GOLD)
     c.line(M, y - 26, W - M, y - 26)
     c.setFillColor(CREAM)

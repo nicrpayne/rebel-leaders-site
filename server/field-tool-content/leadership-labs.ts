@@ -35,11 +35,11 @@ const decisionStatus = choice(
     "PAUSED — clarification needed",
   ]
 );
-const outputs = (ids: string[], titles: string[]) =>
+const outputs = (ids: string[], titles: string[], fromSteps = [0, 1, 3]) =>
   ids.map((id, index) => ({
     id,
     title: titles[index],
-    fromStep: index === 0 ? 0 : index === 1 ? 1 : 3,
+    fromStep: fromSteps[index],
     build: builders[id],
   }));
 
@@ -319,7 +319,17 @@ export const LEADERSHIP_LABS: Record<string, LabConfig> = {
         intro:
           "Titles don't always tell you who can decide. Mark unknown rights and ask the people involved to confirm the map.",
         fields: [
-          field("recommend", "Who recommends?", undefined, "text"),
+          field(
+            "recommend",
+            "Who recommends? (R)",
+            "Brings the options and evidence.",
+            "text"
+          ),
+          field(
+            "consult",
+            "Whose input is needed? (I)",
+            "Consulted people inform the recommendation; input is not a veto."
+          ),
           field(
             "approve",
             "Who has the final decision right?",
@@ -341,8 +351,8 @@ export const LEADERSHIP_LABS: Record<string, LabConfig> = {
           ),
           field(
             "requiredApprovals",
-            "Which specialist or policy approvals remain necessary?",
-            "Security, safety, legal, spending, or data access may have separate accountable owners."
+            "Whose formal agreement is required? (A)",
+            "Name required security, legal, spending, or data approvals. Agree is a specific approval right; Decide is the final choice."
           ),
         ],
       },
@@ -396,7 +406,8 @@ export const LEADERSHIP_LABS: Record<string, LabConfig> = {
     ],
     outputs: outputs(
       ["rights-map", "authority-gap", "mandate-request"],
-      ["Decision Rights Map", "Authority Gap Statement", "Reset Request"]
+      ["Decision Rights Map", "Authority Gap Statement", "Reset Request"],
+      [1, 2, 3]
     ),
     buildOutput: builders["mandate-request"],
   },
@@ -475,7 +486,7 @@ export const LEADERSHIP_LABS: Record<string, LabConfig> = {
           field(
             "response",
             "Your message or meeting script",
-            "Keep the first version to a short paragraph. Put the detail in the Commitment Card."
+            "Optional SCQA: Situation (shared facts), Complication (what changed), Question (decision needed), Answer (your proposed next move). Check the need with them; put supporting detail in the Commitment Card."
           ),
           field("decisionNeeded", "What decision do you need from them?"),
           field("owner", "Who owns that decision?", undefined, "text"),
@@ -491,8 +502,41 @@ export const LEADERSHIP_LABS: Record<string, LabConfig> = {
     ],
     outputs: outputs(
       ["request-decoder", "commitment-card", "stakeholder-response"],
-      ["Request Decoder", "Commitment Card", "Stakeholder Response"]
+      ["Request Decoder", "Commitment Card", "Stakeholder Response"],
+      [1, 2, 3]
     ),
     buildOutput: builders["stakeholder-response"],
   },
 };
+
+// Add shared follow-through without changing existing step numbers or draft keys.
+for (const lab of Object.values(LEADERSHIP_LABS)) {
+  lab.steps[3].fields.push(
+    field(
+      "unresolvedPlan",
+      "If this is declined, unanswered, or with the wrong owner, what happens next?",
+      "Name the right decision owner, an interim move within your authority, and a revisit date. Silence is not agreement."
+    )
+  );
+}
+LEADERSHIP_LABS["deadline-reset"].steps[2].fields.push(
+  field(
+    "checkpointFallback",
+    "If the checkpoint misses the evidence bar, what changes?",
+    "Name the fallback, who can authorize it, and when the decision is needed. Do not silently extend the promise."
+  )
+);
+LEADERSHIP_LABS["priority-whiplash"].steps[1].fields.push(
+  field(
+    "emergencyException",
+    "If this is a genuine emergency, how is the temporary exception bounded?",
+    "Optional. Follow the incident process first. Record the exception owner, interrupted work, and expiry or review time."
+  )
+);
+LEADERSHIP_LABS["product-project-translator"].steps[3].fields.unshift(
+  field(
+    "spokenResponse",
+    "Optional: what would you say in 30 seconds?",
+    "Recognize the need, offer what you can stand behind, and name the next decision. Use the fuller message below for the written follow-up."
+  )
+);

@@ -57,19 +57,28 @@ export default function FieldToolPurchase({
             <p className="mt-5 max-w-2xl font-display text-3xl leading-tight text-[#d9b34d]">
               {presentation.promise}
             </p>
-            {slug === "ai-stalemate" && audience === "pm" && (
+            {
               <figure className="mt-7 overflow-hidden rounded-sm">
                 <img
-                  src="/assets/field-tools/ai-stalemate-pm-kit-v1.webp"
-                  alt="AI Stalemate PDF Field Guide shown as a printed booklet beside the interactive Lab on a laptop and phone"
+                  src={`/assets/field-tools/${slug === "ai-stalemate" ? `ai-stalemate-${audience}` : slug}-kit-v1.webp`}
+                  alt={`${tool.name} Field Guide shown as a printed booklet beside its interactive Lab on a laptop and phone`}
                   width={1536}
                   height={1024}
                   className="h-auto w-full"
                 />
               </figure>
-            )}
+            }
             <div className="mt-9 space-y-6">
-              {presentation.artifacts.map(artifact => (
+              {(slug === "ai-stalemate"
+                ? [
+                    {
+                      name: "Shared Next-Step Brief",
+                      copy: "A clear proposal for the next conversation: clarify, prepare, experiment, or stop this use.",
+                    },
+                    ...presentation.artifacts,
+                  ]
+                : presentation.artifacts
+              ).map(artifact => (
                 <div key={artifact.name} className="flex gap-4">
                   <Check
                     size={19}

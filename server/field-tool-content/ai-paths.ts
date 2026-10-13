@@ -186,6 +186,12 @@ export function aiGuideFor(audience: Audience) {
       " / " +
       page.eyebrow.replace(/^\d+ \/ /, "");
   });
+  pages[1].callout =
+    audience === "pm"
+      ? "Optional 30-second opening - adapt it: I want us to find where AI could improve the work without moving hidden cost onto your team. Here is the outcome I care about. What would make it worthwhile from your side, and what should we protect? We can decide together whether the next move is preparation, a bounded bet, or stopping this use."
+      : "Optional 30-second opening - adapt it: I want us to find responsible uses that improve delivery. Here are the risks and review costs I can see. Can we connect them to the outcome you need, agree what must be protected, and choose whether to prepare first, test a bounded use, or stop this proposal?";
+  pages[7].callout +=
+    " Approval for a bounded experiment does not authorize production deployment, new data access, or wider rollout. Name the owner and required approvals for each next decision.";
   return pages;
 }
 export function aiLabFor(audience: Audience) {
@@ -266,6 +272,27 @@ export function aiLabFor(audience: Audience) {
   steps[3].title = pm
     ? "Make the next move clear to leadership."
     : "Help your PM carry a defensible decision forward.";
+  steps[1].fields.push(
+    {
+      id: "decisionRights",
+      label:
+        "Optional: who recommends, contributes input, gives required approval, decides, and carries out this bet?",
+      type: "textarea",
+      hint: "Use RAPID for this decision if ownership is unclear. Input is not a veto. Required formal approval and the final decision are separate rights. Name affected people and when they will hear the decision.",
+    },
+    {
+      id: "deploymentPermission",
+      label: "What further approval would deployment or expansion require?",
+      type: "textarea",
+      hint: "Acceptance of this bounded experiment grants only its agreed scope. Production, wider access, or rollout need their own permission.",
+    }
+  );
+  steps[3].fields.push({
+    id: "unresolvedPlan",
+    label: "If no agreement is reached, what happens next?",
+    type: "textarea",
+    hint: "Name the right decision owner, a safe interim move within your authority, and a revisit date. Silence is not approval.",
+  });
   steps.splice(1, 0, readinessStep(audience));
   return {
     ...base,

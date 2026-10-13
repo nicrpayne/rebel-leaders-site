@@ -163,7 +163,7 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
         ],
         [
           "Say what changes if the evidence fails",
-          "Agree when a failed dependency check should trigger a scope or date decision. That gives stakeholders a response plan while there is still time to act.",
+          "Agree what changes if the dependency check fails, who may authorize that fallback, and when they must decide. Act while there is still time to update the promise.",
         ],
       ],
       "Try: For this scope, our confidence is medium because the integration is unverified. Thursday's check will tell us whether we can keep this plan."
@@ -364,7 +364,7 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
         ],
         [
           "It's a real incident",
-          "Respond through the team's incident process. Capture the interrupted commitments, notify affected people, and re-plan when the immediate response is stable. The tool supports the follow-up tradeoff; it doesn't replace emergency procedures.",
+          "Respond through the team's incident process first. Record the temporary exception owner, interrupted commitments, affected people, and expiry or review time. Re-plan after the immediate response stabilizes; this tool does not replace emergency procedures.",
         ],
       ],
       "Try: I want to support the request. Let's agree what it changes so the team and the affected customer get one clear plan."
@@ -776,3 +776,34 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
     ),
   ],
 };
+
+const optionalOpenings: Record<string, string> = {
+  "deadline-reset":
+    "I want us to keep a promise customers can rely on. Here is what we know about the date and the work. Can we choose the scope or timing we can responsibly support, and agree what happens if the next checkpoint changes the picture?",
+  "priority-whiplash":
+    "I can see why this request matters. I want us to support it without surprising the people relying on our current work. Can we look at what moves, who is affected, and who can choose that tradeoff?",
+  "mandate-reset":
+    "I want us to give the team a decision they can act on. I am accountable for this outcome, but this decision keeps getting stuck. Can we confirm who recommends, who needs input or formal approval, and who makes the final choice?",
+  "product-project-translator":
+    "I want to give you something you can plan around. What decision do these requirements or dates need to support? Here is what we can commit to now, what remains uncertain, and when we can bring evidence for the next decision.",
+};
+for (const [slug, pages] of Object.entries(LEADERSHIP_GUIDE_PAGES)) {
+  pages[5].callout = `Optional 30-second opening - adapt to your situation: ${optionalOpenings[slug]}`;
+  pages[8].sections[0].body +=
+    " If the answer is no, nobody responds, or the decision sits elsewhere, record that honestly. Name the right owner, an interim action within your authority, and a revisit date. Silence is not approval.";
+}
+const rights = LEADERSHIP_GUIDE_PAGES["mandate-reset"][2];
+rights.sections[1] = {
+  title: "RAPID (Bain): input, agreement, and decision differ",
+  body: "Recommend (R) develops the proposal; Input (I) informs it; Agree (A) is a required formal approval; Decide (D) makes the final choice; Perform (P) carries it out. Name one final decision owner for this decision. Use Agree only where an actual approval right exists, not for everyone consulted.",
+};
+rights.sections[3].body +=
+  " Separate formal rights from informal influence: someone may shape the choice without owning a veto.";
+rights.sources = [
+  {
+    name: "Bain: RAPID decision roles",
+    url: "https://www.bain.com/insights/management-tools-rapid/",
+  },
+];
+LEADERSHIP_GUIDE_PAGES["product-project-translator"][4].intro +=
+  " Optional SCQA: shared Situation, Complication, Question requiring a decision, then your proposed Answer. This is a writing aid; the answer can change after discussion.";

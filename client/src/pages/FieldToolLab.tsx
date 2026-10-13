@@ -1,3 +1,7 @@
+import {
+  FIELD_TOOL_GUIDE_CHAPTERS,
+  FIELD_TOOL_START,
+} from "@/lib/field-tool-workflow";
 import FieldToolsFooter from "@/components/field-tools/FieldToolsFooter";
 import { fieldToolForPath } from "@/lib/field-tool-paths";
 import { fieldToolBase, fieldToolPresentation } from "@/lib/field-tool-paths";
@@ -296,8 +300,19 @@ function LabSession({ slug }: { slug: string }) {
           "readinessSupport",
         ]
       : slug === "ai-stalemate" && step === 2
-        ? ["betQualitative", "betRabbitHoles"]
-        : ["visionTeam", "visionProduct", "visionCompany"]
+        ? [
+            "betQualitative",
+            "betRabbitHoles",
+            "decisionRights",
+            "deploymentPermission",
+          ]
+        : [
+            "visionTeam",
+            "visionProduct",
+            "visionCompany",
+            "emergencyException",
+            "spokenResponse",
+          ]
   );
   const renderFields = (fields: FieldDef[]) =>
     fields.map(field => (
@@ -316,8 +331,7 @@ function LabSession({ slug }: { slug: string }) {
         />
       </div>
     ));
-  const guideChapter =
-    slug === "ai-stalemate" ? [3, 4, 7, 8, 9][step] : [1, 2, 4, 7][step];
+  const guideChapter = FIELD_TOOL_GUIDE_CHAPTERS[slug]?.[step] ?? 0;
 
   return (
     <main
@@ -344,9 +358,8 @@ function LabSession({ slug }: { slug: string }) {
                   : ""}
               </h1>
               <p className="mt-3 max-w-2xl font-ui text-sm leading-6 text-[#acbdb1]">
-                Use the Field Guide for the thinking and this Lab for your
-                situation. Start where you are; complete only what helps with
-                the next move.
+                {FIELD_TOOL_START[slug] ??
+                  "Use the Field Guide for the thinking and this Lab for your situation."}
               </p>
               {storageStatus && (
                 <p
@@ -492,11 +505,13 @@ function LabSession({ slug }: { slug: string }) {
                   className="border-t border-[#cbd4c6] pt-5"
                 >
                   <summary className="cursor-pointer font-ui text-sm font-semibold">
-                    {step === 0
-                      ? "Picture six months from now · optional, private"
-                      : step === 2
-                        ? "Qualitative changes and rabbit holes · optional"
-                        : "Explore business, technical, or team conditions · optional"}
+                    {slug !== "ai-stalemate"
+                      ? "Optional help for this situation"
+                      : step === 0
+                        ? "Picture six months from now · optional, private"
+                        : step === 2
+                          ? "Bet conditions and decision rights · optional"
+                          : "Explore business, technical, or team conditions · optional"}
                   </summary>
                   <div className="mt-5 space-y-6">
                     {renderFields(

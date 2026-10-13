@@ -158,3 +158,14 @@ export const LEADERSHIP_SAMPLES: Record<string, Record<string, string>> = {
       "I may be treating Finance's planning need as hostility to Product. Ask which decision they actually need to make.",
   },
 };
+
+LEADERSHIP_SAMPLES["deadline-reset"].checkpointFallback =
+  "If Thursday's integration check fails, propose a demo-only event scope to the sponsor that day. The sponsor owns changing the external promise; update affected customers by Friday.";
+LEADERSHIP_SAMPLES["mandate-reset"].consult =
+  "Product, Engineering, and the customer-facing lead give input before the sponsor decides. Security approval remains a required release condition, not an optional consultation.";
+LEADERSHIP_SAMPLES["product-project-translator"].spokenResponse =
+  "I understand you need to reserve next quarter's funding. We can commit to a capped two-week discovery phase now. We will bring customer evidence and an Engineering assessment to the review so you can choose the next investment.";
+for (const sample of Object.values(LEADERSHIP_SAMPLES)) {
+  sample.unresolvedPlan =
+    "If no decision is reached, ask the named owner to confirm who can decide. Continue only work within the existing mandate and revisit at the recorded decision checkpoint. Do not treat silence as agreement.";
+}

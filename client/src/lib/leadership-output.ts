@@ -3,7 +3,9 @@ const value = (v: WorkingValues, key: string, fallback = "[not recorded]") =>
   v[key]?.trim() || fallback;
 const section = (title: string, body: string) => `${title}\n${body}`;
 const record = (title: string, sections: string[]) =>
-  `${title}\n\n${sections.join("\n\n")}\n\nWorking record from your inputs. Verify before sharing. Private preparation is excluded.`;
+  `${title}\n\n${sections.filter(Boolean).join("\n\n")}\n\nWorking record from your inputs. Verify before sharing. Private preparation is excluded.`;
+const optional = (v: WorkingValues, key: string, title: string) =>
+  v[key]?.trim() ? section(title, v[key].trim()) : "";
 const status = (v: WorkingValues) =>
   section(
     "DECISION STATUS",
@@ -112,6 +114,16 @@ export function buildDeadlineUpdate(v: WorkingValues) {
       "WHO NEEDS THE UPDATE / COMMUNICATION OWNER",
       value(v, "communication")
     ),
+    optional(
+      v,
+      "unresolvedPlan",
+      "IF NO DECISION IS REACHED / INTERIM MOVE / REVISIT"
+    ),
+    optional(
+      v,
+      "checkpointFallback",
+      "IF THE EVIDENCE CHECKPOINT FAILS / DECISION OWNER"
+    ),
   ]);
 }
 export function buildPriorityStack(v: WorkingValues) {
@@ -178,6 +190,16 @@ export function buildTradeoffBrief(v: WorkingValues) {
       "COMMUNICATION / NEXT REVIEW",
       `${value(v, "communication")}\n${value(v, "reviewDate")}`
     ),
+    optional(
+      v,
+      "unresolvedPlan",
+      "IF NO DECISION IS REACHED / INTERIM MOVE / REVISIT"
+    ),
+    optional(
+      v,
+      "emergencyException",
+      "TEMPORARY EMERGENCY EXCEPTION / OWNER / EXPIRY"
+    ),
   ]);
 }
 export function buildRightsMap(v: WorkingValues) {
@@ -188,13 +210,14 @@ export function buildRightsMap(v: WorkingValues) {
     ),
     section(
       "CURRENT DECISION PATH",
-      `Recommends: ${value(v, "recommend", "Unknown")}\nApproves / decides: ${value(v, "approve", "Unknown")}\nExecutes: ${value(v, "execute", "Unknown")}\nCan constrain / block: ${value(v, "block", "Unknown")}\nAccountable for outcome: ${value(v, "accountable", "Unknown")}`
+      `Recommends (R): ${value(v, "recommend", "Unknown")}\nFinal decision (D): ${value(v, "approve", "Unknown")}\nPerforms (P): ${value(v, "execute", "Unknown")}\nCan constrain / block: ${value(v, "block", "Unknown")}\nAccountable for outcome: ${value(v, "accountable", "Unknown")}`
     ),
     section(
       "CONFIRMED RIGHTS / OPEN QUESTIONS",
       value(v, "rightsEvidence", "Decision rights are not yet verified.")
     ),
-    section("REQUIRED SPECIALIST APPROVALS", value(v, "requiredApprovals")),
+    section("REQUIRED AGREEMENT (A)", value(v, "requiredApprovals")),
+    optional(v, "consult", "CONSULTED INPUT (I)"),
   ]);
 }
 export function buildAuthorityGap(v: WorkingValues) {
@@ -222,7 +245,7 @@ export function buildMandateRequest(v: WorkingValues) {
     ),
     section(
       "CURRENT DECISION RIGHTS / VERIFICATION",
-      `Recommend: ${value(v, "recommend")}\nApprove: ${value(v, "approve")}\nExecute: ${value(v, "execute")}\nCan block: ${value(v, "block")}\nAccountable: ${value(v, "accountable")}\nBasis: ${value(v, "rightsEvidence")}`
+      `Recommend (R): ${value(v, "recommend")}\nDecide (D): ${value(v, "approve")}\nPerform (P): ${value(v, "execute")}\nCan block: ${value(v, "block")}\nAccountable: ${value(v, "accountable")}\nBasis: ${value(v, "rightsEvidence")}`
     ),
     section(
       "AUTHORITY GAP / CONSEQUENCE",
@@ -230,8 +253,9 @@ export function buildMandateRequest(v: WorkingValues) {
     ),
     section(
       "REQUEST / OPERATING BOUNDARIES",
-      `${value(v, "request")}\n${value(v, "boundaries")}\nRequired approvals: ${value(v, "requiredApprovals")}`
+      `${value(v, "request")}\n${value(v, "boundaries")}\nRequired agreement (A): ${value(v, "requiredApprovals")}`
     ),
+    optional(v, "consult", "CONSULTED INPUT (I)"),
     section("IF THE REQUEST CANNOT BE GRANTED", value(v, "fallback")),
     section(
       "ACTION OWNER / NEEDED BY",
@@ -243,6 +267,11 @@ export function buildMandateRequest(v: WorkingValues) {
       `${value(v, "finalDecision", "No reset agreed. This brief does not grant new authority.")}\n${value(v, "interimAction")}`
     ),
     section("NEXT REVIEW / WHAT WILL SHOW IT WORKS", value(v, "reviewDate")),
+    optional(
+      v,
+      "unresolvedPlan",
+      "IF NO DECISION IS REACHED / INTERIM MOVE / REVISIT"
+    ),
   ]);
 }
 export function buildRequestDecoder(v: WorkingValues) {
@@ -314,6 +343,12 @@ export function buildStakeholderResponse(v: WorkingValues) {
       "RECORDED RESPONSE / NEXT ACTION",
       `${value(v, "finalDecision", "No stakeholder agreement recorded.")}\n${value(v, "nextAction")}`
     ),
+    optional(
+      v,
+      "unresolvedPlan",
+      "IF NO DECISION IS REACHED / INTERIM MOVE / REVISIT"
+    ),
+    optional(v, "spokenResponse", "SHORT SPOKEN VERSION"),
   ]);
 }
 export const LEADERSHIP_OUTPUT_BUILDERS: Record<

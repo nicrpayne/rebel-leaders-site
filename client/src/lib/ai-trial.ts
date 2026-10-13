@@ -79,6 +79,9 @@ ${optional
 This record supports the conversation; it does not create agreement or certify security or team readiness. Appropriate owners must verify technical conditions. Private preparation is excluded.`;
 }
 
+const optionalRecord = (v: Values, key: string, title: string) =>
+  v[key]?.trim() ? `\n\n${title}\n${v[key].trim()}` : "";
+
 export function buildTrialCard(v: Values) {
   return `AI STALEMATE — BET BRIEF
 
@@ -150,7 +153,7 @@ ${answer(v, "owners")}
 BET ACCEPTANCE
 ${answer(v, "betStatus", "PROPOSED — NOT YET ACCEPTED")}
 
-Record these shared conditions before the trial. Private preparation is excluded.`;
+Record these shared conditions before the trial. Private preparation is excluded.${optionalRecord(v, "decisionRights", "DECISION RIGHTS / AFFECTED PEOPLE")}${optionalRecord(v, "deploymentPermission", "FURTHER APPROVAL FOR DEPLOYMENT OR EXPANSION")}`;
 }
 
 export function buildEvidenceRecord(v: Values) {
@@ -274,7 +277,7 @@ LIMITS OF THIS EVIDENCE
 ${answer(v, "limits")}
 
 NEXT ACTION / ACCOUNTABLE OWNER / DATE
-${answer(v, "next")}
+${answer(v, "next")}${optionalRecord(v, "unresolvedPlan", "IF UNRESOLVED / INTERIM MOVE / REVISIT")}${optionalRecord(v, "deploymentPermission", "FURTHER APPROVAL FOR DEPLOYMENT OR EXPANSION")}
 
 UPDATE TO LEADERSHIP
 ${answer(v, "leadershipUpdate")}`;
