@@ -11,6 +11,7 @@ import { getFieldTool } from "@/lib/field-tools";
 import { FIELD_TOOL_PRESENTATIONS } from "@/lib/field-tool-presentations";
 import FieldToolsNav from "@/components/field-tools/FieldToolsNav";
 import RelatedFieldTools from "@/components/field-tools/RelatedFieldTools";
+import AIPMKitPreview from "@/components/field-tools/AIPMKitPreview";
 
 export default function FieldToolPurchase({
   slug,
@@ -59,13 +60,17 @@ export default function FieldToolPurchase({
             </p>
             {
               <figure className="mt-7 overflow-hidden rounded-sm">
-                <img
-                  src={`/assets/field-tools/${slug === "ai-stalemate" ? `ai-stalemate-${audience}` : slug}-kit-${slug === "ai-stalemate" && audience === "pm" ? "v2" : "v1"}.webp`}
-                  alt={`${tool.name} Field Guide shown as a printed booklet beside its interactive Lab on a laptop and phone`}
-                  width={1536}
-                  height={1024}
-                  className="h-auto w-full"
-                />
+                {slug === "ai-stalemate" && audience === "pm" ? (
+                  <AIPMKitPreview />
+                ) : (
+                  <img
+                    src={`/assets/field-tools/${slug === "ai-stalemate" ? `ai-stalemate-${audience}` : slug}-kit-v1.webp`}
+                    alt={`${tool.name} Field Guide shown as a printed booklet beside its interactive Lab on a laptop and phone`}
+                    width={1536}
+                    height={1024}
+                    className="h-auto w-full"
+                  />
+                )}
               </figure>
             }
             <div className="mt-9 space-y-6">

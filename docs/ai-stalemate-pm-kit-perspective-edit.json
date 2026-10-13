@@ -24,5 +24,43 @@
       "bytes": 171434,
       "sha256": "373fe503a4a61fa9a3a8224e90121a1c73ee35f3dc7f0d2c1301f8ab50c420ba"
     }
-  ]
+  ],
+  "correction": {
+    "date": "2026-10-13",
+    "reason": "User rejected the generated v2 perspective. A second generated attempt was also rejected during QA and was not deployed.",
+    "implementation": "AIPMKitPreview renders a real Lab screenshot with a single CSS projective transform, then restores the foreground booklet and phone with SVG masks. The v2 raster remains only as the scene background.",
+    "screenshot": "client/public/assets/field-tools/ai-stalemate-pm-lab-preview.webp",
+    "screenshotSha256": "7db115c68acc1497acb9e65697f5698cce068f9efa7daf97bf9fb2bed6b35969",
+    "screenshotSize": [
+      1347,
+      850
+    ],
+    "sceneSize": [
+      1536,
+      1024
+    ],
+    "displayCorners": [
+      [
+        584,
+        142
+      ],
+      [
+        1401,
+        124
+      ],
+      [
+        1382,
+        703
+      ],
+      [
+        550,
+        674
+      ]
+    ],
+    "validation": [
+      "Production build and TypeScript checks",
+      "Native-size browser inspection of screen corners and foreground overlap",
+      "Desktop and 390px responsive purchase-page inspection"
+    ]
+  }
 }

@@ -1,0 +1,38 @@
+.ai-pm-photo-kit {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+}
+
+.ai-pm-photo-kit-background {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.ai-pm-photo-kit-plane {
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 1536px;
+  height: 1024px;
+  transform-origin: 0 0;
+  pointer-events: none;
+}
+
+.ai-pm-photo-kit-layer {
+  position: absolute;
+  inset: 0;
+  width: 1536px;
+  height: 1024px;
+}
+
+.ai-pm-photo-kit-display {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1347px;
+  height: 850px;
+  max-width: none;
+  transform-origin: 0 0;
+}
