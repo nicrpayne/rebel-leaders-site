@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-13",
+  "request": "Match the laptop webpage preview to the physical screen angle.",
+  "mode": "built-in image_gen edit",
+  "source": "client/public/assets/field-tools/ai-stalemate-pm-kit-v1.webp",
+  "generatedMaster": "assets/source-originals/ai-stalemate-pm-kit-perspective-v2.png",
+  "webAsset": "client/public/assets/field-tools/ai-stalemate-pm-kit-v2.webp",
+  "encoding": "WebP quality 92, effort 6; original generated dimensions retained.",
+  "scope": "PM purchase-page mockup. The original v1 asset is preserved.",
+  "prompt": "Use case: precise-object-edit.\nAsset type: existing AI Stalemate / PM product kit image for a landing page.\nInput image 1 is the EDIT TARGET, not a style reference.\nPrimary request: correct ONLY the perspective of the webpage displayed inside the LAPTOP screen. The current interface looks pasted on flat: its horizontal rules and bands do not follow the angle of the physical screen.\nMap the entire existing laptop interface onto the laptop display plane with one consistent four-corner projective perspective. All horizontal UI dividers, text baselines, form boxes and navigation must align with the screen plane, naturally converging with the screen's top and bottom edges. Vertical interface edges must align with the screen's side edges. Fit the displayed content precisely inside the black bezel, preserving its normal margin, with no spill over the frame. The top inner display runs approximately from x584 y139 to x1400 y125 in this 1536x1024 source; the bottom visible display is approximately x568 y675 to x1381 y702, partly hidden behind the phone and booklet. Follow the ACTUAL visible display boundaries, not a flat rectangular overlay.\nPreserve the laptop housing, camera, keyboard, trackpad, screen angle, book, portrait, phone, tabletop, background, lighting, shadows, composition, aspect ratio, and crop unchanged. Keep every existing word and UI field exactly as in the source; do not invent or rewrite interface content. Preserve the book and phone in front of the display, including their occlusion. Do not change the phone screen or book cover. No new objects or extra text. Output one corrected full product-kit image at 1536x1024.",
+  "files": [
+    {
+      "path": "client/public/assets/field-tools/ai-stalemate-pm-kit-v1.webp",
+      "bytes": 199114,
+      "sha256": "b59a555b7b4a14f7ee1edbf6538d92d041b1ced982e87937a6cd2bac97cb89f5"
+    },
+    {
+      "path": "assets/source-originals/ai-stalemate-pm-kit-perspective-v2.png",
+      "bytes": 1832441,
+      "sha256": "21fdd66a1fd7dd5b977acf544d2ac50520a52c277786e1f4a71000152ab05256"
+    },
+    {
+      "path": "client/public/assets/field-tools/ai-stalemate-pm-kit-v2.webp",
+      "bytes": 171434,
+      "sha256": "373fe503a4a61fa9a3a8224e90121a1c73ee35f3dc7f0d2c1301f8ab50c420ba"
+    }
+  ]
+}

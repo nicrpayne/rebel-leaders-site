@@ -60,7 +60,7 @@ export default function FieldToolPurchase({
             {
               <figure className="mt-7 overflow-hidden rounded-sm">
                 <img
-                  src={`/assets/field-tools/${slug === "ai-stalemate" ? `ai-stalemate-${audience}` : slug}-kit-v1.webp`}
+                  src={`/assets/field-tools/${slug === "ai-stalemate" ? `ai-stalemate-${audience}` : slug}-kit-${slug === "ai-stalemate" && audience === "pm" ? "v2" : "v1"}.webp`}
                   alt={`${tool.name} Field Guide shown as a printed booklet beside its interactive Lab on a laptop and phone`}
                   width={1536}
                   height={1024}
