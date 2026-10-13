@@ -34,7 +34,7 @@ describe("the five Field Tool examples", () => {
   }
 });
 
-describe("AI trial evidence and shared artifacts", () => {
+describe("AI experiment evidence and shared artifacts", () => {
   it("keeps the prediction, investment, and acceptance distinct from observed results", () => {
     const v = {
       betHypothesis: "Hypothesis",
@@ -53,7 +53,7 @@ describe("AI trial evidence and shared artifacts", () => {
     expect(buildEvidenceRecord(v)).toContain("Target missed");
     expect(buildDecisionBrief(v)).toContain("Review cost increased");
   });
-  it("does not imply a trial result when an accepted proposal was never attempted", () => {
+  it("does not imply an experiment result when an accepted proposal was never attempted", () => {
     const v = {
       task: "Proposed task",
       readinessDecision: "READY FOR A BOUNDED TEST",
@@ -61,7 +61,7 @@ describe("AI trial evidence and shared artifacts", () => {
       decision: "STOP",
       reason: "Priority changed",
     };
-    expect(buildDecisionBrief(v)).toContain("No trial result is recorded");
+    expect(buildDecisionBrief(v)).toContain("No experiment result is recorded");
     expect(buildAITrialPackage(v)).not.toContain("EVIDENCE RECORD");
   });
   it("reports descriptive effort reduction only with complete evidence and a positive baseline", () => {
@@ -118,7 +118,7 @@ describe("AI trial evidence and shared artifacts", () => {
       "Recorded effort difference: 12 min"
     );
   });
-  it("exports a pre-trial card without implying that evidence or a decision exists", () => {
+  it("exports a pre-experiment brief without implying that evidence or a decision exists", () => {
     const card = buildTrialCard({
       task: "Approved test task",
       comparator: "Matched previous task",
@@ -170,7 +170,7 @@ describe("AI trial evidence and shared artifacts", () => {
     });
     expect(brief).toContain("PAUSE");
     expect(brief).toContain("Approval missing");
-    expect(brief).toContain("No trial result is recorded");
+    expect(brief).toContain("No experiment result is recorded");
   });
 });
 

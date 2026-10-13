@@ -50,7 +50,7 @@ export default function FieldToolAccess({ slug }: { slug: string }) {
           <h2 className="font-display text-3xl">Your first useful move</h2>
           <p className="mt-3 font-ui text-sm leading-7 text-[#b8c9b8]">
             {slug === "ai-stalemate"
-              ? "Skim the Field Guide or open the Lab and follow its chapter links as you work. Start with where your ongoing conversation stands. Reflect privately, understand each other, and choose a useful next move. A trial is optional."
+              ? "Skim the Field Guide or open the Lab and follow its chapter links as you work. Start with where your ongoing conversation stands. Reflect privately, understand each other, and choose a useful next move. An experiment is optional."
               : content.firstMove}
           </p>
           <Link href={`${base}/lab`} className="ft-button ft-button-gold mt-5">

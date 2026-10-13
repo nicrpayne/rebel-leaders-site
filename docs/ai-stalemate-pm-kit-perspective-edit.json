@@ -29,8 +29,8 @@
     "date": "2026-10-13",
     "reason": "User rejected the generated v2 perspective. A second generated attempt was also rejected during QA and was not deployed.",
     "implementation": "AIPMKitPreview renders a real Lab screenshot with a single CSS projective transform, then restores the foreground booklet and phone with SVG masks. The v2 raster remains only as the scene background.",
-    "screenshot": "client/public/assets/field-tools/ai-stalemate-pm-lab-preview.webp",
-    "screenshotSha256": "7db115c68acc1497acb9e65697f5698cce068f9efa7daf97bf9fb2bed6b35969",
+    "screenshot": "client/public/assets/field-tools/ai-stalemate-pm-lab-preview-v2.webp",
+    "screenshotSha256": "a131cc0e013d8c0faf64bbfde819ba65fae76a147c5343c5d4cfec9313c8a785",
     "screenshotSize": [
       1347,
       850
@@ -49,11 +49,11 @@
         124
       ],
       [
-        1382,
+        1362,
         703
       ],
       [
-        550,
+        530,
         674
       ]
     ],
@@ -61,6 +61,12 @@
       "Production build and TypeScript checks",
       "Native-size browser inspection of screen corners and foreground overlap",
       "Desktop and 390px responsive purchase-page inspection"
-    ]
+    ],
+    "bottomEdgeRefinement": {
+      "date": "2026-10-13",
+      "change": "Both bottom corners moved 20 pixels left at native scene size; top corners remain fixed, increasing the display slant."
+    },
+    "mobileScreenshot": "client/public/assets/field-tools/ai-stalemate-pm-mobile-lab-preview-v1.webp",
+    "captureNote": "Desktop and mobile Lab captures refreshed after replacing trial with experiment. Native phone overlay preserves the foreground housing and notch."
   }
 }

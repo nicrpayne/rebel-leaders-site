@@ -30,10 +30,12 @@ PAGES = json.loads(subprocess.check_output([
     f"import {{ aiGuideFor }} from './server/field-tool-content/ai-paths.ts'; console.log(JSON.stringify(aiGuideFor('{AUDIENCE}')));",
 ], cwd=ROOT))
 
+FONT_DIR = Path(os.environ.get("GUIDE_FONT_DIR", "/usr/share/fonts/truetype/dejavu"))
+
 for name, filename in [
-    ("GuideSerif", "/usr/share/fonts/truetype/dejavu/DejaVuSerif.ttf"),
-    ("GuideSans", "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"),
-    ("GuideBold", "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"),
+    ("GuideSerif", str(FONT_DIR / "DejaVuSerif.ttf")),
+    ("GuideSans", str(FONT_DIR / "DejaVuSans.ttf")),
+    ("GuideBold", str(FONT_DIR / "DejaVuSans-Bold.ttf")),
 ]:
     pdfmetrics.registerFont(TTFont(name, filename))
 

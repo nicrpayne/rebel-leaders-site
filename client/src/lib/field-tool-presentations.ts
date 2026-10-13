@@ -20,7 +20,7 @@ export const FIELD_TOOL_PRESENTATIONS: Record<string, Presentation> = {
     promise:
       "Turn the AI argument into a shared ambition and a next move you can both stand behind.",
     session:
-      "Allow 5–10 minutes of private preparation, 30 minutes together, and about 15 minutes after the trial to review the evidence.",
+      "Allow 5–10 minutes of private preparation, 30 minutes together, and about 15 minutes after the experiment to review the evidence.",
     benefits: [
       "Name what each side protects.",
       "Count the full workflow cost.",
@@ -68,7 +68,7 @@ export const FIELD_TOOL_PRESENTATIONS: Record<string, Presentation> = {
         "A recent unit-test task of similar size, using the same author, reviewer, and acceptance checks.",
       tool: "Team-approved AI tool. Synthetic fixtures only; engineering lead confirms approval before starting.",
       toolVersion:
-        "Record the team's approved model/version before running the trial.",
+        "Record the team's approved model/version before running the experiment.",
       inputs: "Synthetic fixtures only; no production code or customer data.",
       approvalOwner: "Engineering lead",
       qualityBar:
@@ -108,7 +108,7 @@ export const FIELD_TOOL_PRESENTATIONS: Record<string, Presentation> = {
       reason: "The current workflow transfers too much effort to review.",
       limits:
         "One local task does not establish a universal AI productivity gain or loss.",
-      next: "Engineering lead narrows the task and review workflow before approving another trial.",
+      next: "Engineering lead narrows the task and review workflow before approving another experiment.",
       leadershipUpdate:
         "The first test passed quality after rework but used 97 person-minutes versus 90 without AI; we are revising the review workflow before testing again.",
     },

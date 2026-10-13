@@ -96,7 +96,7 @@ describe("private reflection and conversation records", () => {
       const record = buildAITrialPackage(values);
       expect(record).toContain("PROPOSED — NOT YET AGREED");
       expect(record).toContain("PM asks data owner Thursday");
-      expect(record).not.toMatch(/PRIVATE_SECRET|TRIAL CARD|EVIDENCE RECORD/);
+      expect(record).not.toMatch(/PRIVATE_SECRET|BET BRIEF|EVIDENCE RECORD/);
       expect(buildReadinessBrief(values)).not.toContain(
         "API / PERMISSION VERIFICATION"
       );

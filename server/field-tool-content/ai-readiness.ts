@@ -116,7 +116,7 @@ export function readinessStep(audience: Audience) {
       ? "Understand what matters to each of you."
       : "Understand what matters to each of you.",
     intro: pm
-      ? "Start wherever the ongoing conversation stands. Share the outcome you care about, hear your lead’s concerns, and choose one useful next move. A trial is one possibility."
+      ? "Start wherever the ongoing conversation stands. Share the outcome you care about, hear your lead’s concerns, and choose one useful next move. An experiment is one possibility."
       : "Start wherever the ongoing conversation stands. Ask what your PM hopes to improve, make your concerns concrete, and choose one useful next move together.",
     fields: [
       ...fields.filter(
@@ -365,7 +365,7 @@ export const AI_READINESS_SAMPLE: Record<string, string> = {
     "No AI productivity result has been measured. The sponsor's delay-cost figure is unvalidated. This decision applies to this proposed use and environment.",
   next: "Complete the access-model decision, permission tests, and supervised engineering exercise; review with PM and engineering manager next Tuesday.",
   leadershipUpdate:
-    "We propose protected preparation time to establish access boundaries and team readiness, then decide whether an approved synthetic-data trial is worthwhile.",
+    "We propose protected preparation time to establish access boundaries and team readiness, then decide whether an approved synthetic-data experiment is worthwhile.",
 };
 
 export function aiSampleFor(audience: Audience): Record<string, string> {

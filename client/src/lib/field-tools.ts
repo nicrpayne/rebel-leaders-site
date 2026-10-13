@@ -35,7 +35,7 @@ export const FIELD_TOOLS: FieldTool[] = [
     cards: [
       { title: "Your view", copy: "Separate what actually happened from the story you are adding. Name the outcome or responsibility you are protecting." },
       { title: "Their view", copy: "Make the other leader's cost visible before either side tries to persuade the other." },
-      { title: "Shared work", copy: "Build one bounded trial, count the full cost, then Continue, Revise, Stop, or Pause." },
+      { title: "Shared work", copy: "Shape one bounded bet, count the full cost, then Continue, Revise, Stop, or Pause." },
     ],
     who: "For PMs, Product Owners, Engineering Leads, Tech Leads, and Engineering Managers caught in a real AI stalemate.",
     nextTools: ["deadline-reset", "mandate-reset"],

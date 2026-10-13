@@ -231,7 +231,8 @@ function LabSession({ slug }: { slug: string }) {
     const url = URL.createObjectURL(blob);
     const anchor = document.createElement("a");
     anchor.href = url;
-    anchor.download = slug + "-" + (selectedOutput?.id ?? "output") + ".txt";
+    const fileLabel = selectedOutput?.id === "trial-card" ? "bet-brief" : (selectedOutput?.id ?? "output");
+    anchor.download = slug + "-" + fileLabel + ".txt";
     anchor.click();
     URL.revokeObjectURL(url);
   }
@@ -573,7 +574,7 @@ function LabSession({ slug }: { slug: string }) {
                   {slug !== "ai-stalemate"
                     ? "Build a record for the conversation. It updates from your shared inputs; private preparation stays out of every output."
                     : atReadiness
-                      ? "Build a Shared Next-Step Brief to take into the conversation or record what you have agreed. Clarifying or preparing can be the right next move; a trial is optional."
+                      ? "Build a Shared Next-Step Brief to take into the conversation or record what you have agreed. Clarifying or preparing can be the right next move; an experiment is optional."
                       : "Export the Bet Brief before an approved test. Return for evidence and the decision; private preparation stays out of shared outputs."}
                 </p>
                 <div className="mt-3 flex flex-wrap gap-3">
