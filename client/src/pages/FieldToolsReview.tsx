@@ -1,4 +1,5 @@
 import { fieldToolBase, type Audience } from "@/lib/field-tool-paths";
+import FieldToolsReviewVersions from "@/components/field-tools/FieldToolsReviewVersions";
 import "@/components/field-tools/field-tools.css";
 
 const products: {
@@ -87,6 +88,8 @@ export default function FieldToolsReview() {
           </p>
         </div>
       </header>
+
+      <FieldToolsReviewVersions />
 
       <section
         aria-label="Product review links"
