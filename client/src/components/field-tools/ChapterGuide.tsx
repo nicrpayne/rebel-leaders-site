@@ -4,12 +4,58 @@ import { fieldToolBase } from "@/lib/field-tool-paths";
 import { Link } from "wouter";
 import FieldToolsNav from "./FieldToolsNav";
 import { useFieldToolContent } from "./FieldToolGate";
+import { useEffect, useRef, useState } from "react";
 
 export default function ChapterGuide({ slug }: { slug: string }) {
   const content = useFieldToolContent();
   const base = fieldToolBase(slug, content.audience);
   const tool = getFieldTool(slug)!;
   const AI_STALEMATE_GUIDE_PAGES = content.guidePages ?? [];
+  const chapters = useRef<(HTMLElement | null)[]>([]);
+  const [activeChapter, setActiveChapter] = useState<number | null>(null);
+  const chapterCount = AI_STALEMATE_GUIDE_PAGES.length;
+
+  useEffect(() => {
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const readingLine = Math.min(160, window.innerHeight * 0.25);
+      let current: number | null = null;
+      chapters.current.slice(0, chapterCount).forEach((chapter, index) => {
+        if (chapter && chapter.getBoundingClientRect().top <= readingLine) {
+          current = index;
+        }
+      });
+      // A short final chapter still becomes current at the end of the page.
+      if (
+        current !== null &&
+        window.scrollY + window.innerHeight >=
+          document.documentElement.scrollHeight - 2
+      ) {
+        current = chapterCount - 1;
+      }
+      setActiveChapter(current);
+    };
+    const schedule = () => {
+      if (!frame) frame = window.requestAnimationFrame(update);
+    };
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    window.addEventListener("hashchange", schedule);
+    const observer = new ResizeObserver(schedule);
+    chapters.current.slice(0, chapterCount).forEach(chapter => {
+      if (chapter) observer.observe(chapter);
+    });
+    schedule();
+    return () => {
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+      window.removeEventListener("hashchange", schedule);
+      observer.disconnect();
+      window.cancelAnimationFrame(frame);
+    };
+  }, [slug, content.audience, chapterCount]);
+
   return (
     <main className="ft-guide min-h-screen bg-[#f3efe4] text-[#193025]">
       <div className="print:hidden">
@@ -56,7 +102,7 @@ export default function ChapterGuide({ slug }: { slug: string }) {
         <aside className="print:hidden">
           <nav
             aria-label="Guide chapters"
-            className="space-y-4 lg:sticky lg:top-8"
+            className="space-y-2 lg:sticky lg:top-8"
           >
             <p className="font-ui text-[10px] tracking-[.18em] text-[#667e66]">
               INSIDE THE GUIDE
@@ -65,7 +111,8 @@ export default function ChapterGuide({ slug }: { slug: string }) {
               <a
                 key={chapter.eyebrow}
                 href={`#guide-${index}`}
-                className="block border-l border-[#b9c5ad] pl-4 font-ui text-sm leading-6 text-[#576b5d] hover:text-[#193025]"
+                aria-current={activeChapter === index ? "location" : undefined}
+                className={`block rounded-r-sm border-l-2 px-4 py-1 font-ui text-sm leading-6 transition-[background-color,border-color,box-shadow,color] duration-200 motion-reduce:transition-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#c3a14b] ${activeChapter === index ? "border-[#c3a14b] bg-[#fff9e9] text-[#193025] shadow-[0_0_18px_rgba(195,161,75,0.18)]" : "border-[#b9c5ad] text-[#576b5d] hover:border-[#c3a14b] hover:text-[#193025]"}`}
               >
                 {chapter.eyebrow}
               </a>
@@ -77,6 +124,9 @@ export default function ChapterGuide({ slug }: { slug: string }) {
             <section
               key={chapter.eyebrow}
               id={`guide-${index}`}
+              ref={element => {
+                chapters.current[index] = element;
+              }}
               className="scroll-mt-8 border-b border-[#ccd4c8] pb-14 last:border-0"
             >
               <p className="font-ui text-[10px] tracking-[.18em] text-[#667e66]">
