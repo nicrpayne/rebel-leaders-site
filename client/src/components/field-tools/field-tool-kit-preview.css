@@ -1,17 +1,17 @@
-.ai-pm-photo-kit {
+.field-tool-photo-kit {
   position: relative;
   width: 100%;
   aspect-ratio: 3 / 2;
   overflow: hidden;
 }
 
-.ai-pm-photo-kit-background {
+.field-tool-photo-kit-background {
   display: block;
   width: 100%;
   height: auto;
 }
 
-.ai-pm-photo-kit-plane {
+.field-tool-photo-kit-plane {
   position: absolute;
   inset: 0 auto auto 0;
   width: 1536px;
@@ -20,14 +20,14 @@
   pointer-events: none;
 }
 
-.ai-pm-photo-kit-layer {
+.field-tool-photo-kit-layer {
   position: absolute;
   inset: 0;
   width: 1536px;
   height: 1024px;
 }
 
-.ai-pm-photo-kit-display {
+.field-tool-photo-kit-display {
   position: absolute;
   top: 0;
   left: 0;

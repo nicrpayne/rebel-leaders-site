@@ -28,7 +28,7 @@
   "correction": {
     "date": "2026-10-13",
     "reason": "User rejected the generated v2 perspective. A second generated attempt was also rejected during QA and was not deployed.",
-    "implementation": "AIPMKitPreview renders a real Lab screenshot with a single CSS projective transform, then restores the foreground booklet and phone with SVG masks. The v2 raster remains only as the scene background.",
+    "implementation": "FieldToolKitPreview renders a real Lab screenshot with a single CSS projective transform, then restores the foreground booklet and phone with SVG masks. The v2 raster remains only as the scene background.",
     "screenshot": "client/public/assets/field-tools/ai-stalemate-pm-lab-preview-v2.webp",
     "screenshotSha256": "a131cc0e013d8c0faf64bbfde819ba65fae76a147c5343c5d4cfec9313c8a785",
     "screenshotSize": [
