@@ -296,6 +296,69 @@
       "height": 850,
       "bytes": 99374,
       "sha256": "1e39e785654231f83305381c63fe52cf47cd35e23d0eeb59a1a5cfeb24232b18"
+    },
+    {
+      "path": "client/public/assets/field-tools/ai-stalemate-lead-dev-mobile-lab-preview-v1.webp",
+      "width": 390,
+      "height": 1000,
+      "bytes": 57952,
+      "sha256": "ba946163768c27bfa5ced15731c150e8bfb34e926c3137c2fceb2c213bbe8231"
+    },
+    {
+      "path": "client/public/assets/field-tools/deadline-reset-lab-preview-v2.webp",
+      "width": 1347,
+      "height": 850,
+      "bytes": 79186,
+      "sha256": "24628ee166a9ea9d1f6d180787b2e11f031e683b1e2dda276366bfa1af85efea"
+    },
+    {
+      "path": "client/public/assets/field-tools/deadline-reset-mobile-lab-preview-v1.webp",
+      "width": 390,
+      "height": 1000,
+      "bytes": 56350,
+      "sha256": "e0ef67daf534ca1c9045948042b8122761eddd9d853890221ab058dcec2491aa"
+    },
+    {
+      "path": "client/public/assets/field-tools/priority-whiplash-lab-preview-v2.webp",
+      "width": 1347,
+      "height": 850,
+      "bytes": 75522,
+      "sha256": "750194ca2785ae3f93d27f2bc0db1787bf8e2ff5d87488b816ff383e92e61a90"
+    },
+    {
+      "path": "client/public/assets/field-tools/priority-whiplash-mobile-lab-preview-v1.webp",
+      "width": 390,
+      "height": 1000,
+      "bytes": 57368,
+      "sha256": "6adaeb8e9d98b5e0905383b43e30bb17bad21b29e55e2641db6a18677c9ff74d"
+    },
+    {
+      "path": "client/public/assets/field-tools/mandate-reset-lab-preview-v2.webp",
+      "width": 1347,
+      "height": 850,
+      "bytes": 75032,
+      "sha256": "03c6bc12ba9addeb238045598003b69760deba44d6d5e031333e03485e310276"
+    },
+    {
+      "path": "client/public/assets/field-tools/mandate-reset-mobile-lab-preview-v1.webp",
+      "width": 390,
+      "height": 1000,
+      "bytes": 53940,
+      "sha256": "90c7aa7c5dcd680b4c97f292c4a71b8c5e95fcc1fc1829d4da444e3cc2c884ac"
+    },
+    {
+      "path": "client/public/assets/field-tools/product-project-translator-lab-preview-v2.webp",
+      "width": 1347,
+      "height": 850,
+      "bytes": 79876,
+      "sha256": "fb396ac92cd3655aa442dbdbc078db1e1aa8413a14feae351c96a060bda34374"
+    },
+    {
+      "path": "client/public/assets/field-tools/product-project-translator-mobile-lab-preview-v1.webp",
+      "width": 390,
+      "height": 1000,
+      "bytes": 56408,
+      "sha256": "4c49ebffe86efd9bc9ebe6c3f8b07aa51b10536d35c427237282793676992c71"
     }
   ],
   "original_png_recovery": "The six cloud-generated originals remain pending; the user-supplied portrait is a separately preserved surviving copy."
