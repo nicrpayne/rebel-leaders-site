@@ -261,6 +261,20 @@
       "sha256": "fb8a0943801396540c491909adae1df7ce3be4e47c7fb272ffa399fd9adaf72b",
       "width": 1672,
       "height": 941
+    },
+    {
+      "path": "assets/source-originals/ai-stalemate-pm-kit-perspective-v2.png",
+      "bytes": 1832441,
+      "sha256": "21fdd66a1fd7dd5b977acf544d2ac50520a52c277786e1f4a71000152ab05256",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "path": "client/public/assets/field-tools/ai-stalemate-pm-kit-v2.webp",
+      "bytes": 171434,
+      "sha256": "373fe503a4a61fa9a3a8224e90121a1c73ee35f3dc7f0d2c1301f8ab50c420ba",
+      "width": 1536,
+      "height": 1024
     }
   ],
   "original_png_recovery": "The six cloud-generated originals remain pending; the user-supplied portrait is a separately preserved surviving copy."
