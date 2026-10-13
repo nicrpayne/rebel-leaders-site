@@ -84,4 +84,13 @@ The old cloud worker's execution chat ID is `01a12d05-1e1e-7185-912e-0c39253130f
 
 ## Final publication verification
 
-Pending at the time of this draft; update after the recovery commits deploy.
+The recovery application is live and verified:
+
+- Proposal application commit: `86ffec4fce7afef95ef5710083760e40af385a5d`; Railway deployment `78e4796f-6597-4f1e-a66b-2ce5a5cb95c6` is SUCCESS.
+- Existing review desk commit: `4ca218becbb7ab6dca619dc6f553943fb496026d`; deployment `6f8859e5-e6f9-4bba-8b75-0a01da4b4e99` is SUCCESS.
+- Public `main` remains at `8cb8c54`; no product proposal was merged into production.
+- All 43 live-file comparisons passed: six PDF endpoints on each review deployment and 31 proposal website images return the intended file type and exactly match the local SHA-256.
+- Browser verified the published review desk's version selector and recovery links, the live AI `/buy` redirect to the unified page's purchase section, both role-specific screenshots, and the resource shortcut resetting filters and scrolling to its source.
+- The later handoff/verification commit changes documentation only. No further application changes are included.
+
+The original-PNG recovery request remains unanswered. The six original PNGs must stay on the outstanding list until their actual bytes are saved. The source-ready WebPs and all recovered product code are committed and available now.

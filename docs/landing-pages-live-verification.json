@@ -1,0 +1,308 @@
+{
+  "checked": "2026-10-13",
+  "application_commit": "86ffec4fce7afef95ef5710083760e40af385a5d",
+  "preview_commit": "4ca218becbb7ab6dca619dc6f553943fb496026d",
+  "results": [
+    {
+      "site": "proposal",
+      "file": "ai-stalemate-lead-dev-field-guide.pdf",
+      "ok": true,
+      "content_type": "application/pdf",
+      "bytes": 423318
+    },
+    {
+      "site": "proposal",
+      "file": "ai-stalemate-pm-field-guide.pdf",
+      "ok": true,
+      "content_type": "application/pdf",
+      "bytes": 423419
+    },
+    {
+      "site": "proposal",
+      "file": "deadline-reset-field-guide.pdf",
+      "ok": true,
+      "content_type": "application/pdf",
+      "bytes": 286674
+    },
+    {
+      "site": "proposal",
+      "file": "mandate-reset-field-guide.pdf",
+      "ok": true,
+      "content_type": "application/pdf",
+      "bytes": 400480
+    },
+    {
+      "site": "proposal",
+      "file": "priority-whiplash-field-guide.pdf",
+      "ok": true,
+      "content_type": "application/pdf",
+      "bytes": 341309
+    },
+    {
+      "site": "proposal",
+      "file": "product-project-translator-field-guide.pdf",
+      "ok": true,
+      "content_type": "application/pdf",
+      "bytes": 332978
+    },
+    {
+      "site": "preview",
+      "file": "ai-stalemate-lead-dev-field-guide.pdf",
+      "ok": true,
+      "content_type": "application/pdf",
+      "bytes": 305878
+    },
+    {
+      "site": "preview",
+      "file": "ai-stalemate-pm-field-guide.pdf",
+      "ok": true,
+      "content_type": "application/pdf",
+      "bytes": 306021
+    },
+    {
+      "site": "preview",
+      "file": "deadline-reset-field-guide.pdf",
+      "ok": true,
+      "content_type": "application/pdf",
+      "bytes": 286674
+    },
+    {
+      "site": "preview",
+      "file": "mandate-reset-field-guide.pdf",
+      "ok": true,
+      "content_type": "application/pdf",
+      "bytes": 400480
+    },
+    {
+      "site": "preview",
+      "file": "priority-whiplash-field-guide.pdf",
+      "ok": true,
+      "content_type": "application/pdf",
+      "bytes": 341309
+    },
+    {
+      "site": "preview",
+      "file": "product-project-translator-field-guide.pdf",
+      "ok": true,
+      "content_type": "application/pdf",
+      "bytes": 332978
+    },
+    {
+      "site": "proposal",
+      "file": "ai-stalemate-hero-v2.webp",
+      "ok": true,
+      "content_type": "image/webp",
+      "bytes": 100320
+    },
+    {
+      "site": "proposal",
+      "file": "ai-stalemate-hero.webp",
+      "ok": true,
+      "content_type": "image/webp",
+      "bytes": 88274
+    },
+    {
+      "site": "proposal",
+      "file": "ai-stalemate-lab-preview.webp",
+      "ok": true,
+      "content_type": "image/webp",
+      "bytes": 97714
+    },
+    {
+      "site": "proposal",
+      "file": "ai-stalemate-lead-dev-cover.webp",
+      "ok": true,
+      "content_type": "image/webp",
+      "bytes": 92064
+    },
+    {
+      "site": "proposal",
+      "file": "ai-stalemate-lead-dev-kit-v1.webp",
+      "ok": true,
+      "content_type": "image/webp",
+      "bytes": 154976
+    },
+    {
+      "site": "proposal",
+      "file": "ai-stalemate-lead-dev-lab-preview.webp",
+      "ok": true,
+      "content_type": "image/webp",
+      "bytes": 95512
+    },
+    {
+      "site": "proposal",
+      "file": "ai-stalemate-library-hero-v1.webp",
+      "ok": true,
+      "content_type": "image/webp",
+      "bytes": 216718
+    },
+    {
+      "site": "proposal",
+      "file": "ai-stalemate-pm-cover.webp",
+      "ok": true,
+      "content_type": "image/webp",
+      "bytes": 96218
+    },
+    {
+      "site": "proposal",
+      "file": "ai-stalemate-pm-hero-v4.webp",
+      "ok": true,
+      "content_type": "image/webp",
+      "bytes": 200150
+    },
+    {
+      "site": "proposal",
+      "file": "ai-stalemate-pm-hero-v5.webp",
+      "ok": true,
+      "content_type": "image/webp",
+      "bytes": 204520
+    },
+    {
+      "site": "proposal",
+      "file": "ai-stalemate-pm-kit-v1.webp",
+      "ok": true,
+      "content_type": "image/webp",
+      "bytes": 199114
+    },
+    {
+      "site": "proposal",
+      "file": "ai-stalemate-pm-lab-preview.webp",
+      "ok": true,
+      "content_type": "image/webp",
+      "bytes": 97714
+    },
+    {
+      "site": "proposal",
+      "file": "ai-stalemate-pm-real-portrait-v1.webp",
+      "ok": true,
+      "content_type": "image/webp",
+      "bytes": 642354
+    },
+    {
+      "site": "proposal",
+      "file": "deadline-reset-guide-cover.webp",
+      "ok": true,
+      "content_type": "image/webp",
+      "bytes": 25860
+    },
+    {
+      "site": "proposal",
+      "file": "deadline-reset-hero-v2.webp",
+      "ok": true,
+      "content_type": "image/webp",
+      "bytes": 93996
+    },
+    {
+      "site": "proposal",
+      "file": "deadline-reset-hero.webp",
+      "ok": true,
+      "content_type": "image/webp",
+      "bytes": 79816
+    },
+    {
+      "site": "proposal",
+      "file": "deadline-reset-kit-v1.webp",
+      "ok": true,
+      "content_type": "image/webp",
+      "bytes": 141924
+    },
+    {
+      "site": "proposal",
+      "file": "field-tools-catalog-hero-v1.webp",
+      "ok": true,
+      "content_type": "image/webp",
+      "bytes": 207528
+    },
+    {
+      "site": "proposal",
+      "file": "mandate-reset-guide-cover.webp",
+      "ok": true,
+      "content_type": "image/webp",
+      "bytes": 35382
+    },
+    {
+      "site": "proposal",
+      "file": "mandate-reset-hero-v2.webp",
+      "ok": true,
+      "content_type": "image/webp",
+      "bytes": 98220
+    },
+    {
+      "site": "proposal",
+      "file": "mandate-reset-hero-v3.webp",
+      "ok": true,
+      "content_type": "image/webp",
+      "bytes": 158020
+    },
+    {
+      "site": "proposal",
+      "file": "mandate-reset-hero.webp",
+      "ok": true,
+      "content_type": "image/webp",
+      "bytes": 80148
+    },
+    {
+      "site": "proposal",
+      "file": "mandate-reset-kit-v1.webp",
+      "ok": true,
+      "content_type": "image/webp",
+      "bytes": 148606
+    },
+    {
+      "site": "proposal",
+      "file": "priority-whiplash-guide-cover.webp",
+      "ok": true,
+      "content_type": "image/webp",
+      "bytes": 30482
+    },
+    {
+      "site": "proposal",
+      "file": "priority-whiplash-hero-v2.webp",
+      "ok": true,
+      "content_type": "image/webp",
+      "bytes": 134526
+    },
+    {
+      "site": "proposal",
+      "file": "priority-whiplash-hero.webp",
+      "ok": true,
+      "content_type": "image/webp",
+      "bytes": 90764
+    },
+    {
+      "site": "proposal",
+      "file": "priority-whiplash-kit-v1.webp",
+      "ok": true,
+      "content_type": "image/webp",
+      "bytes": 141790
+    },
+    {
+      "site": "proposal",
+      "file": "product-project-translator-guide-cover.webp",
+      "ok": true,
+      "content_type": "image/webp",
+      "bytes": 31554
+    },
+    {
+      "site": "proposal",
+      "file": "product-project-translator-hero-v2.webp",
+      "ok": true,
+      "content_type": "image/webp",
+      "bytes": 126332
+    },
+    {
+      "site": "proposal",
+      "file": "product-project-translator-hero.webp",
+      "ok": true,
+      "content_type": "image/webp",
+      "bytes": 82102
+    },
+    {
+      "site": "proposal",
+      "file": "product-project-translator-kit-v1.webp",
+      "ok": true,
+      "content_type": "image/webp",
+      "bytes": 149928
+    }
+  ]
+}
