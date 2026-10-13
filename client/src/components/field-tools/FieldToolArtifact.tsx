@@ -29,7 +29,7 @@ export default function FieldToolArtifact({
           (block, index) => {
             const [heading, ...body] = block.split("\n");
             const isHeading =
-              /^[A-Z0-9 /—–:().-]+$/.test(heading) && heading.length < 100;
+              /^[A-Z0-9 /—–:().&'-]+$/.test(heading) && heading.length < 100;
             return (
               <section
                 key={index}

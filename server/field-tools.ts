@@ -1,4 +1,6 @@
 import { aiSampleFor } from "./field-tool-content/ai-readiness";
+import { AI_TOOLS, AI_STUDY, AI_RESOURCE_REVIEW_DATE } from "./field-tool-content/ai-resources";
+import { aiCompanionFor } from "./field-tool-content/ai-companion";
 import { FIELD_TOOL_PRESENTATIONS } from "../client/src/lib/field-tool-presentations";
 import { aiGuideFor, aiLabFor } from "./field-tool-content/ai-paths";
 import { LEADERSHIP_GUIDE_PAGES } from "./field-tool-content/leadership-guides";
@@ -60,6 +62,7 @@ export const fieldToolsRouter = router({
     const email = await buyerEmail(ctx.req);
     return {
       preview: previewEnabled(),
+      proposal: previewEnabled() && process.env.FIELD_TOOL_PROPOSAL === "true",
       signedIn: Boolean(email),
       slugs: await purchasedSlugs(email),
     };
@@ -134,6 +137,8 @@ export const fieldToolsRouter = router({
           : FIELD_LABS[input.slug];
       return {
         audience: input.audience,
+        resources: input.slug === "ai-stalemate" ? { tools: AI_TOOLS, study: AI_STUDY, reviewed: AI_RESOURCE_REVIEW_DATE } : null,
+        companion: input.slug === "ai-stalemate" ? aiCompanionFor(input.audience) : null,
         firstMove: (
           {
             "deadline-reset":

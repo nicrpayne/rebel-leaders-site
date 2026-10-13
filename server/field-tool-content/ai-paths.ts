@@ -269,6 +269,8 @@ export function aiLabFor(audience: Audience) {
   steps[2].title = pm
     ? "Ask what the whole workflow cost."
     : "Make the real effort and quality visible.";
+  const qualityNotes = steps[2].fields.find(f => f.id === "quality");
+  if (qualityNotes) { qualityNotes.label = "Additional defects, rework, or reviewer experience"; qualityNotes.hint = "Use the checklist below for expected and observed quality results. Record other defects or the reviewer's experience here."; }
   steps[3].title = pm
     ? "Make the next move clear to leadership."
     : "Help your PM carry a defensible decision forward.";

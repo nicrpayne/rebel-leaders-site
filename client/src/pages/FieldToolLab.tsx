@@ -10,6 +10,8 @@ import { Link } from "wouter";
 import FieldToolsNav from "@/components/field-tools/FieldToolsNav";
 import FieldToolArtifact from "@/components/field-tools/FieldToolArtifact";
 import AIEffortComparison from "@/components/field-tools/AIEffortComparison";
+import AICommunicationPanel from "@/components/field-tools/AICommunicationPanel";
+import AIQualityChecks from "@/components/field-tools/AIQualityChecks";
 import LeadershipWorkSurface from "@/components/field-tools/LeadershipWorkSurface";
 import { getFieldTool } from "@/lib/field-tools";
 
@@ -265,6 +267,9 @@ function LabSession({ slug }: { slug: string }) {
     const sample = content.sampleValues;
     if (!sample) return;
     const ids = new Set(current.fields.map(field => field.id));
+    if (slug === "ai-stalemate" && step === 1) ["conversationLeadershipUpdate", "conversationTeamUpdate"].forEach(id => ids.add(id));
+    if (slug === "ai-stalemate" && step === 3) ids.add("qualityChecks");
+    if (slug === "ai-stalemate" && step === 4) ["teamUpdate", "returnRecord"].forEach(id => ids.add(id));
     if (slug === "ai-stalemate" && step === 3)
       Object.keys(sample)
         .filter(id => /^(ai|baseline)_/.test(id))
@@ -315,7 +320,7 @@ function LabSession({ slug }: { slug: string }) {
           ]
   );
   const renderFields = (fields: FieldDef[]) =>
-    fields.map(field => (
+    fields.filter(field => field.id !== "leadershipUpdate" || slug !== "ai-stalemate").map(field => (
       <div key={field.id}>
         {field.section && (
           <h3 className="mb-5 border-b border-[#cbd4c6] pb-3 pt-3 font-ui text-[10px] font-semibold tracking-[.16em] text-[#6a7d64]">
@@ -436,6 +441,7 @@ function LabSession({ slug }: { slug: string }) {
             >
               Read the matching Field Guide chapter →
             </Link>
+            {slug === "ai-stalemate" && <div className="mt-5 flex flex-col gap-3 text-xs"><Link className="underline" href={`${base}/walkthrough`}>Play through a worked example →</Link><Link className="underline" href={`${base}/resources`}>Find a tool or study resource →</Link></div>}
           </aside>
 
           <div className="border border-[#c8d0c5] bg-[#fbf9f3] p-5 md:p-8">
@@ -521,6 +527,10 @@ function LabSession({ slug }: { slug: string }) {
                 </details>
               )}
             </div>
+
+            {slug === "ai-stalemate" && step === 3 && <AIQualityChecks value={values.qualityChecks} onChange={value => setValues(prev => ({ ...prev, qualityChecks: value }))} />}
+            {slug === "ai-stalemate" && (step === 1 || step === 4) && <AICommunicationPanel values={values} audience={content.audience} phase={step === 1 ? "conversation" : "decision"} onChange={(id,value) => setValues(prev => ({ ...prev, [id]: value }))} />}
+            {slug === "ai-stalemate" && step === 4 && <details className="ai-workbench-panel"><summary className="cursor-pointer font-display text-2xl">Return after the next move.</summary><label>Shared record: what happened, what changed, and what now?<textarea rows={4} value={values.returnRecord ?? ""} onChange={e => setValues(prev => ({ ...prev, returnRecord: e.target.value }))} placeholder="Action taken / evidence or response / revised next move / owner / next review date" /></label><label>Private reflection: what did you learn about how you lead?<textarea rows={3} value={values.leadershipReflection ?? ""} onChange={e => setValues(prev => ({ ...prev, leadershipReflection: e.target.value }))} placeholder="What helped people think or work together? What condition could you improve next time?" /></label><p className="mt-3 text-xs">The shared record is saved and included in the Decision Brief. Private reflection stays only in this tab and is excluded from saved drafts and exports.</p></details>}
 
             <div className="mt-9 flex flex-wrap justify-between gap-3 border-t border-[#d7ddd3] pt-6">
               <button

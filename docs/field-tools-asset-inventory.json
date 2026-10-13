@@ -1,0 +1,281 @@
+{
+  "checked": "2026-10-13",
+  "scope": "Field Tools web images, Guides, and recoverable source images; excludes unrelated site assets",
+  "files": [
+    {
+      "path": "client/public/assets/field-tools/ai-stalemate-hero-v2.webp",
+      "bytes": 100320,
+      "sha256": "7f000dbea6ef5122581b6328a58ea53735ebf6e6bbcd3dfd204f84d50402a3ec",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "path": "client/public/assets/field-tools/ai-stalemate-hero.webp",
+      "bytes": 88274,
+      "sha256": "afc50ab08e2fe76ddcd87e6788c0383e3bac880e6b7ea437d1a8818b29da7af6",
+      "width": 1122,
+      "height": 1402
+    },
+    {
+      "path": "client/public/assets/field-tools/ai-stalemate-lab-preview.webp",
+      "bytes": 97714,
+      "sha256": "7db115c68acc1497acb9e65697f5698cce068f9efa7daf97bf9fb2bed6b35969",
+      "width": 1347,
+      "height": 850
+    },
+    {
+      "path": "client/public/assets/field-tools/ai-stalemate-lead-dev-cover.webp",
+      "bytes": 92064,
+      "sha256": "3f07e4730009cdad7102a691e54c8c9df5c7bfef024282c0088975970685c0fd",
+      "width": 708,
+      "height": 1000
+    },
+    {
+      "path": "client/public/assets/field-tools/ai-stalemate-lead-dev-kit-v1.webp",
+      "bytes": 154976,
+      "sha256": "296ce575eaac84280e5c560c48d52cb71db0cfbea3ec21e3fc58ddec66d29daa",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "path": "client/public/assets/field-tools/ai-stalemate-lead-dev-lab-preview.webp",
+      "bytes": 95512,
+      "sha256": "bb15fabc823ea6277f2199ec80d6291a6ff76ab311e2dbc7297a40b66c92b4f1",
+      "width": 1355,
+      "height": 931
+    },
+    {
+      "path": "client/public/assets/field-tools/ai-stalemate-library-hero-v1.webp",
+      "bytes": 216718,
+      "sha256": "f02958bd12a211daca481dcf5f3abf197f99dc194f0c543a9e4162add4a8474c",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "path": "client/public/assets/field-tools/ai-stalemate-pm-cover.webp",
+      "bytes": 96218,
+      "sha256": "6cf2dd691746af60fcc549dbd3c557ccd7a2b790dcd53d02add68bc7e1327d59",
+      "width": 708,
+      "height": 1000
+    },
+    {
+      "path": "client/public/assets/field-tools/ai-stalemate-pm-hero-v4.webp",
+      "bytes": 200150,
+      "sha256": "331e67d3ab9bf3c6f4aaf871ab80b7925d7367efcb07d8dd195dee97083cf92a",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "path": "client/public/assets/field-tools/ai-stalemate-pm-hero-v5.webp",
+      "bytes": 204520,
+      "sha256": "780b5203ab19bb2d6758e8733b94e3b3a20100919c3c8a21522940d190935591",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "path": "client/public/assets/field-tools/ai-stalemate-pm-kit-v1.webp",
+      "bytes": 199114,
+      "sha256": "b59a555b7b4a14f7ee1edbf6538d92d041b1ced982e87937a6cd2bac97cb89f5",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "path": "client/public/assets/field-tools/ai-stalemate-pm-lab-preview.webp",
+      "bytes": 97714,
+      "sha256": "7db115c68acc1497acb9e65697f5698cce068f9efa7daf97bf9fb2bed6b35969",
+      "width": 1347,
+      "height": 850
+    },
+    {
+      "path": "client/public/assets/field-tools/ai-stalemate-pm-real-portrait-v1.webp",
+      "bytes": 642354,
+      "sha256": "f64ef7a2de035c5a45485386299c4bb82c43715b3bab465dccad0afed049623b",
+      "width": 1340,
+      "height": 1054
+    },
+    {
+      "path": "client/public/assets/field-tools/deadline-reset-guide-cover.webp",
+      "bytes": 25860,
+      "sha256": "f29dd70475975f4a994c20dd8c2986fb8a5d02a49179d676989a5696f9fcfc6c",
+      "width": 420,
+      "height": 594
+    },
+    {
+      "path": "client/public/assets/field-tools/deadline-reset-hero-v2.webp",
+      "bytes": 93996,
+      "sha256": "035a491b6ccdce1f59d3183b2cccdfa7f262f531b6a2ad1a76ab199f1591ce13",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "path": "client/public/assets/field-tools/deadline-reset-hero.webp",
+      "bytes": 79816,
+      "sha256": "d7baca16c78128041de552f70e361385a90f14f8e0b1b54eff1f711ccf22d403",
+      "width": 1122,
+      "height": 1402
+    },
+    {
+      "path": "client/public/assets/field-tools/deadline-reset-kit-v1.webp",
+      "bytes": 141924,
+      "sha256": "b96f0bfa424f8170bf18a8b248f505741f283f9f60abc978e541e39d186498f8",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "path": "client/public/assets/field-tools/field-tools-catalog-hero-v1.webp",
+      "bytes": 207528,
+      "sha256": "e15374659f53c71a36a228994513a9d5359b6c8bb15d1975c6cfdf0686d867a3",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "path": "client/public/assets/field-tools/mandate-reset-guide-cover.webp",
+      "bytes": 35382,
+      "sha256": "f5287c35ad140171482145d1551c5aa3fd96e524e9f9bd542052e87ac565c914",
+      "width": 420,
+      "height": 594
+    },
+    {
+      "path": "client/public/assets/field-tools/mandate-reset-hero-v2.webp",
+      "bytes": 98220,
+      "sha256": "35326dc8464bca2b35958cfbab72a1eaf4858aea484c3f5393c072c5f033a99c",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "path": "client/public/assets/field-tools/mandate-reset-hero-v3.webp",
+      "bytes": 158020,
+      "sha256": "e638efb89a7fb83a01bd24155d8701a18d9742726666665af0fedd5eba5735e0",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "path": "client/public/assets/field-tools/mandate-reset-hero.webp",
+      "bytes": 80148,
+      "sha256": "b9abf3f5b582080eeba6c7505d4203a3b048139e4858143fb661745ae962b4b9",
+      "width": 1122,
+      "height": 1402
+    },
+    {
+      "path": "client/public/assets/field-tools/mandate-reset-kit-v1.webp",
+      "bytes": 148606,
+      "sha256": "c6cef9fae128df9dbc776ebb29a2a63c1a6d9c3810022054b2bc88c6b8e9a64d",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "path": "client/public/assets/field-tools/priority-whiplash-guide-cover.webp",
+      "bytes": 30482,
+      "sha256": "be184262096a6856922c6aee3a29f5366c0b01f944701f4c7ea8e1c9c4ef0594",
+      "width": 420,
+      "height": 594
+    },
+    {
+      "path": "client/public/assets/field-tools/priority-whiplash-hero-v2.webp",
+      "bytes": 134526,
+      "sha256": "980cb28d294f7955f1b56360ee20ebd5a73aeb2740204ee25ffa93457745e901",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "path": "client/public/assets/field-tools/priority-whiplash-hero.webp",
+      "bytes": 90764,
+      "sha256": "e307ca5a7e11c9fd1759a035a49caaa5cf49e1f86fbfb68f92ca2e650441ad5a",
+      "width": 1122,
+      "height": 1402
+    },
+    {
+      "path": "client/public/assets/field-tools/priority-whiplash-kit-v1.webp",
+      "bytes": 141790,
+      "sha256": "d8e8d085fadd6d4e5fedc82a02cd7d580cd97bcdf6778448763032a4ebcc8e03",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "path": "client/public/assets/field-tools/product-project-translator-guide-cover.webp",
+      "bytes": 31554,
+      "sha256": "49a7c560e8e0e4a7bf5643326fd738360a72587b840e9c23fb66cd0e8949aa1c",
+      "width": 420,
+      "height": 594
+    },
+    {
+      "path": "client/public/assets/field-tools/product-project-translator-hero-v2.webp",
+      "bytes": 126332,
+      "sha256": "6c495b916b5fe8de590396dbfe714b6fbb0ea8c353247eef07e8f5fff4684572",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "path": "client/public/assets/field-tools/product-project-translator-hero.webp",
+      "bytes": 82102,
+      "sha256": "6b9a0958740b9ab7686fb15dfdb2675fdc3530c06b6639689ad7fb18c7ac42ff",
+      "width": 1122,
+      "height": 1402
+    },
+    {
+      "path": "client/public/assets/field-tools/product-project-translator-kit-v1.webp",
+      "bytes": 149928,
+      "sha256": "eddef52c1f44530403f1bfc6b4e68502b389fe5eb065280e4c0e21c1ee91c806",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "path": "private/field-tools/ai-stalemate-lead-dev-field-guide.pdf",
+      "bytes": 423318,
+      "sha256": "9163e31bfab4dd398086eb10dc94c607695aae9f9633e096389ba5dbe6f367ed",
+      "pages": 18
+    },
+    {
+      "path": "private/field-tools/ai-stalemate-pm-field-guide.pdf",
+      "bytes": 423419,
+      "sha256": "5b7c39b3c72a462574380dd7896632e4e243f2868af4ca6c5f87ad6e3115dd38",
+      "pages": 18
+    },
+    {
+      "path": "private/field-tools/deadline-reset-field-guide.pdf",
+      "bytes": 286674,
+      "sha256": "5a7ed134ac3a89b6d265f760f998083ee14defb8a57107272020c5298046156d",
+      "pages": 10
+    },
+    {
+      "path": "private/field-tools/mandate-reset-field-guide.pdf",
+      "bytes": 400480,
+      "sha256": "cbad2a1e65b94dbb9607fe644b44b080ac82062de9f9dc95d13276ec9c73a186",
+      "pages": 10
+    },
+    {
+      "path": "private/field-tools/priority-whiplash-field-guide.pdf",
+      "bytes": 341309,
+      "sha256": "8555968aa20c65e00dc70fe73b8ada4b3f639c1edefc905090d4c6cc935d2e7d",
+      "pages": 10
+    },
+    {
+      "path": "private/field-tools/product-project-translator-field-guide.pdf",
+      "bytes": 332978,
+      "sha256": "7f2fe89455a19c1ad64bb207e9b653eb0b7c491183472d7bf451b452fc27823e",
+      "pages": 10
+    },
+    {
+      "path": "assets/source-originals/nic-library-portrait-user-supplied.png",
+      "bytes": 2070665,
+      "sha256": "fb8a0943801396540c491909adae1df7ce3be4e47c7fb272ffa399fd9adaf72b",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "path": "assets/source-originals/ai-stalemate-pm-kit-perspective-v2.png",
+      "bytes": 1832441,
+      "sha256": "21fdd66a1fd7dd5b977acf544d2ac50520a52c277786e1f4a71000152ab05256",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "path": "client/public/assets/field-tools/ai-stalemate-pm-kit-v2.webp",
+      "bytes": 171434,
+      "sha256": "373fe503a4a61fa9a3a8224e90121a1c73ee35f3dc7f0d2c1301f8ab50c420ba",
+      "width": 1536,
+      "height": 1024
+    }
+  ],
+  "original_png_recovery": "The six cloud-generated originals remain pending; the user-supplied portrait is a separately preserved surviving copy."
+}

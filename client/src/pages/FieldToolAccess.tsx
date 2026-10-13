@@ -8,6 +8,7 @@ import { ArrowRight, FileText, FlaskConical } from "lucide-react";
 import FieldToolsNav from "@/components/field-tools/FieldToolsNav";
 import { getFieldTool } from "@/lib/field-tools";
 import { FIELD_TOOL_PRESENTATIONS } from "@/lib/field-tool-presentations";
+import { aiProductCopy, AI_PRODUCT_INVENTORY } from "@/lib/ai-product";
 
 // Content is rendered only within the server-authorized FieldToolGate.
 export default function FieldToolAccess({ slug }: { slug: string }) {
@@ -43,14 +44,14 @@ export default function FieldToolAccess({ slug }: { slug: string }) {
             : ""}
         </h1>
         <p className="mt-5 max-w-2xl font-ui text-base leading-7 text-[#b8c9b8]">
-          {presentation.promise} Start with one situation you want to move
+          {slug === "ai-stalemate" ? aiProductCopy(content.audience).promise : presentation.promise} Start with one situation you want to move
           forward. Bookmark this page to return to your tool.
         </p>
         <div className="mt-8 border-l-2 border-[#d9b34d] bg-[#12281b] p-6">
           <h2 className="font-display text-3xl">Your first useful move</h2>
           <p className="mt-3 font-ui text-sm leading-7 text-[#b8c9b8]">
             {slug === "ai-stalemate"
-              ? "Skim the Field Guide or open the Lab and follow its chapter links as you work. Start with where your ongoing conversation stands. Reflect privately, understand each other, and choose a useful next move. A trial is optional."
+              ? aiProductCopy(content.audience).first
               : content.firstMove}
           </p>
           <Link href={`${base}/lab`} className="ft-button ft-button-gold mt-5">
@@ -63,6 +64,7 @@ export default function FieldToolAccess({ slug }: { slug: string }) {
             Download the Field Guide ↓
           </a>
         </div>
+        {slug === "ai-stalemate" && <section className="mt-8 grid gap-3 sm:grid-cols-2">{AI_PRODUCT_INVENTORY.filter(item => item.destination === "walkthrough" || item.destination === "resources").map(item => <Link key={item.title} href={`${base}/${item.destination}`} className="border border-[#617857] bg-[#12281b] p-5"><h2 className="font-display text-2xl">{item.title} →</h2><p className="mt-2 text-xs leading-6 text-[#b5c6b2]">{item.detail}</p></Link>)}</section>}
         {content.walkthroughUrl && (
           <section className="mt-8 border border-[#60775a] p-6">
             <h2 className="font-display text-3xl">

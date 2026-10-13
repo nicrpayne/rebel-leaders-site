@@ -5,6 +5,7 @@ import { Link } from "wouter";
 import FieldToolsNav from "./FieldToolsNav";
 import { useFieldToolContent } from "./FieldToolGate";
 import { useEffect, useRef, useState } from "react";
+import AIGuideVisual from "./AIGuideVisual";
 
 export default function ChapterGuide({ slug }: { slug: string }) {
   const content = useFieldToolContent();
@@ -224,6 +225,7 @@ export default function ChapterGuide({ slug }: { slug: string }) {
               >
                 Use this in the Lab →
               </Link>
+              {slug === "ai-stalemate" && <AIGuideVisual index={index} />}
             </section>
           ))}
           <div className="flex flex-wrap gap-4 print:hidden">

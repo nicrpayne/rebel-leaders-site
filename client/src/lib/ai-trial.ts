@@ -1,3 +1,4 @@
+import { qualityChecksRecord, qualityChecksObserved } from "./ai-quality.ts";
 export const AI_EFFORT_STAGES = [
   { id: "setup", label: "Setup, context, and prompting" },
   { id: "drafting", label: "Drafting / implementation" },
@@ -50,6 +51,8 @@ export function buildReadinessBrief(v: Values) {
     ["AI / AGENT OPERATING BOUNDARIES", [v.automationBoundary]],
     ["DEMONSTRATED TEAM CAPABILITY", [v.teamReadiness]],
     ["TRAINING / PAIRING / QUALIFIED REVIEW", [v.readinessSupport]],
+    ["UPDATE TO LEADERSHIP / SPONSOR", [v.conversationLeadershipUpdate]],
+    ["UPDATE TO THE TEAM", [v.conversationTeamUpdate]],
   ] as const;
   return `AI STALEMATE — SHARED NEXT-STEP BRIEF
 
@@ -200,6 +203,9 @@ ${answer(v, "withAi")}
 QUALITY CHECKS / DEFECTS / REVIEWER EXPERIENCE
 ${answer(v, "quality")}
 
+STRUCTURED QUALITY CHECKS
+${qualityChecksRecord(v.qualityChecks)}
+
 ELAPSED TIME / TOOL COST / LEARNING EFFECTS
 ${answer(v, "otherCosts")}
 
@@ -215,7 +221,7 @@ export function buildDecisionBrief(v: Values) {
   const hasEvidence =
     baseline.entered > 0 ||
     ai.entered > 0 ||
-    Boolean(v.quality?.trim() || v.withoutAi?.trim() || v.withAi?.trim());
+    Boolean(v.quality?.trim() || v.withoutAi?.trim() || v.withAi?.trim() || qualityChecksObserved(v.qualityChecks));
   const preTrial =
     !hasEvidence &&
     (v.betStatus === "NOT ATTEMPTED" ||
@@ -263,6 +269,7 @@ ${answer(v, "comparator", preTrial ? "[no trial comparator agreed]" : "[not ente
 EVIDENCE
 ${effort}
 ${answer(v, "quality")}
+${qualityChecksRecord(v.qualityChecks)}
 
 DECISION
 ${answer(v, "decision", "[not selected]")}
@@ -280,7 +287,7 @@ NEXT ACTION / ACCOUNTABLE OWNER / DATE
 ${answer(v, "next")}${optionalRecord(v, "unresolvedPlan", "IF UNRESOLVED / INTERIM MOVE / REVISIT")}${optionalRecord(v, "deploymentPermission", "FURTHER APPROVAL FOR DEPLOYMENT OR EXPANSION")}
 
 UPDATE TO LEADERSHIP
-${answer(v, "leadershipUpdate")}`;
+${answer(v, "leadershipUpdate")}${optionalRecord(v, "teamUpdate", "UPDATE TO THE TEAM")}${optionalRecord(v, "decisionRights", "DECISION RIGHTS / AFFECTED PEOPLE")}${optionalRecord(v, "returnRecord", "RETURN TO THE WORK / WHAT CHANGED / NEXT REVIEW")}`;
 }
 
 export function buildAITrialPackage(v: Values) {
@@ -299,6 +306,7 @@ export function buildAITrialPackage(v: Values) {
       stage => v[`ai_${stage.id}`]?.trim() || v[`baseline_${stage.id}`]?.trim()
     ) &&
     !v.quality?.trim()
+    && !qualityChecksObserved(v.qualityChecks)
       ? []
       : [buildTrialCard(v), buildEvidenceRecord(v)]),
     buildDecisionBrief(v),

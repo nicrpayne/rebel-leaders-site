@@ -15,7 +15,7 @@ const products: {
     name: "AI Stalemate",
     audience: "pm",
     edition: "PM path",
-    pages: 13,
+    pages: 18,
     image: "ai-stalemate-pm-hero-v5.webp",
   },
   {
@@ -23,7 +23,7 @@ const products: {
     name: "AI Stalemate",
     audience: "lead-dev",
     edition: "Lead Developer path",
-    pages: 13,
+    pages: 18,
     image: "ai-stalemate-hero-v2.webp",
   },
   {
