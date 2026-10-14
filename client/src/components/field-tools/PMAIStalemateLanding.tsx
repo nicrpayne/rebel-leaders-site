@@ -66,6 +66,7 @@ export default function PMAIStalemateLanding() {
         imageLayout="wide"
         showCaption={false}
         primary={{ label: "Get the Field Tool — $47", href: `${base}/buy` }}
+        secondary={{ label: "Gift to someone", href: `${base}/buy?gift=1` }}
         facts={[
           "One-time $47 USD purchase",
           "Field Guide + interactive Lab",
@@ -124,6 +125,15 @@ export default function PMAIStalemateLanding() {
             >
               Get the Field Tool <ArrowRight size={17} aria-hidden="true" />
             </Link>
+            <Link
+              href={`${base}/buy?gift=1`}
+              className="mt-4 block text-center font-ui text-sm underline underline-offset-4"
+            >
+              Gift to someone →
+            </Link>
+            <p className="mt-3 font-ui text-xs leading-6 text-[#607063]">
+              Know someone working through this? Give them a place to start.
+            </p>
             <p className="mt-5 font-ui text-xs text-[#607063]">
               Already purchased?{" "}
               <Link

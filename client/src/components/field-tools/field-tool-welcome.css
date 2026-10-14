@@ -1,0 +1,381 @@
+.ft-welcome {
+  min-height: 100vh;
+  color: #21392d;
+  background: #f8f4eb;
+  font-family: var(--font-ui);
+}
+.ft-welcome-inner {
+  max-width: 1180px;
+  margin: auto;
+  padding: 130px 40px 56px;
+}
+.ft-welcome h1,
+.ft-welcome h2,
+.ft-welcome h3,
+.ft-welcome p,
+.ft-welcome figure {
+  margin: 0;
+}
+.ft-welcome h1 {
+  font-family: var(--font-display);
+  font-size: clamp(38px, 4.4vw, 58px);
+  line-height: 1.04;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  max-width: 570px;
+}
+.ft-welcome h2 {
+  font-family: var(--font-display);
+  font-size: 30px;
+  line-height: 1.18;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.ft-welcome h3 {
+  font-family: var(--font-ui);
+  font-size: 18px;
+  line-height: 1.35;
+  font-weight: 600;
+}
+.ft-welcome-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  gap: 64px;
+  align-items: center;
+}
+.ft-welcome-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #586d52;
+  font-size: 12px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 22px !important;
+}
+.ft-welcome-eyebrow > span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #a18b41;
+  flex-shrink: 0;
+}
+.ft-welcome-intro {
+  font-size: 17px;
+  line-height: 1.8;
+  color: #4c6054;
+  margin-top: 23px !important;
+  max-width: 560px;
+}
+.ft-welcome-personal {
+  margin-top: 20px;
+  padding-left: 18px;
+  border-left: 2px solid #cab777;
+  max-width: 490px;
+}
+.ft-welcome-personal > p:first-child {
+  font-size: 16px;
+  line-height: 1.7;
+  color: #4c6054;
+}
+.ft-welcome-signature {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 29px;
+  color: #566b45;
+  margin-top: 5px !important;
+}
+.ft-welcome-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: 16px 24px;
+  margin-top: 27px;
+  border-radius: 8px;
+  background: #274b37;
+  color: #fffdf7;
+  font-size: 16px;
+  font-weight: 500;
+  box-shadow: 0 3px 0 #193625;
+  transition:
+    background 0.18s ease,
+    transform 0.18s ease;
+}
+.ft-welcome-primary:hover {
+  background: #366046;
+  transform: translateY(-2px);
+}
+.ft-welcome a:focus-visible,
+.ft-welcome button:focus-visible,
+.ft-welcome summary:focus-visible {
+  outline: 3px solid #9b762a;
+  outline-offset: 5px;
+}
+.ft-welcome-first {
+  margin-top: 13px !important;
+  color: #64715f;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.ft-welcome-portrait {
+  overflow: hidden;
+  border-radius: 160px 160px 14px 14px;
+  background: #e4dfd0;
+  box-shadow: 0 15px 35px #354a2b0c;
+  align-self: center;
+}
+.ft-welcome-portrait img {
+  display: block;
+  width: 100%;
+  height: 390px;
+  object-fit: cover;
+  object-position: 77% center;
+}
+.ft-welcome-portrait figcaption {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 20px 25px;
+  background: #ede6d8;
+}
+.ft-welcome-portrait figcaption span:first-child {
+  font-family: var(--font-display);
+  font-size: 28px;
+  line-height: 1.1;
+}
+.ft-welcome-portrait figcaption span:last-child {
+  font-size: 12px;
+  color: #64715f;
+}
+.ft-welcome-outcomes {
+  margin-top: 64px;
+  padding: 28px 32px;
+  background: #eaf0e4;
+  border-radius: 12px;
+}
+.ft-welcome-outcomes h2 {
+  font-size: 26px;
+}
+.ft-welcome-outcomes ul {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+.ft-welcome-outcomes li {
+  display: flex;
+  gap: 11px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #4b614b;
+}
+.ft-welcome-outcomes svg {
+  flex-shrink: 0;
+  margin-top: 3px;
+  color: #7d8649;
+}
+.ft-welcome-kit {
+  margin-top: 56px;
+}
+.ft-welcome-section-heading p {
+  margin-top: 9px;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #627062;
+}
+.ft-welcome-kit-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 24px;
+}
+.ft-welcome-resource {
+  display: flex;
+  gap: 20px;
+  padding: 27px;
+  background: #fffdf7;
+  border: 1px solid #e3e3d5;
+  border-radius: 12px;
+  transition:
+    box-shadow 0.18s ease,
+    border-color 0.18s ease;
+}
+.ft-welcome-resource:hover {
+  border-color: #98aa8d;
+  box-shadow: 0 5px 18px #354a2b0a;
+}
+.ft-welcome-resource > svg {
+  flex-shrink: 0;
+  color: #8c783b;
+  margin-top: 2px;
+}
+.ft-welcome-resource p {
+  font-size: 15px;
+  line-height: 1.7;
+  color: #627062;
+  margin-top: 10px;
+}
+.ft-welcome-resource span {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 18px;
+  color: #31563d;
+  font-size: 14px;
+  font-weight: 500;
+}
+.ft-welcome-help {
+  margin-top: 54px;
+  max-width: 900px;
+}
+.ft-welcome-help > h2 {
+  margin-bottom: 22px;
+}
+.ft-welcome-help > details {
+  border-bottom: 1px solid #d8ded0;
+}
+.ft-welcome-help > details > summary {
+  padding: 18px 0;
+  font-size: 16px;
+  line-height: 1.5;
+  cursor: pointer;
+  font-weight: 500;
+}
+.ft-welcome-help > details > p {
+  padding: 0 0 22px;
+  max-width: 720px;
+  font-size: 15px;
+  line-height: 1.8;
+  color: #586b5b;
+}
+.ft-welcome-help > details > section {
+  padding-bottom: 25px;
+}
+.ft-welcome-bottom {
+  margin-top: 36px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  color: #60715d;
+  font-size: 13px;
+}
+.ft-welcome-bottom a,
+.ft-welcome-bottom button {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+  cursor: pointer;
+}
+.ft-welcome-bottom a:hover,
+.ft-welcome-bottom button:hover {
+  color: #21392d;
+  text-decoration: underline;
+}
+@media (max-width: 900px) {
+  .ft-welcome-inner {
+    padding: 110px 28px 45px;
+  }
+  .ft-welcome-hero {
+    gap: 30px;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+  }
+  .ft-welcome-portrait img {
+    height: 350px;
+    object-position: 74% center;
+  }
+  .ft-welcome-outcomes ul {
+    gap: 16px;
+  }
+}
+@media (max-width: 640px) {
+  .ft-welcome-inner {
+    padding: 105px 22px 36px;
+  }
+  .ft-welcome-hero {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: stretch;
+  }
+  .ft-welcome-copy {
+    order: 1;
+  }
+  .ft-welcome-portrait {
+    order: 0;
+    display: flex;
+    flex-direction: row;
+    border-radius: 12px;
+    box-shadow: none;
+    align-self: stretch;
+    background: #ede6d8;
+  }
+  .ft-welcome-portrait img {
+    width: 110px;
+    height: 116px;
+    object-position: 77% center;
+    flex-shrink: 0;
+  }
+  .ft-welcome-portrait figcaption {
+    justify-content: center;
+    padding: 16px 20px;
+  }
+  .ft-welcome-portrait figcaption span:first-child {
+    font-size: 26px;
+  }
+  .ft-welcome-eyebrow {
+    font-size: 11px;
+    margin-bottom: 16px !important;
+  }
+  .ft-welcome h1 {
+    font-size: 40px;
+  }
+  .ft-welcome-intro {
+    font-size: 16px;
+    margin-top: 18px !important;
+  }
+  .ft-welcome-primary {
+    width: 100%;
+  }
+  .ft-welcome-first {
+    text-align: center;
+  }
+  .ft-welcome-outcomes {
+    margin-top: 40px;
+    padding: 25px;
+  }
+  .ft-welcome-outcomes ul {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  .ft-welcome-kit {
+    margin-top: 38px;
+  }
+  .ft-welcome-kit-grid {
+    grid-template-columns: 1fr;
+  }
+  .ft-welcome-resource {
+    padding: 23px;
+    gap: 16px;
+  }
+  .ft-welcome-help {
+    margin-top: 38px;
+  }
+  .ft-welcome h2 {
+    font-size: 28px;
+  }
+  .ft-welcome-outcomes h2 {
+    font-size: 25px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ft-welcome-primary,
+  .ft-welcome-resource {
+    transition: none;
+  }
+}

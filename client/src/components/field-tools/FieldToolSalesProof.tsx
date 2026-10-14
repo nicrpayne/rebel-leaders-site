@@ -123,7 +123,11 @@ export function FieldToolBuyerQuestions() {
     ],
     [
       "How does access work?",
-      "When purchases open, use your purchase email to request an access link. Opening your purchased tool on another device will not transfer your local draft.",
+      "When purchases open, use your purchase email—or the email your gift was sent to—to request an access link. Opening your purchased tool on another device will not transfer your local draft.",
+    ],
+    [
+      "Can I give this to someone?",
+      "Yes. Choose Gift to someone, add their email and an optional note, then pay using your own email. After payment, they get their own access and you get the receipt. Their Lab work stays private. Gift checkout opens alongside regular purchases.",
     ],
     [
       "Do I need an AI subscription?",

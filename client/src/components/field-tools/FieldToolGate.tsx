@@ -26,9 +26,10 @@ export function FieldToolSignIn({
     <div className="mx-auto max-w-xl border border-[#60775a] bg-[#12281b] p-7 text-[#f3efe4]">
       <h1 className="font-display text-4xl">Open your Field Tool</h1>
       <p className="mt-4 font-ui text-sm leading-7 text-[#b8c9b8]">
-        Use the email you entered at checkout. We’ll send you a secure sign-in
-        link.
+        Use the email you entered at checkout, or the email your gift was sent
+        to. We’ll send you a secure sign-in link.
       </p>
+      <p className="mt-3 font-ui text-xs leading-6 text-[#b8c9b8]">Bought this as a gift? We email the recipient after payment. They use their own email here.</p>
       <form
         className="mt-6"
         onSubmit={e => {
@@ -37,7 +38,7 @@ export function FieldToolSignIn({
         }}
       >
         <label className="block font-ui text-sm">
-          Purchase email
+          Your email
           <input
             type="email"
             autoComplete="email"
@@ -56,9 +57,9 @@ export function FieldToolSignIn({
       </form>
       {request.isSuccess && (
         <p role="status" className="mt-5 text-sm leading-7">
-          If this email has purchased this tool, an access link is on its way.
-          If you just paid, allow a moment for payment confirmation and try
-          again.
+          If this email has access to this tool, an access link is on its way.
+          If the purchase was just made, allow a moment for payment confirmation
+          and try again.
         </p>
       )}
       {request.error && (
