@@ -95,6 +95,16 @@ export default function FieldToolKitPreview({
             clipPath={"url(#" + foregroundId + ")"}
           />
         </svg>
+        {kit.coverImage && (
+          <img
+            className="field-tool-photo-kit-display"
+            src={asset(kit.coverImage)}
+            alt=""
+            width={636}
+            height={900}
+            style={{ width: 636, height: 900, transform: kit.coverTransform }}
+          />
+        )}
         {kit.mobileErase && (
           <svg viewBox="0 0 1536 1024" className="field-tool-photo-kit-layer">
             <path

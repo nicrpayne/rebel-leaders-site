@@ -18,20 +18,20 @@ export function fieldToolPresentation(slug: string, audience: Audience = "pm") {
     ...base,
     ...(audience === "pm"
       ? {
-          lead: "Your lead isn't convinced.",
-          accent: "Let's find a move you can make together.",
+          lead: "You think AI could help.",
+          accent: "Your lead has questions.",
           promise:
-            "Make a credible case for the opportunity—and bring your lead into shaping it.",
+            "Explain what you hope AI could improve, hear your lead’s concerns, and work out what to do next together.",
           session:
-            "Start with 10 minutes of PM preparation. Then bring your lead into a focused conversation and agree one useful next move.",
+            "Take about 10 minutes to prepare, then talk with your lead. Agree what happens next, who will do it, and when you will talk again.",
         }
       : {
-          lead: "Your PM sees an AI opportunity.",
-          accent: "You see what needs to be true.",
+          lead: "Your PM thinks AI could help.",
+          accent: "You have questions about the work.",
           promise:
-            "Shape responsible AI use with your PM, protect the standards you own, and make the next move clear.",
+            "Help your PM understand the checks, review, and support the idea would need. Decide together whether to try it and what needs to happen first.",
           session:
-            "Start with 10 minutes of engineering preparation. Then work with your PM to agree an outcome, conditions, and one useful next move.",
+            "Take about 10 minutes to prepare, then talk with your PM. Explain what you would need to check and ask what they hope to improve.",
         }),
   };
 }
@@ -47,56 +47,60 @@ export function fieldToolForPath(
     ...tool,
     who:
       audience === "pm"
-        ? "For you, the PM who sees an opportunity and needs a credible way to move it forward with your lead developer."
-        : "For you, the lead developer who wants to make technical judgment useful and shape responsible AI use with your PM.",
+        ? "For product managers who think AI could help and want to work through the idea with their lead developer."
+        : "For lead developers who want to explain their concerns and help their product manager work out a useful next step.",
     sectionEyebrow:
       audience === "pm"
-        ? "YOUR OUTCOME. YOUR LEAD'S JUDGMENT. A SHARED MOVE."
-        : "YOUR JUDGMENT. YOUR PM'S OUTCOME. A SHARED MOVE.",
+        ? "TALK IT THROUGH WITH YOUR LEAD"
+        : "TALK IT THROUGH WITH YOUR PM",
     sectionHeadline:
       audience === "pm"
         ? "Let's make your next conversation useful."
         : "Let's give your PM something they can work with.",
     sectionCopy:
       audience === "pm"
-        ? "Get clear about your Why. Ask what your lead would need to protect. Shape one proposal together, then explain what the evidence supports."
-        : "Name the actual work and risk. Ask which outcome matters to your PM. Shape the conditions together, then make the evidence and next action clear.",
+        ? "Say who you want to help and how. Ask what your lead would need to check. Decide what to do next, then explain what you agreed and what you still need to find out."
+        : "Show your PM where the idea needs checking or extra work. Ask what they hope it will improve. Work out what you could try and what you need to resolve first.",
     chips:
       audience === "pm"
-        ? ["Clarify your Why", "Bring your lead in", "Make the case"]
+        ? [
+            "Say why it matters",
+            "Bring your lead in",
+            "Explain what you agreed",
+          ]
         : [
-            "Make costs concrete",
-            "Shape responsible use",
-            "Defend the decision",
+            "Explain the extra work",
+            "Plan it together",
+            "Explain the decision",
           ],
     cards:
       audience === "pm"
         ? [
             {
               title: "Get your own thinking clear",
-              copy: "Write the outcome, your Why, and the future you want to help create. Check the story you are telling about your lead.",
+              copy: "Write down who you want to help, what could be better, and why you care. Notice what you are assuming about your lead.",
             },
             {
               title: "Invite your lead to shape it",
-              copy: "Ask for their technical judgment. Turn concerns into conditions, make displaced work visible, and agree what evidence would change your view.",
+              copy: "Ask what they would need to check and how much time it would take. Let their answer change the idea. Agree what would make it worth pursuing.",
             },
             {
-              title: "Take a move back",
-              copy: "Use existing evidence or run one bounded test. Give leadership a clear decision, its limits, and an accountable next action.",
+              title: "Tell people what happens next",
+              copy: "Use what you already know or agree to a small experiment. Tell leadership what you decided, what remains uncertain, and who will do what next.",
             },
           ]
         : [
             {
-              title: "Make your judgment concrete",
-              copy: "Name the checks, costs, or maintenance responsibility involved. Describe the worthwhile future you could help create.",
+              title: "Explain what needs checking",
+              copy: "Name the checks, review time, and maintenance the idea would need. Say what you think could be useful about it too.",
             },
             {
               title: "Shape it with your PM",
-              copy: "Ask about the outcome, define responsible conditions, and make the capacity tradeoff explicit together.",
+              copy: "Ask what your PM hopes to improve. Agree the checks and review the work needs, and what other work would have to wait.",
             },
             {
-              title: "Give the result a next move",
-              copy: "Record full effort and quality. Help your PM explain what the evidence supports, what it doesn't, and what happens next.",
+              title: "Decide what to do with the result",
+              copy: "Count the checking and fixes as well as writing the code. Help your PM explain what happened, what it tells you, and what you will do next.",
             },
           ],
   };

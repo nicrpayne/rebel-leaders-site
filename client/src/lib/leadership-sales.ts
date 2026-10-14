@@ -12,63 +12,60 @@ export const LEADERSHIP_SALES: Record<
   }
 > = {
   "deadline-reset": {
-    subtitle:
-      "Give stakeholders a real choice about the date, scope, and next step.",
-    win: "A delivery conversation you can defend.",
-    firstMove:
-      "Bring one promised date. Separate the real constraint from the assumed scope, then shape options with your lead.",
+    subtitle: "Work out what is possible before making another promise.",
+    win: "A clear choice about the work and the date.",
     takeaway:
-      "Leave with a Stakeholder Update: what you know, what can change, and the decision you need.",
-    sampleTitle: "Keep the event. Reset the assumed launch.",
+      "Leave with a Decision Update you can send: here is what we know, here are the options, and here is the decision we need.",
+    sampleTitle: "The event stays. The report comes later.",
     sample:
-      "RECOMMENDATION\nCore workflow for the November 1 event; reporting later, subject to the integration check.\n\nSTATUS\nProposal — sponsor approval still needed.\n\nNEXT MOVE\nSponsor chooses scope Wednesday. Engineering checks integration Thursday.",
+      "RECOMMENDATION\nLaunch online repair bookings for the November 1 event if Thursday’s calendar test passes. Add downloadable service reports later.\n\nSTATUS\nProposed. The sales director has not agreed yet.\n\nNEXT STEP\nSales director chooses Wednesday. Engineering tests the calendar connection Thursday.",
     question: "What if the date really cannot move?",
     answer:
-      "Work the scope, sequence, and capacity options while keeping required quality and safety checks visible. Take the choice to the person who owns the commitment.",
+      "Find out what could be ready by then. You may be able to deliver fewer features or do the work in stages. Keep the required checks, and let the person responsible for the promise choose.",
+    firstMove:
+      "Bring one promised date. Open The Promise in the Lab and write what the customer was told. Check the options with the team before asking the person responsible for the promise to choose.",
   },
   "priority-whiplash": {
-    subtitle:
-      "Show what the new yes would replace. Get one clear priority decision.",
-    win: "An explicit choice. One coherent plan.",
-    firstMove:
-      "Bring the urgent request and the work already promised. Show who benefits, what moves, and who needs to choose.",
+    subtitle: "Make room for the new request by deciding what will wait.",
+    win: "One decision the team can work from.",
     takeaway:
-      "Leave with a Tradeoff Brief that names the recommendation, displacement, owner, and next review.",
-    sampleTitle: "A Friday demo meets a full week.",
+      "Leave with a Priority Decision Brief: what you recommend, what would wait, who can decide, and who needs telling.",
+    sampleTitle: "A Friday demonstration meets a full week.",
     sample:
-      "RECOMMENDATION\nNarrow the demo. Move 2 person-days of reporting work; protect onboarding and security review.\n\nSTATUS\nProposal — the sponsor still needs to choose.\n\nNEXT MOVE\nDecide Wednesday. PM updates the team and reporting stakeholder after agreement.",
-    question: "What if I already own prioritization?",
+      "RECOMMENDATION\nMake a clickable demonstration of the report screen. Postpone two days of work correcting the customer’s report totals; agree a new date for that correction. Keep the invitation-link fix and security checks.\n\nSTATUS\nProposed. The product director still needs to choose.\n\nNEXT STEP\nDecide Wednesday. The account manager tells the affected customer after agreement.",
+    question: "What if I can already set the priorities?",
     answer:
-      "Use the tool to make and communicate the choice within your mandate. When the tradeoff crosses that boundary, bring a recommendation to the relevant decision owner.",
+      "Make the choice and explain what changes. If it would break a promise you cannot change yourself, take that part to the person who can.",
+    firstMove:
+      "Bring the new request and your current work list. Open Current Work in the Lab. Find out what the request needs, ask the team what would have to wait, and take that choice to the person who can decide.",
   },
   "mandate-reset": {
-    subtitle:
-      "Turn the authority gap into a specific request leadership can act on.",
-    win: "A decision right or a workable response rule.",
-    firstMove:
-      "Bring one blocked decision. Map who recommends, decides, executes, and can constrain it.",
+    subtitle: "Ask for the decision you need to do the job.",
+    win: "A clear agreement about who decides and when.",
     takeaway:
-      "Leave with a Reset Request: the gap, the bounded change, and what happens while you wait.",
-    sampleTitle: "A roadmap owner with no scope rule.",
+      "Leave with a Decision Request that says what is stuck, what needs to change, and what you will do while waiting.",
+    sampleTitle: "Who gets to add another feature?",
     sample:
-      "REQUEST\nEvery new scope request goes to one sponsor for an explicit displacement decision before the plan changes.\n\nSTATUS\nProposal — new authority has not been granted.\n\nNEXT MOVE\nSponsor responds before planning. PM prepares options within current authority.",
+      "REQUEST\nSend new feature requests to the product director before changing the plan. If a request will not fit, decide what waits.\n\nSTATUS\nProposed. This way of working has not been agreed.\n\nNEXT STEP\nAsk for an answer within one working day. Keep the existing plan until a change is approved.",
     question: "What if they cannot give me more authority?",
     answer:
-      "Ask for an escalation recipient, response time, and agreed interim action. A useful reset can be an operating rule rather than a new job title.",
+      "Ask who you should go to, how quickly they will answer, and what you should do while waiting. That may be enough to keep the work moving.",
+    firstMove:
+      "Bring one decision you keep getting stuck on. Open The Problem in the Lab. Write what you are expected to deliver and what you cannot decide. Check who can help before drafting your request.",
   },
   "product-project-translator": {
     subtitle:
-      "Answer their real planning need without promising what you cannot yet know.",
-    win: "A useful answer that keeps trust intact.",
-    firstMove:
-      "Bring the sentence you heard. Check which decision it supports, then offer a commitment and evidence checkpoint.",
+      "Give them an answer they can use, even while you are still learning.",
+    win: "A useful promise you can keep.",
     takeaway:
-      "Leave with a Stakeholder Response and Commitment Card you can take into the next meeting.",
-    sampleTitle: "Finance needs a decision, not every requirement.",
+      "Leave with Your Reply and a Proposed Commitment: what you can do, what it will cost, and when you will talk again.",
+    sampleTitle: "Finance needs a spending decision.",
     sample:
-      "RESPONSE\nWe can define the outcome and a capped discovery phase now. In two weeks, we will bring customer evidence and a delivery assessment for the funding decision.\n\nSTATUS\nProposal — phase approval still needed.\n\nNEXT MOVE\nFinance chooses the boundary Thursday. PM schedules the review after agreement.",
+      "REPLY\nCan we spend up to $5,000 over two weeks testing the two booking-screen designs with five customers and checking the build effort with Engineering? Then we can decide whether to fund the build.\n\nSTATUS\nProposed. Finance has not approved the spending.\n\nNEXT STEP\nFinance answers Thursday. Schedule the review for two weeks after the approved start.",
     question: "Does this mean we never commit to dates?",
     answer:
-      "No. Use evidence-based delivery commitments where the work supports them. This tool helps with the specific uncertainties and coordination needs in the request you are facing.",
+      "No. Promise a delivery date when you have enough information to stand behind it. When you do not, say what you can promise now and when you will know more.",
+    firstMove:
+      "Bring the exact words someone used. Open The Request in the Lab. Ask what they need your answer for, then work out what you can promise and when you will know more.",
   },
 };

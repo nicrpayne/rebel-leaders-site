@@ -110,7 +110,7 @@ def cover(c):
     c.setFillColor(GOLD)
     c.setFont("GuideSans", 10)
     c.drawString(M, 441, f"THE {ROLE} FIELD GUIDE")
-    y = paragraph(c, ("Make a credible case for the opportunity. Shape the next move with your lead." if AUDIENCE == "pm" else "Shape responsible use with your PM."), M, 300, CW, "cover")
+    y = paragraph(c, ("Explain the opportunity. Work out the next step with your lead." if AUDIENCE == "pm" else "Explain the concerns. Work out the next step with your PM."), M, 300, CW, "cover")
     c.setStrokeColor(GOLD)
     c.line(M, y - 26, W - M, y - 26)
     c.setFillColor(CREAM)
@@ -122,7 +122,7 @@ def cover(c):
     c.setFont("GuideSans", 8)
     c.linkURL(LAB_URL, (M, 25, W-M, 76), relative=0)
     c.drawString(M, 76, "OPEN YOUR " + ROLE + " LAB >")
-    c.drawString(M, 58, "UNDERSTAND THE PRESSURE. WORK THE SITUATION. LEAVE WITH A MOVE.")
+    c.drawString(M, 58, "START WITH A REAL SITUATION. DECIDE WHAT HAPPENS NEXT.")
     c.drawString(M, 39, "WORKING EDITION / REBEL-LEADER.COM")
     c.showPage()
 

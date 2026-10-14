@@ -15,8 +15,8 @@ export default function PMAIStalemateLanding() {
   const presentation = fieldToolPresentation("ai-stalemate", "pm");
   const benefits = [
     {
-      title: "Clarify your Why",
-      detail: "Name the future worth pursuing.",
+      title: "Say why it matters",
+      detail: "Describe what could be better.",
       Icon: Compass,
     },
     {
@@ -25,8 +25,8 @@ export default function PMAIStalemateLanding() {
       Icon: MessageSquare,
     },
     {
-      title: "Co-create the next move",
-      detail: "Shape the approach together.",
+      title: "Decide together what to do next",
+      detail: "Make a plan you both helped write.",
       Icon: Users,
     },
   ];
@@ -37,15 +37,15 @@ export default function PMAIStalemateLanding() {
     ],
     [
       "Your PM Lab",
-      "Clarify your Why, explore concerns, and co-create a next move.",
+      "Explain what you hope to improve, ask about the concerns, and agree what happens next.",
     ],
     [
-      "Shared Next-Step Brief",
-      "A proposal or agreement with a next action, owner, and date.",
+      "Next Step Together",
+      "What you want to do next, who will do it, and when. It says whether you have agreed or are still asking.",
     ],
     [
-      "Bet Brief, Evidence Record & Decision Brief",
-      "For when a bounded test is the right move.",
+      "Experiment Plan, Results Record & Decision Brief",
+      "Use these if you decide an experiment would help.",
     ],
     [
       "Worked walkthrough",
@@ -61,7 +61,7 @@ export default function PMAIStalemateLanding() {
             {presentation.lead} <em>{presentation.accent}</em>
           </>
         }
-        description="Get clear about your Why, invite your lead to shape the opportunity, and leave with a decision you can take back to leadership."
+        description="Explain what you want to improve. Ask what your lead would need to check. Work out the next step together, then tell leadership what you have agreed."
         image={PM_AI_HERO_IMAGE}
         imageLayout="wide"
         showCaption={false}

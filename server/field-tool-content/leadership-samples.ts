@@ -1,171 +1,187 @@
 export const LEADERSHIP_SAMPLES: Record<string, Record<string, string>> = {
   "deadline-reset": {
-    outcome: "Give customers a reliable core workflow at the November 1 event.",
+    outcome:
+      "Let customers book a repair appointment online at the November 1 customer event.",
     date: "November 1",
     promise:
-      "Fictional case: sponsor communicated a full launch before integration discovery finished.",
-    fixed: "The customer event is booked for November 1.",
+      "Fictional example: our sales director told customers they could book repairs online and download service reports from November 1.",
+    fixed:
+      "The customer event is booked for November 1. Customers need to see how online booking will work.",
     constraintBasis:
-      "Sponsor confirmed the event booking. Full launch scope is not a contractual requirement in this fictional case.",
+      "The sales director confirmed the event date. No contract requires both features to be ready that day.",
     assumed:
-      "All requested reporting features ship at the event; integration works without additional changes.",
+      "We assumed the booking page would connect to the repair calendar without more work, and that downloadable reports would be ready too.",
     unknown:
-      "Integration behavior and the remaining acceptance effort are unverified.",
+      "We have not checked whether bookings reach the repair calendar correctly or how much testing is left.",
     scopeMove:
-      "Core customer workflow at the event; reporting sequenced afterward. Engineering checks feasibility at the integration review.",
+      "Aim to offer online booking on November 1 and add downloadable service reports later. The engineering lead needs to check the calendar connection on Thursday before confirming that plan.",
     dateMove:
-      "Keep full scope; Engineering reassesses the range after Thursday's integration check. No replacement date is yet supported.",
+      "If both booking and reports must be ready together, ask the engineering lead for a new delivery estimate after Thursday's check. We do not have a reliable replacement date yet.",
     capacityMove:
-      "Current team, no assumed overtime. Sponsor protects integration-review and acceptance capacity.",
+      "Keep the current team. Reserve time for checking the calendar connection and testing bookings. Do not assume anyone will work overtime.",
     qualityGuardrails:
-      "Security review, permission checks, and customer acceptance remain required.",
+      "Customers must only see their own bookings. The team must test that appointments are recorded correctly and complete its security review.",
     consequence:
-      "Full scope plus unresolved integration makes the current promise low confidence.",
+      "If we keep promising both features for November 1, we risk letting customers down because the calendar connection and remaining testing are still unconfirmed.",
     chosenOption: "Keep date / change scope",
     recommendation:
-      "Protect the event's customer outcome with the smaller workflow, subject to integration evidence. Ask the sponsor to reset reporting expectations.",
+      "Keep the event, aim for working online booking, and explain that reports will come later. Confirm what we can promise after Thursday's calendar check.",
     confidence: "Medium",
     confidenceScope:
-      "Core workflow by November 1, conditional on Thursday's integration check.",
+      "Online booking by November 1, provided Thursday's calendar check succeeds.",
     forecastBasis:
-      "Engineering assessed the core workflow from completed work; the integration remains the principal open condition.",
+      "The booking page is built. The engineering lead thinks the remaining work can fit, but has not yet checked the calendar connection.",
     evidenceNext:
-      "Engineering lead tests the integration and confirms the remaining acceptance work on Thursday.",
-    checkpoint: "Thursday, after integration review",
+      "The engineering lead will send test bookings to the repair calendar on Thursday and list any fixes or testing still needed.",
+    checkpoint: "Thursday afternoon, after the calendar check",
     decisionNeeded:
-      "Approve the smaller event scope or request a full-scope date reassessment.",
-    owner: "Product sponsor",
-    decisionBy: "Wednesday, before the external update",
+      "Agree to focus on booking for the event, or ask for a new date when booking and reports can both be ready.",
+    owner: "Sales director, who made the customer promise",
+    decisionBy: "Wednesday, before the next customer update",
     decisionStatus: "PROPOSAL — awaiting a decision",
-    finalDecision: "Sponsor response is not yet recorded.",
+    finalDecision:
+      "We have not discussed this recommendation with the sales director yet.",
     communication:
-      "Sponsor owns the customer update; PM updates the release plan after agreement.",
-    privateReaction: "I'm frustrated that discovery was treated as finished.",
+      "The sales director will tell customers what to expect. After a decision, the product manager will update the team's plan.",
+    privateReaction:
+      "I am frustrated that customers were promised this before we checked the calendar connection.",
     privateAssumption:
-      "I may be assuming the sponsor doesn't care about delivery quality. Ask what the event needs to achieve.",
+      "I am assuming the sales director ignored the risks. I need to ask what customers were told and what they need for the event.",
+    checkpointFallback:
+      "If the calendar check fails, ask the sales director on Thursday whether the event should show a demonstration only. Tell customers by Friday that online booking is not yet available.",
+    unresolvedPlan:
+      "If we cannot get a decision, ask who can make it and when they can respond. Keep working to the last agreed plan within our existing authority. Check again on the date recorded above; silence does not mean yes.",
   },
   "priority-whiplash": {
     outcome:
-      "Finish a usable onboarding improvement while maintaining required security checks.",
-    p1: "Customer onboarding fix — current customer commitment",
-    p2: "Security review — required release condition",
-    p3: "Reporting update — customer expects the agreed sequence",
+      "Help new customers join their account, keep customer information private, and give customers accurate report figures.",
+    p1: "Fix the broken invitation link that stops new customers joining their account.",
+    p2: "Check that customers cannot see another customer's information before releasing the next software update.",
+    p3: "Correct the inaccurate totals in a customer's monthly report.",
     otherWork:
-      "Support and reviewer time are already included in the entered 10-person-day existing load.",
+      "The team's estimate of 10 days of existing work includes customer support and checking each other's changes.",
     newAsk:
-      "Fictional case: an executive requests a demo for Friday's customer meeting.",
-    whyNow: "A customer meeting has been added for Friday.",
+      "Fictional example: the sales director asks us to show a customer how a proposed report screen would work at Friday's meeting.",
+    whyNow: "The customer meeting has just been added for Friday.",
     urgencyBasis:
-      "Sponsor confirmed the meeting. Need is to demonstrate the core idea; a new production feature is not required.",
+      "The sales director confirmed that the customer wants to react to the proposed screen. They do not need working reporting software for the meeting.",
     priorityChoice: "Narrow the request",
     moves:
-      "Move 2 person-days of reporting work out of this planning window to create capacity for a narrow demo.",
+      "Make a simple clickable demonstration and put off two days of work on the incorrect report totals. Check the new report-fix date with the team before promising it.",
     impact:
-      "Reporting's stakeholder needs a revised sequence; Engineering must reassess the resulting delivery forecast.",
+      "The customer waiting for accurate report totals would wait longer. Their account manager needs the revised date and must tell them what is happening.",
     protected:
-      "Onboarding outcome, security review, and the team's agreed acceptance checks.",
+      "Keep the invitation-link fix and the checks that protect customer information.",
     alternative:
-      "Keep reporting in place and use the existing prototype Friday; it supports feedback but does not demonstrate a finished production workflow.",
+      "Keep all three current commitments and show the customer the sketches we already have. They could discuss the idea, but would not be able to click through it.",
     availableCapacity: "10",
     existingLoad: "10",
     requestLoad: "2",
-    capacityWindow: "The remaining shared planning window before Friday",
+    capacityWindow: "The remaining working time from now to Friday",
     capacityBasis:
-      "Fictional team estimates in person-days, including review and support. No assumed overtime; this is not a schedule calculation.",
+      "Fictional estimates: the people involved have 10 days of work time between them before Friday. Existing work needs all 10 days; the simple demonstration needs 2 more. These totals include support and review, with no overtime.",
     recommendation:
-      "Use a narrow demo only with explicit reporting displacement. It meets the customer meeting need with less disruption than a production feature.",
-    decisionOwner: "Product sponsor",
+      "Use a simple clickable demonstration for Friday only if we agree to delay the report correction. It lets the customer react to the idea without asking the team to build the full feature.",
+    decisionOwner:
+      "Product director, who can approve changes to these customer commitments",
     decisionDate: "Wednesday afternoon",
     decisionStatus: "PROPOSAL — awaiting a decision",
-    finalDecision: "Sponsor response is not yet recorded.",
+    finalDecision: "The product director has not made the decision yet.",
     communication:
-      "PM updates the team plan and reporting stakeholder after sponsor agreement, by Thursday morning.",
-    reviewDate: "Friday, after the customer meeting",
-    privateReaction: "I feel like the current plan is being ignored.",
+      "After the decision, the product manager will update the team and the account manager by Thursday morning. The account manager will tell the customer waiting for the report correction.",
+    reviewDate:
+      "Friday after the customer meeting: did the demonstration help, and was the report customer told about the delay?",
+    privateReaction:
+      "I feel as though the work we already promised has been forgotten.",
     privateAssumption:
-      "I may be assuming the request is a vanity demo. Ask what the customer needs to learn.",
+      "I am assuming the demonstration is just to impress someone. I need to ask what the customer needs to see.",
+    unresolvedPlan:
+      "If we cannot get a decision, ask who can make it and when they can respond. Keep working to the last agreed plan within our existing authority. Check again on the date recorded above; silence does not mean yes.",
   },
   "mandate-reset": {
-    outcome: "Deliver a coherent roadmap outcome with one agreed release plan.",
+    outcome:
+      "Release an online repair-booking page on the agreed date, with one plan the team can follow.",
     blockedDecision:
-      "Sequence or displace newly requested scope before it changes the release plan.",
+      "Who can decide whether a new request replaces work already planned for this release?",
     consequence:
-      "The team receives conflicting additions while Product remains accountable for the original delivery date.",
-    recommend: "Product manager",
-    approve: "Executive sponsor",
-    execute: "Product and Engineering",
+      "Different directors keep asking developers to add features. I am expected to meet the original date, but cannot postpone those requests.",
+    recommend:
+      "Product manager: brings the options and explains what each would change.",
+    approve:
+      "Product director: can make the final call about what goes into this release.",
+    execute:
+      "Developers build and test the changes; the product manager updates the plan.",
     block:
-      "Requesting executives introduce conflicting scope demands; security owner retains required approval.",
+      "Other directors can ask for work. The security reviewer can withhold release approval if customer information is not protected.",
     accountable:
-      "Product manager for the roadmap outcome; specialist owners for their approvals.",
+      "The product manager must explain delivery progress. The engineering lead is responsible for the software checks.",
     rightsEvidence:
-      "Observed scope additions and sponsor approvals support the map. Sponsor must still confirm the operating rule with affected executives.",
+      "The product director has approved release changes before. We still need them to confirm how new requests should be handled and tell the other directors.",
     requiredApprovals:
-      "Security/data approvals, spending limits, and Engineering acceptance remain with their accountable owners.",
-    gap: "Several executives can introduce work; Product cannot displace it. There is no agreed sponsor response rule before the plan changes.",
+      "The security reviewer must approve the customer-data checks. The finance manager approves extra spending. The engineering lead confirms that the software is ready to release.",
+    consult:
+      "Ask the developers about the work involved and the account manager about customer promises before making the final call.",
+    gap: "I am held responsible for the release date, but directors can add work and I cannot say what should wait. We have no agreed way to get a quick decision.",
     request:
-      "Every new scope request goes to one sponsor for an explicit displacement decision before the release plan changes.",
+      "Send new requests to the product director before adding them to the team's plan. The director should say whether to add them now and, if they do not fit, what should wait.",
     boundaries:
-      "Within the approved outcome and budget; required security and Engineering acceptance conditions remain intact.",
+      "Keep the agreed budget and the required security and software checks. This changes how we choose work; it does not remove those approvals.",
     fallback:
-      "If disputed, PM escalates to sponsor within one working day. Current agreed plan remains in place while awaiting the sponsor's response.",
-    owner: "Executive sponsor",
-    date: "Before Monday's planning session",
+      "If I cannot make that call, ask the product director to respond within one working day. Keep the last agreed plan while waiting.",
+    owner: "Product director",
+    date: "Before Monday's planning meeting",
     decisionStatus: "PROPOSAL — awaiting a decision",
-    finalDecision: "Sponsor has not yet agreed to the reset.",
+    finalDecision:
+      "The product director has not agreed to this way of handling requests yet.",
     interimAction:
-      "PM prepares scope options and gathers affected-owner input within current authority; no new authority is assumed.",
+      "I will collect the new requests and check how much work they involve. I will not change the agreed plan without permission.",
     reviewDate:
-      "After the next two requests: verify one sponsor decision, explicit displacement, and one updated team plan.",
-    privateReaction: "I feel judged on a lever I cannot move.",
+      "After the next two requests, check whether the director responded in time and the team received one clear plan.",
+    privateReaction: "I feel blamed for a date I cannot protect.",
     privateAssumption:
-      "I may be assuming executives are avoiding responsibility. Check what decision right they believe I have.",
+      "I am assuming the directors are avoiding the decision. I need to check what they think I am allowed to decide.",
+    unresolvedPlan:
+      "If we cannot get a decision, ask who can make it and when they can respond. Keep working to the last agreed plan within our existing authority. Check again on the date recorded above; silence does not mean yes.",
   },
   "product-project-translator": {
     request:
-      "Fictional case: Give me the final requirements before we reserve next-quarter funding.",
-    stakeholder: "Finance sponsor",
+      "Fictional example: Please give me the final list of features before I reserve next quarter's budget.",
+    stakeholder: "Finance director",
     context:
-      "Finance needs an investment decision before its funding window closes.",
+      "Finance needs to decide how much money to set aside for a new online repair-booking service.",
     need: "Budget / staffing",
     needEvidence:
-      "Finance confirmed that the immediate need is a bounded funding decision, rather than every interaction being finalized.",
+      "The finance director confirmed they need a spending limit by Thursday. They do not need every screen agreed yet.",
     assumption:
-      "The final customer workflow can be specified before either candidate workflow is tested.",
-    outcome: "Choose a customer workflow worth funding for the full build.",
+      "We are assuming we can choose the booking screens before customers have tried either design.",
+    outcome:
+      "Find a booking design customers can use without phoning the service desk.",
     known:
-      "The target customer outcome and an initial discovery budget boundary; final workflow is not yet tested.",
+      "Customers currently phone to book repairs. We have sketches of two booking designs, but customers have not tried them.",
     unknown:
-      "Which of two candidate workflows serves the customer at acceptable delivery effort.",
+      "Can customers complete a booking using either design, and what would it take to build the better one?",
     commit:
-      "Test two candidate workflows within a capped two-week discovery phase; PM owns customer evidence and Engineering owns the delivery assessment.",
+      "Propose spending up to $5,000 over two weeks to let five customers try both designs and ask Engineering what each would take to build. The product manager arranges the customer sessions; the engineering lead estimates the build work.",
     commitmentBounds:
-      "Agreed discovery budget and two-week timebox. No production release or full-build funding commitment is made by this phase.",
+      "Maximum $5,000 and two weeks, including customer sessions and Engineering's assessment. No working booking service or full-build budget is promised at the end.",
     checkpoint:
-      "PM and Engineering bring customer findings and a delivery assessment at the two-week funding review. Review is scheduled after phase approval.",
+      "If Finance approves, book a review two weeks after we start. Bring the customer results, Engineering's estimate, and a recommendation to build, change the design, or stop.",
     response:
-      "I understand you need a funding decision for next quarter. I can give you the outcome, investment boundary, and next decision now. We propose testing two workflows within a capped two-week phase, then bringing customer evidence and a delivery assessment before you commit to the full build. Can you approve that boundary by Thursday?",
+      "I understand you need a spending limit by Thursday. Could we set aside up to $5,000 for two weeks to try both booking designs with five customers and check the build work with Engineering? We would then bring you the results and a recommendation before asking for the full build budget.",
+    spokenResponse:
+      "You need a budget by Thursday. Could we approve up to $5,000 for two weeks of customer testing first? Then we can show you which design works and what it would take to build before you commit to the full cost.",
     decisionNeeded:
-      "Approve or revise the capped discovery phase and confirm the funding decision owner.",
-    owner: "Finance sponsor",
-    decisionDate: "Thursday, before reserving discovery capacity",
+      "Approve or change the proposed $5,000, two-week customer test and Engineering assessment.",
+    owner: "Finance director",
+    decisionDate: "Thursday, before booking the customer sessions",
     decisionStatus: "PROPOSAL — awaiting a decision",
-    finalDecision: "Finance response is not yet recorded.",
+    finalDecision: "The finance director has not responded yet.",
     nextAction:
-      "PM presents the Commitment Card Thursday; schedules the two-week evidence review after agreement.",
-    privateReaction: "I feel misunderstood as the PM.",
+      "The product manager will discuss the proposal with Finance on Thursday. Book the customer sessions and review meeting only after approval.",
+    privateReaction: "I feel pushed to promise details we have not worked out.",
     privateAssumption:
-      "I may be treating Finance's planning need as hostility to Product. Ask which decision they actually need to make.",
+      "I am assuming Finance wants to control the design. I need to ask what they need the feature list for.",
+    unresolvedPlan:
+      "If we cannot get a decision, ask who can make it and when they can respond. Keep working to the last agreed plan within our existing authority. Check again on the date recorded above; silence does not mean yes.",
   },
 };
-
-LEADERSHIP_SAMPLES["deadline-reset"].checkpointFallback =
-  "If Thursday's integration check fails, propose a demo-only event scope to the sponsor that day. The sponsor owns changing the external promise; update affected customers by Friday.";
-LEADERSHIP_SAMPLES["mandate-reset"].consult =
-  "Product, Engineering, and the customer-facing lead give input before the sponsor decides. Security approval remains a required release condition, not an optional consultation.";
-LEADERSHIP_SAMPLES["product-project-translator"].spokenResponse =
-  "I understand you need to reserve next quarter's funding. We can commit to a capped two-week discovery phase now. We will bring customer evidence and an Engineering assessment to the review so you can choose the next investment.";
-for (const sample of Object.values(LEADERSHIP_SAMPLES)) {
-  sample.unresolvedPlan =
-    "If no decision is reached, ask the named owner to confirm who can decide. Continue only work within the existing mandate and revisit at the recorded decision checkpoint. Do not treat silence as agreement.";
-}

@@ -1,3 +1,4 @@
+import { fieldToolLabStep } from "@/lib/field-tool-workflow";
 import FieldToolsFooter from "./FieldToolsFooter";
 import { getFieldTool } from "@/lib/field-tools";
 import { fieldToolBase } from "@/lib/field-tool-paths";
@@ -219,7 +220,7 @@ export default function ChapterGuide({ slug }: { slug: string }) {
                 {chapter.callout}
               </div>
               <Link
-                href={`${base}/lab?step=${slug === "ai-stalemate" ? (index <= 3 ? 0 : index <= 6 ? 1 : index === 7 ? 2 : index === 8 ? 3 : 4) : index <= 1 ? 0 : index <= 3 ? 1 : index <= 5 ? 2 : 3}`}
+                href={`${base}/lab?step=${fieldToolLabStep(slug, index)}`}
                 className="mt-5 inline-block font-ui text-sm underline underline-offset-4 print:hidden"
               >
                 Use this in the Lab →

@@ -67,7 +67,7 @@ export default function FieldToolPurchase({
               {(slug === "ai-stalemate"
                 ? [
                     {
-                      name: "Shared Next-Step Brief",
+                      name: "Next Step Together",
                       copy: "A clear proposal for the next conversation: clarify, prepare, experiment, or stop this use.",
                     },
                     ...presentation.artifacts,

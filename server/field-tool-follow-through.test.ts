@@ -26,12 +26,12 @@ describe("working records follow the actual conversation", () => {
       LEADERSHIP_GUIDE_PAGES["deadline-reset"][
         FIELD_TOOL_GUIDE_CHAPTERS["deadline-reset"][1]
       ].eyebrow
-    ).toContain("CREATE OPTIONS");
+    ).toContain("COMPARE THE OPTIONS");
     expect(
       LEADERSHIP_GUIDE_PAGES["priority-whiplash"][
         FIELD_TOOL_GUIDE_CHAPTERS["priority-whiplash"][1]
       ].eyebrow
-    ).toContain("SHOW DISPLACEMENT");
+    ).toContain("WHAT WOULD CHANGE");
     expect(
       LEADERSHIP_GUIDE_PAGES["product-project-translator"][
         FIELD_TOOL_GUIDE_CHAPTERS["product-project-translator"][2]
@@ -75,9 +75,9 @@ describe("working records follow the actual conversation", () => {
       requiredApprovals: "Security release approval",
       approve: "Sponsor decides scope",
     });
-    expect(output).toContain("CONSULTED INPUT (I)");
-    expect(output).toContain("REQUIRED AGREEMENT (A)");
-    expect(output).toContain("Final decision (D): Sponsor decides scope");
+    expect(output).toContain("WHO WE ASKED FOR ADVICE");
+    expect(output).toContain("REQUIRED APPROVAL");
+    expect(output).toContain("Makes the call: Sponsor decides scope");
   });
   it("keeps a bounded AI bet separate from wider deployment permission on both paths", () => {
     for (const audience of ["pm", "lead-dev"] as const) {

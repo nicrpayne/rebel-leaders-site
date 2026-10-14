@@ -16,20 +16,20 @@ export function readinessStep(audience: Audience) {
       id: "businessContext",
       section: "01 / SHARE THE CONTEXT",
       label: pm
-        ? "What outcome matters to you, and what context would help your lead understand it?"
-        : "What outcome and context have you understood from your PM?",
-      hint: "Use the conversation you are already having. Describe who benefits and why it matters; include urgency only when it is relevant.",
+        ? "What do you want to improve, and what does your lead need to know about it?"
+        : "What does your product manager want to improve, and why?",
+      hint: "Start with what you have already discussed. Say who this would help and how. Include a deadline only if it matters to the request.",
     },
     {
       id: "counterpartConcern",
       label: pm
         ? "How would your lead describe their concern?"
-        : "How would your PM describe what they need?",
+        : "How would your product manager describe what they need?",
       hint: "Use their words where possible. If you have not asked, record the question instead of filling in their motives.",
     },
     {
       id: "openQuestions",
-      label: "What do you understand together, and what is still unresolved?",
+      label: "What do you agree on? What do you still need to work out?",
       hint: "Include disagreement fairly. What do you need to ask, learn, or have someone qualified verify?",
     },
     {
@@ -46,53 +46,53 @@ export function readinessStep(audience: Audience) {
     {
       id: "businessBasis",
       label: pm
-        ? "Where does the delay-cost estimate come from?"
-        : "Who supplied the delay-cost estimate, and what supports it?",
-      hint: "Record the source, assumptions, uncertainty, and who can validate it. A stakeholder claim is not automatically an established loss.",
+        ? "If someone says the delay costs money, where did that figure come from?"
+        : "If someone says the delay costs money, who said it and how did they work it out?",
+      hint: "Name who supplied it, what it includes, and who can check it. A possible future benefit is different from money already being lost.",
     },
     {
       id: "growthOpportunity",
       label: pm
         ? "What worthwhile opportunity could this create for your team?"
         : "What worthwhile opportunity could you and your PM help create?",
-      hint: "Connect customer value, engineering capability, influence over standards, and possible career opportunities. Invite your counterpart to shape the picture.",
+      hint: "What could customers do more easily? What could the team learn or help others do? Ask the other person what would make it worthwhile for them.",
     },
     {
       id: "accessModel",
       section: "OPTIONAL / TECHNICAL CONDITIONS",
       label: pm
-        ? "What access decisions need your lead and the data owner?"
-        : "What access model needs to be agreed across these apps?",
-      hint: "Which users or groups can perform which actions on which data? Include resource boundaries, membership changes, and the accountable access-policy owner.",
+        ? "Who should be allowed to see or change the information in these apps?"
+        : "Who should be allowed to see or change which records across these apps?",
+      hint: "For example, should a support agent see only their own customers? Who approves access, changes it when someone moves jobs, and removes it when they leave?",
     },
     {
       id: "securityChecks",
       label: pm
-        ? "What API and permission checks must be demonstrated?"
-        : "What checks will demonstrate that APIs and routes enforce permissions?",
-      hint: "Name the engineering/security owner and evidence for denied access, approved access, and data boundaries. Hiding a screen or adding sign-in does not establish authorization.",
+        ? "How will the team check that people can only access what they are allowed to?"
+        : "How will you test that each server request checks the user's permission?",
+      hint: "Name who will test both allowed and blocked access, including attempts to open another customer's records. Signing in or hiding a button is not enough to prove this works.",
     },
     {
       id: "automationBoundary",
       label: pm
         ? "What may the AI tool or agent read, change, or deploy?"
-        : "What permissions and operating boundaries may the tool or agent have?",
-      hint: "Record environment, data, credentials, write/deploy permissions, human approvals, and rollback. An assistant drafting code and an agent acting on systems need different boundaries.",
+        : "What may the AI tool read, change, or release to live systems?",
+      hint: "Say which systems and information it may use, what it may change, when a person must approve, and who could undo a mistake. Drafting code is different from changing a live system.",
     },
     {
       id: "teamReadiness",
       section: "OPTIONAL / TEAM SUPPORT",
       label: pm
-        ? "What engineering capabilities can your team demonstrate today?"
+        ? "What can the team already explain, test, review, and support?"
         : "What can your team confidently explain, test, review, and maintain?",
-      hint: "Consider authentication/authorization, testing, Git and review, debugging, deployment, rollback, and working in small increments. Use demonstrated capability rather than age or job title.",
+      hint: "Can they check sign-in and permissions, review code changes, find a bug, release a change, and undo it? Use work they have demonstrated rather than assuming from a job title.",
     },
     {
       id: "readinessSupport",
       label: pm
-        ? "What training, pairing, or qualified review should you help protect?"
-        : "What training, pairing, or qualified review does this use require?",
-      hint: "Name the support, its owner, reserved capacity, and a readiness check. Scrum familiarity and secure engineering capability each need their own attention.",
+        ? "What training, time working with an experienced developer, or review does the team need?"
+        : "What training, time working together, or specialist review does this task need?",
+      hint: "Name who will help, when they have time, and what the team will demonstrate before starting. Knowing the team's meeting routine does not show that someone can safely change the software.",
     },
     {
       id: "readinessDecision",
@@ -102,12 +102,12 @@ export function readinessStep(audience: Audience) {
         : "What next move would you propose or agree with your PM?",
       type: "select",
       options: READINESS_CHOICES,
-      hint: "Clarify the conversation, ask a specialist, prepare the team, review existing evidence, design a bounded test, or stop this use. Choose what fits where you are.",
+      hint: "You can ask more questions, get specialist advice, prepare the team, review existing results, plan a small experiment with clear limits, or stop. Choose what helps now.",
     },
     {
       id: "prerequisitePlan",
-      label: "What must happen next, who owns it, and when will you review?",
-      hint: "For each unresolved prerequisite, name the action, accountable owner, date, and evidence that will show it is resolved. Existing evidence or a justified stop can be the right next move.",
+      label: "What happens next, who will do it, and when will you check back?",
+      hint: "For each thing that needs to happen first, name the person, action, and date. Say how you will know it is done. It is fine to use what you already know or decide not to pursue this use.",
     },
   ];
   return {
@@ -116,8 +116,8 @@ export function readinessStep(audience: Audience) {
       ? "Understand what matters to each of you."
       : "Understand what matters to each of you.",
     intro: pm
-      ? "Start wherever the ongoing conversation stands. Share the outcome you care about, hear your lead’s concerns, and choose one useful next move. An experiment is one possibility."
-      : "Start wherever the ongoing conversation stands. Ask what your PM hopes to improve, make your concerns concrete, and choose one useful next move together.",
+      ? "Pick up the conversation where you left it. Explain what you want to improve, ask about your lead's concerns, and decide what to do next. You do not have to run an experiment."
+      : "Pick up the conversation where you left it. Ask what your product manager wants to improve, explain your concerns, and decide what to do next together.",
     fields: [
       ...fields.filter(
         f =>
@@ -146,67 +146,58 @@ export function readinessStep(audience: Audience) {
   };
 }
 export function readinessChapters(audience: Audience) {
-  const pm = audience === "pm";
-  return [
+  const pages = [
     {
-      eyebrow: "SHARE THE BUSINESS CONTEXT",
-      title: pm
-        ? "Bring the rooms you're in into this room."
-        : "Ask what your PM is hearing.",
-      intro: pm
-        ? "Your lead may not hear the revenue, customer, or operational consequences discussed with leadership. Share that context so the team can judge the opportunity with you."
-        : "Your PM may hear costs of delay, customer commitments, and opportunities you haven't seen. Ask for the context behind the urgency, then help turn it into a credible investment.",
+      eyebrow: "SHARE WHAT YOU KNOW",
+      title: "Explain why this matters.",
+      intro:
+        "Your colleague may not have heard what you heard from customers or leadership. Bring that information into the conversation, including anything you have not checked.",
       sections: [
         {
-          title: "Name the outcome and the consequence",
-          body: pm
-            ? "Describe who benefits, what changes, and why timing matters. If a sponsor says each week costs $500,000, attribute the estimate and explain what is included."
-            : "Ask which outcome matters, who is affected by delay, and what timing changes. If you hear $500,000 per week, ask where the estimate comes from and which assumptions it depends on.",
+          title: "Who would this help?",
+          body: "Describe the people and the work. In our fictional example, support staff copy repair requests into two systems. An app might remove that repeated work and reduce missed requests.",
         },
         {
-          title: "Keep estimates open to examination",
-          body: "Separate an observed cost, a forecast, and a stakeholder's claim. Name who can validate the figure. Urgency helps prioritize an investment; the engineering and access requirements still need owners.",
+          title: "Where did the number come from?",
+          body: "If someone says this could be worth $500,000 a week, ask how they worked it out. Is that money currently being lost, money they hope to earn, or time they expect to save? Say who supplied the estimate and who will check it.",
         },
         {
-          title: "Make the opportunity shared",
-          body: "A team that establishes trustworthy practices could improve delivery and influence how the company works. Connect that possibility to learning, mastery, customer value, and professional opportunity for both leaders.",
+          title: "What could the team learn?",
+          body: "People may become better at checking generated code or teaching others where it helps. Ask what would make the work worthwhile for them too. Do not promise promotion or rewards you cannot control.",
         },
         {
-          title: "Make the investment explicit",
-          body: pm
-            ? "Ask what capacity, platform work, training, or review would make progress responsible. Take the tradeoff to the person who owns priorities, then report a next move with an owner and date."
-            : "Translate the concern into an investment your PM can discuss: an access-model decision, a qualified reviewer, training, or a smaller use. Explain what that investment would enable.",
+          title: "What would it take to find out?",
+          body: "Ask what help, permission, training, or time is missing. Take that specific request to the person who can approve it. Name what other work would wait.",
         },
       ],
       callout:
-        "Try together: The opportunity matters. Let's put the business case and the conditions for responsible delivery in one picture.",
+        "Try: ‘Here’s what I’ve heard from the customer. I haven’t checked this figure yet. What else would you need to know before we decide whether to try it?’",
     },
     {
-      eyebrow: "PROTECT THE SYSTEM",
-      title: "Make access a design decision.",
-      intro: pm
-        ? "Your lead's concern about an unprotected API is a concrete issue to resolve. Help identify the data owner, the access decision, and the evidence needed before connecting a new app to real systems."
-        : "Make the specific access gap visible to your PM. Name the route, action, or data boundary at risk and the design decision and verification it needs.",
+      eyebrow: "CHECK WHO CAN ACCESS THE DATA",
+      title: "Who should be able to see this?",
+      intro:
+        "Imagine a customer opening the app and seeing another customer’s repair history. Before connecting real systems, the people responsible need to agree who may see and change each kind of record—and verify that the software enforces it.",
       sections: [
         {
-          title: "Specify who can do what to which data",
-          body: "Map users or groups to application roles, allowed actions, and resource boundaries. Include joiners, movers, leavers, and ownership of access changes. New apps need a coherent access model across the relevant systems.",
+          title: "Decide who may do what",
+          body: "Name the users or groups, the records they may see, and whether they may change them. Decide who grants and removes access, including when someone changes jobs or leaves.",
         },
         {
-          title: "Verify permissions in the API",
-          body: "Microsoft Entra sign-in establishes identity. APIs also need the appropriate token, scope, role, and resource-level authorization checks. Hiding a button does not protect a route. Include tests where access must be denied.",
+          title: "Check more than the sign-in screen",
+          body: "Signing in tells the system who someone is. It must also check what they are allowed to do. An API is a connection software uses to request data or actions; those requests need permission checks too. Hiding a button is not enough.",
         },
         {
-          title: "Bound what an agent can do",
-          body: "Record which environment and data it can use, which credentials it receives, and whether it can read, write, run commands, or deploy. Name approval points, least-privilege boundaries, and a recovery owner.",
+          title: "Limit what the AI can do",
+          body: "Say which code, data, and system it may use. Can it only read, or can it make changes, run commands, or release software? Agree who approves those actions and who can undo a mistake.",
         },
         {
-          title: "Assign the decision and verification",
-          body: pm
-            ? "Ask your lead and the security/data owners to define and verify these conditions. You can help protect their capacity and escalate missing decisions. A completed Lab form is not a security approval."
-            : "Name the access-policy owner, engineering/security reviewer, required checks, and evidence of completion. Use the Lab to coordinate the work; verify implementation through the appropriate technical review.",
+          title: "Ask the right people to verify it",
+          body: "The lead developer and the people responsible for security and data need to define and check the rules. Record their names, the checks, and where the results can be found. Filling in this form does not grant permission.",
         },
       ],
+      callout:
+        "If nobody has agreed or tested the permissions, resolve that first. A test using made-up records may help, but it also needs approval.",
       sources: [
         {
           name: "Microsoft: app roles and groups",
@@ -221,33 +212,32 @@ export function readinessChapters(audience: Audience) {
           url: "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
         },
       ],
-      callout:
-        "A real prerequisite can change the next move: resolve the access model, restrict the environment, or pause this use until the required verification exists.",
     },
     {
-      eyebrow: "PREPARE THE TEAM",
-      title: "Match the responsibility with the capability.",
-      intro: pm
-        ? "Your team may be developing engineering skills while delivering important work. Help make training, pairing, review, and operating practices part of the investment."
-        : "Assess the work your team can explain and verify today. Make the support required for this use visible to your PM, with a concrete readiness check.",
+      eyebrow: "HELP THE TEAM PREPARE",
+      title: "Can the team check the work it will be responsible for?",
+      intro:
+        "AI can produce code that looks plausible. Someone still needs to understand it, check it, and know what to do when it fails. Work out what help the team needs before giving it that responsibility.",
       sections: [
         {
-          title: "Start with demonstrated capability",
-          body: "Can the developer explain the change, test permission boundaries, review a diff, debug a failure, and describe deployment and rollback? Prior roles and age do not establish these capabilities; practical evidence does.",
+          title: "Ask people to show their working",
+          body: "Can the developer explain the change, test who can access the data, inspect the code changes, and investigate a failure? Can they explain how to release it and restore the previous version? Find out by working through a small example together.",
         },
         {
-          title: "Protect learning and qualified review",
-          body: "Use pairing, focused training, small changes, and a reviewer qualified for the risk. Ask developers to explain why the generated change is correct and how they checked it. Reserve time for learning and review.",
+          title: "Make time for an experienced reviewer",
+          body: "Pair a developer with someone who can check this kind of work. Ask them to explain how they know the result is correct. Agree time for that conversation as part of the work.",
         },
         {
-          title: "Build a repeatable delivery practice",
-          body: "Clarify acceptance criteria, Git and review practices, testing, deployment ownership, and feedback. Scrum familiarity helps a team coordinate; secure engineering capability also needs deliberate practice and coaching.",
+          title: "Practise the whole change",
+          body: "Agree what the finished work must do. Keep a record of code changes, have someone review them, run the required tests, and practise releasing and undoing the change.",
         },
         {
-          title: "Treat acceleration as conditional",
-          body: "DORA describes AI as amplifying the strengths and weaknesses of the surrounding delivery system. Small batches strengthen feedback and review. Record what this team needs for this use, then evaluate accepted work at its full cost.",
+          title: "Keep the first task small",
+          body: "Choose a piece of work people can understand and check. Record what the team needs to learn before taking on more. Do not assume that writing more code means the team can safely maintain more software.",
         },
       ],
+      callout:
+        "‘Prepare first’ is a useful answer when it names actual work: who will pair with whom, what they will practise, and what they need to demonstrate before starting.",
       sources: [
         {
           name: "NIST: Secure Software Development Framework",
@@ -261,111 +251,114 @@ export function readinessChapters(audience: Audience) {
           name: "DORA: working in small batches",
           url: "https://dora.dev/capabilities/working-in-small-batches/",
         },
-        {
-          name: "DORA: AI-assisted development research",
-          url: "https://dora.dev/research/publications/",
-        },
       ],
-      callout:
-        "Prepare first can be a productive decision. Name the training, pairing, review, or platform work, the owner, and the evidence that will show the team is ready.",
     },
   ];
+  pages[0].title =
+    audience === "pm"
+      ? "Share what your lead may not have heard."
+      : "Ask what is behind your PM’s request.";
+  pages[0].intro =
+    audience === "pm"
+      ? "You may hear things from customers and leadership that your lead does not. Explain what you heard, who said it, and what you have not checked yet."
+      : "Your PM may have heard something from customers or leadership that you have not. Ask what they want to improve and why it matters now. Then explain what you would need to do the work.";
+  return pages;
 }
 export const AI_READINESS_SAMPLE: Record<string, string> = {
   betBasis:
-    "Fictional case: the team has identified unverified route permissions and repetitive test-writing work. No AI productivity result has been measured. Readiness must be established before this proposed experiment.",
+    "Fictional example. The team needs to check who may see repair records and write tests for those rules. It has not measured whether AI saves time. Permission and review arrangements must be agreed first.",
   betHypothesis:
-    "After access boundaries and qualified review are in place, AI-assisted drafting of one isolated authorization-test task may reduce total accepted-work effort while preserving allowed/denied-access checks.",
+    "We think AI might help write the repetitive permission tests with less total work, including review and fixes. The tests must still prove that allowed access works and forbidden access fails.",
   expectedLift:
-    "Fictional prediction for a future test: 20% less total person-time than a matched without-AI task. Record the comparator's baseline first; the prediction is not a delivery commitment.",
+    "Prediction for a possible future experiment: 20% less total working time than a similar task without AI. We need to record that comparison task first. This is not a promise.",
   betQualitative:
-    "Ask the author and reviewer whether verification is easier or harder and whether they can explain the resulting tests.",
-  task: "Proposed future task: draft tests for one isolated API route using synthetic fixtures. Production connections, live customer data, role redesign, and unrelated refactoring are out of scope.",
+    "Ask the author and reviewer whether the tests are easier to write and check, and whether they can explain what each test proves.",
+  task: "Possible future experiment: write permission tests for one part of the repair app’s API—the connection other software uses—with made-up customer records. No connection to live systems, real customer data, permission redesign, or unrelated code changes.",
   comparator:
-    "A matched without-AI authorization-test task with comparable route complexity, author experience, reviewer, and acceptance checks. Record any limits to the comparison.",
+    "A similar permission-test task completed without AI. Use a task of similar size, with the same author experience, review, and required checks. Write down any differences that could affect the result.",
   tool: "A team-approved coding assistant; approval still needs confirmation before the test.",
   toolVersion: "Record the approved model/version before starting.",
   inputs:
-    "Synthetic fixtures and explicitly approved non-production code only.",
+    "Made-up customer records and code approved for this test environment. No real customer information.",
   approvalOwner:
-    "The accountable engineering/security owner confirms tool and input permission.",
+    "The engineering manager and the person responsible for security must confirm the tool, code, and data are allowed before the test.",
   qualityBar:
-    "Qualified engineering owner reviews tests for allowed and denied access, resource boundaries, repository conventions, and passing CI.",
+    "An experienced reviewer checks that permitted users can see the right repair records and other users cannot, including direct requests to the API. The tests must also pass the team’s usual automated checks.",
   capacity:
-    "Proposed appetite: four total person-hours, including at most one reviewer hour. PM asks the priority owner which documentation task can move; the budget is not yet accepted.",
+    "Proposed limit: four hours of work across everyone involved, including at most one hour of review. The PM will ask the product director whether updating the help pages can wait. This time has not been approved.",
   betTimebox:
-    "Proposed one-week window after prerequisites are verified. Agree actual start/end dates and review on the final day before accepting the bet.",
+    "One week after permission and review arrangements are confirmed. Agree the actual start date, finish date, and final review before starting.",
   betRabbitHoles:
-    "If access-policy design or production integration becomes necessary, stop this task and return that decision to its owner.",
+    "Stop if we need to redesign who can access records or connect to live systems. Those changes need separate decisions.",
   success:
-    "Proposed minimum: at least 10% lower full-workflow effort than the comparator, unchanged quality checks, and no more than one reviewer hour. Agree these conditions before starting.",
-  stop: "Stop for unapproved data or tool access, failed permission checks, or the agreed effort/reviewer budget being exhausted.",
+    "Proposed minimum: at least 10% less total working time than the task without AI, all the same checks passing, and no more than one hour of review. Agree these before starting.",
+  stop: "Stop if we encounter unapproved data or tool access, a permission check fails, or we reach the agreed time limit for the work or review.",
   owners:
-    "Proposed author: paired developer. Reviewer: qualified engineer. The accountable engineering owner decides technical acceptance; the priority owner decides displaced work. Confirm names and review date before starting.",
+    "A developer and experienced engineer work together. The engineer reviews the tests. The engineering manager approves technical results; the product director approves other work being postponed. Confirm names and a review date before starting.",
   betStatus: "PROPOSED — NOT YET ACCEPTED",
   betResult:
-    "This proposed bet has not been attempted. No improvement or quality result can be concluded; the current next move is preparation.",
+    "The experiment has not started. We have no result about time saved or quality. The next step is to prepare.",
   betLearning:
-    "The conversation exposed access and engineering-readiness prerequisites. These are preparation findings, not evidence of an AI productivity gain or loss.",
+    "Our conversation showed that we need agreed data permissions and practice checking and releasing code. It did not show whether AI saves time.",
   happened:
-    "We have discussed AI in planning twice. The PM wants faster delivery; the lead has asked for clear boundaries and review capacity. Neither has proposed a next move they both understand.",
+    "We have talked about using AI to help build the repair app twice. I want to save the support team repeated typing. My lead wants to check who can see the customer records and who will review the code. We have not agreed what to do next.",
   story:
-    "I am treating their hesitation as resistance, but I have not asked what would make progress worthwhile for them.",
+    "I have been reading their hesitation as resistance. I have not asked what they would need to be comfortable trying this.",
   protecting:
-    "A worthwhile customer outcome and a team that can stand behind what it ships.",
-  why: "I want the team to spend less time on repetitive work and more time solving the hard problems.",
+    "I want support staff to stop copying the same request twice and customers to stop chasing missed repairs.",
+  why: "The team is doing work a useful app could take off their hands. I want them to have time to help customers whose requests are more complicated.",
   futurePicture:
-    "Six months from now, we could have a few trustworthy practices that create room for better work.",
+    "Support staff enter a repair request once, can see that it reached the right people, and spend less time chasing it.",
   observed:
-    "The lead identified missing authorization checks; we have not measured full effort in this workflow.",
+    "My lead showed me that we have not tested whether one customer’s records can be seen by another. We have not measured the time AI would save on this work.",
   prediction:
-    "AI may shorten drafting, but total effort and quality are still unknown here.",
+    "AI might help us write the first version faster. We do not know how much checking and fixing it would need.",
   changeMind:
-    "A full-effort comparison and demonstrated quality checks could change my view.",
+    "If the finished work takes longer after review and fixes, or fails the required checks, I would reconsider this use.",
   askOther:
-    "What would you need to understand or protect before we choose a next move?",
+    "What would you need to check before we could try a small piece of this?",
   visionTeam:
-    "The team can explain and verify its changes, and reviewers have protected time.",
+    "Developers can explain and check the changes they make. Reviewers have time to help instead of receiving a pile of unfamiliar code at the end.",
   visionProduct:
-    "Customers wait less for reliable improvements to their workflow.",
+    "Customers submit a repair request once and can trust it has reached the right team.",
   visionCompany:
-    "We could establish a useful standard and create opportunities for both leaders to coach other teams.",
+    "If we find a way of working that helps, we could teach it to other teams. Both of us could help shape how the company uses these tools.",
   counterpartConcern:
-    "Unverified route permissions and review work that the current plan does not account for.",
+    "We have not checked who can access which repair records, and nobody has time set aside to review the code.",
   openQuestions:
-    "We both want reliable delivery. We need to validate the urgency, resolve access ownership, and make review capacity explicit.",
+    "We both want to stop the repeated typing. We still need to check the claimed financial benefit, agree who can see the records, and make time for review.",
   conversationStatus: "PROPOSED — NOT YET AGREED",
   outcome:
-    "Reduce the delay in an internal workflow app while protecting access to operational data.",
+    "Help support staff enter each repair request once, while keeping customer records visible only to the right people.",
   sharedVision:
-    "Build a delivery practice the team can trust and other teams can learn from, with more room for skilled engineering work.",
+    "Support staff spend less time copying and chasing requests. Developers can explain and check the app, and other teams can learn from what we find.",
   businessContext:
-    "Fictional case: the sponsor reports that each week of delay costs $500,000 in operational opportunity. The team has not heard the assumptions behind that estimate.",
+    "Fictional example. Support staff copy repair requests into two systems, and some requests are missed. The PM wants to use AI to help build an app that removes the repeated typing. The sales director says removing the delays could be worth $500,000 a week, but we have not seen how they calculated that figure.",
   businessBasis:
-    "Sponsor estimate; Finance has not validated the amount or separated current loss from forecast opportunity. PM will clarify the basis with Finance by Thursday.",
+    "The figure comes from the sales director. Finance has not checked it or said whether it means money lost now, possible future income, or time saved. The PM will ask Finance by Thursday.",
   growthOpportunity:
-    "The team could build secure reusable patterns, strengthen engineering capability, and help shape company standards. Career opportunities are possible rather than promised.",
+    "The team could learn how to check generated code and protect customer records, then help other teams do the same. That could create opportunities, but we cannot promise them.",
   accessModel:
-    "Users require different access to operational records across apps. Roles, resource boundaries, group assignment ownership, and membership changes have not yet been agreed.",
+    "Support staff and repair engineers need different access to customer records. We have not agreed who can see or change each record, who grants access, or who removes it when someone leaves.",
   securityChecks:
-    "Engineering manager identified routes without demonstrated authorization coverage. Security owner will review the access design and require allowed/denied-access tests before any production connection.",
+    "The engineering manager found that we have not tested direct requests to the app’s API. The security owner will review the permission rules and require tests for allowed and forbidden access before any connection to live systems.",
   automationBoundary:
-    "No agent access to production data, deployment credentials, or write permissions. A future bounded test may use an approved non-production environment with synthetic data after review.",
+    "No AI access to live customer data, release credentials, or permission to change live systems. A later test could use an approved test environment and made-up records, after review.",
   teamReadiness:
-    "Developers have analyst and IT-services experience. They have not yet demonstrated authorization tests, repeatable code review, or deployment/rollback practice for this app.",
+    "The developers have worked in support and IT services. For this app, they have not yet shown how they will check permissions, review code changes, or release and undo a change.",
   readinessSupport:
-    "Engineering manager arranges pairing and a qualified reviewer; PM protects capacity. Team demonstrates a reviewed change, permission tests, and a rollback exercise before readiness review.",
+    "The engineering manager will pair developers with an experienced reviewer. The PM will ask for time to do it. The team will demonstrate a reviewed change, permission tests, and restoring the previous version before Tuesday’s review.",
   readinessDecision: "PREPARE FIRST",
   prerequisitePlan:
-    "PM validates business assumptions Thursday. Data/security owner agrees the access model Friday. Engineering manager leads pairing and verification. Both leaders review readiness next Tuesday.",
+    "The PM checks the claimed benefit with Finance Thursday. The data and security owners agree who may access the records Friday. The engineering manager arranges the practice and review. The PM and lead check progress next Tuesday.",
   decision: "PAUSE",
   reason:
-    "The opportunity merits investment, but access design and demonstrated engineering readiness are prerequisites to this use.",
+    "The idea could help, but we need agreed data permissions and a team that can check and release the change safely before trying it.",
   limits:
-    "No AI productivity result has been measured. The sponsor's delay-cost figure is unvalidated. This decision applies to this proposed use and environment.",
-  next: "Complete the access-model decision, permission tests, and supervised engineering exercise; review with PM and engineering manager next Tuesday.",
+    "We have not measured an AI result or checked the sales director’s financial estimate. This decision covers only the proposed repair-app use.",
+  next: "Agree who may access the records, test those rules, and practise releasing and undoing a small change with an experienced engineer. The PM and engineering manager review progress next Tuesday.",
   leadershipUpdate:
-    "We propose protected preparation time to establish access boundaries and team readiness, then decide whether an approved synthetic-data experiment is worthwhile.",
+    "We want to stop support staff copying requests twice. First we need to agree who can see the records and practise checking and releasing the code. Can we make time for that preparation? We will review progress next Tuesday.",
 };
 
 export function aiSampleFor(audience: Audience): Record<string, string> {
@@ -373,10 +366,18 @@ export function aiSampleFor(audience: Audience): Record<string, string> {
     ...AI_READINESS_SAMPLE,
     ...(audience === "lead-dev"
       ? {
+          happened:
+            "My PM and I have discussed using AI to help build the repair app twice. They want to save the support team repeated typing. I have asked who can see each customer’s records and who will review the code. We have not agreed what to do next.",
+          protecting:
+            "I need to know that customer records stay private and that the team can check, release, and look after the app.",
+          observed:
+            "I found parts of the app’s API where we have not tested whether forbidden access is blocked. We have not measured the time an AI-assisted change would take after review and fixes.",
+          askOther:
+            "What have you heard from the support team, and could we make time to check permissions and review the work before trying this?",
           story:
             "I am assuming my PM does not care about quality. I have not asked what is driving their request.",
           counterpartConcern:
-            "Customers are waiting for an operational improvement; the sponsor expects us to find a responsible way to move faster.",
+            "Support staff copy repair requests twice, and some are missed. My PM wants to save that work and stop customers having to chase us.",
           why: "I would like our team to become confident engineers who can use helpful tools and stand behind their work.",
         }
       : {}),

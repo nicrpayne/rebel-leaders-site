@@ -1,91 +1,90 @@
-export const AI_STALEMATE_GUIDE_PAGES = [
+import type { AIGuidePage } from "./leadership-guides.ts";
+export const AI_STALEMATE_GUIDE_PAGES: AIGuidePage[] = [
   {
-    eyebrow: "01 / THE REFRAME",
-    title: "Two leaders. Different consequences.",
+    eyebrow: "01 / START HERE",
+    title: "You see different parts of the problem.",
     intro:
-      "Product may be carrying the cost of missed opportunity. Engineering may be carrying the cost of what actually ships. Start by making both consequences visible.",
+      "You have talked about AI twice already. One of you thinks it could save time. The other thinks checking its work could take longer. Another argument about AI in general is unlikely to settle that.",
     sections: [
       {
-        title: "What Product may be protecting",
-        body: "Customer outcomes, time to learn, competitive opportunity, limited capacity, or a leadership mandate. Ask which outcome the proposed AI use would improve.",
+        title: "What are you hoping to improve?",
+        body: "Start with somebody’s actual work. Perhaps the support team copies the same repair request into two systems. An app could save them that trouble. AI is one possible way to help build it.",
       },
       {
-        title: "What Engineering may be protecting",
-        body: "Quality, security, maintainability, reviewer capacity, and accountability for the result. Ask where the work or risk would move.",
+        title: "What is your colleague worried about?",
+        body: "Perhaps the app could let one customer see another customer’s records. Perhaps the person checking the code is already busy. Ask what the concern means for this piece of work.",
       },
       {
-        title: "Observation before motive",
-        body: "Observation: The lead declined an experiment using customer data. Interpretation: They are afraid of change. The first can be checked. The second is a story that needs examination.",
+        title: "What have you assumed about each other?",
+        body: "‘They asked me to try it by Friday’ describes what happened. ‘They don’t care about quality’ adds a motive. You may have good reasons to be frustrated. You still need to ask.",
       },
       {
-        title: "Choose a useful question",
-        body: "Replace Should we use AI? with Can this approved use improve this specific work outcome, at the quality bar and full cost we agree on?",
+        title: "What could you work out together?",
+        body: "You might agree to try something small. You might need permission, advice, or more information first. You might decide this use is not worth pursuing. All of those can be useful answers.",
       },
     ],
     callout:
-      "No villain. The proposal is allowed to change. A justified STOP is a useful leadership outcome.",
+      "The aim is to understand the opportunity and the concerns well enough to decide what to do next.",
   },
   {
-    eyebrow: "02 / CAST A SHARED VISION",
-    title: "Paint a future worth working toward.",
+    eyebrow: "02 / WHAT COULD BE BETTER?",
+    title: "Give them something they can picture.",
     intro:
-      "Before proposing a tool, get clear about your Why. Give the other leader a concrete picture of what could improve and an invitation to help shape it.",
+      "‘We need to use AI’ gives your colleague very little to work with. What would be better for someone if this went well? Start there.",
     sections: [
       {
-        title: "Name the improvement you care about",
-        body: "Whose work or experience could improve? What is costly or frustrating now? Why does it matter enough to invest time? Faster output becomes meaningful when it serves a worthwhile outcome.",
+        title: "Describe an ordinary day",
+        body: "Our support team copies every repair request into two systems. Sometimes they miss one, and a customer has to call again. We want to stop making customers chase work they have already requested.",
       },
       {
-        title: "Paint a recognizable before and after",
-        body: "Describe the future in everyday work: shorter customer waits, fewer repetitive tasks, more time for judgment, or patterns other teams can trust. Make the picture specific enough to question and improve.",
+        title: "Explain why you care",
+        body: "Saving time matters because people could use it for something else: helping a customer, investigating a difficult fault, or finishing work that keeps being postponed. Say what you hope that time would make possible.",
       },
       {
-        title: "Connect it to a shared stake",
-        body: "The company could gain a useful capability. The team could gain mastery and influence over its standards. Building something others trust could also create professional opportunities for both leaders.",
+        title: "Leave room for their answer",
+        body: "Ask what they would change about your idea. They may see a simpler way to solve the problem, or a part you have missed. If their answer cannot change the proposal, it is not much of an invitation.",
       },
       {
-        title: "Invite authorship",
-        body: "Ask: What would responsible use look like here? What would you change in this picture? Give the other leader room to shape the outcome, the conditions, and the approach.",
-      },
-      {
-        title: "Connect the picture to the next move",
-        body: "A vision gives the work direction. The next move makes it credible: clarify a concern, resolve permission or capacity, use existing evidence, or agree on one bounded test.",
+        title: "Think beyond this one task",
+        body: "You might learn a way of working the team can trust and teach to others. That could give people more confidence and room to grow. Treat it as a possibility to explore together, not a reward you can promise.",
       },
     ],
     callout:
-      "Try: If we can show where AI genuinely improves our work, we could help this company set a standard others trust. That could open opportunities for the team and for both of us. I'd like us to shape that together. What would make it worth pursuing from your side?",
+      "Try: ‘I’d like us to stop making the team copy these requests by hand. Could we look at where AI might help—and what you would need to be comfortable trying it?’",
   },
   {
-    eyebrow: "03 / CONCERNS INTO CONDITIONS",
-    title: "Make the concern workable.",
+    eyebrow: "03 / TALK ABOUT THE CONCERNS",
+    title: "What would need to change?",
     intro:
-      "Use these as questions and options to discuss. Engineering determines technical suitability; the relevant owner determines permission. A concern can change the proposal.",
+      "A concern is easier to work with when you know what it refers to. Ask for an example. Sometimes you can change the plan. Sometimes the answer is no, and you need to understand why.",
     sections: [
       {
-        title: "The quality is not good enough",
-        body: "Which checks or standards fail? Consider a smaller task, clearer acceptance criteria, repository conventions, automated tests, and human review. Keep the existing quality bar.",
+        title: "‘The code is not good enough.’",
+        body: "Which checks does it fail? Would a smaller task, a good example, or clearer instructions help? Keep the checks you normally require before accepting work.",
       },
       {
-        title: "Reviewing it takes longer",
-        body: "Where does effort increase? Consider smaller changes, explicit author verification, and protected review time. Measure accepted work across the whole workflow rather than the first draft.",
+        title: "‘Reviewing it takes longer.’",
+        body: "Ask where the extra work appears. Count the author’s checking, someone else’s review, and the fixes. A faster first draft can still take more work to finish.",
       },
       {
-        title: "Our data or code cannot go into that tool",
-        body: "Which inputs and approvals are involved? Establish the permitted tool and input boundary with the approval owner. Synthetic or non-sensitive inputs may be an option; permission comes first.",
+        title: "‘We cannot put that data in the tool.’",
+        body: "Find out which data and which tool are involved. Ask the person responsible for permission. A test with made-up records may be possible, but check before starting.",
       },
       {
-        title: "It does not understand our codebase",
-        body: "Which context or conventions are missing? Consider explicit repository instructions, a known example, and a contained task. Check whether the available context actually supports that use.",
+        title: "‘It does not know our code.’",
+        body: "Ask what it is missing. A small task with a relevant example may be worth trying. If it needs access you cannot give it, change the task or stop.",
       },
       {
-        title: "We do not have capacity",
-        body: "What work would this replace, and who must review it? Ask the priority owner to protect time or decline the investment. Unplanned overtime is not the bet budget.",
+        title: "‘We do not have time.’",
+        body: "Who would do the work and who would review it? What would they put off? Get that choice agreed. Quietly adding an experiment to someone’s evening is not a plan.",
       },
       {
-        title: "We tried it and it was worse",
-        body: "Which task, conditions, and result? Use that evidence. If a materially different use is proposed, name what changed and why another test would answer a useful question.",
+        title: "‘We tried this already.’",
+        body: "Ask what they tried and what happened. Use what they learned. Another experiment needs a reason: what is different, and what do you still need to find out?",
       },
     ],
+    callout:
+      "Try: ‘Can you show me where it goes wrong? I want to understand whether we can change the idea or should leave this use alone.’",
     sources: [
       {
         name: "GitHub: Copilot best practices",
@@ -96,193 +95,191 @@ export const AI_STALEMATE_GUIDE_PAGES = [
         url: "https://martinfowler.com/articles/reduce-friction-ai/",
       },
     ],
-    callout:
-      "The useful question is: Which condition would make this proposal workable, and who can decide it? Keep a specific no and an unsupported yes open to the same scrutiny.",
   },
   {
-    eyebrow: "04 / PRIVATE PREPARATION",
-    title: "Get clear about your own side.",
+    eyebrow: "04 / BEFORE YOU TALK",
+    title: "Get your own thoughts straight.",
     intro:
-      "Allow 5-10 minutes before the shared conversation. This preparation is for you. Bring agreed observations into shared work, rather than forwarding your assumptions about the other person.",
+      "Take five or ten minutes before the conversation. You do not need a perfect argument. You need to know what matters to you and what you still need to ask.",
     sections: [
       {
-        title: "What actually happened?",
-        body: "Use the request, words, or event you can describe. Be precise enough that the other person could recognize it.",
+        title: "What happened?",
+        body: "Describe what was said or done, using words the other person would recognize.",
       },
       {
-        title: "What story am I adding?",
-        body: "Name your interpretation of their motive. Hold it as a hypothesis rather than a fact.",
+        title: "What am I assuming?",
+        body: "Notice the motive you have assigned to them. Ask about it rather than presenting it as a fact.",
       },
       {
-        title: "What am I protecting?",
-        body: "Describe the opportunity, cost, obligation, or outcome you carry. Product and Engineering can both have legitimate answers.",
+        title: "Why does this matter to me?",
+        body: "Say what you hope to improve or what you would be responsible for if it went wrong.",
       },
       {
-        title: "What have I observed?",
-        body: "Separate a concrete past result from a prediction about future use. An observed failure deserves attention; it does not settle every use case.",
+        title: "What have I actually seen?",
+        body: "Separate something you observed from something you expect. Both can matter, but they are different kinds of information.",
       },
       {
         title: "What would change my mind?",
-        body: "Name the evidence that could alter your view. An experiment is not useful if neither side would reconsider anything.",
+        body: "Name a result or explanation that would make you reconsider. Leave room for a better idea.",
       },
       {
         title: "What do I still need to ask?",
-        body: "Leave room for their actual account of the cost. Do not turn private preparation into a better argument for your original position.",
+        body: "Write the question you have not answered by yourself. That is a good place to start the conversation.",
       },
     ],
     callout:
-      "The Lab excludes every private-preparation field from the Bet Brief, Evidence Record, and Decision Brief.",
+      "Private notes stay only in this open tab. They are not saved or included in shared documents, and they disappear when you refresh or leave. You can also reflect without typing.",
   },
   {
-    eyebrow: "05 / SHAPE THE BET",
-    title: "Shape a worthwhile bet.",
+    eyebrow: "05 / PLAN AN EXPERIMENT",
+    title: "What would be worth finding out?",
     intro:
-      "Allow about 30 minutes together. Use existing evidence if it already answers the question. Run an experiment only when a useful uncertainty, approval, capacity, and ownership are present.",
+      "Plan an experiment only if you have a useful question you cannot answer from what you already know. Agree the plan together before anyone starts.",
     sections: [
       {
-        title: "Pitch the problem and the hypothesis",
-        body: "Name the observed problem and evidence. Shape the ambition together. Write: If we try this approach, we expect this improvement because... Keep predictions separate from facts.",
+        title: "Say what you expect and why",
+        body: "For example: we think AI could help write permission tests faster because many of them are similar. That is a prediction. We have not shown it yet.",
       },
       {
-        title: "Bound the work",
-        body: "Name the work outcome, exact task, and work that is out of scope. Choose a comparator without AI and say why the task size, experience, and acceptance bar are comparable.",
+        title: "Choose the task and the comparison",
+        body: "Name exactly what you will try and what you will leave out. Choose similar work done without AI so the comparison is useful. Note differences in task size, experience, or required checks.",
       },
       {
-        title: "Set the permission boundary",
-        body: "Record the AI tool and model/version, allowed inputs, and approval owner. An experiment does not grant permission to use an unapproved tool or sensitive inputs.",
+        title: "Check permission",
+        body: "Record the approved tool and version, the code and data it may use, and who confirmed permission. Permission for this experiment does not cover live customer systems or wider use.",
       },
       {
-        title: "Protect quality and capacity",
-        body: "Keep the acceptance checks and engineering owner explicit. Set the appetite: the effort and tool budget you will invest in learning, including reviewer time and displaced work. Set start and end dates. Flag rabbit holes that could exhaust the budget.",
+        title: "Agree the time and checks",
+        body: "Include time to prepare, write, check, review, and fix the work. Decide what must pass before you accept it. Agree what other work will wait and who can approve that change.",
       },
       {
-        title: "Agree on the bar beforehand",
-        body: "Predict a change against the comparator, with units. Separately agree the minimum worthwhile result across the full workflow and a stop rule. Record expected qualitative changes. A small test can support or challenge a belief without proving it universally.",
+        title: "Decide what would count as useful",
+        body: "Write your prediction separately from the smallest improvement that would make another use worthwhile. Agree when to stop—for example, if a permission check fails or you use up the review time.",
       },
       {
-        title: "Make ownership explicit",
-        body: "Name the task owner, reviewer, decision owner, and review date. Record whether they have accepted the bet; a brief does not create agreement. Export it before starting. If a prerequisite is missing, name it and choose PAUSE.",
+        title: "Give the plan to the people doing it",
+        body: "Name the author, reviewer, person who can approve the result, and review date. Confirm they have agreed. If something is missing, pause and name who will resolve it.",
       },
     ],
     callout:
-      "Adapted from Ryan Singer's Shape Up (basecamp.com/shapeup). A missed target can teach you something useful. A bet never attempted has no result.",
+      "The idea of choosing how much time to invest draws on Ryan Singer’s Shape Up (basecamp.com/shapeup). An experiment that never started has no result.",
   },
   {
-    eyebrow: "06 / FULL-WORKFLOW EVIDENCE",
-    title: "Count the work on both sides.",
+    eyebrow: "06 / COUNT ALL THE WORK",
+    title: "Did the faster draft save any time?",
     intro:
-      "Record person-minutes for everyone involved. Effort is not elapsed time. Enter 0 when no effort occurred; leave unknown effort blank. Compare quality alongside the totals.",
+      "Count everyone’s working minutes, including checking and fixes. Two people working for 30 minutes use 60 person-minutes. That is different from how long the task took on the clock.",
     sections: [
       {
-        title: "The worked example",
-        body: "These fictional measurements describe one matched unit-test task. The acceptance bar passed after rework. Drafting was faster with AI, while verification, review, and rework increased.",
+        title: "A separate fictional example",
+        body: "These numbers describe one small task writing software tests. The finished tests passed the required checks after fixes. This is separate from the preparation example in the Lab.",
       },
       {
-        title: "What the totals establish",
-        body: "Drafting took 33 fewer minutes, but the full recorded workflow took 7 more. Reviewer checking increased by 15 minutes. The agreed effort bar was missed in this local test.",
+        title: "What happened?",
+        body: "AI cut drafting by 33 minutes. Checking, review, and fixes used 40 more. The whole task therefore took seven extra minutes. The reviewer spent 30 minutes, twice the agreed 15-minute limit; that limit was exceeded and needs to be addressed before another experiment.",
       },
       {
-        title: "What remains outside the totals",
-        body: "Record acceptance checks, defects, reviewer experience, tool cost, elapsed time, first-use learning, and limits to comparability. Name an owner and date for a later defect check.",
+        title: "What else do you need to know?",
+        body: "Record failed checks, later defects, tool costs, and anything that makes the tasks hard to compare. Ask the author and reviewer how the work felt. One task cannot tell you what will happen everywhere.",
       },
     ],
+    callout:
+      "Enter 0 when no time was spent. Leave a box blank when you do not know. A partial total cannot show a saving.",
     table: [
-      ["Workflow stage", "Without AI", "With AI"],
-      ["Setup / context", "10 min", "15 min"],
-      ["Drafting", "45 min", "12 min"],
-      ["Author verification", "15 min", "25 min"],
-      ["Reviewer checking", "15 min", "30 min"],
-      ["Rework", "5 min", "15 min"],
-      ["Follow-up", "0 min", "0 min"],
-      ["Total person-minutes", "90 min", "97 min"],
+      ["Work", "Without AI", "With AI"],
+      ["Preparation", "10 min", "15 min"],
+      ["Writing the first version", "45 min", "12 min"],
+      ["Author checking and testing", "15 min", "25 min"],
+      ["Someone else reviewing", "15 min", "30 min"],
+      ["Fixes", "5 min", "15 min"],
+      ["Later follow-up", "0 min", "0 min"],
+      ["Total working minutes", "90 min", "97 min"],
     ],
-    callout:
-      "A complete total is useful evidence. It is not a universal AI productivity claim, a quality verdict, or proof of causation.",
   },
   {
-    eyebrow: "07 / THE DECISION",
-    title: "Four legitimate next moves.",
+    eyebrow: "07 / DECIDE WHAT HAPPENS NEXT",
+    title: "You do not have to make the experiment a success.",
     intro:
-      "Allow about 15 minutes after the experiment. Compare the evidence with the bar agreed beforehand. Choose the move explicitly; the instrument does not make the decision for you.",
+      "Look at what happened against what you agreed beforehand. The result may change your mind. That is part of the point.",
     sections: [
       {
         title: "CONTINUE",
-        body: "The evidence supports this bounded use under these conditions. Record the operating boundaries and the next review. Continue does not mean AI everywhere.",
+        body: "The result supports using AI for this task under the agreed conditions. Say where that permission ends and when you will check again.",
       },
       {
         title: "REVISE",
-        body: "The use may have value, but the task, inputs, review workflow, or boundaries need to change. Name what will change before another approved experiment.",
+        body: "Something looks useful, but the task, instructions, or review needs to change. Describe the change before asking people to try again.",
       },
       {
         title: "STOP",
-        body: "The evidence does not support this use, or a guardrail was breached. Record why and preserve what was learned. There is no obligation to turn a failed use case into adoption.",
+        body: "The result does not justify this use, or an agreed limit was broken. Explain why you are stopping and keep what you learned.",
       },
       {
         title: "PAUSE",
-        body: "A prerequisite, approval, owner, capacity, or useful evidence is missing. Name the prerequisite and who will resolve it. Pause can be chosen before an experiment starts.",
+        body: "You are missing permission, information, time, or a person who needs to be involved. Name what is missing, who will resolve it, and when you will return. You can choose this before an experiment.",
       },
     ],
     callout:
-      "Every decision needs a reason, the limits of the evidence, an accountable next-action owner, and a date. Record unresolved disagreement rather than claiming consensus.",
+      "Write what you decided, why, who will do what next, and when. If you have not agreed, keep the record marked as a proposal and say what still needs deciding.",
   },
   {
-    eyebrow: "08 / A WORKED DECISION",
-    title: "From an argument to a defensible move.",
+    eyebrow: "08 / A WORKED EXAMPLE",
+    title: "The next step is preparation.",
     intro:
-      "Fictional case: Product wants faster test writing. Engineering expects a larger review burden. Both leaders agree to examine one task rather than debate AI in general.",
+      "Fictional case: support staff copy repair requests between two systems. The PM thinks an AI-assisted app could help. The lead wants to check who can see the records and whether the team can safely check and release the code.",
     sections: [
       {
-        title: "The Bet Brief",
-        body: "Outcome: reduce the effort of producing accepted unit tests. Task: one isolated unit-test task; production code and customer data are out of scope. Use an approved tool with synthetic fixtures and a recorded version.",
+        title: "What the PM knows",
+        body: "The sales director says reducing the delay could create $500,000 of value a week. Nobody has checked the calculation. The PM will ask Finance what the figure includes before treating it as a fact.",
       },
       {
-        title: "The shared bar",
-        body: "Preserve the existing test review and CI checks. Reserve author and reviewer time. Success requires lower total effort without transferring additional checking to the reviewer. Stop for unapproved inputs or a failed quality guardrail.",
+        title: "What the lead needs to check",
+        body: "Staff should see only the customer records their jobs require. The team needs tests that prove forbidden access is blocked, including direct requests to the app’s API—the connection other software uses.",
       },
       {
-        title: "The Evidence Record",
-        body: "Without AI: 90 person-minutes. With AI: 97. The quality bar passed after rework, but reviewer checking doubled from 15 to 30 minutes. One local task does not establish a general gain or loss.",
+        title: "What they propose",
+        body: "Prepare first. The data owner will decide who may see which records. The engineering manager will pair developers with an experienced reviewer to practise checking, releasing, and undoing a change.",
       },
       {
-        title: "The Decision Brief",
-        body: "REVISE. The current workflow transfers too much work to review. The engineering lead will narrow the task and review workflow before approving another experiment, with a named review date.",
+        title: "What they record",
+        body: "PAUSE this use for now. Check progress next Tuesday. No experiment or connection to live customer data is approved. A later test with made-up records would need its own permission.",
       },
       {
-        title: "The update to leadership",
-        body: "Our first test passed quality after rework but used 97 person-minutes versus 90 without AI. We are revising the review workflow before testing again.",
+        title: "What they tell leadership",
+        body: "‘We can see why this could help. Before we try it, we need to agree who can see the customer records and check that the team can release a change safely. Can we make time for that preparation? We’ll review it next Tuesday.’",
       },
     ],
     callout:
-      "They did not leave with agreement about AI in general. They left with a specific decision, its evidence, and a next action.",
+      "They have a proposal someone can answer, with specific work and people responsible. They have not measured an AI productivity gain.",
   },
   {
-    eyebrow: "09 / PLAY THE INSTRUMENT",
-    title: "Take this into the work.",
+    eyebrow: "09 / USE THE LAB",
+    title: "Bring one real conversation.",
     intro:
-      "The guide gives you language and judgment. The Lab sequences your actual situation. The artifact carries the agreed work into the organization.",
+      "The Guide explains the questions. The Lab gives you somewhere to answer them and prepare a document you can share. You can start where you are; you do not need to fill in every box.",
     sections: [
       {
-        title: "1. Prepare privately",
-        body: "Open AI Stalemate through your Field Tool access page. Start on the side you carry. Your private notes stay out of shared exports.",
+        title: "1. Before you talk",
+        body: "Write private notes, or think through the questions without typing. What matters to you, what are you assuming, and what do you still need to ask?",
       },
       {
-        title: "2. Build and export the Bet Brief",
-        body: "Move to Shared Work. Agree on the task, comparator, permission, quality, capacity, bar, stop rule, owners, and review date. Export the Bet Brief before the test.",
+        title: "2. Conversation",
+        body: "Share what you want to improve and ask about the concerns. Choose what to do next. Build Next Step Together, check it, then copy, download, or print it. Mark a proposal as a proposal.",
       },
       {
-        title: "3. Return with evidence",
-        body: "Enter full-workflow effort for both methods, quality results, and comparison limits. Export the Evidence Record. Blank effort stays unknown.",
+        title: "3. Experiment, if useful",
+        body: "Agree the task, time, checks, permissions, people, and review date. Build and review the Experiment Plan before starting. You can skip this step if your next move does not involve an experiment.",
       },
       {
-        title: "4. Write the decision",
-        body: "Choose Continue, Revise, Stop, or Pause. Name the reason, limits, next action, owner, date, and leadership update. Copy, download, or print the Decision Brief.",
+        title: "4. Results",
+        body: "Return after the experiment. Enter all the time spent, the quality checks, and what happened. Build the Results Record. Leave unknown values blank.",
       },
       {
-        title: "Keep what matters",
-        body: "Shared drafts live in this browser on this device. Private reflection is not saved or exported. Export important work before clearing browser data or changing devices. There is no cloud backup or synchronized team workspace in this edition.",
+        title: "5. Next step",
+        body: "Write the decision and the reason. Name who will do what next and when you will check again. Build the Decision Brief and review it before sharing.",
       },
     ],
     callout:
-      "Want to rehearse first? Watch Nic work through a complete case, then load the fictional example in the Lab before bringing your own situation.",
+      "Shared drafts are saved in this browser on this device. Download work you need to keep before changing devices or clearing browser data. Private notes are never saved. Load Examples offers fictional answers; if the step contains work, it asks before replacing it.",
   },
 ];

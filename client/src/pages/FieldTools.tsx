@@ -113,12 +113,11 @@ export default function FieldTools() {
                   FREE ASSESSMENT
                 </p>
                 <h3 className="mt-5 font-display text-3xl font-semibold leading-tight tracking-[-0.03em]">
-                  Not sure which problem is actually driving the friction?
+                  Not sure where to start?
                 </h3>
                 <p className="mt-5 font-ui text-sm leading-6 text-[#c8d8c9]">
-                  Take the Product Leadership Pressure Test and get the
-                  operating pressure most likely making your work harder right
-                  now.
+                  Take the Product Leadership Pressure Test to work out what is
+                  making your job harder and which problem to address first.
                 </p>
               </div>
               <div className="mt-8 border-t border-white/15 pt-5 font-ui text-sm font-semibold">

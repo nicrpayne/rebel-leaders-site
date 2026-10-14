@@ -60,7 +60,7 @@ describe("four complete working kits", () => {
       const pages = LEADERSHIP_GUIDE_PAGES[slug];
       const text = JSON.stringify(pages);
       expect(pages).toHaveLength(9);
-      expect(text).toContain("private");
+      expect(text.toLowerCase()).toContain("private");
       expect(text).toContain("Load Examples");
       expect(text).toContain("browser");
       for (const output of lab.outputs!) expect(text).toContain(output.title);
@@ -95,7 +95,9 @@ describe("decision fidelity", () => {
     });
     expect(output).toContain("DECLINED — response recorded");
     expect(output).toContain("one-day response rule");
-    expect(output).toContain("Security/data approvals");
+    expect(output).toContain(
+      LEADERSHIP_SAMPLES["mandate-reset"].requiredApprovals
+    );
     expect(output).not.toContain("AGREED — decision recorded");
   });
   it("keeps a stakeholder need unconfirmed until the buyer records confirmation", () => {
@@ -120,8 +122,8 @@ describe("capacity assumptions", () => {
       gap: 2,
     });
     const output = buildTradeoffBrief(LEADERSHIP_SAMPLES["priority-whiplash"]);
-    expect(output).toContain("demand beyond entered capacity: 2");
-    expect(output).toContain("not a delivery forecast");
+    expect(output).toContain("work that does not fit: 2");
+    expect(output).toContain("do not calculate a finish date");
   });
   it("keeps blanks, invalid numbers, negatives, and overflow unknown", () => {
     for (const value of ["", " ", "no estimate", "-3", "Infinity", "1e309"]) {

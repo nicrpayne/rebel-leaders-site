@@ -50,7 +50,7 @@ export default function FieldToolAccess({ slug }: { slug: string }) {
           <h2 className="font-display text-3xl">Your first useful move</h2>
           <p className="mt-3 font-ui text-sm leading-7 text-[#b8c9b8]">
             {slug === "ai-stalemate"
-              ? "Skim the Field Guide or open the Lab and follow its chapter links as you work. Start with where your ongoing conversation stands. Reflect privately, understand each other, and choose a useful next move. An experiment is optional."
+              ? "Start with the conversation you are already having. Read the Guide for an example, or open the Lab to work through your own situation. Prepare privately, talk it through, and agree what happens next. You only need the experiment steps if an experiment would help."
               : content.firstMove}
           </p>
           <Link href={`${base}/lab`} className="ft-button ft-button-gold mt-5">
@@ -94,8 +94,8 @@ export default function FieldToolAccess({ slug }: { slug: string }) {
               Read the Field Guide
             </h2>
             <p className="mt-3 font-ui text-sm leading-6 text-[#b5c6b2]">
-              The reframe, working rules, process, and a concrete example. Print
-              it or save it as a PDF.
+              An explanation of the questions, ways to approach the
+              conversation, and a worked example. You can also download the PDF.
             </p>
             <ArrowRight
               size={20}
@@ -119,8 +119,8 @@ export default function FieldToolAccess({ slug }: { slug: string }) {
               Open the Lab
             </h2>
             <p className="mt-3 font-ui text-sm leading-6 text-[#b5c6b2]">
-              Bring one live situation. Work the questions, then copy, download,
-              or print your brief.
+              Answer the questions about your own situation. Then review, copy,
+              download, or print the document you want to share.
             </p>
             <ArrowRight
               size={20}
@@ -132,8 +132,9 @@ export default function FieldToolAccess({ slug }: { slug: string }) {
         <div className="mt-9 border-t border-[#435a46] pt-7 font-ui text-sm leading-7 text-[#acbfaa]">
           <p>{presentation.session}</p>
           <p className="mt-3">
-            The Guide explains the thinking. The Lab sequences your work. Your
-            exported record is what you share with colleagues.
+            Read the Guide to understand the questions. Use the Lab to answer
+            them about your situation, then review the document you want to
+            share.
           </p>
           <p className="mt-3">
             Your shared draft saves on this device. Private reflection is not

@@ -135,7 +135,7 @@ describe("review feedback regressions", () => {
     ).not.toContain("For The");
     expect(
       buildTradeoffBrief(LEADERSHIP_SAMPLES["priority-whiplash"])
-    ).toContain("Fictional case");
+    ).toContain("Fictional example");
     expect(
       buildDeadlineUpdate(LEADERSHIP_SAMPLES["deadline-reset"]).match(
         /qualitative judgment/g
@@ -146,7 +146,7 @@ describe("review feedback regressions", () => {
         needEvidence: "Finance needs a bounded funding decision.",
       })
     ).toContain(
-      "CONFIRMED NEED / BASIS\nFinance needs a bounded funding decision."
+      "WHAT THEY NEED / HOW WE CHECKED\nFinance needs a bounded funding decision."
     );
     expect(
       buildRequestDecoder({
