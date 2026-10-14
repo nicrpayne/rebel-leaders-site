@@ -20,20 +20,22 @@ export default function LeadershipWorkSurface({
         className="mb-8 border border-[#bac8b4] bg-[#e9eddf] p-5"
       >
         <p className="font-ui text-[10px] tracking-[.15em] text-[#59705d]">
-          OPTIONAL / CHECK THE CAPACITY ASSUMPTIONS
+          OPTIONAL / CHECK WHETHER THE WORK FITS
         </p>
         <h3 className="mt-3 font-display text-2xl">
-          Does the new ask fit the entered capacity?
+          Do we have time for the new request?
         </h3>
         <p className="mt-2 text-xs leading-6 text-[#57695d]">
-          Use person-days for one shared planning window. Include review and
-          support. This is a capacity check, not a delivery forecast.
+          Use the same week or period for all three estimates. One person-day
+          means one person working for one day; two people working for a day use
+          two person-days. Include review and support. These estimates show how
+          much work fits; they do not calculate a delivery date.
         </p>
         <div className="mt-4 grid gap-3 sm:grid-cols-3">
           {[
-            ["availableCapacity", "Available person-days"],
-            ["existingLoad", "Existing work person-days"],
-            ["requestLoad", "New request person-days"],
+            ["availableCapacity", "Time available (person-days)"],
+            ["existingLoad", "Work already planned (person-days)"],
+            ["requestLoad", "New work (person-days)"],
           ].map(([id, label]) => (
             <label key={id} className="text-xs font-semibold">
               {label}
@@ -54,8 +56,8 @@ export default function LeadershipWorkSurface({
           className="mt-4 border-t border-[#bbc8b1] pt-4 text-sm font-semibold"
         >
           {snapshot
-            ? `${Number(snapshot.total.toFixed(2))} person-days of demand / ${snapshot.available} available. ${snapshot.gap > 0 ? `${Number(snapshot.gap.toFixed(2))} person-days need displacement or a revised plan.` : "No numeric gap in these assumptions. Check skills, dependencies, and timing."}`
-            : "Capacity remains unknown until all three estimates are entered."}
+            ? `${Number(snapshot.total.toFixed(2))} person-days of work / ${snapshot.available} available. ${snapshot.gap > 0 ? `${Number(snapshot.gap.toFixed(2))} person-days will not fit. Decide what waits or how the plan changes.` : "The estimates fit. Check that the right people are available at the right time and that nothing else must finish first."}`
+            : "Enter all three estimates to see whether the work fits."}
         </p>
       </section>
     );
@@ -68,8 +70,8 @@ export default function LeadershipWorkSurface({
       >
         {[
           ["Keep the date", values.scopeMove],
-          ["Keep the scope", values.dateMove],
-          ["Change capacity", values.capacityMove],
+          ["Keep all the promised work", values.dateMove],
+          ["Add or change the help available", values.capacityMove],
         ].map(([title, detail]) => (
           <div
             key={title}
@@ -90,18 +92,16 @@ export default function LeadershipWorkSurface({
         aria-label="Current decision rights"
         className="mb-8 border border-[#bac8b4] bg-[#e9eddf] p-5"
       >
-        <h3 className="font-display text-2xl">
-          One decision. Confirm each right.
-        </h3>
+        <h3 className="font-display text-2xl">Who needs to be involved?</h3>
         <dl className="mt-4 space-y-2 text-sm">
           {[
-            ["recommend", "Recommend (R)"],
-            ["consult", "Input (I)"],
-            ["requiredApprovals", "Agree (A)"],
-            ["approve", "Decide (D)"],
-            ["execute", "Perform (P)"],
-            ["block", "Constrains"],
-            ["accountable", "Accountable"],
+            ["recommend", "Recommends"],
+            ["consult", "Gives advice"],
+            ["requiredApprovals", "Required approval"],
+            ["approve", "Makes the call"],
+            ["execute", "Does the work"],
+            ["block", "Sets limits"],
+            ["accountable", "Answers for the result"],
           ].map(([id, label]) => (
             <div
               key={id}
@@ -109,13 +109,14 @@ export default function LeadershipWorkSurface({
             >
               <dt className="font-semibold">{label}</dt>
               <dd className="break-words text-[#57695d]">
-                {values[id] || "Unknown — confirm with the people involved"}
+                {values[id] || "Not known yet—ask the people involved"}
               </dd>
             </div>
           ))}
         </dl>
         <p className="mt-3 text-xs leading-6">
-          This map records your understanding. It does not grant authority.
+          Check this with the people named. Writing someone here does not give
+          them new permission.
         </p>
       </section>
     );

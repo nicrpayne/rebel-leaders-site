@@ -1,10 +1,11 @@
+import { fieldToolChoiceLabel } from "./field-tool-choice-labels.ts";
 import { qualityChecksRecord, qualityChecksObserved } from "./ai-quality.ts";
 export const AI_EFFORT_STAGES = [
-  { id: "setup", label: "Setup, context, and prompting" },
-  { id: "drafting", label: "Drafting / implementation" },
-  { id: "verification", label: "Author verification and tests" },
-  { id: "review", label: "Reviewer checking" },
-  { id: "rework", label: "Rework and fixes" },
+  { id: "setup", label: "Getting ready and giving the tool instructions" },
+  { id: "drafting", label: "Writing the first version" },
+  { id: "verification", label: "Checking and testing your own work" },
+  { id: "review", label: "Someone else reviewing the work" },
+  { id: "rework", label: "Making corrections" },
   { id: "followup", label: "Follow-up work" },
 ] as const;
 
@@ -41,23 +42,23 @@ export function summarizeEffort(
 const answer = (
   v: Values,
   key: string,
-  fallback = "To complete before sharing."
-) => v[key]?.trim() || fallback;
+  fallback = "Add this before sharing."
+) => fieldToolChoiceLabel(key, v[key]?.trim() || fallback);
 
 export function buildReadinessBrief(v: Values) {
   const optional = [
-    ["WORK OUTCOME / SHARED AMBITION", [v.outcome, v.sharedVision]],
-    ["BUSINESS BASIS / VALIDATION OWNER", [v.businessBasis]],
+    ["WHAT WE WANT TO IMPROVE TOGETHER", [v.outcome, v.sharedVision]],
+    ["WHERE THE ESTIMATE CAME FROM / WHO WILL CHECK IT", [v.businessBasis]],
     ["TEAM / COMPANY OPPORTUNITY", [v.growthOpportunity]],
-    ["ACCESS MODEL / POLICY OWNER", [v.accessModel]],
-    ["API / PERMISSION VERIFICATION", [v.securityChecks]],
-    ["AI / AGENT OPERATING BOUNDARIES", [v.automationBoundary]],
-    ["DEMONSTRATED TEAM CAPABILITY", [v.teamReadiness]],
-    ["TRAINING / PAIRING / QUALIFIED REVIEW", [v.readinessSupport]],
+    ["WHO MAY ACCESS WHICH RECORDS / WHO DECIDES", [v.accessModel]],
+    ["CHECKING DATA ACCESS", [v.securityChecks]],
+    ["WHAT THE AI IS ALLOWED TO DO", [v.automationBoundary]],
+    ["WHAT THE TEAM HAS SHOWN IT CAN DO", [v.teamReadiness]],
+    ["TRAINING / WORKING WITH AN EXPERIENCED REVIEWER", [v.readinessSupport]],
     ["UPDATE TO LEADERSHIP / SPONSOR", [v.conversationLeadershipUpdate]],
     ["UPDATE TO THE TEAM", [v.conversationTeamUpdate]],
   ] as const;
-  return `AI STALEMATE — SHARED NEXT-STEP BRIEF
+  return `AI STALEMATE — NEXT STEP TOGETHER
 
 CONVERSATION STATUS
 ${answer(v, "conversationStatus", "PROPOSED — NOT YET AGREED")}
@@ -65,16 +66,16 @@ ${answer(v, "conversationStatus", "PROPOSED — NOT YET AGREED")}
 OUTCOME / CONTEXT
 ${answer(v, "businessContext")}
 
-COUNTERPART'S CONCERN / NEED
+WHAT THE OTHER PERSON NEEDS OR IS WORRIED ABOUT
 ${answer(v, "counterpartConcern")}
 
-SHARED UNDERSTANDING / OPEN QUESTIONS
+WHAT WE AGREE ON / WHAT WE STILL NEED TO ASK
 ${answer(v, "openQuestions")}
 
-PROPOSED OR AGREED NEXT MOVE
+WHAT WE WANT TO DO NEXT
 ${answer(v, "readinessDecision", "Choose and record the next move.")}
 
-NEXT ACTION / OWNERS / REVIEW DATE
+WHO WILL DO WHAT / WHEN WE WILL CHECK AGAIN
 ${answer(v, "prerequisitePlan")}
 ${optional
   .map(([title, entries]) => {
@@ -89,29 +90,29 @@ const optionalRecord = (v: Values, key: string, title: string) =>
   v[key]?.trim() ? `\n\n${title}\n${v[key].trim()}` : "";
 
 export function buildTrialCard(v: Values) {
-  return `AI STALEMATE — BET BRIEF
+  return `AI STALEMATE — EXPERIMENT PLAN
 
-THE PITCH
+WHY TRY THIS?
 
-OBSERVED PROBLEM / EVIDENCE BASIS
+THE PROBLEM / WHAT WE HAVE SEEN
 ${answer(v, "betBasis")}
 
-HYPOTHESIS / WHY WE EXPECT THIS
+WHAT WE THINK WILL HAPPEN / WHY
 ${answer(v, "betHypothesis")}
 
-PREDICTED IMPROVEMENT / BASELINE / MEASURE
+WHAT WE EXPECT / WHAT WE WILL COMPARE AND MEASURE
 ${answer(v, "expectedLift")}
 
-EXPECTED QUALITATIVE CHANGES
+OTHER CHANGES WE WILL LOOK FOR
 ${answer(v, "betQualitative", "Describe if relevant.")}
 
 WORK OUTCOME
 ${answer(v, "outcome")}
 
-SHARED AMBITION / WHY THIS MATTERS
+WHAT WE WANT TO IMPROVE TOGETHER
 ${answer(v, "sharedVision")}
 
-READINESS / PREREQUISITES
+WHAT NEEDS TO HAPPEN BEFORE WE START
 ${answer(v, "readinessDecision", "Record the readiness decision.")}
 ${answer(v, "prerequisitePlan")}
 
@@ -121,10 +122,10 @@ Verification: ${answer(v, "securityChecks")}
 Agent boundaries: ${answer(v, "automationBoundary")}
 Team support: ${answer(v, "readinessSupport")}
 
-BOUNDED TASK / OUT OF SCOPE
+THE TASK / WHAT WE WILL NOT DO
 ${answer(v, "task")}
 
-COMPARATOR / WHY IT IS COMPARABLE
+WORK WITHOUT AI / WHY THE COMPARISON IS FAIR
 ${answer(v, "comparator")}
 
 AI TOOL / VERSION
@@ -156,7 +157,7 @@ ${answer(v, "stop")}
 TASK / REVIEWER / DECISION OWNERS / REVIEW DATE
 ${answer(v, "owners")}
 
-BET ACCEPTANCE
+HAS THE EXPERIMENT BEEN AGREED?
 ${answer(v, "betStatus", "PROPOSED — NOT YET ACCEPTED")}
 
 Record these shared conditions before the experiment. Private preparation is excluded.${optionalRecord(v, "decisionRights", "DECISION RIGHTS / AFFECTED PEOPLE")}${optionalRecord(v, "deploymentPermission", "FURTHER APPROVAL FOR DEPLOYMENT OR EXPANSION")}`;
@@ -168,14 +169,14 @@ export function buildEvidenceRecord(v: Values) {
   const rows = AI_EFFORT_STAGES.map(stage => {
     const without = effortMinutes(v[`baseline_${stage.id}`]);
     const withAi = effortMinutes(v[`ai_${stage.id}`]);
-    return `${stage.label}\n  Without AI: ${without === null ? "To complete before sharing." : without + " min"}\n  With AI: ${withAi === null ? "To complete before sharing." : withAi + " min"}`;
+    return `${stage.label}\n  Without AI: ${without === null ? "Add this before sharing." : without + " min"}\n  With AI: ${withAi === null ? "Add this before sharing." : withAi + " min"}`;
   }).join("\n\n");
   const totals = `Without AI: ${baseline.minutes} min${baseline.complete ? "" : " (partial; " + baseline.entered + "/6 stages)"}\nWith AI: ${ai.minutes} min${ai.complete ? "" : " (partial; " + ai.entered + "/6 stages)"}`;
   const difference =
     baseline.complete && ai.complete
       ? `Recorded effort difference: ${Math.round((ai.minutes - baseline.minutes) * 100) / 100} min (with AI minus without AI).`
       : "Comparison pending: enter all stages for both methods. Enter 0 when no effort occurred; blank means unknown.";
-  return `AI STALEMATE — EVIDENCE RECORD
+  return `AI STALEMATE — RESULTS RECORD
 
 TESTED TASK
 ${answer(v, "task")}
@@ -184,14 +185,14 @@ PREDICTION / MINIMUM WORTHWHILE RESULT
 ${answer(v, "expectedLift")}
 ${answer(v, "success")}
 
-RESULT AGAINST THE BET
+RESULT COMPARED WITH WHAT WE EXPECTED
 ${answer(v, "betResult")}
 
-COMPARATOR / COMPARABILITY LIMITS
+WORK WITHOUT AI / DIFFERENCES THAT AFFECT THE COMPARISON
 ${answer(v, "comparator")}
 ${answer(v, "comparability", "Record the limits of this comparison.")}
 
-RECORDED PERSON-MINUTES
+RECORDED WORKING MINUTES
 ${rows}
 
 TOTAL RECORDED EFFORT
@@ -199,7 +200,7 @@ ${totals}
 ${difference}
 ${baseline.complete && ai.complete && baseline.minutes > 0 ? `Observed effort reduction: ${Math.round(((baseline.minutes - ai.minutes) / baseline.minutes) * 1000) / 10}%. Negative means more effort with AI. This is a descriptive comparison, not a causal estimate.` : "Observed percentage reduction unavailable: both methods need complete effort and a positive baseline."}
 
-AUTHOR / COMPARATOR NOTES
+NOTES ABOUT THE TWO TASKS
 ${answer(v, "withoutAi")}
 ${answer(v, "withAi")}
 
@@ -245,7 +246,7 @@ export function buildDecisionBrief(v: Values) {
     ? "No experiment result is recorded for this preparation decision."
     : baseline.complete && ai.complete
       ? `${baseline.minutes} person-minutes without AI; ${ai.minutes} with AI.`
-      : "Effort comparison remains incomplete. See the Evidence Record.";
+      : "Effort comparison remains incomplete. See the Results Record.";
   return `AI STALEMATE — DECISION BRIEF
 
 CONVERSATION STATUS
@@ -253,7 +254,7 @@ ${answer(v, "conversationStatus", "PROPOSED — NOT YET AGREED")}
 
 WORK OUTCOME / ${preTrial ? "PROPOSED USE" : "TESTED TASK"}
 ${answer(v, "outcome")}
-${answer(v, "task", preTrial ? "No experiment has been agreed or run." : "To complete before sharing.")}
+${answer(v, "task", preTrial ? "No experiment has been agreed or run." : "Add this before sharing.")}
 
 SHARED AMBITION
 ${answer(v, "sharedVision")}
@@ -262,7 +263,7 @@ REPORTED BUSINESS CONTEXT / BASIS
 ${answer(v, "businessContext")}
 ${answer(v, "businessBasis")}
 
-READINESS / REQUIRED INVESTMENT
+WHAT NEEDS TO HAPPEN FIRST / HELP NEEDED
 ${answer(v, "readinessDecision")}
 ${answer(v, "prerequisitePlan")}
 Access: ${answer(v, "accessModel")}
@@ -270,9 +271,9 @@ Verification: ${answer(v, "securityChecks")}
 Agent boundaries: ${answer(v, "automationBoundary")}
 Team support: ${answer(v, "readinessSupport")}
 
-CONDITIONS / COMPARATOR
-${answer(v, "tool", preTrial ? "No tool or use approved for an experiment." : "To complete before sharing.")}${v.toolVersion?.trim() ? " — " + v.toolVersion.trim() : ""}
-${answer(v, "comparator", preTrial ? "No experiment comparator agreed." : "To complete before sharing.")}
+AGREED CONDITIONS / WORK WITHOUT AI
+${answer(v, "tool", preTrial ? "No tool or use approved for an experiment." : "Add this before sharing.")}${v.toolVersion?.trim() ? " — " + v.toolVersion.trim() : ""}
+${answer(v, "comparator", preTrial ? "No experiment comparator agreed." : "Add this before sharing.")}
 
 EVIDENCE
 ${effort}
@@ -291,7 +292,7 @@ ${answer(v, "betLearning")}
 LIMITS OF THIS EVIDENCE
 ${answer(v, "limits")}
 
-NEXT ACTION / ACCOUNTABLE OWNER / DATE
+WHO WILL DO WHAT NEXT / WHEN
 ${answer(v, "next")}${optionalRecord(v, "unresolvedPlan", "IF UNRESOLVED / INTERIM MOVE / REVISIT")}${optionalRecord(v, "deploymentPermission", "FURTHER APPROVAL FOR DEPLOYMENT OR EXPANSION")}
 
 UPDATE TO LEADERSHIP

@@ -55,13 +55,13 @@ export default function FieldToolSalesProof({
         <div className="mt-8 grid gap-8 lg:grid-cols-2 lg:items-start">
           <figure>
             <a
-              href={`/assets/field-tools/${key}-lab-preview-v2.webp`}
+              href={`/assets/field-tools/${key}-lab-preview-v3.webp`}
               target="_blank"
               rel="noreferrer"
               className="block border border-[#b0bfa8] bg-[#fbf9f3] focus-visible:outline focus-visible:outline-2"
             >
               <img
-                src={`/assets/field-tools/${key}-lab-preview-v2.webp`}
+                src={`/assets/field-tools/${key}-lab-preview-v3.webp`}
                 alt={`${proof.name} interactive Lab preview`}
                 width={1347}
                 height={850}

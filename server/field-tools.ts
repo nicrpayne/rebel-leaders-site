@@ -1,5 +1,9 @@
 import { aiSampleFor } from "./field-tool-content/ai-readiness";
-import { AI_TOOLS, AI_STUDY, AI_RESOURCE_REVIEW_DATE } from "./field-tool-content/ai-resources";
+import {
+  AI_TOOLS,
+  AI_STUDY,
+  AI_RESOURCE_REVIEW_DATE,
+} from "./field-tool-content/ai-resources";
 import { aiCompanionFor } from "./field-tool-content/ai-companion";
 import { FIELD_TOOL_PRESENTATIONS } from "../client/src/lib/field-tool-presentations";
 import { aiGuideFor, aiLabFor } from "./field-tool-content/ai-paths";
@@ -137,18 +141,26 @@ export const fieldToolsRouter = router({
           : FIELD_LABS[input.slug];
       return {
         audience: input.audience,
-        resources: input.slug === "ai-stalemate" ? { tools: AI_TOOLS, study: AI_STUDY, reviewed: AI_RESOURCE_REVIEW_DATE } : null,
-        companion: input.slug === "ai-stalemate" ? aiCompanionFor(input.audience) : null,
+        resources:
+          input.slug === "ai-stalemate"
+            ? {
+                tools: AI_TOOLS,
+                study: AI_STUDY,
+                reviewed: AI_RESOURCE_REVIEW_DATE,
+              }
+            : null,
+        companion:
+          input.slug === "ai-stalemate" ? aiCompanionFor(input.audience) : null,
         firstMove: (
           {
             "deadline-reset":
-              "Bring one promised date. Skim the Guide's opening, then start Reality in the Lab. Check the constraint, shape options with your lead, and build a Stakeholder Update for the person who can make the tradeoff.",
+              "Bring one promised date. Open The Promise in the Lab and write what the customer was told. Check the options with the team before asking the person responsible for the promise to choose.",
             "priority-whiplash":
-              "Bring one new urgent request and the commitments it competes with. Start The Stack in the Lab. Name what would change, then build a Tradeoff Brief for the decision owner. Return to record what they actually decide.",
+              "Bring the new request and your current work list. Open Current Work in the Lab. Find out what the request needs, ask the team what would have to wait, and take that choice to the person who can decide.",
             "mandate-reset":
-              "Bring one outcome and one decision you cannot make. Start Accountability in the Lab, then verify the decision-rights map. Build a specific Reset Request with boundaries, an owner, and a response date.",
+              "Bring one decision you keep getting stuck on. Open The Problem in the Lab. Write what you are expected to deliver and what you cannot decide. Check who can help before drafting your request.",
             "product-project-translator":
-              "Bring the exact sentence a stakeholder asked you. Start The Request in the Lab. Confirm the need behind it, shape a bounded offer, and leave with a short Stakeholder Response and Commitment Card.",
+              "Bring the exact words someone used. Open The Request in the Lab. Ask what they need your answer for, then work out what you can promise and when you will know more.",
           } as Record<string, string>
         )[input.slug],
         sampleValues:

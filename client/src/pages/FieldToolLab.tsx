@@ -1,3 +1,4 @@
+import { fieldToolChoiceLabel } from "@/lib/field-tool-choice-labels";
 import {
   examplePatch,
   editLabValues,
@@ -78,7 +79,7 @@ function FieldInput({
           <option value="">Select…</option>
           {field.options?.map(option => (
             <option key={option} value={option}>
-              {option}
+              {fieldToolChoiceLabel(field.id, option)}
             </option>
           ))}
         </select>
@@ -497,11 +498,10 @@ function LabSession({ slug }: { slug: string }) {
             </p>
 
             <div className="mt-8 border-l-2 border-[#a1b89d] pl-4 font-ui text-xs leading-5 text-[#657268]">
-              Private reflection is optional: think it through without typing,
-              or use the private fields. Those notes stay only in this open tab
-              and disappear when you refresh or leave the Lab. Shared fields
-              save on this device and feed the records you can review before
-              sharing.
+              You can think through the private questions without typing.
+              Private notes disappear when you refresh or leave and are never
+              included in shared documents. Your other answers save on this
+              device.
             </div>
             <Link
               href={`${base}/guide#guide-${guideChapter}`}
@@ -606,8 +606,8 @@ function LabSession({ slug }: { slug: string }) {
                       : step === 0
                         ? "Picture six months from now · optional, private"
                         : step === 2
-                          ? "Bet conditions and decision rights · optional"
-                          : "Explore business, technical, or team conditions · optional"}
+                          ? "Experiment permissions · optional"
+                          : "Costs, data access, and help for the team · optional"}
                   </summary>
                   <div className="mt-5 space-y-6">
                     {renderFields(
@@ -714,10 +714,10 @@ function LabSession({ slug }: { slug: string }) {
               <div className="mt-6 border-t border-[#d7ddd3] pt-5">
                 <p className="font-ui text-xs leading-6 text-[#657268]">
                   {slug !== "ai-stalemate"
-                    ? "Build a record for the conversation. It updates from your shared inputs; private preparation stays out of every output."
+                    ? "Build the document you want to share. It uses your shared answers and leaves out your private notes."
                     : atReadiness
-                      ? "Build a Shared Next-Step Brief to take into the conversation or record what you have agreed. Clarifying or preparing can be the right next move; an experiment is optional."
-                      : "Export the Bet Brief before an approved test. Return for evidence and the decision; private preparation stays out of shared outputs."}
+                      ? "Build Next Step Together to show your proposal or record what you agreed. You may need another conversation or some preparation before an experiment."
+                      : "Save the agreed Experiment Plan before you start. Come back to record the results and decide what to do next. Private notes are never included."}
                 </p>
                 <div className="mt-3 flex flex-wrap gap-3">
                   {config.outputs

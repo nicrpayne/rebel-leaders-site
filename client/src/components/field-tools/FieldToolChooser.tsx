@@ -4,25 +4,25 @@ const choices = [
     "deadline-reset",
     "A date has been promised; the delivery basis is unclear.",
     "Deadline Reset",
-    "Stakeholder Update",
+    "Decision Update",
   ],
   [
     "priority-whiplash",
     "A new request competes with work already committed.",
     "Priority Whiplash",
-    "Tradeoff Brief",
+    "Priority Decision Brief",
   ],
   [
     "mandate-reset",
     "You own the outcome but cannot make the needed decision.",
     "Mandate Reset",
-    "Reset Request",
+    "Decision Request",
   ],
   [
     "product-project-translator",
     "A stakeholder needs certainty before the solution is known.",
     "Product / Project Translator",
-    "Commitment Card",
+    "Proposed Commitment",
   ],
 ] as const;
 export default function FieldToolChooser() {

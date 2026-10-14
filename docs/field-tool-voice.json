@@ -1,0 +1,42 @@
+{
+  "purpose": "Keep the Field Tools clear on first reading and recognizably in Nic Payne’s voice.",
+  "references": [
+    {
+      "url": "https://leaderrebellion.substack.com/p/the-hollow-crown-why-our-leadership",
+      "lesson": "Begin with a specific human situation; earn the larger argument through it."
+    },
+    {
+      "url": "https://leaderrebellion.substack.com/p/the-magic-of-mr-greenleaf-a-servant",
+      "lesson": "Use conversational rhythm, warmth, self-awareness, and occasional humor. Explain ideas through everyday experience."
+    },
+    {
+      "url": "https://leaderrebellion.substack.com/p/you-have-a-culture-problem",
+      "lesson": "Use dialogue and concrete images to make the point; examine the conditions without turning colleagues into villains."
+    }
+  ],
+  "rules": [
+    "Name who is doing what, for whom, and why it matters. Do not make readers supply the missing scene.",
+    "Write something a person could comfortably say aloud. Use contractions and connected sentences; do not turn every thought into a slogan.",
+    "Keep form labels literal and ask one clear question. Use hints for necessary context and examples.",
+    "Keep the depth and care for people. Plain language must not reduce the work to filling boxes or winning arguments.",
+    "Use humor sparingly in guidance; never at the expense of the person the reader needs to work with.",
+    "Do not invent personal stories or experiences for Nic. Mark invented product examples as fictional.",
+    "Keep a proposal distinct from an agreement, a prediction distinct from an observed result, and private reflection out of shared outputs.",
+    "AI Stalemate PM and Lead Developer paths must address each audience directly, including its own concerns and private reflection.",
+    "When copy changes, update public pages, Guides, Labs, examples, generated documents, PDFs, and product previews together."
+  ],
+  "examples": [
+    {
+      "before": "an onboarding fix",
+      "after": "fix the broken invitation link that stops new customers joining their account"
+    },
+    {
+      "before": "a reporting update",
+      "after": "correct the figures in a customer’s monthly report"
+    },
+    {
+      "before": "establish what would move and who can approve the tradeoff",
+      "after": "ask the team what would have to wait, then take that choice to the person who can decide"
+    }
+  ]
+}

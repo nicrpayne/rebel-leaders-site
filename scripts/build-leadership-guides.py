@@ -19,7 +19,7 @@ ROOT = Path(__file__).resolve().parents[1]
 BASE = os.environ.get("GUIDE_APP_URL", "https://rebel-leaders-field-tools-preview-production.up.railway.app")
 DATA = json.loads(subprocess.check_output(["node", "--experimental-strip-types", "--input-type=module", "-e", "import { LEADERSHIP_GUIDE_PAGES as pages } from './server/field-tool-content/leadership-guides.ts'; import { FIELD_TOOLS as tools } from './client/src/lib/field-tools.ts'; import { FIELD_TOOL_PRESENTATIONS as presentations } from './client/src/lib/field-tool-presentations.ts'; console.log(JSON.stringify({pages,tools,presentations}));"],cwd=ROOT))
 for name,file in [("GuideSerif","DejaVuSerif.ttf"),("GuideSans","DejaVuSans.ttf"),("GuideBold","DejaVuSans-Bold.ttf")]:
-    pdfmetrics.registerFont(TTFont(name,"/usr/share/fonts/truetype/dejavu/"+file))
+    pdfmetrics.registerFont(TTFont(name,str(Path(os.environ.get("GUIDE_FONT_DIR", "/usr/share/fonts/truetype/dejavu")) / file)))
 W,H=A4
 M=48
 CW=W-2*M
@@ -60,7 +60,7 @@ def cover(c,tool,presentation,lab):
     c.setFont("GuideSans",9);c.drawString(M,117,"For you, the PM carrying this situation")
     c.setFillColor(colors.HexColor("#a9bba9"));c.setFont("GuideSans",8)
     c.drawString(M,76,"OPEN YOUR LAB >");c.linkURL(lab,(M,60,W-M,90),relative=0)
-    c.drawString(M,58,"UNDERSTAND THE PRESSURE. WORK THE SITUATION. LEAVE WITH A MOVE.")
+    c.drawString(M,58,"START WITH A REAL SITUATION. DECIDE WHAT HAPPENS NEXT.")
     c.drawString(M,39,"WORKING EDITION / REBEL-LEADER.COM");c.showPage()
 
 def chapter(c,page,number,total,tool,lab):

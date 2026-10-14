@@ -15,11 +15,11 @@ describe("readiness before AI experiments", () => {
       dev = aiLabFor("lead-dev");
     for (const lab of [pm, dev]) {
       expect(lab.steps.map(s => s.eyebrow)).toEqual([
-        "PRIVATE PREP",
+        "BEFORE YOU TALK",
         "CONVERSATION",
-        "SHARED WORK",
-        "EVIDENCE",
-        "DECISION",
+        "EXPERIMENT",
+        "RESULTS",
+        "NEXT STEP",
       ]);
       expect(lab.steps[1].fields.map(f => f.id)).toEqual(
         expect.arrayContaining([
@@ -53,12 +53,12 @@ describe("readiness before AI experiments", () => {
   });
   it("exports preparation with owners and limitations without inventing an experiment result", () => {
     const text = buildAITrialPackage(AI_READINESS_SAMPLE);
-    expect(text).toContain("SHARED NEXT-STEP BRIEF");
+    expect(text).toContain("NEXT STEP TOGETHER");
     expect(text).toContain("PAUSE");
-    expect(text).toContain("Finance has not validated");
+    expect(text).toContain("Finance has not checked");
     expect(text).toContain("next Tuesday");
-    expect(text).not.toContain("BET BRIEF");
-    expect(text).not.toContain("EVIDENCE RECORD");
+    expect(text).not.toContain("EXPERIMENT PLAN");
+    expect(text).not.toContain("RESULTS RECORD");
     expect(text).not.toContain("97 person-minutes");
     expect(text).toContain("No experiment result is recorded");
   });
@@ -90,8 +90,8 @@ describe("readiness before AI experiments", () => {
       task: "Approved synthetic-data test",
     });
     expect(card).toContain("Approved synthetic-data test");
-    expect(card).toContain("No agent access to production data");
-    expect(card).toContain("qualified reviewer");
+    expect(card).toContain("No AI access to live customer data");
+    expect(card).toContain("experienced reviewer");
   });
   it("retains existing measurements when preparation is needed for a next use", () => {
     const values = {
@@ -115,17 +115,17 @@ describe("readiness before AI experiments", () => {
     expect(buildDecisionBrief(values)).toContain(
       "60 person-minutes without AI; 72 with AI"
     );
-    expect(buildAITrialPackage(values)).toContain("EVIDENCE RECORD");
+    expect(buildAITrialPackage(values)).toContain("RESULTS RECORD");
   });
   it("keeps the Guide aligned with the new readiness and preparation example", () => {
     for (const role of ["pm", "lead-dev"] as const) {
       const pages = aiGuideFor(role);
       expect(pages).toHaveLength(12);
-      expect(pages[4].eyebrow).toBe("05 / SHARE THE BUSINESS CONTEXT");
-      expect(pages[5].eyebrow).toBe("06 / PROTECT THE SYSTEM");
-      expect(pages[6].eyebrow).toBe("07 / PREPARE THE TEAM");
-      expect(pages[10].sections.map(s => s.body).join(" ")).toContain(
-        "No AI productivity result has been measured"
+      expect(pages[4].eyebrow).toBe("05 / SHARE WHAT YOU KNOW");
+      expect(pages[5].eyebrow).toBe("06 / CHECK WHO CAN ACCESS THE DATA");
+      expect(pages[6].eyebrow).toBe("07 / HELP THE TEAM PREPARE");
+      expect(pages[10].callout).toContain(
+        "They have not measured an AI productivity gain"
       );
     }
   });

@@ -12,31 +12,31 @@ export const AI_PRODUCT_INVENTORY = [
   {
     title: "Your interactive Lab",
     detail:
-      "Think privately, understand each other, and shape a useful next move. Start where your conversation stands.",
+      "Prepare on your own, talk it through, and decide what to do next. Start with the questions you need now.",
     destination: "lab",
   },
   {
-    title: "Shared Next-Step Brief",
+    title: "Next Step Together",
     detail:
       "A proposal or agreement, plus updates you can adapt for leadership and your team.",
     destination: "lab?step=1",
   },
   {
-    title: "Bet, Evidence & Decision Briefs",
+    title: "Experiment Plan, Results Record & Decision Brief",
     detail:
-      "If you test: govern the experiment, count the whole effort, and record what the evidence supports.",
+      "If you run an experiment, agree the plan, count everyone’s work, and decide what the results tell you.",
     destination: "lab?step=2",
   },
   {
     title: "Worked walkthrough",
     detail:
-      "Follow a realistic case from disagreement to a responsible next move.",
+      "Follow a fictional conversation from the first disagreement to a proposal for what happens next.",
     destination: "walkthrough",
   },
   {
     title: "Tools & study library",
     detail:
-      "Coding, review, testing, access, and delivery resources—with a question to bring back to the work.",
+      "Choose a reading or tool for the question you have about writing, checking, or releasing code. Each includes a question to discuss with your colleague.",
     destination: "resources",
   },
 ] as const;
@@ -46,19 +46,19 @@ export function aiProductCopy(audience: Audience) {
     ? {
         role: "FOR PRODUCT MANAGERS",
         headline: "Your lead isn’t convinced.",
-        accent: "Find a move you can make together.",
+        accent: "Work out what would help you both move forward.",
         promise:
-          "Get clear on the opportunity. Shape the next move with your lead. Explain it to the people who need to act.",
+          "Explain what you hope AI could improve, hear your lead’s concerns, and work out what to do next together.",
         first:
-          "Bring the AI conversation you’re already having. Start with the Guide’s opening or go straight to private preparation in the Lab. You can read the matching chapter as you work.",
+          "Bring the AI conversation you’re already having. Read the opening of the Guide or start with Before You Talk in the Lab. Each Lab step links to a chapter that explains its questions.",
       }
     : {
         role: "FOR LEAD DEVELOPERS",
-        headline: "Your PM sees an AI opportunity.",
-        accent: "You see what needs to be true.",
+        headline: "Your PM thinks AI could help.",
+        accent: "You have questions about the work.",
         promise:
-          "Make the concerns concrete. Understand the opportunity. Shape a responsible next move with your PM.",
+          "Help your PM understand the checks, review, and support the idea would need. Decide together whether to try it and what needs to happen first.",
         first:
-          "Bring the AI conversation you’re already having. Start with the Guide’s opening or prepare privately in the Lab. Turn the concerns into questions, conditions, and a next move your PM can act on.",
+          "Bring the AI conversation you’re already having. Read the Guide or start with Before You Talk in the Lab. Think about what worries you, what you need to ask your PM, and what might help you both move forward.",
       };
 }

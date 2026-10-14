@@ -62,7 +62,7 @@ describe("AI experiment evidence and shared artifacts", () => {
       reason: "Priority changed",
     };
     expect(buildDecisionBrief(v)).toContain("No experiment result is recorded");
-    expect(buildAITrialPackage(v)).not.toContain("EVIDENCE RECORD");
+    expect(buildAITrialPackage(v)).not.toContain("RESULTS RECORD");
   });
   it("reports descriptive effort reduction only with complete evidence and a positive baseline", () => {
     const v = { ...allStages("baseline", "10"), ...allStages("ai", "8") };
@@ -125,7 +125,7 @@ describe("AI experiment evidence and shared artifacts", () => {
       decision: "STOP",
     });
     expect(card).toContain("Matched previous task");
-    expect(card).not.toContain("EVIDENCE RECORD");
+    expect(card).not.toContain("RESULTS RECORD");
     expect(card).not.toContain("STOP\n");
   });
   it("excludes every private preparation field from all shared outputs", () => {

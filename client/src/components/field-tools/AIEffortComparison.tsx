@@ -22,18 +22,18 @@ export default function AIEffortComparison({
       aria-labelledby="effort-title"
     >
       <h3 id="effort-title" className="font-display text-2xl font-semibold">
-        The whole workflow, side by side.
+        Count all the time spent.
       </h3>
       <p className="mt-3 font-ui text-xs leading-6 text-[#5c6960]">
-        Record person-minutes, including every person's work. Enter 0 when no
-        effort occurred. Leave unknown effort blank. Keep quality and
-        comparability in view alongside the totals.
+        Add everyone’s working minutes. Two people working for 30 minutes use 60
+        person-minutes. Enter 0 if no time was spent; leave a box blank if you
+        do not know. Compare the quality of the finished work too.
       </p>
       <table className="mt-5 w-full table-fixed font-ui text-xs">
         <thead>
           <tr className="border-b border-[#c8d0c5] text-left">
             <th scope="col" className="w-[46%] pb-3">
-              Workflow stage
+              Work
             </th>
             <th scope="col" className="pb-3 text-center">
               Without AI
@@ -89,14 +89,14 @@ export default function AIEffortComparison({
       >
         {complete ? (
           <p>
-            With AI required{" "}
+            The work with AI took{" "}
             {Math.abs(Math.round((ai.minutes - baseline.minutes) * 100) / 100)}{" "}
             {ai.minutes === baseline.minutes
               ? "additional minutes: recorded effort is equal."
               : ai.minutes > baseline.minutes
                 ? "more person-minutes."
                 : "fewer person-minutes."}{" "}
-            Check the quality bar before deciding.
+            Check whether the finished work passed the agreed checks too.
           </p>
         ) : (
           <p>
@@ -110,7 +110,7 @@ export default function AIEffortComparison({
             <p className="mt-2">
               Reviewer checking increased by{" "}
               {Math.round((reviewAfter - reviewBefore) * 100) / 100} minutes.
-              Discuss who carries that burden.
+              Ask the reviewer what caused the extra work.
             </p>
           )}
       </div>

@@ -44,8 +44,11 @@ export default function FieldToolAccess({ slug }: { slug: string }) {
             : ""}
         </h1>
         <p className="mt-5 max-w-2xl font-ui text-base leading-7 text-[#b8c9b8]">
-          {slug === "ai-stalemate" ? aiProductCopy(content.audience).promise : presentation.promise} Start with one situation you want to move
-          forward. Bookmark this page to return to your tool.
+          {slug === "ai-stalemate"
+            ? aiProductCopy(content.audience).promise
+            : presentation.promise}{" "}
+          Start with one situation you want to move forward. Bookmark this page
+          to return to your tool.
         </p>
         <div className="mt-8 border-l-2 border-[#d9b34d] bg-[#12281b] p-6">
           <h2 className="font-display text-3xl">Your first useful move</h2>
@@ -64,7 +67,26 @@ export default function FieldToolAccess({ slug }: { slug: string }) {
             Download the Field Guide ↓
           </a>
         </div>
-        {slug === "ai-stalemate" && <section className="mt-8 grid gap-3 sm:grid-cols-2">{AI_PRODUCT_INVENTORY.filter(item => item.destination === "walkthrough" || item.destination === "resources").map(item => <Link key={item.title} href={`${base}/${item.destination}`} className="border border-[#617857] bg-[#12281b] p-5"><h2 className="font-display text-2xl">{item.title} →</h2><p className="mt-2 text-xs leading-6 text-[#b5c6b2]">{item.detail}</p></Link>)}</section>}
+        {slug === "ai-stalemate" && (
+          <section className="mt-8 grid gap-3 sm:grid-cols-2">
+            {AI_PRODUCT_INVENTORY.filter(
+              item =>
+                item.destination === "walkthrough" ||
+                item.destination === "resources"
+            ).map(item => (
+              <Link
+                key={item.title}
+                href={`${base}/${item.destination}`}
+                className="border border-[#617857] bg-[#12281b] p-5"
+              >
+                <h2 className="font-display text-2xl">{item.title} →</h2>
+                <p className="mt-2 text-xs leading-6 text-[#b5c6b2]">
+                  {item.detail}
+                </p>
+              </Link>
+            ))}
+          </section>
+        )}
         {content.walkthroughUrl && (
           <section className="mt-8 border border-[#60775a] p-6">
             <h2 className="font-display text-3xl">
@@ -96,8 +118,8 @@ export default function FieldToolAccess({ slug }: { slug: string }) {
               Read the Field Guide
             </h2>
             <p className="mt-3 font-ui text-sm leading-6 text-[#b5c6b2]">
-              The reframe, working rules, process, and a concrete example. Print
-              it or save it as a PDF.
+              An explanation of the questions, ways to approach the
+              conversation, and a worked example. You can also download the PDF.
             </p>
             <ArrowRight
               size={20}
@@ -121,8 +143,8 @@ export default function FieldToolAccess({ slug }: { slug: string }) {
               Open the Lab
             </h2>
             <p className="mt-3 font-ui text-sm leading-6 text-[#b5c6b2]">
-              Bring one live situation. Work the questions, then copy, download,
-              or print your brief.
+              Answer the questions about your own situation. Then review, copy,
+              download, or print the document you want to share.
             </p>
             <ArrowRight
               size={20}
@@ -134,8 +156,9 @@ export default function FieldToolAccess({ slug }: { slug: string }) {
         <div className="mt-9 border-t border-[#435a46] pt-7 font-ui text-sm leading-7 text-[#acbfaa]">
           <p>{presentation.session}</p>
           <p className="mt-3">
-            The Guide explains the thinking. The Lab sequences your work. Your
-            exported record is what you share with colleagues.
+            Read the Guide to understand the questions. Use the Lab to answer
+            them about your situation, then review the document you want to
+            share.
           </p>
           <p className="mt-3">
             Your shared draft saves on this device. Private reflection is not

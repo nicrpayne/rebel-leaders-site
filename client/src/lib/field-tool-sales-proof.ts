@@ -10,17 +10,17 @@ export const SALES_PROOF: Record<
 > = {
   "deadline-reset": {
     name: "Deadline Reset",
-    title: "Stakeholder Update",
+    title: "Decision Update",
     context:
-      "A promised launch becomes an explicit scope choice, with evidence, an owner, and a decision deadline.",
+      "Sales has promised online repair bookings and service reports for an event. Check what can be ready and who can change the promise.",
     sections: [
       {
-        title: "RECOMMENDATION / TRADEOFF",
-        body: "Keep date / change scope\nProtect the event's customer outcome with the smaller workflow, subject to integration evidence. Ask the sponsor to reset reporting expectations.\nScope: Core customer workflow at the event; reporting sequenced afterward. Engineering checks feasibility at the integration review.\nDate alternative: Keep full scope; Engineering reassesses the range after Thursday's integration check. No replacement date is yet supported.\nCapacity: Current team, no assumed overtime. Sponsor protects integration-review and acceptance capacity.",
+        title: "RECOMMENDATION / WHAT WOULD CHANGE",
+        body: "Keep the date; deliver less first\nKeep the event, aim for working online booking, and explain that reports will come later. Confirm what we can promise after Thursday's calendar check.\nWork included: Aim to offer online booking on November 1 and add downloadable service reports later. The engineering lead needs to check the calendar connection on Thursday before confirming that plan.\nDate alternative: If both booking and reports must be ready together, ask the engineering lead for a new delivery estimate after Thursday's check. We do not have a reliable replacement date yet.\nCapacity: Keep the current team. Reserve time for checking the calendar connection and testing bookings. Do not assume anyone will work overtime.",
       },
       {
-        title: "DECISION NEEDED / OWNER / BY",
-        body: "Approve the smaller event scope or request a full-scope date reassessment.\nProduct sponsor — Wednesday, before the external update",
+        title: "DECISION NEEDED / WHO CAN MAKE IT / WHEN",
+        body: "Agree to focus on booking for the event, or ask for a new date when booking and reports can both be ready.\nSales director, who made the customer promise — Wednesday, before the next customer update",
       },
       {
         title: "DECISION STATUS",
@@ -30,17 +30,17 @@ export const SALES_PROOF: Record<
   },
   "priority-whiplash": {
     name: "Priority Whiplash",
-    title: "Tradeoff Brief",
+    title: "Priority Decision Brief",
     context:
-      "Ten available person-days, ten already committed, and a new two-day request: make the displacement visible before saying yes.",
+      "The team has ten days of work time between them. Existing work needs all ten; a Friday demonstration needs two more. What would have to wait?",
     sections: [
       {
         title: "CAPACITY CHECK",
-        body: "Planning window: The remaining shared planning window before Friday\nUsing entered person-days:\nAvailable: 10; existing work: 10; new request: 2.\nBefore displacement, demand: 12; demand beyond entered capacity: 2.\nThese are planning assumptions, not a delivery forecast. Basis: Fictional team estimates in person-days, including review and support. No assumed overtime; this is not a schedule calculation.",
+        body: "Planning window: The remaining working time from now to Friday\nUsing entered person-days:\nAvailable: 10; existing work: 10; new request: 2.\nBefore changing the plan, work totals: 12; work that does not fit: 2.\nOne person-day is one person working for one day. These estimates do not calculate a finish date. How we estimated them: Fictional estimates: the people involved have 10 days of work time between them before Friday. Existing work needs all 10 days; the simple demonstration needs 2 more. These totals include support and review, with no overtime.",
       },
       {
-        title: "RECOMMENDATION / DISPLACEMENT",
-        body: "Narrow the request\nUse a narrow demo only with explicit reporting displacement. It meets the customer meeting need with less disruption than a production feature.\nWhat moves: Move 2 person-days of reporting work out of this planning window to create capacity for a narrow demo.\nConsequence: Reporting's stakeholder needs a revised sequence; Engineering must reassess the resulting delivery forecast.",
+        title: "RECOMMENDATION / WHAT WOULD WAIT",
+        body: "Narrow the request\nUse a simple clickable demonstration for Friday only if we agree to delay the report correction. It lets the customer react to the idea without asking the team to build the full feature.\nWhat moves: Make a simple clickable demonstration and put off two days of work on the incorrect report totals. Check the new report-fix date with the team before promising it.\nConsequence: The customer waiting for accurate report totals would wait longer. Their account manager needs the revised date and must tell them what is happening.",
       },
       {
         title: "DECISION STATUS",
@@ -50,17 +50,17 @@ export const SALES_PROOF: Record<
   },
   "mandate-reset": {
     name: "Mandate Reset",
-    title: "Reset Request",
+    title: "Decision Request",
     context:
-      "Several leaders can add scope; Product cannot displace it. A decision right names who can choose. Required approvals still protect security, spending, and acceptance.",
+      "Several directors ask for more features; the PM cannot turn them down. Ask for one person to decide which requests change the plan.",
     sections: [
       {
-        title: "AUTHORITY GAP / CONSEQUENCE",
-        body: "Several executives can introduce work; Product cannot displace it. There is no agreed sponsor response rule before the plan changes.\nThe team receives conflicting additions while Product remains accountable for the original delivery date.",
+        title: "WHAT I CANNOT DECIDE / WHY IT MATTERS",
+        body: "I am held responsible for the release date, but directors can add work and I cannot say what should wait. We have no agreed way to get a quick decision.\nDifferent directors keep asking developers to add features. I am expected to meet the original date, but cannot postpone those requests.",
       },
       {
-        title: "REQUEST / OPERATING BOUNDARIES",
-        body: "Every new scope request goes to one sponsor for an explicit displacement decision before the release plan changes.\nWithin the approved outcome and budget; required security and Engineering acceptance conditions remain intact.\nRequired agreement (A): Security/data approvals, spending limits, and Engineering acceptance remain with their accountable owners.",
+        title: "WHAT I AM ASKING FOR / LIMITS",
+        body: "Send new requests to the product director before adding them to the team's plan. The director should say whether to add them now and, if they do not fit, what should wait.\nKeep the agreed budget and the required security and software checks. This changes how we choose work; it does not remove those approvals.\nRequired approval: The security reviewer must approve the customer-data checks. The finance manager approves extra spending. The engineering lead confirms that the software is ready to release.",
       },
       {
         title: "DECISION STATUS",
@@ -70,17 +70,17 @@ export const SALES_PROOF: Record<
   },
   "product-project-translator": {
     name: "Product / Project Translator",
-    title: "Stakeholder Response",
+    title: "Your Reply",
     context:
-      "A request for final requirements becomes a bounded funding decision, with a useful commitment while discovery continues.",
+      "Finance asks for a final feature list. Find out what they need to approve now, then propose time and money to test the two designs.",
     sections: [
       {
         title: "MESSAGE / MEETING SCRIPT",
-        body: "I understand you need a funding decision for next quarter. I can give you the outcome, investment boundary, and next decision now. We propose testing two workflows within a capped two-week phase, then bringing customer evidence and a delivery assessment before you commit to the full build. Can you approve that boundary by Thursday?",
+        body: "I understand you need a spending limit by Thursday. Could we set aside up to $5,000 for two weeks to try both booking designs with five customers and check the build work with Engineering? We would then bring you the results and a recommendation before asking for the full build budget.",
       },
       {
-        title: "DECISION NEEDED / OWNER / BY",
-        body: "Approve or revise the capped discovery phase and confirm the funding decision owner.\nFinance sponsor — Thursday, before reserving discovery capacity",
+        title: "DECISION NEEDED / WHO CAN MAKE IT / WHEN",
+        body: "Approve or change the proposed $5,000, two-week customer test and Engineering assessment.\nFinance director — Thursday, before booking the customer sessions",
       },
       {
         title: "DECISION STATUS",
@@ -90,49 +90,49 @@ export const SALES_PROOF: Record<
   },
   "ai-stalemate-pm": {
     name: "AI Stalemate / PM",
-    title: "Shared Next-Step Brief",
+    title: "Next Step Together",
     context:
-      "Bring the opportunity and the business assumptions into a conversation your lead can help shape.",
+      "Explain the repeated work you hope to remove, ask about your lead’s concerns, and agree what needs checking first.",
     sections: [
       {
         title: "CONVERSATION STATUS",
         body: "PROPOSED — NOT YET AGREED",
       },
       {
-        title: "COUNTERPART'S CONCERN / NEED",
-        body: "Unverified route permissions and review work that the current plan does not account for.",
+        title: "WHAT THE OTHER PERSON NEEDS OR IS WORRIED ABOUT",
+        body: "We have not checked who can access which repair records, and nobody has time set aside to review the code.",
       },
       {
-        title: "PROPOSED OR AGREED NEXT MOVE",
+        title: "WHAT WE WANT TO DO NEXT",
         body: "PREPARE FIRST",
       },
       {
-        title: "NEXT ACTION / OWNERS / REVIEW DATE",
-        body: "PM validates business assumptions Thursday. Data/security owner agrees the access model Friday. Engineering manager leads pairing and verification. Both leaders review readiness next Tuesday.",
+        title: "WHO WILL DO WHAT / WHEN WE WILL CHECK AGAIN",
+        body: "The PM checks the claimed benefit with Finance Thursday. The data and security owners agree who may access the records Friday. The engineering manager arranges the practice and review. The PM and lead check progress next Tuesday.",
       },
     ],
   },
   "ai-stalemate-lead-dev": {
     name: "AI Stalemate / Lead Developer",
-    title: "Shared Next-Step Brief",
+    title: "Next Step Together",
     context:
-      "Bring the delivery conditions into a conversation that also makes room for the opportunity your PM sees.",
+      "Help your PM understand the permission checks and review the idea would need, while making room for the problem they want to solve.",
     sections: [
       {
         title: "CONVERSATION STATUS",
         body: "PROPOSED — NOT YET AGREED",
       },
       {
-        title: "COUNTERPART'S CONCERN / NEED",
-        body: "Customers are waiting for an operational improvement; the sponsor expects us to find a responsible way to move faster.",
+        title: "WHAT THE OTHER PERSON NEEDS OR IS WORRIED ABOUT",
+        body: "Support staff copy repair requests twice, and some are missed. My PM wants to save that work and stop customers having to chase us.",
       },
       {
-        title: "PROPOSED OR AGREED NEXT MOVE",
+        title: "WHAT WE WANT TO DO NEXT",
         body: "PREPARE FIRST",
       },
       {
-        title: "NEXT ACTION / OWNERS / REVIEW DATE",
-        body: "PM validates business assumptions Thursday. Data/security owner agrees the access model Friday. Engineering manager leads pairing and verification. Both leaders review readiness next Tuesday.",
+        title: "WHO WILL DO WHAT / WHEN WE WILL CHECK AGAIN",
+        body: "The PM checks the claimed benefit with Finance Thursday. The data and security owners agree who may access the records Friday. The engineering manager arranges the practice and review. The PM and lead check progress next Tuesday.",
       },
     ],
   },

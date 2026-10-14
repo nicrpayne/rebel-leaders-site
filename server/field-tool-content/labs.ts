@@ -39,10 +39,10 @@ export const FIELD_LABS: Record<string, LabConfig> = {
   "ai-stalemate": {
     steps: [
       {
-        eyebrow: "PRIVATE PREP",
-        title: "Start with your side of the table.",
+        eyebrow: "BEFORE YOU TALK",
+        title: "What has happened so far?",
         intro:
-          "Separate observation from interpretation. Your counterpart does not need to see this page.",
+          "Take a few minutes to get your thoughts straight before you talk. These notes are just for you.",
         fields: [
           {
             id: "side",
@@ -65,7 +65,7 @@ export const FIELD_LABS: Record<string, LabConfig> = {
           {
             id: "protecting",
             label:
-              "What opportunity, cost, or responsibility are you protecting?",
+              "What do you want to improve, and what are you worried about losing?",
             type: "textarea",
           },
           {
@@ -77,9 +77,9 @@ export const FIELD_LABS: Record<string, LabConfig> = {
           },
           {
             id: "futurePicture",
-            label: "What better future could you help create together?",
+            label: "If this went well, what would be better for people?",
             type: "textarea",
-            hint: "Paint a specific before and after for customers, the team, or the company. Treat career opportunities as a possibility, not a guarantee.",
+            hint: "Picture an ordinary day for a customer or teammate. What would be easier or better? You can be ambitious without promising that it will happen.",
           },
           {
             id: "observed",
@@ -104,58 +104,58 @@ export const FIELD_LABS: Record<string, LabConfig> = {
         ],
       },
       {
-        eyebrow: "SHARED WORK",
-        title: "Shape a bet you can learn from.",
+        eyebrow: "EXPERIMENT",
+        title: "What would be worth trying?",
         intro:
-          "If existing evidence already answers the question, use it. If approval or ownership is missing, pause and name the prerequisite.",
+          "Check what you already know. If a test would help, agree the task, the time you will spend, and who needs to approve it before starting.",
         fields: [
           {
             id: "outcome",
-            section: "01 / THE SHARED AMBITION",
-            label: "What work outcome are we trying to improve?",
+            section: "01 / WHAT WE WANT TO IMPROVE",
+            label: "What do we want to make better?",
             type: "textarea",
           },
           {
             id: "sharedVision",
-            label: "What ambition and Why do you both agree to pursue?",
+            label: "What do you both want to achieve, and why does it matter?",
             type: "textarea",
-            hint: "Invite the other leader to shape the picture. Record the shared version here; your private vision notes stay out of exports.",
+            hint: "Ask the other person what they would add or change. Record what you have agreed, or mark it as a suggestion you still need to discuss.",
           },
           {
             id: "task",
-            label: "Exact task — and what is explicitly out of scope",
+            label: "What will you try, and what will you leave out?",
             type: "textarea",
           },
           {
             id: "betBasis",
-            label: "What observed problem makes this bet worth considering?",
+            label: "What problem have you seen that makes this worth trying?",
             type: "textarea",
-            hint: "Share facts and their source. Keep your interpretation separate; private preparation is never copied here automatically.",
+            hint: "Describe what happened and how you know. Your private notes are not copied here; choose what you want to share.",
           },
           {
             id: "betHypothesis",
-            label: "What are you betting will happen, and why?",
+            label: "What do you think will happen, and why?",
             type: "textarea",
-            hint: "If we try this approach on this task, we expect this outcome because... Name the uncertainty you want to resolve.",
+            hint: "Try: “If we use AI for this task, we think it will help because...” Say what you want to find out.",
           },
           {
             id: "expectedLift",
             label: "What improvement do you predict?",
             type: "textarea",
-            hint: "Name the baseline, expected change, unit, and measurement. A reasoned range is fine. Record qualitative changes separately; this is a prediction, not a promised result.",
+            hint: "For example: this usually takes 90 minutes in total; we think it might take 72 with AI. Explain how you will measure it. This is a prediction, not a promise.",
           },
           {
             id: "betQualitative",
             label: "What else might change for the team or customers?",
             type: "textarea",
-            hint: "Optional: confidence, review experience, clarity, or learning. Say how you would notice it.",
+            hint: "Optional. Would checking the work feel easier or harder? Would people learn something useful? Say who you will ask or what you will look for.",
           },
           {
             id: "comparator",
             label:
-              "Comparator — what work without AI will you compare against?",
+              "Which similar task done without AI will you compare this with?",
             type: "textarea",
-            hint: "Name the comparable task and why its complexity, quality bar, and experience are similar.",
+            hint: "Choose work of similar difficulty, done by people with similar experience and checked to the same standard. Say what differs.",
           },
           {
             id: "tool",
@@ -166,55 +166,62 @@ export const FIELD_LABS: Record<string, LabConfig> = {
           { id: "toolVersion", label: "Tool / model version", type: "text" },
           {
             id: "inputs",
-            label: "Allowed inputs and data boundaries",
+            label:
+              "What information and code are you allowed to put into the tool?",
             type: "textarea",
           },
           {
             id: "approvalOwner",
-            label: "Who approves the tool and these inputs?",
+            label:
+              "Who can approve this tool and the information you will use?",
             type: "text",
           },
           {
             id: "qualityBar",
-            section: "03 / QUALITY AND CAPACITY",
-            label: "Acceptance checks and accountable engineering owner",
+            section: "03 / CHECKS AND TIME",
+            label: "What checks must the result pass, and who will check it?",
             type: "textarea",
           },
           {
             id: "capacity",
             label:
-              "Appetite — effort budget, reviewer time, and work displaced",
+              "How much work time and money will you spend? What would have to wait?",
             type: "textarea",
-            hint: "How much effort are you willing to invest in learning? Set author and reviewer limits, any tool budget, and the work that moves. This is a budget, not a delivery estimate.",
+            hint: "Include the person doing the task and the person reviewing it. Set a maximum and say which other work would wait. This is how much you agree to spend, not a prediction of how long it will take.",
           },
           {
             id: "betTimebox",
             label: "When does the experiment start and end?",
             type: "textarea",
-            hint: "Set a start, end, and evidence checkpoint. Calendar time and person-hours are different constraints.",
+            hint: "Set start and finish dates and a time to review the result. A one-week test does not mean everyone works on it all week; record their work-time limits above.",
           },
           {
             id: "betRabbitHoles",
-            label: "Rabbit holes — what could pull this beyond the budget?",
+            label: "What could turn this into a much bigger job?",
             type: "textarea",
-            hint: "Optional: flag known complications and how you will contain them. Put excluded work in the task's out-of-scope boundary.",
+            hint: "Optional. Name complications that could use up the agreed time, and say when you would stop or ask for another decision.",
           },
           {
             id: "success",
-            label: "What result would make this bet worth continuing?",
+            label: "What result would make another experiment worthwhile?",
             type: "textarea",
-            section: "04 / THE BAR AND OWNERS",
-            hint: "Agree the minimum worthwhile improvement before running the experiment, plus quality and reviewer guardrails. It can differ from your predicted improvement.",
+            section: "04 / WHEN TO CONTINUE OR STOP",
+            hint: "Agree the smallest improvement worth the effort, the checks that must still pass, and the maximum review time. That minimum can be lower than your prediction.",
           },
-          { id: "stop", label: "Stop rule", type: "textarea" },
+          {
+            id: "stop",
+            label: "What would make you stop the experiment?",
+            type: "textarea",
+          },
           {
             id: "owners",
-            label: "Task owner, reviewer, decision owner, review date",
+            label:
+              "Who does the task, who reviews it, and who decides what happens next? When will you meet?",
             type: "textarea",
           },
           {
             id: "betStatus",
-            label: "Has this bet been accepted by the accountable owners?",
+            label: "Have the people responsible agreed to this experiment?",
             type: "select",
             options: [
               "PROPOSED — NOT YET ACCEPTED",
@@ -222,58 +229,64 @@ export const FIELD_LABS: Record<string, LabConfig> = {
               "NOT ACCEPTED",
               "NOT ATTEMPTED",
             ],
-            hint: "A completed brief does not create agreement. Record acceptance with the owners before starting.",
+            hint: "Keep this as proposed until the people responsible for the work and approvals have agreed. Filling in the plan does not count as permission.",
           },
         ],
       },
       {
-        eyebrow: "EVIDENCE",
-        title: "Count the full cost.",
+        eyebrow: "RESULTS",
+        title: "Did it save work overall?",
         intro:
-          "Drafting speed is not team productivity if the burden simply moves to verification, review, rework, or later defects.",
+          "Count the time spent checking and fixing the result as well as writing it. A faster first draft may leave somebody else with more work.",
         fields: [
           {
             id: "betResult",
             label:
-              "How close were the results to your prediction and success bar?",
+              "What happened compared with what you expected? Was it enough to be worthwhile?",
             type: "textarea",
-            hint: "Compare the expected improvement with observed effort, quality, and qualitative changes. Say supported, not supported, or inconclusive; a small local experiment does not prove a universal claim.",
+            hint: "Compare the result with your prediction and the minimum you agreed. Include time, quality, and people's experience. Say if you do not have enough information to decide.",
           },
           {
             id: "comparability",
-            label: "What limits the comparison?",
+            label: "What differences might make this an unfair comparison?",
             type: "textarea",
-            hint: "Different task size, author experience, first-use learning, or changed quality bar?",
+            hint: "Was one task harder? Did one person have more experience? Was someone learning the tool for the first time? Were both results checked to the same standard?",
           },
           {
             id: "withoutAi",
-            label: "Without-AI workflow notes",
+            label: "What happened when the work was done without AI?",
             type: "textarea",
           },
-          { id: "withAi", label: "With-AI workflow notes", type: "textarea" },
+          {
+            id: "withAi",
+            label: "What happened when the work was done with AI?",
+            type: "textarea",
+          },
           {
             id: "quality",
-            label: "Quality checks, defects, and reviewer experience",
+            label:
+              "Did the work pass the checks? What problems did the reviewer find?",
             type: "textarea",
           },
           {
             id: "otherCosts",
-            label: "Elapsed time, tool cost, and learning effects",
+            label:
+              "What else affected the result: waiting, tool costs, or learning to use it?",
             type: "textarea",
-            hint: "Person-minutes above are effort, not elapsed time or a financial ROI calculation.",
+            hint: "The table adds up everyone's work time. Record waiting time and money separately; those are different costs.",
           },
           {
             id: "laterCheck",
-            label: "Later defect check — what, who, and when?",
+            label: "Who will check for problems that appear later, and when?",
             type: "textarea",
           },
         ],
       },
       {
-        eyebrow: "DECISION",
+        eyebrow: "NEXT STEP",
         title: "Continue, revise, stop, or pause.",
         intro:
-          "A failed use case can be a successful leadership outcome if it gives you evidence you can act on.",
+          "Use what you found to choose what happens next. Finding that this use of AI does not help is a useful result too.",
         fields: [
           {
             id: "decision",
@@ -283,23 +296,23 @@ export const FIELD_LABS: Record<string, LabConfig> = {
           },
           {
             id: "reason",
-            label: "Reason and unresolved disagreement",
+            label: "Why this decision? What do you still disagree about?",
             type: "textarea",
           },
           {
             id: "betLearning",
             label: "What did you learn, and what might explain the result?",
             type: "textarea",
-            hint: "Separate observations from possible explanations. If the bet was never attempted, say so; that is not a failed experiment.",
+            hint: "Say what happened, then what might explain it. If you never ran the experiment, say that rather than treating it as a failure.",
           },
           {
             id: "limits",
-            label: "What this evidence does not establish",
+            label: "What can you not conclude from this result?",
             type: "textarea",
           },
           {
             id: "next",
-            label: "Next action, accountable owner, and date",
+            label: "What happens next, who will do it, and by when?",
             type: "textarea",
           },
           {
@@ -314,13 +327,13 @@ export const FIELD_LABS: Record<string, LabConfig> = {
     outputs: [
       {
         id: "trial-card",
-        title: "Bet Brief",
+        title: "Experiment Plan",
         fromStep: 1,
         build: buildTrialCard,
       },
       {
         id: "evidence-record",
-        title: "Evidence Record",
+        title: "Results Record",
         fromStep: 2,
         build: buildEvidenceRecord,
       },

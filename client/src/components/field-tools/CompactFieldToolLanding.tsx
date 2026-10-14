@@ -38,20 +38,20 @@ export default function CompactFieldToolLanding({
         : LEADERSHIP_SALES[slug].firstMove,
     ],
     [
-      engineering ? "Shared Next-Step Brief" : primaryArtifact.name,
+      engineering ? "Next Step Together" : primaryArtifact.name,
       engineering
-        ? "A proposal or agreement with a next action, owner, and date."
+        ? "What you want to do next, who will do it, and when. It says whether you have agreed or are still asking."
         : primaryArtifact.copy,
     ],
     [
       engineering
-        ? "Bet Brief, Evidence Record & Decision Brief"
+        ? "Experiment Plan, Results Record & Decision Brief"
         : p.artifacts
             .slice(0, 2)
             .map(a => a.name)
             .join(" & "),
       engineering
-        ? "For when a bounded test is the right move."
+        ? "Use these if you decide an experiment would help."
         : p.artifacts
             .slice(0, 2)
             .map(a => a.copy)
