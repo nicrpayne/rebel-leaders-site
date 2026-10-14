@@ -1,64 +1,31 @@
 # Field Tools preview and launch
 
-Each $47 tool combines a Field Guide, an interactive Lab, and an exported work artifact. AI Stalemate now has a ten-page PDF and web reader built from the same chapter data, with document-style Lab outputs. Five distinct wide photographic heroes sit behind the coded UI (smiling, standing, couch, angled standing, and armchair portraits). Nic's walkthrough is the fourth part of the experience. Customer-facing copy describes the completed product; internal release checks cover media and checkout configuration.
+The main review preview contains six separately purchasable $47 Field Tools across five situations. AI Stalemate / Product Manager and AI Stalemate / Lead Developer are separate expanded editions. Deadline Reset, Priority Whiplash, Mandate Reset, and Product / Project Translator complete the catalog.
 
-## Routes
+## Review routes
 
-The hub is `/field-tools`; the free ten-question Pressure Test is `/assessment`.
+The hub is `/field-tools`. AI editions start at `/field-tools/ai-stalemate/pm` and `/field-tools/ai-stalemate/lead-dev`. Other tools start at `/field-tools/:slug`.
 
-Each of `ai-stalemate`, `deadline-reset`, `priority-whiplash`, `mandate-reset`, and `product-project-translator` has:
+Each has `/buy`, `/buy?gift=1`, `/access`, `/guide`, and `/lab`. AI editions also have `/walkthrough` and `/resources`. Shared Holistic Shaping resources are at `/field-tools/resources`. The free Pressure Test is `/assessment`.
 
-- `/field-tools/:slug`: sales page, real portrait, sample artifact, process, inclusions, FAQs.
-- `/field-tools/:slug/guide`: printable Field Guide.
-- `/field-tools/:slug/lab`: browser-local instrument and fictional example.
-- `/field-tools/:slug/buy`: order summary and configured hosted checkout link.
-- `/field-tools/:slug/access`: the Guide/Lab starting point for delivery.
+Buy pages keep the product image, purchase/gift controls, and related tools. Full product details stay on the preceding landing page. Each welcome page starts with the situation and a direct Lab action, with Guide/PDF and optional resources below.
 
-## AI Stalemate
+## Expanded AI editions
 
-Export the Trial Card from Shared Work before running the trial. Return to record evidence and export the Evidence Record, then choose Continue, Revise, Stop, or Pause and export the Decision Brief. A full working record is also available.
+Each PDF contains 21 pages: cover, 12 chapters, five companion pages, and three source/teaching pages. The online Guide, five-stage Lab, worked walkthrough, and library are included in the same edition. The two audiences have distinct preparation questions, framing, and guidance, with common experiment/evidence standards for working together. No outcome of adopting AI is presumed.
 
-Six effort stages record person-minutes for both methods. Blank means unknown, 0 means none occurred, and incomplete totals do not produce a saving claim. Quality and comparability remain separate judgments. No shared export includes private preparation.
+The Lab supports a useful next conversation, preparation, specialist input, an experiment, existing evidence, or stopping. Six effort stages record person-minutes for both methods. Blank means unknown; zero means none occurred. Incomplete totals cannot produce a saving claim. Quality and comparability remain separate judgments. Shared exports exclude private preparation. Drafts stay in the current browser; signing in elsewhere does not sync them.
 
-Drafts use the existing `rl_field_lab_:slug` browser keys. Existing string values are preserved. Storage failures are shown; important work should be exported. There is no account, cloud persistence, or synchronized team editing.
+## Checkout and access
 
-## Checkout configuration
+See `field-tools-commerce.md` for exact service setup, receipt routes, gifts, access links, refunds, and validation limits. Two AI variant mappings and checkout URLs are required. New purchases unlock their own edition only; historical purchases sold with both retain both. The review preview intentionally exposes content with a banner and cannot accept payment.
 
-Set one HTTPS hosted checkout URL per tool on the intended Railway service:
+Use Lemon Squeezy test mode and test cards to verify the complete purchase/delivery/refund journey. Database, payment-provider, and email-provider mocks do not establish that actual delivery works. Published purchase/refund terms, final walkthrough links, and account configuration remain launch tasks.
 
-| Tool | Environment variable |
-| --- | --- |
-| AI Stalemate | `FIELD_TOOL_AI_STALEMATE_CHECKOUT_URL` |
-| Deadline Reset | `FIELD_TOOL_DEADLINE_RESET_CHECKOUT_URL` |
-| Priority Whiplash | `FIELD_TOOL_PRIORITY_WHIPLASH_CHECKOUT_URL` |
-| Mandate Reset | `FIELD_TOOL_MANDATE_RESET_CHECKOUT_URL` |
-| Product / Project Translator | `FIELD_TOOL_PRODUCT_PROJECT_TRANSLATOR_CHECKOUT_URL` |
+## Verification and publication
 
-The existing launch plan prefers Lemon Squeezy. The adapter also recognizes Stripe Payment Links. An absent or invalid URL leaves purchase unavailable; the page never fabricates a successful order.
+See `field-tools-editions-responsive.md` for the current responsive matrix, PDF checks, and the 106 passing Field Tool tests. TypeScript and production build pass. The full legacy repository suite is not claimed green; unrelated auth/RSS/YouTube failures were recorded in earlier reviews.
 
-Configure the provider's receipt/delivery with the appropriate `/access` URL and guide link, and its return destination as supported. The access page does not verify a payment. Labs and guides are public in this preview, with no entitlement gate. This is the lightweight access model in the handoff, not paid access enforcement.
+Nic authorized publishing code/assets to `nicrpayne/rebel-leaders-site` on 11 October 2026. Keep these changes on `field-tools-launch` and PR #3. The expanded proposal has now been selected and incorporated into the main review preview. Do not merge to production `main` until Nic approves.
 
-Before taking payment, activate the store, create and review the $47 product, configure receipt delivery and published purchase/refund terms, add its checkout URL, and complete a provider test-mode purchase through delivery. Do not describe the checkout or delivery as tested until this has happened.
-
-## Verification for this change
-
-- TypeScript and production build pass.
-- Field Tool workflow tests cover all five sample outputs, effort completeness, zero/invalid values, transferred reviewer effort, private-output isolation, pre-trial exports, pause decisions, draft recovery, and checkout URL handling.
-- The repository-wide test run has failures in unchanged legacy auth/RSS/YouTube tests (cookie count, live RSS network access, and outdated YouTube integration mocks). They are outside the Field Tool change; the full suite is not green.
-- Railway preview verification is recorded in the PR once deployment completes.
-
-Keep changes on `field-tools-launch` and PR #3. Merge to `main` only after Nic approves the preview.
-
-## Current publication state
-
-Nic explicitly authorized publishing code and assets to `nicrpayne/rebel-leaders-site` on October 11, 2026. Changes remain on the `field-tools-launch` preview branch; production merge still awaits review.
-
-Rebuild the portable guide with `python3 scripts/build-ai-stalemate-guide.py` (Python/ReportLab plus Node with TypeScript stripping). Its source chapters are in `client/src/lib/ai-stalemate-guide.ts`.
-
-## Shared vision
-
-The Guide teaches Why, a concrete future, shared professional stakes, an invitation to co-author, and a credible next move. Private Why and future reflections stay out of exports. Only the agreed shared ambition appears in the Trial Card and Decision Brief. A concerns chapter turns common objections into questions and locally appropriate conditions, with primary-source reading links.
-
-## Purchase integration and distinct reader paths
-
-See `docs/field-tools-commerce.md` for the current implementation and exact account setup. The earlier public/no-account preview description above is superseded: paid content is now server-authorized, with explicit review-mode access on the preview service. AI Stalemate has separate `/pm` and `/lead-dev` landing pages, Guides, PDFs, Labs, and welcome pages. Current PDF sources are server-side.
+PDF sources live in `server/field-tool-content`. Rebuild each base AI PDF with `scripts/build-ai-stalemate-guide.py pm` or `lead-dev`, then append the teaching resource pages once with `scripts/append-teaching-resources.py`. Set `GUIDE_APP_URL` to the intended deployment origin. Checked-in review PDFs use the main preview origin.

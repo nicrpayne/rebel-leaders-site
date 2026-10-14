@@ -1,5 +1,6 @@
 import type { Audience } from "./ai-paths";
 import type { FieldDef } from "./labs";
+import { communicationDraft } from "../../client/src/lib/ai-communication.ts";
 
 export const READINESS_CHOICES = [
   "CLARIFY THE CONVERSATION",
@@ -19,6 +20,13 @@ export function readinessStep(audience: Audience) {
         ? "What do you want to improve, and what does your lead need to know about it?"
         : "What does your product manager want to improve, and why?",
       hint: "Start with what you have already discussed. Say who this would help and how. Include a deadline only if it matters to the request.",
+    },
+    {
+      id: "sharedVision",
+      label: pm
+        ? "What future would you invite your lead to help shape?"
+        : "What future could you and your PM want to build together?",
+      hint: "What could get better for users, the team, and the company? Invite your colleague to add or change something. Keep it as an idea until you have shaped it together.",
     },
     {
       id: "counterpartConcern",
@@ -362,7 +370,7 @@ export const AI_READINESS_SAMPLE: Record<string, string> = {
 };
 
 export function aiSampleFor(audience: Audience): Record<string, string> {
-  return {
+  const sample = {
     ...AI_READINESS_SAMPLE,
     ...(audience === "lead-dev"
       ? {
@@ -381,5 +389,68 @@ export function aiSampleFor(audience: Audience): Record<string, string> {
           why: "I would like our team to become confident engineers who can use helpful tools and stand behind their work.",
         }
       : {}),
+  };
+  return {
+    ...sample,
+    conversationLeadershipUpdate: communicationDraft(
+      sample,
+      audience,
+      "conversation",
+      "leadership"
+    ).replace(
+      "[what we need, who can decide, and when we need an answer]",
+      "Could the product director agree time for developers to practise with an experienced reviewer by Friday, including which help-page updates would wait? We’ll review what the team needs next Tuesday."
+    ),
+    conversationTeamUpdate: communicationDraft(
+      sample,
+      audience,
+      "conversation",
+      "team"
+    ).replace(
+      "[what work, review time, or access changes; say if nothing changes yet]",
+      "No experiment or access to live systems is approved yet. We propose practising permission tests and undoing a change with an experienced reviewer. The product director still needs to agree time for that work and what would wait."
+    ),
+    leadershipUpdate: communicationDraft(
+      sample,
+      audience,
+      "decision",
+      "leadership"
+    ).replace(
+      "[what we need, who can decide, and when we need an answer]",
+      "Could the product director agree time for practice and review by Friday? Before Tuesday, the engineering manager and data owner need to confirm who may see the records and which checks the work must pass."
+    ),
+    teamUpdate: communicationDraft(
+      sample,
+      audience,
+      "decision",
+      "team"
+    ).replace(
+      "[what work, review time, or access changes; say if nothing changes yet]",
+      "We’re proposing preparation first. Tool access and use in live systems aren’t approved yet. Before scheduling, we need to agree who will practise together, who will review, and what other work would wait."
+    ),
+    qualityChecks: JSON.stringify([
+      {
+        id: "allowed",
+        check: "Approved user can access the permitted record",
+        expected:
+          "A user with permission can open the repair record they are allowed to see.",
+        status: "NOT CHECKED",
+        observed: "",
+        evidence: "",
+        verifier: "Experienced engineer; name still to confirm",
+      },
+      {
+        id: "denied",
+        check: "Unauthorized user can’t access another group's record",
+        expected:
+          "A direct request to the app’s API cannot open a record the user is not allowed to see.",
+        status: "NOT CHECKED",
+        observed: "",
+        evidence: "",
+        verifier: "Experienced engineer; name still to confirm",
+      },
+    ]),
+    returnRecord:
+      "We haven’t reviewed this yet. Come back after agreeing who can see the records and practising the change together. Add what happened, what to do next, who will do it, and when to check again.",
   };
 }

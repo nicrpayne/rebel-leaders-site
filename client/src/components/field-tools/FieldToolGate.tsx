@@ -1,3 +1,4 @@
+import { ownsFieldTool } from "../../../../shared/field-tool-entitlements";
 import { fieldToolBase, type Audience } from "@/lib/field-tool-paths";
 import { createContext, useContext, useState, type ReactNode } from "react";
 import { Link } from "wouter";
@@ -29,7 +30,10 @@ export function FieldToolSignIn({
         Use the email you entered at checkout, or the email your gift was sent
         to. We’ll send you a secure sign-in link.
       </p>
-      <p className="mt-3 font-ui text-xs leading-6 text-[var(--ft-muted)]">Bought this as a gift? We email the recipient after payment. They use their own email here.</p>
+      <p className="mt-3 font-ui text-xs leading-6 text-[var(--ft-muted)]">
+        Bought this as a gift? We email the recipient after payment. They use
+        their own email here.
+      </p>
       <form
         className="mt-6"
         onSubmit={e => {
@@ -87,7 +91,8 @@ export default function FieldToolGate({
 }) {
   const access = trpc.fieldTools.access.useQuery(undefined, { retry: false });
   const allowed = Boolean(
-    access.data?.preview || access.data?.slugs.includes(slug)
+    access.data?.preview ||
+      ownsFieldTool(access.data?.slugs ?? [], slug, audience)
   );
   const content = trpc.fieldTools.content.useQuery(
     { slug, audience },

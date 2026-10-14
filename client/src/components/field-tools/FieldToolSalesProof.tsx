@@ -10,8 +10,8 @@ export function AIRoleLinks({ audience }: { audience: Audience }) {
       className="mb-8 border-l-2 border-[var(--ft-line)] pl-4 font-ui text-sm leading-7"
     >
       <p>
-        {audience === "pm" ? "Product Manager" : "Lead Developer"} edition. Both
-        editions are included.
+        {audience === "pm" ? "Product Manager" : "Lead Developer"} edition ·
+        $47. Each edition is sold separately.
       </p>
       <Link
         className="font-semibold underline underline-offset-4"
@@ -127,7 +127,10 @@ export function FieldToolBuyerQuestions() {
         </h2>
         <div className="mt-6 grid gap-x-10 md:grid-cols-2">
           {questions.map(([question, answer]) => (
-            <details key={question} className="border-t border-[var(--ft-line)] py-5">
+            <details
+              key={question}
+              className="border-t border-[var(--ft-line)] py-5"
+            >
               <summary className="cursor-pointer font-ui font-semibold">
                 {question}
               </summary>

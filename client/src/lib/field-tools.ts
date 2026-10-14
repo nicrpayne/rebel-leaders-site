@@ -198,3 +198,25 @@ export const FIELD_TOOLS: FieldTool[] = [
 export function getFieldTool(slug: string) {
   return FIELD_TOOLS.find(tool => tool.slug === slug);
 }
+
+// The two AI editions are separate purchases within the same situation family.
+export const FIELD_TOOL_OFFERS = FIELD_TOOLS.flatMap(tool =>
+  tool.slug === "ai-stalemate"
+    ? (["pm", "lead-dev"] as const).map(audience => ({
+        ...tool,
+        slug: `${tool.slug}/${audience}`,
+        name: `AI Stalemate / ${audience === "pm" ? "Product Manager" : "Lead Developer"}`,
+        eyebrow: `FIELD TOOL 01 / ${audience === "pm" ? "PRODUCT MANAGERS" : "LEAD DEVELOPERS"}`,
+        headline:
+          audience === "pm"
+            ? "You see a possibility for AI."
+            : "An AI idea is on the table.",
+        accentLine:
+          audience === "pm" ? "Is it worth pursuing?" : "What would it take?",
+        subhead:
+          audience === "pm"
+            ? "Explain the opportunity, invite your lead to question it, and decide what to explore together."
+            : "Assess the engineering work, the risks, and the evidence you need to make a sound decision.",
+      }))
+    : [tool]
+);

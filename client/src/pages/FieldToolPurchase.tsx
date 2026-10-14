@@ -77,7 +77,11 @@ export default function FieldToolPurchase({
                 key={slug + audience}
                 slug={slug}
                 audience={audience}
-                name={tool.name}
+                name={
+                  slug === "ai-stalemate"
+                    ? `${tool.name} / ${audience === "pm" ? "Product Manager" : "Lead Developer"}`
+                    : tool.name
+                }
                 available={Boolean(checkout.data?.checkoutUrl)}
               />
             )}

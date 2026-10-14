@@ -13,7 +13,7 @@ export function aiGuideFor(audience: Audience) {
     : "Your PM wants to try AI. You have questions.";
   pages[0].intro = pm
     ? "You have an idea for where AI could help, and your lead has questions. Let’s put the opportunity into words and understand those questions, so you can work out a useful next step together."
-    : "Your PM has an AI idea they want to explore. You can see the checks, review, and ongoing work it would need. Let’s make those clear and hear what they hope to improve, so you can decide what to do together.";
+    : "You’re being asked to assess an AI idea and may have to build, review, or support what follows. Let’s get clear about the problem, the engineering work, and what would justify going ahead. Your recommendation can be to proceed, prepare, choose another approach, or stop.";
   pages[0].sections[0].body = pm
     ? "Perhaps your support team copies repair requests into two systems, and customers have to call again when one is missed. Tell your lead about that problem. Ask whether an app would help and where AI might make the work easier."
     : "Ask your PM what they want to make better. Perhaps support staff copy repair requests into two systems and customers have to call again when one is missed. That gives you a specific problem to discuss.";
@@ -122,6 +122,13 @@ export function aiLabFor(audience: Audience) {
   steps[2].title = pm
     ? "Did it save time once everything was checked?"
     : "What did it take to get work you could approve?";
+  const qualityNotes = steps[2].fields.find(f => f.id === "quality");
+  if (qualityNotes) {
+    qualityNotes.label =
+      "What other problems, fixes, or review work should we know about?";
+    qualityNotes.hint =
+      "Use the checklist below for what you checked and what happened. Add other problems or what the reviewer found here.";
+  }
   steps[3].title = pm
     ? "What will you do next?"
     : "What will you and your product manager do next?";

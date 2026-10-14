@@ -1,8 +1,7 @@
 import { Link } from "wouter";
 import { ArrowRight } from "lucide-react";
-import { FIELD_TOOLS } from "@/lib/field-tools";
-import { FIELD_TOOL_PRESENTATIONS } from "@/lib/field-tool-presentations";
-import { fieldToolBase, type Audience } from "@/lib/field-tool-paths";
+import { FIELD_TOOL_OFFERS } from "@/lib/field-tools";
+import { type Audience } from "@/lib/field-tool-paths";
 
 export default function RelatedFieldTools({
   slug,
@@ -11,7 +10,8 @@ export default function RelatedFieldTools({
   slug: string;
   audience?: Audience;
 }) {
-  const related = FIELD_TOOLS.filter(tool => tool.slug !== slug);
+  const current = slug === "ai-stalemate" ? `${slug}/${audience}` : slug;
+  const related = FIELD_TOOL_OFFERS.filter(tool => tool.slug !== current);
   if (!related.length) return null;
   return (
     <section
@@ -22,33 +22,25 @@ export default function RelatedFieldTools({
         <h2 id="related-field-tools" className="font-display text-2xl">
           Related products
         </h2>
-        <div className="mt-5 grid grid-cols-2 gap-x-5 gap-y-6 md:grid-cols-4">
+        <div className="mt-5 grid grid-cols-2 gap-x-5 gap-y-6 md:grid-cols-3 lg:grid-cols-5">
           {related.map(tool => (
             <div key={tool.slug}>
               <Link
-                href={fieldToolBase(tool.slug, audience)}
+                href={"/field-tools/" + tool.slug}
                 className="group block cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ft-accent)]"
               >
                 <div className="flex h-52 items-center justify-center overflow-hidden rounded-sm bg-[var(--ft-tint)] transition-colors group-hover:bg-[var(--ft-tint)] md:h-56">
                   <img
                     src={
-                      tool.slug === "ai-stalemate"
-                        ? FIELD_TOOL_PRESENTATIONS[tool.slug].image
+                      tool.slug.startsWith("ai-stalemate/")
+                        ? `/assets/field-tools/${tool.slug.replace("/", "-")}-cover-v2.webp`
                         : `/assets/field-tools/${tool.slug}-guide-cover.webp`
                     }
-                    alt={
-                      tool.slug === "ai-stalemate"
-                        ? "AI Stalemate"
-                        : `${tool.name} Field Guide cover`
-                    }
+                    alt={`${tool.name} Field Guide cover`}
                     loading="lazy"
-                    width={tool.slug === "ai-stalemate" ? 1672 : 420}
-                    height={tool.slug === "ai-stalemate" ? 941 : 594}
-                    className={
-                      tool.slug === "ai-stalemate"
-                        ? "h-full w-full object-cover object-right"
-                        : "h-44 w-auto max-w-[90%] rotate-[-3deg] object-contain shadow-md transition-transform duration-200 group-hover:scale-105 md:h-48"
-                    }
+                    width={420}
+                    height={594}
+                    className="h-44 w-auto max-w-[90%] rotate-[-3deg] object-contain transition-transform duration-200 group-hover:scale-105 md:h-48"
                   />
                 </div>
                 <div className="mt-3 flex items-start justify-between gap-2">
@@ -67,22 +59,6 @@ export default function RelatedFieldTools({
                   />
                 </div>
               </Link>
-              {tool.slug === "ai-stalemate" && (
-                <div className="mt-3 flex flex-col gap-2 font-ui text-xs">
-                  <Link
-                    className="underline underline-offset-4"
-                    href={fieldToolBase(tool.slug, "pm")}
-                  >
-                    For Product Managers →
-                  </Link>
-                  <Link
-                    className="underline underline-offset-4"
-                    href={fieldToolBase(tool.slug, "lead-dev")}
-                  >
-                    For Lead Developers →
-                  </Link>
-                </div>
-              )}
             </div>
           ))}
         </div>

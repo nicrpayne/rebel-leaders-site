@@ -1,4 +1,10 @@
 import { aiSampleFor } from "./field-tool-content/ai-readiness";
+import {
+  AI_TOOLS,
+  AI_STUDY,
+  AI_RESOURCE_REVIEW_DATE,
+} from "./field-tool-content/ai-resources";
+import { aiCompanionFor } from "./field-tool-content/ai-companion";
 import { FIELD_TOOL_PRESENTATIONS } from "../client/src/lib/field-tool-presentations";
 import { aiGuideFor, aiLabFor } from "./field-tool-content/ai-paths";
 import { LEADERSHIP_GUIDE_PAGES } from "./field-tool-content/leadership-guides";
@@ -32,6 +38,7 @@ import {
 import { ENV } from "./_core/env";
 import { getFieldToolCheckout } from "./field-tool-checkout";
 
+import { fieldToolEntitlement } from "../shared/field-tool-entitlements";
 import { giftDetailsSchema } from "../shared/field-tool-gifts";
 import { createGiftCheckout } from "./field-tool-gifts";
 
@@ -62,23 +69,15 @@ async function availableCheckout(input: {
       env.LEMONSQUEEZY_WEBHOOK_SECRET &&
       env.LEMONSQUEEZY_STORE_ID &&
       ["live", "test"].includes(env.LEMONSQUEEZY_MODE ?? "") &&
-      Object.values(map).includes(input.slug) &&
+      Object.values(map).includes(
+        fieldToolEntitlement(input.slug, input.audience)
+      ) &&
       !previewEnabled()
   );
-  const key =
-    "FIELD_TOOL_" +
-    input.slug.replaceAll("-", "_").toUpperCase() +
-    "_CHECKOUT_URL";
-  const roleKey =
-    "FIELD_TOOL_" +
-    input.slug.replaceAll("-", "_").toUpperCase() +
-    "_" +
-    input.audience.replaceAll("-", "_").toUpperCase() +
-    "_CHECKOUT_URL";
-  const checkout = getFieldToolCheckout(input.slug, {
-    ...env,
-    [key]: env[roleKey] ?? env[key],
-  });
+  const checkout = getFieldToolCheckout(
+    fieldToolEntitlement(input.slug, input.audience),
+    env
+  );
   return ready && checkout.provider === "Lemon Squeezy"
     ? checkout
     : { checkoutUrl: null, provider: null };
@@ -114,6 +113,7 @@ export const fieldToolsRouter = router({
     const email = await buyerEmail(ctx.req);
     return {
       preview: previewEnabled(),
+      proposal: previewEnabled() && process.env.FIELD_TOOL_PROPOSAL === "true",
       signedIn: Boolean(email),
       slugs: await purchasedSlugs(email),
     };
@@ -177,7 +177,7 @@ export const fieldToolsRouter = router({
       ctx.res.setHeader("Cache-Control", "private, no-store");
       if (!Object.hasOwn(FIELD_LABS, input.slug))
         throw new TRPCError({ code: "NOT_FOUND" });
-      if (!(await hasFieldTool(ctx.req, input.slug)))
+      if (!(await hasFieldTool(ctx.req, input.slug, input.audience)))
         throw new TRPCError({
           code: "FORBIDDEN",
           message: "Sign in with your purchase email.",
@@ -188,6 +188,16 @@ export const fieldToolsRouter = router({
           : FIELD_LABS[input.slug];
       return {
         audience: input.audience,
+        resources:
+          input.slug === "ai-stalemate"
+            ? {
+                tools: AI_TOOLS,
+                study: AI_STUDY,
+                reviewed: AI_RESOURCE_REVIEW_DATE,
+              }
+            : null,
+        companion:
+          input.slug === "ai-stalemate" ? aiCompanionFor(input.audience) : null,
         firstMove: (
           {
             "deadline-reset":

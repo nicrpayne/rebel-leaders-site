@@ -1,5 +1,8 @@
 export const FIELD_TOOL_CHECKOUT_KEYS: Record<string, string> = {
+  // Legacy key remains valid for old verified orders, not new edition checkout.
   "ai-stalemate": "FIELD_TOOL_AI_STALEMATE_CHECKOUT_URL",
+  "ai-stalemate/pm": "FIELD_TOOL_AI_STALEMATE_PM_CHECKOUT_URL",
+  "ai-stalemate/lead-dev": "FIELD_TOOL_AI_STALEMATE_LEAD_DEV_CHECKOUT_URL",
   "deadline-reset": "FIELD_TOOL_DEADLINE_RESET_CHECKOUT_URL",
   "priority-whiplash": "FIELD_TOOL_PRIORITY_WHIPLASH_CHECKOUT_URL",
   "mandate-reset": "FIELD_TOOL_MANDATE_RESET_CHECKOUT_URL",

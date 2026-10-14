@@ -7,6 +7,7 @@ import { Link } from "wouter";
 import FieldToolsNav from "./FieldToolsNav";
 import { useFieldToolContent } from "./FieldToolGate";
 import { useEffect, useRef, useState } from "react";
+import AIGuideVisual from "./AIGuideVisual";
 
 export default function ChapterGuide({ slug }: { slug: string }) {
   const content = useFieldToolContent();
@@ -101,7 +102,9 @@ export default function ChapterGuide({ slug }: { slug: string }) {
               Open the Lab →
             </Link>
           </div>
-          <p className="mt-6 font-ui text-xs text-[var(--ft-muted)]">By Nic Payne</p>
+          <p className="mt-6 font-ui text-xs text-[var(--ft-muted)]">
+            By Nic Payne
+          </p>
         </div>
       </header>
       <div className="mx-auto grid max-w-6xl gap-10 px-5 py-14 md:px-10 lg:grid-cols-[.65fr_2fr] lg:py-20">
@@ -231,6 +234,7 @@ export default function ChapterGuide({ slug }: { slug: string }) {
               >
                 Use this in the Lab →
               </Link>
+              {slug === "ai-stalemate" && <AIGuideVisual index={index} />}
             </section>
           ))}
           <FrameworkResources />

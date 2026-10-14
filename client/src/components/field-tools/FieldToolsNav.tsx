@@ -1,4 +1,5 @@
 import { Link, useLocation } from "wouter";
+import { Menu } from "lucide-react";
 import "./field-tools.css";
 import RebelLogo from "@/components/RebelLogo";
 import { fieldToolAccessPath } from "@/lib/field-tool-paths";
@@ -8,47 +9,53 @@ export default function FieldToolsNav({
 }: {
   tone?: "dark" | "light";
 }) {
-  const light = tone === "light";
   const [location] = useLocation();
   const myTool = fieldToolAccessPath(location);
+  const inTool =
+    /(?:\/access|\/guide|\/lab|\/walkthrough|\/resources)$/.test(location) &&
+    myTool !== "/field-tools";
+  const links = inTool
+    ? [
+        [myTool, "Start"],
+        [myTool.replace(/\/access$/, "/guide"), "Field Guide"],
+        [myTool.replace(/\/access$/, "/lab"), "Lab"],
+      ]
+    : [
+        ["/field-tools", "Field Tools"],
+        [myTool, "Open your tool"],
+        ["/about", "About Nic"],
+      ];
+  const items = links.map(([href, label]) => (
+    <Link key={label} href={href}>
+      {label}
+    </Link>
+  ));
   return (
-    <header
-      className={`ft-nav absolute inset-x-0 top-0 z-40 border-b backdrop-blur-lg ${light ? "border-[var(--ft-line)] bg-[var(--ft-paper)]/95" : "border-[var(--ft-line)] bg-[var(--ft-paper)]/82"}`}
-    >
-      <div className="mx-auto flex h-[74px] max-w-[1440px] items-center justify-between gap-3 px-4 md:px-10">
-        <Link
-          href="/field-tools"
-          className={`flex shrink-0 items-center gap-2 ${light ? "text-[var(--ft-ink)]" : "text-[var(--ft-ink)]"}`}
-        >
+    <header className="ft-nav absolute inset-x-0 top-0 z-40 border-b border-[var(--ft-line)]">
+      <div className="ft-nav-inner">
+        <Link href="/field-tools" className="ft-nav-brand">
           <RebelLogo size={28} className="text-[var(--ft-accent)]" />
-          <span className="font-display text-[20px] font-semibold tracking-[-0.02em] md:text-[28px]">
-            Rebel Leaders
-          </span>
+          <span className="font-display">Rebel Leaders</span>
         </Link>
-
-        <nav
-          aria-label="Field Tools"
-          className={`flex items-center gap-3 font-ui text-[11px] md:gap-9 md:text-sm ${light ? "text-[var(--ft-muted)]" : "text-[var(--ft-muted)]"}`}
-        >
-          {/(?:\/access|\/guide|\/lab)$/.test(location) &&
-          myTool !== "/field-tools" ? (
-            <>
-              <Link href={myTool}>Start</Link>
-              <Link href={myTool.replace(/\/access$/, "/guide")}>
-                Field Guide
-              </Link>
-              <Link href={myTool.replace(/\/access$/, "/lab")}>Lab</Link>
-            </>
-          ) : (
-            <>
-              <Link href="/field-tools">Field Tools</Link>
-              <Link href={myTool}>Open your tool</Link>
-              <Link href="/about" className="hidden sm:inline">
-                About Nic
-              </Link>
-            </>
-          )}
+        <nav aria-label="Field Tools" className="ft-nav-desktop">
+          {items}
         </nav>
+        <details
+          key={location}
+          className="ft-nav-mobile"
+          onKeyDown={event => {
+            if (event.key === "Escape") {
+              event.currentTarget.open = false;
+              event.currentTarget.querySelector("summary")?.focus();
+            }
+          }}
+        >
+          <summary aria-label="Navigation menu">
+            <Menu size={21} aria-hidden="true" />
+            <span>Menu</span>
+          </summary>
+          <nav aria-label="Field Tools mobile">{items}</nav>
+        </details>
       </div>
     </header>
   );

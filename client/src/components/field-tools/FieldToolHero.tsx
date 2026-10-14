@@ -32,20 +32,6 @@ export default function FieldToolHero({
 }) {
   return (
     <div className={`ft-hero ft-hero--${imageLayout}`}>
-      <div className="ft-hero-photo">
-        <img
-          src={image}
-          alt="Nic Payne, founder of Rebel Leaders"
-          width={imageLayout === "wide" ? 1672 : 1122}
-          height={imageLayout === "wide" ? 941 : 1402}
-          fetchPriority="high"
-        />
-        {showCaption && (
-          <div className="ft-photo-caption">
-            <span /> BETTER LEADERS. BRIGHTER WORK.
-          </div>
-        )}
-      </div>
       <FieldToolsNav />
       <section className="ft-hero-inner">
         <div className="ft-hero-copy">
@@ -100,6 +86,20 @@ export default function FieldToolHero({
             </div>
           )}
           <p className="ft-founder-note">By Nic Payne · Rebel Leaders</p>
+        </div>
+        <div className="ft-hero-photo">
+          <img
+            src={image}
+            alt="Nic Payne, founder of Rebel Leaders"
+            width={imageLayout === "wide" ? 1672 : 1122}
+            height={imageLayout === "wide" ? 941 : 1402}
+            fetchPriority="high"
+          />
+          {showCaption && (
+            <div className="ft-photo-caption">
+              <span /> Hope is rebellious.
+            </div>
+          )}
         </div>
       </section>
       <div className="ft-facts">

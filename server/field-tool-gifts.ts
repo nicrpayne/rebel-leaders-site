@@ -6,6 +6,7 @@ import {
   giftDetailsSchema,
   type GiftDetails,
 } from "../shared/field-tool-gifts";
+import { fieldToolEntitlement } from "../shared/field-tool-entitlements";
 import { getDb } from "./db";
 
 export const giftTokenHash = (token: string) =>
@@ -37,7 +38,7 @@ export async function createGiftCheckout(
   const url = giftCheckoutUrl(checkoutUrl, token);
   await db.insert(fieldToolGifts).values({
     tokenHash: giftTokenHash(token),
-    slug: input.slug,
+    slug: fieldToolEntitlement(input.slug, input.audience),
     audience: input.audience,
     ...giftDetailsSchema.parse(input.gift),
   });
@@ -59,6 +60,8 @@ export function validateGiftOrder(
 
 const names: Record<string, string> = {
   "ai-stalemate": "AI Stalemate",
+  "ai-stalemate/pm": "AI Stalemate / Product Manager",
+  "ai-stalemate/lead-dev": "AI Stalemate / Lead Developer",
   "deadline-reset": "Deadline Reset",
   "priority-whiplash": "Priority Whiplash",
   "mandate-reset": "Mandate Reset",

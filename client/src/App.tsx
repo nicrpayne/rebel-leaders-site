@@ -1,4 +1,5 @@
 import "./components/field-tools/field-tool-theme.css";
+import "./components/field-tools/field-tool-responsive.css";
 import FieldToolGate from "./components/field-tools/FieldToolGate";
 import { Toaster } from "@/components/ui/sonner";
 import { useClaimAnonymousResult } from "@/_core/hooks/useClaimAnonymousResult";
@@ -46,6 +47,9 @@ const FieldToolLab = lazy(() => import("./pages/FieldToolLab"));
 const FieldToolGuide = lazy(() => import("./pages/FieldToolGuide"));
 const FieldToolPurchase = lazy(() => import("./pages/FieldToolPurchase"));
 const FieldToolAccess = lazy(() => import("./pages/FieldToolAccess"));
+const AIResources = lazy(() => import("./pages/AIResources"));
+const AIWalkthrough = lazy(() => import("./pages/AIWalkthrough"));
+const AIProposalReview = lazy(() => import("./pages/AIProposalReview"));
 
 function RouteLoading() {
   return (
@@ -84,6 +88,7 @@ function Router() {
           </Route>
           <Route path="/field-tools" component={FieldTools} />
           <Route path="/field-tools/review" component={FieldToolsReview} />
+          <Route path="/field-tools/proposal" component={AIProposalReview} />
           <Route path="/field-tools/sign-in" component={FieldToolSignIn} />
           <Route path="/field-tools/:slug/buy">
             {(params: { slug: string }) => (
@@ -126,6 +131,10 @@ function Router() {
                     <FieldToolLab slug="ai-stalemate" />
                   ) : p.view === "guide" ? (
                     <FieldToolGuide slug="ai-stalemate" />
+                  ) : p.view === "resources" ? (
+                    <AIResources />
+                  ) : p.view === "walkthrough" ? (
+                    <AIWalkthrough />
                   ) : p.view === "access" ? (
                     <FieldToolAccess slug="ai-stalemate" />
                   ) : (

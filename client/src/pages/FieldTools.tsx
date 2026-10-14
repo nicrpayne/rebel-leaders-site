@@ -1,7 +1,7 @@
 import FieldToolChooser from "@/components/field-tools/FieldToolChooser";
 import { Link } from "wouter";
 import FieldToolHero from "@/components/field-tools/FieldToolHero";
-import { FIELD_TOOLS } from "@/lib/field-tools";
+import { FIELD_TOOL_OFFERS } from "@/lib/field-tools";
 
 export default function FieldTools() {
   return (
@@ -10,7 +10,7 @@ export default function FieldTools() {
         eyebrow="REBEL LEADERS / FIELD TOOLS"
         headline={
           <>
-            Field tools for the conversations product leaders are{" "}
+            Field tools for the conversations product teams are{" "}
             <em>actually having.</em>
           </>
         }
@@ -18,9 +18,9 @@ export default function FieldTools() {
         image="/assets/field-tools/field-tools-catalog-hero-v1.webp"
         imageLayout="wide"
         primary={{ label: "Take the free Pressure Test", href: "/assessment" }}
-        secondary={{ label: "Browse the five tools", href: "#tools" }}
+        secondary={{ label: "Browse the tools", href: "#tools" }}
         facts={[
-          "Five focused Field Tools",
+          "Six focused Field Tools",
           "$47 USD each · one time",
           "Interactive Lab + Field Guide",
           "No subscription",
@@ -42,7 +42,7 @@ export default function FieldTools() {
           </div>
 
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {FIELD_TOOLS.map(tool => (
+            {FIELD_TOOL_OFFERS.map(tool => (
               <Link
                 key={tool.slug}
                 href={"/field-tools/" + tool.slug}

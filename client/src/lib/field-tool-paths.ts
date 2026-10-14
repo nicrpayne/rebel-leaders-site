@@ -29,7 +29,7 @@ export function fieldToolPresentation(slug: string, audience: Audience = "pm") {
           lead: "Your PM thinks AI could help.",
           accent: "You have questions about the work.",
           promise:
-            "Help your PM understand the checks, review, and support the idea would need. Decide together whether to try it and what needs to happen first.",
+            "Work through the engineering questions, the ongoing work, and the evidence you need. Help shape a decision you can stand behind—including when to stop.",
           session:
             "Take about 10 minutes to prepare, then talk with your PM. Explain what you would need to check and ask what they hope to improve.",
         }),
@@ -48,7 +48,7 @@ export function fieldToolForPath(
     who:
       audience === "pm"
         ? "For product managers who think AI could help and want to work through the idea with their lead developer."
-        : "For lead developers who want to explain their concerns and help their product manager work out a useful next step.",
+        : "For lead developers assessing an AI proposal, the work it would create, and whether the evidence supports going ahead.",
     sectionEyebrow:
       audience === "pm"
         ? "TALK IT THROUGH WITH YOUR LEAD"
@@ -56,7 +56,7 @@ export function fieldToolForPath(
     sectionHeadline:
       audience === "pm"
         ? "Let's make your next conversation useful."
-        : "Let's give your PM something they can work with.",
+        : "Let's make a decision you can stand behind.",
     sectionCopy:
       audience === "pm"
         ? "Say who you want to help and how. Ask what your lead would need to check. Decide what to do next, then explain what you agreed and what you still need to find out."

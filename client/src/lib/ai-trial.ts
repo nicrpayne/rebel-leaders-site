@@ -1,4 +1,5 @@
 import { fieldToolChoiceLabel } from "./field-tool-choice-labels.ts";
+import { qualityChecksRecord, qualityChecksObserved } from "./ai-quality.ts";
 export const AI_EFFORT_STAGES = [
   { id: "setup", label: "Getting ready and giving the tool instructions" },
   { id: "drafting", label: "Writing the first version" },
@@ -57,6 +58,8 @@ export function buildReadinessBrief(v: Values) {
     ["WHAT THE AI IS ALLOWED TO DO", [v.automationBoundary]],
     ["WHAT THE TEAM HAS SHOWN IT CAN DO", [v.teamReadiness]],
     ["TRAINING / WORKING WITH AN EXPERIENCED REVIEWER", [v.readinessSupport]],
+    ["UPDATE TO LEADERSHIP / SPONSOR", [v.conversationLeadershipUpdate]],
+    ["UPDATE TO THE TEAM", [v.conversationTeamUpdate]],
   ] as const;
   return `AI STALEMATE — NEXT STEP TOGETHER
 
@@ -207,6 +210,9 @@ ${answer(v, "withAi")}
 QUALITY CHECKS / DEFECTS / REVIEWER EXPERIENCE
 ${answer(v, "quality")}
 
+STRUCTURED QUALITY CHECKS
+${qualityChecksRecord(v.qualityChecks)}
+
 WAITING TIME / TOOL COSTS / LEARNING TO USE IT
 ${answer(v, "otherCosts")}
 
@@ -222,7 +228,12 @@ export function buildDecisionBrief(v: Values) {
   const hasEvidence =
     baseline.entered > 0 ||
     ai.entered > 0 ||
-    Boolean(v.quality?.trim() || v.withoutAi?.trim() || v.withAi?.trim());
+    Boolean(
+      v.quality?.trim() ||
+        v.withoutAi?.trim() ||
+        v.withAi?.trim() ||
+        qualityChecksObserved(v.qualityChecks)
+    );
   const preTrial =
     !hasEvidence &&
     (v.betStatus === "NOT ATTEMPTED" ||
@@ -270,6 +281,7 @@ ${answer(v, "comparator", preTrial ? "We have not yet agreed which task without 
 EVIDENCE
 ${effort}
 ${answer(v, "quality")}
+${qualityChecksRecord(v.qualityChecks)}
 
 DECISION
 ${answer(v, "decision", "Choose and record the decision.")}
@@ -287,7 +299,7 @@ WHO WILL DO WHAT NEXT / WHEN
 ${answer(v, "next")}${optionalRecord(v, "unresolvedPlan", "IF WE HAVE NOT AGREED / WHAT WE WILL DO WHILE WAITING / WHEN TO TALK AGAIN")}${optionalRecord(v, "deploymentPermission", "APPROVAL NEEDED FOR LIVE SYSTEMS OR WIDER USE")}
 
 UPDATE TO LEADERSHIP
-${answer(v, "leadershipUpdate")}`;
+${answer(v, "leadershipUpdate")}${optionalRecord(v, "teamUpdate", "UPDATE TO THE TEAM")}${optionalRecord(v, "decisionRights", "WHO CAN DECIDE / WHO NEEDS TO BE INVOLVED")}${optionalRecord(v, "returnRecord", "RETURN TO THE WORK / WHAT CHANGED / NEXT REVIEW")}`;
 }
 
 export function buildAITrialPackage(v: Values) {
@@ -305,7 +317,8 @@ export function buildAITrialPackage(v: Values) {
     !AI_EFFORT_STAGES.some(
       stage => v[`ai_${stage.id}`]?.trim() || v[`baseline_${stage.id}`]?.trim()
     ) &&
-    !v.quality?.trim()
+    !v.quality?.trim() &&
+    !qualityChecksObserved(v.qualityChecks)
       ? []
       : [buildTrialCard(v), buildEvidenceRecord(v)]),
     buildDecisionBrief(v),

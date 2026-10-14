@@ -11,6 +11,7 @@ import type { Express, Request } from "express";
 import express from "express";
 import path from "node:path";
 import { z } from "zod";
+import { ownsFieldTool } from "../shared/field-tool-entitlements";
 import { getDb } from "./db";
 import {
   fieldToolOrders,
@@ -193,10 +194,15 @@ export async function purchasedSlugs(email: string | null) {
 }
 export async function hasFieldTool(
   req: Pick<Request, "headers">,
-  slug: string
+  slug: string,
+  audience: "pm" | "lead-dev" = "pm"
 ) {
   if (previewEnabled()) return true;
-  return (await purchasedSlugs(await buyerEmail(req))).includes(slug);
+  return ownsFieldTool(
+    await purchasedSlugs(await buyerEmail(req)),
+    slug,
+    audience
+  );
 }
 // Bounded per-process abuse controls; generic responses do not disclose buyer status.
 const attempts = new Map<string, { count: number; until: number }>();
@@ -224,7 +230,7 @@ export async function requestBuyerLink(
   const db = await getDb();
   if (!db || !process.env.RESEND_API_KEY || !process.env.APP_URL)
     throw new Error("Email access is temporarily unavailable.");
-  if (!(await purchasedSlugs(email)).includes(slug)) return;
+  if (!ownsFieldTool(await purchasedSlugs(email), slug, audience)) return;
   const token = randomBytes(32).toString("hex");
   await db.insert(fieldToolAccessTokens).values({
     tokenHash: hashToken(token),
@@ -337,7 +343,13 @@ export function registerFieldToolCommerce(app: Express) {
     if (!Object.hasOwn(pdfNames, req.params.slug))
       return void res.sendStatus(404);
     try {
-      if (!(await hasFieldTool(req, req.params.slug)))
+      if (
+        !(await hasFieldTool(
+          req,
+          req.params.slug,
+          req.query.audience === "lead-dev" ? "lead-dev" : "pm"
+        ))
+      )
         return void res
           .status(403)
           .send(

@@ -1,7 +1,7 @@
 import { Link } from "wouter";
 import { fieldToolForPath, type Audience } from "@/lib/field-tool-paths";
 import CompactFieldToolLanding from "@/components/field-tools/CompactFieldToolLanding";
-import PMAIStalemateLanding from "@/components/field-tools/PMAIStalemateLanding";
+import AIProductPage from "@/components/field-tools/AIProductPage";
 export default function FieldToolLanding({
   slug,
   audience = "pm",
@@ -23,7 +23,6 @@ export default function FieldToolLanding({
       </main>
     );
   }
-  if (slug === "ai-stalemate" && audience === "pm")
-    return <PMAIStalemateLanding />;
+  if (slug === "ai-stalemate") return <AIProductPage audience={audience} />;
   return <CompactFieldToolLanding slug={slug} audience={audience} />;
 }

@@ -28,6 +28,8 @@ import { Link } from "wouter";
 import FieldToolsNav from "@/components/field-tools/FieldToolsNav";
 import FieldToolArtifact from "@/components/field-tools/FieldToolArtifact";
 import AIEffortComparison from "@/components/field-tools/AIEffortComparison";
+import AICommunicationPanel from "@/components/field-tools/AICommunicationPanel";
+import AIQualityChecks from "@/components/field-tools/AIQualityChecks";
 import LeadershipWorkSurface from "@/components/field-tools/LeadershipWorkSurface";
 import { getFieldTool } from "@/lib/field-tools";
 
@@ -379,20 +381,24 @@ function LabSession({ slug }: { slug: string }) {
           ]
   );
   const renderFields = (fields: FieldDef[]) =>
-    fields.map(field => (
-      <div key={field.id}>
-        {field.section && (
-          <h3 className="mb-5 border-b border-[var(--ft-line)] pb-3 pt-3 font-ui text-[10px] font-semibold tracking-[.16em] text-[var(--ft-muted)]">
-            {field.section}
-          </h3>
-        )}
-        <FieldInput
-          field={field}
-          value={values[field.id] || ""}
-          onChange={value => editValue(field.id, value)}
-        />
-      </div>
-    ));
+    fields
+      .filter(
+        field => field.id !== "leadershipUpdate" || slug !== "ai-stalemate"
+      )
+      .map(field => (
+        <div key={field.id}>
+          {field.section && (
+            <h3 className="mb-5 border-b border-[var(--ft-line)] pb-3 pt-3 font-ui text-[10px] font-semibold tracking-[.16em] text-[var(--ft-muted)]">
+              {field.section}
+            </h3>
+          )}
+          <FieldInput
+            field={field}
+            value={values[field.id] || ""}
+            onChange={value => editValue(field.id, value)}
+          />
+        </div>
+      ));
   const guideChapter = FIELD_TOOL_GUIDE_CHAPTERS[slug]?.[step] ?? 0;
 
   return (
@@ -495,19 +501,34 @@ function LabSession({ slug }: { slug: string }) {
               {current.intro}
             </p>
 
-            <div className="mt-8 border-l-2 border-[var(--ft-line)] pl-4 font-ui text-xs leading-5 text-[var(--ft-muted)]">
-              The private questions are there if they help you think. You can
-              answer without typing. Private notes aren’t saved or exported and
-              disappear when you refresh or leave. Other answers save in this
-              browser on this device.
-            </div>
-            <Link
-              href={`${base}/guide#guide-${guideChapter}`}
-              className="mt-5 inline-block font-ui text-sm underline underline-offset-4"
-            >
-              Read this part of the Guide →
-            </Link>
-            <LabTeachingNote slug={slug} step={step} />
+            <details className="ft-lab-help mt-5">
+              <summary className="cursor-pointer font-ui text-sm text-[var(--ft-accent)]">
+                Help with this step
+              </summary>
+              <div className="mt-4 font-ui text-xs leading-5 text-[var(--ft-muted)]">
+                The private questions are there if they help you think. You can
+                answer without typing. Private notes aren’t saved or exported
+                and disappear when you refresh or leave. Other answers save in
+                this browser on this device.
+              </div>
+              <Link
+                href={`${base}/guide#guide-${guideChapter}`}
+                className="mt-5 inline-block font-ui text-sm underline underline-offset-4"
+              >
+                Read this part of the Guide →
+              </Link>
+              <LabTeachingNote slug={slug} step={step} />
+              {slug === "ai-stalemate" && (
+                <div className="mt-5 flex flex-col gap-3 text-xs">
+                  <Link className="underline" href={`${base}/walkthrough`}>
+                    Play through a worked example →
+                  </Link>
+                  <Link className="underline" href={`${base}/resources`}>
+                    Find a tool or study resource →
+                  </Link>
+                </div>
+              )}
+            </details>
           </aside>
 
           <div className="ft-lab-form border border-[var(--ft-line)] bg-[var(--ft-white)] p-5 md:p-8">
@@ -606,6 +627,53 @@ function LabSession({ slug }: { slug: string }) {
                 </details>
               )}
             </div>
+
+            {slug === "ai-stalemate" && step === 3 && (
+              <AIQualityChecks
+                value={values.qualityChecks}
+                onChange={value => editValue("qualityChecks", value)}
+              />
+            )}
+            {slug === "ai-stalemate" && (step === 1 || step === 4) && (
+              <AICommunicationPanel
+                values={values}
+                audience={content.audience}
+                phase={step === 1 ? "conversation" : "decision"}
+                onChange={editValue}
+              />
+            )}
+            {slug === "ai-stalemate" && step === 4 && (
+              <details className="ai-workbench-panel">
+                <summary className="cursor-pointer font-display text-2xl">
+                  Return after the next move.
+                </summary>
+                <label>
+                  Shared record: what happened, what changed, and what now?
+                  <textarea
+                    rows={4}
+                    value={values.returnRecord ?? ""}
+                    onChange={e => editValue("returnRecord", e.target.value)}
+                    placeholder="Action taken / evidence or response / revised next move / owner / next review date"
+                  />
+                </label>
+                <label>
+                  Private reflection: what did you learn about how you lead?
+                  <textarea
+                    rows={3}
+                    value={values.leadershipReflection ?? ""}
+                    onChange={e =>
+                      editValue("leadershipReflection", e.target.value)
+                    }
+                    placeholder="What helped people think or work together? What condition could you improve next time?"
+                  />
+                </label>
+                <p className="mt-3 text-xs">
+                  The shared record is saved and included in the Decision Brief.
+                  Private reflection stays only in this tab and is excluded from
+                  saved drafts and exports.
+                </p>
+              </details>
+            )}
 
             <div className="mt-9 flex flex-wrap justify-between gap-3 border-t border-[var(--ft-line)] pt-6">
               <button

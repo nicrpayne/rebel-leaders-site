@@ -122,6 +122,7 @@ describe("gift checkout", () => {
     expect(inserts[0].table).toBe(fieldToolGifts);
     expect(inserts[0].value).toMatchObject({
       recipientEmail: "taylor@example.com",
+      slug: "ai-stalemate/lead-dev",
       tokenHash: giftTokenHash(reference),
     });
     expect(inserts.some(entry => entry.table === fieldToolOrders)).toBe(false);

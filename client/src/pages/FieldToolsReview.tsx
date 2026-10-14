@@ -15,7 +15,7 @@ const products: {
     name: "AI Stalemate",
     audience: "pm",
     edition: "PM path",
-    pages: 13,
+    pages: 18,
     image: "ai-stalemate-pm-hero-v5.webp",
   },
   {
@@ -23,7 +23,7 @@ const products: {
     name: "AI Stalemate",
     audience: "lead-dev",
     edition: "Lead Developer path",
-    pages: 13,
+    pages: 18,
     image: "ai-stalemate-hero-v2.webp",
   },
   {
@@ -83,8 +83,9 @@ export default function FieldToolsReview() {
             All your Field Tools. One place.
           </h1>
           <p className="mt-4 max-w-3xl text-sm leading-6 text-[var(--ft-muted)]">
-            Five products, six paths. Open the pages, download the current PDFs,
-            and try the Labs. Links open in a new tab so this desk stays handy.
+            Six products across five situations. Open the pages, download the
+            current PDFs, and try the Labs. Links open in a new tab so this desk
+            stays handy.
           </p>
         </div>
       </header>
