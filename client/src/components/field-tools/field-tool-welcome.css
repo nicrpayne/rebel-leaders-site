@@ -126,21 +126,13 @@
 .ft-welcome-portrait figcaption {
   position: absolute;
   z-index: 1;
-  bottom: 34px;
+  top: 50%;
   left: 36px;
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
+  transform: translateY(-50%);
   color: #fffdf7;
-}
-.ft-welcome-portrait figcaption span:first-child {
   font-family: var(--font-display);
   font-size: 30px;
   line-height: 1.1;
-}
-.ft-welcome-portrait figcaption span:last-child {
-  font-size: 12px;
-  color: #e2e6d8;
 }
 .ft-welcome-outcomes {
   padding: 48px 0;
@@ -298,9 +290,6 @@
   }
   .ft-welcome-portrait figcaption {
     left: 24px;
-    bottom: 22px;
-  }
-  .ft-welcome-portrait figcaption span:first-child {
     font-size: 27px;
   }
   .ft-welcome-eyebrow {
