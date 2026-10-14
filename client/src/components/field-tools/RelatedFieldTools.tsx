@@ -16,7 +16,7 @@ export default function RelatedFieldTools({
   return (
     <section
       aria-labelledby="related-field-tools"
-      className="border-t border-[#435a46] bg-[#07110d] px-5 py-8 text-[#f5f0e6] md:px-10"
+      className="border-t border-[var(--ft-line)] bg-[var(--ft-paper)] px-5 py-8 text-[var(--ft-ink)] md:px-10"
     >
       <div className="mx-auto max-w-6xl">
         <h2 id="related-field-tools" className="font-display text-2xl">
@@ -27,9 +27,9 @@ export default function RelatedFieldTools({
             <div key={tool.slug}>
               <Link
                 href={fieldToolBase(tool.slug, audience)}
-                className="group block cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#d9b34d]"
+                className="group block cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ft-accent)]"
               >
-                <div className="flex h-52 items-center justify-center overflow-hidden rounded-sm bg-[#13231b] transition-colors group-hover:bg-[#1c3225] md:h-56">
+                <div className="flex h-52 items-center justify-center overflow-hidden rounded-sm bg-[var(--ft-tint)] transition-colors group-hover:bg-[var(--ft-tint)] md:h-56">
                   <img
                     src={
                       tool.slug === "ai-stalemate"
@@ -56,7 +56,7 @@ export default function RelatedFieldTools({
                     <h3 className="font-display text-lg leading-tight">
                       {tool.name}
                     </h3>
-                    <p className="mt-1 font-ui text-xs text-[#afbfaa]">
+                    <p className="mt-1 font-ui text-xs text-[var(--ft-muted)]">
                       ${tool.price}
                     </p>
                   </div>

@@ -27,7 +27,7 @@ const choices = [
 ] as const;
 export default function FieldToolChooser() {
   return (
-    <section className="bg-[#fbf9f3] px-5 py-12 text-[#193025] md:px-10">
+    <section className="bg-[var(--ft-white)] px-5 py-12 text-[var(--ft-ink)] md:px-10">
       <div className="mx-auto max-w-6xl">
         <h2 className="font-display text-3xl">Which Field Tool fits?</h2>
         <p className="mt-3 max-w-3xl font-ui text-sm leading-7">
@@ -39,7 +39,7 @@ export default function FieldToolChooser() {
               Choose a Field Tool by the pressure and the output you need
             </caption>
             <thead>
-              <tr className="border-b border-[#b8c7ac]">
+              <tr className="border-b border-[var(--ft-line)]">
                 <th scope="col" className="py-3 pr-5">
                   What is stuck?
                 </th>
@@ -52,7 +52,7 @@ export default function FieldToolChooser() {
               </tr>
             </thead>
             <tbody>
-              <tr className="border-b border-[#d5dccc]">
+              <tr className="border-b border-[var(--ft-line)]">
                 <td className="py-5 pr-5">
                   You and your colleague disagree about using AI.
                 </td>
@@ -74,7 +74,7 @@ export default function FieldToolChooser() {
                 <td className="py-5">Next Step Together</td>
               </tr>
               {choices.map(([slug, pressure, title, output]) => (
-                <tr key={slug} className="border-b border-[#d5dccc]">
+                <tr key={slug} className="border-b border-[var(--ft-line)]">
                   <td className="py-5 pr-5">{pressure}</td>
                   <td className="py-5 pr-5">
                     <Link

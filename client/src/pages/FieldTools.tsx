@@ -5,7 +5,7 @@ import { FIELD_TOOLS } from "@/lib/field-tools";
 
 export default function FieldTools() {
   return (
-    <main className="ft-catalog min-h-screen bg-[#07130f] text-[#f2f3ec]">
+    <main className="ft-catalog min-h-screen bg-[var(--ft-paper)] text-[var(--ft-ink)]">
       <FieldToolHero
         eyebrow="REBEL LEADERS / FIELD TOOLS"
         headline={
@@ -29,11 +29,11 @@ export default function FieldTools() {
 
       <section
         id="tools"
-        className="bg-[#f3efe4] px-5 py-16 text-[#102019] md:px-8 md:py-24"
+        className="bg-[var(--ft-paper)] px-5 py-16 text-[var(--ft-ink)] md:px-8 md:py-24"
       >
         <div className="mx-auto max-w-7xl">
           <div className="mb-10 max-w-3xl">
-            <p className="font-pixel text-[8px] tracking-[0.24em] text-[#54715b]">
+            <p className="font-ui text-[10px] tracking-[0.24em] text-[var(--ft-muted)]">
               WHAT ARE YOU DEALING WITH?
             </p>
             <h2 className="mt-4 font-display text-4xl font-semibold tracking-[-0.035em] md:text-5xl">
@@ -46,23 +46,23 @@ export default function FieldTools() {
               <Link
                 key={tool.slug}
                 href={"/field-tools/" + tool.slug}
-                className="group flex min-h-[300px] flex-col justify-between border border-[#cfd5c8] bg-[#fbf9f3] p-6 transition-all hover:-translate-y-1 hover:border-[#809b84] hover:shadow-[8px_8px_0_#d7ded2]"
+                className="group flex min-h-[300px] flex-col justify-between border border-[var(--ft-line)] bg-[var(--ft-white)] p-6 transition-all hover:-translate-y-1 hover:border-[var(--ft-line)] hover:shadow-none"
               >
                 <div>
-                  <p className="font-pixel text-[7px] tracking-[0.18em] text-[#6a836e]">
+                  <p className="font-ui text-[10px] tracking-[0.18em] text-[var(--ft-muted)]">
                     {tool.eyebrow}
                   </p>
                   <h3 className="mt-5 font-display text-3xl font-semibold leading-tight tracking-[-0.03em]">
                     {tool.headline}
                   </h3>
-                  <p className="mt-1 font-display text-2xl italic text-[#54715b]">
+                  <p className="mt-1 font-display text-2xl italic text-[var(--ft-muted)]">
                     {tool.accentLine}
                   </p>
-                  <p className="mt-5 font-ui text-sm leading-6 text-[#536058]">
+                  <p className="mt-5 font-ui text-sm leading-6 text-[var(--ft-muted)]">
                     {tool.subhead}
                   </p>
                 </div>
-                <div className="mt-8 flex items-center justify-between border-t border-[#d9ddd4] pt-5 font-ui text-sm font-semibold">
+                <div className="mt-8 flex items-center justify-between border-t border-[var(--ft-line)] pt-5 font-ui text-sm font-semibold">
                   <span>
                     {"$"}
                     {tool.price}
@@ -76,28 +76,28 @@ export default function FieldTools() {
 
             <Link
               href="/assessment"
-              className="group flex min-h-[300px] flex-col justify-between border border-[#6f8c73] bg-[#153625] p-6 text-[#eef4ec] transition-all hover:-translate-y-1 hover:shadow-[8px_8px_0_#aac09f]"
+              className="group flex min-h-[300px] flex-col justify-between border border-[var(--ft-line)] bg-[var(--ft-tint)] p-6 text-[var(--ft-ink)] transition-all hover:-translate-y-1 hover:shadow-none"
             >
               <div>
-                <p className="font-pixel text-[7px] tracking-[0.18em] text-[#b6d1ad]">
+                <p className="font-ui text-[10px] tracking-[0.18em] text-[var(--ft-muted)]">
                   FREE ASSESSMENT
                 </p>
                 <h3 className="mt-5 font-display text-3xl font-semibold leading-tight tracking-[-0.03em]">
                   Not sure where to start?
                 </h3>
-                <p className="mt-5 font-ui text-sm leading-6 text-[#c8d8c9]">
+                <p className="mt-5 font-ui text-sm leading-6 text-[var(--ft-muted)]">
                   Take the Product Leadership Pressure Test to work out what is
                   making your job harder and which problem to address first.
                 </p>
               </div>
-              <div className="mt-8 border-t border-white/15 pt-5 font-ui text-sm font-semibold">
+              <div className="mt-8 border-t border-[var(--ft-line)] pt-5 font-ui text-sm font-semibold">
                 Take the free test →
               </div>
             </Link>
           </div>
         </div>
       </section>
-      <details className="bg-[#fbf9f3] px-5 py-8 text-[#193025] md:px-10">
+      <details className="bg-[var(--ft-white)] px-5 py-8 text-[var(--ft-ink)] md:px-10">
         <summary className="mx-auto max-w-6xl cursor-pointer font-ui font-semibold">
           Compare the tools
         </summary>

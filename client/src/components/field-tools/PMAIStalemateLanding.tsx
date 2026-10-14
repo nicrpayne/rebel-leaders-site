@@ -50,7 +50,7 @@ export default function PMAIStalemateLanding() {
     ],
   ];
   return (
-    <main className="ft-pm-landing min-h-screen bg-[#f3efe4] text-[#193025]">
+    <main className="ft-pm-landing min-h-screen bg-[var(--ft-paper)] text-[var(--ft-ink)]">
       <FieldToolHero
         eyebrow="FIELD TOOL 01"
         headline={
@@ -95,12 +95,12 @@ export default function PMAIStalemateLanding() {
                 <li key={title} className="flex gap-3">
                   <Check
                     size={18}
-                    className="mt-1 shrink-0 text-[#6e8056]"
+                    className="mt-1 shrink-0 text-[var(--ft-muted)]"
                     aria-hidden="true"
                   />
                   <div>
                     <h3 className="font-ui text-sm font-semibold">{title}</h3>
-                    <p className="mt-1 font-ui text-sm leading-6 text-[#607063]">
+                    <p className="mt-1 font-ui text-sm leading-6 text-[var(--ft-muted)]">
                       {detail}
                     </p>
                   </div>
@@ -108,11 +108,11 @@ export default function PMAIStalemateLanding() {
               ))}
             </ul>
           </div>
-          <div className="border border-[#aab99f] bg-[#fffdf7] p-7">
+          <div className="border border-[var(--ft-line)] bg-[var(--ft-white)] p-7">
             <p className="font-display text-2xl">AI Stalemate / PM</p>
             <p className="mt-5 font-display text-6xl font-semibold">
               $47{" "}
-              <span className="font-ui text-xs font-normal text-[#607063]">
+              <span className="font-ui text-xs font-normal text-[var(--ft-muted)]">
                 USD · one time
               </span>
             </p>
@@ -121,7 +121,7 @@ export default function PMAIStalemateLanding() {
               giftHref={`${base}/buy?gift=1`}
               className="mt-7"
             />
-            <p className="mt-5 font-ui text-xs text-[#607063]">
+            <p className="mt-5 font-ui text-xs text-[var(--ft-muted)]">
               Already purchased?{" "}
               <Link
                 href={`${base}/access`}
@@ -135,7 +135,7 @@ export default function PMAIStalemateLanding() {
       </section>
       <FieldToolBuyerQuestions />
       <RelatedFieldTools slug="ai-stalemate" audience="pm" />
-      <footer className="border-t border-[#cbd4c6] px-5 py-7 font-ui text-xs text-[#607063] md:px-10">
+      <footer className="border-t border-[var(--ft-line)] px-5 py-7 font-ui text-xs text-[var(--ft-muted)] md:px-10">
         <div className="mx-auto flex max-w-6xl flex-wrap justify-between gap-4">
           <span>Nic Payne · Rebel Leaders</span>
           <Link href="/field-tools">All Field Tools →</Link>

@@ -10,17 +10,17 @@ export default function FieldToolArtifact({
   const blocks = text.split(/\n\n+/);
   return (
     <article
-      className="ft-lab-output min-w-0 border border-[#c6d0c1] bg-[#fbf9f3] px-6 py-8 text-[#193025] shadow-[8px_8px_0_#06180f] md:px-10 md:py-10"
+      className="ft-lab-output min-w-0 border border-[var(--ft-line)] bg-[var(--ft-white)] px-6 py-8 text-[var(--ft-ink)] shadow-none md:px-10 md:py-10"
       aria-label={`${title} document`}
     >
-      <header className="border-b border-[#b8c6ad] pb-6">
-        <p className="font-ui text-[10px] tracking-[.18em] text-[#647b64]">
+      <header className="border-b border-[var(--ft-line)] pb-6">
+        <p className="font-ui text-[10px] tracking-[.18em] text-[var(--ft-muted)]">
           REBEL LEADERS / {toolName.toUpperCase()}
         </p>
         <h3 className="mt-4 font-display text-4xl font-semibold tracking-[-.025em]">
           {title}
         </h3>
-        <p className="mt-3 font-ui text-xs text-[#7c897c]">
+        <p className="mt-3 font-ui text-xs text-[var(--ft-muted)]">
           Working record · Review before sharing
         </p>
       </header>
@@ -33,14 +33,14 @@ export default function FieldToolArtifact({
             return (
               <section
                 key={index}
-                className="break-inside-avoid border-b border-[#e0e5da] pb-5 last:border-0"
+                className="break-inside-avoid border-b border-[var(--ft-line)] pb-5 last:border-0"
               >
                 {isHeading && (
-                  <h4 className="mb-2 font-ui text-[10px] font-semibold tracking-[.1em] text-[#687e68]">
+                  <h4 className="mb-2 font-ui text-[10px] font-semibold tracking-[.1em] text-[var(--ft-muted)]">
                     {heading}
                   </h4>
                 )}
-                <p className="whitespace-pre-wrap break-words font-ui text-sm leading-7 text-[#354e3e]">
+                <p className="whitespace-pre-wrap break-words font-ui text-sm leading-7 text-[var(--ft-ink)]">
                   {isHeading ? body.join("\n") : block}
                 </p>
               </section>

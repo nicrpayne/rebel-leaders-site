@@ -26,7 +26,7 @@ export default function FieldToolPurchase({
   );
   if (!tool)
     return (
-      <main className="min-h-screen bg-[#07110d] p-10 text-white">
+      <main className="min-h-screen bg-[var(--ft-paper)] p-10 text-[var(--ft-ink)]">
         <h1 className="font-display text-4xl">Field Tool not found.</h1>
         <Link href="/field-tools" className="mt-5 inline-block underline">
           Browse the tools
@@ -34,12 +34,12 @@ export default function FieldToolPurchase({
       </main>
     );
   return (
-    <main className="relative min-h-screen bg-[#07110d] text-[#f5f0e6]">
+    <main className="ft-purchase relative min-h-screen bg-[var(--ft-paper)] text-[var(--ft-ink)]">
       <FieldToolsNav />
       <section className="mx-auto max-w-6xl px-5 pb-12 pt-24 md:px-10 md:pt-28">
         <Link
           href={base}
-          className="inline-flex items-center gap-2 font-ui text-xs text-[#afc0af]"
+          className="inline-flex items-center gap-2 font-ui text-xs text-[var(--ft-muted)]"
         >
           <ArrowLeft size={14} aria-hidden="true" />
           Back to product
@@ -56,11 +56,11 @@ export default function FieldToolPurchase({
           </figure>
           <aside
             aria-label="Purchase options"
-            className="border border-[#778b6c] bg-[#10251a] p-6 md:p-8"
+            className="border border-[var(--ft-line)] bg-[var(--ft-tint)] p-6 md:p-8"
           >
-            <p className="font-display text-6xl font-semibold text-[#e4bc59]">
+            <p className="font-display text-6xl font-semibold text-[var(--ft-accent)]">
               ${tool.price}{" "}
-              <span className="font-ui text-sm font-normal text-[#afbfaa]">
+              <span className="font-ui text-sm font-normal text-[var(--ft-muted)]">
                 USD · one time
               </span>
             </p>
@@ -92,16 +92,16 @@ export default function FieldToolPurchase({
                 {checkout.isPending ? (
                   <p
                     role="status"
-                    className="mt-4 font-ui text-sm text-[#cbd5c5]"
+                    className="mt-4 font-ui text-sm text-[var(--ft-muted)]"
                   >
                     Checking checkout…
                   </p>
                 ) : checkout.data?.checkoutUrl ? (
-                  <p className="mt-4 font-ui text-xs text-[#adbfaa]">
+                  <p className="mt-4 font-ui text-xs text-[var(--ft-muted)]">
                     Tax shown at checkout.
                   </p>
                 ) : (
-                  <div className="mt-4 font-ui text-sm text-[#ead69a]">
+                  <div className="mt-4 font-ui text-sm text-[var(--ft-muted)]">
                     <p role="status">
                       {checkout.error
                         ? "Checkout is temporarily unavailable."
@@ -121,7 +121,7 @@ export default function FieldToolPurchase({
               </>
             )}
             {isGift && checkout.data?.checkoutUrl && (
-              <p className="mt-4 font-ui text-xs leading-6 text-[#adbfaa]">
+              <p className="mt-4 font-ui text-xs leading-6 text-[var(--ft-muted)]">
                 Payment through Lemon Squeezy. Any tax is shown before you pay.
               </p>
             )}

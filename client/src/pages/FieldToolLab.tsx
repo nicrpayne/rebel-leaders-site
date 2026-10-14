@@ -57,15 +57,15 @@ function FieldInput({
   onChange: (value: string) => void;
 }) {
   const shared =
-    "mt-2 w-full border border-[#bfc8bb] bg-[#fffdf7] px-4 py-3 font-ui text-sm text-[#13231a] outline-none transition-colors focus:border-[#56775d]";
+    "mt-2 w-full border border-[var(--ft-line)] bg-[var(--ft-white)] px-4 py-3 font-ui text-sm text-[var(--ft-ink)] outline-none transition-colors focus:border-[var(--ft-accent)]";
 
   return (
     <label className="block">
-      <span className="font-ui text-sm font-semibold text-[#26392d]">
+      <span className="font-ui text-sm font-semibold text-[var(--ft-ink)]">
         {field.label}
       </span>
       {field.hint && (
-        <span className="mt-1 block font-ui text-xs leading-5 text-[#6b776f]">
+        <span className="mt-1 block font-ui text-xs leading-5 text-[var(--ft-muted)]">
           {field.hint}
         </span>
       )}
@@ -225,7 +225,7 @@ function LabSession({ slug }: { slug: string }) {
 
   if (!tool || !config) {
     return (
-      <main className="min-h-screen bg-[#07130f] p-8 text-white">
+      <main className="min-h-screen bg-[var(--ft-paper)] p-8 text-[var(--ft-ink)]">
         Tool Lab not found.
       </main>
     );
@@ -382,7 +382,7 @@ function LabSession({ slug }: { slug: string }) {
     fields.map(field => (
       <div key={field.id}>
         {field.section && (
-          <h3 className="mb-5 border-b border-[#cbd4c6] pb-3 pt-3 font-ui text-[10px] font-semibold tracking-[.16em] text-[#6a7d64]">
+          <h3 className="mb-5 border-b border-[var(--ft-line)] pb-3 pt-3 font-ui text-[10px] font-semibold tracking-[.16em] text-[var(--ft-muted)]">
             {field.section}
           </h3>
         )}
@@ -398,20 +398,20 @@ function LabSession({ slug }: { slug: string }) {
   return (
     <main
       className={
-        "ft-lab min-h-screen bg-[#f3efe4] text-[#102019]" +
+        "ft-lab min-h-screen bg-[var(--ft-paper)] text-[var(--ft-ink)]" +
         (showOutput ? " ft-lab-print-output" : "")
       }
     >
       <FieldToolsNav />
 
-      <section className="bg-[#07130f] px-5 pb-8 pt-24 text-[#eef3ec] md:px-8">
+      <section className="ft-lab-header bg-[var(--ft-paper)] px-5 pb-8 pt-24 text-[var(--ft-ink)] md:px-8">
         <div className="mx-auto max-w-6xl">
           <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
             <div>
-              <p className="font-pixel text-[8px] tracking-[0.22em] text-[#9bb397]">
+              <p className="font-ui text-[10px] tracking-[0.22em] text-[var(--ft-muted)]">
                 {tool.eyebrow} / LAB
               </p>
-              <h1 className="mt-4 font-ui text-4xl font-semibold tracking-[-0.04em] md:text-5xl">
+              <h1 className="mt-4 font-display text-4xl font-semibold tracking-[-0.04em] md:text-5xl">
                 {tool.name}
                 {slug === "ai-stalemate"
                   ? content.audience === "pm"
@@ -419,14 +419,14 @@ function LabSession({ slug }: { slug: string }) {
                     : " / Lead Developer"
                   : ""}
               </h1>
-              <p className="mt-3 max-w-2xl font-ui text-sm leading-6 text-[#acbdb1]">
+              <p className="mt-3 max-w-2xl font-ui text-sm leading-6 text-[var(--ft-muted)]">
                 {FIELD_TOOL_START[slug] ??
                   "Let’s work through your situation, one question at a time."}
               </p>
               {storageStatus && (
                 <p
                   role="status"
-                  className="mt-3 max-w-2xl font-ui text-xs leading-6 text-[#ead69a]"
+                  className="mt-3 max-w-2xl font-ui text-xs leading-6 text-[var(--ft-muted)]"
                 >
                   {storageStatus}
                 </p>
@@ -439,7 +439,7 @@ function LabSession({ slug }: { slug: string }) {
                   actionTrigger.current = event.currentTarget;
                   setPendingAction("clear");
                 }}
-                className="self-start border border-white/15 px-4 py-2 font-ui text-xs text-[#bdcbbf]"
+                className="self-start border border-[var(--ft-line)] px-4 py-2 font-ui text-xs text-[var(--ft-muted)]"
               >
                 Clear local draft
               </button>
@@ -448,7 +448,7 @@ function LabSession({ slug }: { slug: string }) {
 
           <div
             className={
-              "mt-8 grid gap-2 " +
+              "ft-step-nav mt-8 grid gap-2 " +
               (config.steps.length === 5
                 ? "grid-cols-2 sm:grid-cols-5"
                 : "grid-cols-2 sm:grid-cols-4")
@@ -460,15 +460,18 @@ function LabSession({ slug }: { slug: string }) {
                 key={item.eyebrow}
                 onClick={() => setStep(index)}
                 aria-current={index === step ? "step" : undefined}
+                aria-label={`Step ${index + 1}: ${item.eyebrow}`}
                 className={
                   "border-t-2 pt-3 text-left font-ui text-[11px] " +
                   (index === step
-                    ? "border-[#b9d5ad] text-white"
-                    : "border-white/10 text-[#72857a]")
+                    ? "border-[var(--ft-accent)] text-[var(--ft-ink)]"
+                    : "border-[var(--ft-line)] text-[var(--ft-muted)]")
                 }
               >
-                <span className="hidden sm:inline">{index + 1}. </span>
-                {item.eyebrow}
+                <span className="ft-step-number" aria-hidden="true">
+                  {index + 1}
+                </span>
+                <span className="ft-step-label">{item.eyebrow}</span>
               </button>
             ))}
           </div>
@@ -478,7 +481,7 @@ function LabSession({ slug }: { slug: string }) {
       <section className="px-5 py-10 md:px-8 md:py-14">
         <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[.72fr_1.28fr]">
           <aside>
-            <p className="font-pixel text-[8px] tracking-[0.2em] text-[#607b64]">
+            <p className="font-ui text-[10px] tracking-[0.2em] text-[var(--ft-muted)]">
               {current.eyebrow}
             </p>
             <h2
@@ -488,11 +491,11 @@ function LabSession({ slug }: { slug: string }) {
             >
               {current.title}
             </h2>
-            <p className="mt-4 font-ui text-sm leading-6 text-[#5c6960]">
+            <p className="mt-4 font-ui text-sm leading-6 text-[var(--ft-muted)]">
               {current.intro}
             </p>
 
-            <div className="mt-8 border-l-2 border-[#a1b89d] pl-4 font-ui text-xs leading-5 text-[#657268]">
+            <div className="mt-8 border-l-2 border-[var(--ft-line)] pl-4 font-ui text-xs leading-5 text-[var(--ft-muted)]">
               The private questions are there if they help you think. You can
               answer without typing. Private notes aren’t saved or exported and
               disappear when you refresh or leave. Other answers save in this
@@ -507,9 +510,9 @@ function LabSession({ slug }: { slug: string }) {
             <LabTeachingNote slug={slug} step={step} />
           </aside>
 
-          <div className="border border-[#c8d0c5] bg-[#fbf9f3] p-5 md:p-8">
-            <div className="mb-6 flex flex-wrap items-center justify-between gap-3 border-b border-[#cbd4c6] pb-4">
-              <p className="font-ui text-xs text-[#657268]">
+          <div className="ft-lab-form border border-[var(--ft-line)] bg-[var(--ft-white)] p-5 md:p-8">
+            <div className="mb-6 flex flex-wrap items-center justify-between gap-3 border-b border-[var(--ft-line)] pb-4">
+              <p className="font-ui text-xs text-[var(--ft-muted)]">
                 {step === 0 && slug === "ai-stalemate"
                   ? "Private reflection · not saved or exported"
                   : "Your draft · saved in this browser"}
@@ -520,7 +523,7 @@ function LabSession({ slug }: { slug: string }) {
                   actionTrigger.current = event.currentTarget;
                   loadExample();
                 }}
-                className="border border-[#aeb8aa] px-4 py-2 font-ui text-xs"
+                className="border border-[var(--ft-line)] px-4 py-2 font-ui text-xs"
               >
                 Load Examples
               </button>
@@ -528,7 +531,7 @@ function LabSession({ slug }: { slug: string }) {
             {editNotice && (
               <div
                 role="status"
-                className="mb-6 border-l-2 border-[#78946b] bg-[#edf1e5] p-4 font-ui text-sm leading-6"
+                className="mb-6 border-l-2 border-[var(--ft-line)] bg-[var(--ft-tint)] p-4 font-ui text-sm leading-6"
               >
                 {editNotice}{" "}
                 {undo && (
@@ -565,7 +568,7 @@ function LabSession({ slug }: { slug: string }) {
               ) && (
                 <details
                   open={slug === "ai-stalemate"}
-                  className="border-l-2 border-[#a1b89d] pl-4"
+                  className="border-l-2 border-[var(--ft-line)] pl-4"
                 >
                   <summary className="cursor-pointer font-ui text-sm font-semibold">
                     Private reflection · optional, not saved or exported
@@ -584,7 +587,7 @@ function LabSession({ slug }: { slug: string }) {
               {current.fields.some(field => optionalIds.has(field.id)) && (
                 <details
                   key={`optional-${step}`}
-                  className="border-t border-[#cbd4c6] pt-5"
+                  className="border-t border-[var(--ft-line)] pt-5"
                 >
                   <summary className="cursor-pointer font-ui text-sm font-semibold">
                     {slug !== "ai-stalemate"
@@ -604,12 +607,12 @@ function LabSession({ slug }: { slug: string }) {
               )}
             </div>
 
-            <div className="mt-9 flex flex-wrap justify-between gap-3 border-t border-[#d7ddd3] pt-6">
+            <div className="mt-9 flex flex-wrap justify-between gap-3 border-t border-[var(--ft-line)] pt-6">
               <button
                 type="button"
                 disabled={step === 0}
                 onClick={() => setStep(Math.max(0, step - 1))}
-                className="border border-[#aeb8aa] px-5 py-3 font-ui text-sm disabled:cursor-default disabled:opacity-30"
+                className="border border-[var(--ft-line)] px-5 py-3 font-ui text-sm disabled:cursor-default disabled:opacity-30"
               >
                 ← Back
               </button>
@@ -618,7 +621,7 @@ function LabSession({ slug }: { slug: string }) {
                 <button
                   type="button"
                   onClick={continueWork}
-                  className="bg-[#173c2a] px-6 py-3 font-ui text-sm font-semibold text-white"
+                  className="ft-action-primary bg-[var(--ft-tint)] px-6 py-3 font-ui text-sm font-semibold text-[var(--ft-ink)]"
                 >
                   {atReadiness && preparationDecision
                     ? values.readinessDecision === "STOP THIS USE"
@@ -639,7 +642,7 @@ function LabSession({ slug }: { slug: string }) {
                         : (config.outputs?.at(-1)?.id ?? "output")
                     )
                   }
-                  className="bg-[#173c2a] px-6 py-3 font-ui text-sm font-semibold text-white"
+                  className="ft-action-primary bg-[var(--ft-tint)] px-6 py-3 font-ui text-sm font-semibold text-[var(--ft-ink)]"
                 >
                   {config.outputs
                     ? slug === "ai-stalemate"
@@ -651,8 +654,8 @@ function LabSession({ slug }: { slug: string }) {
             </div>
             {config.outputs?.some(item => item.fromStep <= step) &&
               (slug !== "ai-stalemate" || step > 0) && (
-                <div className="mt-6 border-t border-[#d7ddd3] pt-5">
-                  <p className="font-ui text-xs leading-6 text-[#657268]">
+                <div className="mt-6 border-t border-[var(--ft-line)] pt-5">
+                  <p className="font-ui text-xs leading-6 text-[var(--ft-muted)]">
                     {slug !== "ai-stalemate"
                       ? "Ready to see your document? It brings your answers together and leaves out your private notes."
                       : atReadiness
@@ -674,7 +677,7 @@ function LabSession({ slug }: { slug: string }) {
                           type="button"
                           key={item.id}
                           onClick={() => openOutput(item.id)}
-                          className="border border-[#aeb8aa] px-4 py-3 font-ui text-xs"
+                          className="border border-[var(--ft-line)] px-4 py-3 font-ui text-xs"
                         >
                           Preview {item.title} →
                         </button>
@@ -689,11 +692,11 @@ function LabSession({ slug }: { slug: string }) {
       {showOutput && (
         <section
           id="lab-output"
-          className="ft-lab-output-section scroll-mt-20 bg-[#10271d] px-5 py-12 text-[#eef3ec] md:px-8"
+          className="ft-lab-output-section scroll-mt-20 bg-[var(--ft-tint)] px-5 py-12 text-[var(--ft-ink)] md:px-8"
           aria-label={selectedOutput?.title ?? "Your output"}
         >
           <div className="mx-auto max-w-6xl">
-            <p className="font-pixel text-[8px] tracking-[0.22em] text-[#b0c8aa] print:hidden">
+            <p className="font-ui text-[10px] tracking-[0.22em] text-[var(--ft-muted)] print:hidden">
               YOUR OUTPUT
             </p>
             <h2 className="mt-4 font-display text-3xl font-semibold print:hidden">
@@ -707,7 +710,7 @@ function LabSession({ slug }: { slug: string }) {
             </p>
             {labReviewPrompts(slug, values).length > 0 && (
               <div
-                className="mt-5 border border-[#adc3a1] p-4 font-ui text-sm leading-6"
+                className="mt-5 border border-[var(--ft-line)] p-4 font-ui text-sm leading-6"
                 aria-label="Questions before sharing"
               >
                 <p className="font-semibold">Before sharing</p>
@@ -735,7 +738,7 @@ function LabSession({ slug }: { slug: string }) {
                 <button
                   type="button"
                   onClick={copyOutput}
-                  className="bg-[#b9d5ad] px-5 py-3 font-ui text-sm font-semibold text-[#07130f]"
+                  className="ft-action-primary bg-[var(--ft-tint)] px-5 py-3 font-ui text-sm font-semibold text-[var(--ft-ink)]"
                 >
                   Copy
                 </button>
@@ -745,14 +748,14 @@ function LabSession({ slug }: { slug: string }) {
                 <button
                   type="button"
                   onClick={downloadOutput}
-                  className="border border-white/20 px-5 py-3 font-ui text-sm"
+                  className="border border-[var(--ft-line)] px-5 py-3 font-ui text-sm"
                 >
                   Download .txt
                 </button>
                 <button
                   type="button"
                   onClick={() => window.print()}
-                  className="border border-white/20 px-5 py-3 font-ui text-sm"
+                  className="border border-[var(--ft-line)] px-5 py-3 font-ui text-sm"
                 >
                   Print
                 </button>
@@ -763,7 +766,7 @@ function LabSession({ slug }: { slug: string }) {
       )}
 
       <footer className="px-5 py-8 md:px-8">
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 font-ui text-xs text-[#667369]">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 font-ui text-xs text-[var(--ft-muted)]">
           <Link href={base}>← Back to {tool.name}</Link>
           <div className="flex gap-4">
             <Link href={base + "/guide"}>Field Guide</Link>
@@ -778,7 +781,7 @@ function LabSession({ slug }: { slug: string }) {
         }}
       >
         <AlertDialogContent
-          className="bg-[#fbf9f3] text-[#193025]"
+          className="ft-dialog bg-[var(--ft-white)] text-[var(--ft-ink)]"
           onCloseAutoFocus={event => {
             event.preventDefault();
             actionTrigger.current?.focus({ preventScroll: true });
@@ -789,7 +792,7 @@ function LabSession({ slug }: { slug: string }) {
               ? "Clear this local draft?"
               : "Replace this step with the example?"}
           </AlertDialogTitle>
-          <AlertDialogDescription className="text-[#536058] leading-6">
+          <AlertDialogDescription className="text-[var(--ft-muted)] leading-6">
             {pendingAction === "clear"
               ? "This clears your saved answers and any private notes in this Lab. Copy or download anything you want to keep first. You can’t undo this."
               : "The fictional example will replace your answers in this step. Other steps keep their answers, though a changed next step may mean reviewing the decision too. You can undo this until you edit an answer."}
@@ -797,7 +800,7 @@ function LabSession({ slug }: { slug: string }) {
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction
-              className="bg-[#173c2a] text-white"
+              className="bg-[var(--ft-tint)] text-[var(--ft-ink)]"
               onClick={() => {
                 if (pendingAction === "clear") clearDraft();
                 else replaceWithExample();
