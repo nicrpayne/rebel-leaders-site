@@ -36,9 +36,9 @@ export default function AIResources() {
         .includes(search.toLowerCase())
   );
   return (
-    <main className="font-ui min-h-screen bg-[#f3efe4] text-[#193025]">
+    <main className="font-ui min-h-screen bg-[var(--ft-paper)] text-[var(--ft-ink)]">
       <FieldToolsNav />
-      <header className="bg-[#07110d] px-6 pb-12 pt-28 text-[#f3efe4]">
+      <header className="bg-[var(--ft-paper)] px-6 pb-12 pt-28 text-[var(--ft-ink)]">
         <div className="mx-auto max-w-6xl">
           <Link href={`${base}/access`} className="text-xs underline">
             ← Your Field Tool
@@ -50,7 +50,7 @@ export default function AIResources() {
           <h1 className="mt-4 font-display text-5xl md:text-7xl">
             Bring better questions.
           </h1>
-          <p className="mt-5 max-w-2xl text-sm leading-7 text-[#b6c7b8]">
+          <p className="mt-5 max-w-2xl text-sm leading-7 text-[var(--ft-muted)]">
             Pick the question you need to answer. Read or watch one relevant
             source, then bring something concrete back to{" "}
             {content.audience === "pm" ? "your lead" : "your PM"}. You do not
@@ -102,14 +102,14 @@ export default function AIResources() {
                 setView(v);
                 setCategory("All");
               }}
-              className={`border px-5 py-3 text-sm ${view === v ? "bg-[#153625] text-white" : "border-[#aeb8aa]"}`}
+              className={`border px-5 py-3 text-sm ${view === v ? "bg-[var(--ft-tint)] text-[var(--ft-ink)]" : "border-[var(--ft-line)]"}`}
             >
               {v === "study" ? "Study & frameworks" : "Tool map"}
             </button>
           ))}
         </div>
         {view === "tools" && (
-          <p className="mt-5 max-w-3xl text-sm leading-7 text-[#536659]">
+          <p className="ft-action-primary mt-5 max-w-3xl text-sm leading-7 text-[var(--ft-muted)]">
             These tools do different jobs. Some help write code; others help
             review or test it. Ask your engineering lead what you already use,
             what each tool would check, what it would miss, and what it would
@@ -123,7 +123,7 @@ export default function AIResources() {
               aria-label="Find a resource"
               value={search}
               onChange={e => setSearch(e.target.value)}
-              className="mt-2 w-full border border-[#bfc8bb] bg-white p-3 text-sm"
+              className="mt-2 w-full border border-[var(--ft-line)] bg-white p-3 text-sm"
               placeholder="Try permissions, testing, or evidence"
             />
           </label>
@@ -132,7 +132,7 @@ export default function AIResources() {
             <select
               value={category}
               onChange={e => setCategory(e.target.value)}
-              className="mt-2 block border border-[#bfc8bb] bg-white p-3 text-sm"
+              className="mt-2 block border border-[var(--ft-line)] bg-white p-3 text-sm"
             >
               {categories.map(c => (
                 <option key={c}>{c}</option>
@@ -140,7 +140,7 @@ export default function AIResources() {
             </select>
           </label>
         </div>
-        <p className="mb-5 text-xs text-[#536659]">
+        <p className="mb-5 text-xs text-[var(--ft-muted)]">
           {filtered.length} resources · sources reviewed {library.reviewed}
         </p>
         <div className="grid gap-5 md:grid-cols-2">
@@ -160,7 +160,7 @@ export default function AIResources() {
                   <strong>Look for:</strong> {r.section}
                 </p>
               )}
-              <div className="mt-4 border-l-2 border-[#c3a14b] pl-4">
+              <div className="mt-4 border-l-2 border-[var(--ft-accent)] pl-4">
                 <p>
                   <strong>Bring back this question</strong>
                   <br />
@@ -193,7 +193,7 @@ export default function AIResources() {
             No matching resources. Try another topic or search.
           </p>
         )}
-        <aside className="mt-10 border-t border-[#c8d0c5] pt-7">
+        <aside className="mt-10 border-t border-[var(--ft-line)] pt-7">
           <h2 className="font-display text-3xl">
             Keep the question close to the work.
           </h2>

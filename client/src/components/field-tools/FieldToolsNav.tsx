@@ -13,14 +13,14 @@ export default function FieldToolsNav({
   const myTool = fieldToolAccessPath(location);
   return (
     <header
-      className={`absolute inset-x-0 top-0 z-40 border-b backdrop-blur-lg ${light ? "border-[#dce0d4] bg-[#f8f4eb]/95" : "border-white/[0.07] bg-[#06100c]/82"}`}
+      className={`ft-nav absolute inset-x-0 top-0 z-40 border-b backdrop-blur-lg ${light ? "border-[var(--ft-line)] bg-[var(--ft-paper)]/95" : "border-[var(--ft-line)] bg-[var(--ft-paper)]/82"}`}
     >
       <div className="mx-auto flex h-[74px] max-w-[1440px] items-center justify-between gap-3 px-4 md:px-10">
         <Link
           href="/field-tools"
-          className={`flex shrink-0 items-center gap-2 ${light ? "text-[#243f2e]" : "text-[#f3efe4]"}`}
+          className={`flex shrink-0 items-center gap-2 ${light ? "text-[var(--ft-ink)]" : "text-[var(--ft-ink)]"}`}
         >
-          <RebelLogo size={28} className="text-[#d9b14f]" />
+          <RebelLogo size={28} className="text-[var(--ft-accent)]" />
           <span className="font-display text-[20px] font-semibold tracking-[-0.02em] md:text-[28px]">
             Rebel Leaders
           </span>
@@ -28,7 +28,7 @@ export default function FieldToolsNav({
 
         <nav
           aria-label="Field Tools"
-          className={`flex items-center gap-3 font-ui text-[11px] md:gap-9 md:text-sm ${light ? "text-[#52664e]" : "text-[#dce5de]"}`}
+          className={`flex items-center gap-3 font-ui text-[11px] md:gap-9 md:text-sm ${light ? "text-[var(--ft-muted)]" : "text-[var(--ft-muted)]"}`}
         >
           {/(?:\/access|\/guide|\/lab)$/.test(location) &&
           myTool !== "/field-tools" ? (

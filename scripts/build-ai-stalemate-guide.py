@@ -34,33 +34,33 @@ PAGES = CONTENT["pages"]
 COMPANION = CONTENT["companion"]
 TOTAL_PAGES = len(PAGES) + len(COMPANION) + 1
 
-FONT_DIR = Path(os.environ.get("GUIDE_FONT_DIR", "/usr/share/fonts/truetype/dejavu"))
+FONT_DIR = Path(os.environ.get("GUIDE_FONT_DIR", str(ROOT / "scripts/fonts")))
 
 for name, filename in [
-    ("GuideSerif", str(FONT_DIR / "DejaVuSerif.ttf")),
-    ("GuideSans", str(FONT_DIR / "DejaVuSans.ttf")),
-    ("GuideBold", str(FONT_DIR / "DejaVuSans-Bold.ttf")),
+    ("GuideSerif", str(FONT_DIR / "GuideSerif.ttf")),
+    ("GuideSans", str(FONT_DIR / "GuideSans.ttf")),
+    ("GuideBold", str(FONT_DIR / "GuideBold.ttf")),
 ]:
     pdfmetrics.registerFont(TTFont(name, filename))
 
 W, H = A4
 M = 48
 CW = W - 2 * M
-DARK = colors.HexColor("#07110d")
-FOREST = colors.HexColor("#153625")
-CREAM = colors.HexColor("#f3efe4")
-GOLD = colors.HexColor("#c3a14b")
-INK = colors.HexColor("#193025")
-MUTED = colors.HexColor("#526459")
-LINE = colors.HexColor("#c9d2c3")
+DARK = colors.HexColor("#fcfaf6")
+FOREST = colors.HexColor("#315c4b")
+CREAM = colors.HexColor("#fcfaf6")
+GOLD = colors.HexColor("#315c4b")
+INK = colors.HexColor("#34322e")
+MUTED = colors.HexColor("#68635c")
+LINE = colors.HexColor("#ded8ce")
 
 styles = {
-    "title": ParagraphStyle("title", fontName="GuideSerif", fontSize=30, leading=35, textColor=INK),
+    "title": ParagraphStyle("title", fontName="GuideSerif", fontSize=34, leading=37, textColor=INK),
     "intro": ParagraphStyle("intro", fontName="GuideSans", fontSize=11, leading=17, textColor=MUTED),
     "heading": ParagraphStyle("heading", fontName="GuideBold", fontSize=11, leading=16, textColor=INK),
     "body": ParagraphStyle("body", fontName="GuideSans", fontSize=10, leading=15, textColor=MUTED),
-    "callout": ParagraphStyle("callout", fontName="GuideSans", fontSize=10.5, leading=16, textColor=CREAM),
-    "cover": ParagraphStyle("cover", fontName="GuideSerif", fontSize=19, leading=27, textColor=CREAM),
+    "callout": ParagraphStyle("callout", fontName="GuideSans", fontSize=10.5, leading=16, textColor=INK),
+    "cover": ParagraphStyle("cover", fontName="GuideSerif", fontSize=19, leading=27, textColor=INK),
 }
 
 
@@ -85,51 +85,27 @@ def callout(c, text, y):
     _, height = p.wrap(CW - 36, H)
     box_height = height + 30
     assert y - box_height >= 70, f"Callout overlaps footer: {text[:40]}"
-    c.setFillColor(FOREST)
-    c.rect(M, y - box_height, CW, box_height, fill=1, stroke=0)
-    c.setFillColor(GOLD)
-    c.rect(M, y - box_height, 3, box_height, fill=1, stroke=0)
+    c.setFillColor(colors.HexColor("#e8eee6"))
+    c.roundRect(M, y - box_height, CW, box_height, 8, fill=1, stroke=0)
     p.drawOn(c, M + 18, y - 15 - height)
 
 
 def cover(c):
-    c.setFillColor(DARK)
-    c.rect(0, 0, W, H, fill=1, stroke=0)
-    # The actual photographic hero remains a background layer; all type is vector text.
-    image = ROOT / "client/public/assets/field-tools/ai-stalemate-library-hero-v1.webp"
-    photograph = BytesIO()
-    with Image.open(image) as source:
-        source.convert("RGB").save(photograph, "JPEG", quality=92)
-    photograph.seek(0)
-    c.drawImage(ImageReader(photograph), -116, 346, width=880, height=495, mask="auto")
-    c.setFillColor(DARK)
-    c.rect(0, 0, W, 347, fill=1, stroke=0)
-    c.setFillColor(GOLD)
-    c.setFont("GuideBold", 9)
-    c.drawString(M, 799, "REBEL LEADERS / FIELD TOOL 01")
-    c.setFillColor(CREAM)
-    c.setFont("GuideSerif", 55)
-    c.drawString(M, 556, "AI")
-    c.drawString(M, 487, "Stalemate")
-    c.setFillColor(GOLD)
-    c.setFont("GuideSans", 10)
-    c.drawString(M, 441, f"THE {ROLE} FIELD GUIDE")
-    y = paragraph(c, ("Get clear on the opportunity. Shape the next move with your lead." if AUDIENCE == "pm" else "Explain the concerns. Work out the next step with your PM."), M, 300, CW, "cover")
-    c.setStrokeColor(GOLD)
-    c.line(M, y - 26, W - M, y - 26)
-    c.setFillColor(CREAM)
-    c.setFont("GuideBold", 11)
-    c.drawString(M, 136, "Nic Payne")
-    c.setFont("GuideSans", 9)
-    c.drawString(M, 117, f"For you, the {ROLE.lower()}")
-    c.setFillColor(colors.HexColor("#a9bba9"))
-    c.setFont("GuideSans", 8)
-    c.linkURL(LAB_URL, (M, 25, W-M, 76), relative=0)
-    c.drawString(M, 76, "OPEN YOUR " + ROLE + " LAB >")
-    c.drawString(M, 58, "START WITH A REAL SITUATION. DECIDE WHAT HAPPENS NEXT.")
-    c.drawString(M, 39, "WORKING EDITION / REBEL-LEADER.COM")
-    c.showPage()
-
+    c.setFillColor(CREAM);c.rect(0,0,W,H,fill=1,stroke=0)
+    c.setFillColor(FOREST);c.setFont("GuideBold",9);c.drawString(M,799,"REBEL LEADERS / FIELD TOOL 01")
+    c.setFillColor(INK);c.setFont("GuideSerif",55);c.drawString(M,705,"AI Stalemate")
+    photograph=BytesIO()
+    with Image.open(ROOT / "client/public/assets/field-tools/ai-stalemate-hero-v2.webp") as source:source.convert("RGB").save(photograph,"JPEG",quality=92)
+    photograph.seek(0);c.drawImage(ImageReader(photograph),M,290,width=CW,height=CW*941/1672)
+    c.setFillColor(FOREST);c.setFont("GuideSans",10);c.drawString(M,267,f"THE {ROLE} FIELD GUIDE")
+    paragraph(c,("Explain the opportunity. Work out the next step with your lead." if AUDIENCE == "pm" else "Explain the concerns. Work out the next step with your PM."),M,243,CW,"cover")
+    c.setStrokeColor(LINE);c.line(M,153,W-M,153)
+    c.setFillColor(INK);c.setFont("GuideBold",11);c.drawString(M,128,"Nic Payne")
+    c.setFont("GuideSans",9);c.drawString(M,109,f"For you, the {ROLE.lower()}")
+    c.setFillColor(FOREST);c.setFont("GuideSans",8)
+    c.linkURL(LAB_URL,(M,25,W-M,76),relative=0);c.drawString(M,76,"OPEN YOUR "+ROLE+" LAB >")
+    c.setFillColor(MUTED);c.drawString(M,58,"START WITH A REAL SITUATION. DECIDE WHAT HAPPENS NEXT.")
+    c.drawString(M,39,"WORKING EDITION / REBEL-LEADER.COM");c.showPage()
 
 def chapter(c, data, number):
     c.setFillColor(CREAM)
@@ -147,10 +123,10 @@ def chapter(c, data, number):
             ("FONTNAME", (0, 0), (-1, -1), "GuideSans"),
             ("FONTSIZE", (0, 0), (-1, -1), 9),
             ("TEXTCOLOR", (0, 0), (-1, -1), INK),
-            ("BACKGROUND", (0, 0), (-1, 0), FOREST),
-            ("TEXTCOLOR", (0, 0), (-1, 0), CREAM),
+            ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#e8eee6")),
+            ("TEXTCOLOR", (0, 0), (-1, 0), INK),
             ("FONTNAME", (0, 0), (-1, 0), "GuideBold"),
-            ("BACKGROUND", (0, -1), (-1, -1), colors.HexColor("#dce3d4")),
+            ("BACKGROUND", (0, -1), (-1, -1), colors.HexColor("#e8eee6")),
             ("FONTNAME", (0, -1), (-1, -1), "GuideBold"),
             ("LINEBELOW", (0, 1), (-1, -2), .4, LINE),
             ("ALIGN", (1, 0), (-1, -1), "RIGHT"),
@@ -181,16 +157,17 @@ def chapter(c, data, number):
 def companion(c, data, number):
     c.setFillColor(CREAM)
     c.rect(0, 0, W, H, fill=1, stroke=0)
-    c.setFillColor(FOREST)
-    c.rect(0, H-212, W, 212, fill=1, stroke=0)
+    c.setStrokeColor(LINE)
+    c.setLineWidth(0.6)
+    c.line(M, H-212, W-M, H-212)
     c.setFillColor(GOLD)
     c.setFont("GuideBold", 8)
     c.drawString(M, H-48, data["eyebrow"])
-    white_title = ParagraphStyle("white_title", parent=styles["title"], textColor=CREAM, fontSize=27, leading=33)
+    white_title = ParagraphStyle("white_title", parent=styles["title"], textColor=INK, fontSize=27, leading=33)
     title = Paragraph(escape(data["title"]), white_title)
     _, th = title.wrap(CW, H)
     title.drawOn(c, M, H-72-th)
-    intro_style = ParagraphStyle("white_intro", parent=styles["body"], textColor=CREAM, fontSize=9.5, leading=14)
+    intro_style = ParagraphStyle("white_intro", parent=styles["body"], textColor=INK, fontSize=9.5, leading=14)
     intro = Paragraph(escape(data["intro"]), intro_style)
     _, ih = intro.wrap(CW, H)
     intro.drawOn(c, M, H-92-th-ih)
@@ -202,11 +179,9 @@ def companion(c, data, number):
     for i, card in enumerate(data["cards"]):
         x = M+(i%2)*(cardw+gap)
         y = top-(i//2)*(cardh+gap)
-        c.setFillColor(colors.HexColor("#fffcf4"))
         c.setStrokeColor(LINE)
-        c.rect(x, y-cardh, cardw, cardh, fill=1, stroke=1)
-        c.setFillColor(GOLD)
-        c.rect(x, y-3, cardw, 3, fill=1, stroke=0)
+        c.setLineWidth(0.6)
+        c.line(x, y, x+cardw, y)
         yy = paragraph(c, card["title"], x+14, y-18, cardw-28, "heading")-10
         yy = paragraph(c, card["body"], x+14, yy, cardw-28, "body")
         assert yy >= y-cardh+10, f"Card overflow: {card['title']}"

@@ -331,8 +331,8 @@ const readingByProduct: Record<string, { intro: string; ids: string[] }> = {
 };
 
 const linkStyle =
-  "underline decoration-[#89967e] underline-offset-4 hover:decoration-current focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#997727]";
-const paragraphStyle = "font-ui text-base leading-8 text-[#4e6254]";
+  "underline decoration-[#89967e] underline-offset-4 hover:decoration-current focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ft-line)]";
+const paragraphStyle = "font-ui text-base leading-8 text-[var(--ft-muted)]";
 
 function SourceCard({
   id,
@@ -347,9 +347,9 @@ function SourceCard({
     id === "willison-lenny-podcast" ? `${source.url}&t=4101s` : source.url;
   return (
     <article
-      className={`${compact ? "p-5" : "p-6 md:p-7"} border border-[#ccd3c2] bg-[#fbf9f3]`}
+      className={`${compact ? "p-5" : "p-6 md:p-7"} border border-[var(--ft-line)] bg-[var(--ft-white)]`}
     >
-      <p className="font-ui text-xs leading-5 text-[#67775f]">
+      <p className="font-ui text-xs leading-5 text-[var(--ft-muted)]">
         {source.author} · {source.kind}
       </p>
       <h3 className="mt-3 font-display text-2xl leading-tight">
@@ -357,11 +357,11 @@ function SourceCard({
           {source.title} ↗
         </a>
       </h3>
-      <p className="mt-3 font-ui text-sm leading-7 text-[#536659]">
+      <p className="mt-3 font-ui text-sm leading-7 text-[var(--ft-muted)]">
         {source.summary}
       </p>
       {id === "willison-lenny-podcast" && (
-        <p className="mt-3 font-ui text-xs leading-6 text-[#63705f]">
+        <p className="mt-3 font-ui text-xs leading-6 text-[var(--ft-muted)]">
           The link starts at 1:08:21, the publisher’s chapter on testing. The
           chapter time was checked against the episode notes. The full written
           transcript may require a subscription.
@@ -402,7 +402,7 @@ function ProductLinks({
 function BaseElements() {
   const icons = [Fingerprint, UsersRound, Telescope, Orbit];
   return (
-    <div className="mt-9 grid gap-x-8 gap-y-10 border-y border-[#c8d1bf] py-9 sm:grid-cols-2 lg:grid-cols-4">
+    <div className="mt-9 grid gap-x-8 gap-y-10 border-y border-[var(--ft-line)] py-9 sm:grid-cols-2 lg:grid-cols-4">
       {elements.map(([name, question, body], index) => {
         const Icon = icons[index];
         return (
@@ -410,10 +410,10 @@ function BaseElements() {
             <Icon
               size={38}
               strokeWidth={1.3}
-              className="mx-auto mb-5 text-[#8c783b]"
+              className="mx-auto mb-5 text-[var(--ft-accent)]"
               aria-hidden="true"
             />
-            <p className="font-ui text-[10px] tracking-[.1em] text-[#62705b]">
+            <p className="font-ui text-[10px] tracking-[.1em] text-[var(--ft-muted)]">
               {name === "Culture"
                 ? "THE FIELD PEOPLE FEEL"
                 : "WHERE CULTURE TAKES SHAPE"}
@@ -422,7 +422,7 @@ function BaseElements() {
             <p className="mt-3 font-ui text-sm font-semibold leading-6">
               {question}
             </p>
-            <p className="mt-2 font-ui text-sm leading-7 text-[#536659]">
+            <p className="mt-2 font-ui text-sm leading-7 text-[var(--ft-muted)]">
               {body}
             </p>
           </article>
@@ -435,12 +435,12 @@ function BaseElements() {
 function OrbitalDiagram() {
   const [enlarged, setEnlarged] = useState(false);
   return (
-    <figure className="my-9 overflow-hidden border border-[#b2c1a6] bg-[#10271b] p-3 text-[#f3efe4] sm:p-8">
+    <figure className="my-9 overflow-hidden border border-[var(--ft-line)] bg-[var(--ft-tint)] p-3 text-[var(--ft-ink)] sm:p-8">
       <button
         type="button"
         aria-pressed={enlarged}
         onClick={() => setEnlarged(value => !value)}
-        className="mb-4 border border-[#809575] px-3 py-2 font-ui text-sm sm:hidden"
+        className="mb-4 border border-[var(--ft-line)] px-3 py-2 font-ui text-sm sm:hidden"
       >
         {enlarged ? "Fit diagram to screen" : "Enlarge diagram"}
       </button>
@@ -482,7 +482,7 @@ function OrbitalDiagram() {
               markerHeight="6"
               orient="auto-start-reverse"
             >
-              <path d="M 0 0 L 10 5 L 0 10 z" fill="#d4b35e" />
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="#b6cfb7" />
             </marker>
           </defs>
           <ellipse
@@ -499,7 +499,7 @@ function OrbitalDiagram() {
             x="380"
             y="30"
             textAnchor="middle"
-            fill="#d4b35e"
+            fill="#b6cfb7"
             fontSize="18"
             className="font-ui"
           >
@@ -535,7 +535,7 @@ function OrbitalDiagram() {
           </text>
           <path
             d="M 281 341 Q 380 399 479 341"
-            stroke="#d4b35e"
+            stroke="#b6cfb7"
             strokeWidth="2"
             fill="none"
             markerStart="url(#orbital-arrow)"
@@ -543,7 +543,7 @@ function OrbitalDiagram() {
           />
           <path
             d="M 269 302 Q 292 241 335 239"
-            stroke="#d4b35e"
+            stroke="#b6cfb7"
             strokeWidth="2"
             fill="none"
             markerStart="url(#orbital-arrow)"
@@ -551,7 +551,7 @@ function OrbitalDiagram() {
           />
           <path
             d="M 425 239 Q 474 243 492 300"
-            stroke="#d4b35e"
+            stroke="#b6cfb7"
             strokeWidth="2"
             fill="none"
             markerStart="url(#orbital-arrow)"
@@ -620,7 +620,7 @@ function OrbitalDiagram() {
           </text>
         </svg>
       </div>
-      <figcaption className="mx-auto max-w-xl font-ui text-xs leading-6 text-[#c5d1bd]">
+      <figcaption className="mx-auto max-w-xl font-ui text-xs leading-6 text-[var(--ft-muted)]">
         A simplified reading of Nic’s orbital model. The arrows show mutual
         influence. Culture is the surrounding field; leadership tends the
         conditions and is shaped by them too. This is a way of seeing human
@@ -653,7 +653,7 @@ function HidContent() {
           practice might nourish them or wear them down.
         </p>
       </section>
-      <figure className="my-9 border border-[#d0d5c8] bg-white p-3 sm:p-6">
+      <figure className="my-9 border border-[var(--ft-line)] bg-white p-3 sm:p-6">
         <a
           href="/assets/field-tools/hid-tree.png"
           target="_blank"
@@ -667,7 +667,7 @@ function HidContent() {
             className="mx-auto max-h-[760px] w-full object-contain"
           />
         </a>
-        <figcaption className="mt-5 font-ui text-sm leading-7 text-[#536659]">
+        <figcaption className="mt-5 font-ui text-sm leading-7 text-[var(--ft-muted)]">
           Nic’s original working diagram. The accompanying page names 1:1s,
           peer-to-peer coaching, strategy discovery and performance reviews. The
           examples below explore how their design matters.{" "}
@@ -701,7 +701,7 @@ function HidContent() {
           rate anyone or ask them to disclose private information. Notice the
           conditions you can see and the choices you can change.
         </p>
-        <div className="mt-7 divide-y divide-[#cbd3bf] border-y border-[#cbd3bf]">
+        <div className="mt-7 divide-y divide-[#cbd3bf] border-y border-[var(--ft-line)]">
           {healthAreas.map(area => (
             <article
               key={area.name}
@@ -712,7 +712,7 @@ function HidContent() {
                 <p className="font-ui font-semibold leading-7">
                   {area.question}
                 </p>
-                <p className="mt-2 font-ui text-sm leading-7 text-[#536659]">
+                <p className="mt-2 font-ui text-sm leading-7 text-[var(--ft-muted)]">
                   {area.description}
                 </p>
               </div>
@@ -730,7 +730,7 @@ function HidContent() {
           it helpful by itself. Look at what happens in the room and what
           happens afterward.
         </p>
-        <p className="mt-4 font-ui text-xs leading-6 text-[#657460]">
+        <p className="mt-4 font-ui text-xs leading-6 text-[var(--ft-muted)]">
           These are illustrative applications of the four activities in Nic’s
           drawing, not quotations or claims about every workplace.
         </p>
@@ -738,18 +738,18 @@ function HidContent() {
           {practices.map(practice => (
             <article
               key={practice.name}
-              className="border border-[#ccd3c2] bg-[#fbf9f3] p-6"
+              className="border border-[var(--ft-line)] bg-[var(--ft-white)] p-6"
             >
               <h3 className="font-display text-3xl">{practice.name}</h3>
-              <p className="mt-4 font-ui text-sm leading-7 text-[#536659]">
-                <strong className="text-[#193025]">Notice: </strong>
+              <p className="mt-4 font-ui text-sm leading-7 text-[var(--ft-muted)]">
+                <strong className="text-[var(--ft-ink)]">Notice: </strong>
                 {practice.harm}
               </p>
-              <p className="mt-3 font-ui text-sm leading-7 text-[#536659]">
-                <strong className="text-[#193025]">Try: </strong>
+              <p className="mt-3 font-ui text-sm leading-7 text-[var(--ft-muted)]">
+                <strong className="text-[var(--ft-ink)]">Try: </strong>
                 {practice.change}
               </p>
-              <p className="mt-4 border-t border-[#d9dece] pt-4 font-ui text-xs leading-6 text-[#657460]">
+              <p className="mt-4 border-t border-[var(--ft-line)] pt-4 font-ui text-xs leading-6 text-[var(--ft-muted)]">
                 {practice.roots}
               </p>
             </article>
@@ -765,7 +765,7 @@ function HidContent() {
           questions to notice a practice worth changing; you do not need to fix
           everything at once.
         </p>
-        <p className="mt-3 font-ui text-xs leading-6 text-[#657460]">
+        <p className="mt-3 font-ui text-xs leading-6 text-[var(--ft-muted)]">
           The situations and suggested practices are new illustrative
           applications of Nic’s teaching, not reported case studies.
         </p>
@@ -774,11 +774,11 @@ function HidContent() {
             <details
               key={product.slug}
               id={product.slug}
-              className="group border border-[#bbc8b1] bg-[#fbf9f3] open:bg-[#f8f6ee]"
+              className="group border border-[var(--ft-line)] bg-[var(--ft-white)] open:bg-[var(--ft-paper)]"
             >
-              <summary className="cursor-pointer px-5 py-5 font-display text-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#997727] sm:px-7">
+              <summary className="cursor-pointer px-5 py-5 font-display text-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--ft-line)] sm:px-7">
                 {product.name}
-                <span className="ml-3 font-ui text-xs text-[#66795c]">
+                <span className="ml-3 font-ui text-xs text-[var(--ft-muted)]">
                   Explore the five areas
                 </span>
               </summary>
@@ -788,23 +788,23 @@ function HidContent() {
                   {product.rows.map(([health, harm, change]) => (
                     <section
                       key={health}
-                      className="border-t border-[#d3dacb] pt-5"
+                      className="border-t border-[var(--ft-line)] pt-5"
                     >
                       <h3 className="font-display text-2xl">{health}</h3>
                       <div className="mt-3 grid gap-4 md:grid-cols-2">
-                        <div className="border-l-2 border-[#b8a88b] pl-4">
-                          <p className="font-ui text-xs font-semibold text-[#665b43]">
+                        <div className="border-l-2 border-[var(--ft-line)] pl-4">
+                          <p className="font-ui text-xs font-semibold text-[var(--ft-muted)]">
                             What may wear people down
                           </p>
-                          <p className="mt-2 font-ui text-sm leading-7 text-[#536659]">
+                          <p className="mt-2 font-ui text-sm leading-7 text-[var(--ft-muted)]">
                             {harm}
                           </p>
                         </div>
-                        <div className="border-l-2 border-[#7b9769] pl-4">
-                          <p className="font-ui text-xs font-semibold text-[#49613c]">
+                        <div className="border-l-2 border-[var(--ft-line)] pl-4">
+                          <p className="font-ui text-xs font-semibold text-[var(--ft-muted)]">
                             A practice that could help
                           </p>
-                          <p className="mt-2 font-ui text-sm leading-7 text-[#536659]">
+                          <p className="mt-2 font-ui text-sm leading-7 text-[var(--ft-muted)]">
                             {change}
                           </p>
                         </div>
@@ -812,7 +812,7 @@ function HidContent() {
                     </section>
                   ))}
                 </div>
-                <p className="mt-6 border-t border-[#d3dacb] pt-5 font-ui text-sm leading-7">
+                <p className="mt-6 border-t border-[var(--ft-line)] pt-5 font-ui text-sm leading-7">
                   <strong>Watch what happens over time. </strong>
                   {product.recurring}
                 </p>
@@ -822,7 +822,7 @@ function HidContent() {
           ))}
         </div>
       </section>
-      <section className="mt-14 border border-[#a9baa0] bg-[#e6eadb] p-6 sm:p-8">
+      <section className="mt-14 border border-[var(--ft-line)] bg-[var(--ft-tint)] p-6 sm:p-8">
         <h2 className="font-display text-3xl">
           Choose one change you can actually make.
         </h2>
@@ -890,7 +890,7 @@ function OrbitalContent() {
       </section>
       <section
         aria-labelledby="orbital-leadership"
-        className="mt-14 border border-[#a9baa0] bg-[#e6eadb] p-6 sm:p-8"
+        className="mt-14 border border-[var(--ft-line)] bg-[var(--ft-tint)] p-6 sm:p-8"
       >
         <h2 id="orbital-leadership" className="font-display text-3xl">
           Where does leadership fit?
@@ -924,22 +924,22 @@ function OrbitalContent() {
           The immediate decision still matters. These examples add a second
           question: what will repeating this way of working teach people?
         </p>
-        <p className="mt-3 font-ui text-xs leading-6 text-[#657460]">
+        <p className="mt-3 font-ui text-xs leading-6 text-[var(--ft-muted)]">
           Illustrative applications of Nic’s model, not reported case studies.
         </p>
         <div className="mt-6 space-y-4">
           {productCases.map(product => (
             <details
               key={product.slug}
-              className="border border-[#bbc8b1] bg-[#fbf9f3]"
+              className="border border-[var(--ft-line)] bg-[var(--ft-white)]"
             >
-              <summary className="cursor-pointer px-6 py-5 font-display text-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#997727]">
+              <summary className="cursor-pointer px-6 py-5 font-display text-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--ft-line)]">
                 {product.name}
               </summary>
               <div className="px-6 pb-6">
                 <p className={paragraphStyle}>{product.recurring}</p>
                 <p className={`mt-4 ${paragraphStyle}`}>
-                  <strong className="text-[#193025]">A place to begin: </strong>
+                  <strong className="text-[var(--ft-ink)]">A place to begin: </strong>
                   {product.move}
                 </p>
                 <ProductLinks
@@ -977,12 +977,12 @@ function SourceSection({ noteId }: { noteId: string }) {
   return (
     <section
       aria-labelledby="framework-sources"
-      className="mt-14 border-t border-[#c8d1bc] pt-8"
+      className="mt-14 border-t border-[var(--ft-line)] pt-8"
     >
       <h2 id="framework-sources" className="font-display text-3xl">
         The teaching behind this page
       </h2>
-      <p className="mt-4 max-w-3xl font-ui text-sm leading-7 text-[#536659]">
+      <p className="mt-4 max-w-3xl font-ui text-sm leading-7 text-[var(--ft-muted)]">
         These explanations follow Nic Payne’s Holistic Shaping definitions:
         Identity, Relationship and Vision give rise to Culture; Culture is the
         field people experience and is part of what shapes them in return. The
@@ -1013,12 +1013,12 @@ function LibraryContent() {
   );
   return (
     <>
-      <blockquote className="mb-12 max-w-3xl border-l-2 border-[#b79542] pl-6">
+      <blockquote className="mb-12 max-w-3xl border-l-2 border-[var(--ft-line)] pl-6">
         <p className="font-display text-2xl leading-relaxed">
           “Leadership is shaping the conditions where humans become whole
           together, and where good work emerges as fruit, not extraction.”
         </p>
-        <cite className="mt-4 block font-ui text-sm not-italic text-[#536659]">
+        <cite className="mt-4 block font-ui text-sm not-italic text-[var(--ft-muted)]">
           Nic Payne ·{" "}
           <a
             href={teachingSources["the-lie-weve-normalized-leadership"].url}
@@ -1032,7 +1032,7 @@ function LibraryContent() {
       </blockquote>
       <nav
         aria-label="On this page"
-        className="mb-12 flex flex-wrap gap-3 border-y border-[#c8d1bf] py-5 font-ui text-sm"
+        className="mb-12 flex flex-wrap gap-3 border-y border-[var(--ft-line)] py-5 font-ui text-sm"
       >
         {[
           ["frameworks", "The two maps"],
@@ -1046,7 +1046,7 @@ function LibraryContent() {
           <a
             key={id}
             href={`#library-${id}`}
-            className={`${linkStyle} rounded border border-[#c8d1bf] px-3 py-2`}
+            className={`${linkStyle} rounded border border-[var(--ft-line)] px-3 py-2`}
           >
             {label}
           </a>
@@ -1148,7 +1148,7 @@ function LibraryContent() {
       </section>
       <section
         aria-labelledby="library-others"
-        className="mt-16 border-t border-[#bfcab3] pt-10"
+        className="mt-16 border-t border-[var(--ft-line)] pt-10"
       >
         <h2 id="library-others" className="scroll-mt-24 font-display text-4xl">
           Other voices, where they can help.
@@ -1164,17 +1164,17 @@ function LibraryContent() {
             return (
               <details
                 key={product.slug}
-                className="border border-[#bbc8b1] bg-[#ecefdf]"
+                className="border border-[var(--ft-line)] bg-[var(--ft-tint)]"
               >
-                <summary className="cursor-pointer px-6 py-5 font-display text-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#997727]">
+                <summary className="cursor-pointer px-6 py-5 font-display text-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--ft-line)]">
                   {product.name}
-                  <span className="ml-3 font-ui text-xs text-[#66795c]">
+                  <span className="ml-3 font-ui text-xs text-[var(--ft-muted)]">
                     {group.ids.length}{" "}
                     {group.ids.length === 1 ? "resource" : "resources"}
                   </span>
                 </summary>
                 <div className="px-5 pb-6 sm:px-6">
-                  <p className="font-ui text-sm leading-7 text-[#536659]">
+                  <p className="font-ui text-sm leading-7 text-[var(--ft-muted)]">
                     {group.intro}
                   </p>
                   <div className="mt-5 grid gap-4 md:grid-cols-2">
@@ -1216,26 +1216,26 @@ export default function FieldToolResources({
         ? "The teaching library is a good place to start."
         : "Nic’s teaching, with useful reading and listening for the situation in front of you.";
   return (
-    <main className="min-h-screen bg-[#f3efe4] text-[#193025]">
+    <main className="min-h-screen bg-[var(--ft-paper)] text-[var(--ft-ink)]">
       <FieldToolsNav />
-      <header className="bg-[#07130f] px-5 pb-12 pt-32 text-[#f3efe4] md:px-10 md:pb-16">
+      <header className="bg-[var(--ft-paper)] px-5 pb-12 pt-32 text-[var(--ft-ink)] md:px-10 md:pb-16">
         <div className="mx-auto max-w-5xl">
-          <p className="font-ui text-[11px] tracking-[.2em] text-[#d1b866]">
+          <p className="font-ui text-[11px] tracking-[.2em] text-[var(--ft-accent)]">
             REBEL LEADERS / HOLISTIC SHAPING
           </p>
           <h1 className="mt-5 max-w-4xl font-display text-5xl font-semibold leading-[1.05] tracking-[-.035em] md:text-7xl">
             {title}
           </h1>
-          <p className="mt-6 max-w-3xl font-display text-2xl leading-snug text-[#e4bc59] md:text-3xl">
+          <p className="mt-6 max-w-3xl font-display text-2xl leading-snug text-[var(--ft-accent)] md:text-3xl">
             {deck}
           </p>
-          <p className="mt-5 max-w-2xl font-ui text-sm leading-7 text-[#bacbb8]">
+          <p className="mt-5 max-w-2xl font-ui text-sm leading-7 text-[var(--ft-muted)]">
             Go deeper when it helps. Your Field Tool works on its own, and you
             can come back to these resources whenever you want.
           </p>
           <nav
             aria-label="Resource pages"
-            className="mt-7 flex flex-wrap gap-x-6 gap-y-3 font-ui text-sm text-[#d8e2ce]"
+            className="mt-7 flex flex-wrap gap-x-6 gap-y-3 font-ui text-sm text-[var(--ft-muted)]"
           >
             <Link href="/field-tools" className={linkStyle}>
               Field Tools

@@ -94,7 +94,7 @@ export default function AIQualityChecks({
       ))}
       <button
         type="button"
-        className="mt-5 border border-[#aeb8aa] px-4 py-2 text-xs"
+        className="mt-5 border border-[var(--ft-line)] px-4 py-2 text-xs"
         onClick={() =>
           onChange(
             JSON.stringify([

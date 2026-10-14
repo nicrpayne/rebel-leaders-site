@@ -53,54 +53,69 @@ export default function AIWalkthrough() {
   ];
   const scene = scenes[stage];
   return (
-    <main className="font-ui min-h-screen bg-[#f3efe4] text-[#193025]">
+    <main className="font-ui min-h-screen bg-[var(--ft-paper)] text-[var(--ft-ink)]">
       <FieldToolsNav />
-      <section className="mx-auto max-w-5xl px-6 pb-16 pt-28">
+      <section className="ft-walkthrough mx-auto max-w-5xl px-6 pb-16 pt-28">
         <Link href={`${base}/access`} className="text-xs underline">
           ← Your Field Tool
         </Link>
-        <p className="ai-eyebrow mt-8">AI STALEMATE / WORKED WALKTHROUGH</p>
-        <h1 className="mt-4 font-display text-5xl">
-          Play through the conversation.
-        </h1>
-        <p className="mt-5 max-w-2xl text-sm leading-7 text-[#536659]">
-          A fictional example: support staff are doing the same work twice, a PM
-          wants to fix it, and a lead developer has questions about using AI.
-          Follow their conversation without changing your own draft.
-        </p>
-        {content.walkthroughUrl && (
-          <a
-            className="ft-button ft-button-gold mt-5"
-            target="_blank"
-            rel="noreferrer"
-            href={content.walkthroughUrl}
-          >
-            Watch Nic’s walkthrough ↗
-          </a>
-        )}
-        <div className="mt-8 grid grid-cols-2 gap-2 sm:grid-cols-5">
+        <div className="ft-walkthrough-intro">
+          <div>
+            <p className="ai-eyebrow">AI STALEMATE / WORKED WALKTHROUGH</p>
+            <h1 className="mt-4 font-display text-5xl">
+              Play through the conversation.
+            </h1>
+            <p className="mt-5 max-w-2xl text-sm leading-7 text-[var(--ft-muted)]">
+              A fictional example: support staff are doing the same work twice,
+              a PM wants to fix it, and a lead developer has questions about
+              using AI. Follow their conversation without changing your own
+              draft.
+            </p>
+            {content.walkthroughUrl && (
+              <a
+                className="ft-button ft-button-gold mt-5"
+                target="_blank"
+                rel="noreferrer"
+                href={content.walkthroughUrl}
+              >
+                Watch Nic’s walkthrough ↗
+              </a>
+            )}
+          </div>
+          <img
+            src="/assets/field-tools/ai-stalemate-hero-v2.webp"
+            alt="Nic Payne in his study"
+            width={1672}
+            height={941}
+          />
+        </div>
+        <div className="ft-step-nav mt-8 grid grid-cols-2 gap-2 sm:grid-cols-5">
           {scenes.map((s, i) => (
             <button
               aria-current={stage === i ? "step" : undefined}
+              aria-label={`Step ${i + 1}: ${s.title}`}
               key={s.title}
               onClick={() => setStage(i)}
-              className={`border-t-2 p-3 text-left text-xs ${stage === i ? "border-[#c3a14b] bg-[#e9e5d8]" : "border-[#c8d0c5]"}`}
+              className={`border-t-2 p-3 text-left text-xs ${stage === i ? "border-[var(--ft-accent)] bg-[var(--ft-tint)]" : "border-[var(--ft-line)]"}`}
             >
-              {i + 1}. {s.title}
+              <span className="ft-step-number" aria-hidden="true">
+                {i + 1}
+              </span>
+              <span className="ft-step-label">{s.title}</span>
             </button>
           ))}
         </div>
-        <article className="ai-visual">
+        <article className="ai-visual ft-walkthrough-story">
           <p className="ai-eyebrow">{stage + 1} / WHAT CHANGES</p>
           <h2 className="mt-3 font-display text-3xl">{scene.title}</h2>
           <p>{scene.move}</p>
-          <div className="mt-5 border-t border-[#69806b] pt-4">
+          <div className="ft-reflection">
             <h3 className="!text-xl">Ask yourself</h3>
             <p>{scene.question}</p>
           </div>
         </article>
         {scene.record && (
-          <details className="border border-[#c8d0c5] p-5">
+          <details className="border border-[var(--ft-line)] p-5">
             <summary className="cursor-pointer text-sm font-semibold">
               See the example document
             </summary>
@@ -113,7 +128,7 @@ export default function AIWalkthrough() {
           <button
             disabled={stage === 0}
             onClick={() => setStage(stage - 1)}
-            className="border border-[#aeb8aa] px-5 py-3 text-sm disabled:opacity-40"
+            className="border border-[var(--ft-line)] px-5 py-3 text-sm disabled:opacity-40"
           >
             Previous
           </button>

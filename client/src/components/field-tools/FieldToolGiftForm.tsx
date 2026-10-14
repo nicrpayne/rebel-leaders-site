@@ -23,7 +23,7 @@ export default function FieldToolGiftForm({
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const inputClass =
-    "mt-2 block w-full rounded-sm border border-[#79906e] bg-[#fffdf7] p-3 text-base text-[#193025] outline-offset-4";
+    "mt-2 block w-full rounded-sm border border-[var(--ft-line)] bg-[var(--ft-white)] p-3 text-base text-[var(--ft-ink)] outline-offset-4";
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!available || checkout.isPending) return;
@@ -69,7 +69,7 @@ export default function FieldToolGiftForm({
         <h2 className="flex items-center gap-2 font-display text-2xl">
           <Gift size={20} aria-hidden="true" /> Give them {name}.
         </h2>
-        <p className="mt-3 leading-6 text-[#c0cfb9]">
+        <p className="mt-3 leading-6 text-[var(--ft-muted)]">
           They get their own Field Guide and Lab. To give another gift, come
           back and choose “Gift this” again.
         </p>
@@ -86,7 +86,7 @@ export default function FieldToolGiftForm({
         />
       </label>
       <label className="block">
-        Their name <span className="text-[#afbfaa]">(optional)</span>
+        Their name <span className="text-[var(--ft-muted)]">(optional)</span>
         <input
           className={inputClass}
           autoComplete="off"
@@ -120,7 +120,7 @@ export default function FieldToolGiftForm({
         />
       </label>
       <label className="block">
-        A note from you <span className="text-[#afbfaa]">(optional)</span>
+        A note from you <span className="text-[var(--ft-muted)]">(optional)</span>
         <textarea
           className={inputClass}
           rows={4}
@@ -129,11 +129,11 @@ export default function FieldToolGiftForm({
           onChange={e => setMessage(e.target.value)}
           placeholder="Thought this might be useful for what you’re working through."
         />
-        <span className="mt-1 block text-xs text-[#afbfaa]">
+        <span className="mt-1 block text-xs text-[var(--ft-muted)]">
           {message.length} / 1,000 characters
         </span>
       </label>
-      <div className="border-l-2 border-[#d9b34d] pl-4 text-xs leading-6 text-[#c0cfb9]">
+      <div className="border-l-2 border-[var(--ft-accent)] pl-4 text-xs leading-6 text-[var(--ft-muted)]">
         <p>
           We’ll email their gift as soon as payment is confirmed. Use{" "}
           <strong>your own email</strong> at checkout for your receipt.
@@ -151,7 +151,7 @@ export default function FieldToolGiftForm({
         )}
       </div>
       {(error || checkout.error) && (
-        <p role="alert" className="text-[#ffd2bd]">
+        <p role="alert" className="text-[var(--ft-muted)]">
           {error || checkout.error?.message}
         </p>
       )}
@@ -166,7 +166,7 @@ export default function FieldToolGiftForm({
         <ArrowRight size={17} aria-hidden="true" />
       </button>
       {!available && (
-        <p role="status" className="text-xs leading-6 text-[#ead69a]">
+        <p role="status" className="text-xs leading-6 text-[var(--ft-muted)]">
           Gift checkout opens when purchases open. Nothing is sent or saved from
           this form yet.
         </p>

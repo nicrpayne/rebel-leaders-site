@@ -20,16 +20,16 @@ from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, KeepTogethe
 ROOT=Path(__file__).resolve().parents[1]
 DATA=json.loads((ROOT/'shared/field-tool-teachings.json').read_text())
 BASE=os.environ.get('GUIDE_APP_URL','https://rebel-leaders-field-tools-preview-production.up.railway.app')
-FONT=Path(os.environ['GUIDE_FONT_DIR'])
-for name,file in [('ReadSans','DejaVuSans.ttf'),('ReadBold','DejaVuSans-Bold.ttf'),('ReadSerif','DejaVuSerif.ttf')]:
+FONT=Path(os.environ.get('GUIDE_FONT_DIR',str(ROOT/'scripts/fonts')))
+for name,file in [('ReadSans','GuideSans.ttf'),('ReadBold','GuideBold.ttf'),('ReadSerif','GuideSerif.ttf')]:
  pdfmetrics.registerFont(TTFont(name,str(FONT/file)))
 W,H=A4;M=48;CW=W-2*M
-CREAM=colors.HexColor('#f3efe4');INK=colors.HexColor('#193025');MUTED=colors.HexColor('#536659')
+CREAM=colors.HexColor('#fcfaf6');INK=colors.HexColor('#34322e');MUTED=colors.HexColor('#68635c')
 styles={name:ParagraphStyle(name,fontName=font,fontSize=size,leading=leading,textColor=INK,spaceAfter=space) for name,font,size,leading,space in [('title','ReadSerif',26,32,16),('heading','ReadSerif',16,21,9),('body','ReadSans',9.5,14,8),('small','ReadSans',8,12,5),('label','ReadBold',8,12,5)]}
 def p(text,style='body'):return Paragraph(escape(text),styles[style])
 def link(source):
  url=source['url'];url=BASE+url if url.startswith('/') else url
- return Paragraph(f'<link href="{escape(url)}" color="#193025"><u>{escape(source["title"])}</u></link><br/>{escape(source["author"])} · {escape(source["kind"])}',styles['small'])
+ return Paragraph(f'<link href="{escape(url)}" color="#34322e"><u>{escape(source["title"])}</u></link><br/>{escape(source["author"])} · {escape(source["kind"])}',styles['small'])
 def background(c,doc):
  c.saveState();c.setFillColor(CREAM);c.rect(0,0,W,H,fill=1,stroke=0);c.setFillColor(MUTED);c.setFont('ReadSans',7);c.drawString(M,30,'REBEL LEADERS / THE THINKING BEHIND THE TOOL');c.restoreState()
 def append(path,slug):

@@ -71,19 +71,19 @@ export default function ChapterGuide({ slug }: { slug: string }) {
   }, [slug, content.audience, chapterCount]);
 
   return (
-    <main className="ft-guide min-h-screen bg-[#f3efe4] text-[#193025]">
+    <main className="ft-guide min-h-screen bg-[var(--ft-paper)] text-[var(--ft-ink)]">
       <div className="print:hidden">
         <FieldToolsNav />
       </div>
-      <header className="bg-[#07110d] px-5 pb-14 pt-32 text-[#f3efe4] md:px-10 md:pb-20">
+      <header className="bg-[var(--ft-paper)] px-5 pb-14 pt-32 text-[var(--ft-ink)] md:px-10 md:pb-20">
         <div className="mx-auto max-w-6xl">
-          <p className="font-ui text-[11px] tracking-[.2em] text-[#cfb466]">
+          <p className="font-ui text-[11px] tracking-[.2em] text-[var(--ft-accent)]">
             REBEL LEADERS / {tool.eyebrow} / THE FIELD GUIDE
           </p>
           <h1 className="mt-5 font-display text-5xl font-semibold tracking-[-.035em] md:text-6xl">
             {tool.name}
           </h1>
-          <p className="mt-5 max-w-3xl font-ui text-lg leading-8 text-[#e4bc59]">
+          <p className="mt-5 max-w-3xl font-ui text-lg leading-8 text-[var(--ft-accent)]">
             {slug === "ai-stalemate"
               ? content.audience === "pm"
                 ? "You think AI could help. Your lead has questions. Start by understanding what matters to each of you."
@@ -102,7 +102,7 @@ export default function ChapterGuide({ slug }: { slug: string }) {
               Open the Lab →
             </Link>
           </div>
-          <p className="mt-6 font-ui text-xs text-[#91a693]">By Nic Payne</p>
+          <p className="mt-6 font-ui text-xs text-[var(--ft-muted)]">By Nic Payne</p>
         </div>
       </header>
       <div className="mx-auto grid max-w-6xl gap-10 px-5 py-14 md:px-10 lg:grid-cols-[.65fr_2fr] lg:py-20">
@@ -111,7 +111,7 @@ export default function ChapterGuide({ slug }: { slug: string }) {
             aria-label="Guide chapters"
             className="space-y-2 lg:sticky lg:top-8"
           >
-            <p className="font-ui text-[10px] tracking-[.18em] text-[#667e66]">
+            <p className="font-ui text-[10px] tracking-[.18em] text-[var(--ft-muted)]">
               INSIDE THE GUIDE
             </p>
             {AI_STALEMATE_GUIDE_PAGES.map((chapter, index) => (
@@ -119,7 +119,7 @@ export default function ChapterGuide({ slug }: { slug: string }) {
                 key={chapter.eyebrow}
                 href={`#guide-${index}`}
                 aria-current={activeChapter === index ? "location" : undefined}
-                className={`block rounded-r-sm border-l-2 px-4 py-1 font-ui text-sm leading-6 transition-[background-color,border-color,box-shadow,color] duration-200 motion-reduce:transition-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#c3a14b] ${activeChapter === index ? "border-[#c3a14b] bg-[#fff9e9] text-[#193025] shadow-[0_0_18px_rgba(195,161,75,0.18)]" : "border-[#b9c5ad] text-[#576b5d] hover:border-[#c3a14b] hover:text-[#193025]"}`}
+                className={`block rounded-r-sm border-l-2 px-4 py-1 font-ui text-sm leading-6 transition-[background-color,border-color,box-shadow,color] duration-200 motion-reduce:transition-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--ft-accent)] ${activeChapter === index ? "border-[var(--ft-accent)] bg-[var(--ft-white)] text-[var(--ft-ink)] shadow-none" : "border-[var(--ft-line)] text-[var(--ft-muted)] hover:border-[var(--ft-accent)] hover:text-[var(--ft-ink)]"}`}
               >
                 {chapter.eyebrow}
               </a>
@@ -134,21 +134,21 @@ export default function ChapterGuide({ slug }: { slug: string }) {
               ref={element => {
                 chapters.current[index] = element;
               }}
-              className="scroll-mt-8 border-b border-[#ccd4c8] pb-14 last:border-0"
+              className="scroll-mt-8 border-b border-[var(--ft-line)] pb-14 last:border-0"
             >
-              <p className="font-ui text-[10px] tracking-[.18em] text-[#667e66]">
+              <p className="font-ui text-[10px] tracking-[.18em] text-[var(--ft-muted)]">
                 {chapter.eyebrow}
               </p>
               <h2 className="mt-4 font-display text-4xl font-semibold leading-tight tracking-[-.025em] md:text-5xl">
                 {chapter.title}
               </h2>
-              <p className="mt-5 font-ui text-base leading-8 text-[#536659]">
+              <p className="mt-5 font-ui text-base leading-8 text-[var(--ft-muted)]">
                 {chapter.intro}
               </p>
               {chapter.table && (
                 <div className="mt-7 overflow-x-auto">
                   <table className="w-full font-ui text-sm">
-                    <thead className="bg-[#153625] text-[#f3efe4]">
+                    <thead className="bg-[var(--ft-tint)] text-[var(--ft-ink)]">
                       <tr>
                         {chapter.table[0].map(cell => (
                           <th
@@ -167,8 +167,8 @@ export default function ChapterGuide({ slug }: { slug: string }) {
                           key={row[0]}
                           className={
                             rowIndex === (chapter.table?.length ?? 0) - 2
-                              ? "bg-[#dce3d4] font-semibold"
-                              : "border-b border-[#cbd4c6]"
+                              ? "bg-[var(--ft-tint)] font-semibold"
+                              : "border-b border-[var(--ft-line)]"
                           }
                         >
                           {row.map((cell, column) =>
@@ -201,7 +201,7 @@ export default function ChapterGuide({ slug }: { slug: string }) {
                     <h3 className="font-ui text-base font-semibold">
                       {section.title}
                     </h3>
-                    <p className="mt-2 font-ui text-sm leading-7 text-[#57695d]">
+                    <p className="mt-2 font-ui text-sm leading-7 text-[var(--ft-muted)]">
                       {section.body}
                     </p>
                   </div>
@@ -209,7 +209,7 @@ export default function ChapterGuide({ slug }: { slug: string }) {
               </div>
               <TeachingNote slug={slug} chapter={index} />
               {chapter.sources && (
-                <div className="mt-6 flex flex-col gap-2 font-ui text-xs text-[#667e66]">
+                <div className="mt-6 flex flex-col gap-2 font-ui text-xs text-[var(--ft-muted)]">
                   {chapter.sources.map(source => (
                     <a
                       key={source.url}
@@ -223,7 +223,7 @@ export default function ChapterGuide({ slug }: { slug: string }) {
                   ))}
                 </div>
               )}
-              <div className="mt-8 border-l-[3px] border-[#c3a14b] bg-[#153625] px-6 py-5 font-ui text-sm leading-7 text-[#f3efe4]">
+              <div className="ft-guide-callout mt-8 border-l-[3px] border-[var(--ft-accent)] bg-[var(--ft-tint)] px-6 py-5 font-ui text-sm leading-7 text-[var(--ft-ink)]">
                 {chapter.callout}
               </div>
               <Link
@@ -239,13 +239,13 @@ export default function ChapterGuide({ slug }: { slug: string }) {
           <div className="flex flex-wrap gap-4 print:hidden">
             <Link
               href={`${base}/lab`}
-              className="ft-button bg-[#153625] text-[#f3efe4]"
+              className="ft-action-primary ft-button bg-[var(--ft-tint)] text-[var(--ft-ink)]"
             >
               Open the Lab →
             </Link>
             <Link
               href={`${base}/access`}
-              className="ft-button border-[#a8b59d]"
+              className="ft-button border-[var(--ft-line)]"
             >
               Your Field Tool →
             </Link>

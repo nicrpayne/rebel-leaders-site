@@ -7,7 +7,7 @@ export function AIRoleLinks({ audience }: { audience: Audience }) {
   return (
     <nav
       aria-label="AI Stalemate editions"
-      className="mb-8 border-l-2 border-[#a4b591] pl-4 font-ui text-sm leading-7"
+      className="mb-8 border-l-2 border-[var(--ft-line)] pl-4 font-ui text-sm leading-7"
     >
       <p>
         {audience === "pm" ? "Product Manager" : "Lead Developer"} edition. Both
@@ -46,7 +46,7 @@ export default function FieldToolSalesProof({
       <div className="ft-sales-proof-inner">
         {slug === "ai-stalemate" && <AIRoleLinks audience={audience} />}
         <div className="ft-sales-proof-heading">
-          <p className="font-ui text-xs tracking-widest text-[#53684d]">
+          <p className="font-ui text-xs tracking-widest text-[var(--ft-muted)]">
             INSIDE THE FIELD TOOL
           </p>
           <h2 id="sales-proof-title" className="mt-3 font-display text-4xl">
@@ -62,14 +62,14 @@ export default function FieldToolSalesProof({
             className="ft-proof-document"
             aria-label={`${proof.title} example`}
           >
-            <p className="font-ui text-xs tracking-widest text-[#617457]">
+            <p className="font-ui text-xs tracking-widest text-[var(--ft-muted)]">
               FICTIONAL EXAMPLE · EXCERPT
             </p>
             <h3 className="mt-3 font-display text-3xl">{proof.title}</h3>
             <div className="mt-5 space-y-5">
               {proof.sections.map(section => (
                 <div key={section.title}>
-                  <h4 className="font-ui text-xs font-semibold tracking-wide text-[#526849]">
+                  <h4 className="font-ui text-xs font-semibold tracking-wide text-[var(--ft-muted)]">
                     {section.title}
                   </h4>
                   <p className="mt-2 whitespace-pre-line font-ui text-sm leading-6">
@@ -119,7 +119,7 @@ export function FieldToolBuyerQuestions() {
   return (
     <section
       aria-labelledby="buyer-questions"
-      className="bg-[#f3efe4] px-5 py-12 text-[#193025] md:px-10"
+      className="bg-[var(--ft-paper)] px-5 py-12 text-[var(--ft-ink)] md:px-10"
     >
       <div className="mx-auto max-w-6xl">
         <h2 id="buyer-questions" className="font-display text-3xl">
@@ -127,11 +127,11 @@ export function FieldToolBuyerQuestions() {
         </h2>
         <div className="mt-6 grid gap-x-10 md:grid-cols-2">
           {questions.map(([question, answer]) => (
-            <details key={question} className="border-t border-[#c2ccba] py-5">
+            <details key={question} className="border-t border-[var(--ft-line)] py-5">
               <summary className="cursor-pointer font-ui font-semibold">
                 {question}
               </summary>
-              <p className="mt-3 font-ui text-sm leading-7 text-[#536058]">
+              <p className="mt-3 font-ui text-sm leading-7 text-[var(--ft-muted)]">
                 {answer}
               </p>
             </details>

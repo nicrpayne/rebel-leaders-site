@@ -34,8 +34,8 @@
 .ft-eyebrow > span {
   width: 7px;
   height: 7px;
-  background: #d9b34d;
-  box-shadow: 3px 3px 0 #6e5d2d;
+  background: var(--ft-accent);
+  box-shadow: 3px 3px 0 transparent;
 }
 .ft-headline {
   font-family: var(--font-display);
@@ -49,7 +49,7 @@
 }
 .ft-headline em {
   font-style: normal;
-  color: #e4bc59;
+  color: var(--ft-accent);
 }
 .ft-deck {
   font-family: var(--font-ui);
@@ -83,13 +83,13 @@
 }
 .ft-button:focus-visible,
 .ft-hero a:focus-visible {
-  outline: 3px solid #e4bc59;
+  outline: 3px solid var(--ft-accent);
   outline-offset: 4px;
 }
 .ft-button-gold {
-  background: #e4bc59;
+  background: var(--ft-accent);
   color: #102019;
-  box-shadow: 3px 3px 0 #786129;
+  box-shadow: 3px 3px 0 transparent;
 }
 .ft-button-gold:hover {
   background: #f0cc73;
@@ -168,7 +168,7 @@
   width: 24px;
   height: 1px;
   margin: 0 10px 3px 0;
-  background: #d9b34d;
+  background: var(--ft-accent);
 }
 .ft-facts {
   position: relative;
@@ -196,7 +196,7 @@
   border: 0;
 }
 .ft-facts svg {
-  color: #d9b34d;
+  color: var(--ft-accent);
   flex-shrink: 0;
 }
 .ft-benefits {

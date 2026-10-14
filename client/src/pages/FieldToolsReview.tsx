@@ -61,20 +61,20 @@ const products: {
 ];
 
 const linkStyle =
-  "flex items-center justify-center border border-[#c6d0c0] px-3 py-3 text-center font-ui text-xs font-semibold transition-colors hover:border-[#173c2a] hover:bg-[#e5ecdf] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#173c2a]";
+  "flex items-center justify-center border border-[var(--ft-line)] px-3 py-3 text-center font-ui text-xs font-semibold transition-colors hover:border-[var(--ft-accent)] hover:bg-[var(--ft-tint)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--ft-accent)]";
 
 export default function FieldToolsReview() {
   return (
-    <main className="min-h-screen bg-[#f3efe4] font-ui text-[#193025]">
-      <header className="bg-[#07130f] px-5 py-9 text-[#f3efe4] md:px-10">
+    <main className="min-h-screen bg-[var(--ft-paper)] font-ui text-[var(--ft-ink)]">
+      <header className="bg-[var(--ft-paper)] px-5 py-9 text-[var(--ft-ink)] md:px-10">
         <div className="mx-auto max-w-6xl">
           <div className="flex items-center justify-between gap-4">
-            <p className="text-xs tracking-[.18em] text-[#d3b45c]">
+            <p className="text-xs tracking-[.18em] text-[var(--ft-accent)]">
               REBEL LEADERS / REVIEW DESK
             </p>
             <a
               href="/field-tools"
-              className="text-xs text-[#bfd0bf] underline underline-offset-4"
+              className="text-xs text-[var(--ft-muted)] underline underline-offset-4"
             >
               Open the store ↗
             </a>
@@ -82,7 +82,7 @@ export default function FieldToolsReview() {
           <h1 className="mt-5 font-display text-4xl font-semibold tracking-[-.03em] md:text-5xl">
             All your Field Tools. One place.
           </h1>
-          <p className="mt-4 max-w-3xl text-sm leading-6 text-[#bfd0bf]">
+          <p className="mt-4 max-w-3xl text-sm leading-6 text-[var(--ft-muted)]">
             Five products, six paths. Open the pages, download the current PDFs,
             and try the Labs. Links open in a new tab so this desk stays handy.
           </p>
@@ -101,17 +101,17 @@ export default function FieldToolsReview() {
             <article
               key={base}
               aria-label={`${product.name} / ${product.edition}`}
-              className="flex flex-col border border-[#c6d0c0] bg-[#fffdf7] p-5"
+              className="flex flex-col border border-[var(--ft-line)] bg-[var(--ft-white)] p-5"
             >
               <div className="flex min-h-[90px] items-start justify-between gap-3">
                 <div>
-                  <p className="text-[10px] font-semibold uppercase tracking-[.12em] text-[#718369]">
+                  <p className="text-[10px] font-semibold uppercase tracking-[.12em] text-[var(--ft-muted)]">
                     {product.edition}
                   </p>
                   <h2 className="mt-2 font-display text-2xl font-semibold leading-tight">
                     {product.name}
                   </h2>
-                  <p className="mt-2 text-xs text-[#718369]">
+                  <p className="mt-2 text-xs text-[var(--ft-muted)]">
                     {product.pages}-page Field Guide
                   </p>
                 </div>
@@ -156,7 +156,7 @@ export default function FieldToolsReview() {
                   Download PDF ↓
                 </a>
                 <a
-                  className={`${linkStyle} col-span-2 border-[#173c2a] bg-[#173c2a] text-[#f3efe4] hover:bg-[#285339]`}
+                  className={`${linkStyle} col-span-2 border-[var(--ft-accent)] bg-[var(--ft-tint)] text-[var(--ft-ink)] hover:bg-[var(--ft-tint)]`}
                   href={`${base}/lab`}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -164,7 +164,7 @@ export default function FieldToolsReview() {
                   Open Lab & build outputs ↗
                 </a>
               </div>
-              <div className="mt-4 flex flex-wrap justify-between gap-3 text-xs text-[#718369]">
+              <div className="mt-4 flex flex-wrap justify-between gap-3 text-xs text-[var(--ft-muted)]">
                 <a
                   href={`${base}/buy`}
                   target="_blank"
@@ -189,7 +189,7 @@ export default function FieldToolsReview() {
 
       <section
         aria-label="Shared project resources"
-        className="mx-auto max-w-6xl border-t border-[#c6d0c0] px-5 py-7 md:px-0"
+        className="mx-auto max-w-6xl border-t border-[var(--ft-line)] px-5 py-7 md:px-0"
       >
         <h2 className="font-display text-2xl font-semibold">
           Shared links & notes
@@ -228,7 +228,7 @@ export default function FieldToolsReview() {
             Purchase & access setup ↗
           </a>
         </div>
-        <p className="mt-5 text-xs leading-6 text-[#718369]">
+        <p className="mt-5 text-xs leading-6 text-[var(--ft-muted)]">
           Outputs are generated from your entries inside each Lab. Walkthrough
           access lives on each Start page. This is the review preview; payment
           setup is still in progress.

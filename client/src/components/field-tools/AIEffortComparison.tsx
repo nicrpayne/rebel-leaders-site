@@ -18,20 +18,20 @@ export default function AIEffortComparison({
   const reviewAfter = effortMinutes(values.ai_review);
   return (
     <section
-      className="mb-8 border-b border-[#c8d0c5] pb-8"
+      className="mb-8 border-b border-[var(--ft-line)] pb-8"
       aria-labelledby="effort-title"
     >
       <h3 id="effort-title" className="font-display text-2xl font-semibold">
         Count all the time spent.
       </h3>
-      <p className="mt-3 font-ui text-xs leading-6 text-[#5c6960]">
+      <p className="mt-3 font-ui text-xs leading-6 text-[var(--ft-muted)]">
         Add everyone’s working minutes. Two people working for 30 minutes use 60
         person-minutes. Enter 0 if no time was spent; leave a box blank if you
         do not know. Compare the quality of the finished work too.
       </p>
       <table className="mt-5 w-full table-fixed font-ui text-xs">
         <thead>
-          <tr className="border-b border-[#c8d0c5] text-left">
+          <tr className="border-b border-[var(--ft-line)] text-left">
             <th scope="col" className="w-[46%] pb-3">
               Work
             </th>
@@ -45,7 +45,7 @@ export default function AIEffortComparison({
         </thead>
         <tbody>
           {AI_EFFORT_STAGES.map(stage => (
-            <tr key={stage.id} className="border-b border-[#e0e5db]">
+            <tr key={stage.id} className="border-b border-[var(--ft-line)]">
               <th
                 scope="row"
                 className="py-4 pr-3 text-left font-normal leading-5"
@@ -64,7 +64,7 @@ export default function AIEffortComparison({
                     onChange={e =>
                       onChange(`${method}_${stage.id}`, e.target.value)
                     }
-                    className="w-full min-w-0 border border-[#bfc8bb] bg-[#fffdf7] px-2 py-3 text-center focus:outline-[#56775d]"
+                    className="w-full min-w-0 border border-[var(--ft-line)] bg-[var(--ft-white)] px-2 py-3 text-center focus:outline-[var(--ft-accent)]"
                   />
                 </td>
               ))}
@@ -85,7 +85,7 @@ export default function AIEffortComparison({
       </table>
       <div
         role="status"
-        className="mt-5 border-l-2 border-[#a1b89d] pl-4 font-ui text-xs leading-6 text-[#405747]"
+        className="mt-5 border-l-2 border-[var(--ft-line)] pl-4 font-ui text-xs leading-6 text-[var(--ft-muted)]"
       >
         {complete ? (
           <p>

@@ -17,10 +17,10 @@ export default function FieldToolSignIn() {
     },
   });
   return (
-    <main className="min-h-screen bg-[#07110d] px-5 pb-20 pt-32 text-[#f3efe4]">
+    <main className="min-h-screen bg-[var(--ft-paper)] px-5 pb-20 pt-32 text-[var(--ft-ink)]">
       <FieldToolsNav />
       {token ? (
-        <div className="mx-auto max-w-xl border border-[#60775a] bg-[#12281b] p-8">
+        <div className="mx-auto max-w-xl border border-[var(--ft-line)] bg-[var(--ft-tint)] p-8">
           <h1 className="font-display text-4xl">Welcome back.</h1>
           <p className="mt-4 leading-7">
             Confirm below to open your Field Tool on this device.

@@ -23,13 +23,13 @@ export function FieldToolSignIn({
   const [email, setEmail] = useState("");
   const request = trpc.fieldTools.requestAccess.useMutation();
   return (
-    <div className="mx-auto max-w-xl border border-[#60775a] bg-[#12281b] p-7 text-[#f3efe4]">
+    <div className="mx-auto max-w-xl border border-[var(--ft-line)] bg-[var(--ft-tint)] p-7 text-[var(--ft-ink)]">
       <h1 className="font-display text-4xl">Open your Field Tool</h1>
-      <p className="mt-4 font-ui text-sm leading-7 text-[#b8c9b8]">
+      <p className="mt-4 font-ui text-sm leading-7 text-[var(--ft-muted)]">
         Use the email you entered at checkout, or the email your gift was sent
         to. We’ll send you a secure sign-in link.
       </p>
-      <p className="mt-3 font-ui text-xs leading-6 text-[#b8c9b8]">Bought this as a gift? We email the recipient after payment. They use their own email here.</p>
+      <p className="mt-3 font-ui text-xs leading-6 text-[var(--ft-muted)]">Bought this as a gift? We email the recipient after payment. They use their own email here.</p>
       <form
         className="mt-6"
         onSubmit={e => {
@@ -45,7 +45,7 @@ export function FieldToolSignIn({
             required
             value={email}
             onChange={e => setEmail(e.target.value)}
-            className="mt-2 w-full bg-[#fffdf7] p-4 text-[#193025]"
+            className="mt-2 w-full bg-[var(--ft-white)] p-4 text-[var(--ft-ink)]"
           />
         </label>
         <button
@@ -97,7 +97,7 @@ export default function FieldToolGate({
     return (
       <ContentContext.Provider value={content.data}>
         {access.data?.preview && (
-          <div className="fixed bottom-0 inset-x-0 z-50 bg-[#d9b34d] px-4 py-2 text-center font-ui text-xs text-[#193025] print:hidden">
+          <div className="ft-review-notice fixed bottom-0 inset-x-0 z-50 bg-[var(--ft-tint)] px-4 py-2 text-center font-ui text-xs text-[var(--ft-ink)] print:hidden">
             Review preview · purchase verification is disabled here.
           </div>
         )}
@@ -105,16 +105,16 @@ export default function FieldToolGate({
       </ContentContext.Provider>
     );
   return (
-    <main className="min-h-screen bg-[#07110d] px-5 pb-20 pt-32">
+    <main className="min-h-screen bg-[var(--ft-paper)] px-5 pb-20 pt-32">
       <FieldToolsNav />
       {access.isPending || (allowed && content.isPending) ? (
         <div
           role="status"
           aria-live="polite"
-          className="mx-auto max-w-4xl border border-[#60775a] bg-[#12281b] p-8 text-[#f3efe4]"
+          className="mx-auto max-w-4xl border border-[var(--ft-line)] bg-[var(--ft-tint)] p-8 text-[var(--ft-ink)]"
         >
           <p className="font-display text-3xl">Opening your Field Tool…</p>
-          <p className="mt-3 font-ui text-sm text-[#b8c9b8]">
+          <p className="mt-3 font-ui text-sm text-[var(--ft-muted)]">
             Checking access and loading your Guide and Lab.
           </p>
           <div
@@ -126,7 +126,7 @@ export default function FieldToolGate({
           </div>
         </div>
       ) : access.error || content.error ? (
-        <div className="mx-auto max-w-xl text-[#f3efe4]">
+        <div className="mx-auto max-w-xl text-[var(--ft-ink)]">
           <p role="alert">We couldn’t open your tool. Please try again.</p>
           <button
             className="ft-button mt-5"

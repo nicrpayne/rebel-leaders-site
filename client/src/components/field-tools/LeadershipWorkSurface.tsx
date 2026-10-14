@@ -17,15 +17,15 @@ export default function LeadershipWorkSurface({
     return (
       <section
         aria-label="Optional capacity check"
-        className="mb-8 border border-[#bac8b4] bg-[#e9eddf] p-5"
+        className="mb-8 border border-[var(--ft-line)] bg-[var(--ft-tint)] p-5"
       >
-        <p className="font-ui text-[10px] tracking-[.15em] text-[#59705d]">
+        <p className="font-ui text-[10px] tracking-[.15em] text-[var(--ft-muted)]">
           OPTIONAL / CHECK WHETHER THE WORK FITS
         </p>
         <h3 className="mt-3 font-display text-2xl">
           Do we have time for the new request?
         </h3>
-        <p className="mt-2 text-xs leading-6 text-[#57695d]">
+        <p className="mt-2 text-xs leading-6 text-[var(--ft-muted)]">
           Use the same week or period for all three estimates. One person-day
           means one person working for one day; two people working for a day use
           two person-days. Include review and support. These estimates show how
@@ -46,14 +46,14 @@ export default function LeadershipWorkSurface({
                 inputMode="decimal"
                 value={values[id] || ""}
                 onChange={e => onChange(id, e.target.value)}
-                className="mt-2 w-full border border-[#afbea6] bg-white p-3 text-sm"
+                className="mt-2 w-full border border-[var(--ft-line)] bg-white p-3 text-sm"
               />
             </label>
           ))}
         </div>
         <p
           role="status"
-          className="mt-4 border-t border-[#bbc8b1] pt-4 text-sm font-semibold"
+          className="mt-4 border-t border-[var(--ft-line)] pt-4 text-sm font-semibold"
         >
           {snapshot
             ? `${Number(snapshot.total.toFixed(2))} person-days of work / ${snapshot.available} available. ${snapshot.gap > 0 ? `${Number(snapshot.gap.toFixed(2))} person-days will not fit. Let’s look at what could wait or change.` : "The estimates fit. Check that the right people are available at the right time and that nothing else must finish first."}`
@@ -75,10 +75,10 @@ export default function LeadershipWorkSurface({
         ].map(([title, detail]) => (
           <div
             key={title}
-            className="border-t-2 border-[#b29548] bg-[#e9eddf] p-4"
+            className="border-t-2 border-[var(--ft-line)] bg-[var(--ft-tint)] p-4"
           >
             <h3 className="font-display text-xl">{title}</h3>
-            <p className="mt-2 text-xs leading-6 text-[#57695d]">
+            <p className="mt-2 text-xs leading-6 text-[var(--ft-muted)]">
               {detail ||
                 "Add an option below, then check it with the people doing the work."}
             </p>
@@ -90,7 +90,7 @@ export default function LeadershipWorkSurface({
     return (
       <section
         aria-label="Current decision rights"
-        className="mb-8 border border-[#bac8b4] bg-[#e9eddf] p-5"
+        className="mb-8 border border-[var(--ft-line)] bg-[var(--ft-tint)] p-5"
       >
         <h3 className="font-display text-2xl">Who needs to be involved?</h3>
         <dl className="mt-4 space-y-2 text-sm">
@@ -105,10 +105,10 @@ export default function LeadershipWorkSurface({
           ].map(([id, label]) => (
             <div
               key={id}
-              className="grid grid-cols-[110px_1fr] gap-3 border-b border-[#c6cfbf] py-2"
+              className="grid grid-cols-[110px_1fr] gap-3 border-b border-[var(--ft-line)] py-2"
             >
               <dt className="font-semibold">{label}</dt>
-              <dd className="break-words text-[#57695d]">
+              <dd className="break-words text-[var(--ft-muted)]">
                 {values[id] || "Still to check with the people involved"}
               </dd>
             </div>
@@ -124,7 +124,7 @@ export default function LeadershipWorkSurface({
     return (
       <section
         aria-label="Request starters"
-        className="mb-8 border border-[#bac8b4] bg-[#e9eddf] p-5"
+        className="mb-8 border border-[var(--ft-line)] bg-[var(--ft-tint)] p-5"
       >
         <h3 className="font-display text-2xl">
           Which sentence sounds familiar?
@@ -145,7 +145,7 @@ export default function LeadershipWorkSurface({
               key={text}
               disabled={Boolean(values.request?.trim())}
               onClick={() => onChange("request", text)}
-              className="border border-[#9aac91] bg-[#fbf9f3] p-3 text-left text-xs disabled:opacity-40"
+              className="border border-[var(--ft-line)] bg-[var(--ft-white)] p-3 text-left text-xs disabled:opacity-40"
             >
               {text}
             </button>

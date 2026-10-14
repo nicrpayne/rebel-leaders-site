@@ -21,21 +21,21 @@ export function teachingFor(slug: string, chapter: number) {
 export function TeachingNoteBody({ note }: { note: Teaching }) {
   return (
     <>
-      <h3 className="font-display text-2xl leading-tight text-[#193025]">
+      <h3 className="font-display text-2xl leading-tight text-[var(--ft-ink)]">
         {note.title}
       </h3>
       {note.quote && (
-        <blockquote className="mt-4 border-l-2 border-[#c3a14b] pl-4 font-display text-xl leading-7 text-[#193025]">
+        <blockquote className="mt-4 border-l-2 border-[var(--ft-accent)] pl-4 font-display text-xl leading-7 text-[var(--ft-ink)]">
           “{note.quote}”
           <cite className="mt-2 block font-ui text-xs not-italic">
             Nic Payne · {teachingSources[note.quoteSource!]?.title}
           </cite>
         </blockquote>
       )}
-      <p className="mt-3 font-ui text-sm leading-7 text-[#536659]">
+      <p className="mt-3 font-ui text-sm leading-7 text-[var(--ft-muted)]">
         {note.body}
       </p>
-      <p className="mt-4 font-ui text-sm leading-7 text-[#193025]">
+      <p className="mt-4 font-ui text-sm leading-7 text-[var(--ft-ink)]">
         <strong>Worth asking: </strong>
         {note.question}
       </p>
@@ -52,7 +52,7 @@ export function TeachingNoteBody({ note }: { note: Teaching }) {
               >
                 {s.title} ↗
               </a>
-              <span className="block text-[#637465]">
+              <span className="block text-[var(--ft-muted)]">
                 {s.author} · {s.kind}
               </span>
             </li>
@@ -74,9 +74,9 @@ export default function TeachingNote({
   return note ? (
     <aside
       aria-label="The thinking behind this step"
-      className="mt-8 border border-[#c8d1bf] bg-[#e8eddf] p-5 md:p-6"
+      className="ft-teaching-note mt-8 border border-[var(--ft-line)] bg-[var(--ft-tint)] p-5 md:p-6"
     >
-      <p className="mb-3 font-ui text-[10px] uppercase tracking-[.16em] text-[#617358]">
+      <p className="mb-3 font-ui text-[10px] uppercase tracking-[.16em] text-[var(--ft-muted)]">
         The thinking behind this step
       </p>
       <TeachingNoteBody note={note} />
@@ -95,13 +95,13 @@ export function LabTeachingNote({
     note => note.slug === slug && note.labStep === step
   );
   return note ? (
-    <details className="mt-7 border-t border-[#bec9b5] pt-5">
-      <summary className="cursor-pointer font-ui text-sm leading-6 text-[#193025]">
+    <details className="mt-7 border-t border-[var(--ft-line)] pt-5">
+      <summary className="cursor-pointer font-ui text-sm leading-6 text-[var(--ft-ink)]">
         What is this way of working doing to people?
       </summary>
-      <div className="mt-4 border-l-2 border-[#c3a14b] pl-4">
+      <div className="mt-4 border-l-2 border-[var(--ft-accent)] pl-4">
         <TeachingNoteBody note={note} />
-        <p className="mt-4 font-ui text-xs leading-6 text-[#637465]">
+        <p className="mt-4 font-ui text-xs leading-6 text-[var(--ft-muted)]">
           You can reflect without writing anything down. Reading and video links
           open in another tab.
         </p>
@@ -112,11 +112,11 @@ export function LabTeachingNote({
 
 export function FrameworkResources() {
   return (
-    <aside className="mt-10 border-t border-[#c8d1bf] pt-7">
-      <h2 className="font-display text-3xl text-[#193025]">
+    <aside className="mt-10 border-t border-[var(--ft-line)] pt-7">
+      <h2 className="font-display text-3xl text-[var(--ft-ink)]">
         What work does to people.
       </h2>
-      <p className="mt-3 max-w-2xl font-ui text-sm leading-7 text-[#536659]">
+      <p className="mt-3 max-w-2xl font-ui text-sm leading-7 text-[var(--ft-muted)]">
         These tools come from Holistic Shaping. The work matters, and so does
         who we become while doing it together. Explore the two maps behind that
         approach.
@@ -130,10 +130,10 @@ export function FrameworkResources() {
               href={s.url}
               target="_blank"
               rel="noreferrer"
-              className="border-t border-[#bfcbb6] pt-5 hover:border-[#75866d] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4"
+              className="border-t border-[var(--ft-line)] pt-5 hover:border-[var(--ft-line)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4"
             >
               <h3 className="font-display text-2xl">{s.title} ↗</h3>
-              <p className="mt-2 font-ui text-sm leading-6 text-[#536659]">
+              <p className="mt-2 font-ui text-sm leading-6 text-[var(--ft-muted)]">
                 {s.summary}
               </p>
             </a>

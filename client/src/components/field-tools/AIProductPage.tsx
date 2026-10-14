@@ -22,7 +22,7 @@ export default function AIProductPage({ audience }: { audience: Audience }) {
   );
   const access = trpc.fieldTools.access.useQuery();
   return (
-    <main className="ai-product bg-[#f3efe4] text-[#193025]">
+    <main className="ai-product bg-[var(--ft-paper)] text-[var(--ft-ink)]">
       <FieldToolsNav />
       {access.data?.proposal && (
         <div className="ai-review-ribbon">
