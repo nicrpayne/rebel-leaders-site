@@ -1,3 +1,4 @@
+import TeachingNote, { FrameworkResources } from "./TeachingNote";
 import { fieldToolLabStep } from "@/lib/field-tool-workflow";
 import FieldToolsFooter from "./FieldToolsFooter";
 import { getFieldTool } from "@/lib/field-tools";
@@ -213,6 +214,7 @@ export default function ChapterGuide({ slug }: { slug: string }) {
                   </div>
                 ))}
               </div>
+              <TeachingNote slug={slug} chapter={index} />
               {chapter.sources && (
                 <div className="mt-6 flex flex-col gap-2 font-ui text-xs text-[#667e66]">
                   {chapter.sources.map(source => (
@@ -240,6 +242,7 @@ export default function ChapterGuide({ slug }: { slug: string }) {
               {slug === "ai-stalemate" && <AIGuideVisual index={index} />}
             </section>
           ))}
+          <FrameworkResources />
           <div className="flex flex-wrap gap-4 print:hidden">
             <Link
               href={`${base}/lab`}

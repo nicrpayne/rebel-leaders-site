@@ -1,4 +1,4 @@
-import { fieldToolChoiceLabel } from "./field-tool-choice-labels";
+import { fieldToolChoiceLabel } from "./field-tool-choice-labels.ts";
 import type { Audience } from "./field-tool-paths";
 export function communicationDraft(
   values: Record<string, string>,
