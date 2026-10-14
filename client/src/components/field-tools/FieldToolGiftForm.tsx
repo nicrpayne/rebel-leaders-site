@@ -70,8 +70,8 @@ export default function FieldToolGiftForm({
           <Gift size={20} aria-hidden="true" /> Give them {name}.
         </h2>
         <p className="mt-3 leading-6 text-[#c0cfb9]">
-          For a colleague, a friend, or someone on your team. They get their own
-          Field Guide and Lab.
+          They get their own Field Guide and Lab. To give another gift, come
+          back and choose “Gift this” again.
         </p>
       </div>
       <label className="block">

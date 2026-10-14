@@ -2,7 +2,8 @@ import FieldToolSalesProof, {
   FieldToolBuyerQuestions,
 } from "./FieldToolSalesProof";
 import { Link } from "wouter";
-import { ArrowRight, Check, Compass, MessageSquare, Users } from "lucide-react";
+import { Check, Compass, MessageSquare, Users } from "lucide-react";
+import FieldToolBuyActions from "./FieldToolBuyActions";
 import FieldToolHero from "./FieldToolHero";
 import RelatedFieldTools from "./RelatedFieldTools";
 import {
@@ -29,13 +30,13 @@ export default function CompactFieldToolLanding({
   const included = [
     [
       `${engineering ? 13 : 10}-page Field Guide`,
-      "Language, practical questions, and a worked example.",
+      "Practical questions and a written example you can also try in the Lab.",
     ],
     [
       engineering ? "Your Lead Developer Lab" : `Your ${tool.name} Lab`,
       engineering
-        ? "Explore the concerns, shape responsible conditions, and co-create a next move."
-        : LEADERSHIP_SALES[slug].firstMove,
+        ? "Talk through the risks and decide with your PM what to do next."
+        : "Work through the questions, then review and share your answers.",
     ],
     [
       engineering ? "Next Step Together" : primaryArtifact.name,
@@ -56,10 +57,6 @@ export default function CompactFieldToolLanding({
             .slice(0, 2)
             .map(a => a.copy)
             .join(" "),
-    ],
-    [
-      "Worked walkthrough",
-      "Follow the fictional case in the Guide and load its examples into each Lab step.",
     ],
   ];
   return (
@@ -86,10 +83,10 @@ export default function CompactFieldToolLanding({
         imageLayout={p.imageLayout}
         showCaption={false}
         primary={{
-          label: `Get the Field Tool — $${tool.price}`,
+          label: `Buy — $${tool.price}`,
           href: `${base}/buy`,
         }}
-        secondary={{ label: "Gift to someone", href: `${base}/buy?gift=1` }}
+        giftHref={`${base}/buy?gift=1`}
         facts={[
           "One-time $47 USD purchase",
           "Field Guide + interactive Lab",
@@ -149,21 +146,11 @@ export default function CompactFieldToolLanding({
                 USD · one time
               </span>
             </p>
-            <Link
-              href={`${base}/buy`}
-              className="ft-button ft-button-gold mt-7 w-full"
-            >
-              Get the Field Tool <ArrowRight size={17} aria-hidden="true" />
-            </Link>
-            <Link
-              href={`${base}/buy?gift=1`}
-              className="mt-4 block text-center font-ui text-sm underline underline-offset-4"
-            >
-              Gift to someone →
-            </Link>
-            <p className="mt-3 font-ui text-xs leading-6 text-[#607063]">
-              Know someone working through this? Give them a place to start.
-            </p>
+            <FieldToolBuyActions
+              buyHref={`${base}/buy`}
+              giftHref={`${base}/buy?gift=1`}
+              className="mt-7"
+            />
             <p className="mt-5 font-ui text-xs text-[#607063]">
               Already purchased?{" "}
               <Link

@@ -79,20 +79,15 @@ export default function ChapterGuide({ slug }: { slug: string }) {
           <p className="font-ui text-[11px] tracking-[.2em] text-[#cfb466]">
             REBEL LEADERS / {tool.eyebrow} / THE FIELD GUIDE
           </p>
-          <h1 className="mt-5 font-display text-6xl font-semibold tracking-[-.035em] md:text-8xl">
+          <h1 className="mt-5 font-display text-5xl font-semibold tracking-[-.035em] md:text-6xl">
             {tool.name}
           </h1>
-          <p className="mt-5 max-w-3xl font-display text-3xl leading-tight text-[#e4bc59]">
+          <p className="mt-5 max-w-3xl font-ui text-lg leading-8 text-[#e4bc59]">
             {slug === "ai-stalemate"
               ? content.audience === "pm"
                 ? "You think AI could help. Your lead has questions. Start by understanding what matters to each of you."
                 : "Your PM thinks AI could help. Explain your concerns and work out what to do next together."
               : content.guide.deck}
-          </p>
-          <p className="mt-6 max-w-2xl font-ui text-sm leading-7 text-[#b6c7b8]">
-            Read the Guide to understand the questions and see an example. Then
-            use the Lab to prepare for your own conversation and write down what
-            happens next.
           </p>
           <div className="mt-8 flex flex-wrap gap-4 print:hidden">
             <a
@@ -100,15 +95,13 @@ export default function ChapterGuide({ slug }: { slug: string }) {
               download
               className="ft-button ft-button-gold"
             >
-              Download the Field Guide ↓
+              Download PDF ↓
             </a>
             <Link href={`${base}/lab`} className="ft-button ft-button-outline">
               Open the Lab →
             </Link>
           </div>
-          <p className="mt-6 font-ui text-xs text-[#91a693]">
-            Nic Payne / Working Edition / Read online or download the PDF.
-          </p>
+          <p className="mt-6 font-ui text-xs text-[#91a693]">By Nic Payne</p>
         </div>
       </header>
       <div className="mx-auto grid max-w-6xl gap-10 px-5 py-14 md:px-10 lg:grid-cols-[.65fr_2fr] lg:py-20">
@@ -246,7 +239,7 @@ export default function ChapterGuide({ slug }: { slug: string }) {
               href={`${base}/lab`}
               className="ft-button bg-[#153625] text-[#f3efe4]"
             >
-              Work your situation in the Lab →
+              Open the Lab →
             </Link>
             <Link
               href={`${base}/access`}

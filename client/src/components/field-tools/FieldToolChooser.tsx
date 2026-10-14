@@ -2,25 +2,25 @@ import { Link } from "wouter";
 const choices = [
   [
     "deadline-reset",
-    "A date has been promised; the delivery basis is unclear.",
+    "Someone promised a date. You’re not sure the team can meet it.",
     "Deadline Reset",
     "Decision Update",
   ],
   [
     "priority-whiplash",
-    "A new request competes with work already committed.",
+    "Someone wants more work. The team is already busy.",
     "Priority Whiplash",
     "Priority Decision Brief",
   ],
   [
     "mandate-reset",
-    "You own the outcome but cannot make the needed decision.",
+    "You’re responsible, but the decision is out of your hands.",
     "Mandate Reset",
     "Decision Request",
   ],
   [
     "product-project-translator",
-    "A stakeholder needs certainty before the solution is known.",
+    "They want an answer you don’t have yet.",
     "Product / Project Translator",
     "Proposed Commitment",
   ],
@@ -31,8 +31,7 @@ export default function FieldToolChooser() {
       <div className="mx-auto max-w-6xl">
         <h2 className="font-display text-3xl">Which Field Tool fits?</h2>
         <p className="mt-3 max-w-3xl font-ui text-sm leading-7">
-          Start with the decision blocking your next conversation. If several
-          pressures overlap, work on that one first.
+          Choose the situation you need help with now.
         </p>
         <div className="mt-6 overflow-x-auto">
           <table className="w-full min-w-[580px] text-left font-ui text-sm">
@@ -55,7 +54,7 @@ export default function FieldToolChooser() {
             <tbody>
               <tr className="border-b border-[#d5dccc]">
                 <td className="py-5 pr-5">
-                  Product and Engineering need a responsible next move on AI.
+                  You and your colleague disagree about using AI.
                 </td>
                 <td className="py-5 pr-5">
                   <Link
@@ -72,7 +71,7 @@ export default function FieldToolChooser() {
                     AI Stalemate / Lead Developer
                   </Link>
                 </td>
-                <td className="py-5">Shared Next-Step Brief</td>
+                <td className="py-5">Next Step Together</td>
               </tr>
               {choices.map(([slug, pressure, title, output]) => (
                 <tr key={slug} className="border-b border-[#d5dccc]">

@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { Link } from "wouter";
 import { ArrowRight, Check } from "lucide-react";
+import FieldToolBuyActions from "./FieldToolBuyActions";
 import FieldToolsNav from "./FieldToolsNav";
 import "./field-tools.css";
 
@@ -13,6 +14,7 @@ export default function FieldToolHero({
   children,
   primary,
   secondary,
+  giftHref,
   facts,
   showCaption = true,
 }: {
@@ -24,6 +26,7 @@ export default function FieldToolHero({
   children?: ReactNode;
   primary: { label: string; href: string; onClick?: () => void };
   secondary?: { label: string; href: string };
+  giftHref?: string;
   facts: string[];
   showCaption?: boolean;
 }) {
@@ -53,43 +56,50 @@ export default function FieldToolHero({
           <h1 className="ft-headline">{headline}</h1>
           <p className="ft-deck">{description}</p>
           {children}
-          <div className="ft-actions">
-            {primary.onClick ? (
-              <button
-                type="button"
-                onClick={primary.onClick}
-                className="ft-button ft-button-gold"
-              >
-                {primary.label}
-                <ArrowRight size={17} aria-hidden="true" />
-              </button>
-            ) : (
-              <Link href={primary.href} className="ft-button ft-button-gold">
-                {primary.label}
-                <ArrowRight size={17} aria-hidden="true" />
-              </Link>
-            )}
-            {secondary &&
-              (secondary.href.startsWith("#") ? (
-                <a
-                  href={secondary.href}
-                  className="ft-button ft-button-outline"
+          {giftHref ? (
+            <FieldToolBuyActions
+              buyHref={primary.href}
+              buyLabel={primary.label}
+              giftHref={giftHref}
+              tone="dark"
+              className="mt-8"
+            />
+          ) : (
+            <div className="ft-actions">
+              {primary.onClick ? (
+                <button
+                  type="button"
+                  onClick={primary.onClick}
+                  className="ft-button ft-button-gold"
                 >
-                  {secondary.label}
-                </a>
+                  {primary.label}
+                  <ArrowRight size={17} aria-hidden="true" />
+                </button>
               ) : (
-                <Link
-                  href={secondary.href}
-                  className="ft-button ft-button-outline"
-                >
-                  {secondary.label}
+                <Link href={primary.href} className="ft-button ft-button-gold">
+                  {primary.label}
+                  <ArrowRight size={17} aria-hidden="true" />
                 </Link>
-              ))}
-          </div>
-          <p className="ft-founder-note">
-            Built by Nic Payne · Working product leader, founder of Rebel
-            Leaders
-          </p>
+              )}
+              {secondary &&
+                (secondary.href.startsWith("#") ? (
+                  <a
+                    href={secondary.href}
+                    className="ft-button ft-button-outline"
+                  >
+                    {secondary.label}
+                  </a>
+                ) : (
+                  <Link
+                    href={secondary.href}
+                    className="ft-button ft-button-outline"
+                  >
+                    {secondary.label}
+                  </Link>
+                ))}
+            </div>
+          )}
+          <p className="ft-founder-note">By Nic Payne · Rebel Leaders</p>
         </div>
       </section>
       <div className="ft-facts">

@@ -2,7 +2,8 @@ import FieldToolSalesProof, {
   FieldToolBuyerQuestions,
 } from "./FieldToolSalesProof";
 import { Link } from "wouter";
-import { ArrowRight, Check, Compass, MessageSquare, Users } from "lucide-react";
+import { Check, Compass, MessageSquare, Users } from "lucide-react";
+import FieldToolBuyActions from "./FieldToolBuyActions";
 import FieldToolHero from "./FieldToolHero";
 import RelatedFieldTools from "./RelatedFieldTools";
 import { fieldToolPresentation } from "@/lib/field-tool-paths";
@@ -33,7 +34,7 @@ export default function PMAIStalemateLanding() {
   const included = [
     [
       "13-page Field Guide",
-      "Language, practical questions, and a worked example.",
+      "Practical questions and a written example you can also try in the Lab.",
     ],
     [
       "Your PM Lab",
@@ -47,10 +48,6 @@ export default function PMAIStalemateLanding() {
       "Experiment Plan, Results Record & Decision Brief",
       "Use these if you decide an experiment would help.",
     ],
-    [
-      "Worked walkthrough",
-      "Follow the fictional case in the Guide and load its examples into each Lab step.",
-    ],
   ];
   return (
     <main className="ft-pm-landing min-h-screen bg-[#f3efe4] text-[#193025]">
@@ -61,12 +58,12 @@ export default function PMAIStalemateLanding() {
             {presentation.lead} <em>{presentation.accent}</em>
           </>
         }
-        description="Explain what you want to improve. Ask what your lead would need to check. Work out the next step together, then tell leadership what you have agreed."
+        description="Talk through what AI could help with, what needs checking, and what you and your lead could do next."
         image={PM_AI_HERO_IMAGE}
         imageLayout="wide"
         showCaption={false}
-        primary={{ label: "Get the Field Tool — $47", href: `${base}/buy` }}
-        secondary={{ label: "Gift to someone", href: `${base}/buy?gift=1` }}
+        primary={{ label: "Buy — $47", href: `${base}/buy` }}
+        giftHref={`${base}/buy?gift=1`}
         facts={[
           "One-time $47 USD purchase",
           "Field Guide + interactive Lab",
@@ -119,21 +116,11 @@ export default function PMAIStalemateLanding() {
                 USD · one time
               </span>
             </p>
-            <Link
-              href={`${base}/buy`}
-              className="ft-button ft-button-gold mt-7 w-full"
-            >
-              Get the Field Tool <ArrowRight size={17} aria-hidden="true" />
-            </Link>
-            <Link
-              href={`${base}/buy?gift=1`}
-              className="mt-4 block text-center font-ui text-sm underline underline-offset-4"
-            >
-              Gift to someone →
-            </Link>
-            <p className="mt-3 font-ui text-xs leading-6 text-[#607063]">
-              Know someone working through this? Give them a place to start.
-            </p>
+            <FieldToolBuyActions
+              buyHref={`${base}/buy`}
+              giftHref={`${base}/buy?gift=1`}
+              className="mt-7"
+            />
             <p className="mt-5 font-ui text-xs text-[#607063]">
               Already purchased?{" "}
               <Link

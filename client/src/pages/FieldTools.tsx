@@ -14,7 +14,7 @@ export default function FieldTools() {
             <em>actually having.</em>
           </>
         }
-        description="Practical tools for modern product work inside organizations that still demand certainty. Start with the pressure you are carrying today."
+        description="Work through a difficult request, prepare for a conversation, and decide what to do next."
         image="/assets/field-tools/field-tools-catalog-hero-v1.webp"
         imageLayout="wide"
         primary={{ label: "Take the free Pressure Test", href: "/assessment" }}
@@ -23,40 +23,10 @@ export default function FieldTools() {
           "Five focused Field Tools",
           "$47 USD each · one time",
           "Interactive Lab + Field Guide",
-          "No course portal required",
+          "No subscription",
         ]}
       />
 
-      <section className="bg-[#e9ebdf] px-5 py-8 text-[#193025]">
-        <div className="mx-auto max-w-6xl">
-          <h2 className="font-display text-3xl">
-            AI Stalemate: start with your situation
-          </h2>
-          <div className="mt-5 grid gap-4 md:grid-cols-2">
-            <Link
-              href="/field-tools/ai-stalemate/pm"
-              className="border border-[#9baa8e] bg-[#fbf9f3] p-5"
-            >
-              <span className="font-display text-2xl">I'm the PM →</span>
-              <p className="mt-2 text-sm">
-                I see an opportunity. My lead isn't convinced.
-              </p>
-            </Link>
-            <Link
-              href="/field-tools/ai-stalemate/lead-dev"
-              className="border border-[#9baa8e] bg-[#fbf9f3] p-5"
-            >
-              <span className="font-display text-2xl">
-                I'm the lead developer →
-              </span>
-              <p className="mt-2 text-sm">
-                My PM sees potential. I need to make the conditions clear.
-              </p>
-            </Link>
-          </div>
-        </div>
-      </section>
-      <FieldToolChooser />
       <section
         id="tools"
         className="bg-[#f3efe4] px-5 py-16 text-[#102019] md:px-8 md:py-24"
@@ -67,7 +37,7 @@ export default function FieldTools() {
               WHAT ARE YOU DEALING WITH?
             </p>
             <h2 className="mt-4 font-display text-4xl font-semibold tracking-[-0.035em] md:text-5xl">
-              Start with the sentence that sounds most like your Tuesday.
+              What’s happening at work?
             </h2>
           </div>
 
@@ -98,7 +68,7 @@ export default function FieldTools() {
                     {tool.price}
                   </span>
                   <span className="transition-transform group-hover:translate-x-1">
-                    Open tool →
+                    See what’s included →
                   </span>
                 </div>
               </Link>
@@ -127,6 +97,12 @@ export default function FieldTools() {
           </div>
         </div>
       </section>
+      <details className="bg-[#fbf9f3] px-5 py-8 text-[#193025] md:px-10">
+        <summary className="mx-auto max-w-6xl cursor-pointer font-ui font-semibold">
+          Compare the tools
+        </summary>
+        <FieldToolChooser />
+      </details>
     </main>
   );
 }
