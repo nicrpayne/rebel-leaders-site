@@ -65,28 +65,30 @@ export function labReviewPrompts(slug: string, values: LabValues): string[] {
   if (slug === "ai-stalemate") {
     if (values.readinessDecision && !values.prerequisitePlan?.trim())
       prompts.push(
-        "You chose a next move. Who will act, and when will you review it?"
+        "Who will take that next step, and when will you check back?"
       );
     if (values.readinessDecision === "READY FOR A BOUNDED TEST") {
       if (!values.approvalOwner?.trim())
         prompts.push(
-          "Name who can approve the tool and its inputs before the experiment."
+          "Who can approve the AI tool and the information you’ll use? Check with them before starting."
         );
       if (!values.stop?.trim())
-        prompts.push("Record the stop rule before starting the experiment.");
+        prompts.push(
+          "What would make you stop the experiment? Agree that before starting."
+        );
     }
   } else {
     if (
       (values.date || values.decisionDate || values.decisionBy) &&
       !(values.owner || values.decisionOwner)?.trim()
     )
-      prompts.push("You named a date. Who can make the needed decision?");
+      prompts.push("You’ve added a date. Who can make this decision?");
     if (
       values.decisionStatus?.startsWith("AGREED") &&
       !values.finalDecision?.trim()
     )
       prompts.push(
-        "You marked this agreed. Record the actual response before sharing it as an agreement."
+        "You’ve marked this as agreed. Add what they agreed to before sharing it."
       );
   }
   return prompts;

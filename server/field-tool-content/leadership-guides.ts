@@ -14,7 +14,7 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
       eyebrow: "01 / START HERE",
       title: "The date has already been promised. Now what?",
       intro:
-        "You find out that customers have been promised a launch date. The team has not finished checking the work. Somehow, you are now expected to make those two things fit.",
+        "A launch date has been promised, and the team is still checking what it can deliver. Let’s start with what customers were told, then work through the options together.",
       sections: [
         {
           title: "Start with why the date matters",
@@ -29,26 +29,26 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
           body: "Perhaps customers need online booking by the event, but reports could come later. Perhaps both features matter more than the date. Work through those options with the people building the software.",
         },
         {
-          title: "What you will leave with",
+          title: "What you’ll leave with",
           body: "The Lab helps you write down the facts, compare delivery options, and prepare an update asking for a decision. You can return after the meeting to record the answer.",
         },
       ],
       callout:
-        "Start with one promised date. You are trying to work out what can be delivered and what people need to be told.",
+        "Your first useful step is to get clear on the promise. From there, we can work out what’s possible and what to ask next.",
     },
     {
       eyebrow: "02 / BEFORE THE CONVERSATION",
       title: "You can be frustrated and still be curious.",
       intro:
-        "It is easy to hear an unrealistic date as “just work harder.” Before replying, separate that frustration from the question you need answered.",
+        "A date that looks impossible can feel like a request to work harder. Take a moment to notice your reaction, then think about what you’d like to understand before replying.",
       sections: [
         {
           title: "What actually happened?",
-          body: "Write down what was said or done. Then notice what you have added. “They asked for Friday” and “They do not care about the team” are different statements. You can check the first. You need to ask about the second.",
+          body: "Start with what was said or done. “They asked for Friday” tells us what happened. “They don’t care about the team” is an explanation you may have added. What could you ask to find out what’s behind the request?",
         },
         {
           title: "Why do you care?",
-          body: "Who would be better off if this worked? A customer could stop chasing an answer. Your team could finish the work it promised. Start there. Give the other person a chance to tell you what matters to them too.",
+          body: "Who would be better off if this worked? Perhaps a customer could stop chasing an answer, or your team could finish something it promised. Say why that matters to you, and ask what matters to the other person too.",
         },
         {
           title: "What would better look like?",
@@ -56,7 +56,7 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
         },
         {
           title: "Keep these notes to yourself",
-          body: "Private notes in the Lab stay only in the open tab. They disappear when you refresh or leave and never appear in your exported documents. You can also think through these questions without typing.",
+          body: "These questions are for your own thinking; you can answer them without typing. If you use the Lab’s private notes, they stay only in the open tab. They aren’t saved or exported, and disappear when you refresh or leave.",
         },
       ],
       callout:
@@ -73,7 +73,7 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
           body: "Name the date, the features or service promised, the people expecting it, and the person who told them. Quote the actual message if you can.",
         },
         {
-          title: "Check what really cannot change",
+          title: "Check what really can’t change",
           body: "For example, the event venue may be booked, but nobody has agreed which features must be shown. Ask the person responsible for the event or contract to confirm.",
         },
         {
@@ -82,7 +82,7 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
         },
         {
           title: "Explain what is at risk",
-          body: "Say what customers could experience if the plan does not work. “A customer books a repair but the service team never receives it” is more useful than “integration risk.”",
+          body: "Say what customers could experience if the plan doesn’t work. “A customer books a repair but the service team never receives it” is more useful than “integration risk.”",
         },
       ],
       callout:
@@ -100,11 +100,11 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
         },
         {
           title: "Keep all the work; reconsider the date",
-          body: "Ask the people doing the work when both features could be ready and what they still need to check. If they cannot give a reliable date yet, say when they will reassess it.",
+          body: "Ask the people doing the work when both features could be ready and what they still need to check. If they can’t give a reliable date yet, say when they will reassess it.",
         },
         {
           title: "Check whether more help would help",
-          body: "A new person needs time to learn the work. A specialist might remove a specific problem. Include the time needed to teach, review, and test; do not assume extra people instantly make delivery faster.",
+          body: "A new person needs time to learn the work. A specialist might remove a specific problem. Include the time needed to teach, review, and test; don’t assume extra people instantly make delivery faster.",
         },
         {
           title: "Keep the necessary checks",
@@ -118,10 +118,10 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
       eyebrow: "05 / CHECK HOW SURE YOU ARE",
       title: "How confident are we, and why?",
       intro:
-        "“Medium confidence” is not much help on its own. Explain which work and date you mean, and what could change your view.",
+        "“Medium confidence” isn’t much help on its own. Explain which work and date you mean, and what could change your view.",
       sections: [
         {
-          title: "Name the plan you are assessing",
+          title: "Name the plan you’re assessing",
           body: "“Online booking by November 1” is different from “booking and reports by November 1.” Make sure everyone is talking about the same promise.",
         },
         {
@@ -138,20 +138,20 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
         },
       ],
       callout:
-        "The Lab does not calculate the chance of hitting a date. It helps you explain your judgment and what you will check next.",
+        "The Lab doesn’t calculate the chance of hitting a date. It helps you explain your judgment and what you’ll check next.",
     },
     {
       eyebrow: "06 / HAVE THE CONVERSATION",
       title: "Give them something they can decide.",
       intro:
-        "Bring a short recommendation, the reason for it, and the alternatives. Leave room for information you do not have.",
+        "You have looked at the options. Now let’s turn them into a short recommendation you can talk through. Explain your reasoning, and ask what you might have missed.",
       sections: [
         {
           title: "Open with the customer need",
           body: "“Customers need to see online booking at the event. I want to keep that useful. Here is what the team has checked and what is still uncertain.”",
         },
         {
-          title: "If the answer is “the date cannot move”",
+          title: "If the answer is “the date can’t move”",
           body: "“Understood. Which parts must be ready that day, and which could come later?” Bring the team into checking whether the smaller plan is possible.",
         },
         {
@@ -170,7 +170,7 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
       eyebrow: "07 / EXAMPLE",
       title: "Online booking by November 1. Reports too?",
       intro:
-        "Fictional example: a sales director has promised online repair booking and downloadable service reports for a customer event. The event is fixed. The connection between booking and the repair calendar has not been tested.",
+        "Fictional example: a sales director has promised online repair booking and downloadable service reports for a customer event. The event is fixed. The connection between booking and the repair calendar hasn’t been tested.",
       sections: [
         {
           title: "What the product manager finds out",
@@ -200,29 +200,29 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
       sections: [
         {
           title: "The promise",
-          body: "Record what was promised, why the date matters, and what is still uncertain. Build Deadline Facts if you need to check your understanding with someone.",
+          body: "Record what was promised, why the date matters, and what is still uncertain. Preview Deadline Facts if you need to check your understanding with someone.",
         },
         {
           title: "Options",
-          body: "Write down what could be ready on the date, what a later date might allow, and whether extra help would be useful. Build Delivery Options to compare them.",
+          body: "Write down what could be ready on the date, what a later date might allow, and whether extra help would be useful. Preview Delivery Options to compare them.",
         },
         {
           title: "How sure are we?",
-          body: "Choose your current confidence, explain it, and name the next check. Say what you will do if that check changes the plan.",
+          body: "Choose your current confidence, explain it, and name the next check. Say what you’ll do if that check changes the plan.",
         },
         {
           title: "The update",
-          body: "Write the decision you need, who can make it, and when. Build Decision Update while it is still a proposal. Return after the meeting to record the response, then rebuild and share the updated version.",
+          body: "Write the decision you need, who can make it, and when. Preview Decision Update while it is still a proposal. Return after the meeting to record the response, then rebuild and share the updated version.",
         },
       ],
       callout:
-        "Load Examples fills only the step you are on. If it would replace existing answers, you will be asked first.",
+        "Load Examples fills only the step you’re on. If it would replace existing answers, you’ll be asked first.",
     },
     {
       eyebrow: "09 / AFTER THE CONVERSATION",
-      title: "Did anything actually change?",
+      title: "What happened after the conversation?",
       intro:
-        "A completed form can look satisfying. The useful part is what people do with it.",
+        "Once you have talked, come back and see what changed. What helped, what still needs attention, and who needs to hear from you?",
       sections: [
         {
           title: "Follow up",
@@ -230,19 +230,19 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
         },
         {
           title: "Try saying it out loud",
-          body: "Read your proposed message to someone you trust. Ask where they got lost or what sounded strange. Could you say this to the person in a real meeting? Change anything you would have to translate as you spoke.",
+          body: "Read your message aloud. Does it sound like you? If a phrase feels awkward, use the words you’d say in the meeting. Someone you trust can help you spot anything that’s hard to follow.",
         },
         {
           title: "Keep the record",
-          body: "Copy, download, or print anything you need to keep. Shared answers save in this browser on this device; they do not follow you to another device. Private notes are not saved. Export before clearing a draft or browser data.",
+          body: "Copy, download, or print anything you need to keep. Shared answers save in this browser on this device; they don’t follow you to another device. Private notes aren’t saved. Export before clearing a draft or browser data.",
         },
         {
           title: "Check what happened",
-          body: "Was the decision understood? Did someone act? Did the change help the people it was meant to help? If nobody responded, find out who can decide and agree when to ask again. Silence does not mean yes.",
+          body: "Was the decision understood? Did someone act? Did the change help the people it was meant to help? If nobody responded, find out who can decide and agree when to ask again. Silence doesn’t mean yes.",
         },
       ],
       callout:
-        "You do not have to fix the whole organization in one conversation. Leave knowing what happens next, who will do it, and when you will check back.",
+        "You don’t have to fix the whole organization in one conversation. Leave knowing what happens next, who will do it, and when you’ll check back.",
     },
   ],
   "priority-whiplash": [
@@ -250,7 +250,7 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
       eyebrow: "01 / START HERE",
       title: "One more thing. And it is urgent.",
       intro:
-        "The team already has a full week. Then another request arrives. It may be a good idea. It may even be the most important thing. But what happens to the work people are already waiting for?",
+        "Another request lands, and the team’s week is already full. Let’s find out what’s needed and look at the work people are waiting for. Then we can see what fits and what might need to wait.",
       sections: [
         {
           title: "Find out what is needed",
@@ -258,7 +258,7 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
         },
         {
           title: "Check whether it fits",
-          body: "List the work already promised and ask the team what the new request would take. Include support, testing, and review. Sometimes it fits. If it does not, something needs to change.",
+          body: "List the work already promised and ask the team what the new request would take. Include support, testing, and review. Sometimes it fits. If it doesn’t, something needs to change.",
         },
         {
           title: "Make a recommendation",
@@ -266,25 +266,25 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
         },
         {
           title: "Get a clear answer",
-          body: "If you are allowed to make the call, make it and tell the people affected. If it changes commitments someone else owns, take the recommendation to them. Record what is decided.",
+          body: "If you’re allowed to make the call, make it and tell the people affected. If it changes commitments someone else owns, take the recommendation to them. Record what is decided.",
         },
       ],
       callout:
-        "You are not trying to win an argument about being busy. You are trying to make a plan people can actually follow.",
+        "Start by getting the current work and the new request in one place. That gives you something concrete to talk through with the team.",
     },
     {
       eyebrow: "02 / BEFORE THE CONVERSATION",
       title: "You can be frustrated and still be curious.",
       intro:
-        "A new urgent request can feel like nobody remembers the promises you are already trying to keep. That feeling is worth noticing before you write the reply.",
+        "A new urgent request can feel like nobody remembers the promises you’re already trying to keep. That feeling is worth noticing before you write the reply.",
       sections: [
         {
           title: "What actually happened?",
-          body: "Write down what was said or done. Then notice what you have added. “They asked for Friday” and “They do not care about the team” are different statements. You can check the first. You need to ask about the second.",
+          body: "Start with what was said or done. “They asked for Friday” tells us what happened. “They don’t care about the team” is an explanation you may have added. What could you ask to find out what’s behind the request?",
         },
         {
           title: "Why do you care?",
-          body: "Who would be better off if this worked? A customer could stop chasing an answer. Your team could finish the work it promised. Start there. Give the other person a chance to tell you what matters to them too.",
+          body: "Who would be better off if this worked? Perhaps a customer could stop chasing an answer, or your team could finish something it promised. Say why that matters to you, and ask what matters to the other person too.",
         },
         {
           title: "What would better look like?",
@@ -292,7 +292,7 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
         },
         {
           title: "Keep these notes to yourself",
-          body: "Private notes in the Lab stay only in the open tab. They disappear when you refresh or leave and never appear in your exported documents. You can also think through these questions without typing.",
+          body: "These questions are for your own thinking; you can answer them without typing. If you use the Lab’s private notes, they stay only in the open tab. They aren’t saved or exported, and disappear when you refresh or leave.",
         },
       ],
       callout:
@@ -306,11 +306,11 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
       sections: [
         {
           title: "Start with the people waiting",
-          body: "A new customer cannot join their account. Another customer is waiting for corrected report figures. Describe the work and who needs it.",
+          body: "A new customer can’t join their account. Another customer is waiting for corrected report figures. Describe the work and who needs it.",
         },
         {
           title: "Include work that is easy to overlook",
-          body: "Customer support, checking changes, meetings, and maintenance all use time. They do not disappear because they are missing from the feature list.",
+          body: "Customer support, checking changes, meetings, and maintenance all use time. They don’t disappear because they are missing from the feature list.",
         },
         {
           title: "Describe the new request",
@@ -328,7 +328,7 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
       eyebrow: "04 / SEE WHAT WOULD CHANGE",
       title: "What would have to wait?",
       intro:
-        "Work through the options with the people doing the work. Do not turn “we will squeeze it in” into a plan.",
+        "Let’s check with the people doing the work. If the request won’t fit, what could be smaller, happen later, or wait while this gets done?",
       sections: [
         {
           title: "Name the work that changes",
@@ -340,7 +340,7 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
         },
         {
           title: "Understand what the numbers can tell you",
-          body: "Ten days available, ten already needed, and two more requested means the entered plan needs twelve days of effort. The extra two must be addressed. It does not tell you the new finish date; ask the team about skills, waiting, and the order of work.",
+          body: "Ten days available, ten already needed, and two more requested means the entered plan needs twelve days of effort. The extra two must be addressed. It doesn’t tell you the new finish date; ask the team about skills, waiting, and the order of work.",
         },
         {
           title: "Keep another option open",
@@ -348,17 +348,17 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
         },
       ],
       callout:
-        "Changing the written recommendation does not change the calculator. Its numbers describe the work you entered before the proposed change.",
+        "Changing the written recommendation doesn’t change the calculator. Its numbers describe the work you entered before the proposed change.",
     },
     {
       eyebrow: "05 / MAKE A RECOMMENDATION",
       title: "What do you think we should do?",
       intro:
-        "The person making the call needs more than a list of problems. Give them your recommendation and the reason for it.",
+        "You have looked at what would change. Which option would you recommend, and why? That gives the person making the call a useful place to start.",
       sections: [
         {
           title: "Make the choice specific",
-          body: "“Prepare the small demonstration and postpone the report correction” is a choice. “Be more flexible” is not enough for anyone to act on.",
+          body: "“Prepare the small demonstration and postpone the report correction” is a choice. “Be more flexible” isn’t enough for anyone to act on.",
         },
         {
           title: "Explain who benefits and who waits",
@@ -388,7 +388,7 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
         },
         {
           title: "“It is only a day or two”",
-          body: "“Does that include checking and testing it? Let us ask the people doing the work before we promise.”",
+          body: "“Does that include checking and testing it? Let’s ask the people doing the work before we promise.”",
         },
         {
           title: "“Nothing can move”",
@@ -426,7 +426,7 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
         },
       ],
       callout:
-        "If the new work had fitted, there would have been no need to invent a tradeoff. Here it does not fit, so the people involved make a clear choice.",
+        "If the new work had fitted, there would have been no need to invent a tradeoff. Here it doesn’t fit, so the people involved make a clear choice.",
     },
     {
       eyebrow: "08 / USE THE LAB",
@@ -436,11 +436,11 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
       sections: [
         {
           title: "Current work",
-          body: "List the current commitments, the new request, and why it matters now. Build Current Work List if you want someone to check it.",
+          body: "List the current commitments, the new request, and why it matters now. Preview Current Work List if you want someone to check it.",
         },
         {
           title: "What changes",
-          body: "Check the time available if useful. Write what would wait, who would be affected, and another option. Build What Would Change to review the consequences.",
+          body: "Check the time available if useful. Write what would wait, who would be affected, and another option. Preview What Would Change to review the consequences.",
         },
         {
           title: "Recommend",
@@ -448,17 +448,17 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
         },
         {
           title: "Record",
-          body: "Keep the status as PROPOSAL before the conversation and leave the actual decision blank. Build Priority Decision Brief. After the conversation, record the response, update who will do what, and rebuild the brief.",
+          body: "Keep the status as PROPOSAL before the conversation and leave the actual decision blank. Preview Priority Decision Brief. After the conversation, record the response, update who will do what, and rebuild the brief.",
         },
       ],
       callout:
-        "Copy, download, or print the brief to take into your usual work tools. The Lab does not send it or change the team's plan.",
+        "Copy, download, or print the brief to take into your usual work tools. The Lab doesn’t send it or change the team's plan.",
     },
     {
       eyebrow: "09 / AFTER THE CONVERSATION",
-      title: "Did anything actually change?",
+      title: "What happened after the conversation?",
       intro:
-        "A completed form can look satisfying. The useful part is what people do with it.",
+        "Once you have talked, come back and see what changed. What helped, what still needs attention, and who needs to hear from you?",
       sections: [
         {
           title: "Follow up",
@@ -466,27 +466,27 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
         },
         {
           title: "Try saying it out loud",
-          body: "Read your proposed message to someone you trust. Ask where they got lost or what sounded strange. Could you say this to the person in a real meeting? Change anything you would have to translate as you spoke.",
+          body: "Read your message aloud. Does it sound like you? If a phrase feels awkward, use the words you’d say in the meeting. Someone you trust can help you spot anything that’s hard to follow.",
         },
         {
           title: "Keep the record",
-          body: "Copy, download, or print anything you need to keep. Shared answers save in this browser on this device; they do not follow you to another device. Private notes are not saved. Export before clearing a draft or browser data.",
+          body: "Copy, download, or print anything you need to keep. Shared answers save in this browser on this device; they don’t follow you to another device. Private notes aren’t saved. Export before clearing a draft or browser data.",
         },
         {
           title: "Check what happened",
-          body: "Was the decision understood? Did someone act? Did the change help the people it was meant to help? If nobody responded, find out who can decide and agree when to ask again. Silence does not mean yes.",
+          body: "Was the decision understood? Did someone act? Did the change help the people it was meant to help? If nobody responded, find out who can decide and agree when to ask again. Silence doesn’t mean yes.",
         },
       ],
       callout:
-        "You do not have to fix the whole organization in one conversation. Leave knowing what happens next, who will do it, and when you will check back.",
+        "You don’t have to fix the whole organization in one conversation. Leave knowing what happens next, who will do it, and when you’ll check back.",
     },
   ],
   "mandate-reset": [
     {
       eyebrow: "01 / START HERE",
-      title: "You are responsible. But can you make the call?",
+      title: "You’re responsible. But can you make the call?",
       intro:
-        "You are asked why the release is late. Meanwhile, several directors have added work, and you are not allowed to put any of it off. Working harder will not answer the missing question: who gets to decide?",
+        "You’re responsible for a release, but you can’t decide what waits when more work is added. Let’s take one of those decisions and work out what you need from the people involved.",
       sections: [
         {
           title: "Choose one decision",
@@ -502,25 +502,25 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
         },
         {
           title: "Check the answer",
-          body: "A new job title or a reassuring “you own it” does not tell the team what to do. Ask the people involved to confirm the arrangement and use it on the next real request.",
+          body: "A new job title or a reassuring “you own it” doesn’t tell the team what to do. Ask the people involved to confirm the arrangement and use it on the next real request.",
         },
       ],
       callout:
-        "Here, your mandate means the decisions you are actually allowed to make. The tool helps you ask for a clear answer about one of them.",
+        "Here, your mandate means the decisions you’re actually allowed to make. The tool helps you ask for a clear answer about one of them.",
     },
     {
       eyebrow: "02 / BEFORE THE CONVERSATION",
       title: "You can be frustrated and still be curious.",
       intro:
-        "Being held responsible for a decision you cannot make is exhausting. You can describe that problem directly without deciding that everyone involved has bad intentions.",
+        "It’s frustrating to be responsible for something you can’t decide. Let’s put that problem into words and leave room to hear how the other people see it.",
       sections: [
         {
           title: "What actually happened?",
-          body: "Write down what was said or done. Then notice what you have added. “They asked for Friday” and “They do not care about the team” are different statements. You can check the first. You need to ask about the second.",
+          body: "Start with what was said or done. “They asked for Friday” tells us what happened. “They don’t care about the team” is an explanation you may have added. What could you ask to find out what’s behind the request?",
         },
         {
           title: "Why do you care?",
-          body: "Who would be better off if this worked? A customer could stop chasing an answer. Your team could finish the work it promised. Start there. Give the other person a chance to tell you what matters to them too.",
+          body: "Who would be better off if this worked? Perhaps a customer could stop chasing an answer, or your team could finish something it promised. Say why that matters to you, and ask what matters to the other person too.",
         },
         {
           title: "What would better look like?",
@@ -528,7 +528,7 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
         },
         {
           title: "Keep these notes to yourself",
-          body: "Private notes in the Lab stay only in the open tab. They disappear when you refresh or leave and never appear in your exported documents. You can also think through these questions without typing.",
+          body: "These questions are for your own thinking; you can answer them without typing. If you use the Lab’s private notes, they stay only in the open tab. They aren’t saved or exported, and disappear when you refresh or leave.",
         },
       ],
       callout:
@@ -538,11 +538,11 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
       eyebrow: "03 / WHO CAN DECIDE",
       title: "Who does what when this decision comes up?",
       intro:
-        "Map one decision using real names. Job titles alone may not tell you how the decision gets made.",
+        "Let’s follow one decision from the request to the answer. Who gets involved along the way? Use names where you can, and note anything you need to check.",
       sections: [
         {
           title: "Who brings the options and advice?",
-          body: "One person prepares the recommendation. Others provide information: developers estimate the work, and an account manager explains customer promises. Giving advice does not automatically give someone the final say.",
+          body: "One person prepares the recommendation. Others provide information: developers estimate the work, and an account manager explains customer promises. Giving advice doesn’t automatically give someone the final say.",
         },
         {
           title: "Whose approval is required?",
@@ -558,17 +558,17 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
         },
       ],
       callout:
-        "The map records what you understand. It does not give anyone new authority.",
+        "Use this map to check your understanding with the people named. Any change to who can decide still needs their agreement.",
     },
     {
       eyebrow: "04 / EXPLAIN THE PROBLEM",
-      title: "What are you expected to deliver that you cannot decide?",
+      title: "What are you expected to deliver that you can’t decide?",
       intro:
-        "Show the connection between the result expected of you and the decision that keeps getting stuck.",
+        "Let’s connect the decision to the work. What are you expected to deliver, and what can’t happen until someone makes the call?",
       sections: [
         {
           title: "Describe what happens",
-          body: "“Directors ask developers to add features. I cannot postpone them, but I am still expected to meet the original date.” Someone else should be able to recognize that sequence.",
+          body: "“Directors ask developers to add features. I can’t postpone them, but I’m still expected to meet the original date.” Someone else should be able to recognize that sequence.",
         },
         {
           title: "Explain the effect",
@@ -580,25 +580,25 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
         },
         {
           title: "Keep necessary approvals",
-          body: "You are asking for a workable way to choose work. That does not remove required security, legal, or spending approvals. Include the people responsible for them.",
+          body: "You’re asking for a workable way to choose work. That doesn’t remove required security, legal, or spending approvals. Include the people responsible for them.",
         },
       ],
       callout:
-        "Try: “I am responsible for the date, but I cannot choose what waits when new work arrives. Can we agree how those requests get decided?”",
+        "Try: “I’m responsible for the date, but I can’t choose what waits when new work arrives. Can we agree how those requests get decided?”",
     },
     {
       eyebrow: "05 / ASK FOR THE CHANGE",
       title: "Make it easy to give you a clear answer.",
       intro:
-        "“Empower me” can mean many things. Tell the person what you need to be able to do.",
+        "A specific request is easier to answer. What would you like to be able to decide, or what response do you need from the person who keeps that decision?",
       sections: [
         {
-          title: "If you are asking to decide",
+          title: "If you’re asking to decide",
           body: "Say which decision you want to make, for how long, and within which budget or other limits. Name any approvals that would still be required.",
         },
         {
           title: "If someone else keeps the decision",
-          body: "Ask who you should contact, how soon they will respond, and what plan the team should follow while waiting. Do not interpret no response as permission.",
+          body: "Ask who you should contact, how soon they will respond, and what plan the team should follow while waiting. Don’t interpret no response as permission.",
         },
         {
           title: "Ask when it can be agreed",
@@ -616,7 +616,7 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
       eyebrow: "06 / HAVE THE CONVERSATION",
       title: "Ask what they mean by “you own it.”",
       intro:
-        "You may discover that leadership thinks you already have permission, or that an approval cannot move. Find out which problem you are solving.",
+        "You may discover that leadership thinks you already have permission, or that an approval can’t move. Find out which problem you’re solving.",
       sections: [
         {
           title: "Start with the work",
@@ -624,19 +624,19 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
         },
         {
           title: "“You need to influence people”",
-          body: "“Who should I speak to, and who makes the final call? What should the team do while I am getting an answer?”",
+          body: "“Who should I speak to, and who makes the final call? What should the team do while I’m getting an answer?”",
         },
         {
           title: "“You already own it”",
           body: "“Can I postpone a director's new request to protect the release date? If so, could you confirm that with the directors and the team?”",
         },
         {
-          title: "“We cannot give you that authority”",
+          title: "“We can’t give you that authority”",
           body: "Ask for a timely decision from the person who keeps it. If no workable arrangement is agreed, record the problem and raise it through the appropriate manager. Stay within the authority you actually have.",
         },
       ],
       callout:
-        "The aim is a decision people can act on. You can be firm about the problem and still curious about what you do not know.",
+        "The aim is a decision people can act on. You can be firm about the problem and still curious about what you don’t know.",
     },
     {
       eyebrow: "07 / EXAMPLE",
@@ -646,11 +646,11 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
       sections: [
         {
           title: "The problem",
-          body: "I am held responsible for the release date, but directors can add work and I cannot say what should wait. We have no agreed way to get a quick decision.",
+          body: "I’m held responsible for the release date, but directors can add work and I can’t say what should wait. We don’t have any agreed way to get a quick decision.",
         },
         {
           title: "The request",
-          body: "Send new requests to the product director before adding them to the team's plan. The director should say whether to add them now and, if they do not fit, what should wait.",
+          body: "Send new requests to the product director before adding them to the team's plan. The director should say whether to add them now and, if they don’t fit, what should wait.",
         },
         {
           title: "What stays in place",
@@ -672,19 +672,19 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
       sections: [
         {
           title: "The problem",
-          body: "Record what you are responsible for, which decision is stuck, and what happens while you wait.",
+          body: "Record what you’re responsible for, which decision is stuck, and what happens while you wait.",
         },
         {
           title: "Who decides",
-          body: "Name the people who recommend, advise, approve, decide, and carry out the work. Build Who Can Decide and ask them to check it.",
+          body: "Name the people who recommend, advise, approve, decide, and carry out the work. Preview Who Can Decide and ask them to check it.",
         },
         {
           title: "What needs to change",
-          body: "Explain what you cannot decide and the change you are requesting. Include limits and an alternative if the decision must stay with someone else. Build The Decision Problem.",
+          body: "Explain what you can’t decide and the change you’re requesting. Include limits and an alternative if the decision must stay with someone else. Preview The Decision Problem.",
         },
         {
           title: "Ask and follow up",
-          body: "Name who needs to respond and by when. Build Decision Request before the conversation. Return to record the answer, what you will do while waiting, and when to check whether the arrangement works.",
+          body: "Name who needs to respond and by when. Preview Decision Request before the conversation. Return to record the answer, what you’ll do while waiting, and when to check whether the arrangement works.",
         },
       ],
       callout:
@@ -692,9 +692,9 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
     },
     {
       eyebrow: "09 / AFTER THE CONVERSATION",
-      title: "Did anything actually change?",
+      title: "What happened after the conversation?",
       intro:
-        "A completed form can look satisfying. The useful part is what people do with it.",
+        "Once you have talked, come back and see what changed. What helped, what still needs attention, and who needs to hear from you?",
       sections: [
         {
           title: "Follow up",
@@ -702,19 +702,19 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
         },
         {
           title: "Try saying it out loud",
-          body: "Read your proposed message to someone you trust. Ask where they got lost or what sounded strange. Could you say this to the person in a real meeting? Change anything you would have to translate as you spoke.",
+          body: "Read your message aloud. Does it sound like you? If a phrase feels awkward, use the words you’d say in the meeting. Someone you trust can help you spot anything that’s hard to follow.",
         },
         {
           title: "Keep the record",
-          body: "Copy, download, or print anything you need to keep. Shared answers save in this browser on this device; they do not follow you to another device. Private notes are not saved. Export before clearing a draft or browser data.",
+          body: "Copy, download, or print anything you need to keep. Shared answers save in this browser on this device; they don’t follow you to another device. Private notes aren’t saved. Export before clearing a draft or browser data.",
         },
         {
           title: "Check what happened",
-          body: "Was the decision understood? Did someone act? Did the change help the people it was meant to help? If nobody responded, find out who can decide and agree when to ask again. Silence does not mean yes.",
+          body: "Was the decision understood? Did someone act? Did the change help the people it was meant to help? If nobody responded, find out who can decide and agree when to ask again. Silence doesn’t mean yes.",
         },
       ],
       callout:
-        "You do not have to fix the whole organization in one conversation. Leave knowing what happens next, who will do it, and when you will check back.",
+        "You don’t have to fix the whole organization in one conversation. Leave knowing what happens next, who will do it, and when you’ll check back.",
     },
   ],
   "product-project-translator": [
@@ -722,7 +722,7 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
       eyebrow: "01 / START HERE",
       title: "“Can you just give me the final requirements?”",
       intro:
-        "You are still finding out what customers need. Someone needs a feature list, a date, or a budget. Both of you need an answer you can use. Start by asking what they need the answer for.",
+        "Someone needs a feature list, a date, or a budget while you’re still finding things out. Let’s understand what they need the answer for, then work out what you can usefully offer now.",
       sections: [
         {
           title: "Find the decision behind the question",
@@ -738,7 +738,7 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
         },
         {
           title: "Write a reply you would actually say",
-          body: "The Lab helps you check the request, prepare a commitment, and write the response. You do not need to teach someone product-management vocabulary before helping them plan.",
+          body: "The Lab helps you check the request, prepare a commitment, and write the response. You don’t need to teach someone product-management vocabulary before helping them plan.",
         },
       ],
       callout:
@@ -748,15 +748,15 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
       eyebrow: "02 / BEFORE THE CONVERSATION",
       title: "You can be frustrated and still be curious.",
       intro:
-        "A request for final details can feel like somebody has misunderstood your job. They may simply be trying to do theirs. Find out what they need before correcting them.",
+        "When someone asks for details you don’t have yet, it can be hard to know what to say. They may be trying to make a decision of their own. Let’s start by finding out what it is.",
       sections: [
         {
           title: "What actually happened?",
-          body: "Write down what was said or done. Then notice what you have added. “They asked for Friday” and “They do not care about the team” are different statements. You can check the first. You need to ask about the second.",
+          body: "Start with what was said or done. “They asked for Friday” tells us what happened. “They don’t care about the team” is an explanation you may have added. What could you ask to find out what’s behind the request?",
         },
         {
           title: "Why do you care?",
-          body: "Who would be better off if this worked? A customer could stop chasing an answer. Your team could finish the work it promised. Start there. Give the other person a chance to tell you what matters to them too.",
+          body: "Who would be better off if this worked? Perhaps a customer could stop chasing an answer, or your team could finish something it promised. Say why that matters to you, and ask what matters to the other person too.",
         },
         {
           title: "What would better look like?",
@@ -764,7 +764,7 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
         },
         {
           title: "Keep these notes to yourself",
-          body: "Private notes in the Lab stay only in the open tab. They disappear when you refresh or leave and never appear in your exported documents. You can also think through these questions without typing.",
+          body: "These questions are for your own thinking; you can answer them without typing. If you use the Lab’s private notes, they stay only in the open tab. They aren’t saved or exported, and disappear when you refresh or leave.",
         },
       ],
       callout:
@@ -774,7 +774,7 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
       eyebrow: "03 / UNDERSTAND THE REQUEST",
       title: "Ask what they will use the answer for.",
       intro:
-        "Your first interpretation might be wrong. Give the person a chance to explain.",
+        "You may have an idea of why they’re asking. A quick question can help you check it before you spend time on the answer.",
       sections: [
         {
           title: "“We need final requirements”",
@@ -786,21 +786,21 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
         },
         {
           title: "“We need the full roadmap”",
-          body: "“How far ahead do you need to plan, and what will you use it for?” Explain which work is agreed, which is only a possibility, and when you will know more.",
+          body: "“How far ahead do you need to plan, and what will you use it for?” Explain which work is agreed, which is only a possibility, and when you’ll know more.",
         },
         {
           title: "Record what they actually confirm",
-          body: "If you have not asked yet, write the question you will ask. Do not turn your guess about their motives into a fact in the reply.",
+          body: "If you haven’t asked yet, jot down the question you want to ask. You can add their answer after you have spoken; for now, keep your guess separate from what they’ve confirmed.",
         },
       ],
       callout:
-        "You are looking for an answer that helps them make their decision. Check that you understand it before writing the response.",
+        "You’re looking for an answer that helps them make their decision. Check that you understand it before writing the response.",
     },
     {
       eyebrow: "04 / OFFER A COMMITMENT",
       title: "What can we promise at this point?",
       intro:
-        "Uncertainty does not have to leave the other person empty-handed. Be specific about what you can do and what they will learn from it.",
+        "You can still give someone a useful answer while you’re learning. Let’s work out what you can do now, what it will help you find out, and when you’ll come back to them.",
       sections: [
         {
           title: "Start with what you know",
@@ -808,7 +808,7 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
         },
         {
           title: "Name the question that matters",
-          body: "Can customers complete a booking using either design? How much work would the better one take to build? Say how you will find out.",
+          body: "Can customers complete a booking using either design? How much work would the better one take to build? Say how you’ll find out.",
         },
         {
           title: "Propose the work and its limits",
@@ -816,11 +816,11 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
         },
         {
           title: "Explain what comes afterward",
-          body: "Bring the findings and estimate to Finance. Ask whether to fund the build, change the idea, or stop. Do not promise a finished service when you are only promising a customer test.",
+          body: "Bring the findings and estimate to Finance. Ask whether to fund the build, change the idea, or stop. Don’t promise a finished service when you’re only promising a customer test.",
         },
       ],
       callout:
-        "A useful commitment says what you will do, who will do it, how much time or money you will use, and when the other person will hear back.",
+        "A useful commitment says what you’ll do, who will do it, how much time or money you’ll use, and when the other person will hear back.",
     },
     {
       eyebrow: "05 / WRITE THE REPLY",
@@ -838,11 +838,11 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
         },
         {
           title: "Explain what they will get back",
-          body: "“We will bring you the results, an estimate, and a recommendation before asking you to pay for the full build.”",
+          body: "“We’ll bring you the results, an estimate, and a recommendation before asking you to pay for the full build.”",
         },
         {
           title: "Ask for a response",
-          body: "“Would that give you enough to make Thursday's decision?” Let them tell you if the offer does not meet their need. Revise it together.",
+          body: "“Would that give you enough to make Thursday's decision?” Let them tell you if the offer doesn’t meet their need. Revise it together.",
         },
       ],
       callout:
@@ -851,15 +851,14 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
     {
       eyebrow: "06 / WHEN THEY NEED MORE",
       title: "Keep working on the actual question.",
-      intro:
-        "Sometimes the first offer will not be enough. Ask what is missing.",
+      intro: "Sometimes the first offer won’t be enough. Ask what is missing.",
       sections: [
         {
           title: "“Just give me the date”",
           body: "If the team has a reliable estimate for the agreed work, share it with its assumptions. Otherwise say what needs checking and when you can return with an estimate. Use Deadline Reset if a date has already been promised.",
         },
         {
-          title: "“We cannot approve an open-ended budget”",
+          title: "“We can’t approve an open-ended budget”",
           body: "Agree a maximum spend and a stopping point. Explain what that money buys and what will still be unknown. The person paying can change or decline the proposal.",
         },
         {
@@ -868,7 +867,7 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
         },
         {
           title: "“Why does the plan keep changing?”",
-          body: "Explain what you learned and how it changed the choice. If poor planning or communication also played a part, say so. Learning does not excuse keeping people in the dark.",
+          body: "Explain what you learned and how it changed the plan. If you also missed something or didn’t keep people updated, acknowledge that and agree how you’ll keep them informed from here.",
         },
       ],
       callout:
@@ -878,11 +877,11 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
       eyebrow: "07 / EXAMPLE",
       title: "Finance needs a budget by Thursday.",
       intro:
-        "Fictional example: the finance director asks for the final feature list for an online repair-booking service. Customers have not tried either proposed design yet.",
+        "Fictional example: the finance director asks for the final feature list for an online repair-booking service. Customers haven’t tried either proposed design yet.",
       sections: [
         {
           title: "The product manager asks why",
-          body: "Finance needs a spending limit by Thursday. They do not need every screen agreed. The product manager checks that understanding before proposing a smaller first spend.",
+          body: "Finance needs a spending limit by Thursday. They don’t need every screen agreed. The product manager checks that understanding before proposing a smaller first spend.",
         },
         {
           title: "The proposed commitment",
@@ -912,15 +911,15 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
         },
         {
           title: "What they need",
-          body: "Choose the reason they need an answer, record what they confirmed, and name anything you still need to check. Build What They Need if you want to review your understanding.",
+          body: "Choose the reason they need an answer, record what they confirmed, and name anything you still need to check. Preview What They Need if you want to review your understanding.",
         },
         {
           title: "What we can promise",
-          body: "Write what you know, what is still uncertain, and what you can offer now. Include the time, money, and other limits. Build Proposed Commitment.",
+          body: "Write what you know, what is still uncertain, and what you can offer now. Include the time, money, and other limits. Preview Proposed Commitment.",
         },
         {
           title: "Your reply",
-          body: "Write the short spoken version if useful, then the message. Name the decision you need and when. Build Your Reply as a proposal. Return after the conversation to record the answer and the next action.",
+          body: "Write the short spoken version if useful, then the message. Name the decision you need and when. Preview Your Reply as a proposal. Return after the conversation to record the answer and the next action.",
         },
       ],
       callout:
@@ -928,9 +927,9 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
     },
     {
       eyebrow: "09 / AFTER THE CONVERSATION",
-      title: "Did anything actually change?",
+      title: "What happened after the conversation?",
       intro:
-        "A completed form can look satisfying. The useful part is what people do with it.",
+        "Once you have talked, come back and see what changed. What helped, what still needs attention, and who needs to hear from you?",
       sections: [
         {
           title: "Follow up",
@@ -938,19 +937,19 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
         },
         {
           title: "Try saying it out loud",
-          body: "Read your proposed message to someone you trust. Ask where they got lost or what sounded strange. Could you say this to the person in a real meeting? Change anything you would have to translate as you spoke.",
+          body: "Read your message aloud. Does it sound like you? If a phrase feels awkward, use the words you’d say in the meeting. Someone you trust can help you spot anything that’s hard to follow.",
         },
         {
           title: "Keep the record",
-          body: "Copy, download, or print anything you need to keep. Shared answers save in this browser on this device; they do not follow you to another device. Private notes are not saved. Export before clearing a draft or browser data.",
+          body: "Copy, download, or print anything you need to keep. Shared answers save in this browser on this device; they don’t follow you to another device. Private notes aren’t saved. Export before clearing a draft or browser data.",
         },
         {
           title: "Check what happened",
-          body: "Was the decision understood? Did someone act? Did the change help the people it was meant to help? If nobody responded, find out who can decide and agree when to ask again. Silence does not mean yes.",
+          body: "Was the decision understood? Did someone act? Did the change help the people it was meant to help? If nobody responded, find out who can decide and agree when to ask again. Silence doesn’t mean yes.",
         },
       ],
       callout:
-        "You do not have to fix the whole organization in one conversation. Leave knowing what happens next, who will do it, and when you will check back.",
+        "You don’t have to fix the whole organization in one conversation. Leave knowing what happens next, who will do it, and when you’ll check back.",
     },
   ],
 };
@@ -964,5 +963,5 @@ LEADERSHIP_GUIDE_PAGES["mandate-reset"][2].sources = [
 
 for (const slug of ["priority-whiplash", "mandate-reset"]) {
   LEADERSHIP_GUIDE_PAGES[slug][7].callout +=
-    " Use Load Examples to see fictional answers for the current step. You will be asked before existing answers are replaced.";
+    " Use Load Examples to see fictional answers for the current step. You’ll be asked before existing answers are replaced.";
 }

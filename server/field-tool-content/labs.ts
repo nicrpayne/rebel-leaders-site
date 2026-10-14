@@ -42,7 +42,7 @@ export const FIELD_LABS: Record<string, LabConfig> = {
         eyebrow: "BEFORE YOU TALK",
         title: "What has happened so far?",
         intro:
-          "Take a few minutes to get your thoughts straight before you talk. These notes are just for you.",
+          "Take a moment to think about what matters to you and what you want to ask. These notes are just for you.",
         fields: [
           {
             id: "side",
@@ -59,7 +59,7 @@ export const FIELD_LABS: Record<string, LabConfig> = {
           },
           {
             id: "story",
-            label: "What story are you adding about the other person's motive?",
+            label: "What are you assuming about why they said or did that?",
             type: "textarea",
           },
           {
@@ -83,12 +83,12 @@ export const FIELD_LABS: Record<string, LabConfig> = {
           },
           {
             id: "observed",
-            label: "What have you actually observed?",
+            label: "What have you seen happen?",
             type: "textarea",
           },
           {
             id: "prediction",
-            label: "What is still prediction?",
+            label: "What do you think might happen but haven’t checked yet?",
             type: "textarea",
           },
           {
@@ -107,7 +107,7 @@ export const FIELD_LABS: Record<string, LabConfig> = {
         eyebrow: "EXPERIMENT",
         title: "What would be worth trying?",
         intro:
-          "Check what you already know. If a test would help, agree the task, the time you will spend, and who needs to approve it before starting.",
+          "Would a small experiment help you answer a question that’s still open? If so, let’s agree what you’ll try, how much time you’ll spend, and who needs to approve it.",
         fields: [
           {
             id: "outcome",
@@ -130,7 +130,7 @@ export const FIELD_LABS: Record<string, LabConfig> = {
             id: "betBasis",
             label: "What problem have you seen that makes this worth trying?",
             type: "textarea",
-            hint: "Describe what happened and how you know. Your private notes are not copied here; choose what you want to share.",
+            hint: "Describe what happened and how you know. Your private notes aren’t copied here; choose what you want to share.",
           },
           {
             id: "betHypothesis",
@@ -142,13 +142,13 @@ export const FIELD_LABS: Record<string, LabConfig> = {
             id: "expectedLift",
             label: "What improvement do you predict?",
             type: "textarea",
-            hint: "For example: this usually takes 90 minutes in total; we think it might take 72 with AI. Explain how you will measure it. This is a prediction, not a promise.",
+            hint: "For example: this usually takes 90 minutes in total; we think it might take 72 with AI. Explain how you’ll measure it. This is a prediction, not a promise.",
           },
           {
             id: "betQualitative",
             label: "What else might change for the team or customers?",
             type: "textarea",
-            hint: "Optional. Would checking the work feel easier or harder? Would people learn something useful? Say who you will ask or what you will look for.",
+            hint: "Optional. Would checking the work feel easier or harder? Would people learn something useful? Say who you’ll ask or what you’ll look for.",
           },
           {
             id: "comparator",
@@ -172,8 +172,7 @@ export const FIELD_LABS: Record<string, LabConfig> = {
           },
           {
             id: "approvalOwner",
-            label:
-              "Who can approve this tool and the information you will use?",
+            label: "Who can approve this tool and the information you’ll use?",
             type: "text",
           },
           {
@@ -193,7 +192,7 @@ export const FIELD_LABS: Record<string, LabConfig> = {
             id: "betTimebox",
             label: "When does the experiment start and end?",
             type: "textarea",
-            hint: "Set start and finish dates and a time to review the result. A one-week test does not mean everyone works on it all week; record their work-time limits above.",
+            hint: "Set start and finish dates and a time to review the result. A one-week test doesn’t mean everyone works on it all week; record their work-time limits above.",
           },
           {
             id: "betRabbitHoles",
@@ -229,7 +228,7 @@ export const FIELD_LABS: Record<string, LabConfig> = {
               "NOT ACCEPTED",
               "NOT ATTEMPTED",
             ],
-            hint: "Keep this as proposed until the people responsible for the work and approvals have agreed. Filling in the plan does not count as permission.",
+            hint: "You can prepare the plan now. Keep it marked as proposed until the people doing and approving the work have agreed; their permission is still needed before you start.",
           },
         ],
       },
@@ -237,14 +236,14 @@ export const FIELD_LABS: Record<string, LabConfig> = {
         eyebrow: "RESULTS",
         title: "Did it save work overall?",
         intro:
-          "Count the time spent checking and fixing the result as well as writing it. A faster first draft may leave somebody else with more work.",
+          "Let’s look at the whole task, including checking and fixes. That will help you see whether the faster first draft made the finished work easier too.",
         fields: [
           {
             id: "betResult",
             label:
               "What happened compared with what you expected? Was it enough to be worthwhile?",
             type: "textarea",
-            hint: "Compare the result with your prediction and the minimum you agreed. Include time, quality, and people's experience. Say if you do not have enough information to decide.",
+            hint: "Compare the result with your prediction and the minimum you agreed. Include time, quality, and people's experience. Say if you don’t have enough information to decide.",
           },
           {
             id: "comparability",
@@ -286,7 +285,7 @@ export const FIELD_LABS: Record<string, LabConfig> = {
         eyebrow: "NEXT STEP",
         title: "Continue, revise, stop, or pause.",
         intro:
-          "Use what you found to choose what happens next. Finding that this use of AI does not help is a useful result too.",
+          "What did you find out? Let’s use that to choose the next step together. Learning that this use of AI doesn’t help is useful too.",
         fields: [
           {
             id: "decision",
@@ -307,7 +306,7 @@ export const FIELD_LABS: Record<string, LabConfig> = {
           },
           {
             id: "limits",
-            label: "What can you not conclude from this result?",
+            label: "What does this result still leave unanswered?",
             type: "textarea",
           },
           {
@@ -317,7 +316,7 @@ export const FIELD_LABS: Record<string, LabConfig> = {
           },
           {
             id: "leadershipUpdate",
-            label: "One-sentence update to leadership",
+            label: "What would you tell leadership in one sentence?",
             type: "textarea",
           },
         ],

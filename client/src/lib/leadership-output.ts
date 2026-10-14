@@ -7,11 +7,11 @@ const prompts: Record<string, string> = {
   decisionBy: "Record when the decision is needed.",
   decisionDate: "Record when the decision is needed.",
   date: "Record the date and what it applies to.",
-  decisionNeeded: "State the decision you are asking for.",
-  p1: "Record the first current commitment.",
-  p2: "Record another commitment, or mark none.",
-  p3: "Record another commitment, or mark none.",
-  otherWork: "Account for support, review, and other work, or mark none.",
+  decisionNeeded: "Say what you need someone to decide.",
+  p1: "Add the first piece of work already promised.",
+  p2: "Add another piece of promised work, or write none.",
+  p3: "Add another piece of promised work, or write none.",
+  otherWork: "Include support, review, and other work, or write none.",
   newAsk: "Describe the new request.",
   whyNow: "Explain why it is needed now.",
   urgencyBasis: "Say why this is needed now and how you know.",
@@ -25,7 +25,7 @@ const value = (
 ) => fieldToolChoiceLabel(key, v[key]?.trim() || fallback);
 const section = (title: string, body: string) => `${title}\n${body}`;
 const record = (title: string, sections: string[]) =>
-  `${title}\n\n${sections.filter(Boolean).join("\n\n")}\n\nWritten from your answers. Check it before sharing. Private notes are not included.`;
+  `${title}\n\n${sections.filter(Boolean).join("\n\n")}\n\nMade from your answers. Read it through before sharing; your private notes are left out.`;
 const optional = (v: WorkingValues, key: string, title: string) =>
   v[key]?.trim() ? section(title, v[key].trim()) : "";
 const status = (v: WorkingValues) =>
@@ -55,13 +55,13 @@ function capacityText(v: WorkingValues) {
   const c = capacitySnapshot(v);
   if (!c)
     return "The time estimates are incomplete. We do not yet know whether the new work will fit.";
-  return `Planning window: ${value(v, "capacityWindow", "Record the planning window.")}\nUsing entered person-days:\nAvailable: ${c.available}; existing work: ${c.existing}; new request: ${c.request}.\nBefore changing the plan, work totals: ${c.total}; work that does not fit: ${Number(c.gap.toFixed(2))}.\nOne person-day is one person working for one day. These estimates do not calculate a finish date. How we estimated them: ${value(v, "capacityBasis")}`;
+  return `Dates covered: ${value(v, "capacityWindow", "Add the dates these estimates cover.")}\nWork time, in person-days:\nAvailable: ${c.available}; existing work: ${c.existing}; new request: ${c.request}.\nBefore changing the plan, work totals: ${c.total}; work that does not fit: ${Number(c.gap.toFixed(2))}.\nOne person-day is one person working for one day. These estimates do not calculate a finish date. How we estimated them: ${value(v, "capacityBasis")}`;
 }
 export function buildDeadlineReality(v: WorkingValues) {
   return record("DEADLINE RESET — DEADLINE FACTS", [
     section("WHAT WE WANT TO IMPROVE", value(v, "outcome")),
     section(
-      "COMMUNICATED DATE / PROMISE",
+      "THE DATE PEOPLE WERE GIVEN / WHAT WAS PROMISED",
       `${value(v, "date")}\n${value(v, "promise")}`
     ),
     section(
@@ -69,7 +69,7 @@ export function buildDeadlineReality(v: WorkingValues) {
       `${value(v, "fixed")}\nBasis: ${value(v, "constraintBasis")}`
     ),
     section(
-      "ASSUMPTIONS / UNKNOWNS",
+      "WHAT WE ARE ASSUMING / WHAT NEEDS CHECKING",
       `${value(v, "assumed")}\n${value(v, "unknown")}`
     ),
     section("WHAT THE ESTIMATE IS BASED ON", value(v, "forecastBasis")),
@@ -96,8 +96,8 @@ export function buildDeadlineOptions(v: WorkingValues) {
 export function buildDeadlineUpdate(v: WorkingValues) {
   return record("DEADLINE RESET — DECISION UPDATE", [
     section(
-      "OUTCOME / CURRENT COMMITMENT",
-      `${value(v, "outcome")}\nDate communicated: ${value(v, "date")}\nPromise: ${value(v, "promise")}`
+      "WHAT WE WANT TO DELIVER / WHAT WAS PROMISED",
+      `${value(v, "outcome")}\nDate people were given: ${value(v, "date")}\nPromise: ${value(v, "promise")}`
     ),
     section(
       "WHAT IS FIXED / WHAT IS STILL ASSUMED",
@@ -105,11 +105,11 @@ export function buildDeadlineUpdate(v: WorkingValues) {
     ),
     section(
       "HOW SURE WE ARE / WHY",
-      `${value(v, "confidence", "Not assessed")} (qualitative judgment, not a calculated probability)\n${value(v, "forecastBasis")}\nApplies to: ${value(v, "confidenceScope")}`
+      `${value(v, "confidence", "Not assessed")} (your assessment, not a calculated chance of success)\n${value(v, "forecastBasis")}\nApplies to: ${value(v, "confidenceScope")}`
     ),
     section(
       "RECOMMENDATION / WHAT WOULD CHANGE",
-      `${value(v, "chosenOption")}\n${value(v, "recommendation")}\nWork included: ${value(v, "scopeMove")}\nDate alternative: ${value(v, "dateMove")}\nCapacity: ${value(v, "capacityMove")}`
+      `${value(v, "chosenOption")}\n${value(v, "recommendation")}\nWork included: ${value(v, "scopeMove")}\nAlternative date: ${value(v, "dateMove")}\nExtra help: ${value(v, "capacityMove")}`
     ),
     section(
       "REQUIRED CHECKS / IF NOTHING CHANGES",
@@ -157,9 +157,9 @@ export function buildPriorityStack(v: WorkingValues) {
     ),
     section(
       "NEW REQUEST / WHY NOW",
-      `${value(v, "newAsk")}\n${value(v, "whyNow")}\nUrgency basis: ${value(v, "urgencyBasis")}`
+      `${value(v, "newAsk")}\n${value(v, "whyNow")}\nWhy it is needed now: ${value(v, "urgencyBasis")}`
     ),
-    section("CAPACITY CHECK", capacityText(v)),
+    section("DOES THE WORK FIT", capacityText(v)),
   ]);
 }
 export function buildDisplacementMap(v: WorkingValues) {
@@ -167,12 +167,12 @@ export function buildDisplacementMap(v: WorkingValues) {
     section("NEW REQUEST", value(v, "newAsk")),
     section("OPTION BEING RECOMMENDED", value(v, "priorityChoice")),
     section(
-      "WHAT MOVES / CONSEQUENCE",
+      "WHAT WOULD WAIT / WHO IT AFFECTS",
       `${value(v, "moves")}\n${value(v, "impact")}`
     ),
     section("WHAT STAYS PROTECTED", value(v, "protected")),
-    section("ALTERNATIVE / ITS CONSEQUENCE", value(v, "alternative")),
-    section("CAPACITY CHECK", capacityText(v)),
+    section("ANOTHER OPTION / WHAT IT WOULD CHANGE", value(v, "alternative")),
+    section("DOES THE WORK FIT", capacityText(v)),
     status(v),
   ]);
 }
@@ -186,17 +186,17 @@ export function buildTradeoffBrief(v: WorkingValues) {
       "NEW REQUEST / WHY IT IS NEEDED NOW",
       `${value(v, "newAsk")}\n${value(v, "whyNow")}\n${value(v, "urgencyBasis")}`
     ),
-    section("CAPACITY CHECK", capacityText(v)),
+    section("DOES THE WORK FIT", capacityText(v)),
     section(
       "RECOMMENDATION / WHAT WOULD WAIT",
-      `${value(v, "priorityChoice")}\n${value(v, "recommendation")}\nWhat moves: ${value(v, "moves")}\nConsequence: ${value(v, "impact")}`
+      `${value(v, "priorityChoice")}\n${value(v, "recommendation")}\nWhat would wait: ${value(v, "moves")}\nWhat this would mean for people: ${value(v, "impact")}`
     ),
     section(
       "PROTECTED WORK / ALTERNATIVE",
       `${value(v, "protected")}\n${value(v, "alternative")}`
     ),
     section(
-      "DECISION OWNER / NEEDED BY",
+      "WHO CAN DECIDE / WHEN WE NEED AN ANSWER",
       `${value(v, "decisionOwner")} — ${value(v, "decisionDate")}`
     ),
     status(v),
@@ -220,23 +220,23 @@ export function buildTradeoffBrief(v: WorkingValues) {
     optional(
       v,
       "emergencyException",
-      "TEMPORARY EMERGENCY EXCEPTION / OWNER / EXPIRY"
+      "EMERGENCY CHANGE / WHO APPROVED IT / WHEN TO REVIEW"
     ),
   ]);
 }
 export function buildRightsMap(v: WorkingValues) {
   return record("MANDATE RESET — WHO CAN DECIDE", [
     section(
-      "OUTCOME / SPECIFIC DECISION",
+      "WHAT WE WANT TO DO / THE DECISION WE NEED",
       `${value(v, "outcome")}\n${value(v, "blockedDecision")}`
     ),
     section(
-      "CURRENT DECISION PATH",
+      "WHO DOES WHAT TODAY",
       `Recommends: ${value(v, "recommend", "Unknown")}\nMakes the call: ${value(v, "approve", "Unknown")}\nDoes the work: ${value(v, "execute", "Unknown")}\nSets limits or can stop it: ${value(v, "block", "Unknown")}\nAnswers for the result: ${value(v, "accountable", "Unknown")}`
     ),
     section(
-      "CONFIRMED RIGHTS / OPEN QUESTIONS",
-      value(v, "rightsEvidence", "Decision rights are not yet verified.")
+      "WHAT PEOPLE HAVE CONFIRMED / WHAT WE NEED TO ASK",
+      value(v, "rightsEvidence", "We still need to confirm who can decide.")
     ),
     section("REQUIRED APPROVAL", value(v, "requiredApprovals")),
     optional(v, "consult", "WHO WE ASKED FOR ADVICE"),
@@ -245,11 +245,14 @@ export function buildRightsMap(v: WorkingValues) {
 export function buildAuthorityGap(v: WorkingValues) {
   return record("MANDATE RESET — THE DECISION PROBLEM", [
     section(
-      "OUTCOME / BLOCKED DECISION",
+      "WHAT WE WANT TO DO / THE DECISION HOLDING IT UP",
       `${value(v, "outcome")}\n${value(v, "blockedDecision")}`
     ),
     section("THE DECISION I CANNOT MAKE", value(v, "gap")),
-    section("BUSINESS / TEAM CONSEQUENCE", value(v, "consequence")),
+    section(
+      "WHAT THIS MEANS FOR THE TEAM OR BUSINESS",
+      value(v, "consequence")
+    ),
     section("THE CHANGE WE ARE ASKING FOR", value(v, "request")),
     section(
       "LIMITS / REQUIRED APPROVALS",
@@ -262,12 +265,12 @@ export function buildAuthorityGap(v: WorkingValues) {
 export function buildMandateRequest(v: WorkingValues) {
   return record("MANDATE RESET — DECISION REQUEST", [
     section(
-      "OUTCOME / CURRENT BLOCK",
+      "WHAT WE WANT TO DO / WHAT IS HOLDING IT UP",
       `${value(v, "outcome")}\n${value(v, "blockedDecision")}`
     ),
     section(
       "WHO CAN DECIDE / WHAT WE HAVE CHECKED",
-      `Recommends: ${value(v, "recommend")}\nMakes the call: ${value(v, "approve")}\nDoes the work: ${value(v, "execute")}\nCan block: ${value(v, "block")}\nAnswers for the result: ${value(v, "accountable")}\nBasis: ${value(v, "rightsEvidence")}`
+      `Recommends: ${value(v, "recommend")}\nMakes the call: ${value(v, "approve")}\nDoes the work: ${value(v, "execute")}\nCan stop this going ahead: ${value(v, "block")}\nAnswers for the result: ${value(v, "accountable")}\nBasis: ${value(v, "rightsEvidence")}`
     ),
     section(
       "WHAT I CANNOT DECIDE / WHY IT MATTERS",
@@ -278,15 +281,15 @@ export function buildMandateRequest(v: WorkingValues) {
       `${value(v, "request")}\n${value(v, "boundaries")}\nRequired approval: ${value(v, "requiredApprovals")}`
     ),
     optional(v, "consult", "WHO WE ASKED FOR ADVICE"),
-    section("IF THE REQUEST CANNOT BE GRANTED", value(v, "fallback")),
+    section("IF THIS CHANGE IS NOT POSSIBLE", value(v, "fallback")),
     section(
-      "ACTION OWNER / NEEDED BY",
+      "WHO WE NEED AN ANSWER FROM / WHEN",
       `${value(v, "owner")} — ${value(v, "date")}`
     ),
     status(v),
     section(
-      "RECORDED RESPONSE / INTERIM ACTION",
-      `${value(v, "finalDecision", "No reset agreed. This brief does not grant new authority.")}\n${value(v, "interimAction")}`
+      "WHAT THEY SAID / WHAT WE WILL DO WHILE WAITING",
+      `${value(v, "finalDecision", "No change has been agreed yet. Current decision permissions still apply.")}\n${value(v, "interimAction")}`
     ),
     section("NEXT REVIEW / WHAT WILL SHOW IT WORKS", value(v, "reviewDate")),
     optional(
@@ -299,7 +302,7 @@ export function buildMandateRequest(v: WorkingValues) {
 export function buildRequestDecoder(v: WorkingValues) {
   return record("PRODUCT / PROJECT TRANSLATOR — WHAT THEY NEED", [
     section(
-      "EXACT REQUEST / STAKEHOLDER",
+      "WHAT THEY ASKED / WHO ASKED",
       `${value(v, "request")}\n${value(v, "stakeholder")}`
     ),
     section(
@@ -311,7 +314,7 @@ export function buildRequestDecoder(v: WorkingValues) {
       value(
         v,
         "needEvidence",
-        "Underlying need is a hypothesis; confirm it with the stakeholder."
+        "We still need to ask what they need the answer for."
       )
     ),
     section("ASSUMPTION TO CHECK", value(v, "assumption")),
@@ -323,9 +326,9 @@ export function buildProductTranslation(v: WorkingValues) {
       "WHAT WE WANT TO ACHIEVE / WHAT THEY NEED",
       `${value(v, "outcome")}\n${value(v, "need")}\n${value(v, "needEvidence")}`
     ),
-    section("KNOWN / EVIDENCE", value(v, "known")),
+    section("WHAT WE KNOW / HOW WE KNOW", value(v, "known")),
     section(
-      "UNKNOWN / HOW WE WILL LEARN",
+      "WHAT WE NEED TO FIND OUT / HOW",
       `${value(v, "unknown")}\n${value(v, "checkpoint")}`
     ),
     section(
@@ -363,7 +366,7 @@ export function buildStakeholderResponse(v: WorkingValues) {
     status(v),
     section(
       "RECORDED RESPONSE / NEXT ACTION",
-      `${value(v, "finalDecision", "No stakeholder agreement recorded.")}\n${value(v, "nextAction")}`
+      `${value(v, "finalDecision", "No agreement has been recorded yet.")}\n${value(v, "nextAction")}`
     ),
     optional(
       v,

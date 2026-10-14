@@ -12,13 +12,13 @@ export function aiGuideFor(audience: Audience) {
     ? "You think AI could help. Your lead has questions."
     : "Your PM wants to try AI. You have questions.";
   pages[0].intro = pm
-    ? "You can see work AI might help with. Your lead is not convinced. Before trying to persuade them again, get specific about what you want to improve and ask what they would need to check."
-    : "You may see something useful in your PM’s idea. You can also see code to check, mistakes to fix, and software someone will have to maintain. Explain those concerns in terms your PM can work with.";
+    ? "You have an idea for where AI could help, and your lead has questions. Let’s put the opportunity into words and understand those questions, so you can work out a useful next step together."
+    : "Your PM has an AI idea they want to explore. You can see the checks, review, and ongoing work it would need. Let’s make those clear and hear what they hope to improve, so you can decide what to do together.";
   pages[0].sections[0].body = pm
     ? "Perhaps your support team copies repair requests into two systems, and customers have to call again when one is missed. Tell your lead about that problem. Ask whether an app would help and where AI might make the work easier."
     : "Ask your PM what they want to make better. Perhaps support staff copy repair requests into two systems and customers have to call again when one is missed. That gives you a specific problem to discuss.";
   pages[0].sections[1].body = pm
-    ? "Your lead may need to check that the app cannot expose one customer’s records to another. They may also need someone to review the code. Ask what work your proposal adds and what would make it possible."
+    ? "Your lead may need to check that the app can’t expose one customer’s records to another. They may also need someone to review the code. Ask what work your proposal adds and what would make it possible."
     : "Show your PM the concern: the app must prevent one customer from seeing another’s records, and someone needs time to review the code. Say what you would need to check and who could help.";
   pages[1].callout = pm
     ? "Try: ‘The team keeps copying these requests by hand. I think we could make that easier. Could we look at whether AI would help us build something useful? I’d like to understand what you’d need to check.’"
@@ -55,8 +55,8 @@ export function aiLabFor(audience: Audience) {
     ? "Before you talk with your lead."
     : "Before you talk with your product manager.";
   steps[0].intro = pm
-    ? "You think AI could help. Your lead has questions. Take a moment to write down what you want to improve and what you still need to ask them."
-    : "Your product manager wants to try AI. You may see a useful idea and some problems. Write down both before the conversation.";
+    ? "Let’s get your idea ready to talk through. What do you hope AI could help with, and what would you like to understand from your lead? These notes are just for you."
+    : "Let’s make room for what looks useful and what gives you pause. What would you want your PM to understand, and what do you need to ask them? These notes are just for you.";
   steps[0].fields = steps[0].fields.filter(f => f.id !== "side");
   const labels: Record<string, string> = pm
     ? {
@@ -68,8 +68,8 @@ export function aiLabFor(audience: Audience) {
         why: "Why does that matter to you?",
         futurePicture:
           "If you and your lead made this work, what could be better?",
-        observed: "What evidence have you seen yourself?",
-        prediction: "What are you still predicting?",
+        observed: "What have you seen or checked yourself?",
+        prediction: "What do you think might happen but haven’t checked yet?",
         changeMind: "What would change your mind about this use of AI?",
         askOther: "What do you still need to ask your lead?",
       }
@@ -82,7 +82,8 @@ export function aiLabFor(audience: Audience) {
         futurePicture:
           "If you and your product manager made this work, what could be better?",
         observed: "What have you seen happen when people do this work?",
-        prediction: "What risk or benefit are you still predicting?",
+        prediction:
+          "What do you think could help or go wrong, but haven’t checked yet?",
         changeMind: "What would change your mind about this use of AI?",
         askOther:
           "What do you still need to ask your product manager about the request?",
@@ -103,12 +104,12 @@ export function aiLabFor(audience: Audience) {
       {
         id: "visionProduct",
         label: "What would be better for customers and the product?",
-        hint: "Name a visible improvement rather than an AI adoption target.",
+        hint: "What would a customer notice? Describe something they could do more easily or reliably.",
       },
       {
         id: "visionCompany",
         label: "What could this mean for the company, your lead, and you?",
-        hint: "Possible standards, influence, learning, or career opportunities. Invite your lead to help shape this future; avoid promising rewards.",
+        hint: "What could you learn or help other teams do? Ask your lead what they’d like to make possible too. Keep hopes for career opportunities separate from promises you can make.",
       }
     );
   }
@@ -116,8 +117,8 @@ export function aiLabFor(audience: Audience) {
     ? "Plan an experiment with your lead."
     : "Plan an experiment with your product manager.";
   steps[1].intro = pm
-    ? "Work out the plan together. What will you try? How much time will you spend? What would make it worth doing again?"
-    : "Work out the plan together. Agree what you expect, how long you will spend, and which checks the result must pass before starting.";
+    ? "If an experiment would help, let’s plan it with your lead. What will you try, how much time will you spend, and what would make it worth doing again?"
+    : "If an experiment would help, let’s plan it with your PM. Agree the task, time, and checks together before anyone starts.";
   steps[2].title = pm
     ? "Did it save time once everything was checked?"
     : "What did it take to get work you could approve?";
@@ -137,14 +138,14 @@ export function aiLabFor(audience: Audience) {
       label:
         "What permission would you need to use this in live software or with more people?",
       type: "textarea",
-      hint: "Approval to run this experiment does not automatically cover live customer systems, more data, or wider use. Name who would need to approve those changes.",
+      hint: "Approval to run this experiment doesn’t automatically cover live customer systems, more data, or wider use. Name who would need to approve those changes.",
     }
   );
   steps[3].fields.push({
     id: "unresolvedPlan",
     label: "If no agreement is reached, what happens next?",
     type: "textarea",
-    hint: "Name who can decide, what you are allowed to do while waiting, and when you will ask again. Silence does not mean yes.",
+    hint: "Name who can decide, what you’re allowed to do while waiting, and when you’ll ask again. Silence doesn’t mean yes.",
   });
   steps.splice(1, 0, readinessStep(audience));
   return {

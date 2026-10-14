@@ -105,9 +105,11 @@ describe("decision fidelity", () => {
       request: "Final requirements",
       need: "Budget / staffing",
     });
-    expect(output).toContain("Underlying need is a hypothesis");
+    expect(output).toContain(
+      "We still need to ask what they need the answer for."
+    );
     expect(buildDeadlineUpdate({ confidence: "High" })).toContain(
-      "not a calculated probability"
+      "not a calculated chance of success"
     );
   });
 });

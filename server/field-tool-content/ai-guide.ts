@@ -4,7 +4,7 @@ export const AI_STALEMATE_GUIDE_PAGES: AIGuidePage[] = [
     eyebrow: "01 / START HERE",
     title: "You see different parts of the problem.",
     intro:
-      "You have talked about AI twice already. One of you thinks it could save time. The other thinks checking its work could take longer. Another argument about AI in general is unlikely to settle that.",
+      "You’re looking at the same AI idea from different parts of the work. Let’s make space for both: what could get better, what needs checking, and what you could work out together.",
     sections: [
       {
         title: "What are you hoping to improve?",
@@ -16,11 +16,11 @@ export const AI_STALEMATE_GUIDE_PAGES: AIGuidePage[] = [
       },
       {
         title: "What have you assumed about each other?",
-        body: "‘They asked me to try it by Friday’ describes what happened. ‘They don’t care about quality’ adds a motive. You may have good reasons to be frustrated. You still need to ask.",
+        body: "‘They asked me to try it by Friday’ describes what happened. ‘They don’t care about quality’ is an explanation you may have added. What could you ask to understand what’s behind the request?",
       },
       {
         title: "What could you work out together?",
-        body: "You might agree to try something small. You might need permission, advice, or more information first. You might decide this use is not worth pursuing. All of those can be useful answers.",
+        body: "You might agree to try something small. You might need permission, advice, or more information first. You might decide this use isn’t worth pursuing. All of those can be useful answers.",
       },
     ],
     callout:
@@ -30,7 +30,7 @@ export const AI_STALEMATE_GUIDE_PAGES: AIGuidePage[] = [
     eyebrow: "02 / WHAT COULD BE BETTER?",
     title: "Give them something they can picture.",
     intro:
-      "‘We need to use AI’ gives your colleague very little to work with. What would be better for someone if this went well? Start there.",
+      "Let’s start with something your colleague can picture. If this went well, whose work or experience would get better, and how?",
     sections: [
       {
         title: "Describe an ordinary day",
@@ -42,7 +42,7 @@ export const AI_STALEMATE_GUIDE_PAGES: AIGuidePage[] = [
       },
       {
         title: "Leave room for their answer",
-        body: "Ask what they would change about your idea. They may see a simpler way to solve the problem, or a part you have missed. If their answer cannot change the proposal, it is not much of an invitation.",
+        body: "Ask what they would add or change. They may see a simpler way to help, or a part you have missed. Give their answer room to change the idea.",
       },
       {
         title: "Think beyond this one task",
@@ -59,7 +59,7 @@ export const AI_STALEMATE_GUIDE_PAGES: AIGuidePage[] = [
       "A concern is easier to work with when you know what it refers to. Ask for an example. Sometimes you can change the plan. Sometimes the answer is no, and you need to understand why.",
     sections: [
       {
-        title: "‘The code is not good enough.’",
+        title: "‘The code isn’t good enough.’",
         body: "Which checks does it fail? Would a smaller task, a good example, or clearer instructions help? Keep the checks you normally require before accepting work.",
       },
       {
@@ -67,16 +67,16 @@ export const AI_STALEMATE_GUIDE_PAGES: AIGuidePage[] = [
         body: "Ask where the extra work appears. Count the author’s checking, someone else’s review, and the fixes. A faster first draft can still take more work to finish.",
       },
       {
-        title: "‘We cannot put that data in the tool.’",
+        title: "‘We can’t put that data in the tool.’",
         body: "Find out which data and which tool are involved. Ask the person responsible for permission. A test with made-up records may be possible, but check before starting.",
       },
       {
-        title: "‘It does not know our code.’",
-        body: "Ask what it is missing. A small task with a relevant example may be worth trying. If it needs access you cannot give it, change the task or stop.",
+        title: "‘It doesn’t know our code.’",
+        body: "Ask what it is missing. A small task with a relevant example may be worth trying. If it needs access you can’t give it, change the task or stop.",
       },
       {
-        title: "‘We do not have time.’",
-        body: "Who would do the work and who would review it? What would they put off? Get that choice agreed. Quietly adding an experiment to someone’s evening is not a plan.",
+        title: "‘We don’t have time.’",
+        body: "Who would do the work and who would review it? What would they put off? Get that choice agreed. Quietly adding an experiment to someone’s evening isn’t a plan.",
       },
       {
         title: "‘We tried this already.’",
@@ -98,9 +98,9 @@ export const AI_STALEMATE_GUIDE_PAGES: AIGuidePage[] = [
   },
   {
     eyebrow: "04 / BEFORE YOU TALK",
-    title: "Get your own thoughts straight.",
+    title: "Take a moment before you talk.",
     intro:
-      "Take five or ten minutes before the conversation. You do not need a perfect argument. You need to know what matters to you and what you still need to ask.",
+      "Take five or ten minutes before the conversation. You don’t need a perfect argument. You need to know what matters to you and what you still need to ask.",
     sections: [
       {
         title: "What happened?",
@@ -124,29 +124,29 @@ export const AI_STALEMATE_GUIDE_PAGES: AIGuidePage[] = [
       },
       {
         title: "What do I still need to ask?",
-        body: "Write the question you have not answered by yourself. That is a good place to start the conversation.",
+        body: "Write the question you haven’t answered by yourself. That’s a good place to start the conversation.",
       },
     ],
     callout:
-      "Private notes stay only in this open tab. They are not saved or included in shared documents, and they disappear when you refresh or leave. You can also reflect without typing.",
+      "Private notes stay only in this open tab. They aren’t saved or included in shared documents, and they disappear when you refresh or leave. You can also reflect without typing.",
   },
   {
     eyebrow: "05 / PLAN AN EXPERIMENT",
     title: "What would be worth finding out?",
     intro:
-      "Plan an experiment only if you have a useful question you cannot answer from what you already know. Agree the plan together before anyone starts.",
+      "Plan an experiment only if you have a useful question you can’t answer from what you already know. Agree the plan together before anyone starts.",
     sections: [
       {
         title: "Say what you expect and why",
-        body: "For example: we think AI could help write permission tests faster because many of them are similar. That is a prediction. We have not shown it yet.",
+        body: "For example: we think AI could help write permission tests faster because many of them are similar. That’s a prediction. We haven’t shown it yet.",
       },
       {
         title: "Choose the task and the comparison",
-        body: "Name exactly what you will try and what you will leave out. Choose similar work done without AI so the comparison is useful. Note differences in task size, experience, or required checks.",
+        body: "Name exactly what you’ll try and what you’ll leave out. Choose similar work done without AI so the comparison is useful. Note differences in task size, experience, or required checks.",
       },
       {
         title: "Check permission",
-        body: "Record the approved tool and version, the code and data it may use, and who confirmed permission. Permission for this experiment does not cover live customer systems or wider use.",
+        body: "Record the approved tool and version, the code and data it may use, and who confirmed permission. Permission for this experiment doesn’t cover live customer systems or wider use.",
       },
       {
         title: "Agree the time and checks",
@@ -168,7 +168,7 @@ export const AI_STALEMATE_GUIDE_PAGES: AIGuidePage[] = [
     eyebrow: "06 / COUNT ALL THE WORK",
     title: "Did the faster draft save any time?",
     intro:
-      "Count everyone’s working minutes, including checking and fixes. Two people working for 30 minutes use 60 person-minutes. That is different from how long the task took on the clock.",
+      "Count everyone’s working minutes, including checking and fixes. Two people working for 30 minutes use 60 person-minutes. That’s different from how long the task took on the clock.",
     sections: [
       {
         title: "A separate fictional example",
@@ -180,11 +180,11 @@ export const AI_STALEMATE_GUIDE_PAGES: AIGuidePage[] = [
       },
       {
         title: "What else do you need to know?",
-        body: "Record failed checks, later defects, tool costs, and anything that makes the tasks hard to compare. Ask the author and reviewer how the work felt. One task cannot tell you what will happen everywhere.",
+        body: "Record failed checks, later defects, tool costs, and anything that makes the tasks hard to compare. Ask the author and reviewer how the work felt. One task can’t tell you what will happen everywhere.",
       },
     ],
     callout:
-      "Enter 0 when no time was spent. Leave a box blank when you do not know. A partial total cannot show a saving.",
+      "Enter 0 when no time was spent. Leave a box blank when you don’t know. A partial total can’t show a saving.",
     table: [
       ["Work", "Without AI", "With AI"],
       ["Preparation", "10 min", "15 min"],
@@ -198,13 +198,13 @@ export const AI_STALEMATE_GUIDE_PAGES: AIGuidePage[] = [
   },
   {
     eyebrow: "07 / DECIDE WHAT HAPPENS NEXT",
-    title: "You do not have to make the experiment a success.",
+    title: "What did we learn, and what should we do next?",
     intro:
-      "Look at what happened against what you agreed beforehand. The result may change your mind. That is part of the point.",
+      "Let’s compare what happened with what you hoped to find. It’s useful to learn that this task needs a different approach, or that this use of AI isn’t worth continuing.",
     sections: [
       {
         title: "CONTINUE",
-        body: "The result supports using AI for this task under the agreed conditions. Say where that permission ends and when you will check again.",
+        body: "The result supports using AI for this task under the agreed conditions. Say where that permission ends and when you’ll check again.",
       },
       {
         title: "REVISE",
@@ -212,15 +212,15 @@ export const AI_STALEMATE_GUIDE_PAGES: AIGuidePage[] = [
       },
       {
         title: "STOP",
-        body: "The result does not justify this use, or an agreed limit was broken. Explain why you are stopping and keep what you learned.",
+        body: "The result doesn’t justify this use, or an agreed limit was broken. Explain why you’re stopping and keep what you learned.",
       },
       {
         title: "PAUSE",
-        body: "You are missing permission, information, time, or a person who needs to be involved. Name what is missing, who will resolve it, and when you will return. You can choose this before an experiment.",
+        body: "You’re missing permission, information, time, or a person who needs to be involved. Name what is missing, who will resolve it, and when you’ll return. You can choose this before an experiment.",
       },
     ],
     callout:
-      "Write what you decided, why, who will do what next, and when. If you have not agreed, keep the record marked as a proposal and say what still needs deciding.",
+      "Write what you decided, why, who will do what next, and when. If you haven’t agreed, keep the record marked as a proposal and say what still needs deciding.",
   },
   {
     eyebrow: "08 / A WORKED EXAMPLE",
@@ -250,13 +250,13 @@ export const AI_STALEMATE_GUIDE_PAGES: AIGuidePage[] = [
       },
     ],
     callout:
-      "They have a proposal someone can answer, with specific work and people responsible. They have not measured an AI productivity gain.",
+      "They have a proposal someone can answer, with specific work and people responsible. They haven’t measured an AI productivity gain.",
   },
   {
     eyebrow: "09 / USE THE LAB",
     title: "Bring one real conversation.",
     intro:
-      "The Guide explains the questions. The Lab gives you somewhere to answer them and prepare a document you can share. You can start where you are; you do not need to fill in every box.",
+      "Ready to try this with your own situation? The Lab helps you work through the questions and prepare something to talk over with your colleague. Start where it helps; you don’t need to fill every box.",
     sections: [
       {
         title: "1. Before you talk",
@@ -264,19 +264,19 @@ export const AI_STALEMATE_GUIDE_PAGES: AIGuidePage[] = [
       },
       {
         title: "2. Conversation",
-        body: "Share what you want to improve and ask about the concerns. Choose what to do next. Build Next Step Together, check it, then copy, download, or print it. Mark a proposal as a proposal.",
+        body: "Share what you want to improve and ask about the concerns. Choose what to do next. Preview Next Step Together, check it, then copy, download, or print it. Mark a proposal as a proposal.",
       },
       {
         title: "3. Experiment, if useful",
-        body: "Agree the task, time, checks, permissions, people, and review date. Build and review the Experiment Plan before starting. You can skip this step if your next move does not involve an experiment.",
+        body: "Agree the task, time, checks, permissions, people, and review date. Read through the Experiment Plan before starting. You can skip this step if your next move doesn’t involve an experiment.",
       },
       {
         title: "4. Results",
-        body: "Return after the experiment. Enter all the time spent, the quality checks, and what happened. Build the Results Record. Leave unknown values blank.",
+        body: "Return after the experiment. Enter all the time spent, the quality checks, and what happened. Preview the Results Record. Leave unknown values blank.",
       },
       {
         title: "5. Next step",
-        body: "Write the decision and the reason. Name who will do what next and when you will check again. Build the Decision Brief and review it before sharing.",
+        body: "Write the decision and the reason. Name who will do what next and when you’ll check again. Preview the Decision Brief and review it before sharing.",
       },
     ],
     callout:

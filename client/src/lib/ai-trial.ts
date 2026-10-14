@@ -48,7 +48,10 @@ export function buildReadinessBrief(v: Values) {
   const optional = [
     ["WHAT WE WANT TO IMPROVE TOGETHER", [v.outcome, v.sharedVision]],
     ["WHERE THE ESTIMATE CAME FROM / WHO WILL CHECK IT", [v.businessBasis]],
-    ["TEAM / COMPANY OPPORTUNITY", [v.growthOpportunity]],
+    [
+      "WHAT THIS COULD MAKE POSSIBLE FOR THE TEAM OR COMPANY",
+      [v.growthOpportunity],
+    ],
     ["WHO MAY ACCESS WHICH RECORDS / WHO DECIDES", [v.accessModel]],
     ["CHECKING DATA ACCESS", [v.securityChecks]],
     ["WHAT THE AI IS ALLOWED TO DO", [v.automationBoundary]],
@@ -60,7 +63,7 @@ export function buildReadinessBrief(v: Values) {
 CONVERSATION STATUS
 ${answer(v, "conversationStatus", "PROPOSED — NOT YET AGREED")}
 
-OUTCOME / CONTEXT
+WHAT WE WANT TO IMPROVE / WHY IT MATTERS
 ${answer(v, "businessContext")}
 
 WHAT THE OTHER PERSON NEEDS OR IS WORRIED ABOUT
@@ -70,7 +73,7 @@ WHAT WE AGREE ON / WHAT WE STILL NEED TO ASK
 ${answer(v, "openQuestions")}
 
 WHAT WE WANT TO DO NEXT
-${answer(v, "readinessDecision", "Choose and record the next move.")}
+${answer(v, "readinessDecision", "Choose what you want to do next.")}
 
 WHO WILL DO WHAT / WHEN WE WILL CHECK AGAIN
 ${answer(v, "prerequisitePlan")}
@@ -80,7 +83,7 @@ ${optional
     return text ? "\n" + title + "\n" + text + "\n" : "";
   })
   .join("")}
-This record supports the conversation; it does not create agreement or certify security or team readiness. Appropriate owners must verify technical conditions. Private preparation is excluded.`;
+Use this to talk through the next step. A proposal still needs agreement, and the people responsible must check the technical details and support the team needs. Your private notes are left out.`;
 }
 
 const optionalRecord = (v: Values, key: string, title: string) =>
@@ -103,20 +106,20 @@ ${answer(v, "expectedLift")}
 OTHER CHANGES WE WILL LOOK FOR
 ${answer(v, "betQualitative", "Describe if relevant.")}
 
-WORK OUTCOME
+WHAT WE WANT TO IMPROVE
 ${answer(v, "outcome")}
 
 WHAT WE WANT TO IMPROVE TOGETHER
 ${answer(v, "sharedVision")}
 
 WHAT NEEDS TO HAPPEN BEFORE WE START
-${answer(v, "readinessDecision", "Record the readiness decision.")}
+${answer(v, "readinessDecision", "Add what needs to happen before you start.")}
 ${answer(v, "prerequisitePlan")}
 
-SYSTEM / TEAM CONDITIONS
+WHAT THE SYSTEM AND TEAM NEED
 Access: ${answer(v, "accessModel")}
-Verification: ${answer(v, "securityChecks")}
-Agent boundaries: ${answer(v, "automationBoundary")}
+Checks: ${answer(v, "securityChecks")}
+What the AI is allowed to do: ${answer(v, "automationBoundary")}
 Team support: ${answer(v, "readinessSupport")}
 
 THE TASK / WHAT WE WILL NOT DO
@@ -129,35 +132,35 @@ AI TOOL / VERSION
 ${answer(v, "tool")}
 Version: ${answer(v, "toolVersion")}
 
-ALLOWED INPUTS / APPROVAL OWNER
+INFORMATION WE MAY USE / WHO APPROVES IT
 ${answer(v, "inputs")}
-Approval owner: ${answer(v, "approvalOwner")}
+Who can approve it: ${answer(v, "approvalOwner")}
 
-QUALITY BAR / ACCEPTANCE OWNER
+CHECKS THE WORK MUST PASS / WHO CHECKS
 ${answer(v, "qualityBar")}
 
-PROTECTED CAPACITY / DISPLACED WORK
+TIME WE WILL SET ASIDE / WORK THAT WOULD WAIT
 ${answer(v, "capacity")}
 
-TIMEBOX / EVIDENCE CHECKPOINT
+START AND FINISH / WHEN WE WILL REVIEW
 ${answer(v, "betTimebox")}
 
-RABBIT HOLES / CONTAINMENT
+WHAT COULD MAKE THIS A BIGGER JOB / WHEN TO STOP
 ${answer(v, "betRabbitHoles", "None recorded; check before sharing.")}
 
-SUCCESS BAR
+WHAT WOULD MAKE THIS WORTH DOING AGAIN
 ${answer(v, "success")}
 
-STOP RULE
+WHEN WE WILL STOP
 ${answer(v, "stop")}
 
-TASK / REVIEWER / DECISION OWNERS / REVIEW DATE
+WHO DOES THE WORK / WHO REVIEWS / WHO DECIDES / WHEN
 ${answer(v, "owners")}
 
 HAS THE EXPERIMENT BEEN AGREED?
 ${answer(v, "betStatus", "PROPOSED — NOT YET ACCEPTED")}
 
-Record these shared conditions before the experiment. Private preparation is excluded.${optionalRecord(v, "decisionRights", "DECISION RIGHTS / AFFECTED PEOPLE")}${optionalRecord(v, "deploymentPermission", "FURTHER APPROVAL FOR DEPLOYMENT OR EXPANSION")}`;
+Agree this plan with the people doing and approving the work before starting. Your private notes are left out.${optionalRecord(v, "decisionRights", "WHO CAN DECIDE / WHO NEEDS TO BE INVOLVED")}${optionalRecord(v, "deploymentPermission", "APPROVAL NEEDED FOR LIVE SYSTEMS OR WIDER USE")}`;
 }
 
 export function buildEvidenceRecord(v: Values) {
@@ -171,8 +174,8 @@ export function buildEvidenceRecord(v: Values) {
   const totals = `Without AI: ${baseline.minutes} min${baseline.complete ? "" : " (partial; " + baseline.entered + "/6 stages)"}\nWith AI: ${ai.minutes} min${ai.complete ? "" : " (partial; " + ai.entered + "/6 stages)"}`;
   const difference =
     baseline.complete && ai.complete
-      ? `Recorded effort difference: ${Math.round((ai.minutes - baseline.minutes) * 100) / 100} min (with AI minus without AI).`
-      : "Comparison pending: enter all stages for both methods. Enter 0 when no effort occurred; blank means unknown.";
+      ? `Difference in total working time: ${Math.round((ai.minutes - baseline.minutes) * 100) / 100} min (with AI minus without AI).`
+      : "We need all stages for both methods before comparing them. Enter 0 when no time was spent; leave it blank if you do not know.";
   return `AI STALEMATE — RESULTS RECORD
 
 TESTED TASK
@@ -195,7 +198,7 @@ ${rows}
 TOTAL RECORDED EFFORT
 ${totals}
 ${difference}
-${baseline.complete && ai.complete && baseline.minutes > 0 ? `Observed effort reduction: ${Math.round(((baseline.minutes - ai.minutes) / baseline.minutes) * 1000) / 10}%. Negative means more effort with AI. This is a descriptive comparison, not a causal estimate.` : "Observed percentage reduction unavailable: both methods need complete effort and a positive baseline."}
+${baseline.complete && ai.complete && baseline.minutes > 0 ? `Reduction in working time: ${Math.round(((baseline.minutes - ai.minutes) / baseline.minutes) * 1000) / 10}%. A negative number means it took longer with AI. This compares the two tasks; it does not show that AI caused the difference.` : "To calculate a percentage, add all the times for both tasks. The task without AI must have taken more than zero minutes."}
 
 NOTES ABOUT THE TWO TASKS
 ${answer(v, "withoutAi")}
@@ -204,13 +207,13 @@ ${answer(v, "withAi")}
 QUALITY CHECKS / DEFECTS / REVIEWER EXPERIENCE
 ${answer(v, "quality")}
 
-ELAPSED TIME / TOOL COST / LEARNING EFFECTS
+WAITING TIME / TOOL COSTS / LEARNING TO USE IT
 ${answer(v, "otherCosts")}
 
-LATER DEFECT CHECK / OWNER / DATE
+WHO WILL CHECK FOR LATER PROBLEMS / WHEN
 ${answer(v, "laterCheck")}
 
-These totals describe recorded effort for this task. They do not establish quality, causation, or a universal productivity result.`;
+These totals show the time entered for this task. Check quality and differences between the tasks too; this result cannot tell us whether AI will help on every task.`;
 }
 
 export function buildDecisionBrief(v: Values) {
@@ -235,20 +238,20 @@ export function buildDecisionBrief(v: Values) {
     ? "No experiment result is recorded for this preparation decision."
     : baseline.complete && ai.complete
       ? `${baseline.minutes} person-minutes without AI; ${ai.minutes} with AI.`
-      : "Effort comparison remains incomplete. See the Results Record.";
+      : "Some working times are still missing. Check the Results Record before comparing the tasks.";
   return `AI STALEMATE — DECISION BRIEF
 
 CONVERSATION STATUS
 ${answer(v, "conversationStatus", "PROPOSED — NOT YET AGREED")}
 
-WORK OUTCOME / ${preTrial ? "PROPOSED USE" : "TESTED TASK"}
+WHAT WE WANT TO IMPROVE / ${preTrial ? "PROPOSED USE" : "TESTED TASK"}
 ${answer(v, "outcome")}
 ${answer(v, "task", preTrial ? "No experiment has been agreed or run." : "Add this before sharing.")}
 
-SHARED AMBITION
+WHAT WE HOPE TO MAKE POSSIBLE TOGETHER
 ${answer(v, "sharedVision")}
 
-REPORTED BUSINESS CONTEXT / BASIS
+WHAT WE HAVE HEARD / WHERE IT CAME FROM
 ${answer(v, "businessContext")}
 ${answer(v, "businessBasis")}
 
@@ -256,13 +259,13 @@ WHAT NEEDS TO HAPPEN FIRST / HELP NEEDED
 ${answer(v, "readinessDecision")}
 ${answer(v, "prerequisitePlan")}
 Access: ${answer(v, "accessModel")}
-Verification: ${answer(v, "securityChecks")}
-Agent boundaries: ${answer(v, "automationBoundary")}
+Checks: ${answer(v, "securityChecks")}
+What the AI is allowed to do: ${answer(v, "automationBoundary")}
 Team support: ${answer(v, "readinessSupport")}
 
 AGREED CONDITIONS / WORK WITHOUT AI
 ${answer(v, "tool", preTrial ? "No tool or use approved for an experiment." : "Add this before sharing.")}${v.toolVersion?.trim() ? " — " + v.toolVersion.trim() : ""}
-${answer(v, "comparator", preTrial ? "No experiment comparator agreed." : "Add this before sharing.")}
+${answer(v, "comparator", preTrial ? "We have not yet agreed which task without AI to compare with." : "Add this before sharing.")}
 
 EVIDENCE
 ${effort}
@@ -281,7 +284,7 @@ LIMITS OF THIS EVIDENCE
 ${answer(v, "limits")}
 
 WHO WILL DO WHAT NEXT / WHEN
-${answer(v, "next")}${optionalRecord(v, "unresolvedPlan", "IF UNRESOLVED / INTERIM MOVE / REVISIT")}${optionalRecord(v, "deploymentPermission", "FURTHER APPROVAL FOR DEPLOYMENT OR EXPANSION")}
+${answer(v, "next")}${optionalRecord(v, "unresolvedPlan", "IF WE HAVE NOT AGREED / WHAT WE WILL DO WHILE WAITING / WHEN TO TALK AGAIN")}${optionalRecord(v, "deploymentPermission", "APPROVAL NEEDED FOR LIVE SYSTEMS OR WIDER USE")}
 
 UPDATE TO LEADERSHIP
 ${answer(v, "leadershipUpdate")}`;

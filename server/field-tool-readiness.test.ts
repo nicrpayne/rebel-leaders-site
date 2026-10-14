@@ -55,7 +55,7 @@ describe("readiness before AI experiments", () => {
     const text = buildAITrialPackage(AI_READINESS_SAMPLE);
     expect(text).toContain("NEXT STEP TOGETHER");
     expect(text).toContain("PAUSE");
-    expect(text).toContain("Finance has not checked");
+    expect(text).toContain("Finance hasn’t checked");
     expect(text).toContain("next Tuesday");
     expect(text).not.toContain("EXPERIMENT PLAN");
     expect(text).not.toContain("RESULTS RECORD");
@@ -125,7 +125,7 @@ describe("readiness before AI experiments", () => {
       expect(pages[5].eyebrow).toBe("06 / CHECK WHO CAN ACCESS THE DATA");
       expect(pages[6].eyebrow).toBe("07 / HELP THE TEAM PREPARE");
       expect(pages[10].callout).toContain(
-        "They have not measured an AI productivity gain"
+        "They haven’t measured an AI productivity gain"
       );
     }
   });

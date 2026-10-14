@@ -17,12 +17,12 @@ const privatePrep = [
   field(
     "privateReaction",
     "How are you feeling about this?",
-    "Private. Take a moment to notice the frustration before you reply."
+    "Just for you. Notice what’s on your mind before deciding how to reply."
   ),
   field(
     "privateAssumption",
     "What are you assuming about the other person?",
-    "Private. What could you ask them to check whether that is true?"
+    "Just for you. What could you ask to find out whether that’s true?"
   ),
 ];
 const decisionStatus = choice(
@@ -50,22 +50,22 @@ export const LEADERSHIP_LABS: Record<string, LabConfig> = {
         eyebrow: "THE PROMISE",
         title: "What exactly has been promised?",
         intro:
-          "Start with one promised date. Find out what people expect to be ready and what the team still needs to check.",
+          "Let’s start with what people were told. Write down what you know about the date and the work; anything you’re unsure of can become a question to ask.",
         fields: [
           field(
             "outcome",
             "What should customers or the team be able to do when this is finished?"
           ),
-          field("date", "What date has been communicated?", undefined, "text"),
+          field("date", "What date were people given?", undefined, "text"),
           field(
             "promise",
             "What was promised, and by whom?",
             "Use the words people were told. Was this an estimate, a target, or a promise they are relying on?"
           ),
-          field("fixed", "What cannot change, and why?"),
+          field("fixed", "What can’t change, and why?"),
           field(
             "constraintBasis",
-            "How do you know it cannot change?",
+            "How do you know it can’t change?",
             "For example, the event is booked or a contract sets the date. Name the person who confirmed it."
           ),
           field(
@@ -80,7 +80,7 @@ export const LEADERSHIP_LABS: Record<string, LabConfig> = {
         eyebrow: "OPTIONS",
         title: "What could we change?",
         intro:
-          "Ask the people doing the work what each option would take. Check whether extra help would really help, and keep the necessary quality checks.",
+          "Let’s compare a few ways forward. Ask the team what each would take, including the checks they need to do and whether extra help would make a difference.",
         fields: [
           field(
             "scopeMove",
@@ -90,7 +90,7 @@ export const LEADERSHIP_LABS: Record<string, LabConfig> = {
           field(
             "dateMove",
             "If all the promised work must be ready together, when could we finish?",
-            "Use the team's estimate and explain what it depends on. If they do not know yet, say what they need to check."
+            "Use the team's estimate and explain what it depends on. If they don’t know yet, say what they need to check."
           ),
           field(
             "capacityMove",
@@ -119,7 +119,7 @@ export const LEADERSHIP_LABS: Record<string, LabConfig> = {
         eyebrow: "HOW SURE ARE WE?",
         title: "How sure are we that this plan will work?",
         intro:
-          "Explain why you think the work can be ready. The Lab does not calculate the chance of meeting the date.",
+          "What gives you confidence in this plan, and what still needs checking? We’re putting your judgment into words here; the Lab doesn’t calculate the chance of meeting the date.",
         fields: [
           choice("confidence", "How confident are you?", [
             "Low",
@@ -129,7 +129,7 @@ export const LEADERSHIP_LABS: Record<string, LabConfig> = {
           ]),
           field(
             "confidenceScope",
-            "Which work and finish date are you judging?"
+            "Which work and finish date does that confidence apply to?"
           ),
           field(
             "forecastBasis",
@@ -152,7 +152,7 @@ export const LEADERSHIP_LABS: Record<string, LabConfig> = {
         eyebrow: "UPDATE",
         title: "What do you need someone to decide?",
         intro:
-          "Prepare your request before the meeting. Come back afterward to record the answer.",
+          "Let’s turn what you have found into a clear request. You can take it into the meeting, then come back to add the answer.",
         fields: [
           field("decisionNeeded", "What decision do you need now?"),
           field("owner", "Who can make it?", undefined, "text"),
@@ -183,7 +183,7 @@ export const LEADERSHIP_LABS: Record<string, LabConfig> = {
         eyebrow: "CURRENT WORK",
         title: "What are we already working on?",
         intro:
-          "List the work people are waiting for, then add the new request. We will check whether it fits and what would need to change.",
+          "Start with the work people are already waiting for, then add the new request. A rough list is enough to begin; we’ll work through what it means next.",
         fields: [
           field(
             "outcome",
@@ -211,7 +211,7 @@ export const LEADERSHIP_LABS: Record<string, LabConfig> = {
         eyebrow: "WHAT CHANGES",
         title: "If we take this on, what would have to wait?",
         intro:
-          "Check whether the request fits. If it does not, compare a smaller version, a later date, or putting other work off. Use the time check below if it helps.",
+          "Let’s see whether the request fits. If it doesn’t, we can look at a smaller version, a later date, or work that could wait. The time check below can help.",
         fields: [
           choice("priorityChoice", "What do you suggest?", [
             "Accept / displace named work",
@@ -255,7 +255,7 @@ export const LEADERSHIP_LABS: Record<string, LabConfig> = {
         eyebrow: "RECOMMEND",
         title: "What do you think we should do?",
         intro:
-          "If you are allowed to make this call, make it and tell the people affected. Otherwise, take your recommendation to the person who can.",
+          "You have looked at the options. Which would you choose, and why? If the call is yours, explain it to the people affected. Otherwise, take your recommendation to the person who can decide.",
         fields: [
           field(
             "recommendation",
@@ -270,13 +270,13 @@ export const LEADERSHIP_LABS: Record<string, LabConfig> = {
         eyebrow: "RECORD",
         title: "What was decided, and who needs to know?",
         intro:
-          "Before the meeting, build the brief as a proposal. Afterward, come back and record the answer. Do not mark it agreed before someone agrees.",
+          "Your brief can help you start the conversation. Keep it as a proposal for now, then come back to add what was decided and who needs to know.",
         fields: [
           decisionStatus,
           field(
             "finalDecision",
             "What was actually decided?",
-            "Record the choice and the person who made it. Leave blank before agreement."
+            "After the conversation, add the choice and who made it. You can leave this blank until then."
           ),
           field(
             "communication",
@@ -303,13 +303,13 @@ export const LEADERSHIP_LABS: Record<string, LabConfig> = {
         eyebrow: "THE PROBLEM",
         title: "Which decision is holding up the work?",
         intro:
-          "Start with what you are expected to deliver and a decision you cannot make. We will work out who can make it and what you need to ask for.",
+          "Let’s take one decision that keeps getting stuck. What are you trying to get done, and what do you need someone to decide?",
         fields: [
           field("outcome", "What are you expected to deliver or improve?"),
           field(
             "blockedDecision",
             "Which decision is blocking progress?",
-            "For example, you are expected to meet the release date but cannot postpone new feature requests."
+            "For example, you’re expected to meet the release date but can’t postpone new feature requests."
           ),
           field(
             "consequence",
@@ -323,7 +323,7 @@ export const LEADERSHIP_LABS: Record<string, LabConfig> = {
         eyebrow: "WHO DECIDES",
         title: "Who does what when this decision comes up?",
         intro:
-          "Use real names where you can. If you are unsure who is allowed to decide, say so and ask the people involved to confirm.",
+          "Who gets involved in this decision? Start with the people you know. If you’re unsure about someone’s role, note it here so you can ask them.",
         fields: [
           field(
             "recommend",
@@ -366,12 +366,12 @@ export const LEADERSHIP_LABS: Record<string, LabConfig> = {
         eyebrow: "WHAT NEEDS TO CHANGE",
         title: "What would make it possible to get a decision?",
         intro:
-          "You might ask to make this call yourself within agreed limits. Or ask the person who keeps it to respond within a set time.",
+          "What would help you get on with the work? You might ask to make this decision within agreed limits, or agree how quickly the person responsible will answer.",
         fields: [
           field(
             "gap",
-            "What are you responsible for that you cannot decide?",
-            "Describe what happens. For example: directors add work, I cannot put it off, but I am still expected to meet the original date."
+            "What are you responsible for that you can’t decide?",
+            "Describe what happens. For example: directors add work, I can’t put it off, but I’m still expected to meet the original date."
           ),
           field(
             "request",
@@ -381,7 +381,7 @@ export const LEADERSHIP_LABS: Record<string, LabConfig> = {
           field("boundaries", "What limits and approvals would still apply?"),
           field(
             "fallback",
-            "If you cannot make the call, how will you get an answer?",
+            "If you can’t make the call, how will you get an answer?",
             "Who will you ask, how soon should they respond, and what will the team do while waiting?"
           ),
         ],
@@ -390,12 +390,12 @@ export const LEADERSHIP_LABS: Record<string, LabConfig> = {
         eyebrow: "REQUEST",
         title: "Make the request easy to respond to.",
         intro:
-          "Ask the person who can agree to this change. Record their answer after the conversation.",
+          "Let’s get your request ready for the person who can agree to it. Add when you need an answer, then return after the conversation to record what they said.",
         fields: [
           field("owner", "Who needs to act?", undefined, "text"),
           field("date", "Response needed by", undefined, "text"),
           decisionStatus,
-          field("finalDecision", "What response has been recorded?"),
+          field("finalDecision", "What did they say?"),
           field(
             "interimAction",
             "What will you do within your current authority while waiting?"
@@ -420,7 +420,7 @@ export const LEADERSHIP_LABS: Record<string, LabConfig> = {
         eyebrow: "THE REQUEST",
         title: "Let's start with the sentence you heard.",
         intro:
-          "Someone needs an answer so they can plan. Start with what they asked, then find out what they need it for.",
+          "What did they ask you? Use their words, even if you’re not sure how to answer yet. We’ll work out what they need the answer for next.",
         fields: [
           field("request", "What did they ask for?", "Use their actual words."),
           field("stakeholder", "Who is asking?", undefined, "text"),
@@ -432,7 +432,7 @@ export const LEADERSHIP_LABS: Record<string, LabConfig> = {
         eyebrow: "WHAT THEY NEED",
         title: "What do they need the answer for?",
         intro:
-          "They may need to set a budget, tell a customer, or plan another team's work. Ask them before treating your guess as the answer.",
+          "They might be setting a budget, talking to a customer, or planning another team’s work. What have they told you? If you haven’t asked yet, write the question you want to ask.",
         fields: [
           choice("need", "Why do they need an answer?", [
             "Confidence",
@@ -458,15 +458,15 @@ export const LEADERSHIP_LABS: Record<string, LabConfig> = {
         eyebrow: "COMMITMENT",
         title: "What can we promise now?",
         intro:
-          "Say what you can do and when you will report back. Check any delivery promise with the people doing the work.",
+          "Let’s find something useful you can offer now and a time to come back with more. Check any delivery promise with the people who’ll do the work.",
         fields: [
           field(
             "outcome",
             "What should this help customers or the business do?"
           ),
-          field("known", "What do you know, and what evidence supports it?"),
-          field("unknown", "What remains unknown, and why does it matter?"),
-          field("commit", "What can you responsibly commit to now?"),
+          field("known", "What do you know so far, and how do you know?"),
+          field("unknown", "What do you still need to find out, and why?"),
+          field("commit", "What can you promise at this point?"),
           field(
             "commitmentBounds",
             "What work, spending limit, and approvals are included in that promise?"
@@ -481,7 +481,7 @@ export const LEADERSHIP_LABS: Record<string, LabConfig> = {
         eyebrow: "RESPOND",
         title: "Write the answer you'd actually say.",
         intro:
-          "Show that you heard what they need. Say what you can offer now, what you still need to check, and when they will hear back.",
+          "You have worked through what they need and what you can offer. Now put it in your own words: what can you do, what needs checking, and when will they hear from you?",
         fields: [
           field(
             "response",
@@ -517,16 +517,16 @@ for (const lab of Object.values(LEADERSHIP_LABS)) {
   lab.steps[3].fields.push(
     field(
       "unresolvedPlan",
-      "If they say no, do not reply, or cannot make the decision, what will you do?",
-      "Name who can decide, what you can do while waiting, and when you will ask again. Silence does not mean yes."
+      "If they say no, don’t reply, or can’t make the decision, what will you do?",
+      "Name who can decide, what you can do while waiting, and when you’ll ask again. Silence doesn’t mean yes."
     )
   );
 }
 LEADERSHIP_LABS["deadline-reset"].steps[2].fields.push(
   field(
     "checkpointFallback",
-    "If the next check shows the plan will not work, what will you do?",
-    "Name the alternative, who can approve it, and when people need to be told. Do not quietly change the promise."
+    "If the next check shows the plan won’t work, what will you do?",
+    "What could you do instead, who would need to agree, and when would you tell the people relying on the original promise?"
   )
 );
 LEADERSHIP_LABS["priority-whiplash"].steps[1].fields.push(
