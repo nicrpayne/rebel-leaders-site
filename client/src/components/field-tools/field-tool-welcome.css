@@ -68,24 +68,6 @@
   margin-top: 23px !important;
   max-width: 560px;
 }
-.ft-welcome-personal {
-  margin-top: 20px;
-  padding-left: 18px;
-  border-left: 2px solid #cab777;
-  max-width: 490px;
-}
-.ft-welcome-personal > p:first-child {
-  font-size: 16px;
-  line-height: 1.7;
-  color: #4c6054;
-}
-.ft-welcome-signature {
-  font-family: var(--font-display);
-  font-style: italic;
-  font-size: 29px;
-  color: #566b45;
-  margin-top: 5px !important;
-}
 .ft-welcome-primary {
   display: inline-flex;
   align-items: center;
@@ -112,12 +94,6 @@
 .ft-welcome summary:focus-visible {
   outline: 3px solid #9b762a;
   outline-offset: 5px;
-}
-.ft-welcome-first {
-  margin-top: 13px !important;
-  color: #64715f;
-  font-size: 13px;
-  line-height: 1.6;
 }
 .ft-welcome-portrait {
   overflow: hidden;
@@ -341,9 +317,6 @@
   }
   .ft-welcome-primary {
     width: 100%;
-  }
-  .ft-welcome-first {
-    text-align: center;
   }
   .ft-welcome-outcomes {
     margin-top: 40px;
