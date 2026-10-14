@@ -36,6 +36,7 @@ const WallPage = lazy(() => import("./pages/wall/WallPage"));
 const WallAdmin = lazy(() => import("./pages/wall/WallAdmin"));
 const AuthVerify = lazy(() => import("./pages/AuthVerify"));
 const FieldToolSignIn = lazy(() => import("./pages/FieldToolSignIn"));
+const FieldToolResources = lazy(() => import("./pages/FieldToolResources"));
 const FieldTools = lazy(() => import("./pages/FieldTools"));
 const FieldToolsReview = lazy(() => import("./pages/FieldToolsReview"));
 const FieldToolLanding = lazy(() => import("./pages/FieldToolLanding"));
@@ -70,6 +71,12 @@ function Router() {
         <Route path="/book" component={Book} />
         <Route path="/community" component={Community} />
         <Route path="/mirror" component={Mirror} />
+        <Route path="/field-tools/resources">
+          <FieldToolResources />
+        </Route>
+        <Route path="/field-tools/resources/:resource">
+          {p => <FieldToolResources resource={p.resource} />}
+        </Route>
         <Route path="/field-tools" component={FieldTools} />
         <Route path="/field-tools/review" component={FieldToolsReview} />
         <Route path="/field-tools/sign-in" component={FieldToolSignIn} />

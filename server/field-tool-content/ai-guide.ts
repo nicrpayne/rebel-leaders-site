@@ -91,7 +91,7 @@ export const AI_STALEMATE_GUIDE_PAGES: AIGuidePage[] = [
         url: "https://docs.github.com/en/copilot/get-started/best-practices",
       },
       {
-        name: "Thoughtworks: reducing AI development friction",
+        name: "Rahul Garg: reducing AI development friction",
         url: "https://martinfowler.com/articles/reduce-friction-ai/",
       },
     ],

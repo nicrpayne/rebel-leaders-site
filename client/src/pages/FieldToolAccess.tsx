@@ -1,3 +1,4 @@
+import { FrameworkResources } from "@/components/field-tools/TeachingNote";
 import FieldToolsFooter from "@/components/field-tools/FieldToolsFooter";
 import { fieldToolForPath } from "@/lib/field-tool-paths";
 import { trpc } from "@/lib/trpc";
@@ -142,6 +143,9 @@ export default function FieldToolAccess({ slug }: { slug: string }) {
             Squeezy receipt for order and payment details. Use your purchase
             email to sign in on another device.
           </p>
+        </div>
+        <div className="mt-10 bg-[#f3efe4] px-6 pb-7 pt-1">
+          <FrameworkResources />
         </div>
         <button
           onClick={() => signOut.mutate()}

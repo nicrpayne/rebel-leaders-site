@@ -958,7 +958,7 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
 LEADERSHIP_GUIDE_PAGES["mandate-reset"][2].sources = [
   {
     name: "Further reading: Bain’s RAPID decision roles",
-    url: "https://www.bain.com/insights/management-tools-rapid/",
+    url: "https://www.bain.com/insights/rapid-decision-making/",
   },
 ];
 

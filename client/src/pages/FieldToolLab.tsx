@@ -1,3 +1,4 @@
+import { LabTeachingNote } from "@/components/field-tools/TeachingNote";
 import { fieldToolChoiceLabel } from "@/lib/field-tool-choice-labels";
 import {
   examplePatch,
@@ -503,6 +504,7 @@ function LabSession({ slug }: { slug: string }) {
             >
               Read the matching Field Guide chapter →
             </Link>
+            <LabTeachingNote slug={slug} step={step} />
           </aside>
 
           <div className="border border-[#c8d0c5] bg-[#fbf9f3] p-5 md:p-8">
