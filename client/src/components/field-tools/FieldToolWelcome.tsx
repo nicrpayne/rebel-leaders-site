@@ -52,14 +52,9 @@ export default function FieldToolWelcome({
             </p>
             <h1 id="welcome-title">{copy.heading}</h1>
             <p className="ft-welcome-intro">{copy.intro}</p>
-            <div className="ft-welcome-personal">
-              <p>{copy.note}</p>
-              <p className="ft-welcome-signature">Nic</p>
-            </div>
             <Link href={`${base}/lab`} className="ft-welcome-primary">
               Open my Lab <ArrowRight size={18} aria-hidden="true" />
             </Link>
-            <p className="ft-welcome-first">{copy.first}</p>
           </div>
           <figure className="ft-welcome-portrait">
             <img
