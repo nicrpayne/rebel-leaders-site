@@ -12,13 +12,13 @@ export const LEADERSHIP_SAMPLES: Record<string, Record<string, string>> = {
     assumed:
       "We assumed the booking page would connect to the repair calendar without more work, and that downloadable reports would be ready too.",
     unknown:
-      "We have not checked whether bookings reach the repair calendar correctly or how much testing is left.",
+      "We haven’t checked whether bookings reach the repair calendar correctly or how much testing is left.",
     scopeMove:
       "Aim to offer online booking on November 1 and add downloadable service reports later. The engineering lead needs to check the calendar connection on Thursday before confirming that plan.",
     dateMove:
-      "If both booking and reports must be ready together, ask the engineering lead for a new delivery estimate after Thursday's check. We do not have a reliable replacement date yet.",
+      "If both booking and reports must be ready together, ask the engineering lead for a new delivery estimate after Thursday's check. We don’t have a reliable replacement date yet.",
     capacityMove:
-      "Keep the current team. Reserve time for checking the calendar connection and testing bookings. Do not assume anyone will work overtime.",
+      "Keep the current team. Reserve time for checking the calendar connection and testing bookings. Don’t assume anyone will work overtime.",
     qualityGuardrails:
       "Customers must only see their own bookings. The team must test that appointments are recorded correctly and complete its security review.",
     consequence:
@@ -30,7 +30,7 @@ export const LEADERSHIP_SAMPLES: Record<string, Record<string, string>> = {
     confidenceScope:
       "Online booking by November 1, provided Thursday's calendar check succeeds.",
     forecastBasis:
-      "The booking page is built. The engineering lead thinks the remaining work can fit, but has not yet checked the calendar connection.",
+      "The booking page is built. The engineering lead thinks the remaining work can fit, but hasn’t yet checked the calendar connection.",
     evidenceNext:
       "The engineering lead will send test bookings to the repair calendar on Thursday and list any fixes or testing still needed.",
     checkpoint: "Thursday afternoon, after the calendar check",
@@ -40,23 +40,23 @@ export const LEADERSHIP_SAMPLES: Record<string, Record<string, string>> = {
     decisionBy: "Wednesday, before the next customer update",
     decisionStatus: "PROPOSAL — awaiting a decision",
     finalDecision:
-      "We have not discussed this recommendation with the sales director yet.",
+      "We haven’t discussed this recommendation with the sales director yet.",
     communication:
       "The sales director will tell customers what to expect. After a decision, the product manager will update the team's plan.",
     privateReaction:
-      "I am frustrated that customers were promised this before we checked the calendar connection.",
+      "I’m frustrated that customers were promised this before we checked the calendar connection.",
     privateAssumption:
-      "I am assuming the sales director ignored the risks. I need to ask what customers were told and what they need for the event.",
+      "I’m assuming the sales director ignored the risks. I need to ask what customers were told and what they need for the event.",
     checkpointFallback:
-      "If the calendar check fails, ask the sales director on Thursday whether the event should show a demonstration only. Tell customers by Friday that online booking is not yet available.",
+      "If the calendar check fails, ask the sales director on Thursday whether the event should show a demonstration only. Tell customers by Friday that online booking isn’t yet available.",
     unresolvedPlan:
-      "If we cannot get a decision, ask who can make it and when they can respond. Keep working to the last agreed plan within our existing authority. Check again on the date recorded above; silence does not mean yes.",
+      "If we can’t get a decision, ask who can make it and when they can respond. Keep working to the last agreed plan within our existing authority. Check again on the date recorded above; silence doesn’t mean yes.",
   },
   "priority-whiplash": {
     outcome:
       "Help new customers join their account, keep customer information private, and give customers accurate report figures.",
     p1: "Fix the broken invitation link that stops new customers joining their account.",
-    p2: "Check that customers cannot see another customer's information before releasing the next software update.",
+    p2: "Check that customers can’t see another customer's information before releasing the next software update.",
     p3: "Correct the inaccurate totals in a customer's monthly report.",
     otherWork:
       "The team's estimate of 10 days of existing work includes customer support and checking each other's changes.",
@@ -64,7 +64,7 @@ export const LEADERSHIP_SAMPLES: Record<string, Record<string, string>> = {
       "Fictional example: the sales director asks us to show a customer how a proposed report screen would work at Friday's meeting.",
     whyNow: "The customer meeting has just been added for Friday.",
     urgencyBasis:
-      "The sales director confirmed that the customer wants to react to the proposed screen. They do not need working reporting software for the meeting.",
+      "The sales director confirmed that the customer wants to react to the proposed screen. They don’t need working reporting software for the meeting.",
     priorityChoice: "Narrow the request",
     moves:
       "Make a simple clickable demonstration and put off two days of work on the incorrect report totals. Check the new report-fix date with the team before promising it.",
@@ -86,7 +86,7 @@ export const LEADERSHIP_SAMPLES: Record<string, Record<string, string>> = {
       "Product director, who can approve changes to these customer commitments",
     decisionDate: "Wednesday afternoon",
     decisionStatus: "PROPOSAL — awaiting a decision",
-    finalDecision: "The product director has not made the decision yet.",
+    finalDecision: "The product director hasn’t made the decision yet.",
     communication:
       "After the decision, the product manager will update the team and the account manager by Thursday morning. The account manager will tell the customer waiting for the report correction.",
     reviewDate:
@@ -94,9 +94,9 @@ export const LEADERSHIP_SAMPLES: Record<string, Record<string, string>> = {
     privateReaction:
       "I feel as though the work we already promised has been forgotten.",
     privateAssumption:
-      "I am assuming the demonstration is just to impress someone. I need to ask what the customer needs to see.",
+      "I’m assuming the demonstration is just to impress someone. I need to ask what the customer needs to see.",
     unresolvedPlan:
-      "If we cannot get a decision, ask who can make it and when they can respond. Keep working to the last agreed plan within our existing authority. Check again on the date recorded above; silence does not mean yes.",
+      "If we can’t get a decision, ask who can make it and when they can respond. Keep working to the last agreed plan within our existing authority. Check again on the date recorded above; silence doesn’t mean yes.",
   },
   "mandate-reset": {
     outcome:
@@ -104,7 +104,7 @@ export const LEADERSHIP_SAMPLES: Record<string, Record<string, string>> = {
     blockedDecision:
       "Who can decide whether a new request replaces work already planned for this release?",
     consequence:
-      "Different directors keep asking developers to add features. I am expected to meet the original date, but cannot postpone those requests.",
+      "Different directors keep asking developers to add features. I’m expected to meet the original date, but can’t postpone those requests.",
     recommend:
       "Product manager: brings the options and explains what each would change.",
     approve:
@@ -112,7 +112,7 @@ export const LEADERSHIP_SAMPLES: Record<string, Record<string, string>> = {
     execute:
       "Developers build and test the changes; the product manager updates the plan.",
     block:
-      "Other directors can ask for work. The security reviewer can withhold release approval if customer information is not protected.",
+      "Other directors can ask for work. The security reviewer can withhold release approval if customer information isn’t protected.",
     accountable:
       "The product manager must explain delivery progress. The engineering lead is responsible for the software checks.",
     rightsEvidence:
@@ -121,27 +121,27 @@ export const LEADERSHIP_SAMPLES: Record<string, Record<string, string>> = {
       "The security reviewer must approve the customer-data checks. The finance manager approves extra spending. The engineering lead confirms that the software is ready to release.",
     consult:
       "Ask the developers about the work involved and the account manager about customer promises before making the final call.",
-    gap: "I am held responsible for the release date, but directors can add work and I cannot say what should wait. We have no agreed way to get a quick decision.",
+    gap: "I’m held responsible for the release date, but directors can add work and I can’t say what should wait. We don’t have any agreed way to get a quick decision.",
     request:
-      "Send new requests to the product director before adding them to the team's plan. The director should say whether to add them now and, if they do not fit, what should wait.",
+      "Send new requests to the product director before adding them to the team's plan. The director should say whether to add them now and, if they don’t fit, what should wait.",
     boundaries:
-      "Keep the agreed budget and the required security and software checks. This changes how we choose work; it does not remove those approvals.",
+      "Keep the agreed budget and the required security and software checks. This changes how we choose work; it doesn’t remove those approvals.",
     fallback:
-      "If I cannot make that call, ask the product director to respond within one working day. Keep the last agreed plan while waiting.",
+      "If I can’t make that call, ask the product director to respond within one working day. Keep the last agreed plan while waiting.",
     owner: "Product director",
     date: "Before Monday's planning meeting",
     decisionStatus: "PROPOSAL — awaiting a decision",
     finalDecision:
-      "The product director has not agreed to this way of handling requests yet.",
+      "The product director hasn’t agreed to this way of handling requests yet.",
     interimAction:
-      "I will collect the new requests and check how much work they involve. I will not change the agreed plan without permission.",
+      "I will collect the new requests and check how much work they involve. I won’t change the agreed plan without permission.",
     reviewDate:
       "After the next two requests, check whether the director responded in time and the team received one clear plan.",
-    privateReaction: "I feel blamed for a date I cannot protect.",
+    privateReaction: "I feel blamed for a date I can’t protect.",
     privateAssumption:
-      "I am assuming the directors are avoiding the decision. I need to check what they think I am allowed to decide.",
+      "I’m assuming the directors are avoiding the decision. I need to check what they think I’m allowed to decide.",
     unresolvedPlan:
-      "If we cannot get a decision, ask who can make it and when they can respond. Keep working to the last agreed plan within our existing authority. Check again on the date recorded above; silence does not mean yes.",
+      "If we can’t get a decision, ask who can make it and when they can respond. Keep working to the last agreed plan within our existing authority. Check again on the date recorded above; silence doesn’t mean yes.",
   },
   "product-project-translator": {
     request:
@@ -151,13 +151,13 @@ export const LEADERSHIP_SAMPLES: Record<string, Record<string, string>> = {
       "Finance needs to decide how much money to set aside for a new online repair-booking service.",
     need: "Budget / staffing",
     needEvidence:
-      "The finance director confirmed they need a spending limit by Thursday. They do not need every screen agreed yet.",
+      "The finance director confirmed they need a spending limit by Thursday. They don’t need every screen agreed yet.",
     assumption:
-      "We are assuming we can choose the booking screens before customers have tried either design.",
+      "We’re assuming we can choose the booking screens before customers have tried either design.",
     outcome:
       "Find a booking design customers can use without phoning the service desk.",
     known:
-      "Customers currently phone to book repairs. We have sketches of two booking designs, but customers have not tried them.",
+      "Customers currently phone to book repairs. We have sketches of two booking designs, but customers haven’t tried them.",
     unknown:
       "Can customers complete a booking using either design, and what would it take to build the better one?",
     commit:
@@ -175,13 +175,13 @@ export const LEADERSHIP_SAMPLES: Record<string, Record<string, string>> = {
     owner: "Finance director",
     decisionDate: "Thursday, before booking the customer sessions",
     decisionStatus: "PROPOSAL — awaiting a decision",
-    finalDecision: "The finance director has not responded yet.",
+    finalDecision: "The finance director hasn’t responded yet.",
     nextAction:
       "The product manager will discuss the proposal with Finance on Thursday. Book the customer sessions and review meeting only after approval.",
-    privateReaction: "I feel pushed to promise details we have not worked out.",
+    privateReaction: "I feel pushed to promise details we haven’t worked out.",
     privateAssumption:
-      "I am assuming Finance wants to control the design. I need to ask what they need the feature list for.",
+      "I’m assuming Finance wants to control the design. I need to ask what they need the feature list for.",
     unresolvedPlan:
-      "If we cannot get a decision, ask who can make it and when they can respond. Keep working to the last agreed plan within our existing authority. Check again on the date recorded above; silence does not mean yes.",
+      "If we can’t get a decision, ask who can make it and when they can respond. Keep working to the last agreed plan within our existing authority. Check again on the date recorded above; silence doesn’t mean yes.",
   },
 };

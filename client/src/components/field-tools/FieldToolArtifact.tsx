@@ -48,10 +48,6 @@ export default function FieldToolArtifact({
           }
         )}
       </div>
-      <footer className="mt-8 border-t border-[#b8c6ad] pt-4 font-ui text-[10px] leading-5 text-[#7c897c]">
-        Prepared from your entered information. Private preparation is excluded
-        from shared outputs.
-      </footer>
     </article>
   );
 }

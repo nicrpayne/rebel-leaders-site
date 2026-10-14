@@ -66,16 +66,16 @@ describe("AI experiment evidence and shared artifacts", () => {
   });
   it("reports descriptive effort reduction only with complete evidence and a positive baseline", () => {
     const v = { ...allStages("baseline", "10"), ...allStages("ai", "8") };
-    expect(buildEvidenceRecord(v)).toContain("Observed effort reduction: 20%");
+    expect(buildEvidenceRecord(v)).toContain("Reduction in working time: 20%");
     expect(buildEvidenceRecord({ ...v, baseline_review: "" })).toContain(
-      "percentage reduction unavailable"
+      "To calculate a percentage, add all the times"
     );
     expect(
       buildEvidenceRecord({
         ...allStages("baseline", "0"),
         ...allStages("ai", "0"),
       })
-    ).toContain("percentage reduction unavailable");
+    ).toContain("To calculate a percentage, add all the times");
   });
   it("keeps missing effort unknown and recognizes explicit zero", () => {
     expect(summarizeEffort({}, "ai")).toEqual({
@@ -101,7 +101,9 @@ describe("AI experiment evidence and shared artifacts", () => {
       entered: 3,
       complete: false,
     });
-    expect(buildEvidenceRecord(v)).toContain("Comparison pending");
+    expect(buildEvidenceRecord(v)).toContain(
+      "We need all stages for both methods before comparing them"
+    );
   });
   it("counts transferred costs even when AI drafting is much faster", () => {
     const v = {
@@ -115,7 +117,7 @@ describe("AI experiment evidence and shared artifacts", () => {
     expect(summarizeEffort(v, "baseline").minutes).toBe(60);
     expect(summarizeEffort(v, "ai").minutes).toBe(72);
     expect(buildEvidenceRecord(v)).toContain(
-      "Recorded effort difference: 12 min"
+      "Difference in total working time: 12 min"
     );
   });
   it("exports a pre-experiment brief without implying that evidence or a decision exists", () => {
@@ -126,7 +128,7 @@ describe("AI experiment evidence and shared artifacts", () => {
     });
     expect(card).toContain("Matched previous task");
     expect(card).not.toContain("RESULTS RECORD");
-    expect(card).not.toContain("STOP\n");
+    expect(card).not.toContain("\nSTOP\n");
   });
   it("excludes every private preparation field from all shared outputs", () => {
     const v = {

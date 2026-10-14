@@ -49,6 +49,6 @@ describe("plain language without changing saved work", () => {
     });
     expect(sample.p1).toContain("invitation link");
     expect(sample.p3).toContain("inaccurate totals");
-    expect(sample.finalDecision).toContain("not made the decision");
+    expect(sample.finalDecision).toContain("hasn’t made the decision");
   });
 });

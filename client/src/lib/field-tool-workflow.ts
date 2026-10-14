@@ -8,15 +8,15 @@ export const FIELD_TOOL_GUIDE_CHAPTERS: Record<string, number[]> = {
 };
 export const FIELD_TOOL_START: Record<string, string> = {
   "deadline-reset":
-    "Bring one promised date. Open The Promise in the Lab and write what the customer was told. Check the options with the team before asking the person responsible for the promise to choose.",
+    "Let’s work through one deadline and get you ready to talk about what’s possible.",
   "priority-whiplash":
-    "Bring the new request and your current work list. Open Current Work in the Lab. Find out what the request needs, ask the team what would have to wait, and take that choice to the person who can decide.",
+    "Let’s see how the new request fits with the work already promised.",
   "mandate-reset":
-    "Bring one decision you keep getting stuck on. Open The Problem in the Lab. Write what you are expected to deliver and what you cannot decide. Check who can help before drafting your request.",
+    "Let’s work out who can help with the decision and what you need to ask them.",
   "product-project-translator":
-    "Bring the exact words someone used. Open The Request in the Lab. Ask what they need your answer for, then work out what you can promise and when you will know more.",
+    "Let’s turn the question you’ve been asked into a reply you feel good about giving.",
   "ai-stalemate":
-    "Start with the conversation you are already having. Prepare on your own, then talk through what matters to each of you. Write down the next step and who will do it. Come back to record what you agreed or learned.",
+    "Let’s work through the idea, the questions, and a next step you can discuss together.",
 };
 
 export function fieldToolLabStep(slug: string, chapter: number): number {

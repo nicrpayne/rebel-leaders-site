@@ -23,7 +23,7 @@ import {
 describe("review feedback regressions", () => {
   it("asks for missing decision ownership and experiment boundaries without pretending to approve them", () => {
     expect(labReviewPrompts("deadline-reset", { date: "Friday" })).toContain(
-      "You named a date. Who can make the needed decision?"
+      "You’ve added a date. Who can make this decision?"
     );
     expect(
       labReviewPrompts("deadline-reset", { date: "Friday", owner: "Sponsor" })
@@ -138,7 +138,7 @@ describe("review feedback regressions", () => {
     ).toContain("Fictional example");
     expect(
       buildDeadlineUpdate(LEADERSHIP_SAMPLES["deadline-reset"]).match(
-        /qualitative judgment/g
+        /your assessment, not a calculated chance of success/g
       )
     ).toHaveLength(1);
     expect(

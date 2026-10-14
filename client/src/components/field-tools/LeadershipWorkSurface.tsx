@@ -56,7 +56,7 @@ export default function LeadershipWorkSurface({
           className="mt-4 border-t border-[#bbc8b1] pt-4 text-sm font-semibold"
         >
           {snapshot
-            ? `${Number(snapshot.total.toFixed(2))} person-days of work / ${snapshot.available} available. ${snapshot.gap > 0 ? `${Number(snapshot.gap.toFixed(2))} person-days will not fit. Decide what waits or how the plan changes.` : "The estimates fit. Check that the right people are available at the right time and that nothing else must finish first."}`
+            ? `${Number(snapshot.total.toFixed(2))} person-days of work / ${snapshot.available} available. ${snapshot.gap > 0 ? `${Number(snapshot.gap.toFixed(2))} person-days will not fit. Let’s look at what could wait or change.` : "The estimates fit. Check that the right people are available at the right time and that nothing else must finish first."}`
             : "Enter all three estimates to see whether the work fits."}
         </p>
       </section>
@@ -80,7 +80,7 @@ export default function LeadershipWorkSurface({
             <h3 className="font-display text-xl">{title}</h3>
             <p className="mt-2 text-xs leading-6 text-[#57695d]">
               {detail ||
-                "Describe this option below. Check it with the delivery team."}
+                "Add an option below, then check it with the people doing the work."}
             </p>
           </div>
         ))}
@@ -109,14 +109,14 @@ export default function LeadershipWorkSurface({
             >
               <dt className="font-semibold">{label}</dt>
               <dd className="break-words text-[#57695d]">
-                {values[id] || "Not known yet—ask the people involved"}
+                {values[id] || "Still to check with the people involved"}
               </dd>
             </div>
           ))}
         </dl>
         <p className="mt-3 text-xs leading-6">
-          Check this with the people named. Writing someone here does not give
-          them new permission.
+          Check this with the people named. This shows your understanding; any
+          change to who can decide still needs agreement.
         </p>
       </section>
     );
@@ -130,7 +130,8 @@ export default function LeadershipWorkSurface({
           Which sentence sounds familiar?
         </h3>
         <p className="mt-2 text-xs leading-6">
-          Choose a starter while the request is blank, then make it your own.
+          Choose one to get started, then edit it to match what they said. These
+          buttons are available while the request below is blank.
         </p>
         <div className="mt-4 flex flex-wrap gap-2">
           {[

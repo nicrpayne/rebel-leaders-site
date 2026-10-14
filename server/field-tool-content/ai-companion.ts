@@ -27,7 +27,7 @@ export function aiCompanionFor(audience: "pm" | "lead-dev") {
         },
       ],
       takeaway:
-        "This is a future you hope to build. You have not shown that AI will make it happen or promised anyone a promotion.",
+        "Treat this as something to explore together. You’ll still need to find out whether AI helps, and keep possible career benefits separate from promises you can make.",
       step: 0,
     },
     {
@@ -55,7 +55,7 @@ export function aiCompanionFor(audience: "pm" | "lead-dev") {
         },
       ],
       takeaway:
-        "Close by stating: this is our proposal, this is what we agree, this is still unresolved. Do not infer agreement from silence.",
+        "Before you finish, check what you’ve agreed and what’s still a proposal. If something is unanswered, say who will follow up and when. Silence doesn’t mean yes.",
       step: 1,
     },
     {
@@ -91,15 +91,15 @@ export function aiCompanionFor(audience: "pm" | "lead-dev") {
       eyebrow: "COMMUNICATION / DECISION / RETURN",
       title: "Make the result useful to other people.",
       intro: pm
-        ? "Leadership needs a status and a decision or support request. Your team needs to understand what changes in the work."
-        : "Give your PM a technical recommendation they can communicate responsibly. Give the team clear conditions and expectations.",
+        ? "Let’s help people understand where things stand. Tell leadership what you need from them, and tell the team what this means for their work."
+        : "Let’s help your PM explain what you’ve found and what you recommend. Tell the team what they need to know before the next piece of work starts.",
       cards: [
         {
-          title: "Up / leadership or sponsor",
+          title: "For leadership or your sponsor",
           body: "Explain the problem, what you propose or have agreed, and what you know so far. Ask for a specific decision or help, name who can provide it, and say when you need an answer.",
         },
         {
-          title: "Down / the team",
+          title: "For your team",
           body: "Tell the team why this matters, what work changes, and what stays the same. Name who will do what, what you still need to ask them, and when you will talk again.",
         },
         {
@@ -107,7 +107,7 @@ export function aiCompanionFor(audience: "pm" | "lead-dev") {
           body: "For each check, say what should happen, what actually happened, who checked it, and where the result can be seen. Mark it passed, failed, or not checked. Saving time does not show that the work is correct.",
         },
         {
-          title: "Return / improve the conditions",
+          title: "Come back and see what helped",
           body: "Come back after the next action. Did it help? Do people need a different rule, more review time, training, or clearer permission? Decide who will do what next and when.",
         },
       ],
@@ -118,7 +118,7 @@ export function aiCompanionFor(audience: "pm" | "lead-dev") {
     {
       after: 11,
       eyebrow: "STUDY / PRACTICE / SHAPING",
-      title: "Leave with a move. Return with better judgment.",
+      title: "What will you take into the next conversation?",
       intro:
         "After the immediate decision, take a moment to notice what changed. You may understand the problem, your colleague, or your own reaction differently now.",
       cards: [

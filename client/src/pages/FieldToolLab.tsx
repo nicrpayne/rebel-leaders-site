@@ -213,7 +213,7 @@ function LabSession({ slug }: { slug: string }) {
       setStorageStatus("");
     } catch {
       setStorageStatus(
-        "This browser cannot save the draft. Keep this tab open and export your work before leaving."
+        "Your browser couldn’t save this draft. Keep the tab open and copy or download anything you want to keep before leaving."
       );
     }
   }, [storageKey, values, step]);
@@ -270,7 +270,7 @@ function LabSession({ slug }: { slug: string }) {
       setCopyStatus("Copied to clipboard.");
     } catch {
       setCopyStatus(
-        "Clipboard unavailable. Select the output or download the text file."
+        "We couldn’t copy that. You can select the text to copy it yourself, or download it instead."
       );
     }
   }
@@ -292,7 +292,7 @@ function LabSession({ slug }: { slug: string }) {
   function clearDraft() {
     setValues(withLabDefaults(slug, {}));
     setUndo(null);
-    setEditNotice("Local draft cleared.");
+    setEditNotice("Your draft has been cleared.");
     setStep(0);
     setShowOutput(false);
     try {
@@ -342,7 +342,7 @@ function LabSession({ slug }: { slug: string }) {
     );
     setShowOutput(false);
     setEditNotice(
-      "Fictional example loaded into this step. Other steps are unchanged, except any decision that needs review after a changed next move."
+      "The fictional example is loaded. You can undo it until you edit an answer."
     );
   }
   function restoreDraft() {
@@ -427,7 +427,7 @@ function LabSession({ slug }: { slug: string }) {
               </h1>
               <p className="mt-3 max-w-2xl font-ui text-sm leading-6 text-[#acbdb1]">
                 {FIELD_TOOL_START[slug] ??
-                  "Use the Field Guide for the thinking and this Lab for your situation."}
+                  "Let’s work through your situation, one question at a time."}
               </p>
               {storageStatus && (
                 <p
@@ -499,16 +499,16 @@ function LabSession({ slug }: { slug: string }) {
             </p>
 
             <div className="mt-8 border-l-2 border-[#a1b89d] pl-4 font-ui text-xs leading-5 text-[#657268]">
-              You can think through the private questions without typing.
-              Private notes disappear when you refresh or leave and are never
-              included in shared documents. Your other answers save on this
-              device.
+              The private questions are there if they help you think. You can
+              answer without typing. Private notes aren’t saved or exported and
+              disappear when you refresh or leave. Other answers save in this
+              browser on this device.
             </div>
             <Link
               href={`${base}/guide#guide-${guideChapter}`}
               className="mt-5 inline-block font-ui text-sm underline underline-offset-4"
             >
-              Read the matching Field Guide chapter →
+              Read this part of the Guide →
             </Link>
             <LabTeachingNote slug={slug} step={step} />
             {slug === "ai-stalemate" && (
@@ -528,7 +528,7 @@ function LabSession({ slug }: { slug: string }) {
               <p className="font-ui text-xs text-[#657268]">
                 {step === 0 && slug === "ai-stalemate"
                   ? "Private reflection · not saved or exported"
-                  : "Shared work · saved on this device"}
+                  : "Your draft · saved in this browser"}
               </p>
               <button
                 type="button"
@@ -685,11 +685,11 @@ function LabSession({ slug }: { slug: string }) {
                 >
                   {atReadiness && preparationDecision
                     ? values.readinessDecision === "STOP THIS USE"
-                      ? "Write a STOP decision →"
-                      : "Record the next move →"
+                      ? "Write up why you’re stopping →"
+                      : "Write down the next step →"
                     : atReadiness &&
                         values.readinessDecision === "USE EXISTING EVIDENCE"
-                      ? "Review existing evidence →"
+                      ? "Review what you already know →"
                       : "Continue →"}
                 </button>
               ) : (
@@ -706,44 +706,45 @@ function LabSession({ slug }: { slug: string }) {
                 >
                   {config.outputs
                     ? slug === "ai-stalemate"
-                      ? "Build the Decision Brief →"
-                      : `Build ${config.outputs.at(-1)?.title} →`
-                    : "Generate the output →"}
+                      ? "Preview the Decision Brief →"
+                      : `Preview ${config.outputs.at(-1)?.title} →`
+                    : "Preview your document →"}
                 </button>
               )}
             </div>
-            {config.outputs && (slug !== "ai-stalemate" || step > 0) && (
-              <div className="mt-6 border-t border-[#d7ddd3] pt-5">
-                <p className="font-ui text-xs leading-6 text-[#657268]">
-                  {slug !== "ai-stalemate"
-                    ? "Build the document you want to share. It uses your shared answers and leaves out your private notes."
-                    : atReadiness
-                      ? "Build Next Step Together to show your proposal or record what you agreed. You may need another conversation or some preparation before an experiment."
-                      : "Save the agreed Experiment Plan before you start. Come back to record the results and decide what to do next. Private notes are never included."}
-                </p>
-                <div className="mt-3 flex flex-wrap gap-3">
-                  {config.outputs
-                    .filter(
-                      item =>
-                        item.fromStep <= step &&
-                        !(
-                          preparationDecision &&
-                          ["trial-card", "evidence-record"].includes(item.id)
-                        )
-                    )
-                    .map(item => (
-                      <button
-                        type="button"
-                        key={item.id}
-                        onClick={() => openOutput(item.id)}
-                        className="border border-[#aeb8aa] px-4 py-3 font-ui text-xs"
-                      >
-                        Build {item.title} →
-                      </button>
-                    ))}
+            {config.outputs?.some(item => item.fromStep <= step) &&
+              (slug !== "ai-stalemate" || step > 0) && (
+                <div className="mt-6 border-t border-[#d7ddd3] pt-5">
+                  <p className="font-ui text-xs leading-6 text-[#657268]">
+                    {slug !== "ai-stalemate"
+                      ? "Ready to see your document? It brings your answers together and leaves out your private notes."
+                      : atReadiness
+                        ? "Next Step Together gives you something to talk through. It can show your proposal or what you’ve agreed, including any preparation you need first."
+                        : "Save a copy of the Experiment Plan once it’s agreed. You can come back to add the results and work out what happens next. Your private notes stay out."}
+                  </p>
+                  <div className="mt-3 flex flex-wrap gap-3">
+                    {config.outputs
+                      .filter(
+                        item =>
+                          item.fromStep <= step &&
+                          !(
+                            preparationDecision &&
+                            ["trial-card", "evidence-record"].includes(item.id)
+                          )
+                      )
+                      .map(item => (
+                        <button
+                          type="button"
+                          key={item.id}
+                          onClick={() => openOutput(item.id)}
+                          className="border border-[#aeb8aa] px-4 py-3 font-ui text-xs"
+                        >
+                          Preview {item.title} →
+                        </button>
+                      ))}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
           </div>
         </div>
       </section>
@@ -762,9 +763,10 @@ function LabSession({ slug }: { slug: string }) {
               {selectedOutput?.title ?? "Your working brief"}
             </h2>
             <p className="mt-3 font-ui text-sm leading-6 print:hidden">
-              Review before sharing. Missing information appears as a prompt; a
-              proposal does not record agreement. Editing an answer closes this
-              preview so you can rebuild it.
+              Here’s your draft. Read it through and make sure it says what you
+              mean. Prompts show where something is missing; keep it marked as a
+              proposal until it’s agreed. If you change an answer, open the
+              preview again to see the update.
             </p>
             {labReviewPrompts(slug, values).length > 0 && (
               <div
@@ -852,8 +854,8 @@ function LabSession({ slug }: { slug: string }) {
           </AlertDialogTitle>
           <AlertDialogDescription className="text-[#536058] leading-6">
             {pendingAction === "clear"
-              ? "This removes the saved shared answers and private notes in this Lab. Export anything you want to keep first. This cannot be undone."
-              : "The fictional example replaces the answers in this step. Other steps keep their answers; if the next move changes, its decision must be reviewed. You can undo the replacement before editing again."}
+              ? "This clears your saved answers and any private notes in this Lab. Copy or download anything you want to keep first. You can’t undo this."
+              : "The fictional example will replace your answers in this step. Other steps keep their answers, though a changed next step may mean reviewing the decision too. You can undo this until you edit an answer."}
           </AlertDialogDescription>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
