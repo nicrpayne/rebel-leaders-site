@@ -117,9 +117,7 @@ function Router() {
             const audience = p.audience;
             if (p.view === "buy")
               return (
-                <Redirect
-                  to={`/field-tools/ai-stalemate/${audience}#purchase`}
-                />
+                <FieldToolPurchase slug="ai-stalemate" audience={audience} />
               );
             return (
               <FieldToolGate slug="ai-stalemate" audience={audience}>

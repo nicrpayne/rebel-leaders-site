@@ -23,6 +23,7 @@ import {
   buyerCookie,
   BUYER_COOKIE,
   revokeBuyerSession,
+  allowAttempt,
 } from "./field-tool-commerce";
 import { z } from "zod";
 import { Resend } from "resend";
@@ -32,9 +33,62 @@ import {
   userEvents,
   fieldToolOrders,
   fieldToolAccessTokens,
+  fieldToolGifts,
 } from "../drizzle/schema";
 import { ENV } from "./_core/env";
 import { getFieldToolCheckout } from "./field-tool-checkout";
+
+import { giftDetailsSchema } from "../shared/field-tool-gifts";
+import { createGiftCheckout } from "./field-tool-gifts";
+
+async function availableCheckout(input: {
+  slug: string;
+  audience: "pm" | "lead-dev";
+}) {
+  const env = process.env;
+  let map: Record<string, string> = {};
+  try {
+    map = JSON.parse(env.LEMONSQUEEZY_VARIANT_MAP ?? "{}");
+  } catch {}
+  let databaseReady = false;
+  try {
+    const db = await getDb();
+    if (db) {
+      await db.select().from(fieldToolOrders).limit(1);
+      await db.select().from(fieldToolAccessTokens).limit(1);
+      await db.select().from(fieldToolGifts).limit(1);
+      databaseReady = true;
+    }
+  } catch {}
+  const ready = Boolean(
+    databaseReady &&
+      env.DATABASE_URL &&
+      env.RESEND_API_KEY &&
+      env.APP_URL &&
+      env.LEMONSQUEEZY_WEBHOOK_SECRET &&
+      env.LEMONSQUEEZY_STORE_ID &&
+      ["live", "test"].includes(env.LEMONSQUEEZY_MODE ?? "") &&
+      Object.values(map).includes(input.slug) &&
+      !previewEnabled()
+  );
+  const key =
+    "FIELD_TOOL_" +
+    input.slug.replaceAll("-", "_").toUpperCase() +
+    "_CHECKOUT_URL";
+  const roleKey =
+    "FIELD_TOOL_" +
+    input.slug.replaceAll("-", "_").toUpperCase() +
+    "_" +
+    input.audience.replaceAll("-", "_").toUpperCase() +
+    "_CHECKOUT_URL";
+  const checkout = getFieldToolCheckout(input.slug, {
+    ...env,
+    [key]: env[roleKey] ?? env[key],
+  });
+  return ready && checkout.provider === "Lemon Squeezy"
+    ? checkout
+    : { checkoutUrl: null, provider: null };
+}
 
 const resultSchema = z.enum([
   "ai",
@@ -194,48 +248,38 @@ export const fieldToolsRouter = router({
       })
     )
     .query(async ({ input }) => {
-      const env = process.env;
-      let map: Record<string, string> = {};
+      return availableCheckout(input);
+    }),
+  giftCheckout: publicProcedure
+    .input(
+      z.object({
+        slug: z.string().min(1).max(64),
+        audience: z.enum(["pm", "lead-dev"]).default("pm"),
+        gift: giftDetailsSchema,
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      const ip = ctx.req.ip ?? ctx.req.socket.remoteAddress ?? "unknown";
+      if (!allowAttempt("gift-checkout:" + ip, Date.now(), 15))
+        throw new TRPCError({
+          code: "TOO_MANY_REQUESTS",
+          message: "Please wait a few minutes before trying again.",
+        });
+      const checkout = await availableCheckout(input);
+      if (!checkout.checkoutUrl)
+        throw new TRPCError({
+          code: "PRECONDITION_FAILED",
+          message:
+            "Gift checkout is being prepared. Please come back when purchases open.",
+        });
       try {
-        map = JSON.parse(env.LEMONSQUEEZY_VARIANT_MAP ?? "{}");
-      } catch {}
-      let databaseReady = false;
-      try {
-        const db = await getDb();
-        if (db) {
-          await db.select().from(fieldToolOrders).limit(1);
-          await db.select().from(fieldToolAccessTokens).limit(1);
-          databaseReady = true;
-        }
-      } catch {}
-      const ready = Boolean(
-        databaseReady &&
-          env.DATABASE_URL &&
-          env.RESEND_API_KEY &&
-          env.APP_URL &&
-          env.LEMONSQUEEZY_WEBHOOK_SECRET &&
-          env.LEMONSQUEEZY_STORE_ID &&
-          ["live", "test"].includes(env.LEMONSQUEEZY_MODE ?? "") &&
-          Object.values(map).includes(input.slug) &&
-          !previewEnabled()
-      );
-      const key =
-        "FIELD_TOOL_" +
-        input.slug.replaceAll("-", "_").toUpperCase() +
-        "_CHECKOUT_URL";
-      const roleKey =
-        "FIELD_TOOL_" +
-        input.slug.replaceAll("-", "_").toUpperCase() +
-        "_" +
-        input.audience.replaceAll("-", "_").toUpperCase() +
-        "_CHECKOUT_URL";
-      const checkout = getFieldToolCheckout(input.slug, {
-        ...env,
-        [key]: env[roleKey] ?? env[key],
-      });
-      return ready && checkout.provider === "Lemon Squeezy"
-        ? checkout
-        : { checkoutUrl: null, provider: null };
+        return await createGiftCheckout(input, checkout.checkoutUrl);
+      } catch {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "We couldn’t prepare the gift checkout. Please try again.",
+        });
+      }
     }),
   capturePressureTestLead: publicProcedure
     .input(

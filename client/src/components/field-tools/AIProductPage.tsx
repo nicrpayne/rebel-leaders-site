@@ -45,6 +45,7 @@ export default function AIProductPage({ audience }: { audience: Audience }) {
           <a href="#purchase" className="ft-button ft-button-gold">
             Get the Field Tool — $47 <ArrowRight size={16} />
           </a>
+          <Link href={`${base}/buy?gift=1`} className="ft-button ft-button-outline mt-3">Gift to someone</Link>
           <p className="ai-hero-note">
             Field Guide · Lab · usable working documents
           </p>
@@ -75,6 +76,7 @@ export default function AIProductPage({ audience }: { audience: Audience }) {
             A working kit for
             <br />a real conversation.
           </h2>
+          <Link href={`${base}/buy?gift=1`} className="mb-4 block font-ui text-sm underline underline-offset-4">Gift to someone →</Link>
           <p className="ai-price">
             $47 <small>USD · one time</small>
           </p>
@@ -118,7 +120,7 @@ export default function AIProductPage({ audience }: { audience: Audience }) {
             </div>
           )}
           <Link href={`${base}/access`} className="ai-small underline">
-            Already purchased? Open your tool →
+            Bought or received a gift? Open your tool →
           </Link>
         </aside>
       </section>

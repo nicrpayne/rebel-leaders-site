@@ -12,8 +12,18 @@ import express from "express";
 import path from "node:path";
 import { z } from "zod";
 import { getDb } from "./db";
-import { fieldToolOrders, fieldToolAccessTokens } from "../drizzle/schema";
+import {
+  fieldToolOrders,
+  fieldToolAccessTokens,
+  fieldToolGifts,
+} from "../drizzle/schema";
 import { FIELD_TOOL_CHECKOUT_KEYS } from "./field-tool-checkout";
+
+import {
+  giftTokenHash,
+  validateGiftOrder,
+  notifyGiftRecipient,
+} from "./field-tool-gifts";
 
 export const hashToken = (token: string) =>
   createHash("sha256").update(token).digest("hex");
@@ -35,7 +45,18 @@ const slugSchema = z.enum(
   Object.keys(FIELD_TOOL_CHECKOUT_KEYS) as [string, ...string[]]
 );
 export const orderSchema = z.object({
-  meta: z.object({ event_name: z.enum(["order_created", "order_refunded"]) }),
+  meta: z.object({
+    event_name: z.enum(["order_created", "order_refunded"]),
+    custom_data: z
+      .object({
+        field_tool_gift: z
+          .string()
+          .regex(/^[a-f0-9]{64}$/)
+          .optional(),
+      })
+      .passthrough()
+      .optional(),
+  }),
   data: z.object({
     type: z.literal("orders"),
     id: z.string().regex(/^\d+$/),
@@ -76,6 +97,7 @@ export function parseLemonOrder(payload: unknown, env = process.env) {
   if (!slug) return null;
   return {
     orderId: p.data.id,
+    giftToken: p.meta.custom_data?.field_tool_gift,
     email: a.user_email.trim().toLowerCase(),
     slug,
     status:
@@ -92,18 +114,47 @@ export async function saveLemonOrder(
 ) {
   const db = await getDb();
   if (!db) throw new Error("Database unavailable");
-  // Each delivery is an upsert. A delayed paid event cannot overwrite a newer refund.
-  const newer = sql`(${order.providerUpdatedAt} > ${fieldToolOrders.providerUpdatedAt} OR (${order.providerUpdatedAt} = ${fieldToolOrders.providerUpdatedAt} AND ${order.status} = 'revoked'))`;
-  await db
-    .insert(fieldToolOrders)
-    .values(order)
-    .onDuplicateKeyUpdate({
-      set: {
-        email: sql`IF(${newer}, ${order.email}, ${fieldToolOrders.email})`,
-        status: sql`IF(${newer}, ${order.status}, ${fieldToolOrders.status})`,
-        providerUpdatedAt: sql`GREATEST(${fieldToolOrders.providerUpdatedAt}, ${order.providerUpdatedAt})`,
-      },
-    });
+  await db.transaction(async tx => {
+    const [existingGift] = await tx
+      .select()
+      .from(fieldToolGifts)
+      .where(
+        order.giftToken
+          ? eq(fieldToolGifts.tokenHash, giftTokenHash(order.giftToken))
+          : eq(fieldToolGifts.orderId, order.orderId)
+      )
+      .limit(1)
+      .for("update");
+    const gift = order.giftToken
+      ? validateGiftOrder(existingGift, order)
+      : existingGift;
+    if (gift) {
+      validateGiftOrder(gift, order);
+      await tx
+        .update(fieldToolGifts)
+        .set({ orderId: order.orderId, buyerEmail: order.email })
+        .where(eq(fieldToolGifts.tokenHash, gift.tokenHash));
+    }
+    const { giftToken: _giftToken, ...payment } = order;
+    const entitlement = {
+      ...payment,
+      email: gift?.recipientEmail ?? order.email,
+    };
+    // Refunds without custom data still resolve the saved recipient. A delayed
+    // paid event cannot overwrite a newer refund, including equal timestamps.
+    const newer = sql`(${order.providerUpdatedAt} > ${fieldToolOrders.providerUpdatedAt} OR (${order.providerUpdatedAt} = ${fieldToolOrders.providerUpdatedAt} AND ${order.status} = 'revoked'))`;
+    await tx
+      .insert(fieldToolOrders)
+      .values(entitlement)
+      .onDuplicateKeyUpdate({
+        set: {
+          email: sql`IF(${newer}, ${entitlement.email}, ${fieldToolOrders.email})`,
+          status: sql`IF(${newer}, ${order.status}, ${fieldToolOrders.status})`,
+          providerUpdatedAt: sql`GREATEST(${fieldToolOrders.providerUpdatedAt}, ${order.providerUpdatedAt})`,
+        },
+      });
+  });
+  await notifyGiftRecipient(order.orderId);
 }
 const COOKIE = "rl_field_tools";
 export async function buyerEmail(req: Pick<Request, "headers">) {
@@ -192,7 +243,7 @@ export async function requestBuyerLink(
       "Rebel Leaders <hello@rebel-leader.com>",
     to: email,
     subject: "Open your Rebel Leaders Field Tool",
-    html: `<div style="font-family:Arial;max-width:560px;line-height:1.7"><h1>Your Field Tool is ready.</h1><p>Use this secure link to sign in. It expires in 15 minutes.</p><p><a href="${url.toString().replace(/&/g, "&amp;")}">Open your Field Tool</a></p><p>Your payment receipt comes separately from Lemon Squeezy. If you did not request this link, you can ignore it.</p></div>`,
+    html: `<div style="font-family:Arial;max-width:560px;line-height:1.7"><h1>Your Field Tool is ready.</h1><p>Use this secure link to sign in. It expires in 15 minutes.</p><p><a href="${url.toString().replace(/&/g, "&amp;")}">Open your Field Tool</a></p><p>Keep this sign-in link private. If you did not request it, you can ignore this email.</p></div>`,
   });
   if (result.error) {
     await db
