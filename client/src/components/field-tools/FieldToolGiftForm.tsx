@@ -120,7 +120,8 @@ export default function FieldToolGiftForm({
         />
       </label>
       <label className="block">
-        A note from you <span className="text-[var(--ft-muted)]">(optional)</span>
+        A note from you{" "}
+        <span className="text-[var(--ft-muted)]">(optional)</span>
         <textarea
           className={inputClass}
           rows={4}
@@ -145,8 +146,8 @@ export default function FieldToolGiftForm({
         {slug === "ai-stalemate" && (
           <p className="mt-2">
             Their email will open the{" "}
-            {audience === "lead-dev" ? "Lead Developer" : "PM"} edition. Both
-            editions are included.
+            {audience === "lead-dev" ? "Lead Developer" : "PM"} edition. The
+            other edition is sold separately.
           </p>
         )}
       </div>
