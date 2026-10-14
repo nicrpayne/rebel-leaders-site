@@ -94,10 +94,10 @@ export default function FieldToolWelcome({
             <Link href={`${base}/guide`} className="ft-welcome-resource">
               <BookOpen size={24} aria-hidden="true" />
               <div>
-                <h3>Read the Field Guide</h3>
+                <h3>Read the Field Guide first</h3>
                 <p>
-                  See a worked example and get a feel for the questions before
-                  you try them.
+                  See an example and get a feel for the questions before you
+                  try your own situation.
                 </p>
                 <span>
                   Open the Guide <ArrowRight size={16} aria-hidden="true" />
