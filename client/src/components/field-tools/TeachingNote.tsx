@@ -121,7 +121,7 @@ export function FrameworkResources() {
         who we become while doing it together. Explore the two maps behind that
         approach.
       </p>
-      <div className="mt-5 grid gap-4 sm:grid-cols-2">
+      <div className="mt-7 grid gap-7 sm:grid-cols-2">
         {["orbital", "hid"].map(id => {
           const s = teachingSources[id];
           return (
@@ -130,7 +130,7 @@ export function FrameworkResources() {
               href={s.url}
               target="_blank"
               rel="noreferrer"
-              className="border border-[#bfcbb6] bg-[#e8eddf] p-5 hover:border-[#75866d]"
+              className="border-t border-[#bfcbb6] pt-5 hover:border-[#75866d] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4"
             >
               <h3 className="font-display text-2xl">{s.title} ↗</h3>
               <p className="mt-2 font-ui text-sm leading-6 text-[#536659]">
