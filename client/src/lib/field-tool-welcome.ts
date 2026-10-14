@@ -5,63 +5,63 @@ export type WelcomeCopy = {
 };
 const welcome: Record<string, WelcomeCopy> = {
   "priority-whiplash": {
-    heading: "Let’s sort out what comes first.",
+    heading: "You’re in. Let’s get you a quick win.",
     intro:
-      "Another request lands. The team is already busy. Before anyone promises more, let’s work out what can fit—and how to talk about what needs to wait.",
+      "Bring the new request and what’s already on your team’s plate. Let’s work out what can fit and what would have to wait, so you’re ready for that conversation.",
     outcomes: [
       "See what’s already on the team’s plate",
       "Work out what the new request would change",
-      "Get ready to talk through the options",
+      "Prepare a recommendation to talk through",
     ],
   },
   "deadline-reset": {
-    heading: "Let’s find a plan you can stand behind.",
+    heading: "Let’s see what’s possible by that date.",
     intro:
-      "Someone has promised a date, and you’re wondering how the team can possibly make it. Let’s look at what’s needed, what you know so far, and what you can honestly promise.",
+      "Bring the date you’ve been given and what the team needs to deliver. Let’s compare the options so you can explain what’s possible and what still needs checking.",
     outcomes: [
       "Understand why the date matters",
-      "Look at a few workable options",
-      "Explain what you can commit to—and what needs checking",
+      "Compare what the team could deliver and when",
+      "Prepare an update you can stand behind",
     ],
   },
   "mandate-reset": {
-    heading: "Let’s work out what you need to move forward.",
+    heading: "Let’s get that decision moving.",
     intro:
-      "You’re responsible for making something happen, but a decision you need is out of your hands. Let’s name that decision and get clear about what to ask for.",
+      "Bring one decision that’s holding up your work. Let’s work out who can make it and what you need from them, so you can ask for help clearly.",
     outcomes: [
       "Name the decision that’s holding things up",
       "Find out who can make it",
-      "Ask for the authority or support you actually need",
+      "Put your request into words",
     ],
   },
   "product-project-translator": {
-    heading: "Let’s get clear on what they need.",
+    heading: "Let’s find an answer you can stand behind.",
     intro:
-      "“Just give me the roadmap.” “When will it be done?” You want to give a useful answer without promising something you don’t know yet. Let’s work out what they need from you.",
+      "Bring the question you’ve been asked, in their words. Let’s work out what they need to know and write a helpful reply that doesn’t promise more than you know.",
     outcomes: [
       "Understand what the person needs to know",
-      "Decide what you can honestly commit to",
+      "Separate what you know from what you need to check",
       "Write a reply that sounds like you",
     ],
   },
   "ai-stalemate/pm": {
-    heading: "Let’s work out whether AI could help.",
+    heading: "Let’s put your AI idea into words.",
     intro:
-      "You can see something AI might help with. Your lead has questions. Let’s make room for both: what you hope to improve, what needs checking, and what you could do next together.",
+      "Bring one thing you think AI could improve. Let’s explain why it matters, understand your lead’s concerns, and prepare for a conversation about what to do next.",
     outcomes: [
-      "Explain what you hope could get better",
+      "Describe what you hope AI could help with",
       "Understand your lead’s concerns",
-      "Agree on a useful next step together",
+      "Prepare a next step to discuss with your lead",
     ],
   },
   "ai-stalemate/lead-dev": {
-    heading: "Let’s talk through the idea—and your concerns.",
+    heading: "Let’s get your questions on the table.",
     intro:
-      "Your PM is excited about AI. You can see things the team needs to check before going further. Let’s put those concerns into words and work out what would help you move forward together.",
+      "Bring the AI idea you’ve been asked to consider. Let’s see what it could help with, spell out what needs checking, and get ready to talk it through with your PM.",
     outcomes: [
       "Understand what your PM hopes to improve",
-      "Explain what needs checking or preparing",
-      "Agree on a useful next step together",
+      "Put your questions and concerns into words",
+      "Prepare a next step to discuss with your PM",
     ],
   },
 };
