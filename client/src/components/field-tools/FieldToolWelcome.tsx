@@ -63,10 +63,7 @@ export default function FieldToolWelcome({
             height={941}
             fetchPriority="high"
           />
-          <figcaption>
-            <span>Glad you’re here.</span>
-            <span>Nic Payne · Rebel Leaders</span>
-          </figcaption>
+          <figcaption>Glad you’re here.</figcaption>
         </figure>
       </section>
 
