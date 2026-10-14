@@ -22,7 +22,10 @@ export default function FieldToolsNav({
       ]
     : [
         ["/field-tools", "Field Tools"],
-        [myTool, "Open your tool"],
+        [
+          myTool === "/field-tools" ? "/field-tools/sign-in" : myTool,
+          "Open your tool",
+        ],
         ["/about", "About Nic"],
       ];
   const items = links.map(([href, label]) => (

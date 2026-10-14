@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Link, useLocation } from "wouter";
+import { Link } from "wouter";
+import { FIELD_TOOL_OFFERS } from "@/lib/field-tools";
 import { trpc } from "@/lib/trpc";
 import FieldToolsNav from "@/components/field-tools/FieldToolsNav";
 import { FieldToolSignIn as SignInForm } from "@/components/field-tools/FieldToolGate";
@@ -44,6 +45,24 @@ export default function FieldToolSignIn() {
             Request a fresh access link
           </Link>
         </div>
+      ) : !params.get("slug") ? (
+        <section className="mx-auto max-w-2xl">
+          <h1 className="font-display text-4xl">
+            Which tool would you like to open?
+          </h1>
+          <div className="mt-8 grid gap-3">
+            {FIELD_TOOL_OFFERS.map(tool => (
+              <Link
+                key={tool.slug}
+                href={`/field-tools/${tool.slug}/access`}
+                className="flex min-h-14 items-center justify-between gap-4 border-b border-[var(--ft-line)] py-4 font-ui text-base"
+              >
+                <span>{tool.name}</span>
+                <span aria-hidden="true">→</span>
+              </Link>
+            ))}
+          </div>
+        </section>
       ) : (
         <SignInForm slug={slug} audience={audience} />
       )}
