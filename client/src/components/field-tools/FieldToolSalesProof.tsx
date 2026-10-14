@@ -1,6 +1,7 @@
 import { Link } from "wouter";
 import { fieldToolBase, type Audience } from "@/lib/field-tool-paths";
 import { SALES_PROOF } from "@/lib/field-tool-sales-proof";
+import FieldToolScreenPreview from "./FieldToolScreenPreview";
 
 export function AIRoleLinks({ audience }: { audience: Audience }) {
   return (
@@ -36,45 +37,29 @@ export default function FieldToolSalesProof({
   const key = slug === "ai-stalemate" ? `${slug}-${audience}` : slug;
   const proof = SALES_PROOF[key];
   if (!proof) return null;
+  const device =
+    key === "ai-stalemate-lead-dev" || key === "product-project-translator"
+      ? "phone"
+      : "laptop";
   return (
-    <section
-      aria-labelledby="sales-proof-title"
-      className="border-y border-[#cbd4c6] bg-[#e9ebdf] px-5 py-12 text-[#193025] md:px-10 md:py-16"
-    >
-      <div className="mx-auto max-w-6xl">
+    <section aria-labelledby="sales-proof-title" className="ft-sales-proof">
+      <div className="ft-sales-proof-inner">
         {slug === "ai-stalemate" && <AIRoleLinks audience={audience} />}
-        <p className="font-ui text-xs tracking-widest text-[#53684d]">
-          INSIDE THE FIELD TOOL
-        </p>
-        <h2 id="sales-proof-title" className="mt-3 font-display text-4xl">
-          See what you can make.
-        </h2>
-        <p className="mt-4 max-w-3xl font-ui text-sm leading-7">
-          {proof.context}
-        </p>
-        <div className="mt-8 grid gap-8 lg:grid-cols-2 lg:items-start">
-          <figure>
-            <a
-              href={`/assets/field-tools/${key}-lab-preview-v3.webp`}
-              target="_blank"
-              rel="noreferrer"
-              className="block border border-[#b0bfa8] bg-[#fbf9f3] focus-visible:outline focus-visible:outline-2"
-            >
-              <img
-                src={`/assets/field-tools/${key}-lab-preview-v3.webp`}
-                alt={`${proof.name} interactive Lab preview`}
-                width={1347}
-                height={850}
-                loading="lazy"
-                className="h-auto w-full"
-              />
-            </a>
-            <figcaption className="mt-3 font-ui text-xs leading-6 text-[#536058]">
-              A real Lab screen. Select the image to enlarge it.
-            </figcaption>
-          </figure>
+        <div className="ft-sales-proof-heading">
+          <p className="font-ui text-xs tracking-widest text-[#53684d]">
+            INSIDE THE FIELD TOOL
+          </p>
+          <h2 id="sales-proof-title" className="mt-3 font-display text-4xl">
+            See what you can make.
+          </h2>
+          <p className="mt-4 max-w-3xl font-ui text-sm leading-7">
+            {proof.context}
+          </p>
+        </div>
+        <div className={`ft-sales-proof-grid ft-sales-proof-grid--${device}`}>
+          <FieldToolScreenPreview productKey={key} device={device} />
           <article
-            className="border border-[#b0bfa8] bg-[#fffdf7] p-6 md:p-8"
+            className="ft-proof-document"
             aria-label={`${proof.title} example`}
           >
             <p className="font-ui text-xs tracking-widest text-[#617457]">
@@ -93,10 +78,6 @@ export default function FieldToolSalesProof({
                 </div>
               ))}
             </div>
-            <p className="mt-6 border-t border-[#d1d8c9] pt-4 font-ui text-xs leading-6 text-[#61705e]">
-              The Lab turns your answers into a document you can review, copy,
-              download, or print.
-            </p>
           </article>
         </div>
       </div>

@@ -41,36 +41,36 @@ export default function FieldToolWelcome({
   return (
     <main className="ft-welcome">
       <FieldToolsNav tone="light" />
-      <div className="ft-welcome-inner">
-        <section className="ft-welcome-hero" aria-labelledby="welcome-title">
-          <div className="ft-welcome-copy">
-            <p className="ft-welcome-eyebrow">
-              <span aria-hidden="true" /> {tool.name}
-              {slug === "ai-stalemate"
-                ? ` · ${content.audience === "pm" ? "PM edition" : "Lead Developer edition"}`
-                : ""}
-            </p>
-            <h1 id="welcome-title">{copy.heading}</h1>
-            <p className="ft-welcome-intro">{copy.intro}</p>
-            <Link href={`${base}/lab`} className="ft-welcome-primary">
-              Open my Lab <ArrowRight size={18} aria-hidden="true" />
-            </Link>
-          </div>
-          <figure className="ft-welcome-portrait">
-            <img
-              src="/assets/field-tools/product-project-translator-hero-v2.webp"
-              alt="Nic Payne smiling in his study"
-              width={1672}
-              height={941}
-              fetchPriority="high"
-            />
-            <figcaption>
-              <span>Glad you’re here.</span>
-              <span>Nic Payne · Rebel Leaders</span>
-            </figcaption>
-          </figure>
-        </section>
+      <section className="ft-welcome-hero" aria-labelledby="welcome-title">
+        <div className="ft-welcome-copy">
+          <p className="ft-welcome-eyebrow">
+            <span aria-hidden="true" /> {tool.name}
+            {slug === "ai-stalemate"
+              ? ` · ${content.audience === "pm" ? "PM edition" : "Lead Developer edition"}`
+              : ""}
+          </p>
+          <h1 id="welcome-title">{copy.heading}</h1>
+          <p className="ft-welcome-intro">{copy.intro}</p>
+          <Link href={`${base}/lab`} className="ft-welcome-primary">
+            Open my Lab <ArrowRight size={18} aria-hidden="true" />
+          </Link>
+        </div>
+        <figure className="ft-welcome-portrait">
+          <img
+            src="/assets/field-tools/product-project-translator-hero-v2.webp"
+            alt="Nic Payne smiling in his study"
+            width={1672}
+            height={941}
+            fetchPriority="high"
+          />
+          <figcaption>
+            <span>Glad you’re here.</span>
+            <span>Nic Payne · Rebel Leaders</span>
+          </figcaption>
+        </figure>
+      </section>
 
+      <div className="ft-welcome-inner">
         <section
           className="ft-welcome-outcomes"
           aria-labelledby="outcomes-title"
@@ -96,8 +96,8 @@ export default function FieldToolWelcome({
               <div>
                 <h3>Read the Field Guide first</h3>
                 <p>
-                  See an example and get a feel for the questions before you
-                  try your own situation.
+                  See an example and get a feel for the questions before you try
+                  your own situation.
                 </p>
                 <span>
                   Open the Guide <ArrowRight size={16} aria-hidden="true" />

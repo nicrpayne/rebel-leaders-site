@@ -8,6 +8,8 @@ export type KitScene = {
   scene: string;
   desktopImage: string;
   mobileImage: string;
+  // Optional close-up of real fields for the standalone phone display (390 × 810).
+  mobileDetailImage?: string;
   desktopTransform: string;
   mobileTransform: string;
   erase: string;
@@ -46,6 +48,7 @@ export const FIELD_TOOL_KIT_SCENES: Record<string, KitScene> = {
     scene: "ai-stalemate-lead-dev-kit-v1.webp",
     desktopImage: "ai-stalemate-lead-dev-lab-preview-v4.webp",
     mobileImage: "ai-stalemate-lead-dev-mobile-lab-preview-v3.webp",
+    mobileDetailImage: "ai-stalemate-lead-dev-phone-detail-v1.jpg",
     desktopTransform:
       "matrix3d(0.541639466992,-0.014018289042,0,-0.000046815949,-0.075223780459,0.622687092833,0,-0.000022064847,0,0,1,0,584,136,0,1)",
     mobileTransform:
@@ -122,6 +125,7 @@ export const FIELD_TOOL_KIT_SCENES: Record<string, KitScene> = {
     scene: "product-project-translator-kit-v1.webp",
     desktopImage: "product-project-translator-lab-preview-v4.webp",
     mobileImage: "product-project-translator-mobile-lab-preview-v3.webp",
+    mobileDetailImage: "product-project-translator-phone-detail-v1.jpg",
     desktopTransform:
       "matrix3d(0.572732857621,-0.010111037652,0,-0.000033110426,-0.041108745177,0.645822337213,0,-0.000008637164,0,0,1,0,568,134,0,1)",
     mobileTransform:

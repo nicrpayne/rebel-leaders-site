@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "wouter";
+import { Fingerprint, UsersRound, Telescope, Orbit } from "lucide-react";
 import FieldToolsNav from "@/components/field-tools/FieldToolsNav";
 import FieldToolsFooter from "@/components/field-tools/FieldToolsFooter";
 import { teachingSources } from "@/components/field-tools/TeachingNote";
@@ -398,28 +399,35 @@ function ProductLinks({
   );
 }
 
-function ElementCards() {
+function BaseElements() {
+  const icons = [Fingerprint, UsersRound, Telescope, Orbit];
   return (
-    <div className="mt-7 grid gap-4 sm:grid-cols-2">
-      {elements.map(([name, question, body]) => (
-        <article
-          key={name}
-          className={`border p-6 ${name === "Culture" ? "border-[#9aab91] bg-[#e6eadb]" : "border-[#d2d7c9] bg-[#fbf9f3]"}`}
-        >
-          <p className="font-ui text-xs tracking-[.12em] text-[#62705b]">
-            {name === "Culture"
-              ? "THE FIELD PEOPLE FEEL"
-              : "WHERE CULTURE TAKES SHAPE"}
-          </p>
-          <h3 className="mt-3 font-display text-3xl">{name}</h3>
-          <p className="mt-3 font-ui text-sm font-semibold leading-6">
-            {question}
-          </p>
-          <p className="mt-2 font-ui text-sm leading-7 text-[#536659]">
-            {body}
-          </p>
-        </article>
-      ))}
+    <div className="mt-9 grid gap-x-8 gap-y-10 border-y border-[#c8d1bf] py-9 sm:grid-cols-2 lg:grid-cols-4">
+      {elements.map(([name, question, body], index) => {
+        const Icon = icons[index];
+        return (
+          <article key={name} className="text-center">
+            <Icon
+              size={38}
+              strokeWidth={1.3}
+              className="mx-auto mb-5 text-[#8c783b]"
+              aria-hidden="true"
+            />
+            <p className="font-ui text-[10px] tracking-[.1em] text-[#62705b]">
+              {name === "Culture"
+                ? "THE FIELD PEOPLE FEEL"
+                : "WHERE CULTURE TAKES SHAPE"}
+            </p>
+            <h3 className="mt-3 font-display text-3xl">{name}</h3>
+            <p className="mt-3 font-ui text-sm font-semibold leading-6">
+              {question}
+            </p>
+            <p className="mt-2 font-ui text-sm leading-7 text-[#536659]">
+              {body}
+            </p>
+          </article>
+        );
+      })}
     </div>
   );
 }
@@ -682,7 +690,7 @@ function HidContent() {
           people in return. The five health areas sit beneath this whole
           picture; they are not five separate outcomes to score.
         </p>
-        <ElementCards />
+        <BaseElements />
       </section>
       <section aria-labelledby="hid-roots" className="mt-14">
         <h2 id="hid-roots" className="scroll-mt-24 font-display text-4xl">
@@ -872,7 +880,7 @@ function OrbitalContent() {
           relationships. The culture that grows around them teaches newcomers
           what is possible here.
         </p>
-        <ElementCards />
+        <BaseElements />
         <p className={`mt-6 max-w-3xl ${paragraphStyle}`}>
           That distinction changes where you begin. If you want people to speak
           honestly, look at what happens when someone does. If you want shared
