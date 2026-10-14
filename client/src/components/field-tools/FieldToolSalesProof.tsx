@@ -47,7 +47,7 @@ export default function FieldToolSalesProof({
           INSIDE THE FIELD TOOL
         </p>
         <h2 id="sales-proof-title" className="mt-3 font-display text-4xl">
-          See the work. See what you leave with.
+          See an example of what you can make.
         </h2>
         <p className="mt-4 max-w-3xl font-ui text-sm leading-7">
           {proof.context}
@@ -71,7 +71,8 @@ export default function FieldToolSalesProof({
             </a>
             <figcaption className="mt-3 font-ui text-xs leading-6 text-[#536058]">
               Actual Lab screen. Open the image to view it larger. The Guide
-              explains the thinking; the Lab holds your situation.
+              explains the questions; the Lab helps you answer them about your
+              own work.
             </figcaption>
           </figure>
           <article
@@ -110,11 +111,11 @@ export function FieldToolBuyerQuestions() {
   const questions = [
     [
       "Who is this for?",
-      "People carrying a live product or delivery decision who need a clearer conversation and a record others can act on. AI Stalemate has separate Product Manager and Lead Developer paths.",
+      "Product managers and people leading teams who need to talk through a difficult request or decision. AI Stalemate has separate editions for Product Managers and Lead Developers.",
     ],
     [
       "What won’t it do?",
-      "It will not generate a roadmap, make decisions for your organization, or grant permission. Bring your own evidence and involve the people who can agree the next move.",
+      "It will not make a plan or decision for you. Use what you know about your situation, check what you are unsure of, and talk with the people who need to decide.",
     ],
     [
       "Where does my work save?",
@@ -126,11 +127,11 @@ export function FieldToolBuyerQuestions() {
     ],
     [
       "Do I need an AI subscription?",
-      "No. These are guided working tools. You write the answers; the Lab organizes them into records you can review, copy, download, or print.",
+      "No. You write the answers. The Lab puts them into documents you can review, copy, download, or print.",
     ],
     [
       "Is the walkthrough a video?",
-      "It is a written worked case with examples you can load into the interactive Lab. You can follow it one step at a time.",
+      "It is a written example you can follow one step at a time. You can load its answers into the Lab to see how it works.",
     ],
   ];
   return (
