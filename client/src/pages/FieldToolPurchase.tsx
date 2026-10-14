@@ -5,12 +5,10 @@ import {
   type Audience,
 } from "@/lib/field-tool-paths";
 import { Link, Redirect, useSearch } from "wouter";
-import { useEffect, useState } from "react";
+import FieldToolBuyActions from "@/components/field-tools/FieldToolBuyActions";
 import FieldToolGiftForm from "@/components/field-tools/FieldToolGiftForm";
-import { ArrowLeft, ArrowRight, Check, LockKeyhole } from "lucide-react";
+import { ArrowLeft, Check, LockKeyhole } from "lucide-react";
 import { trpc } from "@/lib/trpc";
-import { getFieldTool } from "@/lib/field-tools";
-import { FIELD_TOOL_PRESENTATIONS } from "@/lib/field-tool-presentations";
 import FieldToolsNav from "@/components/field-tools/FieldToolsNav";
 import RelatedFieldTools from "@/components/field-tools/RelatedFieldTools";
 import FieldToolKitPreview from "@/components/field-tools/FieldToolKitPreview";
@@ -23,13 +21,7 @@ export default function FieldToolPurchase({
   audience?: Audience;
 }) {
   const search = useSearch();
-  const [isGift, setIsGift] = useState(
-    () => new URLSearchParams(search).get("gift") === "1"
-  );
-  useEffect(
-    () => setIsGift(new URLSearchParams(search).get("gift") === "1"),
-    [search, slug, audience]
-  );
+  const isGift = new URLSearchParams(search).get("gift") === "1";
   const base = fieldToolBase(slug, audience);
   const tool = fieldToolForPath(slug, audience);
   const presentation = fieldToolPresentation(slug, audience);
@@ -105,15 +97,9 @@ export default function FieldToolPurchase({
             </div>
             <div className="mt-9 border-t border-[#435a46] pt-6 font-ui text-sm leading-7 text-[#adbfaf]">
               <p>
-                Includes the interactive Lab, printable Field Guide, and your
-                shareable output. Secure access through your email, or the
-                recipient’s email for a gift. No AI subscription required.
+                Includes the Field Guide, written examples, and interactive Lab.
+                Sign in with your email. No subscription needed.
               </p>
-              <p className="mt-3">
-                The walkthrough shows how to use the process on a realistic
-                case.
-              </p>
-              <p className="mt-3">{presentation.session}</p>
             </div>
           </div>
           <aside className="border border-[#778b6c] bg-[#10251a] p-7 md:p-9">
@@ -129,29 +115,14 @@ export default function FieldToolPurchase({
             <p className="mt-3 font-ui text-sm leading-6 text-[#b9c8b3]">
               One Field Tool. No subscription.
             </p>
-            <fieldset className="mt-7">
-              <legend className="font-ui text-sm">Who is this for?</legend>
-              <div className="mt-3 grid grid-cols-2 gap-2">
-                {[
-                  { label: "For me", value: false },
-                  { label: "Gift to someone", value: true },
-                ].map(option => (
-                  <label
-                    key={option.label}
-                    className={`cursor-pointer border p-3 text-center font-ui text-sm ${isGift === option.value ? "border-[#e4bc59] bg-[#293b21] text-[#f5dc94]" : "border-[#60775a] text-[#c0cfb9]"}`}
-                  >
-                    <input
-                      className="mr-2 accent-[#d9b34d]"
-                      type="radio"
-                      name="purchase-for"
-                      checked={isGift === option.value}
-                      onChange={() => setIsGift(option.value)}
-                    />
-                    {option.label}
-                  </label>
-                ))}
-              </div>
-            </fieldset>
+            {isGift && (
+              <Link
+                href={`${base}/buy`}
+                className="mt-6 inline-block font-ui text-sm underline underline-offset-4"
+              >
+                ← Buy for myself
+              </Link>
+            )}
             {isGift && (
               <FieldToolGiftForm
                 key={slug + audience}
@@ -161,61 +132,54 @@ export default function FieldToolPurchase({
                 available={Boolean(checkout.data?.checkoutUrl)}
               />
             )}
-            {!isGift &&
-              (checkout.isPending ? (
-                <p
-                  role="status"
-                  className="mt-7 font-ui text-sm text-[#cbd5c5]"
-                >
-                  Checking checkout availability…
-                </p>
-              ) : checkout.data?.checkoutUrl ? (
-                <>
-                  <a
-                    href={checkout.data.checkoutUrl}
-                    className="ft-button ft-button-gold mt-7 w-full"
-                  >
-                    Continue to checkout
-                    <ArrowRight size={17} aria-hidden="true" />
-                  </a>
-                  <p className="mt-4 flex items-center gap-2 font-ui text-xs text-[#adbfaa]">
-                    <LockKeyhole size={13} aria-hidden="true" />
-                    Payment handled by {checkout.data.provider}.
-                  </p>
-                  <p className="mt-3 font-ui text-xs leading-6 text-[#adbfaa]">
-                    Any applicable tax is shown at checkout. Review the order
-                    total and terms before paying.
-                  </p>
-                </>
-              ) : (
-                <div className="mt-7 border border-[#7a8258] bg-[#1c2d1a] p-4">
+            {!isGift && (
+              <>
+                <FieldToolBuyActions
+                  buyHref={checkout.data?.checkoutUrl}
+                  giftHref={`${base}/buy?gift=1`}
+                  tone="dark"
+                  className="mt-7"
+                />
+                {checkout.isPending ? (
                   <p
                     role="status"
-                    className="font-ui text-sm font-semibold text-[#ead69a]"
+                    className="mt-4 font-ui text-sm text-[#cbd5c5]"
                   >
-                    {checkout.error
-                      ? "Checkout is temporarily unavailable."
-                      : "Checkout is being prepared."}
+                    Checking checkout…
                   </p>
-                  <p className="mt-2 font-ui text-xs leading-6 text-[#c0ccb7]">
-                    Return to the product page to see the example and what is
-                    included.
+                ) : checkout.data?.checkoutUrl ? (
+                  <p className="mt-4 flex items-start gap-2 font-ui text-xs leading-6 text-[#adbfaa]">
+                    <LockKeyhole
+                      size={13}
+                      className="mt-1 shrink-0"
+                      aria-hidden="true"
+                    />
+                    Payment through {checkout.data.provider}. Any tax is shown
+                    before you pay.
                   </p>
-                  {checkout.error && (
-                    <button
-                      type="button"
-                      onClick={() => checkout.refetch()}
-                      className="mt-3 font-ui text-xs underline"
-                    >
-                      Check again
-                    </button>
-                  )}
-                </div>
-              ))}
+                ) : (
+                  <div className="mt-4 font-ui text-sm text-[#ead69a]">
+                    <p role="status">
+                      {checkout.error
+                        ? "Checkout is temporarily unavailable."
+                        : "Purchases are not open yet."}
+                    </p>
+                    {checkout.error && (
+                      <button
+                        type="button"
+                        onClick={() => checkout.refetch()}
+                        className="mt-3 underline"
+                      >
+                        Check again
+                      </button>
+                    )}
+                  </div>
+                )}
+              </>
+            )}
             {isGift && checkout.data?.checkoutUrl && (
               <p className="mt-4 font-ui text-xs leading-6 text-[#adbfaa]">
-                Payment handled by Lemon Squeezy. Any applicable tax is shown at
-                checkout. Review the total and terms before paying.
+                Payment through Lemon Squeezy. Any tax is shown before you pay.
               </p>
             )}
             <div className="mt-7 flex flex-col gap-4 border-t border-[#435a46] pt-6 font-ui text-xs text-[#c0cfb9]">
@@ -223,7 +187,7 @@ export default function FieldToolPurchase({
                 href={`${base}/access`}
                 className="underline underline-offset-4"
               >
-                Bought or received a gift? Open your tool →
+                Already have this? Open your tool →
               </Link>
               <Link href={base} className="underline underline-offset-4">
                 See the product →

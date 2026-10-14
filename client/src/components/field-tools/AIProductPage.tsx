@@ -2,13 +2,14 @@ import FieldToolSalesProof, {
   FieldToolBuyerQuestions,
 } from "./FieldToolSalesProof";
 import { Link } from "wouter";
-import { ArrowRight, Check } from "lucide-react";
+import { Check } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { fieldToolBase, type Audience } from "@/lib/field-tool-paths";
 import { aiProductCopy, AI_PRODUCT_INVENTORY } from "@/lib/ai-product";
 import FieldToolsNav from "./FieldToolsNav";
 import FieldToolsFooter from "./FieldToolsFooter";
 import RelatedFieldTools from "./RelatedFieldTools";
+import FieldToolBuyActions from "./FieldToolBuyActions";
 import AIKitPreview from "./AIKitPreview";
 import "./ai-library.css";
 
@@ -42,13 +43,13 @@ export default function AIProductPage({ audience }: { audience: Audience }) {
             {copy.headline} {copy.accent && <em>{copy.accent}</em>}
           </h1>
           <p className="ai-promise">{copy.promise}</p>
-          <a href="#purchase" className="ft-button ft-button-gold">
-            Get the Field Tool — $47 <ArrowRight size={16} />
-          </a>
-          <Link href={`${base}/buy?gift=1`} className="ft-button ft-button-outline mt-3">Gift to someone</Link>
-          <p className="ai-hero-note">
-            Field Guide · Lab · usable working documents
-          </p>
+          <FieldToolBuyActions
+            buyHref="#purchase"
+            buyLabel="Buy — $47"
+            giftHref={`${base}/buy?gift=1`}
+            tone="dark"
+          />
+          <p className="ai-hero-note">Field Guide · Lab · written examples</p>
         </div>
       </header>
       <FieldToolSalesProof slug="ai-stalemate" audience={audience} />
@@ -72,11 +73,6 @@ export default function AIProductPage({ audience }: { audience: Audience }) {
           <p className="ai-eyebrow">
             AI STALEMATE / {audience === "pm" ? "PM" : "LEAD DEVELOPER"}
           </p>
-          <h2>
-            A working kit for
-            <br />a real conversation.
-          </h2>
-          <Link href={`${base}/buy?gift=1`} className="mb-4 block font-ui text-sm underline underline-offset-4">Gift to someone →</Link>
           <p className="ai-price">
             $47 <small>USD · one time</small>
           </p>
@@ -87,50 +83,38 @@ export default function AIProductPage({ audience }: { audience: Audience }) {
             <br />
             No AI subscription required.
           </p>
+          <FieldToolBuyActions
+            buyHref={checkout.data?.checkoutUrl}
+            giftHref={`${base}/buy?gift=1`}
+            tone="dark"
+          />
           {checkout.isPending ? (
-            <p role="status">Checking checkout…</p>
-          ) : checkout.data?.checkoutUrl ? (
-            <a
-              href={checkout.data.checkoutUrl}
-              className="ft-button ft-button-gold"
-            >
-              Buy the Field Tool <ArrowRight size={16} />
-            </a>
-          ) : access.data?.preview ? (
-            <>
-              <Link
-                href={`${base}/access`}
-                className="ft-button ft-button-gold"
-              >
-                Open the review copy →
-              </Link>
-              <p className="ai-small">Review access · no payment taken.</p>
-            </>
+            <p role="status" className="ai-small">
+              Checking checkout…
+            </p>
           ) : (
-            <div role="status" className="ai-small">
-              {checkout.error
-                ? "Checkout is temporarily unavailable."
-                : "Purchases are not open yet."}
-              <button
-                className="block underline mt-2"
-                onClick={() => checkout.refetch()}
-              >
-                Check again
-              </button>
-            </div>
+            !checkout.data?.checkoutUrl && (
+              <div role="status" className="ai-small mb-4">
+                {checkout.error
+                  ? "Checkout is temporarily unavailable."
+                  : "Purchases are not open yet."}
+                {checkout.error && (
+                  <button
+                    className="block underline mt-2"
+                    onClick={() => checkout.refetch()}
+                  >
+                    Check again
+                  </button>
+                )}
+              </div>
+            )
           )}
           <Link href={`${base}/access`} className="ai-small underline">
-            Bought or received a gift? Open your tool →
+            {access.data?.preview
+              ? "Open the review copy →"
+              : "Already have this? Open your tool →"}
           </Link>
         </aside>
-      </section>
-      <section className="ai-teacher-note">
-        <p className="ai-eyebrow">A NOTE FROM NIC</p>
-        <p>
-          “You don’t need to win the argument. You need a clearer picture of
-          what matters, what needs to be true, and what you can do together.”
-        </p>
-        <span>Nic Payne · Rebel Leaders</span>
       </section>
       <FieldToolBuyerQuestions />
       <RelatedFieldTools slug="ai-stalemate" audience={audience} />

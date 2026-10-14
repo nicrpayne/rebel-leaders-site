@@ -9,8 +9,8 @@ export function AIRoleLinks({ audience }: { audience: Audience }) {
       className="mb-8 border-l-2 border-[#a4b591] pl-4 font-ui text-sm leading-7"
     >
       <p>
-        One Field Tool, two role-specific paths. You are viewing the{" "}
-        {audience === "pm" ? "Product Manager" : "Lead Developer"} edition.
+        {audience === "pm" ? "Product Manager" : "Lead Developer"} edition. Both
+        editions are included.
       </p>
       <Link
         className="font-semibold underline underline-offset-4"
@@ -47,7 +47,7 @@ export default function FieldToolSalesProof({
           INSIDE THE FIELD TOOL
         </p>
         <h2 id="sales-proof-title" className="mt-3 font-display text-4xl">
-          See an example of what you can make.
+          See what you can make.
         </h2>
         <p className="mt-4 max-w-3xl font-ui text-sm leading-7">
           {proof.context}
@@ -70,9 +70,7 @@ export default function FieldToolSalesProof({
               />
             </a>
             <figcaption className="mt-3 font-ui text-xs leading-6 text-[#536058]">
-              Actual Lab screen. Open the image to view it larger. The Guide
-              explains the questions; the Lab helps you answer them about your
-              own work.
+              A real Lab screen. Select the image to enlarge it.
             </figcaption>
           </figure>
           <article
@@ -80,7 +78,7 @@ export default function FieldToolSalesProof({
             aria-label={`${proof.title} example`}
           >
             <p className="font-ui text-xs tracking-widest text-[#617457]">
-              FICTIONAL WORKED EXAMPLE · OUTPUT EXCERPT
+              FICTIONAL EXAMPLE · EXCERPT
             </p>
             <h3 className="mt-3 font-display text-3xl">{proof.title}</h3>
             <div className="mt-5 space-y-5">
@@ -96,9 +94,8 @@ export default function FieldToolSalesProof({
               ))}
             </div>
             <p className="mt-6 border-t border-[#d1d8c9] pt-4 font-ui text-xs leading-6 text-[#61705e]">
-              Excerpt from the Lab’s built-in example. Your record uses your
-              shared answers. Review it, then copy, download, or print it for
-              the conversation.
+              The Lab turns your answers into a document you can review, copy,
+              download, or print.
             </p>
           </article>
         </div>
@@ -123,11 +120,11 @@ export function FieldToolBuyerQuestions() {
     ],
     [
       "How does access work?",
-      "When purchases open, use your purchase email—or the email your gift was sent to—to request an access link. Opening your purchased tool on another device will not transfer your local draft.",
+      "After purchase, use your email—or the email your gift was sent to—to request a sign-in link.",
     ],
     [
       "Can I give this to someone?",
-      "Yes. Choose Gift to someone, add their email and an optional note, then pay using your own email. After payment, they get their own access and you get the receipt. Their Lab work stays private. Gift checkout opens alongside regular purchases.",
+      "Yes. Choose Gift this beside Buy. Add their email and an optional note, then pay using your own email. They get access; you get the receipt. You can buy another gift at any time, even if you own the tool. Each person needs a separate checkout. Gift checkout opens when purchases open.",
     ],
     [
       "Do I need an AI subscription?",

@@ -75,9 +75,7 @@ export default function FieldToolWelcome({
           className="ft-welcome-outcomes"
           aria-labelledby="outcomes-title"
         >
-          <h2 id="outcomes-title">
-            A little more clarity. A next step you can take.
-          </h2>
+          <h2 id="outcomes-title">What this helps with</h2>
           <ul>
             {copy.outcomes.map(outcome => (
               <li key={outcome}>
@@ -90,8 +88,7 @@ export default function FieldToolWelcome({
 
         <section className="ft-welcome-kit" aria-labelledby="kit-title">
           <div className="ft-welcome-section-heading">
-            <h2 id="kit-title">It’s all here when you need it.</h2>
-            <p>Start in the Lab, or take a look around first.</p>
+            <h2 id="kit-title">Your Guide and resources</h2>
           </div>
           <div className="ft-welcome-kit-grid">
             <Link href={`${base}/guide`} className="ft-welcome-resource">
@@ -158,7 +155,7 @@ export default function FieldToolWelcome({
         </section>
 
         <section className="ft-welcome-help" aria-labelledby="help-title">
-          <h2 id="help-title">A couple of things worth knowing.</h2>
+          <h2 id="help-title">Using your tool</h2>
           <details>
             <summary>Will my work be saved?</summary>
             <p>
@@ -198,8 +195,7 @@ export default function FieldToolWelcome({
         </section>
         <div className="ft-welcome-bottom">
           <Link href={`${base}/buy?gift=1`}>
-            <Gift size={17} aria-hidden="true" /> Gift this Field Tool to
-            someone
+            <Gift size={17} aria-hidden="true" /> Gift this
           </Link>
           <button onClick={() => signOut.mutate()} disabled={signOut.isPending}>
             <LogOut size={15} aria-hidden="true" />
