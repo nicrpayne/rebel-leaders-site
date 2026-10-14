@@ -18,6 +18,17 @@ export default function ChapterGuide({ slug }: { slug: string }) {
   const chapterCount = AI_STALEMATE_GUIDE_PAGES.length;
 
   useEffect(() => {
+    // The chapters arrive after the access check, so the browser may have
+    // tried to follow the fragment before its target existed.
+    const match = /^#guide-(\d+)$/.exec(window.location.hash);
+    if (!match) return;
+    const frame = window.requestAnimationFrame(() => {
+      chapters.current[Number(match[1])]?.scrollIntoView({ block: "start" });
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [slug, content.audience, chapterCount]);
+
+  useEffect(() => {
     let frame = 0;
     const update = () => {
       frame = 0;
@@ -74,14 +85,14 @@ export default function ChapterGuide({ slug }: { slug: string }) {
           <p className="mt-5 max-w-3xl font-display text-3xl leading-tight text-[#e4bc59]">
             {slug === "ai-stalemate"
               ? content.audience === "pm"
-                ? "A PM’s guide to moving the opportunity forward."
-                : "A lead developer’s guide to shaping responsible use."
+                ? "You think AI could help. Your lead has questions. Start by understanding what matters to each of you."
+                : "Your PM thinks AI could help. Explain your concerns and work out what to do next together."
               : content.guide.deck}
           </p>
           <p className="mt-6 max-w-2xl font-ui text-sm leading-7 text-[#b6c7b8]">
-            Build the language and judgment for the conversation. Then use the
-            Lab to work your actual situation and carry the result into the
-            organization.
+            Read the Guide to understand the questions and see an example. Then
+            use the Lab to prepare for your own conversation and write down what
+            happens next.
           </p>
           <div className="mt-8 flex flex-wrap gap-4 print:hidden">
             <a
@@ -96,7 +107,7 @@ export default function ChapterGuide({ slug }: { slug: string }) {
             </Link>
           </div>
           <p className="mt-6 font-ui text-xs text-[#91a693]">
-            Nic Payne / Working Edition / Read here or keep the portable PDF.
+            Nic Payne / Working Edition / Read online or download the PDF.
           </p>
         </div>
       </header>
