@@ -44,99 +44,99 @@ export const FIELD_TOOL_PRESENTATIONS: Record<string, Presentation> = {
       "Your support team copies repair requests between two systems. AI might help build an app that saves that work. Your lead wants to check who can see each customer’s records before anyone connects the app to real data.",
     sampleValues: {
       betBasis:
-        "Fictional example. The team needs to check who may see repair records and write tests for those rules. It has not measured whether AI saves time. Permission and review arrangements must be agreed first.",
+        "Fictional example. We need tests that check who can see each repair record. We think AI might help write them, but we haven't tried it. First we need to agree the access rules and make time for someone to review the code.",
       betHypothesis:
-        "We think AI might help write the repetitive permission tests with less total work, including review and fixes. The tests must still prove that allowed access works and forbidden access fails.",
+        "Could AI help us write these tests with less work overall, once we've counted the checking and fixes? They still need to prove that people can see the records they're allowed to see, and can't see the others.",
       expectedLift:
-        "Prediction for a possible future experiment: 20% less total working time than a similar task without AI. We need to record that comparison task first. This is not a promise.",
+        "Our guess is 20% less time, including checking and fixes. We haven't measured that. First we'll record how long a similar job takes without AI.",
       betQualitative:
-        "Ask the author and reviewer whether the tests are easier to write and check, and whether they can explain what each test proves.",
-      task: "Possible future experiment: write permission tests for one part of the repair app’s API—the connection other software uses—with made-up customer records. No connection to live systems, real customer data, permission redesign, or unrelated code changes.",
+        "Ask the developer and reviewer: was this easier to write and check? Can you explain what each test is checking?",
+      task: "Try writing permission tests for one part of the repair app's API, using made-up customer records. That's the connection other software uses to reach the app. We won't connect to the live system, use real records, redesign permissions, or change unrelated code.",
       comparator:
-        "A similar permission-test task completed without AI. Use a task of similar size, with the same author experience, review, and required checks. Write down any differences that could affect the result.",
-      tool: "A team-approved coding assistant; approval still needs confirmation before the test.",
-      toolVersion: "Record the approved model/version before starting.",
+        "Compare it with a similar set of tests written without AI. Keep the size of the job, the developer's experience, and the checks as close as we can. Note anything that makes the comparison less fair.",
+      tool: "A coding assistant the team is allowed to use. We still need to confirm which one.",
+      toolVersion: "We'll write down the model and version before we start.",
       inputs:
-        "Made-up customer records and code approved for this test environment. No real customer information.",
+        "Made-up customer records and code we're allowed to use in the test. No real customer information.",
       approvalOwner:
-        "The engineering manager and the person responsible for security must confirm the tool, code, and data are allowed before the test.",
+        "Our engineering manager and security owner need to confirm which tool, code, and data we're allowed to use.",
       qualityBar:
-        "An experienced reviewer checks that permitted users can see the right repair records and other users cannot, including direct requests to the API. The tests must also pass the team’s usual automated checks.",
+        "An experienced reviewer checks that people can see the right repair records and can't get into anyone else's, even by going straight to the API. All our usual automated checks still need to pass.",
       capacity:
-        "Proposed limit: four hours of work across everyone involved, including at most one hour of review. The PM will ask the product director whether updating the help pages can wait. This time has not been approved.",
+        "Could we allow four hours across everyone involved, with no more than one hour of review? The PM will ask whether the help-page updates can wait to make room. Nobody has agreed to that yet.",
       betTimebox:
-        "One week after permission and review arrangements are confirmed. Agree the actual start date, finish date, and final review before starting.",
+        "One week, once we've agreed the permissions and who will review the work. We still need to choose the dates and book the final review.",
       betRabbitHoles:
-        "Stop if we need to redesign who can access records or connect to live systems. Those changes need separate decisions.",
+        "If we find we need to redesign permissions or connect to live systems, we'll stop and talk about that separately.",
       success:
-        "Proposed minimum: at least 10% less total working time than the task without AI, all the same checks passing, and no more than one hour of review. Agree these before starting.",
-      stop: "Stop if we encounter unapproved data or tool access, a permission check fails, or we reach the agreed time limit for the work or review.",
+        "We'd want at least 10% less time overall, all the same checks passing, and no more than an hour of review. Let's agree those limits before we start.",
+      stop: "Stop if we come across data or tool access we haven't approved, a permission test fails, or we run out of the time agreed for the work or review.",
       owners:
-        "A developer and experienced engineer work together. The engineer reviews the tests. The engineering manager approves technical results; the product director approves other work being postponed. Confirm names and a review date before starting.",
+        "A developer works with an experienced engineer, who reviews the tests. Our engineering manager signs off the technical work. The product director decides what other work can wait. We still need names and a review date.",
       betStatus: "PROPOSED — NOT YET ACCEPTED",
       betResult:
-        "The experiment has not started. We have no result about time saved or quality. The next step is to prepare.",
+        "We haven't run the experiment yet. We don't know whether AI will save us time or how good the work will be.",
       betLearning:
-        "Our conversation showed that we need agreed data permissions and practice checking and releasing code. It did not show whether AI saves time.",
+        "Talking it through showed us two things to sort out first: who can see the records, and how we'll check and release the code. We haven't tried the AI work yet, so we can't say whether it helps.",
       happened:
-        "We have talked about using AI to help build the repair app twice. I want to save the support team repeated typing. My lead wants to check who can see the customer records and who will review the code. We have not agreed what to do next.",
+        "We've talked about using AI for the repair app twice. I want to stop the support team typing every request into two systems. My lead keeps asking who can see the records and who'll check the code. We haven't worked out what to do next.",
       story:
-        "I have been reading their hesitation as resistance. I have not asked what they would need to be comfortable trying this.",
+        "I've been taking their hesitation as a no. I haven't asked what they'd need before we could try it.",
       protecting:
-        "I want support staff to stop copying the same request twice and customers to stop chasing missed repairs.",
-      why: "The team is doing work a useful app could take off their hands. I want them to have time to help customers whose requests are more complicated.",
+        "I want to stop the double typing and the missed repairs customers keep chasing us about.",
+      why: "I'd like the team to have more time to help customers, instead of copying information from one place to another.",
       futurePicture:
-        "Support staff enter a repair request once, can see that it reached the right people, and spend less time chasing it.",
+        "Someone enters a repair once, sees it's reached the right person, and doesn't have to chase it.",
       observed:
-        "My lead showed me that we have not tested whether one customer’s records can be seen by another. We have not measured the time AI would save on this work.",
+        "My lead showed me that we haven't tested whether one customer could get into another's records. We also haven't measured how much time AI would save.",
       prediction:
-        "AI might help us write the first version faster. We do not know how much checking and fixing it would need.",
+        "AI might help us get a first version written faster. I don't know how much checking and fixing we'd need afterward.",
       changeMind:
-        "If the finished work takes longer after review and fixes, or fails the required checks, I would reconsider this use.",
+        "If we spend more time checking and fixing than we save, or the work doesn't pass our checks, I'd rethink this.",
       askOther:
         "What would you need to check before we could try a small piece of this?",
       visionTeam:
-        "Developers can explain and check the changes they make. Reviewers have time to help instead of receiving a pile of unfamiliar code at the end.",
+        "The developers understand the code they're changing, and reviewers have time to help as we go. Nobody gets a pile of unfamiliar code at the last minute.",
       visionProduct:
-        "Customers submit a repair request once and can trust it has reached the right team.",
+        "Customers enter a repair request once and know it's reached the right team.",
       visionCompany:
-        "If we find a way of working that helps, we could teach it to other teams. Both of us could help shape how the company uses these tools.",
+        "If this helps, we could show other teams what worked. I'd like both of us to help decide how we use AI here.",
       counterpartConcern:
-        "We have not checked who can access which repair records, and nobody has time set aside to review the code.",
+        "We haven't agreed who can see which records, and nobody has time set aside to check the code.",
       openQuestions:
-        "We both want to stop the repeated typing. We still need to check the claimed financial benefit, agree who can see the records, and make time for review.",
+        "We both want to stop the double typing. We still need to check the money claim, agree who can see the records, and find time for review.",
       conversationStatus: "PROPOSED — NOT YET AGREED",
       outcome:
-        "Help support staff enter each repair request once, while keeping customer records visible only to the right people.",
+        "Support staff enter each repair once, and customers' records stay private.",
       sharedVision:
-        "Support staff spend less time copying and chasing requests. Developers can explain and check the app, and other teams can learn from what we find.",
+        "Less time copying and chasing requests. An app the team understands and can look after. And, if it works, something we can teach other teams.",
       businessContext:
-        "Fictional example. Support staff copy repair requests into two systems, and some requests are missed. The PM wants to use AI to help build an app that removes the repeated typing. The sales director says removing the delays could be worth $500,000 a week, but we have not seen how they calculated that figure.",
+        "Fictional example. Support staff type repair requests into two systems, and some get missed. The PM thinks AI could help us build an app to avoid that. The sales director says fixing the delays could be worth $500,000 a week. We haven't seen the calculation.",
       businessBasis:
-        "The figure comes from the sales director. Finance has not checked it or said whether it means money lost now, possible future income, or time saved. The PM will ask Finance by Thursday.",
+        "That figure came from the sales director. Finance hasn’t checked it. We don't know whether they mean money we're losing, possible future sales, or staff time. The PM will ask by Thursday.",
       growthOpportunity:
-        "The team could learn how to check generated code and protect customer records, then help other teams do the same. That could create opportunities, but we cannot promise them.",
+        "We could get better at checking AI-generated code and protecting customer records, then help other teams learn it too. That might open doors for people, but we shouldn't promise it.",
       accessModel:
-        "Support staff and repair engineers need different access to customer records. We have not agreed who can see or change each record, who grants access, or who removes it when someone leaves.",
+        "Support staff and repair engineers need to see different things. We haven't agreed who can see or change each record, who gives them access, or who takes it away when they leave.",
       securityChecks:
-        "The engineering manager found that we have not tested direct requests to the app’s API. The security owner will review the permission rules and require tests for allowed and forbidden access before any connection to live systems.",
+        "We've checked the screens, but not what happens when someone asks the API for a record directly. Our security owner needs to check the rules, and we need tests for both allowed and blocked access before connecting to live systems.",
       automationBoundary:
-        "No AI access to live customer data, release credentials, or permission to change live systems. A later test could use an approved test environment and made-up records, after review.",
+        "No AI access to live customer data or release credentials, and no permission to change live systems. If we agree to a test later, we'll use an approved test environment and made-up records.",
       teamReadiness:
-        "The developers have worked in support and IT services. For this app, they have not yet shown how they will check permissions, review code changes, or release and undo a change.",
+        "The team knows support and IT services. We still need to practise checking permissions, reviewing code, and putting out a change we can undo if it goes wrong.",
       readinessSupport:
-        "The engineering manager will pair developers with an experienced reviewer. The PM will ask for time to do it. The team will demonstrate a reviewed change, permission tests, and restoring the previous version before Tuesday’s review.",
+        "Our engineering manager will arrange practice with an experienced reviewer. The PM will ask for the time. Before Tuesday's review, we'll show a checked code change, working permission tests, and how to restore the previous version.",
       readinessDecision: "PREPARE FIRST",
       prerequisitePlan:
-        "The PM checks the claimed benefit with Finance Thursday. The data and security owners agree who may access the records Friday. The engineering manager arranges the practice and review. The PM and lead check progress next Tuesday.",
+        "The PM will ask Finance about the $500,000 figure on Thursday. The data and security owners will agree who can see the records on Friday. Our engineering manager will arrange the practice and review. The PM and lead will check in next Tuesday.",
       decision: "PAUSE",
       reason:
-        "The idea could help, but we need agreed data permissions and a team that can check and release the change safely before trying it.",
+        "This could save us time, but we're not ready to try it yet. We need to agree who can see the records and practise checking, releasing, and undoing a change.",
       limits:
-        "We have not measured an AI result or checked the sales director’s financial estimate. This decision covers only the proposed repair-app use.",
-      next: "Agree who may access the records, test those rules, and practise releasing and undoing a small change with an experienced engineer. The PM and engineering manager review progress next Tuesday.",
+        "We haven't tried the AI work or checked the sales director's figure yet. We're only deciding what to do about this repair app, not whether AI is useful everywhere.",
+      next: "Let's agree who can see the records, test those rules, and practise putting out a small change we can undo. An experienced engineer will help. The PM and engineering manager will check in next Tuesday.",
       leadershipUpdate:
-        "We want to stop support staff copying requests twice. First we need to agree who can see the records and practise checking and releasing the code. Can we make time for that preparation? We will review progress next Tuesday.",
+        "We want to stop the support team typing each request twice. Before we try AI, we need to sort out who can see the records and practise checking and releasing the code. Could we make time for that? We'll check in next Tuesday.",
     },
   },
   "deadline-reset": {
@@ -170,57 +170,55 @@ export const FIELD_TOOL_PRESENTATIONS: Record<string, Presentation> = {
     example:
       "Sales has promised customers online repair bookings and downloadable service reports by November 1. The customer event is fixed, but the booking system’s connection to the engineers’ calendar has not been tested. Work out what could be ready and who can change the promise.",
     sampleValues: {
-      outcome:
-        "Let customers book a repair appointment online at the November 1 customer event.",
+      outcome: "Customers can book a repair online at our November 1 event.",
       date: "November 1",
       promise:
-        "Fictional example: our sales director told customers they could book repairs online and download service reports from November 1.",
+        "Fictional example: our sales director told customers they'd be able to book repairs online and download service reports from November 1.",
       fixed:
-        "The customer event is booked for November 1. Customers need to see how online booking will work.",
+        "The event is already booked for November 1. We need something we can show customers that day.",
       constraintBasis:
-        "The sales director confirmed the event date. No contract requires both features to be ready that day.",
+        "I've checked with Sales: the event date is fixed, but we haven't signed a contract promising both features that day.",
       assumed:
-        "We assumed the booking page would connect to the repair calendar without more work, and that downloadable reports would be ready too.",
+        "We thought connecting the booking page to the engineers' calendar would be straightforward. We also assumed we'd have time for the reports.",
       unknown:
-        "We have not checked whether bookings reach the repair calendar correctly or how much testing is left.",
+        "We haven't checked whether bookings reach the calendar properly. We don't yet know how much fixing and testing is left.",
       scopeMove:
-        "Aim to offer online booking on November 1 and add downloadable service reports later. The engineering lead needs to check the calendar connection on Thursday before confirming that plan.",
+        "Could we have booking ready for the event and add reports later? Our engineering lead needs to check the calendar connection on Thursday before we can promise that.",
       dateMove:
-        "If both booking and reports must be ready together, ask the engineering lead for a new delivery estimate after Thursday's check. We do not have a reliable replacement date yet.",
+        "If customers need both at once, we'll need another date. Let's get Thursday's results before we give them one.",
       capacityMove:
-        "Keep the current team. Reserve time for checking the calendar connection and testing bookings. Do not assume anyone will work overtime.",
+        "Let's give the team time to check the calendar connection and test bookings. I'm not counting on anyone working evenings to get this done.",
       qualityGuardrails:
-        "Customers must only see their own bookings. The team must test that appointments are recorded correctly and complete its security review.",
+        "Bookings need to reach the right calendar, and customers must only see their own details. We still need to finish the security review.",
       consequence:
-        "If we keep promising both features for November 1, we risk letting customers down because the calendar connection and remaining testing are still unconfirmed.",
+        "We're still telling customers both features will be ready, but we haven't checked that we can do it. I'd rather change the promise now than let them down on the day.",
       chosenOption: "Keep date / change scope",
       recommendation:
-        "Keep the event, aim for working online booking, and explain that reports will come later. Confirm what we can promise after Thursday's calendar check.",
+        "I'd keep the event and focus on booking. Reports can follow. Let's check the calendar connection on Thursday before we tell customers booking will be ready.",
       confidence: "Medium",
       confidenceScope:
-        "Online booking by November 1, provided Thursday's calendar check succeeds.",
+        "Getting booking ready by November 1, if Thursday's calendar check goes well.",
       forecastBasis:
-        "The booking page is built. The engineering lead thinks the remaining work can fit, but has not yet checked the calendar connection.",
+        "The booking page is built. Our engineering lead thinks the rest can fit, but the calendar connection is still a question mark.",
       evidenceNext:
-        "The engineering lead will send test bookings to the repair calendar on Thursday and list any fixes or testing still needed.",
+        "On Thursday, our engineering lead will try sending bookings to the calendar and tell us what still needs fixing or testing.",
       checkpoint: "Thursday afternoon, after the calendar check",
       decisionNeeded:
-        "Agree to focus on booking for the event, or ask for a new date when booking and reports can both be ready.",
+        "Can we focus on booking for the event and deliver reports later? If both need to launch together, can we agree to change the date?",
       owner: "Sales director, who made the customer promise",
       decisionBy: "Wednesday, before the next customer update",
       decisionStatus: "PROPOSAL — awaiting a decision",
-      finalDecision:
-        "We have not discussed this recommendation with the sales director yet.",
+      finalDecision: "We haven't spoken to the sales director about this yet.",
       communication:
-        "The sales director will tell customers what to expect. After a decision, the product manager will update the team's plan.",
+        "Once we've agreed, the sales director will tell customers what to expect. I'll update the team's plan.",
       privateReaction:
-        "I am frustrated that customers were promised this before we checked the calendar connection.",
+        "I'm frustrated that we promised this before checking whether it would work.",
       privateAssumption:
-        "I am assuming the sales director ignored the risks. I need to ask what customers were told and what they need for the event.",
+        "I'm assuming Sales ignored the risks. I need to find out what they actually promised and what customers need from the event.",
       checkpointFallback:
-        "If the calendar check fails, ask the sales director on Thursday whether the event should show a demonstration only. Tell customers by Friday that online booking is not yet available.",
+        "If the calendar check fails, I'll ask Sales on Thursday whether we should show a demo at the event instead. We'd need to tell customers by Friday that they won't be able to book yet.",
       unresolvedPlan:
-        "If we cannot get a decision, ask who can make it and when they can respond. Keep working to the last agreed plan within our existing authority. Check again on the date recorded above; silence does not mean yes.",
+        "If we don't hear back by Wednesday, I'll ask the sales director who can make the call. We'll stick with the work already agreed and check again after Thursday's calendar test. No answer doesn't mean we can change the promise.",
     },
   },
   "priority-whiplash": {
@@ -255,49 +253,49 @@ export const FIELD_TOOL_PRESENTATIONS: Record<string, Presentation> = {
       "Your team is fixing a broken invitation link, checking that customers cannot see each other’s data, and correcting wrong totals in a customer’s monthly report. The sales director now wants a clickable demonstration of a new report screen for Friday. Find out what the demonstration needs and what would have to wait.",
     sampleValues: {
       outcome:
-        "Help new customers join their account, keep customer information private, and give customers accurate report figures.",
-      p1: "Fix the broken invitation link that stops new customers joining their account.",
-      p2: "Check that customers cannot see another customer's information before releasing the next software update.",
-      p3: "Correct the inaccurate totals in a customer's monthly report.",
+        "New customers can join their account, their information stays private, and their reports show the right figures.",
+      p1: "Fix the broken invitation link. New customers can't join their account.",
+      p2: "Before the next update goes out, check that customers can't see each other's information.",
+      p3: "Fix the inaccurate totals in a customer's monthly report.",
       otherWork:
-        "The team's estimate of 10 days of existing work includes customer support and checking each other's changes.",
+        "The 10 days already planned include answering support questions and checking each other's changes.",
       newAsk:
-        "Fictional example: the sales director asks us to show a customer how a proposed report screen would work at Friday's meeting.",
-      whyNow: "The customer meeting has just been added for Friday.",
+        "Fictional example: Sales wants a demo of the new report screen for a customer meeting on Friday.",
+      whyNow: "The meeting's just been booked for Friday.",
       urgencyBasis:
-        "The sales director confirmed that the customer wants to react to the proposed screen. They do not need working reporting software for the meeting.",
+        "I asked Sales what the customer needs. They want to click through the idea and give us feedback. It doesn't need to be working software yet.",
       priorityChoice: "Narrow the request",
       moves:
-        "Make a simple clickable demonstration and put off two days of work on the incorrect report totals. Check the new report-fix date with the team before promising it.",
+        "We could make a clickable demo, but we'd have to put two days of report fixes on hold. I'll check with the team before giving that customer a new date.",
       impact:
-        "The customer waiting for accurate report totals would wait longer. Their account manager needs the revised date and must tell them what is happening.",
+        "The customer with the wrong report figures would wait longer. Their account manager needs to explain the delay and agree a new date with them.",
       protected:
-        "Keep the invitation-link fix and the checks that protect customer information.",
+        "We'll still fix the invitation link and check that customer information stays private.",
       alternative:
-        "Keep all three current commitments and show the customer the sketches we already have. They could discuss the idea, but would not be able to click through it.",
+        "We could show the sketches we already have. The customer couldn't click through them, but they could still tell us what they think. All three jobs would stay on track.",
       availableCapacity: "10",
       existingLoad: "10",
       requestLoad: "2",
-      capacityWindow: "The remaining working time from now to Friday",
+      capacityWindow: "From now until Friday",
       capacityBasis:
-        "Fictional estimates: the people involved have 10 days of work time between them before Friday. Existing work needs all 10 days; the simple demonstration needs 2 more. These totals include support and review, with no overtime.",
+        "Fictional estimates: we've got 10 working days between us before Friday, and all 10 are spoken for. The demo needs another 2. That includes support and checking the work; nobody's working extra hours to make it fit.",
       recommendation:
-        "Use a simple clickable demonstration for Friday only if we agree to delay the report correction. It lets the customer react to the idea without asking the team to build the full feature.",
+        "I'd make the small demo if we're willing to delay the report fix. If not, let's use the sketches. We don't need to build the whole feature for this meeting.",
       decisionOwner:
-        "Product director, who can approve changes to these customer commitments",
+        "Product director — they can agree to change what we've promised customers",
       decisionDate: "Wednesday afternoon",
       decisionStatus: "PROPOSAL — awaiting a decision",
-      finalDecision: "The product director has not made the decision yet.",
+      finalDecision: "The product director hasn’t made the decision yet.",
       communication:
-        "After the decision, the product manager will update the team and the account manager by Thursday morning. The account manager will tell the customer waiting for the report correction.",
+        "Once we have an answer, I'll tell the team and the account manager by Thursday morning. The account manager will contact the customer waiting for the report fix.",
       reviewDate:
-        "Friday after the customer meeting: did the demonstration help, and was the report customer told about the delay?",
+        "Friday, after the meeting. Did the demo help? Did we tell the other customer about the delay?",
       privateReaction:
-        "I feel as though the work we already promised has been forgotten.",
+        "It feels like we've forgotten everything we already promised.",
       privateAssumption:
-        "I am assuming the demonstration is just to impress someone. I need to ask what the customer needs to see.",
+        "I'm assuming this is just about impressing someone. I haven't asked what the customer actually needs to see.",
       unresolvedPlan:
-        "If we cannot get a decision, ask who can make it and when they can respond. Keep working to the last agreed plan within our existing authority. Check again on the date recorded above; silence does not mean yes.",
+        "If we haven't heard by Wednesday afternoon, I'll follow up with the product director. Until someone agrees to the change, we'll keep going with the three jobs already planned.",
     },
   },
   "mandate-reset": {
@@ -332,48 +330,48 @@ export const FIELD_TOOL_PRESENTATIONS: Record<string, Presentation> = {
       "You are expected to launch online repair bookings on time. Several directors keep asking for more features, and you cannot turn them down or postpone them. Ask for one person to decide which requests change the plan—and what waits when they do.",
     sampleValues: {
       outcome:
-        "Release an online repair-booking page on the agreed date, with one plan the team can follow.",
+        "Get online repair booking out on the agreed date, with one plan everyone can follow.",
       blockedDecision:
-        "Who can decide whether a new request replaces work already planned for this release?",
+        "Who gets to say whether a new request goes into this release, and what has to wait if it does?",
       consequence:
-        "Different directors keep asking developers to add features. I am expected to meet the original date, but cannot postpone those requests.",
+        "Directors keep going straight to developers with more features. I'm still expected to hit the date, but I can't say no or move anything out.",
       recommend:
-        "Product manager: brings the options and explains what each would change.",
+        "I'll bring the options and explain what each would mean for the team and the date.",
       approve:
-        "Product director: can make the final call about what goes into this release.",
+        "The product director makes the final call on what goes into this release.",
       execute:
-        "Developers build and test the changes; the product manager updates the plan.",
+        "The developers build and test it. I update the plan and tell people what's changed.",
       block:
-        "Other directors can ask for work. The security reviewer can withhold release approval if customer information is not protected.",
+        "Other directors can ask for changes. Our security reviewer can stop a release if customer information isn't protected.",
       accountable:
-        "The product manager must explain delivery progress. The engineering lead is responsible for the software checks.",
+        "I explain where we are with delivery. The engineering lead makes sure the software passes the checks it needs.",
       rightsEvidence:
-        "The product director has approved release changes before. We still need them to confirm how new requests should be handled and tell the other directors.",
+        "The product director has made these calls before. I still need them to confirm this is how we'll handle new requests and tell the other directors.",
       requiredApprovals:
-        "The security reviewer must approve the customer-data checks. The finance manager approves extra spending. The engineering lead confirms that the software is ready to release.",
+        "Security still needs to approve how we protect customer data. Finance signs off extra spending. Our engineering lead confirms the software is ready to go out.",
       consult:
-        "Ask the developers about the work involved and the account manager about customer promises before making the final call.",
-      gap: "I am held responsible for the release date, but directors can add work and I cannot say what should wait. We have no agreed way to get a quick decision.",
+        "Before deciding, let's ask the developers what the change involves and the account manager what we've promised the customer.",
+      gap: "I'm responsible for the date, but I can't stop more work being added. When two requests clash, we don't know who to ask for a quick answer.",
       request:
-        "Send new requests to the product director before adding them to the team's plan. The director should say whether to add them now and, if they do not fit, what should wait.",
+        "Could new requests come to you before we add them to the plan? We'd need you to say whether they go in now and, if there's no room, what comes out.",
       boundaries:
-        "Keep the agreed budget and the required security and software checks. This changes how we choose work; it does not remove those approvals.",
+        "We'd keep the same budget and all the security and release checks. I'm asking to change how we choose the work, not skip those checks.",
       fallback:
-        "If I cannot make that call, ask the product director to respond within one working day. Keep the last agreed plan while waiting.",
+        "If I can't make that call, could you give us an answer within one working day? While we're waiting, we'd stick with the plan you've already agreed.",
       owner: "Product director",
       date: "Before Monday's planning meeting",
       decisionStatus: "PROPOSAL — awaiting a decision",
-      finalDecision:
-        "The product director has not agreed to this way of handling requests yet.",
+      finalDecision: "The product director hasn't agreed to this yet.",
       interimAction:
-        "I will collect the new requests and check how much work they involve. I will not change the agreed plan without permission.",
+        "I'll collect the requests and ask the team what each would involve. I won't add them to the plan until we have an answer.",
       reviewDate:
-        "After the next two requests, check whether the director responded in time and the team received one clear plan.",
-      privateReaction: "I feel blamed for a date I cannot protect.",
+        "After the next two requests: did we get an answer in time, and did everyone know which plan to follow?",
+      privateReaction:
+        "I feel like I'm being blamed for a date I can't protect.",
       privateAssumption:
-        "I am assuming the directors are avoiding the decision. I need to check what they think I am allowed to decide.",
+        "I'm assuming the directors are ducking the decision. I should ask what they think I'm already allowed to decide.",
       unresolvedPlan:
-        "If we cannot get a decision, ask who can make it and when they can respond. Keep working to the last agreed plan within our existing authority. Check again on the date recorded above; silence does not mean yes.",
+        "If we don't have an answer before Monday's planning meeting, I'll ask the product director when we can talk. We'll keep the last agreed plan in the meantime.",
     },
   },
   "product-project-translator": {
@@ -408,45 +406,44 @@ export const FIELD_TOOL_PRESENTATIONS: Record<string, Presentation> = {
       "Finance asks for the final feature list before reserving money on Thursday. You have two sketches for an online repair-booking screen, but customers have tried neither. Find out what Finance needs to approve now and what you can learn before committing to the full build.",
     sampleValues: {
       request:
-        "Fictional example: Please give me the final list of features before I reserve next quarter's budget.",
+        "Fictional example: ‘Can you send me the final feature list? I need to set aside next quarter's budget.’",
       stakeholder: "Finance director",
-      context:
-        "Finance needs to decide how much money to set aside for a new online repair-booking service.",
+      context: "Finance needs to set aside money for online repair booking.",
       need: "Budget / staffing",
       needEvidence:
-        "The finance director confirmed they need a spending limit by Thursday. They do not need every screen agreed yet.",
+        "I asked what they need by Thursday. It's a spending limit, not a decision on every screen.",
       assumption:
-        "We are assuming we can choose the booking screens before customers have tried either design.",
+        "We're acting as though we know which design to build, but no customer has tried either one yet.",
       outcome:
-        "Find a booking design customers can use without phoning the service desk.",
+        "Customers can book a repair themselves without having to phone us.",
       known:
-        "Customers currently phone to book repairs. We have sketches of two booking designs, but customers have not tried them.",
+        "Customers phone us to book repairs today. We've sketched two ways they could do it online, but haven't tried either with customers.",
       unknown:
-        "Can customers complete a booking using either design, and what would it take to build the better one?",
+        "Can customers finish a booking with either design? What would it take to build the one that works better?",
       commit:
-        "Propose spending up to $5,000 over two weeks to let five customers try both designs and ask Engineering what each would take to build. The product manager arranges the customer sessions; the engineering lead estimates the build work.",
+        "Could we spend up to $5,000 over two weeks trying both designs with five customers? I'll arrange the sessions, and our engineering lead will check what each design would take to build.",
       commitmentBounds:
-        "Maximum $5,000 and two weeks, including customer sessions and Engineering's assessment. No working booking service or full-build budget is promised at the end.",
+        "We'd spend no more than $5,000 and two weeks, including the customer sessions and the engineering estimate. We wouldn't be promising a working service or agreeing the full build budget yet.",
       checkpoint:
-        "If Finance approves, book a review two weeks after we start. Bring the customer results, Engineering's estimate, and a recommendation to build, change the design, or stop.",
+        "If Finance says yes, let's meet two weeks after we start. We'll show what customers could and couldn't do, what the build would involve, and whether we think we should build it, change it, or stop.",
       response:
-        "I understand you need a spending limit by Thursday. Could we set aside up to $5,000 for two weeks to try both booking designs with five customers and check the build work with Engineering? We would then bring you the results and a recommendation before asking for the full build budget.",
+        "Could we set aside up to $5,000 for two weeks first? That would let us try both designs with five customers and check the build work with Engineering. We'd bring you what we learn before asking you to fund the whole thing. Would that give you enough to work with on Thursday?",
       spokenResponse:
-        "You need a budget by Thursday. Could we approve up to $5,000 for two weeks of customer testing first? Then we can show you which design works and what it would take to build before you commit to the full cost.",
+        "Could we fund two weeks first, up to $5,000? We'd try both designs with five customers and check what they'd take to build. Then we'd have a better basis for the full budget.",
       decisionNeeded:
-        "Approve or change the proposed $5,000, two-week customer test and Engineering assessment.",
+        "Can we spend up to $5,000 over two weeks on customer sessions and an engineering estimate, or do we need to change that plan?",
       owner: "Finance director",
       decisionDate: "Thursday, before booking the customer sessions",
       decisionStatus: "PROPOSAL — awaiting a decision",
-      finalDecision: "The finance director has not responded yet.",
+      finalDecision: "The finance director hasn't responded yet.",
       nextAction:
-        "The product manager will discuss the proposal with Finance on Thursday. Book the customer sessions and review meeting only after approval.",
+        "I'll talk this through with Finance on Thursday. If they say yes, I'll book the customer sessions and the review meeting.",
       privateReaction:
-        "I feel pushed to promise details we have not worked out.",
+        "I feel pushed to promise something we haven't figured out yet.",
       privateAssumption:
-        "I am assuming Finance wants to control the design. I need to ask what they need the feature list for.",
+        "I'm assuming Finance wants to control the design. I need to ask what they need the list for.",
       unresolvedPlan:
-        "If we cannot get a decision, ask who can make it and when they can respond. Keep working to the last agreed plan within our existing authority. Check again on the date recorded above; silence does not mean yes.",
+        "If we don't get an answer on Thursday, I'll ask Finance what they still need and when we can talk again. I won't book the paid sessions until we've agreed the money.",
     },
   },
 };

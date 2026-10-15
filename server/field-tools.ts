@@ -4,6 +4,7 @@ import {
   AI_STUDY,
   AI_RESOURCE_REVIEW_DATE,
 } from "./field-tool-content/ai-resources";
+import { LEADERSHIP_EXPANSIONS } from "./field-tool-content/leadership-expansion";
 import { aiCompanionFor } from "./field-tool-content/ai-companion";
 import { FIELD_TOOL_PRESENTATIONS } from "../client/src/lib/field-tool-presentations";
 import { aiGuideFor, aiLabFor } from "./field-tool-content/ai-paths";
@@ -197,7 +198,10 @@ export const fieldToolsRouter = router({
               }
             : null,
         companion:
-          input.slug === "ai-stalemate" ? aiCompanionFor(input.audience) : null,
+          input.slug === "ai-stalemate"
+            ? aiCompanionFor(input.audience)
+            : (LEADERSHIP_EXPANSIONS[input.slug]?.companion ?? null),
+        expansion: LEADERSHIP_EXPANSIONS[input.slug] ?? null,
         firstMove: (
           {
             "deadline-reset":

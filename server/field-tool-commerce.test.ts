@@ -149,6 +149,16 @@ describe("verified payment boundary", () => {
     await expect(
       caller.content({ slug: "ai-stalemate", audience: "pm" })
     ).rejects.toMatchObject({ code: "FORBIDDEN" });
+    for (const slug of [
+      "deadline-reset",
+      "priority-whiplash",
+      "mandate-reset",
+      "product-project-translator",
+    ]) {
+      await expect(
+        caller.content({ slug, audience: "pm" })
+      ).rejects.toMatchObject({ code: "FORBIDDEN" });
+    }
     expect(await caller.access()).toMatchObject({ signedIn: false, slugs: [] });
     expect(
       await caller.checkout({ slug: "ai-stalemate", audience: "pm" })

@@ -28,6 +28,7 @@ import { Link } from "wouter";
 import FieldToolsNav from "@/components/field-tools/FieldToolsNav";
 import FieldToolArtifact from "@/components/field-tools/FieldToolArtifact";
 import AIEffortComparison from "@/components/field-tools/AIEffortComparison";
+import LeadershipCommunicationPanel from "@/components/field-tools/LeadershipCommunicationPanel";
 import AICommunicationPanel from "@/components/field-tools/AICommunicationPanel";
 import AIQualityChecks from "@/components/field-tools/AIQualityChecks";
 import LeadershipWorkSurface from "@/components/field-tools/LeadershipWorkSurface";
@@ -518,14 +519,16 @@ function LabSession({ slug }: { slug: string }) {
                 Read this part of the Guide →
               </Link>
               <LabTeachingNote slug={slug} step={step} />
-              {slug === "ai-stalemate" && (
+              {(slug === "ai-stalemate" || content.expansion) && (
                 <div className="mt-5 flex flex-col gap-3 text-xs">
                   <Link className="underline" href={`${base}/walkthrough`}>
                     Play through a worked example →
                   </Link>
-                  <Link className="underline" href={`${base}/resources`}>
-                    Find a tool or study resource →
-                  </Link>
+                  {slug === "ai-stalemate" && (
+                    <Link className="underline" href={`${base}/resources`}>
+                      Find a tool or study resource →
+                    </Link>
+                  )}
                 </div>
               )}
             </details>
@@ -642,18 +645,26 @@ function LabSession({ slug }: { slug: string }) {
                 onChange={editValue}
               />
             )}
-            {slug === "ai-stalemate" && step === 4 && (
+            {content.expansion && step === 3 && (
+              <LeadershipCommunicationPanel
+                slug={slug}
+                values={values}
+                onChange={editValue}
+              />
+            )}
+            {((slug === "ai-stalemate" && step === 4) ||
+              (content.expansion && step === 3)) && (
               <details className="ai-workbench-panel">
                 <summary className="cursor-pointer font-display text-2xl">
-                  Return after the next move.
+                  Come back after the decision.
                 </summary>
                 <label>
-                  Shared record: what happened, what changed, and what now?
+                  What happened? What needs to happen next?
                   <textarea
                     rows={4}
                     value={values.returnRecord ?? ""}
                     onChange={e => editValue("returnRecord", e.target.value)}
-                    placeholder="Action taken / evidence or response / revised next move / owner / next review date"
+                    placeholder="What did people do? What did you learn? What will you do next, with whom, and when?"
                   />
                 </label>
                 <label>
@@ -668,7 +679,7 @@ function LabSession({ slug }: { slug: string }) {
                   />
                 </label>
                 <p className="mt-3 text-xs">
-                  The shared record is saved and included in the Decision Brief.
+                  Your follow-up is saved and included in your final document.
                   Private reflection stays only in this tab and is excluded from
                   saved drafts and exports.
                 </p>

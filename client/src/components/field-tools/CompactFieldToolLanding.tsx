@@ -81,7 +81,6 @@ export default function CompactFieldToolLanding({
         }
         image={p.image}
         imageLayout={p.imageLayout}
-        showCaption={false}
         primary={{
           label: `Buy — $${tool.price}`,
           href: `${base}/buy`,

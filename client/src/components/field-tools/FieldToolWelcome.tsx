@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
 import {
   ArrowRight,
@@ -14,7 +15,6 @@ import { fieldToolWelcome } from "@/lib/field-tool-welcome";
 import { useFieldToolContent } from "./FieldToolGate";
 import FieldToolsNav from "./FieldToolsNav";
 import FieldToolsFooter from "./FieldToolsFooter";
-import { FrameworkResources } from "./TeachingNote";
 import "./field-tool-welcome.css";
 
 export default function FieldToolWelcome({
@@ -25,6 +25,11 @@ export default function FieldToolWelcome({
   extras?: Array<{ title: string; detail: string; href: string }>;
 }) {
   const content = useFieldToolContent();
+  const portrait = useRef<HTMLImageElement>(null);
+  const [portraitReady, setPortraitReady] = useState(false);
+  useEffect(() => {
+    if (portrait.current?.complete) setPortraitReady(true);
+  }, []);
   const base = fieldToolBase(slug, content.audience);
   const tool = fieldToolForPath(slug, content.audience);
   const copy = fieldToolWelcome(slug, content.audience);
@@ -55,8 +60,11 @@ export default function FieldToolWelcome({
             Open my Lab <ArrowRight size={18} aria-hidden="true" />
           </Link>
         </div>
-        <figure className="ft-welcome-portrait">
+        <figure className="ft-welcome-portrait" data-ready={portraitReady}>
           <img
+            ref={portrait}
+            onLoad={() => setPortraitReady(true)}
+            onError={() => setPortraitReady(true)}
             src="/assets/field-tools/product-project-translator-hero-v2.webp"
             alt="Nic Payne smiling in his study"
             width={1672}
@@ -183,11 +191,17 @@ export default function FieldToolWelcome({
           <details>
             <summary>Where does the thinking behind this come from?</summary>
             <p>
-              These tools draw on Nic’s Holistic Shaping work: how our everyday
-              choices shape the people we work with. If you’d like to explore
-              that, start with these two maps.
+              These tools draw on my Holistic Shaping work—how work shapes who
+              we become, and what we can do about it.
             </p>
-            <FrameworkResources />
+            <a
+              href="https://rebel-leader.com"
+              target="_blank"
+              rel="noreferrer"
+              className="mt-4 inline-block underline underline-offset-4"
+            >
+              Explore Rebel Leaders →
+            </a>
           </details>
         </section>
         <div className="ft-welcome-bottom">

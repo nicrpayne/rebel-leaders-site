@@ -105,7 +105,10 @@ export default function AIWalkthrough() {
             </button>
           ))}
         </div>
-        <article className="ai-visual ft-walkthrough-story">
+        <article
+          key={stage}
+          className="ai-visual ft-walkthrough-story ft-scene-enter"
+        >
           <p className="ai-eyebrow">{stage + 1} / WHAT CHANGES</p>
           <h2 className="mt-3 font-display text-3xl">{scene.title}</h2>
           <p>{scene.move}</p>

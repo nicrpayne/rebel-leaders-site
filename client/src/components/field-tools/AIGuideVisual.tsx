@@ -1,12 +1,28 @@
+import { teachingSources } from "./TeachingNote";
 import { Link } from "wouter";
 import { useFieldToolContent } from "./FieldToolGate";
 import { fieldToolBase } from "@/lib/field-tool-paths";
 import "./ai-library.css";
-export default function AIGuideVisual({ index }: { index: number }) {
+export default function AIGuideVisual({
+  index,
+  slug = "ai-stalemate",
+}: {
+  index: number;
+  slug?: string;
+}) {
   const content = useFieldToolContent();
   const visual = content.companion?.find(v => v.after === index);
   if (!visual) return null;
-  const base = fieldToolBase("ai-stalemate", content.audience);
+  const resources =
+    content.expansion?.resources.filter(item => {
+      const destination =
+        item.topic === "Holistic Shaping"
+          ? content.companion?.at(-1)
+          : (content.companion?.find(part => part.step === item.step) ??
+            content.companion?.[0]);
+      return destination?.after === index;
+    }) ?? [];
+  const base = fieldToolBase(slug, content.audience);
   return (
     <aside className="ai-visual">
       <p className="ai-eyebrow">{visual.eyebrow}</p>
@@ -29,14 +45,44 @@ export default function AIGuideVisual({ index }: { index: number }) {
       >
         Use these questions in the Lab →
       </Link>
-      {index === 11 && (
-        <Link
-          className="ml-5 inline-block text-xs underline"
-          href={`${base}/resources`}
-        >
-          Choose a study resource →
-        </Link>
+      {resources.length > 0 && (
+        <details className="mt-6 border-t border-[var(--ft-line)] pt-4">
+          <summary className="cursor-pointer text-sm font-semibold">
+            Read or watch something that helps
+          </summary>
+          <ul className="mt-4 space-y-6">
+            {resources.map(item => {
+              const source = teachingSources[item.source];
+              return (
+                <li key={item.source}>
+                  <a
+                    href={source.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-sm underline underline-offset-4"
+                  >
+                    {source.title} ↗
+                  </a>
+                  <p className="!mt-1 !text-xs">
+                    {source.author} · {source.kind}
+                  </p>
+                  <p className="!mt-2">{item.why}</p>
+                  <p className="!mt-2">{item.question}</p>
+                </li>
+              );
+            })}
+          </ul>
+        </details>
       )}
+      {slug === "ai-stalemate" &&
+        index === content.companion?.at(-1)?.after && (
+          <Link
+            className="ml-5 inline-block text-xs underline"
+            href={`${base}/resources`}
+          >
+            Choose a study resource →
+          </Link>
+        )}
     </aside>
   );
 }

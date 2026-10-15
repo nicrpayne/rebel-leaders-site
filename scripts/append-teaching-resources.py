@@ -36,9 +36,7 @@ def append(path,slug):
  original=PdfReader(path)
  if any('THE THINKING BEHIND THE TOOL' in (x.extract_text() or '') for x in original.pages):raise RuntimeError('Rebuild the base PDF before appending resources: '+str(path))
  notes=sorted([n for n in DATA['notes'] if n['slug']==slug],key=lambda note:note['chapter'])
- flow=[p('The thinking behind the tool.','title'),p('Holistic Shaping asks what work is doing to people, as well as what people are doing at work. These short notes connect the Guide to Nic’s teaching and a few practical sources. Read what helps with the situation in front of you. Links open the original resources.'),p('Two maps you can return to','heading')]
- for key in ['orbital','hid']:
-  s=DATA['sources'][key];flow += [link(s),p(s['summary']),Spacer(1,5)]
+ flow=[p('The thinking behind the tool.','title'),p('Holistic Shaping asks what work is doing to people, as well as what people are doing at work. These short notes connect the Guide to Nic’s teaching and a few practical sources. Read what helps with the situation in front of you. Links open the original resources.')]
  flow += [p('Back in the Guide','heading')]
  for n in notes:
   block=[p(f'CHAPTER {n["chapter"]+1:02d}','label'),p(n['title'],'heading')]
@@ -46,7 +44,7 @@ def append(path,slug):
   block += [p(n['body']),p('Worth asking: '+n['question'])]
   block += [link(DATA['sources'][key]) for key in n['sources']]
   block += [Spacer(1,8)];flow.append(KeepTogether(block))
- flow += [KeepTogether([Paragraph(f'<link href="{BASE}/field-tools/resources"><u>Explore Nic’s articles, video, and the complete reading library.</u></link>',styles['body']),p('The notes apply the teaching to these situations. They are not quotations unless marked. The health reflection is optional; you do not need to record or share personal information.','small')])]
+ flow += [KeepTogether([Paragraph('<link href="https://rebel-leader.com"><u>Explore more of Nic’s Holistic Shaping work at Rebel Leaders.</u></link>',styles['body']),p('The notes apply the teaching to these situations. They are not quotations unless marked. The health reflection is optional; you do not need to record or share personal information.','small')])]
  extra=BytesIO();SimpleDocTemplate(extra,pagesize=A4,leftMargin=M,rightMargin=M,topMargin=55,bottomMargin=65).build(flow,onFirstPage=background,onLaterPages=background)
  writer=PdfWriter();writer.append(original);writer.append(PdfReader(extra));total=len(writer.pages)
  # Continuous page numbers include the reading companion. Cover stays unchanged.

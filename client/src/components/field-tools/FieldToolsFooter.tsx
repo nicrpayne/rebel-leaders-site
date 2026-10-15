@@ -8,10 +8,14 @@ export default function FieldToolsFooter() {
         className="mx-auto flex max-w-6xl flex-wrap gap-6"
       >
         <Link href="/field-tools">All Field Tools</Link>
-        <Link href="/field-tools/resources">Reading, listening & frameworks</Link>
         <Link href="/about">About Nic</Link>
-        <Link href="/">Rebel Leaders →</Link>
+        <a href="https://rebel-leader.com" target="_blank" rel="noreferrer">
+          Rebel Leaders →
+        </a>
       </nav>
+      <p className="ft-footer-hope mx-auto max-w-6xl mt-7">
+        Hope is rebellious.
+      </p>
     </footer>
   );
 }

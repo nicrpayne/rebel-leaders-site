@@ -5,19 +5,14 @@ export default function FieldToolAccess({ slug }: { slug: string }) {
   const content = useFieldToolContent();
   const base = fieldToolBase(slug, content.audience);
   const extras =
-    slug === "ai-stalemate"
+    slug === "ai-stalemate" || content.expansion
       ? [
           {
             title: "See the conversation take shape",
             detail:
+              content.expansion?.welcome ??
               "Follow a PM and lead through a worked example, from their first concerns to a next step they can agree on.",
             href: `${base}/walkthrough`,
-          },
-          {
-            title: "Explore a little further",
-            detail:
-              "Find articles, videos, and practical resources for the questions that come up along the way.",
-            href: `${base}/resources`,
           },
         ]
       : [];

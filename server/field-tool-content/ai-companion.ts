@@ -77,11 +77,11 @@ export function aiCompanionFor(audience: "pm" | "lead-dev") {
       cards: [
         {
           title: "What we expect",
-          body: "We think the finished tests could take less work, including review and fixes. They must still prove that allowed access works and forbidden access fails. Compare with a similar task done without AI.",
+          body: "Could AI help us write these tests with less work overall, once we count the checking and fixes? They still need to show that people can open the right records and can’t get into anyone else’s. We’ll compare with a similar job done without AI.",
         },
         {
           title: "Time we are willing to spend",
-          body: "Propose four hours across everyone involved, including at most one hour of review. Start after permission and review arrangements are confirmed, and finish within a week. Stop when the agreed time is used up.",
+          body: "Could we allow four hours across everyone involved, with no more than an hour of review? Once we’ve agreed access and who’ll check the work, we’d have one week to finish. When the time is up, we stop.",
         },
         {
           title: "What is allowed",

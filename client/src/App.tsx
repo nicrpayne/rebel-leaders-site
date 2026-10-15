@@ -1,5 +1,6 @@
 import "./components/field-tools/field-tool-theme.css";
 import "./components/field-tools/field-tool-responsive.css";
+import "./components/field-tools/field-tool-motion.css";
 import FieldToolGate from "./components/field-tools/FieldToolGate";
 import { Toaster } from "@/components/ui/sonner";
 import { useClaimAnonymousResult } from "@/_core/hooks/useClaimAnonymousResult";
@@ -38,7 +39,6 @@ const WallPage = lazy(() => import("./pages/wall/WallPage"));
 const WallAdmin = lazy(() => import("./pages/wall/WallAdmin"));
 const AuthVerify = lazy(() => import("./pages/AuthVerify"));
 const FieldToolSignIn = lazy(() => import("./pages/FieldToolSignIn"));
-const FieldToolResources = lazy(() => import("./pages/FieldToolResources"));
 const FieldTools = lazy(() => import("./pages/FieldTools"));
 const FieldToolsReview = lazy(() => import("./pages/FieldToolsReview"));
 const FieldToolLanding = lazy(() => import("./pages/FieldToolLanding"));
@@ -48,6 +48,9 @@ const FieldToolGuide = lazy(() => import("./pages/FieldToolGuide"));
 const FieldToolPurchase = lazy(() => import("./pages/FieldToolPurchase"));
 const FieldToolAccess = lazy(() => import("./pages/FieldToolAccess"));
 const AIResources = lazy(() => import("./pages/AIResources"));
+const LeadershipWalkthrough = lazy(
+  () => import("./pages/LeadershipWalkthrough")
+);
 const AIWalkthrough = lazy(() => import("./pages/AIWalkthrough"));
 const AIProposalReview = lazy(() => import("./pages/AIProposalReview"));
 
@@ -80,11 +83,12 @@ function Router() {
           <Route path="/book" component={Book} />
           <Route path="/community" component={Community} />
           <Route path="/mirror" component={Mirror} />
+          {/* The unfinished resource area stays hidden while its teaching and design are revised. */}
           <Route path="/field-tools/resources">
-            <FieldToolResources />
+            <Redirect to="/field-tools" />
           </Route>
           <Route path="/field-tools/resources/:resource">
-            {p => <FieldToolResources resource={p.resource} />}
+            <Redirect to="/field-tools" />
           </Route>
           <Route path="/field-tools" component={FieldTools} />
           <Route path="/field-tools/review" component={FieldToolsReview} />
@@ -113,6 +117,13 @@ function Router() {
             {(params: { slug: string }) => (
               <FieldToolGate slug={params.slug}>
                 <FieldToolGuide slug={params.slug} />
+              </FieldToolGate>
+            )}
+          </Route>
+          <Route path="/field-tools/:slug/walkthrough">
+            {p => (
+              <FieldToolGate slug={p.slug}>
+                <LeadershipWalkthrough slug={p.slug} />
               </FieldToolGate>
             )}
           </Route>

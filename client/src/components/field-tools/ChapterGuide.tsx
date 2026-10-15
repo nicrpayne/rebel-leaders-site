@@ -1,4 +1,4 @@
-import TeachingNote, { FrameworkResources } from "./TeachingNote";
+import TeachingNote from "./TeachingNote";
 import { fieldToolLabStep } from "@/lib/field-tool-workflow";
 import FieldToolsFooter from "./FieldToolsFooter";
 import { getFieldTool } from "@/lib/field-tools";
@@ -14,6 +14,12 @@ export default function ChapterGuide({ slug }: { slug: string }) {
   const base = fieldToolBase(slug, content.audience);
   const tool = getFieldTool(slug)!;
   const AI_STALEMATE_GUIDE_PAGES = content.guidePages ?? [];
+  const introduction =
+    slug === "ai-stalemate"
+      ? content.audience === "pm"
+        ? "You think AI could help. Your lead has questions. Start by understanding what matters to each of you."
+        : "Your PM thinks AI could help. Explain your concerns and work out what to do next together."
+      : content.guide.deck;
   const chapters = useRef<(HTMLElement | null)[]>([]);
   const [activeChapter, setActiveChapter] = useState<number | null>(null);
   const chapterCount = AI_STALEMATE_GUIDE_PAGES.length;
@@ -83,13 +89,11 @@ export default function ChapterGuide({ slug }: { slug: string }) {
           <h1 className="mt-5 font-display text-5xl font-semibold tracking-[-.035em] md:text-6xl">
             {tool.name}
           </h1>
-          <p className="mt-5 max-w-3xl font-ui text-lg leading-8 text-[var(--ft-accent)]">
-            {slug === "ai-stalemate"
-              ? content.audience === "pm"
-                ? "You think AI could help. Your lead has questions. Start by understanding what matters to each of you."
-                : "Your PM thinks AI could help. Explain your concerns and work out what to do next together."
-              : content.guide.deck}
-          </p>
+          {introduction !== AI_STALEMATE_GUIDE_PAGES[0]?.intro && (
+            <p className="mt-5 max-w-3xl font-ui text-lg leading-8 text-[var(--ft-accent)]">
+              {introduction}
+            </p>
+          )}
           <div className="mt-8 flex flex-wrap gap-4 print:hidden">
             <a
               href={`/api/field-tools/${slug}/pdf?audience=${content.audience}`}
@@ -234,10 +238,9 @@ export default function ChapterGuide({ slug }: { slug: string }) {
               >
                 Use this in the Lab →
               </Link>
-              {slug === "ai-stalemate" && <AIGuideVisual index={index} />}
+              <AIGuideVisual index={index} slug={slug} />
             </section>
           ))}
-          <FrameworkResources />
           <div className="flex flex-wrap gap-4 print:hidden">
             <Link
               href={`${base}/lab`}

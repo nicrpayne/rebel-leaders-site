@@ -47,6 +47,9 @@ export default function AIProductPage({ audience }: { audience: Audience }) {
           />
           <p className="ai-hero-note">Field Guide · Lab · written examples</p>
         </div>
+        <div className="ft-photo-caption">
+          <span /> Hope is rebellious.
+        </div>
       </header>
       <FieldToolSalesProof slug="ai-stalemate" audience={audience} />
       <section id="purchase" className="ai-purchase-section">

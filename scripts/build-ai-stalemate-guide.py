@@ -104,7 +104,7 @@ def cover(c):
     c.setFont("GuideSans",9);c.drawString(M,109,f"For you, the {ROLE.lower()}")
     c.setFillColor(FOREST);c.setFont("GuideSans",8)
     c.linkURL(LAB_URL,(M,25,W-M,76),relative=0);c.drawString(M,76,"OPEN YOUR "+ROLE+" LAB >")
-    c.setFillColor(MUTED);c.drawString(M,58,"START WITH A REAL SITUATION. DECIDE WHAT HAPPENS NEXT.")
+    c.setFillColor(MUTED);c.drawString(M,58,"HOPE IS REBELLIOUS.")
     c.drawString(M,39,"WORKING EDITION / REBEL-LEADER.COM");c.showPage()
 
 def chapter(c, data, number):

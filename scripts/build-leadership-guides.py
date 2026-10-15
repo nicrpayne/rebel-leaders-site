@@ -17,7 +17,7 @@ from reportlab.platypus import Paragraph
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = os.environ.get("GUIDE_APP_URL", "https://rebel-leaders-field-tools-preview-production.up.railway.app")
-DATA = json.loads(subprocess.check_output(["node", "--experimental-strip-types", "--input-type=module", "-e", "import { LEADERSHIP_GUIDE_PAGES as pages } from './server/field-tool-content/leadership-guides.ts'; import { FIELD_TOOLS as tools } from './client/src/lib/field-tools.ts'; import { FIELD_TOOL_PRESENTATIONS as presentations } from './client/src/lib/field-tool-presentations.ts'; console.log(JSON.stringify({pages,tools,presentations}));"],cwd=ROOT))
+DATA = json.loads(subprocess.check_output(["node", "--experimental-strip-types", "--input-type=module", "-e", "import { LEADERSHIP_GUIDE_PAGES as pages } from './server/field-tool-content/leadership-guides.ts'; import { FIELD_TOOLS as tools } from './client/src/lib/field-tools.ts'; import { FIELD_TOOL_PRESENTATIONS as presentations } from './client/src/lib/field-tool-presentations.ts'; import { LEADERSHIP_EXPANSIONS as expansions } from './server/field-tool-content/leadership-expansion.ts'; console.log(JSON.stringify({pages,tools,presentations,expansions}));"],cwd=ROOT))
 for name,file in [("GuideSerif","GuideSerif.ttf"),("GuideSans","GuideSans.ttf"),("GuideBold","GuideBold.ttf")]:
     pdfmetrics.registerFont(TTFont(name,str(Path(os.environ.get("GUIDE_FONT_DIR", str(ROOT / "scripts/fonts"))) / file)))
 W,H=A4
@@ -59,7 +59,7 @@ def cover(c,tool,presentation,lab):
     c.setFont("GuideSans",9);c.drawString(M,109,"For you, the PM carrying this situation")
     c.setFillColor(FOREST);c.setFont("GuideSans",8)
     c.drawString(M,76,"OPEN YOUR LAB >");c.linkURL(lab,(M,60,W-M,90),relative=0)
-    c.setFillColor(MUTED);c.drawString(M,58,"START WITH A REAL SITUATION. DECIDE WHAT HAPPENS NEXT.")
+    c.setFillColor(MUTED);c.drawString(M,58,"HOPE IS REBELLIOUS.")
     c.drawString(M,39,"WORKING EDITION / REBEL-LEADER.COM");c.showPage()
 
 def chapter(c,page,number,total,tool,lab):
@@ -71,6 +71,8 @@ def chapter(c,page,number,total,tool,lab):
     for section in page["sections"]:
         y=para(c,section["title"],y,"heading")-5
         y=para(c,section["body"],y)-17
+    for source in page.get("sources", []):
+        y=linked(c,source["name"],source["url"],y)-12
     p=Paragraph(escape(page["callout"]),STYLES["callout"]);_,height=p.wrap(CW-36,H);bh=height+30
     assert y-bh-5>=70, f"Callout overlaps footer: {tool['slug']} / {number}"
     c.setFillColor(colors.HexColor("#e8eee6"));c.roundRect(M,y-bh-5,CW,bh,8,fill=1,stroke=0)
@@ -80,15 +82,72 @@ def chapter(c,page,number,total,tool,lab):
     c.drawString(M,30,"REBEL LEADERS / "+tool["name"].upper());c.drawRightString(W-M,30,f"{number:02d} / {total:02d}")
     c.linkURL(lab,(M,21,W-M,41),relative=0);c.showPage()
 
+SOURCES=json.loads((ROOT / "shared/field-tool-teachings.json").read_text())["sources"]
+
+def linked(c,text,url,y):
+    url=BASE+url if url.startswith("/") else url
+    p=Paragraph(f'<link href="{escape(url)}" color="#315c4b"><u>{escape(text)}</u></link>',STYLES["body"])
+    _,height=p.wrap(CW,H)
+    assert y-height>=70, f"Link overlaps footer: {text}"
+    p.drawOn(c,M,y-height)
+    return y-height
+
+def opening(c,eyebrow,title):
+    c.setFillColor(CREAM);c.rect(0,0,W,H,fill=1,stroke=0)
+    c.setFillColor(FOREST);c.setFont("GuideBold",8);c.drawString(M,791,eyebrow)
+    return para(c,title,756,"title")-20
+
+def ending(c,number,total,tool):
+    c.setStrokeColor(LINE);c.line(M,47,W-M,47)
+    c.setFillColor(MUTED);c.setFont("GuideSans",7)
+    c.drawString(M,30,"REBEL LEADERS / "+tool["name"].upper());c.drawRightString(W-M,30,f"{number:02d} / {total:02d}")
+    c.showPage()
+
+def walkthrough(c,scenes,offset,number,total,tool,lab):
+    y=opening(c,"WORKED WALKTHROUGH / A FICTIONAL CONVERSATION","See how it could unfold.")
+    for i,scene in enumerate(scenes,offset+1):
+        y=para(c,f'{i} / {scene["title"]}',y,"heading")-6
+        y=para(c,scene["move"],y)-12
+        for line in scene["dialogue"]:
+            y=para(c,line["speaker"],y,"heading")-3
+            y=para(c,'“'+line["words"]+'”',y)-10
+        y=para(c,'Ask yourself: '+scene["question"],y,"callout")-9
+        y=linked(c,"Open this part of your Lab >",lab+f'?step={scene["step"]}',y)-23
+    ending(c,number,total,tool)
+
+def resources(c,picks,number,total,tool,lab):
+    y=opening(c,"READING & LISTENING / CHOOSE WHAT HELPS","A little more help.")
+    for pick in picks:
+        source=SOURCES[pick["source"]]
+        y=linked(c,source["title"],source["url"],y)-5
+        y=para(c,source["author"]+" · "+source["kind"],y)-10
+        y=para(c,pick["why"],y)-9
+        y=para(c,pick["question"],y,"callout")-6
+        y=linked(c,"Take this into your Lab >",lab+f'?step={pick["step"]}',y)-25
+    ending(c,number,total,tool)
+
 def main():
     for tool in DATA["tools"]:
         slug=tool["slug"]
         if slug not in DATA["pages"]:continue
-        pages=DATA["pages"][slug];lab=f"{BASE}/field-tools/{slug}/lab"
+        expansion=DATA["expansions"][slug]
+        pages=[]
+        for index,page in enumerate(DATA["pages"][slug]):
+            pages.append(("chapter",page))
+            for companion in expansion["companion"]:
+                if companion["after"]==index:
+                    pages.append(("chapter",dict(eyebrow=companion["eyebrow"],title=companion["title"],intro=companion["intro"],sections=companion["cards"],callout=companion["takeaway"],step=companion["step"])))
+        # One conversation per page keeps dialogue and the reflection together.
+        for index,scene in enumerate(expansion["scenes"]):pages.append(("walkthrough",([scene],index)))
+        for index in range(0,len(expansion["resources"]),3):pages.append(("resources",expansion["resources"][index:index+3]))
+        lab=f"{BASE}/field-tools/{slug}/lab"
         dest=ROOT / f"private/field-tools/{slug}-field-guide.pdf";dest.parent.mkdir(parents=True,exist_ok=True)
         c=canvas.Canvas(str(dest),pagesize=A4,pageCompression=1)
-        c.setTitle(tool["name"]+" - Field Guide");c.setAuthor("Nic Payne / Rebel Leaders")
+        c.setTitle(tool["name"]+" - Expanded Field Guide");c.setAuthor("Nic Payne / Rebel Leaders")
         cover(c,tool,DATA["presentations"][slug],lab)
-        for number,page in enumerate(pages,2):chapter(c,page,number,len(pages)+1,tool,lab)
+        for number,(kind,page) in enumerate(pages,2):
+            if kind=="chapter":chapter(c,page,number,len(pages)+1,tool,lab+(f'?step={page["step"]}' if "step" in page else ""))
+            elif kind=="walkthrough":walkthrough(c,page[0],page[1],number,len(pages)+1,tool,lab)
+            else:resources(c,page,number,len(pages)+1,tool,lab)
         c.save();print(dest)
 if __name__=="__main__":main()

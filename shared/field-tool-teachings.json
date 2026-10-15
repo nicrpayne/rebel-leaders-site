@@ -207,11 +207,12 @@
       "summary": "Read with METR’s 2026 update. Results describe the developers, tasks, and tools studied, not a forecast for your team."
     },
     "orbital": {
-      "title": "Cultural Orbital Mechanics",
-      "author": "Nic Payne / Holistic Shaping",
-      "url": "/field-tools/resources/cultural-orbital-mechanics",
-      "kind": "Framework resource",
-      "summary": "How identity, relationships, and shared vision give rise to culture—and how that culture shapes people in return."
+      "title": "You Have a Culture Problem",
+      "url": "https://leaderrebellion.substack.com/p/you-have-a-culture-problem",
+      "date": "2025-12-01",
+      "author": "Nic Payne",
+      "kind": "Article",
+      "summary": "The original explanation of Cultural Orbital Mechanics: how identity, relationship and vision give rise to culture, and how that culture shapes us in return."
     },
     "hid": {
       "title": "Holistic Impact Depth",
@@ -370,9 +371,9 @@
       "slug": "ai-stalemate",
       "chapter": 6,
       "title": "What will this way of working do to the team?",
-      "body": "HID asks what our way of working does to people across five areas of health. Here, look beyond the code: room to learn the craft, confidence to question a result, a real say in the plan, work people can stand behind, and time to recover. Faster output can hide costs in any of those places.",
+      "body": "Holistic Shaping asks what our way of working does to people. Here, look beyond the code: room to learn the craft, confidence to question a result, a real say in the plan, work people can stand behind, and time to recover. Faster output can hide costs in any of those places.",
       "question": "What would you change so people become more capable rather than quietly carrying more?",
-      "sources": ["hid", "when-mattering-isnt-enough"],
+      "sources": ["when-mattering-isnt-enough"],
       "labStep": 1,
       "quote": null,
       "quoteSource": null
@@ -430,9 +431,9 @@
       "slug": "deadline-reset",
       "chapter": 3,
       "title": "A smaller promise can protect more than the schedule.",
-      "body": "Use HID to look at the work behind each option. Does it depend on lost sleep, skipped learning, or people saying yes when they know the plan is wrong? Ask the team what a smaller, useful delivery would let them do well. Shape Up offers a practical way to explore a fixed time limit with room to change the work.",
+      "body": "Look at the work behind each option. Does it depend on lost sleep, skipped learning, or people saying yes when they know the plan is wrong? Ask the team what a smaller, useful delivery would let them do well. Shape Up offers a practical way to explore a fixed time limit with room to change the work.",
       "question": "Which option can people honestly stand behind and sustain?",
-      "sources": ["hid", "singer-boundaries"],
+      "sources": ["singer-boundaries"],
       "labStep": 1,
       "quote": null,
       "quoteSource": null
@@ -490,9 +491,9 @@
       "slug": "priority-whiplash",
       "chapter": 3,
       "title": "Who pays for the extra work?",
-      "body": "HID makes the human cost visible. If the demo only fits because someone gives up evenings, swallows a concern, or loses the time they needed to learn, put that into the discussion. Ask the people affected. The cost does not disappear because the plan leaves it out.",
+      "body": "Look at the cost to people as well as the work. If the demo only fits because someone gives up evenings, swallows a concern, or loses the time they needed to learn, put that into the discussion. Ask the people affected. The cost does not disappear because the plan leaves it out.",
       "question": "What would need to change for the team to do this without quietly paying for it themselves?",
-      "sources": ["hid", "your-companys-god-is-showing"],
+      "sources": ["your-companys-god-is-showing"],
       "labStep": 1,
       "quote": "Does our pace grow or shrink people?",
       "quoteSource": "your-companys-god-is-showing"
@@ -550,9 +551,9 @@
       "slug": "mandate-reset",
       "chapter": 3,
       "title": "What does “owning it” do to a person here?",
-      "body": "HID asks how everyday arrangements help people grow or cause harm. Responsibility without a way to decide can teach someone to keep quiet, seek permission for everything, or cover the gap with longer hours. Describe what is happening and ask for a workable decision arrangement, with the support needed to use it.",
+      "body": "Holistic Shaping asks how everyday arrangements help people grow or cause harm. Responsibility without a way to decide can teach someone to keep quiet, seek permission for everything, or cover the gap with longer hours. Describe what is happening and ask for a workable decision arrangement, with the support needed to use it.",
       "question": "What would let you exercise judgment and learn, rather than merely carry the consequences?",
-      "sources": ["hid", "culture-vulture"],
+      "sources": ["culture-vulture"],
       "labStep": 2,
       "quote": null,
       "quoteSource": null
@@ -625,9 +626,9 @@
       "slug": "product-project-translator",
       "chapter": 5,
       "title": "Does your reply leave them able to participate?",
-      "body": "Use HID to consider what repeated exchanges like this do to people. A correction can leave someone embarrassed and less willing to ask. A clear explanation can help both of you learn the work, make better judgments, and build trust. Be specific about what you can offer, and invite them to tell you what is still missing.",
+      "body": "Consider what repeated exchanges like this do to people. A correction can leave someone embarrassed and less willing to ask. A clear explanation can help both of you learn the work, make better judgments, and build trust. Be specific about what you can offer, and invite them to tell you what is still missing.",
       "question": "Can they question or change your proposal without being made to feel foolish?",
-      "sources": ["hid"],
+      "sources": ["when-mattering-isnt-enough"],
       "labStep": 3,
       "quote": null,
       "quoteSource": null

@@ -28,6 +28,11 @@ const record = (title: string, sections: string[]) =>
   `${title}\n\n${sections.filter(Boolean).join("\n\n")}\n\nMade from your answers. Read it through before sharing; your private notes are left out.`;
 const optional = (v: WorkingValues, key: string, title: string) =>
   v[key]?.trim() ? section(title, v[key].trim()) : "";
+const followThrough = (v: WorkingValues) => [
+  optional(v, "leadershipUpdate", "UPDATE FOR THE PERSON DECIDING"),
+  optional(v, "teamUpdate", "UPDATE FOR THE TEAM"),
+  optional(v, "returnRecord", "AFTERWARD / WHAT HAPPENED AND WHAT NEXT"),
+];
 const status = (v: WorkingValues) =>
   section(
     "DECISION STATUS",
@@ -146,6 +151,7 @@ export function buildDeadlineUpdate(v: WorkingValues) {
       "checkpointFallback",
       "IF THE NEXT CHECK FAILS / WHO WILL DECIDE"
     ),
+    ...followThrough(v),
   ]);
 }
 export function buildPriorityStack(v: WorkingValues) {
@@ -222,6 +228,7 @@ export function buildTradeoffBrief(v: WorkingValues) {
       "emergencyException",
       "EMERGENCY CHANGE / WHO APPROVED IT / WHEN TO REVIEW"
     ),
+    ...followThrough(v),
   ]);
 }
 export function buildRightsMap(v: WorkingValues) {
@@ -297,6 +304,7 @@ export function buildMandateRequest(v: WorkingValues) {
       "unresolvedPlan",
       "IF WE DO NOT GET AN ANSWER / WHAT WE DO WHILE WAITING"
     ),
+    ...followThrough(v),
   ]);
 }
 export function buildRequestDecoder(v: WorkingValues) {
@@ -374,6 +382,7 @@ export function buildStakeholderResponse(v: WorkingValues) {
       "IF WE DO NOT GET AN ANSWER / WHAT WE DO WHILE WAITING"
     ),
     optional(v, "spokenResponse", "SHORT SPOKEN VERSION"),
+    ...followThrough(v),
   ]);
 }
 export const LEADERSHIP_OUTPUT_BUILDERS: Record<
