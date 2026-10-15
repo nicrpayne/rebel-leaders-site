@@ -65,7 +65,7 @@ export default function FieldToolWelcome({
             ref={portrait}
             onLoad={() => setPortraitReady(true)}
             onError={() => setPortraitReady(true)}
-            src="/assets/field-tools/product-project-translator-hero-v2.webp"
+            src="/assets/field-tools/when-the-team-goes-quiet-hero-v2.webp"
             alt="Nic Payne smiling in his study"
             width={1672}
             height={941}

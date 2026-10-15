@@ -153,7 +153,7 @@ describe("verified payment boundary", () => {
       "deadline-reset",
       "priority-whiplash",
       "mandate-reset",
-      "product-project-translator",
+      "when-the-team-goes-quiet",
     ]) {
       await expect(
         caller.content({ slug, audience: "pm" })

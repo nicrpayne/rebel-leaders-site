@@ -38,7 +38,7 @@ export default function FieldToolSalesProof({
   const proof = SALES_PROOF[key];
   if (!proof) return null;
   const device =
-    key === "ai-stalemate-lead-dev" || key === "product-project-translator"
+    key === "ai-stalemate-lead-dev" || key === "when-the-team-goes-quiet"
       ? "phone"
       : "laptop";
   return (

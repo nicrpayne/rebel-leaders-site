@@ -11,7 +11,7 @@ import {
   buildDeadlineUpdate,
   buildTradeoffBrief,
   buildMandateRequest,
-  buildStakeholderResponse,
+  buildQuietFollowThrough,
 } from "./leadership-output";
 
 export const FIELD_OUTPUT_BUILDERS: Record<
@@ -22,7 +22,7 @@ export const FIELD_OUTPUT_BUILDERS: Record<
   "deadline-reset": buildDeadlineUpdate,
   "priority-whiplash": buildTradeoffBrief,
   "mandate-reset": buildMandateRequest,
-  "product-project-translator": buildStakeholderResponse,
+  "when-the-team-goes-quiet": buildQuietFollowThrough,
 };
 export const TOOL_ARTIFACT_BUILDERS = LEADERSHIP_OUTPUT_BUILDERS;
 export const AI_OUTPUT_BUILDERS = {

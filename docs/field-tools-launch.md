@@ -1,12 +1,12 @@
 # Field Tools preview and launch
 
-The main review preview contains six separately purchasable $47 Field Tools across five situations. AI Stalemate / Product Manager and AI Stalemate / Lead Developer are separate expanded editions. Deadline Reset, Priority Whiplash, Mandate Reset, and Product / Project Translator complete the catalog.
+The main review preview contains six separately purchasable $47 Field Tools across five situations. AI Stalemate / Product Manager and AI Stalemate / Lead Developer are separate expanded editions. Deadline Reset, Priority Whiplash, Mandate Reset, and When the Team Goes Quiet complete the catalog.
 
 ## Review routes
 
 The hub is `/field-tools`. AI editions start at `/field-tools/ai-stalemate/pm` and `/field-tools/ai-stalemate/lead-dev`. Other tools start at `/field-tools/:slug`.
 
-Each has `/buy`, `/buy?gift=1`, `/access`, `/guide`, and `/lab`. AI editions also have `/walkthrough` and `/resources`. Shared Holistic Shaping resources are at `/field-tools/resources`. The free Pressure Test is `/assessment`.
+Each has `/buy`, `/buy?gift=1`, `/access`, `/guide`, and `/lab`. Every product has a `/walkthrough`. AI editions also have their own `/resources` library. The unfinished shared `/field-tools/resources` pages are hidden; teaching links lead to existing published sources. The free Pressure Test is `/assessment`.
 
 Buy pages keep the product image, purchase/gift controls, and related tools. Full product details stay on the preceding landing page. Each welcome page starts with the situation and a direct Lab action, with Guide/PDF and optional resources below.
 
@@ -29,3 +29,5 @@ See `field-tools-editions-responsive.md` for the current responsive matrix, PDF 
 Nic authorized publishing code/assets to `nicrpayne/rebel-leaders-site` on 11 October 2026. Keep these changes on `field-tools-launch` and PR #3. The expanded proposal has now been selected and incorporated into the main review preview. Do not merge to production `main` until Nic approves.
 
 PDF sources live in `server/field-tool-content`. Rebuild each base AI PDF with `scripts/build-ai-stalemate-guide.py pm` or `lead-dev`, then append the teaching resource pages once with `scripts/append-teaching-resources.py`. Set `GUIDE_APP_URL` to the intended deployment origin. Checked-in review PDFs use the main preview origin.
+
+When the Team Goes Quiet replaces the unpublished Translator concept. It has its own slug, draft storage and checkout configuration: `FIELD_TOOL_WHEN_THE_TEAM_GOES_QUIET_CHECKOUT_URL`. Before live launch, configure its Lemon Squeezy variant under `when-the-team-goes-quiet` in `LEMONSQUEEZY_VARIANT_MAP`; do not reuse a Translator checkout link. Existing Translator page links redirect to the new product. The original draft files and PDF remain in Git history.

@@ -68,23 +68,23 @@ export const SALES_PROOF: Record<
       },
     ],
   },
-  "product-project-translator": {
-    name: "Product / Project Translator",
-    title: "Your Reply",
+  "when-the-team-goes-quiet": {
+    name: "When the Team Goes Quiet",
+    title: "Your Follow-through",
     context:
-      "Finance asks for a final feature list. Find out what they need to approve now, then propose time and money to test the two designs.",
+      "A data analyst starts to raise a concern about a release. The PM moves the meeting on. Later, the analyst explains that a report Support relies on may miss the new bookings. The PM needs to hear what was missed and look at how they handled the question.",
     sections: [
       {
-        title: "MESSAGE / MEETING SCRIPT",
-        body: "I understand you need a spending limit by Thursday. Could we set aside up to $5,000 for two weeks to try both booking designs with five customers and check the build work with Engineering? We would then bring you the results and a recommendation before asking for the full build budget.",
+        title: "MY NEXT STEP",
+        body: "Invite the analyst to talk today. Check what needs to happen with the report separately; don’t wait for the next team meeting to deal with that.",
       },
       {
-        title: "DECISION NEEDED / WHO CAN MAKE IT / WHEN",
-        body: "Approve or change the proposed $5,000, two-week customer test and Engineering assessment.\nFinance director — Thursday, before booking the customer sessions",
+        title: "A CHANGE I’M PROPOSING",
+        body: "At the next planning meeting, I’ll hear questions about the plan before I ask whether we’re ready to go ahead. If someone raises a concern, I’ll ask them to finish before I respond.",
       },
       {
-        title: "DECISION STATUS",
-        body: "PROPOSAL — awaiting a decision",
+        title: "STATUS",
+        body: "PROPOSAL — not discussed yet",
       },
     ],
   },

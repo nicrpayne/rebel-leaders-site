@@ -6,7 +6,7 @@ import FieldToolsNav from "@/components/field-tools/FieldToolsNav";
 import FieldToolHero from "@/components/field-tools/FieldToolHero";
 import { getFieldTool } from "@/lib/field-tools";
 
-type Pressure = "ai" | "certainty" | "priority" | "authority" | "translation";
+type Pressure = "ai" | "certainty" | "priority" | "authority" | "quiet";
 
 type Option = {
   label: string;
@@ -103,32 +103,32 @@ const QUESTIONS: Question[] = [
       },
       { label: "Just use AI to go faster.", pressure: "ai", weight: 3 },
       {
-        label: "Why can't Product just give us the requirements?",
-        pressure: "translation",
+        label: "Why do I only hear the concerns afterward?",
+        pressure: "quiet",
         weight: 3,
       },
     ],
   },
   {
-    prompt: "What happens when evidence changes the plan?",
+    prompt: "When someone questions the plan, what usually happens?",
     options: [
       {
-        label: "We update the plan and explain why.",
-        pressure: "translation",
+        label: "We hear them out and check whether the plan needs to change.",
+        pressure: "quiet",
         weight: 0,
       },
       {
-        label: "People understand, but are frustrated.",
-        pressure: "translation",
+        label: "We listen, but sometimes leave the concern unanswered.",
+        pressure: "quiet",
         weight: 1,
       },
       {
-        label: "It gets treated like Product or Engineering failed to plan.",
-        pressure: "translation",
+        label: "We move on. The real conversation happens afterward.",
+        pressure: "quiet",
         weight: 3,
       },
       {
-        label: "We try to hide the change until we have a replacement answer.",
+        label: "The date has already been promised, so we argue about that.",
         pressure: "certainty",
         weight: 2,
       },
@@ -181,25 +181,25 @@ const QUESTIONS: Question[] = [
     ],
   },
   {
-    prompt: "What does your organization most often ask Product for?",
+    prompt: "What tends to be missing from your team’s conversations?",
     options: [
       {
-        label: "Evidence and a recommendation.",
-        pressure: "translation",
+        label: "Nothing consistent. We can question things and get an answer.",
+        pressure: "quiet",
         weight: 0,
       },
       {
-        label: "A fixed roadmap and firm dates.",
-        pressure: "translation",
+        label: "The concerns people only mention privately afterward.",
+        pressure: "quiet",
         weight: 3,
       },
       {
-        label: "Coordination across teams without matching authority.",
+        label: "An answer about who can make the call.",
         pressure: "authority",
         weight: 3,
       },
       {
-        label: "More output without removing work.",
+        label: "A decision about what waits when new work is added.",
         pressure: "priority",
         weight: 3,
       },
@@ -235,8 +235,8 @@ const QUESTIONS: Question[] = [
     prompt: "Where do you personally spend the most unnecessary energy?",
     options: [
       {
-        label: "Re-explaining why estimates and plans changed.",
-        pressure: "translation",
+        label: "Finding out afterward what people were worried about.",
+        pressure: "quiet",
         weight: 3,
       },
       {
@@ -295,12 +295,12 @@ const RESULTS: Record<
       "Name one decision you are accountable for but cannot actually make. Identify who can.",
     toolSlug: "mandate-reset",
   },
-  translation: {
-    name: "The Translation Gap",
-    copy: "The surrounding organization is asking for project-style certainty from product work. You are spending energy translating between two operating models.",
+  quiet: {
+    name: "The Conversation We’re Missing",
+    copy: "You may be hearing important concerns after the meeting. That doesn’t tell us why people stayed quiet. Start with one moment and ask about it.",
     freeMove:
-      "Take the next request for certainty and ask what coordination need sits underneath it: confidence, budget, sequence, ownership, or communication.",
-    toolSlug: "product-project-translator",
+      "Think of the last concern that came up afterward. Ask the person: “What did we miss in the meeting?” If you cut them off, acknowledge that first.",
+    toolSlug: "when-the-team-goes-quiet",
   },
 };
 
@@ -320,7 +320,7 @@ export default function PressureTest() {
       certainty: 0,
       priority: 0,
       authority: 0,
-      translation: 0,
+      quiet: 0,
     };
 
     for (const answer of answers) {
@@ -330,7 +330,7 @@ export default function PressureTest() {
     const winner =
       (Object.entries(scores) as Array<[Pressure, number]>).sort(
         (a, b) => b[1] - a[1]
-      )[0]?.[0] ?? "translation";
+      )[0]?.[0] ?? "quiet";
 
     return { pressure: winner, scores, ...RESULTS[winner] };
   }, [answers]);

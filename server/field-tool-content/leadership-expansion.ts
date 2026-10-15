@@ -987,322 +987,351 @@ export const LEADERSHIP_EXPANSIONS: Record<string, LeadershipExpansion> = {
       },
     ],
   },
-  "product-project-translator": {
+  "when-the-team-goes-quiet": {
     welcome:
-      "Follow a request for final requirements through the questions, a bounded proposal, and the reply to Finance.",
+      "Follow a quiet planning meeting into the conversation afterward, a small change, and a check on whether it helped.",
     intro:
-      "A fictional example: Finance needs a feature list to reserve a budget, but customers have not tried either proposed booking design. We’ll find the decision behind the request and prepare a useful answer.",
+      "A fictional example: a data analyst tries to raise a question about a report. The PM moves on. Later, they discover the report may miss the new online bookings. Here’s how the conversation could go.",
     companion: [
       {
         after: 1,
         step: 0,
-        eyebrow: "BEFORE YOU ANSWER / HEAR THE PERSON",
-        title: "What is the request helping them do?",
+        eyebrow: "OPTIONAL / A LITTLE MORE HELP",
+        title: "Prepare without writing a whole script.",
         intro:
-          "“Final requirements” may sound like a demand for certainty. It may also be the language someone uses when they need to reserve money or coordinate another team.",
+          "If you only have five minutes, use these three prompts. You can think them through without writing anything down.",
         cards: [
           {
-            title: "Repeat the actual request",
-            body: "You need the final feature list before reserving next quarter’s budget. Have I got that right?",
+            title: "The moment",
+            body: "What did you notice, in words someone else in the meeting could recognise?",
           },
           {
-            title: "Ask what depends on it",
-            body: "Which decision do you need to make? What would happen if you didn’t have the full list by Thursday?",
+            title: "Your part",
+            body: "What did you say or do that you want to ask about or change?",
           },
           {
-            title: "Check which details matter now",
-            body: "Do you need a spending limit, an estimate for the full build, or a commitment to particular features? Those are different answers.",
-          },
-          {
-            title: "Leave room to be corrected",
-            body: "I thought you needed every screen agreed. It sounds as though the immediate question is how much to set aside. What else do you need?",
+            title: "Your invitation",
+            body: "Who do you want to understand, and what is one question you could ask them?",
           },
         ],
         takeaway:
-          "Use what they confirm. If you have not asked yet, keep it as a question rather than filling in their motives.",
+          "Stop when you have enough to begin. You can return to the rest after you’ve talked.",
       },
       {
         after: 3,
         step: 2,
-        eyebrow: "DISCUSSION GUIDE / A PROMISE YOU CAN KEEP",
-        title: "Offer the next useful piece of certainty.",
+        eyebrow: "OPTIONAL / A LITTLE MORE HELP",
+        title: "Practise the moment you want to defend yourself.",
         intro:
-          "An honest limit can help someone plan. Work out which question you can answer next and what it will cost to find out.",
+          "Imagine hearing: “There isn’t much point raising concerns. You’ve already decided.” What happens inside you?",
         cards: [
           {
-            title: "1 / What do we already know?",
-            body: "Customers phone to book repairs. We have two sketches. Customers have not tried either. Explain those facts without dressing them up as a final design.",
+            title: "Pause",
+            body: "You don’t have to agree with the whole statement to ask what led to it.",
           },
           {
-            title: "2 / What would change the decision?",
-            body: "Can customers complete a booking with either design? What would each take to build? Choose questions that affect whether to spend more.",
+            title: "Ask",
+            body: "“Can you give me an example? I want to understand what I did.”",
           },
           {
-            title: "3 / What are we asking to spend?",
-            body: "Name the people, time, money, and stopping point. In the fictional example, it is up to $5,000 over two weeks. Choose limits that fit your own situation.",
+            title: "Check",
+            body: "“When I presented the plan as settled, you thought the questions wouldn’t change anything. Have I got that?”",
           },
           {
-            title: "4 / What will they get back?",
-            body: "Bring the customer findings, Engineering’s assessment, and a recommendation. Explain what will still be uncertain and what decision comes next.",
+            title: "Then respond",
+            body: "If you did shut the conversation down, own it. If there is a misunderstanding, explain it after checking what you heard.",
           },
         ],
-        takeaway:
-          "A small customer test can inform a choice. It cannot prove that everyone will use the product or that the whole business case is sound.",
+        takeaway: "You’re practising a response, not memorising a performance.",
       },
       {
         after: 4,
-        step: 3,
-        eyebrow: "COMMUNICATION / AFTER YOU HAVE AN ANSWER",
-        title: "Tell the team what the answer means.",
+        step: 2,
+        eyebrow: "OPTIONAL / IF YOUR TEAM USES SCRUM",
+        title: "Why we do Scrum this way",
         intro:
-          "An answer from Finance needs to reach the people doing the work. Before anyone books sessions or starts building, check that you all heard the same thing.",
+          "If your team uses Scrum, these conversations already have a place. The November 2020 Scrum Guide describes opportunities to learn from the work and adjust it. These short summaries explain their purpose; the questions are suggestions for your team.",
         cards: [
           {
-            title: "If they say yes",
-            body: "“Finance has agreed up to $5,000 for the two weeks of customer sessions and an estimate. They haven’t funded the build. Can we check who is doing each part and book our review?”",
+            title: "Sprint Planning",
+            body: "The whole Scrum Team plans together. Developers select the work with the Product Owner and decide how to do it. Ask: “What do we need to understand before we commit to this?”",
           },
           {
-            title: "If they change the offer",
-            body: "“They can fund less than we asked for. What could we learn with that amount? Let’s check before I promise we can do the same work for less.”",
+            title: "Daily Scrum",
+            body: "Developers spend 15 minutes checking progress toward the Sprint Goal and adjusting their plan. Ask: “What needs to change today?” A report to the manager misses that purpose.",
           },
           {
-            title: "If there is no answer yet",
-            body: "“I’m still waiting to hear. Please don’t book the paid sessions yet. I’ll follow up Thursday and let you know.”",
+            title: "Sprint Review",
+            body: "The Scrum Team and stakeholders examine results and decide what to adapt. Ask: “What have we learned that should change what happens next?” Leave room for discussion, beyond a demonstration.",
           },
           {
-            title: "Keep the written record current",
-            body: "Write down the actual answer and any conditions. If someone remembers it differently, check with the person who made the call before changing the work.",
+            title: "Sprint Retrospective",
+            body: "The Scrum Team plans improvements to quality and effectiveness. Ask: “Which change will we actually make?” Then check what happened.",
           },
         ],
         takeaway:
-          "You can draft an update for Finance and a separate one for the team in the Lab. Edit them after the decision so a proposal doesn’t read like permission.",
+          "Source: Ken Schwaber and Jeff Sutherland, The Scrum Guide (November 2020). Read the full definitions at scrumguides.org/scrum-guide.html.",
       },
       {
         after: 5,
-        step: 3,
-        eyebrow: "WHEN THE ANSWER IS NO",
-        title: "Find out what the no is telling you.",
+        step: 2,
+        eyebrow: "OPTIONAL / THE REASON BEHIND THE PRACTICE",
+        title: "Agile should leave room to learn.",
         intro:
-          "A useful conversation can end without funding. You can understand the answer and decide what to do next without turning it into another sales pitch.",
+          "Agile is a set of values and principles; Scrum is a framework a team may use. Neither requires you to pretend the plan is right when you’ve learned something that changes it.",
         cards: [
           {
-            title: "No money right now",
-            body: "“Is the problem the amount, or is there no budget for this at the moment?” If there is no budget, don’t quietly ask the team to do the work anyway.",
+            title: "Work with people",
+            body: "The Agile Manifesto gives more weight to people working together than to processes and tools. A board or a meeting format can help; it can’t hear a concern for you.",
           },
           {
-            title: "Not this problem",
-            body: "“Is there something more important you need us to focus on?” You may have learned that the proposed service isn’t a priority. Check what that means for the current plan.",
+            title: "Respond to what you learn",
+            body: "A plan is useful. The Manifesto also values responding to change. Explain what you learned and discuss what that means for the work.",
           },
           {
-            title: "Not enough confidence yet",
-            body: "“What would you need to know before considering it?” Ask whether you already have that information or can find it within work that is approved.",
+            title: "Make improvement part of the work",
+            body: "The Agile principles call for regular reflection followed by changes in how the team works. A concern raised in a retrospective needs a response, not just a sticky note.",
           },
           {
-            title: "A clear stopping point",
-            body: "“Okay. Shall we leave this here, or is there a specific change that would make it worth revisiting?” Record that answer. A polite maybe isn’t approval to keep spending.",
+            title: "Keep a pace people can sustain",
+            body: "Sustainable work is an Agile principle too. If every honest answer about workload becomes a request for overtime, notice what that teaches people.",
           },
         ],
         takeaway:
-          "You don’t have to rescue every proposal. Understanding a no can save people weeks of work and leave the relationship in good shape.",
+          "Sources: the Agile Manifesto and its twelve principles. The meeting questions in this tool are suggestions, not additional Scrum rules.",
       },
       {
-        after: 8,
+        after: 6,
         step: 3,
-        eyebrow: "HOLISTIC SHAPING / WHAT DID THE CONVERSATION CHANGE?",
-        title: "Make room for each other’s judgment.",
+        eyebrow: "OPTIONAL / A LITTLE MORE HELP",
+        title: "Make the next meeting easier to join.",
         intro:
-          "A good translation helps people think together. Notice whether the conversation changed your understanding as well as theirs.",
+          "Choose a change with the people who use the meeting. These are options to discuss, not a new set of ceremonies.",
         cards: [
           {
-            title: "Identity",
-            body: "Could you say what you did not know without feeling less capable? Could the other person ask for what they needed without being treated as the problem?",
+            title: "Before",
+            body: "Share the question or proposed plan early enough for people to look at it. Ask whose input is missing.",
           },
           {
-            title: "Relationship",
-            body: "Did asking why build understanding? What would make it easier for Finance, Sales, and the team to ask each other an unfinished question next time?",
+            title: "During",
+            body: "Give people a little time to think. Ask what you might be overlooking before announcing your preferred answer. Let people pass.",
           },
           {
-            title: "Vision",
-            body: "Did you find a result that matters to both of you? Can you explain how the proposed work helps customers and the person making the funding decision?",
+            title: "After",
+            body: "Say what changed because of the discussion, or explain why it didn’t. Follow up on questions that still need an answer.",
           },
           {
-            title: "Culture",
-            body: "Do people now expect evidence and honest updates, or polished certainty? What habit could make the next planning conversation more useful?",
+            title: "If you use Scrum",
+            body: "Involve your Scrum Master when the events aren’t helping the team. The Guide describes self-management and the values of commitment, focus, openness, respect, and courage. These aren’t a demand for personal disclosure.",
           },
         ],
         takeaway:
-          "Look at what changed for people as well as what was decided. You can reflect without recording or sharing personal details.",
+          "A useful check: could someone name one time their input changed what happened?",
       },
     ],
     scenes: [
       {
-        title: "The words you heard",
+        title: "The question that got cut short",
+        move: "The team is planning Friday’s release of online booking. The report Support uses may not include bookings from the new page.",
+        dialogue: [
+          {
+            speaker: "Data analyst",
+            words:
+              "There’s something about the booking numbers we need to check.",
+          },
+          {
+            speaker: "PM",
+            words:
+              "Can we stick to the release plan? We’re running out of time.",
+          },
+          {
+            speaker: "Data analyst, afterward",
+            words:
+              "I was trying to tell you the report might miss the new bookings.",
+          },
+        ],
+        question:
+          "What do we know happened? What are we still guessing about why the analyst didn’t continue?",
         step: 0,
-        move: "Finance asks for the final feature list before reserving next quarter’s budget. The PM could argue about uncertainty, but first asks what Finance needs to decide.",
+      },
+      {
+        title: "An invitation to talk",
+        move: "The PM asks for a short conversation away from the group.",
         dialogue: [
-          {
-            speaker: "Finance director",
-            words:
-              "Can you send me the final feature list? I need to set aside next quarter’s budget.",
-          },
           {
             speaker: "PM",
             words:
-              "Which decision do you need the list for? What has to be settled by Thursday?",
+              "I cut you off earlier. I’m sorry. Could we talk about what I missed? Now or later is fine.",
+          },
+          {
+            speaker: "Data analyst",
+            words:
+              "I wasn’t trying to slow everything down. Support uses those numbers to plan tomorrow’s work.",
+          },
+          {
+            speaker: "PM",
+            words: "Tell me more. What do we need to check?",
           },
         ],
         question:
-          "What do you know about their need, and what have you only assumed?",
-      },
-      {
-        title: "Find the actual need",
+          "Does the opening give the analyst room to explain, or ask them to reassure the PM?",
         step: 1,
-        record: "request-decoder",
-        move: "The finance director confirms that Thursday’s need is a spending limit. Every screen does not need to be settled yet. The PM checks that understanding before making an offer.",
+        record: "quiet-conversation",
+      },
+      {
+        title: "Checking what was heard",
+        move: "The PM listens to the work concern and asks about the meeting.",
         dialogue: [
           {
-            speaker: "Finance director",
+            speaker: "PM",
             words:
-              "I need to know how much to set aside. I don’t need every screen chosen this week.",
+              "Let me check I’ve got this. You wanted us to check the report before we agreed to Friday. When I moved on, it sounded like the decision was already made.",
+          },
+          {
+            speaker: "Data analyst",
+            words:
+              "Yes. I wasn’t asking us to cancel. I needed someone to hear that there was a check missing.",
           },
           {
             speaker: "PM",
             words:
-              "Would it help if we agreed a smaller amount now, then came back once we know more?",
+              "That makes sense. I should have let you finish. Can we get the report owner involved today?",
           },
         ],
-        question:
-          "Would the other person recognize the need you have written down?",
-      },
-      {
-        title: "Start with a smaller commitment",
+        question: "What did the correction change in the PM’s understanding?",
         step: 2,
-        record: "commitment-card",
-        move: "The PM proposes up to $5,000 over two weeks to try both booking designs with five customers and get Engineering’s assessment. These are fictional limits, not recommended defaults. The full build remains undecided.",
-        dialogue: [
-          {
-            speaker: "PM",
-            words:
-              "Could we fund those two weeks first? We’ll show you what customers made of it and what it would take to build before asking for the rest.",
-          },
-          {
-            speaker: "Finance director",
-            words:
-              "What would we be able to decide at the end, and what would still be uncertain?",
-          },
-        ],
-        question:
-          "Does the proposed work answer the question that affects the next investment?",
-      },
-      {
-        title: "Record the response",
-        step: 3,
-        record: "stakeholder-response",
+        record: "quiet-change",
         values: {
-          decisionStatus: "AGREED — decision recorded",
-          finalDecision:
-            "Fictional Thursday decision: Finance approves a maximum $5,000 over two weeks for customer testing and Engineering’s assessment. The PM can book those sessions. The full build budget and delivery date remain undecided.",
-          nextAction:
-            "The PM will book the customer sessions and a review with Finance two weeks after work starts.",
+          understanding:
+            "The analyst wanted the report checked before agreeing to Friday. The report owner needs to be involved today.",
         },
-        move: "In this fictional continuation, Finance approves the limited work on Thursday. The PM records what the approval covers and books the review. This is not approval for the full service.",
+      },
+      {
+        title: "A change they can try",
+        move: "The PM asks about the next meeting and what can be shared.",
         dialogue: [
           {
-            speaker: "Finance director",
+            speaker: "PM",
             words:
-              "Yes, up to $5,000 for that. Come back and show me what you’ve learned before we spend anything on the build.",
+              "I’ll send the plan earlier and leave time for concerns before we decide. Would that help?",
+          },
+          {
+            speaker: "Data analyst",
+            words:
+              "Yes. And if there’s a question you can’t answer, could we agree who will check it?",
           },
           {
             speaker: "PM",
             words:
-              "Thanks. I’ll book a time for us to look at it together and let the team know what we’ve agreed.",
+              "Yes. Is it okay to tell the team we’re checking the report with its owner? I won’t repeat this conversation.",
+          },
+          {
+            speaker: "Data analyst",
+            words: "That’s fine. Let’s keep the rest between us.",
           },
         ],
         question:
-          "Can the team tell exactly what is funded and what is still undecided?",
+          "Which part is the PM’s own promise, and which part did they check with the analyst?",
+        step: 3,
+        record: "quiet-follow-through",
+        values: {
+          decisionStatus: "AGREED — change recorded",
+          finalDecision:
+            "The analyst agreed to trying the meeting change and sharing only the report check. The PM will send the plan earlier and name who will follow up on open questions.",
+          sharePermission:
+            "We can share the report check. We won’t share the private conversation.",
+          understanding:
+            "We need to check the report with its owner before confirming Friday.",
+        },
       },
       {
-        title: "Return with what you learned",
+        title: "Two meetings later",
+        move: "They return to what they said they would try. It’s a small start, with more to learn.",
+        dialogue: [
+          {
+            speaker: "PM",
+            words: "Did getting the plan earlier help?",
+          },
+          {
+            speaker: "Data analyst",
+            words:
+              "Yes. I could check the numbers first. The question got a proper answer this time. We still rushed the last item.",
+          },
+          {
+            speaker: "PM",
+            words:
+              "I noticed that too. Let’s put that question earlier next time and see how it goes.",
+          },
+        ],
+        question: "What actually improved, and what still needs attention?",
         step: 3,
-        record: "stakeholder-response",
+        record: "quiet-follow-through",
         values: {
-          decisionStatus: "AGREED — decision recorded",
+          decisionStatus: "AGREED — change recorded",
           finalDecision:
-            "Fictional Thursday decision: approve up to $5,000 and two weeks for customer testing and Engineering’s assessment only.",
+            "The PM and analyst agreed to try the meeting change, share only the report check, and review it after two meetings.",
           returnRecord:
-            "Fictional follow-up: the customer sessions exposed confusion about choosing a repair time. Engineering also found a calendar question that needs checking. The PM returns on the agreed date and proposes revising the design and checking the connection before requesting the full build budget. No further spend is approved yet.",
+            "The analyst had time to check the numbers and their question received an answer. The last agenda item was still rushed. The PM will move that question earlier next time.",
         },
-        move: "The learning is less tidy than hoped: customers struggle with one part of booking, and Engineering finds another question. The PM returns when promised, explains that, and asks for the next decision without claiming the design is proven.",
-        dialogue: [
-          {
-            speaker: "PM",
-            words:
-              "Here’s what we learned. I don’t recommend funding the whole build yet. These are the two questions I think we should answer next.",
-          },
-          {
-            speaker: "Finance director",
-            words:
-              "Show me what that would take and what decision it would help us make.",
-          },
-        ],
-        question:
-          "Did you keep the promise to return, even though the answer was not the one you hoped for?",
       },
     ],
     resources: [
       {
-        source: "chapgpt-schools-me-on-leading-well",
-        topic: "The conversation",
-        why: "Use Nic’s reflection to meet the person behind the request rather than reducing them to a role that is getting in your way.",
-        question:
-          "What pressure or responsibility might they be carrying that I have not asked about?",
+        source: "stop-chasing-psychological-safety",
+        topic: "When a concern sounds like resistance",
+        why: "Nic explores how people can misread one another’s contributions. Read it when a practical concern sounds to you like someone blocking the idea.",
+        question: "What was the other person trying to help us see?",
         step: 0,
       },
       {
-        source: "the-search-for-unapologetic-impracticality",
-        topic: "The conversation",
-        why: "Consider what the conversation leaves out when it only asks for numbers and deliverables.",
-        question:
-          "What are we learning about judgment and trust as we work this out?",
-        step: 3,
-      },
-      {
-        source: "bowl-synthesis",
-        topic: "The conversation",
-        why: "Nic’s video asks you to participate and be changed by the conversation too.",
-        question:
-          "What did their answer change in my understanding of the request?",
+        source: "chapgpt-schools-me-on-leading-well",
+        topic: "Meet the person in front of you",
+        why: "A reflection from Nic on how we meet another person. Read or watch before a conversation you’ve already decided the meaning of.",
+        question: "Can their answer change my view?",
         step: 1,
       },
       {
         source: "you-have-a-culture-problem",
-        topic: "Holistic Shaping",
-        why: "See how a shared purpose and a better relationship can change the next planning conversation.",
-        question: "What worthwhile future can both of us help make possible?",
+        topic: "What becomes normal here",
+        why: "Nic’s Cultural Orbital Mechanics connects culture, identity, relationship, and vision. Read it alongside the question of what repeated meetings teach people.",
+        question: "What are we making normal each time we meet?",
         step: 2,
       },
       {
         source: "when-mattering-isnt-enough",
-        topic: "Holistic Shaping",
-        why: "Explore how pressure to sound certain can affect people, and what an honest commitment could make possible instead.",
+        topic: "What happens after someone feels heard",
+        why: "Nic asks what comes after feeling valued. Read it when you want the conversation to change more than how the meeting feels.",
         question:
-          "Where are people carrying a cost because they cannot say what they still need to learn?",
+          "What room have we made for someone’s judgment to change the work?",
         step: 3,
       },
       {
-        source: "torres-assumptions",
-        topic: "What to learn next",
-        why: "Choose a particular assumption to check before asking someone to fund a larger piece of work.",
-        question:
-          "What finding would change our recommendation about the next investment?",
+        source: "the-hollow-crown-why-our-leadership",
+        topic: "You don’t have to carry this alone",
+        why: "Nic questions the expectation that a better individual leader can solve everything. Read it when the same problem keeps returning despite your efforts.",
+        question: "What needs to change beyond my own behaviour?",
+        step: 3,
+      },
+      {
+        source: "scrum-guide",
+        topic: "Why these Scrum conversations exist",
+        why: "The original definitions, accountabilities, events, and values. Use it to check what a meeting is for before changing how you run it.",
+        question: "What should this event help us learn or change?",
         step: 2,
       },
       {
-        source: "singer-pitch",
-        topic: "What to learn next",
-        why: "Use the problem, time limit, and boundaries to explain what your proposed work will and will not cover.",
+        source: "agile-principles",
+        topic: "Learning together as part of the work",
+        why: "The original twelve principles, including regular reflection and sustainable work. Read them with your team and choose one to discuss.",
+        question: "Which principle is hardest to recognise in our week?",
+        step: 2,
+      },
+      {
+        source: "agile-manifesto",
+        topic: "People, working software, collaboration, and change",
+        why: "Read the four values in full. They explain a preference, not permission to discard tools, documentation, agreements, or plans.",
         question:
-          "What are we asking to spend, what will we do, and where will we stop?",
+          "Where does our routine help those values, and where does it get in the way?",
         step: 2,
       },
     ],

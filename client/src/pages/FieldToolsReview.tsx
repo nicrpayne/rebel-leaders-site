@@ -15,7 +15,7 @@ const products: {
     name: "AI Stalemate",
     audience: "pm",
     edition: "PM path",
-    pages: 18,
+    pages: 21,
     image: "ai-stalemate-pm-hero-v5.webp",
   },
   {
@@ -23,7 +23,7 @@ const products: {
     name: "AI Stalemate",
     audience: "lead-dev",
     edition: "Lead Developer path",
-    pages: 18,
+    pages: 21,
     image: "ai-stalemate-hero-v2.webp",
   },
   {
@@ -31,7 +31,7 @@ const products: {
     name: "Deadline Reset",
     audience: "pm",
     edition: "Field Tool 02",
-    pages: 10,
+    pages: 25,
     image: "deadline-reset-hero-v2.webp",
   },
   {
@@ -39,7 +39,7 @@ const products: {
     name: "Priority Whiplash",
     audience: "pm",
     edition: "Field Tool 03",
-    pages: 10,
+    pages: 25,
     image: "priority-whiplash-hero-v2.webp",
   },
   {
@@ -47,16 +47,16 @@ const products: {
     name: "Mandate Reset",
     audience: "pm",
     edition: "Field Tool 04",
-    pages: 10,
+    pages: 25,
     image: "mandate-reset-hero-v3.webp",
   },
   {
-    slug: "product-project-translator",
-    name: "Product / Project Translator",
+    slug: "when-the-team-goes-quiet",
+    name: "When the Team Goes Quiet",
     audience: "pm",
     edition: "Field Tool 05",
-    pages: 10,
-    image: "product-project-translator-hero-v2.webp",
+    pages: 23,
+    image: "when-the-team-goes-quiet-hero-v2.webp",
   },
 ];
 

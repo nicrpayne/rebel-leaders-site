@@ -18,6 +18,8 @@ export const PRIVATE_FIELD_IDS = new Set([
   "privateReaction",
   "privateAssumption",
   "leadershipReflection",
+  "quietHeard",
+  "quietCorrection",
 ]);
 export function sharedDraftValues(values: Record<string, string>) {
   return Object.fromEntries(

@@ -717,239 +717,240 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
         "You don’t have to fix the whole organization in one conversation. Leave knowing what happens next, who will do it, and when you’ll check back.",
     },
   ],
-  "product-project-translator": [
+  "when-the-team-goes-quiet": [
     {
       eyebrow: "01 / START HERE",
-      title: "“Can you just give me the final requirements?”",
+      title: "The meeting was quiet. The conversation afterward wasn’t.",
       intro:
-        "Someone needs a feature list, a date, or a budget while you’re still finding things out. Let’s understand what they need the answer for, then work out what you can usefully offer now.",
+        "You asked if there were any concerns. Nobody said much. Later, someone tells you what they were worried about. You’re glad to know. You also wish you’d heard it earlier.",
       sections: [
         {
-          title: "Find the decision behind the question",
-          body: "Finance may need to reserve money. Sales may need to tell a customer when to expect something. Another team may need to plan its work. Ask rather than guessing.",
+          title: "Start with one moment",
+          body: "Choose a meeting you were part of. What happened just before the room went quiet? You don’t need to explain the whole team’s culture to begin.",
         },
         {
-          title: "Say what you can answer now",
-          body: "If the work is understood and the team can give a reliable date, use it. If an important question is still open, explain exactly what it is.",
+          title: "Give yourself five minutes",
+          body: "Write down what you noticed, what you want to ask, and how you’ll invite the conversation. That is enough to get started. The later pages help with the answer and what you do next.",
         },
         {
-          title: "Offer a useful next step",
-          body: "Perhaps you can agree to test two booking designs with customers in the next two weeks, then bring a build estimate to Finance. Name the work, the limit, and what they will be able to decide afterward.",
+          title: "Use the bits you need",
+          body: "Prepare in the Lab or on paper. Read the worked conversation if you want to see it unfold. The Scrum section is optional. You won’t need this much preparation for every conversation; these habits get more familiar with practice.",
         },
         {
-          title: "Write a reply you would actually say",
-          body: "The Lab helps you check the request, prepare a commitment, and write the response. You don’t need to teach someone product-management vocabulary before helping them plan.",
+          title: "What this helps you do",
+          body: "You’ll have words to open the conversation, questions to help you understand, and a small change you can follow through on. The other person still gets to choose what they share.",
         },
       ],
       callout:
-        "Try: “What do you need the feature list for? Which decision are you trying to make, and when do you need to make it?”",
+        "You don’t have to make the whole team open up today. Start by making one conversation worth having.",
     },
     {
-      eyebrow: "02 / BEFORE THE CONVERSATION",
-      title: "You can be frustrated and still be curious.",
+      eyebrow: "02 / NOTICE THE MOMENT",
+      title: "What did you actually notice?",
       intro:
-        "When someone asks for details you don’t have yet, it can be hard to know what to say. They may be trying to make a decision of their own. Let’s start by finding out what it is.",
+        "Silence can mean a lot of things. Someone may agree, be thinking, lack the information, or be tired of having the same concern brushed aside. We need to ask.",
       sections: [
         {
-          title: "What actually happened?",
-          body: "Start with what was said or done. “They asked for Friday” tells us what happened. “They don’t care about the team” is an explanation you may have added. What could you ask to find out what’s behind the request?",
+          title: "Describe what happened",
+          body: "“I asked for concerns and moved on after a few seconds” is something you can check. “Nobody cares” is a conclusion. Keep those separate.",
         },
         {
-          title: "Why do you care?",
-          body: "Who would be better off if this worked? Perhaps a customer could stop chasing an answer, or your team could finish something it promised. Say why that matters to you, and ask what matters to the other person too.",
+          title: "Look at your part",
+          body: "Did you interrupt, answer your own question, or explain why the plan couldn’t change before anyone spoke? Notice what you can own without making the conversation about your guilt.",
         },
         {
-          title: "What would better look like?",
-          body: "Imagine the next few weeks going well. What would people be doing differently? Describe that in ordinary words, then ask the other person what they would add or change.",
+          title: "Ask yourself who was missing",
+          body: "Did the people affected have a chance to see the plan? Was there time to think? If Support wasn’t invited, a quiet meeting tells you very little about what Support needs.",
         },
         {
-          title: "Keep these notes to yourself",
-          body: "These questions are for your own thinking; you can answer them without typing. If you use the Lab’s private notes, they stay only in the open tab. They aren’t saved or exported, and disappear when you refresh or leave.",
+          title: "Keep private comments private",
+          body: "Prepare with neutral descriptions. Don’t collect a list of who said what about whom. Before repeating something shared privately, ask what the person is comfortable passing on.",
         },
       ],
       callout:
-        "An opening you can adapt: “I want us to find a way through this. Can we look at what is happening and work out what to do next?”",
+        "Try writing two sentences: “What I noticed was…” and “What I still need to ask is…”",
     },
     {
-      eyebrow: "03 / UNDERSTAND THE REQUEST",
-      title: "Ask what they will use the answer for.",
+      eyebrow: "03 / INVITE THE CONVERSATION",
+      title: "Give them a way into it.",
       intro:
-        "You may have an idea of why they’re asking. A quick question can help you check it before you spend time on the answer.",
+        "Speak to the person whose experience you want to understand. If you interrupted them, start there. A short private conversation may be easier than asking them to explain themselves in front of everyone.",
       sections: [
         {
-          title: "“We need final requirements”",
-          body: "“Which decision depends on that list? Do you need to reserve money, agree a contract, or get another team ready?” Find out which details need to be settled now.",
+          title: "Name your part plainly",
+          body: "“I moved on while you were raising a question. I’m sorry. I’d like to hear what I missed.” You can explain the time pressure later if it helps; first, let them answer.",
         },
         {
-          title: "“We need a firm date”",
-          body: "“Who is waiting for it, and what have they been told?” Ask the team for its current delivery estimate and what could change it.",
+          title: "Ask about their experience",
+          body: "“What was it like trying to raise that?” is different from “Why didn’t you speak up?” Ask one question, then leave room for the answer.",
         },
         {
-          title: "“We need the full roadmap”",
-          body: "“How far ahead do you need to plan, and what will you use it for?” Explain which work is agreed, which is only a possibility, and when you’ll know more.",
+          title: "Let them choose the setting",
+          body: "“Would you rather talk now, find another time, or send me a note?” They can decline. Don’t turn an invitation into another demand.",
         },
         {
-          title: "Record what they actually confirm",
-          body: "If you haven’t asked yet, jot down the question you want to ask. You can add their answer after you have spoken; for now, keep your guess separate from what they’ve confirmed.",
+          title: "If you don’t run the meeting",
+          body: "Ask the person who does: “Could we leave a few minutes for questions before we decide?” You can make that request without speaking for colleagues or naming a private source.",
         },
       ],
       callout:
-        "You’re looking for an answer that helps them make their decision. Check that you understand it before writing the response.",
+        "An opening you can adapt: “I think I moved us on too quickly. What didn’t we get to hear?”",
     },
     {
-      eyebrow: "04 / OFFER A COMMITMENT",
-      title: "What can we promise at this point?",
+      eyebrow: "04 / LISTEN AND CHECK",
+      title: "Before you explain, check you understood.",
       intro:
-        "You can still give someone a useful answer while you’re learning. Let’s work out what you can do now, what it will help you find out, and when you’ll come back to them.",
+        "An uncomfortable answer can make you want to defend what you meant. Take a breath. First find out what happened for the other person.",
       sections: [
         {
-          title: "Start with what you know",
-          body: "For example, customers currently phone to book repairs. There are two possible online designs. Neither has been tried with customers.",
+          title: "Ask for an example",
+          body: "“Can you walk me through that moment?” Listen for what they were trying to contribute and what happened next. You’re learning about their experience, not testing whether they deserve to be upset.",
         },
         {
-          title: "Name the question that matters",
-          body: "Can customers complete a booking using either design? How much work would the better one take to build? Say how you’ll find out.",
+          title: "Say it back in your own words",
+          body: "“Let me just synthesize this back to you to make sure I understand.” Then give a short account of what you heard. Or use: “Let me check I’ve got this.”",
         },
         {
-          title: "Propose the work and its limits",
-          body: "Ask to spend up to $5,000 over two weeks to try both designs with five customers and get an Engineering estimate. Name who does each part. Those are fictional example amounts, not recommended defaults.",
+          title: "Leave room for a correction",
+          body: "“You wanted us to check the report before we agreed to Friday, and my answer made it sound like that wasn’t up for discussion. Is that right?” If they correct you, use the correction.",
         },
         {
-          title: "Explain what comes afterward",
-          body: "Bring the findings and estimate to Finance. Ask whether to fund the build, change the idea, or stop. Don’t promise a finished service when you’re only promising a customer test.",
+          title: "You can understand and still disagree",
+          body: "“I see why that worried you. I’m not sure we need to move the date, but we do need to check the report.” Hearing a concern doesn’t commit you to every solution suggested.",
         },
       ],
       callout:
-        "A useful commitment says what you’ll do, who will do it, how much time or money you’ll use, and when the other person will hear back.",
+        "Ask “What have I missed?” before “Can I explain why I did that?”",
     },
     {
-      eyebrow: "05 / WRITE THE REPLY",
-      title: "Say it as you would in the meeting.",
+      eyebrow: "05 / MAKE A CHANGE",
+      title: "What will you do differently?",
       intro:
-        "Start with what they need. Then explain what you can offer and ask for the decision you need.",
+        "A good conversation matters. What happens in the next meeting will give people something more to go on.",
       sections: [
         {
-          title: "Show that you heard them",
-          body: "“You need a spending limit by Thursday.” Use the need they confirmed, rather than an explanation you invented.",
+          title: "Choose something you control",
+          body: "You might send the plan earlier, stop interrupting, or ask what could go wrong before presenting your own view. Pick something you can actually do.",
         },
         {
-          title: "Make a concrete offer",
-          body: "“Could we set aside up to $5,000 for two weeks to try both booking designs with five customers and check the build work with Engineering?”",
+          title: "Ask whether it would help",
+          body: "“If I sent the plan the day before and left time for questions, would that help? What would still get in the way?” Their answer may change your idea.",
         },
         {
-          title: "Explain what they will get back",
-          body: "“We’ll bring you the results, an estimate, and a recommendation before asking you to pay for the full build.”",
+          title: "Handle the work problem too",
+          body: "If the report is wrong, get the right people together to fix it. Don’t turn an urgent concern into a discussion about communication and leave the original problem untouched.",
         },
         {
-          title: "Ask for a response",
-          body: "“Would that give you enough to make Thursday's decision?” Let them tell you if the offer doesn’t meet their need. Revise it together.",
+          title: "Make a promise you can keep",
+          body: "Name your action and when you’ll do it. If something needs another person’s approval, say that. Don’t promise that speaking up will never have consequences you can’t control.",
         },
       ],
       callout:
-        "Read the message aloud. If you would not say a phrase in conversation, find the words you would use.",
+        "“At the next meeting, I’ll…” is a useful start. “We all need to be more open” leaves everyone guessing.",
     },
     {
-      eyebrow: "06 / WHEN THEY NEED MORE",
-      title: "Keep working on the actual question.",
-      intro: "Sometimes the first offer won’t be enough. Ask what is missing.",
+      eyebrow: "06 / IF THE ANSWER IS DIFFICULT",
+      title: "You may not get the conversation you hoped for.",
+      intro:
+        "An invitation doesn’t undo what came before it. How you respond now still matters.",
       sections: [
         {
-          title: "“Just give me the date”",
-          body: "If the team has a reliable estimate for the agreed work, share it with its assumptions. Otherwise say what needs checking and when you can return with an estimate. Use Deadline Reset if a date has already been promised.",
+          title: "“It’s fine.”",
+          body: "“Okay. You don’t need to talk about it now. I’m still going to work on not cutting questions short.” Leave the door open without repeatedly asking for a different answer.",
         },
         {
-          title: "“We can’t approve an open-ended budget”",
-          body: "Agree a maximum spend and a stopping point. Explain what that money buys and what will still be unknown. The person paying can change or decline the proposal.",
+          title: "“We’ve raised this before.”",
+          body: "“You’re right. What did we say we’d do, and what actually happened?” Start with the unfinished promise. Another discussion won’t substitute for keeping it.",
         },
         {
-          title: "“We need to tell the customer something”",
-          body: "Work with the person responsible for that customer. State what is available, what is still being checked, and when the next update will come. Check any existing contractual promise.",
+          title: "“I don’t want you telling everyone I said this.”",
+          body: "Ask what, if anything, they are comfortable sharing. You can change your own behaviour without identifying them. Don’t promise secrecy if your role requires you to act on what you hear.",
         },
         {
-          title: "“Why does the plan keep changing?”",
-          body: "Explain what you learned and how it changed the plan. If you also missed something or didn’t keep people updated, acknowledge that and agree how you’ll keep them informed from here.",
+          title: "“There’s a reason people don’t speak up.”",
+          body: "Take concrete accounts of threats, harassment, or retaliation seriously. A team conversation isn’t a substitute for an appropriate reporting or support route. Ask what support is needed; don’t press for a public account.",
         },
       ],
       callout:
-        "Try: “I want to give you something you can plan around. Which part of this still leaves you unable to make the decision?”",
+        "You can respect someone’s choice not to talk and still change something you’ve noticed yourself.",
     },
     {
-      eyebrow: "07 / EXAMPLE",
-      title: "Finance needs a budget by Thursday.",
+      eyebrow: "07 / FOLLOW THROUGH",
+      title: "Come back with what you did.",
       intro:
-        "Fictional example: the finance director asks for the final feature list for an online repair-booking service. Customers haven’t tried either proposed design yet.",
+        "After the next meeting or two, ask what was different. The point is to find out whether the change helped, not to get reassurance that you’re a good leader.",
       sections: [
         {
-          title: "The product manager asks why",
-          body: "Finance needs a spending limit by Thursday. They don’t need every screen agreed. The product manager checks that understanding before proposing a smaller first spend.",
+          title: "Make your part visible",
+          body: "“I sent the plan earlier and left the release questions open until we’d heard from the people doing the work.” Describe what you changed without announcing who prompted it.",
         },
         {
-          title: "The proposed commitment",
-          body: "Propose spending up to $5,000 over two weeks to let five customers try both designs and ask Engineering what each would take to build. The product manager arranges the customer sessions; the engineering lead estimates the build work.",
+          title: "Ask about a real moment",
+          body: "“Did you have enough information and time to raise a concern? What happened when you did?” More talking on its own doesn’t prove people are being heard.",
         },
         {
-          title: "The reply",
-          body: "You need a budget by Thursday. Could we approve up to $5,000 for two weeks of customer testing first? Then we can show you which design works and what it would take to build before you commit to the full cost.",
+          title: "Notice what changed in the work",
+          body: "Did a question help you catch a problem or improve the plan? Did someone get an answer to a concern that used to go nowhere? Look for those moments.",
         },
         {
-          title: "What happens next",
-          body: "In this example, Finance approves the limited spend on Thursday. The product manager books the customer sessions and the review two weeks later. Funding for the full build is still undecided. The Lab example starts before approval.",
+          title: "Keep adjusting",
+          body: "If the same problem returns, ask what is still getting in the way. You may need help from the meeting owner or a more senior colleague. Say what you can do and what you need from them.",
         },
       ],
       callout:
-        "Finance can plan the immediate spend. The team knows what to test. Nobody has pretended that the final design or full delivery date is already known.",
+        "Follow-through sounds like: “We said we’d try this. Here’s what happened. What should we keep or change?”",
     },
     {
-      eyebrow: "08 / USE THE LAB",
-      title: "Bring the sentence you heard.",
+      eyebrow: "08 / A NOTE YOU CAN SHARE",
+      title: "Keep the follow-up short.",
       intro:
-        "You can prepare the reply before the conversation and update it after you have checked what the other person needs.",
+        "This fictional note contains the PM’s proposed change. It leaves out the analyst’s private comments. The PM has not yet discussed the change with the team.",
       sections: [
         {
-          title: "The request",
-          body: "Record their words, who asked, and what they need to decide. The starter buttons can help you begin; edit the wording to match your situation.",
+          title: "What I’m changing",
+          body: "“For the next two planning meetings, I’ll send the proposed plan the day before and leave time to hear concerns before we decide.”",
         },
         {
-          title: "What they need",
-          body: "Choose the reason they need an answer, record what they confirmed, and name anything you still need to check. Preview What They Need if you want to review your understanding.",
+          title: "How you can take part",
+          body: "“You can bring a question to the meeting or send it beforehand. If I move on before you’ve finished, please tell me; I’ll also work on noticing it myself.”",
         },
         {
-          title: "What we can promise",
-          body: "Write what you know, what is still uncertain, and what you can offer now. Include the time, money, and other limits. Preview Proposed Commitment.",
+          title: "When we’ll check",
+          body: "“After the second meeting, let’s check whether this gave us enough time to discuss what mattered.”",
         },
         {
-          title: "Your reply",
-          body: "Write the short spoken version if useful, then the message. Name the decision you need and when. Preview Your Reply as a proposal. Return after the conversation to record the answer and the next action.",
+          title: "Before you share it",
+          body: "Check the wording with anyone whose contribution you mention. Remove personal comments that aren’t needed. Only call something agreed after the people involved have agreed to it.",
         },
       ],
       callout:
-        "Load Examples shows the fictional booking-service case. Use your own facts before sharing a document.",
+        "A short note can be enough. You don’t need to distribute your whole conversation plan.",
     },
     {
-      eyebrow: "09 / AFTER THE CONVERSATION",
-      title: "What happened after the conversation?",
+      eyebrow: "09 / THE THINKING BEHIND IT",
+      title: "What are people learning from working with us?",
       intro:
-        "Once you have talked, come back and see what changed. What helped, what still needs attention, and who needs to hear from you?",
+        "Holistic Shaping asks us to notice how work changes people, including us. A meeting is one of the everyday places where that happens.",
       sections: [
         {
-          title: "Follow up",
-          body: "Bring the promised findings on the agreed date. Ask whether they helped the person make the decision. If you misunderstood the need or promised something too vague, revise the offer and check it with them.",
+          title: "Culture",
+          body: "What becomes normal here? If concerns are repeatedly waved away, people may learn that raising them isn’t worth it. What happens next time can start to change that expectation.",
         },
         {
-          title: "Try saying it out loud",
-          body: "Read your message aloud. Does it sound like you? If a phrase feels awkward, use the words you’d say in the meeting. Someone you trust can help you spot anything that’s hard to follow.",
+          title: "Relationship",
+          body: "Can we question each other and stay curious? A colleague’s concern may help us see something we missed. We have to leave room for it to change our thinking.",
         },
         {
-          title: "Keep the record",
-          body: "Copy, download, or print anything you need to keep. Shared answers save in this browser on this device; they don’t follow you to another device. Private notes aren’t saved. Export before clearing a draft or browser data.",
+          title: "Identity",
+          body: "What place does a person come to believe they have here? Being heard as someone with judgment is different from being called on only to confirm the plan.",
         },
         {
-          title: "Check what happened",
-          body: "Was the decision understood? Did someone act? Did the change help the people it was meant to help? If nobody responded, find out who can decide and agree when to ask again. Silence doesn’t mean yes.",
+          title: "Vision",
+          body: "What are we trying to make possible together? Bring the conversation back to the people the work should help. That gives disagreement a purpose beyond proving who is right.",
         },
       ],
       callout:
-        "You don’t have to fix the whole organization in one conversation. Leave knowing what happens next, who will do it, and when you’ll check back.",
+        "You’re part of this too. What did the conversation change in how you see the work, the other person, or yourself?",
     },
   ],
 };

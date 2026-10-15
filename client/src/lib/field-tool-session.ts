@@ -7,7 +7,12 @@ export function labDefaults(slug: string): LabValues {
         conversationStatus: "PROPOSED — NOT YET AGREED",
         betStatus: "PROPOSED — NOT YET ACCEPTED",
       }
-    : { decisionStatus: "PROPOSAL — awaiting a decision" };
+    : {
+        decisionStatus:
+          slug === "when-the-team-goes-quiet"
+            ? "PROPOSAL — not discussed yet"
+            : "PROPOSAL — awaiting a decision",
+      };
 }
 
 export function withLabDefaults(slug: string, values: LabValues): LabValues {

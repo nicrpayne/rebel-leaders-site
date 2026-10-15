@@ -337,8 +337,7 @@ export function registerFieldToolCommerce(app: Express) {
       "deadline-reset": "deadline-reset-field-guide.pdf",
       "priority-whiplash": "priority-whiplash-field-guide.pdf",
       "mandate-reset": "mandate-reset-field-guide.pdf",
-      "product-project-translator":
-        "product-project-translator-field-guide.pdf",
+      "when-the-team-goes-quiet": "when-the-team-goes-quiet-field-guide.pdf",
     };
     if (!Object.hasOwn(pdfNames, req.params.slug))
       return void res.sendStatus(404);

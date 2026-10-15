@@ -94,6 +94,16 @@ function Router() {
           <Route path="/field-tools/review" component={FieldToolsReview} />
           <Route path="/field-tools/proposal" component={AIProposalReview} />
           <Route path="/field-tools/sign-in" component={FieldToolSignIn} />
+          <Route path="/field-tools/product-project-translator">
+            <Redirect to="/field-tools/when-the-team-goes-quiet" />
+          </Route>
+          <Route path="/field-tools/product-project-translator/:page">
+            {(params: { page: string }) => (
+              <Redirect
+                to={`/field-tools/when-the-team-goes-quiet/${params.page}${window.location.search}`}
+              />
+            )}
+          </Route>
           <Route path="/field-tools/:slug/buy">
             {(params: { slug: string }) => (
               <FieldToolPurchase slug={params.slug} />

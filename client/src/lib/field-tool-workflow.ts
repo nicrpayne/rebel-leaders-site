@@ -4,7 +4,7 @@ export const FIELD_TOOL_GUIDE_CHAPTERS: Record<string, number[]> = {
   "deadline-reset": [2, 3, 4, 5],
   "priority-whiplash": [2, 3, 4, 5],
   "mandate-reset": [0, 2, 4, 5],
-  "product-project-translator": [0, 2, 3, 4],
+  "when-the-team-goes-quiet": [1, 2, 3, 6],
 };
 export const FIELD_TOOL_START: Record<string, string> = {
   "deadline-reset":
@@ -13,8 +13,8 @@ export const FIELD_TOOL_START: Record<string, string> = {
     "Let’s see how the new request fits with the work already promised.",
   "mandate-reset":
     "Let’s work out who can help with the decision and what you need to ask them.",
-  "product-project-translator":
-    "Let’s turn the question you’ve been asked into a reply you feel good about giving.",
+  "when-the-team-goes-quiet":
+    "Let’s start with one meeting and a conversation you want to have.",
   "ai-stalemate":
     "Let’s work through the idea, the questions, and a next step you can discuss together.",
 };

@@ -52,11 +52,11 @@ def cover(c,tool,presentation,lab):
     b=BytesIO()
     with Image.open(ROOT / "client/public" / presentation["image"].lstrip("/")) as im:im.convert("RGB").save(b,"JPEG",quality=92)
     b.seek(0);c.drawImage(ImageReader(b),M,290,width=CW,height=CW*941/1672)
-    c.setFillColor(FOREST);c.setFont("GuideSans",10);c.drawString(M,267,"THE PRODUCT LEADER'S FIELD GUIDE")
+    c.setFillColor(FOREST);c.setFont("GuideBold",11);c.drawString(M,267,"YOUR FIELD GUIDE" if tool["slug"] == "when-the-team-goes-quiet" else "THE PRODUCT LEADER'S FIELD GUIDE")
     para(c,presentation["promise"],243,"cover-copy")
     c.setStrokeColor(LINE);c.line(M,153,W-M,153)
     c.setFillColor(INK);c.setFont("GuideBold",11);c.drawString(M,128,"Nic Payne")
-    c.setFont("GuideSans",9);c.drawString(M,109,"For you, the PM carrying this situation")
+    c.setFont("GuideSans",9);c.drawString(M,109,"For the conversations we need to make room for" if tool["slug"] == "when-the-team-goes-quiet" else "For you, the PM carrying this situation")
     c.setFillColor(FOREST);c.setFont("GuideSans",8)
     c.drawString(M,76,"OPEN YOUR LAB >");c.linkURL(lab,(M,60,W-M,90),relative=0)
     c.setFillColor(MUTED);c.drawString(M,58,"HOPE IS REBELLIOUS.")
@@ -64,7 +64,7 @@ def cover(c,tool,presentation,lab):
 
 def chapter(c,page,number,total,tool,lab):
     c.setFillColor(CREAM);c.rect(0,0,W,H,fill=1,stroke=0)
-    c.setFillColor(FOREST);c.setFont("GuideBold",8);c.drawString(M,791,page["eyebrow"])
+    c.setFillColor(FOREST);c.setFont("GuideBold",10);c.drawString(M,791,page["eyebrow"])
     c.setStrokeColor(GOLD);c.line(W-M-74,795,W-M,795)
     y=para(c,page["title"],756,"title")-18
     y=para(c,page["intro"],y,"intro")-26
@@ -104,9 +104,9 @@ def ending(c,number,total,tool):
     c.showPage()
 
 def walkthrough(c,scenes,offset,number,total,tool,lab):
-    y=opening(c,"WORKED WALKTHROUGH / A FICTIONAL CONVERSATION","See how it could unfold.")
+    y=opening(c,"WORKED WALKTHROUGH / A FICTIONAL CONVERSATION",scenes[0]["title"] if tool["slug"] == "when-the-team-goes-quiet" else "See how it could unfold.")
     for i,scene in enumerate(scenes,offset+1):
-        y=para(c,f'{i} / {scene["title"]}',y,"heading")-6
+        if tool["slug"] != "when-the-team-goes-quiet":y=para(c,f'{i} / {scene["title"]}',y,"heading")-6
         y=para(c,scene["move"],y)-12
         for line in scene["dialogue"]:
             y=para(c,line["speaker"],y,"heading")-3
@@ -130,6 +130,7 @@ def main():
     for tool in DATA["tools"]:
         slug=tool["slug"]
         if slug not in DATA["pages"]:continue
+        if os.environ.get("GUIDE_SLUG") and slug != os.environ["GUIDE_SLUG"]:continue
         expansion=DATA["expansions"][slug]
         pages=[]
         for index,page in enumerate(DATA["pages"][slug]):

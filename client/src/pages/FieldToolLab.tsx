@@ -645,18 +645,22 @@ function LabSession({ slug }: { slug: string }) {
                 onChange={editValue}
               />
             )}
-            {content.expansion && step === 3 && (
-              <LeadershipCommunicationPanel
-                slug={slug}
-                values={values}
-                onChange={editValue}
-              />
-            )}
+            {content.expansion &&
+              slug !== "when-the-team-goes-quiet" &&
+              step === 3 && (
+                <LeadershipCommunicationPanel
+                  slug={slug}
+                  values={values}
+                  onChange={editValue}
+                />
+              )}
             {((slug === "ai-stalemate" && step === 4) ||
               (content.expansion && step === 3)) && (
               <details className="ai-workbench-panel">
                 <summary className="cursor-pointer font-display text-2xl">
-                  Come back after the decision.
+                  {slug === "when-the-team-goes-quiet"
+                    ? "Come back after the next meeting."
+                    : "Come back after the decision."}
                 </summary>
                 <label>
                   What happened? What needs to happen next?

@@ -11,6 +11,12 @@ import {
   buildReadinessBrief,
 } from "../client/src/lib/ai-trial";
 
+import {
+  buildQuietConversation,
+  buildQuietChange,
+  buildQuietFollowThrough,
+} from "../client/src/lib/leadership-output";
+
 describe("private reflection and conversation records", () => {
   it("never serializes or restores private fields, while retaining shared work", () => {
     const values = {
@@ -34,6 +40,32 @@ describe("private reflection and conversation records", () => {
       values: { task: "Keep shared task", ai_review: "0" },
       step: 2,
     });
+  });
+  it("keeps private listening notes out of every quiet-team export", () => {
+    const values = {
+      quietHeard: "PRIVATE_HEARD",
+      quietCorrection: "PRIVATE_CORRECTION",
+      privateReaction: "PRIVATE_REACTION",
+      moment: "A question was cut short",
+      myChange: "Give people time to finish",
+      nextAction: "Share the plan Thursday",
+    };
+    for (const build of [
+      buildQuietConversation,
+      buildQuietChange,
+      buildQuietFollowThrough,
+    ]) {
+      expect(build(values)).not.toContain("PRIVATE_");
+    }
+    expect(sharedDraftValues(values)).toEqual({
+      moment: values.moment,
+      myChange: values.myChange,
+      nextAction: values.nextAction,
+    });
+    expect(buildQuietFollowThrough(values)).toContain(
+      "No agreement has been recorded yet."
+    );
+    expect(buildQuietFollowThrough(values)).toContain(values.nextAction);
   });
   it("scrubs legacy notes without losing shared answers, phase, version, or unrelated storage", () => {
     const entries = new Map([

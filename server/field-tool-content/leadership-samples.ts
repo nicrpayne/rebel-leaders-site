@@ -140,45 +140,40 @@ export const LEADERSHIP_SAMPLES: Record<string, Record<string, string>> = {
     unresolvedPlan:
       "If we don't have an answer before Monday's planning meeting, I'll ask the product director when we can talk. We'll keep the last agreed plan in the meantime.",
   },
-  "product-project-translator": {
-    request:
-      "Fictional example: ‘Can you send me the final feature list? I need to set aside next quarter's budget.’",
-    stakeholder: "Finance director",
-    context: "Finance needs to set aside money for online repair booking.",
-    need: "Budget / staffing",
-    needEvidence:
-      "I asked what they need by Thursday. It's a spending limit, not a decision on every screen.",
-    assumption:
-      "We're acting as though we know which design to build, but no customer has tried either one yet.",
-    outcome:
-      "Customers can book a repair themselves without having to phone us.",
-    known:
-      "Customers phone us to book repairs today. We've sketched two ways they could do it online, but haven't tried either with customers.",
-    unknown:
-      "Can customers finish a booking with either design? What would it take to build the one that works better?",
-    commit:
-      "Could we spend up to $5,000 over two weeks trying both designs with five customers? I'll arrange the sessions, and our engineering lead will check what each design would take to build.",
-    commitmentBounds:
-      "We'd spend no more than $5,000 and two weeks, including the customer sessions and the engineering estimate. We wouldn't be promising a working service or agreeing the full build budget yet.",
-    checkpoint:
-      "If Finance says yes, let's meet two weeks after we start. We'll show what customers could and couldn't do, what the build would involve, and whether we think we should build it, change it, or stop.",
-    response:
-      "Could we set aside up to $5,000 for two weeks first? That would let us try both designs with five customers and check the build work with Engineering. We'd bring you what we learn before asking you to fund the whole thing. Would that give you enough to work with on Thursday?",
-    spokenResponse:
-      "Could we fund two weeks first, up to $5,000? We'd try both designs with five customers and check what they'd take to build. Then we'd have a better basis for the full budget.",
-    decisionNeeded:
-      "Can we spend up to $5,000 over two weeks on customer sessions and an engineering estimate, or do we need to change that plan?",
-    owner: "Finance director",
-    decisionDate: "Thursday, before booking the customer sessions",
-    decisionStatus: "PROPOSAL — awaiting a decision",
-    finalDecision: "The finance director hasn't responded yet.",
-    nextAction:
-      "I'll talk this through with Finance on Thursday. If they say yes, I'll book the customer sessions and the review meeting.",
+  "when-the-team-goes-quiet": {
+    moment:
+      "Fictional example: in Monday’s planning meeting, our data analyst started to raise a question about the booking report. I said, “Can we stick to the release plan?” Nobody raised it again.",
+    effect:
+      "Afterward, I heard that the report might miss bookings from the new page. Support uses that report to plan the next day’s work.",
     privateReaction:
-      "I feel pushed to promise something we haven't figured out yet.",
+      "I’m embarrassed that I cut the question off. Part of me wants to explain how rushed we were.",
     privateAssumption:
-      "I'm assuming Finance wants to control the design. I need to ask what they need the list for.",
+      "I’m assuming people don’t feel able to disagree with me. I haven’t asked. The analyst may also have needed time to check the numbers.",
+    person: "The data analyst I interrupted",
+    setting:
+      "Ask for a short chat, away from the team meeting. Offer to hear it in writing if that’s easier.",
+    opening:
+      "I cut you off when you started talking about the report on Monday. I’m sorry. I was trying to keep us moving, but I didn’t hear what you were trying to tell us.",
+    question:
+      "What did I miss? And what was it like trying to raise that in the meeting?",
+    quietHeard:
+      "Practice example only: “I was trying to explain that the report wouldn’t include the new bookings. When you moved on, I thought the decision had already been made.”",
+    quietCorrection:
+      "Practice example only: they weren’t asking to cancel the release. They wanted us to check the report before we committed to Friday.",
+    understanding: "",
+    myChange:
+      "At the next planning meeting, I’ll hear questions about the plan before I ask whether we’re ready to go ahead. If someone raises a concern, I’ll ask them to finish before I respond.",
+    sharePermission:
+      "I haven’t asked what they’re comfortable sharing yet. I won’t repeat a private comment or name them in the team update.",
+    decisionStatus: "PROPOSAL — not discussed yet",
+    finalDecision: "",
+    nextAction:
+      "Invite the analyst to talk today. Check what needs to happen with the report separately; don’t wait for the next team meeting to deal with that.",
+    checkpoint:
+      "After the next two planning meetings, ask whether people had enough time to raise a concern and what happened when they did.",
     unresolvedPlan:
-      "If we don't get an answer on Thursday, I'll ask Finance what they still need and when we can talk again. I won't book the paid sessions until we've agreed the money.",
+      "If they’d rather not talk, don’t press. I can still acknowledge the interruption and change how I handle questions.",
+    teamUpdate:
+      "For the next two planning meetings, I’ll send the proposed plan the day before and leave time to hear concerns before we decide. You can also send me a question beforehand. Let’s check afterward whether that helped.",
   },
 };

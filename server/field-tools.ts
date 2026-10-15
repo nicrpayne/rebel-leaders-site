@@ -89,7 +89,7 @@ const resultSchema = z.enum([
   "certainty",
   "priority",
   "authority",
-  "translation",
+  "quiet",
 ]);
 
 const RESULT_LABELS: Record<z.infer<typeof resultSchema>, string> = {
@@ -97,7 +97,7 @@ const RESULT_LABELS: Record<z.infer<typeof resultSchema>, string> = {
   certainty: "The Certainty Trap",
   priority: "The Priority Collision",
   authority: "The Authority Gap",
-  translation: "The Translation Gap",
+  quiet: "The Conversation We’re Missing",
 };
 
 const TOOL_SLUGS: Record<z.infer<typeof resultSchema>, string> = {
@@ -105,7 +105,7 @@ const TOOL_SLUGS: Record<z.infer<typeof resultSchema>, string> = {
   certainty: "deadline-reset",
   priority: "priority-whiplash",
   authority: "mandate-reset",
-  translation: "product-project-translator",
+  quiet: "when-the-team-goes-quiet",
 };
 
 export const fieldToolsRouter = router({
@@ -210,8 +210,8 @@ export const fieldToolsRouter = router({
               "Bring the new request and your current work list. Open Current Work in the Lab. Find out what the request needs, ask the team what would have to wait, and take that choice to the person who can decide.",
             "mandate-reset":
               "Bring one decision you keep getting stuck on. Open The Problem in the Lab. Write what you are expected to deliver and what you cannot decide. Check who can help before drafting your request.",
-            "product-project-translator":
-              "Bring the exact words someone used. Open The Request in the Lab. Ask what they need your answer for, then work out what you can promise and when you will know more.",
+            "when-the-team-goes-quiet":
+              "Think of one meeting. Write down what happened, then prepare a short invitation to talk. You can stop there and come back after the conversation.",
           } as Record<string, string>
         )[input.slug],
         sampleValues:

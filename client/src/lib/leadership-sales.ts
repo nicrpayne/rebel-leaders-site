@@ -53,19 +53,19 @@ export const LEADERSHIP_SALES: Record<
     firstMove:
       "Bring one decision you keep getting stuck on. Open The Problem in the Lab. Write what you are expected to deliver and what you cannot decide. Check who can help before drafting your request.",
   },
-  "product-project-translator": {
+  "when-the-team-goes-quiet": {
     subtitle:
-      "Give them an answer they can use, even while you are still learning.",
-    win: "A useful promise you can keep.",
+      "Make room for the conversation you’re missing, and work out what you can change.",
+    win: "A conversation you’re ready to have, and a change you can follow through on.",
     takeaway:
-      "Leave with Your Reply and a Proposed Commitment: what you can do, what it will cost, and when you will talk again.",
-    sampleTitle: "Finance needs a spending decision.",
+      "Leave with an opening that sounds like you and a short follow-through note you can choose to share.",
+    sampleTitle: "A question was cut short in planning.",
     sample:
-      "REPLY\nCan we spend up to $5,000 over two weeks testing the two booking-screen designs with five customers and checking the build effort with Engineering? Then we can decide whether to fund the build.\n\nSTATUS\nProposed. Finance has not approved the spending.\n\nNEXT STEP\nFinance answers Thursday. Schedule the review for two weeks after the approved start.",
-    question: "Does this mean we never commit to dates?",
+      "MY NEXT STEP\nI’ll ask the data analyst about the question I interrupted, and listen before explaining my side.\n\nA CHANGE TO TRY\nHear concerns before asking whether the plan is ready.\n\nSTATUS\nProposed. We haven’t talked yet.",
+    question: "What if people are simply quiet?",
     answer:
-      "No. Promise a delivery date when you have enough information to stand behind it. When you do not, say what you can promise now and when you will know more.",
+      "They may be. Quiet doesn’t tell you what someone thinks. Ask about a specific moment, offer a way to respond that suits them, and let them decide what to say.",
     firstMove:
-      "Bring the exact words someone used. Open The Request in the Lab. Ask what they need your answer for, then work out what you can promise and when you will know more.",
+      "Think of one meeting. Write down what happened, then prepare a short invitation to talk. You can stop there and come back after the conversation.",
   },
 };

@@ -115,17 +115,17 @@ export const FIELD_TOOL_KIT_SCENES: Record<string, KitScene> = {
     phone:
       "M1327 397 L1467 397 Q1505 397 1504 437 L1494 889 Q1492 932 1459 932 L1308 924 Q1273 921 1275 884 L1288 440 Q1287 398 1327 397 Z",
   },
-  "product-project-translator": {
-    coverImage: "product-project-translator-cover-v2.webp",
+  "when-the-team-goes-quiet": {
+    coverImage: "when-the-team-goes-quiet-cover-v2.webp",
     coverTransform:
       "matrix3d(0.774184363569,-0.0121473777006,0,4.87816110102e-05,0.0328827854154,0.774271534834,0,-1.88151690244e-05,0,0,1,0,52,183,0,1)",
     mobileErase:
       "M1302.35 419.99 Q1303 400 1323.00 400.31 L1479.00 402.69 Q1499 403 1498.21 422.98 L1479.79 887.02 Q1479 907 1459.04 905.75 L1306.96 896.25 Q1287 895 1287.65 875.01 L1302.35 419.99 Z",
-    title: "Product / Project Translator",
-    scene: "product-project-translator-kit-v1.webp",
-    desktopImage: "product-project-translator-lab-preview-v6.webp",
-    mobileImage: "product-project-translator-mobile-lab-preview-v5.webp",
-    mobileDetailImage: "product-project-translator-phone-detail-v3.webp",
+    title: "When the Team Goes Quiet",
+    scene: "when-the-team-goes-quiet-kit-v1.webp",
+    desktopImage: "when-the-team-goes-quiet-lab-preview-v6.webp",
+    mobileImage: "when-the-team-goes-quiet-mobile-lab-preview-v5.webp",
+    mobileDetailImage: "when-the-team-goes-quiet-phone-detail-v3.webp",
     desktopTransform:
       "matrix3d(0.572732857621,-0.010111037652,0,-0.000033110426,-0.041108745177,0.645822337213,0,-0.000008637164,0,0,1,0,568,134,0,1)",
     mobileTransform:

@@ -79,7 +79,9 @@ describe("expanded leadership products", () => {
       const id = expansion.scenes.at(-1)!.record!;
       const output = LEADERSHIP_OUTPUT_BUILDERS[id](values);
       for (const shared of [
-        values.leadershipUpdate,
+        ...(slug === "when-the-team-goes-quiet"
+          ? []
+          : [values.leadershipUpdate]),
         values.teamUpdate,
         values.returnRecord,
       ])

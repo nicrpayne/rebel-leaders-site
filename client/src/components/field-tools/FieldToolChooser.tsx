@@ -19,10 +19,10 @@ const choices = [
     "Decision Request",
   ],
   [
-    "product-project-translator",
-    "They want an answer you don’t have yet.",
-    "Product / Project Translator",
-    "Proposed Commitment",
+    "when-the-team-goes-quiet",
+    "Concerns come out after the meeting, instead of in it.",
+    "When the Team Goes Quiet",
+    "Your Follow-through",
   ],
 ] as const;
 export default function FieldToolChooser() {

@@ -65,7 +65,7 @@ const names: Record<string, string> = {
   "deadline-reset": "Deadline Reset",
   "priority-whiplash": "Priority Whiplash",
   "mandate-reset": "Mandate Reset",
-  "product-project-translator": "Product / Project Translator",
+  "when-the-team-goes-quiet": "When the Team Goes Quiet",
 };
 const escapeHtml = (value: string) =>
   value.replace(

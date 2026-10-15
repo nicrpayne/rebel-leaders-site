@@ -13,7 +13,7 @@ import {
   capacitySnapshot,
   buildDeadlineUpdate,
   buildTradeoffBrief,
-  buildRequestDecoder,
+  buildQuietConversation,
 } from "../client/src/lib/leadership-output";
 import {
   buildDecisionBrief,
@@ -142,16 +142,14 @@ describe("review feedback regressions", () => {
       )
     ).toHaveLength(1);
     expect(
-      buildRequestDecoder({
-        needEvidence: "Finance needs a bounded funding decision.",
+      buildQuietConversation({
+        moment: "Sam started to ask about the report, and I interrupted.",
       })
-    ).toContain(
-      "WHAT THEY NEED / HOW WE CHECKED\nFinance needs a bounded funding decision."
-    );
+    ).toContain("Sam started to ask about the report, and I interrupted.");
     expect(
-      buildRequestDecoder({
-        request: "Literal [not recorded] from my stakeholder",
+      buildQuietConversation({
+        moment: "Literal [not recorded] from my colleague",
       })
-    ).toContain("Literal [not recorded] from my stakeholder");
+    ).toContain("Literal [not recorded] from my colleague");
   });
 });

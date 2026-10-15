@@ -6,15 +6,14 @@ import {
   buildDeadlineUpdate,
   buildMandateRequest,
   buildRightsMap,
-  buildStakeholderResponse,
   buildTradeoffBrief,
 } from "../client/src/lib/leadership-output";
 import { aiLabFor } from "./field-tool-content/ai-paths";
 import { buildTrialCard, buildDecisionBrief } from "../client/src/lib/ai-trial";
 
 describe("working records follow the actual conversation", () => {
-  it("offers decision-rights and translation records only after their input steps", () => {
-    for (const slug of ["mandate-reset", "product-project-translator"]) {
+  it("offers decision-rights and conversation records only after their input steps", () => {
+    for (const slug of ["mandate-reset", "when-the-team-goes-quiet"]) {
       const lab = LEADERSHIP_LABS[slug];
       expect(lab.outputs!.filter(o => o.fromStep <= 0)).toEqual([]);
       expect(lab.outputs!.filter(o => o.fromStep <= 1)).toHaveLength(1);
@@ -33,10 +32,10 @@ describe("working records follow the actual conversation", () => {
       ].eyebrow
     ).toContain("WHAT WOULD CHANGE");
     expect(
-      LEADERSHIP_GUIDE_PAGES["product-project-translator"][
-        FIELD_TOOL_GUIDE_CHAPTERS["product-project-translator"][2]
+      LEADERSHIP_GUIDE_PAGES["when-the-team-goes-quiet"][
+        FIELD_TOOL_GUIDE_CHAPTERS["when-the-team-goes-quiet"][2]
       ].eyebrow
-    ).toContain("OFFER A COMMITMENT");
+    ).toContain("LISTEN AND CHECK");
   });
   it("includes entered fallbacks and keeps absent optional additions out of exports", () => {
     const values = {
@@ -46,7 +45,6 @@ describe("working records follow the actual conversation", () => {
     for (const build of [
       buildDeadlineUpdate,
       buildMandateRequest,
-      buildStakeholderResponse,
       buildTradeoffBrief,
     ]) {
       expect(build(values)).toContain(values.unresolvedPlan);
@@ -65,9 +63,6 @@ describe("working records follow the actual conversation", () => {
         emergencyException: "Incident owner; stop demo; review at 16:00",
       })
     ).toContain("Incident owner; stop demo; review at 16:00");
-    expect(
-      buildStakeholderResponse({ spokenResponse: "We can fund discovery now." })
-    ).toContain("We can fund discovery now.");
   });
   it("distinguishes input, formal agreement, and the final decision in the rights record", () => {
     const output = buildRightsMap({

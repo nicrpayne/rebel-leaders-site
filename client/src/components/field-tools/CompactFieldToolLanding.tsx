@@ -29,8 +29,10 @@ export default function CompactFieldToolLanding({
   const primaryArtifact = p.artifacts[2];
   const included = [
     [
-      `${engineering ? 13 : 10}-page Field Guide`,
-      "Practical questions and a written example you can also try in the Lab.",
+      "Field Guide",
+      slug === "when-the-team-goes-quiet"
+        ? "Practical questions, a worked conversation, and plain-language explanations of Scrum and Agile."
+        : "Practical questions and a written example you can also try in the Lab.",
     ],
     [
       engineering ? "Your Lead Developer Lab" : `Your ${tool.name} Lab`,
@@ -95,7 +97,11 @@ export default function CompactFieldToolLanding({
       >
         <p className="ft-product-label">
           {tool.name} /{" "}
-          {engineering ? "FOR LEAD DEVELOPERS" : "FOR PRODUCT LEADERS"}
+          {engineering
+            ? "FOR LEAD DEVELOPERS"
+            : slug === "when-the-team-goes-quiet"
+              ? "FOR PEOPLE LEADING TEAMS"
+              : "FOR PRODUCT LEADERS"}
         </p>
         <div className="ft-benefits">
           {tool.chips.map((chip, i) => {

@@ -414,106 +414,164 @@ export const LEADERSHIP_LABS: Record<string, LabConfig> = {
     ),
     buildOutput: builders["mandate-request"],
   },
-  "product-project-translator": {
+  "when-the-team-goes-quiet": {
     steps: [
       {
-        eyebrow: "THE REQUEST",
-        title: "Let's start with the sentence you heard.",
+        eyebrow: "NOTICE",
+        title: "Think of one meeting.",
         intro:
-          "What did they ask you? Use their words, even if you’re not sure how to answer yet. We’ll work out what they need the answer for next.",
+          "What happened that left you wondering what went unsaid? Start with the moment you noticed. We’ll work out what to ask next.",
         fields: [
-          field("request", "What did they ask for?", "Use their actual words."),
-          field("stakeholder", "Who is asking?", undefined, "text"),
-          field("context", "What do they need to decide or plan?"),
-          ...privatePrep,
+          {
+            id: "moment",
+            label: "What happened in the meeting?",
+            type: "textarea",
+            hint: "Describe what you saw or heard. Leave out names and anything shared with you in confidence.",
+          },
+          {
+            id: "effect",
+            label: "What might we be missing because of it?",
+            type: "textarea",
+            hint: "A question left unanswered, a problem found too late, or something else you need to check.",
+          },
+          {
+            id: "privateReaction",
+            label: "What is your first reaction?",
+            type: "textarea",
+            hint: "Just for you. What might make it hard to hear the answer?",
+          },
+          {
+            id: "privateAssumption",
+            label: "What are you assuming about the silence?",
+            type: "textarea",
+            hint: "Just for you. What else might explain it?",
+          },
         ],
       },
       {
-        eyebrow: "WHAT THEY NEED",
-        title: "What do they need the answer for?",
+        eyebrow: "INVITE",
+        title: "How will you bring it up?",
         intro:
-          "They might be setting a budget, talking to a customer, or planning another team’s work. What have they told you? If you haven’t asked yet, write the question you want to ask.",
+          "Choose one person and a way to ask that gives them room to answer. You don’t need a polished speech.",
         fields: [
-          choice("need", "Why do they need an answer?", [
-            "Confidence",
-            "Budget / staffing",
-            "Sequencing",
-            "Customer communication",
-            "Accountability",
-            "Risk management",
-          ]),
-          field(
-            "needEvidence",
-            "What have they confirmed about that need?",
-            "Try: What decision will these requirements or dates help you make, and by when?"
-          ),
-          field(
-            "assumption",
-            "Which assumption needs to be checked?",
-            "What do you still need to find out before you can give a reliable answer? Be specific; some of the work may already be clear."
-          ),
+          {
+            id: "person",
+            label: "Who do you want to speak with?",
+            type: "text",
+            hint: "A role is enough.",
+          },
+          {
+            id: "setting",
+            label: "How will you invite the conversation?",
+            type: "textarea",
+            hint: "Offer a time or a way to reply. They can say they’d rather not.",
+          },
+          {
+            id: "opening",
+            label: "What will you say to begin?",
+            type: "textarea",
+            hint: "If you interrupted or brushed something aside, acknowledge that first.",
+          },
+          {
+            id: "question",
+            label: "What do you want to ask them?",
+            type: "textarea",
+            hint: "One question is enough to start. Give them time to answer.",
+          },
         ],
       },
       {
-        eyebrow: "COMMITMENT",
-        title: "What can we promise now?",
+        eyebrow: "LISTEN",
+        title: "What did you hear?",
         intro:
-          "Let’s find something useful you can offer now and a time to come back with more. Check any delivery promise with the people who’ll do the work.",
+          "Use this after you’ve talked, or to practise with the example. Check your understanding with the person before deciding what to do.",
         fields: [
-          field(
-            "outcome",
-            "What should this help customers or the business do?"
-          ),
-          field("known", "What do you know so far, and how do you know?"),
-          field("unknown", "What do you still need to find out, and why?"),
-          field("commit", "What can you promise at this point?"),
-          field(
-            "commitmentBounds",
-            "What work, spending limit, and approvals are included in that promise?"
-          ),
-          field(
-            "checkpoint",
-            "What will you find out next, who will do it, and when will you report back?"
-          ),
+          {
+            id: "understanding",
+            label: "What can you safely carry forward?",
+            type: "textarea",
+            hint: "Leave this blank until you’ve talked. Keep only the work issue or wording the person is comfortable sharing. Private details belong in the optional notes below.",
+          },
+          {
+            id: "myChange",
+            label: "What could you do differently?",
+            type: "textarea",
+            hint: "Choose something you control. You can propose it, then ask whether it would help.",
+          },
+          {
+            id: "sharePermission",
+            label: "What did you agree could be shared?",
+            type: "textarea",
+            hint: "If you haven’t asked, say so. Don’t repeat a private comment or identify its source without checking.",
+          },
+          {
+            id: "quietHeard",
+            label: "Private: what did they say?",
+            type: "textarea",
+            hint: "Optional. These notes disappear when you refresh or leave. They are never saved or exported.",
+          },
+          {
+            id: "quietCorrection",
+            label: "Private: what did they correct when you said it back?",
+            type: "textarea",
+            hint: "Try: “Let me just synthesize this back to you to make sure I understand.” Or: “Let me check I’ve got this.”",
+          },
         ],
       },
       {
-        eyebrow: "RESPOND",
-        title: "Write the answer you'd actually say.",
+        eyebrow: "FOLLOW THROUGH",
+        title: "What will happen next?",
         intro:
-          "You have worked through what they need and what you can offer. Now put it in your own words: what can you do, what needs checking, and when will they hear from you?",
+          "Keep this short. What will you do, when will you do it, and how will you find out whether it helped?",
         fields: [
-          field(
-            "response",
-            "Your message or meeting script",
-            "Start with what they need. Explain what you can offer and ask whether it will help them decide. Put the supporting detail in Proposed Commitment."
-          ),
-          field("decisionNeeded", "What decision do you need from them?"),
-          field("owner", "Who can make that decision?", undefined, "text"),
-          field("decisionDate", "Decision needed by", undefined, "text"),
-          decisionStatus,
-          field(
-            "finalDecision",
-            "What did they actually agree or ask you to revise?"
-          ),
-          field(
-            "nextAction",
-            "What happens next, who will do it, and by when?"
-          ),
+          {
+            id: "decisionStatus",
+            label: "Where are you with this?",
+            type: "select",
+            options: [
+              "PROPOSAL — not discussed yet",
+              "DISCUSSED — no change agreed",
+              "AGREED — change recorded",
+            ],
+          },
+          {
+            id: "finalDecision",
+            label: "What, if anything, did you agree together?",
+            type: "textarea",
+            hint: "Leave blank if you haven’t talked. A plan you’ve written is still a proposal.",
+          },
+          {
+            id: "nextAction",
+            label: "What will you do next, and when?",
+            type: "textarea",
+          },
+          {
+            id: "checkpoint",
+            label: "When will you check back, and what will you ask?",
+            type: "textarea",
+            hint: "Ask about what happened, rather than rating how safe or open the team is.",
+          },
+          {
+            id: "teamUpdate",
+            label: "Optional: a short note you’re comfortable sharing",
+            type: "textarea",
+            hint: "Include your action and when you’ll check back. Leave out the private conversation.",
+          },
         ],
       },
     ],
     outputs: outputs(
-      ["request-decoder", "commitment-card", "stakeholder-response"],
-      ["What They Need", "Proposed Commitment", "Your Reply"],
+      ["quiet-conversation", "quiet-change", "quiet-follow-through"],
+      ["Your Conversation Plan", "A Change to Try", "Your Follow-through"],
       [1, 2, 3]
     ),
-    buildOutput: builders["stakeholder-response"],
+    buildOutput: builders["quiet-follow-through"],
   },
 };
 
 // Add shared follow-through without changing existing step numbers or draft keys.
-for (const lab of Object.values(LEADERSHIP_LABS)) {
+for (const [slug, lab] of Object.entries(LEADERSHIP_LABS)) {
+  if (slug === "when-the-team-goes-quiet") continue;
   lab.steps[3].fields.push(
     field(
       "unresolvedPlan",
@@ -534,12 +592,5 @@ LEADERSHIP_LABS["priority-whiplash"].steps[1].fields.push(
     "emergencyException",
     "If this is an emergency, who can interrupt the plan and when will you review it?",
     "Optional. Follow your incident process first. Record who approved the interruption, which work stops, and when the normal plan will be reviewed."
-  )
-);
-LEADERSHIP_LABS["product-project-translator"].steps[3].fields.unshift(
-  field(
-    "spokenResponse",
-    "Optional: what would you say in 30 seconds?",
-    "Say what they need, what you can offer, and what you need them to decide. Use the longer message below for the written follow-up."
   )
 );

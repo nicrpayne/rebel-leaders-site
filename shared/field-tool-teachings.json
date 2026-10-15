@@ -323,6 +323,27 @@
       "kind": "Codex practice",
       "url": "https://rebel-leader.com/workbench/codex#MOVE_KILL_THE_GHOST_GOAL",
       "summary": "When a plan changes, make clear what no longer needs doing. Otherwise people can end up trying to deliver both the old plan and the new one."
+    },
+    "scrum-guide": {
+      "title": "The Scrum Guide (November 2020)",
+      "url": "https://scrumguides.org/scrum-guide.html",
+      "author": "Ken Schwaber and Jeff Sutherland",
+      "kind": "Guide",
+      "summary": "The original definition of Scrum, including its theory, values, accountabilities and events."
+    },
+    "agile-principles": {
+      "title": "Principles behind the Agile Manifesto",
+      "url": "https://agilemanifesto.org/principles.html",
+      "author": "The Agile Manifesto authors",
+      "kind": "Principles",
+      "summary": "The original twelve principles, including learning together, sustainable work and regular improvement."
+    },
+    "agile-manifesto": {
+      "title": "Manifesto for Agile Software Development",
+      "url": "https://agilemanifesto.org/",
+      "author": "The Agile Manifesto authors",
+      "kind": "Manifesto",
+      "summary": "Read the four values in full, including the value retained in tools, documentation, agreements and plans."
     }
   },
   "notes": [
@@ -583,79 +604,52 @@
       "quoteSource": null
     },
     {
-      "id": "product-project-translator-1",
-      "slug": "product-project-translator",
-      "chapter": 0,
-      "title": "Find out what their words mean to them.",
-      "body": "In Nic’s writing on shared language, a practical constraint can be a contribution to the idea. ‘Final requirements’ might mean Finance needs to know what funding would cover. Ask what decision the request serves before explaining your preferred way of working.",
-      "question": "What do they need to decide, and what would help them decide it?",
-      "sources": ["stop-chasing-psychological-safety"],
-      "labStep": 0,
-      "quote": null,
-      "quoteSource": null
-    },
-    {
-      "id": "product-project-translator-2",
-      "slug": "product-project-translator",
+      "id": "when-the-team-goes-quiet-1",
+      "slug": "when-the-team-goes-quiet",
       "chapter": 1,
-      "title": "Stay curious when the wording irritates you.",
-      "body": "It is easy to hear a project word and prepare a lecture about Product. Notice the person using it. They have work, pressures, and responsibilities of their own. Nic’s bowl metaphor asks what kind of attention we bring to the relationship and whether we leave room to be changed by it.",
-      "question": "What might you understand if you let them finish explaining the request?",
-      "sources": ["bowl", "note-c-212180715", "codex-mirror"],
-      "labStep": 1,
+      "labStep": 0,
+      "title": "What did we make of their contribution?",
+      "body": "A practical concern can help us see something the plan missed. Nic’s writing on shared language asks us to understand that contribution before treating the person as an obstacle.",
+      "question": "What might their question help us notice?",
+      "sources": ["stop-chasing-psychological-safety"],
       "quote": null,
       "quoteSource": null
     },
     {
-      "id": "product-project-translator-4",
-      "slug": "product-project-translator",
+      "id": "when-the-team-goes-quiet-3",
+      "slug": "when-the-team-goes-quiet",
       "chapter": 3,
-      "title": "Give uncertainty a useful next step.",
-      "body": "You can make a real commitment without promising an answer you do not yet have. Say which question you will check, how, and by when. Teresa Torres’s assumption-testing guide helps narrow that question. Nic’s writing on certainty explains why a polished plan should not replace judgment.",
-      "question": "Which belief must you check before asking people to commit to the whole build?",
-      "sources": [
-        "the-search-for-unapologetic-impracticality-ab8",
-        "torres-assumptions"
-      ],
       "labStep": 2,
+      "title": "Leave room to be changed.",
+      "body": "We can arrive ready to explain ourselves and miss the person in front of us. Nic’s reflection invites us to make room for another person’s experience to change our understanding.",
+      "question": "What have I understood differently after listening?",
+      "sources": ["chapgpt-schools-me-on-leading-well"],
       "quote": null,
       "quoteSource": null
     },
     {
-      "id": "product-project-translator-6",
-      "slug": "product-project-translator",
-      "chapter": 5,
-      "title": "Does your reply leave them able to participate?",
-      "body": "Consider what repeated exchanges like this do to people. A correction can leave someone embarrassed and less willing to ask. A clear explanation can help both of you learn the work, make better judgments, and build trust. Be specific about what you can offer, and invite them to tell you what is still missing.",
-      "question": "Can they question or change your proposal without being made to feel foolish?",
-      "sources": ["when-mattering-isnt-enough"],
+      "id": "when-the-team-goes-quiet-6",
+      "slug": "when-the-team-goes-quiet",
+      "chapter": 6,
       "labStep": 3,
+      "title": "What happened after they were heard?",
+      "body": "Being valued matters. In Nic’s teaching, there is more to ask about the room people have to grow, use their judgment, and change us too. Follow the concern into what you actually do next.",
+      "question": "Did their contribution change something we did?",
+      "sources": ["when-mattering-isnt-enough"],
       "quote": null,
       "quoteSource": null
     },
     {
-      "id": "product-project-translator-9",
-      "slug": "product-project-translator",
+      "id": "when-the-team-goes-quiet-8",
+      "slug": "when-the-team-goes-quiet",
       "chapter": 8,
-      "title": "Build a shared way to ask and answer.",
-      "body": "After the immediate request, ask what you now understand about each other’s work. Keep the explanation and decision where the next person can find them. Cultural Orbital Mechanics helps trace how repeated encounters shape identity and relationship—and what becomes normal between teams.",
-      "question": "Will the next request be easier because of what you learned together?",
-      "sources": ["orbital", "do-your-replacement-a-favor"],
       "labStep": null,
+      "title": "Meetings are part of how culture forms.",
+      "body": "Culture, identity, relationship, and vision shape one another in Nic’s Cultural Orbital Mechanics. This tool applies that lens to ordinary meetings and the way people learn to participate in them.",
+      "question": "What is becoming normal in the way we work together?",
+      "sources": ["you-have-a-culture-problem"],
       "quote": null,
       "quoteSource": null
-    },
-    {
-      "id": "product-project-translator-5",
-      "slug": "product-project-translator",
-      "chapter": 4,
-      "title": "Read your reply out loud.",
-      "body": "Nic’s Note on the words we inherit asks us to notice when language hides the person. Name the customer waiting for a repair, the developer checking the change, and the colleague who needs a funding decision. If a sentence sounds like something nobody would say, rewrite it before sending.",
-      "question": "Could the person receiving this explain what you are offering and what you need from them?",
-      "sources": ["note-c-220111507"],
-      "labStep": null,
-      "quote": "To lead differently, we must learn to speak a different language.",
-      "quoteSource": "note-c-220111507"
     }
   ]
 }

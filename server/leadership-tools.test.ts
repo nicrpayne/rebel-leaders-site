@@ -8,7 +8,7 @@ import {
   buildDeadlineUpdate,
   buildTradeoffBrief,
   buildMandateRequest,
-  buildStakeholderResponse,
+  buildQuietFollowThrough,
 } from "../client/src/lib/leadership-output";
 import { readFieldToolDraft } from "../client/src/lib/field-tool-drafts";
 import { fieldToolAccessPath } from "../client/src/lib/field-tool-paths";
@@ -25,9 +25,7 @@ describe("four complete working kits", () => {
         expect(text).not.toContain(sample.privateAssumption);
         expect(LEADERSHIP_OUTPUT_BUILDERS[output.id]).toBeTypeOf("function");
       }
-      expect(lab.buildOutput(sample)).toContain(
-        "PROPOSAL — awaiting a decision"
-      );
+      expect(lab.buildOutput(sample)).toContain(sample.decisionStatus);
       expect(lab.buildOutput(sample)).not.toContain(
         "AGREED — decision recorded"
       );
@@ -61,9 +59,14 @@ describe("four complete working kits", () => {
       const text = JSON.stringify(pages);
       expect(pages).toHaveLength(9);
       expect(text.toLowerCase()).toContain("private");
-      expect(text).toContain("Load Examples");
-      expect(text).toContain("browser");
-      for (const output of lab.outputs!) expect(text).toContain(output.title);
+      if (slug === "when-the-team-goes-quiet") {
+        expect(text).toContain("five minutes");
+        expect(text).not.toContain("open tab");
+      } else {
+        expect(text).toContain("Load Examples");
+        expect(text).toContain("browser");
+        for (const output of lab.outputs!) expect(text).toContain(output.title);
+      }
     });
   }
 });
@@ -74,14 +77,14 @@ describe("decision fidelity", () => {
       buildDeadlineUpdate,
       buildTradeoffBrief,
       buildMandateRequest,
-      buildStakeholderResponse,
+      buildQuietFollowThrough,
     ]) {
       const output = build({
         recommendation: "Recommendation only",
         privateReaction: "PRIVATE_REACTION",
         privateAssumption: "PRIVATE_STORY",
       });
-      expect(output).toContain("PROPOSAL — agreement not recorded");
+      expect(output).toContain("PROPOSAL");
       expect(output).toContain("No ");
       expect(output).not.toContain("PRIVATE_");
     }
@@ -100,14 +103,19 @@ describe("decision fidelity", () => {
     );
     expect(output).not.toContain("AGREED — decision recorded");
   });
-  it("keeps a stakeholder need unconfirmed until the buyer records confirmation", () => {
-    const output = LEADERSHIP_OUTPUT_BUILDERS["request-decoder"]({
-      request: "Final requirements",
-      need: "Budget / staffing",
+  it("does not turn private listening notes into an agreed change", () => {
+    const output = LEADERSHIP_OUTPUT_BUILDERS["quiet-change"]({
+      quietHeard: "PRIVATE: I fear retaliation",
+      quietCorrection: "PRIVATE: identity of a colleague",
+      myChange: "Hear the question before responding.",
     });
     expect(output).toContain(
-      "We still need to ask what they need the answer for."
+      "We have not recorded a shared understanding yet."
     );
+    expect(output).toContain(
+      "Check what the person is comfortable sharing first."
+    );
+    expect(output).not.toContain("PRIVATE:");
     expect(buildDeadlineUpdate({ confidence: "High" })).toContain(
       "not a calculated chance of success"
     );

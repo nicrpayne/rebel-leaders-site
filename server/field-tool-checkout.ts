@@ -6,8 +6,8 @@ export const FIELD_TOOL_CHECKOUT_KEYS: Record<string, string> = {
   "deadline-reset": "FIELD_TOOL_DEADLINE_RESET_CHECKOUT_URL",
   "priority-whiplash": "FIELD_TOOL_PRIORITY_WHIPLASH_CHECKOUT_URL",
   "mandate-reset": "FIELD_TOOL_MANDATE_RESET_CHECKOUT_URL",
-  "product-project-translator":
-    "FIELD_TOOL_PRODUCT_PROJECT_TRANSLATOR_CHECKOUT_URL",
+  "when-the-team-goes-quiet":
+    "FIELD_TOOL_WHEN_THE_TEAM_GOES_QUIET_CHECKOUT_URL",
 };
 
 export function getFieldToolCheckout(

@@ -307,82 +307,82 @@ export function buildMandateRequest(v: WorkingValues) {
     ...followThrough(v),
   ]);
 }
-export function buildRequestDecoder(v: WorkingValues) {
-  return record("PRODUCT / PROJECT TRANSLATOR — WHAT THEY NEED", [
+// Only deliberately shareable fields reach these documents. Private listening notes never do.
+export function buildQuietConversation(v: WorkingValues) {
+  return record("WHEN THE TEAM GOES QUIET — YOUR CONVERSATION PLAN", [
     section(
-      "WHAT THEY ASKED / WHO ASKED",
-      `${value(v, "request")}\n${value(v, "stakeholder")}`
+      "THE MOMENT I WANT TO ASK ABOUT",
+      value(v, "moment", "Choose one moment you noticed.")
     ),
     section(
-      "WHAT THEY NEED TO DECIDE / WHY",
-      `${value(v, "need")}\n${value(v, "context")}`
+      "WHY IT MATTERS",
+      value(v, "effect", "What might be getting missed?")
     ),
     section(
-      "WHAT THEY NEED / HOW WE CHECKED",
+      "WHO I WANT TO SPEAK WITH / HOW I WILL ASK",
+      `${value(v, "person", "Choose one person.")}\n${value(v, "setting", "Offer a time or a way to reply.")}`
+    ),
+    section(
+      "MY OPENING",
+      value(v, "opening", "Write a short opening in your own words.")
+    ),
+    section(
+      "THE QUESTION I WANT TO ASK",
+      value(v, "question", "Choose one question and leave room for the answer.")
+    ),
+    "This is preparation for a conversation, not a record of what anyone has agreed.",
+  ]);
+}
+export function buildQuietChange(v: WorkingValues) {
+  return record("WHEN THE TEAM GOES QUIET — A CHANGE TO TRY", [
+    section(
+      "WHAT WE CAN CARRY FORWARD",
       value(
         v,
-        "needEvidence",
-        "We still need to ask what they need the answer for."
+        "understanding",
+        "We have not recorded a shared understanding yet."
       )
     ),
-    section("ASSUMPTION TO CHECK", value(v, "assumption")),
+    section(
+      "WHAT I COULD DO DIFFERENTLY",
+      value(v, "myChange", "Choose something you can change.")
+    ),
+    section(
+      "WHAT WE CAN SHARE",
+      value(
+        v,
+        "sharePermission",
+        "Check what the person is comfortable sharing first."
+      )
+    ),
+    section(
+      "WHERE WE ARE",
+      value(v, "decisionStatus", "PROPOSAL — not discussed yet")
+    ),
   ]);
 }
-export function buildProductTranslation(v: WorkingValues) {
-  return record("PRODUCT / PROJECT TRANSLATOR — PROPOSED COMMITMENT", [
+export function buildQuietFollowThrough(v: WorkingValues) {
+  return record("WHEN THE TEAM GOES QUIET — YOUR FOLLOW-THROUGH", [
     section(
-      "WHAT WE WANT TO ACHIEVE / WHAT THEY NEED",
-      `${value(v, "outcome")}\n${value(v, "need")}\n${value(v, "needEvidence")}`
-    ),
-    section("WHAT WE KNOW / HOW WE KNOW", value(v, "known")),
-    section(
-      "WHAT WE NEED TO FIND OUT / HOW",
-      `${value(v, "unknown")}\n${value(v, "checkpoint")}`
+      "WHERE WE ARE",
+      value(v, "decisionStatus", "PROPOSAL — not discussed yet")
     ),
     section(
-      "WHAT WE PROPOSE TO DO / LIMITS",
-      `${value(v, "commit")}\n${value(v, "commitmentBounds")}`
+      "WHAT WE AGREED",
+      value(v, "finalDecision", "No agreement has been recorded yet.")
     ),
     section(
-      "OWNER / DATE / DECISION NEEDED",
-      `${value(v, "owner")} — ${value(v, "decisionDate")}\n${value(v, "decisionNeeded")}`
-    ),
-    status(v),
-  ]);
-}
-export function buildStakeholderResponse(v: WorkingValues) {
-  return record("PRODUCT / PROJECT TRANSLATOR — YOUR REPLY", [
-    section("MESSAGE / MEETING SCRIPT", value(v, "response")),
-    section(
-      "ORIGINAL REQUEST / WHO IS ASKING",
-      `${value(v, "request")}\n${value(v, "stakeholder")}`
+      "THE CHANGE",
+      value(v, "myChange", "Choose something you can change.")
     ),
     section(
-      "WHAT THEY NEED / WHAT THEY CONFIRMED",
-      `${value(v, "need")}\n${value(v, "context")}\n${value(v, "needEvidence")}`
+      "WHAT I WILL DO NEXT / WHEN",
+      value(v, "nextAction", "Name your next step and when you will take it.")
     ),
-    section("KNOWN / UNKNOWN", `${value(v, "known")}\n${value(v, "unknown")}`),
-    section(
-      "WHAT WE PROPOSE TO DO / LIMITS",
-      `${value(v, "commit")}\n${value(v, "commitmentBounds")}`
-    ),
-    section("WHAT WE WILL CHECK NEXT / WHEN", value(v, "checkpoint")),
-    section(
-      "DECISION NEEDED / WHO CAN MAKE IT / WHEN",
-      `${value(v, "decisionNeeded")}\n${value(v, "owner")} — ${value(v, "decisionDate")}`
-    ),
-    status(v),
-    section(
-      "RECORDED RESPONSE / NEXT ACTION",
-      `${value(v, "finalDecision", "No agreement has been recorded yet.")}\n${value(v, "nextAction")}`
-    ),
-    optional(
-      v,
-      "unresolvedPlan",
-      "IF WE DO NOT GET AN ANSWER / WHAT WE DO WHILE WAITING"
-    ),
-    optional(v, "spokenResponse", "SHORT SPOKEN VERSION"),
-    ...followThrough(v),
+    section("WHEN WE WILL CHECK BACK", value(v, "checkpoint")),
+    optional(v, "teamUpdate", "A NOTE TO SHARE"),
+    optional(v, "returnRecord", "AFTERWARD / WHAT HAPPENED"),
+    "Before sharing, remove private comments or details that could identify someone who spoke to you in confidence.",
   ]);
 }
 export const LEADERSHIP_OUTPUT_BUILDERS: Record<
@@ -398,7 +398,7 @@ export const LEADERSHIP_OUTPUT_BUILDERS: Record<
   "rights-map": buildRightsMap,
   "authority-gap": buildAuthorityGap,
   "mandate-request": buildMandateRequest,
-  "request-decoder": buildRequestDecoder,
-  "commitment-card": buildProductTranslation,
-  "stakeholder-response": buildStakeholderResponse,
+  "quiet-conversation": buildQuietConversation,
+  "quiet-change": buildQuietChange,
+  "quiet-follow-through": buildQuietFollowThrough,
 };

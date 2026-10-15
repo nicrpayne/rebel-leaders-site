@@ -34,14 +34,14 @@ const welcome: Record<string, WelcomeCopy> = {
       "Put your request into words",
     ],
   },
-  "product-project-translator": {
-    heading: "Let’s find an answer you can stand behind.",
+  "when-the-team-goes-quiet": {
+    heading: "Let’s make room for what you’re not hearing.",
     intro:
-      "Bring the question you’ve been asked, in their words. Let’s work out what they need to know and write a helpful reply that doesn’t promise more than you know.",
+      "Think of a meeting that left you wondering what went unsaid. We’ll help you prepare one conversation, listen without rushing to answer, and choose something you can do differently.",
     outcomes: [
-      "Understand what the person needs to know",
-      "Separate what you know from what you need to check",
-      "Write a reply that sounds like you",
+      "Find a way to bring it up",
+      "Practise what to say when the answer is uncomfortable",
+      "Leave with a small change you can follow through on",
     ],
   },
   "ai-stalemate/pm": {

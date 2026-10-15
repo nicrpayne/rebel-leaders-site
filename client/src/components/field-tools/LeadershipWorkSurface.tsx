@@ -120,38 +120,5 @@ export default function LeadershipWorkSurface({
         </p>
       </section>
     );
-  if (slug === "product-project-translator" && step === 0)
-    return (
-      <section
-        aria-label="Request starters"
-        className="mb-8 border border-[var(--ft-line)] bg-[var(--ft-tint)] p-5"
-      >
-        <h3 className="font-display text-2xl">
-          Which sentence sounds familiar?
-        </h3>
-        <p className="mt-2 text-xs leading-6">
-          Choose one to get started, then edit it to match what they said. These
-          buttons are available while the request below is blank.
-        </p>
-        <div className="mt-4 flex flex-wrap gap-2">
-          {[
-            "Give me the final requirements.",
-            "Just give me a committed date.",
-            "We need the complete roadmap.",
-            "What can we tell the customer?",
-          ].map(text => (
-            <button
-              type="button"
-              key={text}
-              disabled={Boolean(values.request?.trim())}
-              onClick={() => onChange("request", text)}
-              className="border border-[var(--ft-line)] bg-[var(--ft-white)] p-3 text-left text-xs disabled:opacity-40"
-            >
-              {text}
-            </button>
-          ))}
-        </div>
-      </section>
-    );
   return null;
 }
