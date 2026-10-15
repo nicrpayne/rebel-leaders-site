@@ -156,7 +156,8 @@
     inset: auto;
     height: clamp(280px, 52vw, 440px);
   }
-  .ft-theme .ft-hero .ft-hero-photo img {
+  .ft-theme .ft-hero .ft-hero-photo img,
+  .ft-theme .ft-hero.ft-hero--wide .ft-hero-photo img {
     object-fit: cover;
     object-position: 75% 35%;
   }
