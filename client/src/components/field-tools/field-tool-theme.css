@@ -1,0 +1,579 @@
+/* Shared product palette. Keep this separate from the main site's game theme. */
+:root {
+  --ft-paper: #fcfaf6;
+  --ft-ink: #34322e;
+  --ft-muted: #68635c;
+  --ft-accent: #315c4b;
+  --ft-tint: #e8eee6;
+  --ft-line: #ded8ce;
+  --ft-white: #ffffff;
+}
+.ft-theme,
+.ft-dialog {
+  color: var(--ft-ink);
+  background: var(--ft-paper);
+  font-family: var(--font-ui);
+  --background: var(--ft-paper);
+  --foreground: var(--ft-ink);
+  --border: var(--ft-line);
+  --primary: var(--ft-accent);
+  --primary-foreground: var(--ft-white);
+  --ring: var(--ft-accent);
+}
+.ft-theme {
+  min-height: 100vh;
+}
+.ft-theme :is(a, button, summary, input, textarea, select):focus-visible {
+  outline: 2px solid var(--ft-accent);
+  outline-offset: 4px;
+}
+.ft-theme :is(input, textarea, select),
+.ft-dialog {
+  border-radius: 10px;
+}
+.ft-theme :is(button:not(.ft-step-nav button), a.ft-button),
+.ft-dialog button {
+  border-radius: 999px;
+}
+.ft-theme button:disabled {
+  cursor: default;
+}
+.ft-theme .ft-button,
+.ft-theme .ft-welcome-primary {
+  border-radius: 999px;
+  box-shadow: none;
+  min-height: 46px;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 12px 22px;
+  transition:
+    background-color 0.18s ease,
+    color 0.18s ease;
+}
+.ft-theme .ft-button:hover,
+.ft-theme .ft-welcome-primary:hover {
+  transform: none;
+}
+.ft-theme .ft-button-gold,
+.ft-theme .ft-action-primary,
+.ft-theme .ft-welcome-primary {
+  color: #fff;
+  background: var(--ft-accent);
+  border-color: var(--ft-accent);
+  box-shadow: none;
+}
+.ft-theme .ft-button-gold:hover,
+.ft-theme .ft-action-primary:hover,
+.ft-theme .ft-welcome-primary:hover {
+  background: #244a3b;
+}
+.ft-theme .ft-button-outline,
+.ft-theme .ft-buy-actions .ft-buy-gift {
+  color: var(--ft-accent);
+  background: transparent;
+  border-color: #aab8aa;
+}
+.ft-theme .ft-button-outline:hover,
+.ft-theme .ft-buy-actions .ft-buy-gift:hover {
+  background: var(--ft-tint);
+}
+.ft-theme .ft-nav {
+  background: #fcfaf6f5;
+  border-color: var(--ft-line);
+  backdrop-filter: blur(12px);
+}
+.ft-theme .ft-nav :is(a, svg) {
+  color: var(--ft-accent);
+}
+.ft-theme .ft-nav nav {
+  color: var(--ft-muted);
+}
+.ft-theme .ft-nav nav a:hover {
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+.ft-theme .ft-review-notice,
+.ft-theme .ai-review-ribbon {
+  color: var(--ft-accent);
+  background: var(--ft-tint);
+  border-top: 1px solid var(--ft-line);
+  box-shadow: none;
+}
+/* Photographs carry the forest atmosphere; the reading space stays light. */
+.ft-theme .ft-hero {
+  background: var(--ft-paper);
+  color: var(--ft-ink);
+}
+.ft-theme .ft-hero .ft-hero-photo::after {
+  background: linear-gradient(
+    90deg,
+    var(--ft-paper) 0%,
+    #fcfaf6 32%,
+    #fcfaf6eb 47%,
+    #fcfaf699 57%,
+    transparent 72%
+  );
+}
+.ft-theme .ft-hero-copy {
+  width: 57%;
+  padding-block: 64px;
+}
+.ft-theme .ft-headline {
+  font-size: clamp(46px, 4.8vw, 70px);
+  line-height: 1.04;
+  font-weight: 500;
+}
+.ft-theme .ft-headline em {
+  color: var(--ft-accent);
+  font-style: italic;
+}
+.ft-theme :is(.ft-eyebrow, .ft-product-label) {
+  color: var(--ft-accent);
+}
+.ft-theme .ft-eyebrow > span {
+  background: var(--ft-accent);
+  border-radius: 50%;
+  box-shadow: none;
+}
+.ft-theme :is(.ft-deck, .ft-founder-note, .ft-benefits small) {
+  color: var(--ft-muted);
+}
+.ft-theme .ft-benefits p {
+  color: var(--ft-ink);
+}
+.ft-theme .ft-benefits svg {
+  color: var(--ft-accent);
+}
+.ft-theme .ft-benefits > div {
+  border-color: #b5c2b2;
+}
+.ft-theme .ft-facts {
+  background: var(--ft-tint);
+  border-color: var(--ft-line);
+}
+.ft-theme .ft-facts p {
+  color: var(--ft-muted);
+  border-color: #cad5c7;
+}
+.ft-theme .ft-facts svg {
+  color: var(--ft-accent);
+}
+/* Welcome: the same generous photo, a calmer type scale and open resources. */
+.ft-theme .ft-welcome {
+  background: var(--ft-paper);
+  color: var(--ft-ink);
+}
+.ft-theme .ft-welcome h1 {
+  font-weight: 500;
+  font-size: clamp(40px, 4.4vw, 60px);
+  line-height: 1.06;
+}
+.ft-theme .ft-welcome :is(h2, h3) {
+  color: var(--ft-ink);
+}
+.ft-theme
+  .ft-welcome
+  :is(
+    .ft-welcome-intro,
+    .ft-welcome-resource p,
+    .ft-welcome-help > details > p,
+    .ft-welcome-bottom
+  ) {
+  color: var(--ft-muted);
+}
+.ft-theme
+  .ft-welcome
+  :is(
+    .ft-welcome-eyebrow,
+    .ft-welcome-resource > svg,
+    .ft-welcome-resource span,
+    .ft-welcome-outcomes svg
+  ) {
+  color: var(--ft-accent);
+}
+.ft-theme .ft-welcome-eyebrow > span {
+  background: var(--ft-accent);
+}
+.ft-theme
+  .ft-welcome
+  :is(.ft-welcome-outcomes, .ft-welcome-resource, .ft-welcome-help > details) {
+  border-color: var(--ft-line);
+}
+.ft-theme .ft-welcome-outcomes li {
+  color: var(--ft-muted);
+}
+.ft-theme .ft-welcome-hero {
+  gap: 32px;
+  max-width: 1320px;
+  padding: 114px 40px 32px;
+  min-height: 610px;
+}
+.ft-theme .ft-welcome-copy {
+  padding: 40px 28px 40px 0;
+}
+.ft-theme .ft-welcome-portrait {
+  border-radius: 16px;
+}
+.ft-theme .ft-welcome-portrait::after {
+  inset: 0;
+  background: linear-gradient(90deg, #07170e66, transparent 65%);
+}
+.ft-theme .ft-welcome-outcomes {
+  padding-block: 42px;
+}
+/* Labs: a quiet header, clear step markers and one work surface. */
+.ft-theme .ft-lab-header {
+  background: var(--ft-paper);
+  padding-top: 120px;
+  padding-bottom: 0;
+}
+.ft-theme .ft-lab-header h1 {
+  font-size: clamp(38px, 4vw, 52px);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+}
+.ft-theme .ft-step-nav {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-template-columns: none;
+  gap: 0;
+  border-bottom: 1px solid var(--ft-line);
+}
+.ft-theme .ft-step-nav button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  padding: 20px 10px 18px 0;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  background: transparent;
+  color: var(--ft-muted);
+  text-align: left;
+  font: 400 12px/1.4 var(--font-ui);
+}
+.ft-theme .ft-step-nav button[aria-current="step"] {
+  color: var(--ft-accent);
+  border-bottom-color: var(--ft-accent);
+}
+.ft-step-number {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  border-radius: 50%;
+  border: 1px solid var(--ft-line);
+  font-size: 12px;
+}
+.ft-step-nav [aria-current="step"] .ft-step-number {
+  background: var(--ft-accent);
+  color: #fff;
+  border-color: var(--ft-accent);
+}
+.ft-theme .ft-lab-form {
+  border: 0;
+  border-radius: 16px;
+  background: var(--ft-white);
+  padding: 28px 32px;
+}
+.ft-theme .ft-lab-form :is(input, textarea, select) {
+  border-color: #b8c2b6;
+  background: var(--ft-paper);
+  font-size: 15px;
+  line-height: 1.6;
+}
+.ft-theme .ft-lab-form label > span:first-child {
+  font-size: 15px;
+  font-weight: 500;
+}
+.ft-theme .ft-lab-output {
+  border: 1px solid var(--ft-line);
+  border-radius: 12px;
+  box-shadow: none;
+}
+.ft-theme .ft-lab-output-section {
+  background: var(--ft-tint);
+  color: var(--ft-ink);
+}
+/* Reading: open chapters and a soft reminder rather than a dark panel. */
+.ft-theme .ft-guide > header {
+  background: var(--ft-paper);
+  border-bottom: 1px solid var(--ft-line);
+}
+.ft-theme .ft-guide > header h1 {
+  font-weight: 500;
+}
+.ft-theme .ft-guide > header p {
+  color: var(--ft-muted);
+}
+.ft-theme .ft-guide > header p:first-child {
+  color: var(--ft-accent);
+}
+.ft-theme .ft-guide nav a {
+  border-left-width: 1px;
+  border-radius: 0 8px 8px 0;
+  box-shadow: none;
+}
+.ft-theme .ft-guide nav a[aria-current] {
+  color: var(--ft-accent);
+  border-color: var(--ft-accent);
+  background: var(--ft-tint);
+}
+.ft-theme .ft-guide article h2 {
+  font-weight: 500;
+}
+.ft-theme .ft-guide-callout {
+  background: var(--ft-tint);
+  color: var(--ft-ink);
+  border: 0;
+  border-radius: 12px;
+  padding: 24px;
+}
+.ft-theme .ft-teaching-note {
+  border: 0;
+  border-top: 1px solid var(--ft-line);
+  background: transparent;
+  padding: 24px 0 0;
+}
+.ft-theme .ft-sales-proof {
+  background: var(--ft-tint);
+  color: var(--ft-ink);
+  border-color: var(--ft-line);
+}
+.ft-theme .ft-proof-document {
+  background: var(--ft-paper);
+  border: 1px solid var(--ft-line);
+  border-radius: 12px;
+  box-shadow: none;
+}
+.ft-theme .ft-purchase aside[aria-label="Purchase options"] {
+  border: 0;
+  border-left: 1px solid var(--ft-line);
+  background: transparent;
+}
+.ft-theme .ft-purchase figure {
+  border-radius: 14px;
+}
+/* Expanded AI companion uses the same presentation vocabulary. */
+.ft-theme .ai-library-card {
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--ft-line);
+  padding: 24px 0;
+}
+.ft-theme .ai-library-card p,
+.ft-theme .ai-small {
+  color: var(--ft-muted);
+}
+.ft-theme .ai-visual {
+  background: var(--ft-tint);
+  color: var(--ft-ink);
+  border: 0;
+  border-radius: 14px;
+}
+.ft-theme .ai-visual h4 {
+  color: var(--ft-accent);
+}
+.ft-theme .ai-visual-grid > div {
+  border-color: #bccaba;
+  border-radius: 8px;
+}
+.ft-theme .ai-workbench-panel {
+  background: var(--ft-tint);
+  border: 0;
+  border-radius: 12px;
+}
+.ft-theme .ai-purchase-card {
+  border: 1px solid var(--ft-line);
+  border-radius: 14px;
+  background: var(--ft-white);
+  box-shadow: none;
+}
+.ft-theme .ai-product-hero {
+  margin-top: 74px;
+  background: var(--ft-paper);
+  color: var(--ft-ink);
+}
+.ft-theme .ai-product-hero::after {
+  background: linear-gradient(
+    90deg,
+    var(--ft-paper),
+    #fcfaf6eb 25%,
+    #fcfaf699 43%,
+    transparent 67%
+  );
+}
+.ft-theme .ai-hero-copy em {
+  color: var(--ft-accent);
+}
+.ft-theme .ai-hero-note {
+  color: var(--ft-muted);
+}
+/* Worked example: quiet numbered navigation, open story, one reflection band. */
+.ft-theme .ft-walkthrough {
+  max-width: 1120px;
+}
+.ft-theme .ft-walkthrough h1 {
+  font-size: clamp(42px, 5vw, 62px);
+  font-weight: 500;
+  line-height: 1.04;
+  max-width: 700px;
+}
+.ft-theme .ft-walkthrough-story {
+  margin-top: 38px;
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+}
+.ft-theme .ft-walkthrough-story > h2 {
+  font-size: 38px;
+  font-weight: 500;
+}
+.ft-theme .ft-walkthrough-story > p {
+  max-width: 760px;
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--ft-muted);
+  margin-top: 18px;
+}
+.ft-theme .ft-reflection {
+  margin-top: 28px;
+  padding: 24px 28px;
+  border: 0;
+  background: var(--ft-tint);
+  border-radius: 12px;
+}
+.ft-theme .ft-reflection h3 {
+  font-size: 26px !important;
+}
+.ft-theme .ft-reflection p {
+  font-size: 15px;
+  line-height: 1.7;
+}
+@media (max-width: 760px) {
+  .ft-theme .ft-welcome-hero {
+    padding: 100px 22px 0;
+    gap: 24px;
+    min-height: 0;
+  }
+  .ft-theme .ft-welcome-copy {
+    padding: 12px 0 0;
+  }
+  .ft-theme .ft-welcome-portrait {
+    min-height: 280px;
+  }
+  .ft-theme .ft-welcome-primary {
+    width: auto;
+  }
+  .ft-theme .ft-lab-header {
+    padding-top: 104px;
+  }
+  .ft-theme .ft-step-nav button {
+    padding: 16px 0;
+    justify-content: center;
+  }
+  .ft-theme .ft-step-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+  .ft-theme .ft-step-number {
+    width: 32px;
+    height: 32px;
+    flex-basis: 32px;
+  }
+  .ft-theme .ft-lab-form {
+    padding: 24px 18px;
+  }
+  .ft-theme .ft-purchase aside[aria-label="Purchase options"] {
+    border-left: 0;
+    border-top: 1px solid var(--ft-line);
+    padding-inline: 0;
+  }
+  .ft-theme .ft-hero-copy {
+    width: 100%;
+    padding: 30px 24px 36px;
+  }
+  .ft-theme .ft-hero .ft-hero-photo::after {
+    background: linear-gradient(
+      0deg,
+      var(--ft-paper),
+      #fcfaf6 18%,
+      transparent 70%
+    );
+  }
+  .ft-theme .ai-product-hero::after {
+    background: linear-gradient(
+      0deg,
+      var(--ft-paper),
+      #fcfaf6ee 40%,
+      transparent 80%
+    );
+  }
+}
+@media print {
+  .ft-theme {
+    background: white;
+  }
+  .ft-theme .ft-lab-output {
+    box-shadow: none;
+    border: 0;
+    border-radius: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ft-theme * {
+    scroll-behavior: auto !important;
+  }
+}
+
+.ft-theme ::-webkit-scrollbar-track {
+  background: var(--ft-paper);
+}
+.ft-theme ::-webkit-scrollbar-thumb {
+  background: #b6c2b4;
+  border-radius: 6px;
+}
+.ft-theme .ft-walkthrough-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1.65fr) minmax(0, 0.65fr);
+  gap: 52px;
+  align-items: center;
+  margin-top: 28px;
+}
+.ft-theme .ft-walkthrough-intro img {
+  width: 100%;
+  height: 270px;
+  object-fit: cover;
+  object-position: 75% center;
+  border-radius: 16px;
+}
+@media (max-width: 760px) {
+  .ft-theme .ft-hero-copy {
+    width: 100%;
+  }
+  .ft-theme .ft-walkthrough-intro {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .ft-theme .ft-walkthrough-intro img {
+    height: 210px;
+    object-position: 75% 32%;
+  }
+}
+
+@media (min-width: 801px) {
+  .ft-theme .ai-product-hero { padding-top: 64px; }
+  .ft-theme .ai-teacher { object-position: 65% top; }
+}
+@media (max-width: 800px) {
+  .ft-theme .ai-product-hero::after { background: linear-gradient(0deg, var(--ft-paper), #fcfaf6ee 40%, transparent 80%); }
+}
