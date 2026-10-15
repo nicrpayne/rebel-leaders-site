@@ -210,9 +210,9 @@ export const FIELD_TOOL_OFFERS = FIELD_TOOLS.flatMap(tool =>
         headline:
           audience === "pm"
             ? "You see a possibility for AI."
-            : "An AI idea is on the table.",
+            : "My PM won’t shut up about AI.",
         accentLine:
-          audience === "pm" ? "Is it worth pursuing?" : "What would it take?",
+          audience === "pm" ? "Is it worth pursuing?" : "",
         subhead:
           audience === "pm"
             ? "Explain the opportunity, invite your lead to question it, and decide what to explore together."

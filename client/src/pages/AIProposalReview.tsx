@@ -56,7 +56,7 @@ export default function AIProposalReview() {
                 <h2 className="mt-3 font-display text-3xl">
                   {role === "pm"
                     ? "You see a possibility for AI."
-                    : "An AI idea is on the table."}
+                    : "My PM won’t shut up about AI."}
                 </h2>
                 <Link href={base} className="ft-button ft-button-gold mt-5">
                   Open the product page →

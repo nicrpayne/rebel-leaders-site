@@ -83,7 +83,7 @@ export default function AIWalkthrough() {
             )}
           </div>
           <img
-            src="/assets/field-tools/ai-stalemate-hero-v2.webp"
+            src="/assets/field-tools/ai-stalemate-library-hero-v1.webp"
             alt="Nic Payne in his study"
             width={1672}
             height={941}

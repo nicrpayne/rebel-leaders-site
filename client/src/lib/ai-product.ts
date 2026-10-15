@@ -55,8 +55,9 @@ export function aiProductCopy(audience: Audience) {
       }
     : {
         role: "FOR LEAD DEVELOPERS",
-        headline: "An AI idea is on the table.",
-        accent: "What would it take to make it work?",
+        // The playful headline is intentionally paired with Nic's laughing portrait.
+        headline: "My PM won’t shut up about AI.",
+        accent: "",
         promise:
           "Work through the engineering questions, the ongoing work, and the evidence you need. Help shape a decision you can stand behind—including when to stop.",
         first:
