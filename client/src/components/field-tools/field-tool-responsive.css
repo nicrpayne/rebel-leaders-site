@@ -90,15 +90,7 @@
 .ft-theme .ft-photo-caption {
   bottom: 28px;
   right: 32px;
-  color: #fff;
-  padding: 10px 16px;
-  border-radius: 6px;
-  background: #173c2aeb;
-  font: 400 19px/1.3 var(--font-display);
-  letter-spacing: 0.01em;
-}
-.ft-theme .ft-photo-caption > span {
-  display: none;
+  text-transform: uppercase;
 }
 .ft-theme .ft-facts > div {
   gap: 0;
@@ -331,7 +323,6 @@
     padding: 10px 8px;
   }
   .ft-theme .ft-photo-caption {
-    font-size: 19px;
     right: 20px;
     bottom: 20px;
   }
