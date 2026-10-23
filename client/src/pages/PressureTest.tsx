@@ -373,7 +373,7 @@ export default function PressureTest() {
 
   if (!started)
     return (
-      <main className="min-h-screen bg-[#07110d] text-[#f5f0e6]">
+      <main className="min-h-screen bg-[var(--ft-paper)] text-[var(--ft-ink)]">
         <FieldToolHero
           eyebrow="FREE / PRODUCT LEADERSHIP PRESSURE TEST"
           headline={

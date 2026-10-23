@@ -68,7 +68,11 @@ function Router() {
   const [location] = useLocation();
   return (
     <div
-      className={location.startsWith("/field-tools") ? "ft-theme" : undefined}
+      className={
+        location.startsWith("/field-tools") || location === "/assessment"
+          ? "ft-theme"
+          : undefined
+      }
     >
       <Suspense fallback={<RouteLoading />}>
         <Switch>
