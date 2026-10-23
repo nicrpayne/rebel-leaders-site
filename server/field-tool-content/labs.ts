@@ -148,7 +148,7 @@ export const FIELD_LABS: Record<string, LabConfig> = {
             id: "betQualitative",
             label: "What else might change for the team or customers?",
             type: "textarea",
-            hint: "Optional. Would checking the work feel easier or harder? Would people learn something useful? Say who you’ll ask or what you’ll look for.",
+            hint: "What does each person want to learn? What would users be able to do? Say who you’ll ask and how you will find out whether it helped.",
           },
           {
             id: "comparator",
@@ -186,7 +186,7 @@ export const FIELD_LABS: Record<string, LabConfig> = {
             label:
               "How much work time and money will you spend? What would have to wait?",
             type: "textarea",
-            hint: "Include the person doing the task and the person reviewing it. Set a maximum and say which other work would wait. This is how much you agree to spend, not a prediction of how long it will take.",
+            hint: "Include product, design, engineering, review, user feedback, and learning time. Agree a tool or token usage cap and what work waits. For example: 12 team hours at an assumed blended $150/hour plus $100 in tools = a $1,900 budget. Use your own assumptions.",
           },
           {
             id: "betTimebox",
@@ -236,7 +236,7 @@ export const FIELD_LABS: Record<string, LabConfig> = {
         eyebrow: "RESULTS",
         title: "Did it save work overall?",
         intro:
-          "Let’s look at the whole task, including checking and fixes. That will help you see whether the faster first draft made the finished work easier too.",
+          "What did users get from the work, and what did the team learn? Record the whole effort and costs. If you are comparing task time, include checking and fixes as well as the first draft.",
         fields: [
           {
             id: "betResult",

@@ -359,7 +359,6 @@ function LabSession({ slug }: { slug: string }) {
     slug === "ai-stalemate" && step === 1
       ? [
           "businessBasis",
-          "growthOpportunity",
           "accessModel",
           "securityChecks",
           "automationBoundary",
@@ -367,12 +366,7 @@ function LabSession({ slug }: { slug: string }) {
           "readinessSupport",
         ]
       : slug === "ai-stalemate" && step === 2
-        ? [
-            "betQualitative",
-            "betRabbitHoles",
-            "decisionRights",
-            "deploymentPermission",
-          ]
+        ? ["betRabbitHoles", "decisionRights", "deploymentPermission"]
         : [
             "visionTeam",
             "visionProduct",
@@ -576,14 +570,28 @@ function LabSession({ slug }: { slug: string }) {
               onChange={editValue}
             />
             {slug === "ai-stalemate" && step === 3 && (
-              <AIEffortComparison values={values} onChange={editValue} />
+              <>
+                <div className="mb-6">
+                  {renderFields(
+                    current.fields.filter(
+                      field => field.id === "valueAndEffort"
+                    )
+                  )}
+                </div>
+                <AIEffortComparison values={values} onChange={editValue} />
+              </>
             )}
             <div className="space-y-6">
               {renderFields(
                 current.fields.filter(
                   field =>
                     !optionalIds.has(field.id) &&
-                    !PRIVATE_FIELD_IDS.has(field.id)
+                    !PRIVATE_FIELD_IDS.has(field.id) &&
+                    !(
+                      slug === "ai-stalemate" &&
+                      step === 3 &&
+                      field.id === "valueAndEffort"
+                    )
                 )
               )}
               {current.fields.some(

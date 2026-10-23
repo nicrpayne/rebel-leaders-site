@@ -142,7 +142,7 @@ Who can approve it: ${answer(v, "approvalOwner")}
 CHECKS THE WORK MUST PASS / WHO CHECKS
 ${answer(v, "qualityBar")}
 
-TIME WE WILL SET ASIDE / WORK THAT WOULD WAIT
+TIME AND TOOL BUDGET / WORK THAT WOULD WAIT
 ${answer(v, "capacity")}
 
 START AND FINISH / WHEN WE WILL REVIEW
@@ -190,6 +190,7 @@ ${answer(v, "success")}
 
 RESULT COMPARED WITH WHAT WE EXPECTED
 ${answer(v, "betResult")}
+${optionalRecord(v, "valueAndEffort", "VALUE / TEAM LEARNING / TOTAL EFFORT AND COST")}
 
 WORK WITHOUT AI / DIFFERENCES THAT AFFECT THE COMPARISON
 ${answer(v, "comparator")}
@@ -291,6 +292,7 @@ ${answer(v, "reason")}
 
 LEARNING / POSSIBLE EXPLANATIONS
 ${answer(v, "betLearning")}
+${optionalRecord(v, "valueAndEffort", "VALUE / TEAM LEARNING / TOTAL EFFORT AND COST")}
 
 LIMITS OF THIS EVIDENCE
 ${answer(v, "limits")}

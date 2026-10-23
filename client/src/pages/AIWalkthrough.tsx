@@ -20,32 +20,32 @@ export default function AIWalkthrough() {
   const scenes = [
     {
       title: "The disagreement",
-      move: "Support staff copy repair requests into two systems, and some requests get missed. The PM hopes AI could help build an app to save that work. The lead is worried about who can see the records and who will check the code.",
+      move: "The replacement repair workflow keeps slipping while Support copies requests twice. The PM wants to explore different tools and ways of working. The lead worries about review, support, and what the change means for the team. They need to hear what is behind each person’s position.",
       question: "What matters to each person? What have you heard them say?",
     },
     {
       title: "The next useful move",
-      move: "They both want to stop the repeated typing. First, they need someone to check the claimed financial benefit, agree who may see the repair records, and arrange practice and review time. That is their proposed next step; they have not agreed it yet.",
+      move: "The PM shares what users and leadership have been saying. The lead explains where work gets stuck. They ask what the team wants to learn and propose time with an experienced partner. They still need to agree the people, budget, and which other work can wait.",
       question: "Who will check each question, and when will you hear back?",
       record: buildReadinessBrief(sample),
     },
     {
       title: "An experiment they might try",
-      move: "Once those questions are answered, they could ask AI to help write permission tests for one part of the app. Before starting, they would agree how much time to spend, what to compare it with, which checks it must pass, and when to stop. They have not run this experiment.",
+      move: "They propose one workflow prototype with made-up records: twelve total team hours, including review and user feedback, plus a $100 tool and token cap. They would choose the tools together and compare with a similar prototype. This experiment has not been approved or run.",
       question:
         "What do we want to find out? How much time will we spend? When would we stop?",
       record: buildTrialCard(sample),
     },
     {
       title: "After an experiment",
-      move: "Count the time everyone spent setting up, writing, checking, reviewing, fixing, and following up. Compare it with similar work done without AI. Record which checks passed and where to see the results. Leave results blank until there is something to record.",
+      move: "Ask users to complete the task. Record what helped, what the team learned, and all the work, including review and fixes. Separate estimated annual value from measured benefits. Use the minutes table if you are comparing task effort. Leave actual results blank until the experiment runs.",
       question:
         "What would make us say, “That did not help as much as we expected”?",
       record: buildEvidenceRecord(sample),
     },
     {
       title: "A decision people can use",
-      move: "This example stops at a proposal to prepare. There are no experiment results to report. They can explain the problem they want to solve, the questions they still need answered, and who they are asking to help. Then they come back to record what was decided.",
+      move: "This example ends with a proposal awaiting time, people, and budget. They have no experiment result or productivity gain to report. They can ask leadership for a specific investment and tell the team what they hope to learn together. They will return to record the decision.",
       question:
         "What do we know today, and what are we still asking someone to decide?",
       record: buildDecisionBrief(sample),

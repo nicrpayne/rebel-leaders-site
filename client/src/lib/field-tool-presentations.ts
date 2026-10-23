@@ -41,102 +41,114 @@ export const FIELD_TOOL_PRESENTATIONS: Record<string, Presentation> = {
       },
     ],
     example:
-      "Your support team copies repair requests between two systems. AI might help build an app that saves that work. Your lead wants to check who can see each customer’s records before anyone connects the app to real data.",
+      "A replacement repair workflow keeps slipping. The PM wants to explore new tools and ways of working; the lead wants time and support to review the work. They need to choose something worth learning together.",
     sampleValues: {
       betBasis:
-        "Fictional example. We need tests that check who can see each repair record. We think AI might help write them, but we haven't tried it. First we need to agree the access rules and make time for someone to review the code.",
+        "Fictional example. The replacement repair-request workflow keeps slipping. Support still types everything twice. We want to find out whether a different tool and review approach could help us get something useful in front of users sooner.",
       betHypothesis:
-        "Could AI help us write these tests with less work overall, once we've counted the checking and fixes? They still need to prove that people can see the records they're allowed to see, and can't see the others.",
+        "If we use an approved AI tool on one small workflow, with an experienced partner and time for review, could we reach useful user feedback sooner? We also want to see what the team learns and where the work gets stuck.",
       expectedLift:
-        "Our guess is 20% less time, including checking and fixes. We haven't measured that. First we'll record how long a similar job takes without AI.",
+        "We hope to show Support a working prototype within one week and twelve total team hours. That's a guess, not an agreed delivery promise. We'll compare the effort and elapsed time with a recent, similar prototype and record the differences.",
       betQualitative:
-        "Ask the developer and reviewer: was this easier to write and check? Can you explain what each test is checking?",
-      task: "Try writing permission tests for one part of the repair app's API, using made-up customer records. That's the connection other software uses to reach the app. We won't connect to the live system, use real records, redesign permissions, or change unrelated code.",
+        "Can support staff complete a repair request without entering it twice? Ask the developer what they learned and the reviewer what helped or got in the way. Ask users to show us the task, rather than just say they like the demo.",
+      task: "Prototype one repair-request workflow with made-up records in an isolated environment. Try an approved coding assistant and automated checks with human review. No live records, connections, release, or full replacement app.",
       comparator:
-        "Compare it with a similar set of tests written without AI. Keep the size of the job, the developer's experience, and the checks as close as we can. Note anything that makes the comparison less fair.",
-      tool: "A coding assistant the team is allowed to use. We still need to confirm which one.",
-      toolVersion: "We'll write down the model and version before we start.",
+        "Use our recent prototype of a similar request form as a starting point. Check its scope, design, product, coding, and review time. Note differences in complexity and experience. If the work isn't comparable, don't claim a percentage improvement.",
+      tool: "An approved coding assistant and review tools chosen with the lead. We still need to choose them.",
+      toolVersion: "Write down the tool, model, and version before starting.",
       inputs:
-        "Made-up customer records and code we're allowed to use in the test. No real customer information.",
+        "Made-up repair requests and code approved for the prototype. No real customer information or live credentials.",
       approvalOwner:
-        "Our engineering manager and security owner need to confirm which tool, code, and data we're allowed to use.",
+        "The engineering manager confirms the tools and environment. The product director agrees time and budget with the team.",
       qualityBar:
-        "An experienced reviewer checks that people can see the right repair records and can't get into anyone else's, even by going straight to the API. All our usual automated checks still need to pass.",
+        "Support can enter a request once and see it reach the right place. We check missing or invalid information and ask users to complete a realistic task. The reviewer checks the code and isolation from live systems. We record production checks separately.",
       capacity:
-        "Could we allow four hours across everyone involved, with no more than one hour of review? The PM will ask whether the help-page updates can wait to make room. Nobody has agreed to that yet.",
+        "Proposal: twelve hours across product, design, engineering, user feedback, and review, including up to three reviewer hours. At an assumed blended $150/hour that's $1,800, plus a $100 tools and token cap: $1,900 total. Can the help-page updates wait? No extra evening work.",
       betTimebox:
-        "One week, once we've agreed the permissions and who will review the work. We still need to choose the dates and book the final review.",
+        "One week once the people, tools, and budget are agreed. We'd review next Tuesday; we still need everyone to confirm the dates and time.",
       betRabbitHoles:
-        "If we find we need to redesign permissions or connect to live systems, we'll stop and talk about that separately.",
+        "Stop and talk if this turns into a full replacement app, needs real customer records, or requires changing live systems. We are learning about one workflow.",
       success:
-        "We'd want at least 10% less time overall, all the same checks passing, and no more than an hour of review. Let's agree those limits before we start.",
-      stop: "Stop if we come across data or tool access we haven't approved, a permission test fails, or we run out of the time agreed for the work or review.",
+        "Users can complete the chosen task, the prototype passes its agreed checks, and the team can explain what it built. We stay within twelve team hours, three reviewer hours, and $100 tool usage. Decide together whether what we learned justifies another step.",
+      stop: "Stop if we reach a time or usage cap, a required check fails, or the task needs unapproved data or access. Bring what we've learned to the review instead of quietly expanding the work.",
       owners:
-        "A developer works with an experienced engineer, who reviews the tests. Our engineering manager signs off the technical work. The product director decides what other work can wait. We still need names and a review date.",
+        "The PM arranges user feedback. A developer pairs with an experienced engineer, who reviews the work. The engineering manager agrees technical conditions; the product director agrees what can wait. Confirm names and next Tuesday's review before starting.",
       betStatus: "PROPOSED — NOT YET ACCEPTED",
       betResult:
-        "We haven't run the experiment yet. We don't know whether AI will save us time or how good the work will be.",
+        "We haven't run the experiment. We don't have a result about delivery time, quality, or value yet.",
       betLearning:
-        "Talking it through showed us two things to sort out first: who can see the records, and how we'll check and release the code. We haven't tried the AI work yet, so we can't say whether it helps.",
+        "We were arguing about AI in general. Talking it through gave us a smaller question: could we get this workflow in front of users sooner, with support for the team and time to review it? We still need agreement to try it.",
       happened:
-        "We've talked about using AI for the repair app twice. I want to stop the support team typing every request into two systems. My lead keeps asking who can see the records and who'll check the code. We haven't worked out what to do next.",
+        "We've discussed AI twice while the repair workflow keeps slipping. I keep pointing to what other teams are doing. My lead keeps asking who will review and support it. We haven't talked properly about what we could try together.",
       story:
-        "I've been taking their hesitation as a no. I haven't asked what they'd need before we could try it.",
+        "I've been treating the hesitation as resistance to change. I haven't asked what worries my lead most or whether we've given the team enough support.",
       protecting:
-        "I want to stop the double typing and the missed repairs customers keep chasing us about.",
-      why: "I'd like the team to have more time to help customers, instead of copying information from one place to another.",
+        "I want Support to stop entering everything twice and the team to have a chance to learn better ways of working.",
+      why: "People keep asking when this will be ready. I care about helping them, and I'm excited about AI. I need to stay open to a better idea than mine.",
       futurePicture:
-        "Someone enters a repair once, sees it's reached the right person, and doesn't have to chase it.",
+        "Support enters a repair once. The team can get useful changes to users sooner and feels confident choosing, checking, and explaining the tools it uses.",
       observed:
-        "My lead showed me that we haven't tested whether one customer could get into another's records. We also haven't measured how much time AI would save.",
+        "Support showed me the duplicate entry. Our delivery date has moved twice. My lead described the review queue. I haven't measured what AI would change here.",
       prediction:
-        "AI might help us get a first version written faster. I don't know how much checking and fixing we'd need afterward.",
+        "A different tool and review approach might help us learn sooner. Other teams' stories don't tell us how much time we'd save.",
       changeMind:
-        "If we spend more time checking and fixing than we save, or the work doesn't pass our checks, I'd rethink this.",
+        "If a simpler workflow solves the problem, let's use it. If the experiment adds work without useful learning or a better outcome, I'd change the plan.",
       askOther:
-        "What would you need to check before we could try a small piece of this?",
+        "Are you willing to explore some different tools or ways of working with me? What would make that worthwhile for you and the team?",
       visionTeam:
-        "The developers understand the code they're changing, and reviewers have time to help as we go. Nobody gets a pile of unfamiliar code at the last minute.",
+        "People have time to learn, an experienced partner to ask, and skills they want for this role or a future one. We ask each person what matters to them.",
       visionProduct:
-        "Customers enter a repair request once and know it's reached the right team.",
+        "Support enters a repair once, sees it reach the right people, and spends less time chasing it.",
       visionCompany:
-        "If this helps, we could show other teams what worked. I'd like both of us to help decide how we use AI here.",
+        "We get better at choosing useful work and delivering it. Both of us can explain what we learned and help other teams where it applies.",
       counterpartConcern:
-        "We haven't agreed who can see which records, and nobody has time set aside to check the code.",
+        "My lead says the team is already stretched and doesn't want a quick demo to turn into a service nobody has time to review or support. I still need to ask what else worries them.",
       openQuestions:
-        "We both want to stop the double typing. We still need to check the money claim, agree who can see the records, and find time for review.",
+        "We both want the duplicate entry gone. We need to choose a useful experiment, hear what the team wants to learn, and agree help, review time, and a tool budget. We also need to check the benefit estimate.",
       conversationStatus: "PROPOSED — NOT YET AGREED",
       outcome:
-        "Support staff enter each repair once, and customers' records stay private.",
+        "Support can enter a repair request once. The team learns whether a different way of working can help it deliver useful changes sooner.",
       sharedVision:
-        "Less time copying and chasing requests. An app the team understands and can look after. And, if it works, something we can teach other teams.",
+        "Less copying and chasing for Support. A team with time and help to learn, and more confidence in what it can deliver. I'd like my lead and the team to help shape that.",
       businessContext:
-        "Fictional example. Support staff type repair requests into two systems, and some get missed. The PM thinks AI could help us build an app to avoid that. The sales director says fixing the delays could be worth $500,000 a week. We haven't seen the calculation.",
+        "Fictional example. Support is still entering repair requests twice while the replacement workflow slips. I've heard what that means for customers in meetings my lead hasn't attended. I want to share that context and explore a better approach together.",
       businessBasis:
-        "That figure came from the sales director. Finance hasn’t checked it. We don't know whether they mean money we're losing, possible future sales, or staff time. The PM will ask by Thursday.",
+        "The sponsor estimates $180,000 in annual business value. Finance hasn’t checked the assumptions about adoption or time saved. At 600 total team hours, that's $300 of estimated annual value per team hour. At a hypothetical 400 hours it would be $450. Those aren't measured returns or proof of an AI gain.",
       growthOpportunity:
-        "We could get better at checking AI-generated code and protecting customer records, then help other teams learn it too. That might open doors for people, but we shouldn't promise it.",
+        "Ask each teammate what they want to learn. Could we make time with an experienced partner, choose tools together, and budget tokens and review help? The skills should help them beyond this one experiment too.",
       accessModel:
-        "Support staff and repair engineers need to see different things. We haven't agreed who can see or change each record, who gives them access, or who takes it away when they leave.",
+        "For this prototype, only the agreed team and test users can access made-up records. Real customer access rules belong in a separate production plan.",
       securityChecks:
-        "We've checked the screens, but not what happens when someone asks the API for a record directly. Our security owner needs to check the rules, and we need tests for both allowed and blocked access before connecting to live systems.",
+        "The lead and reviewer check the prototype is isolated, uses made-up data, and has no live connections or credentials. Before any live use, we need approved access rules and tests of allowed and blocked requests.",
       automationBoundary:
-        "No AI access to live customer data or release credentials, and no permission to change live systems. If we agree to a test later, we'll use an approved test environment and made-up records.",
+        "No AI access to live customer data or release credentials. Only approved prototype code and made-up records. A person checks suggested changes; the tool cannot release to live systems.",
       teamReadiness:
-        "The team knows support and IT services. We still need to practise checking permissions, reviewing code, and putting out a change we can undo if it goes wrong.",
+        "The team knows the workflow but has different experience with these tools. We need time to learn together and someone experienced to help with setup and review.",
       readinessSupport:
-        "Our engineering manager will arrange practice with an experienced reviewer. The PM will ask for the time. Before Tuesday's review, we'll show a checked code change, working permission tests, and how to restore the previous version.",
+        "Arrange an experienced reviewer and pairing time. Try automated tests and review assistance where useful. Include that work in the twelve-hour proposal and agree the $100 usage cap before starting.",
       readinessDecision: "PREPARE FIRST",
       prerequisitePlan:
-        "The PM will ask Finance about the $500,000 figure on Thursday. The data and security owners will agree who can see the records on Friday. Our engineering manager will arrange the practice and review. The PM and lead will check in next Tuesday.",
+        "By Friday the PM checks the benefit estimate and asks which work can wait. The lead asks the team what they want to learn, chooses a partner and tools, and confirms the checks. Then we agree the twelve hours and $100 cap. Review next Tuesday if those arrangements are in place.",
       decision: "PAUSE",
       reason:
-        "This could save us time, but we're not ready to try it yet. We need to agree who can see the records and practise checking, releasing, and undoing a change.",
+        "Let's hold off starting until we've agreed the people, time, and tool budget. We have a useful question to try together, but no one has committed that time yet.",
       limits:
-        "We haven't tried the AI work or checked the sales director's figure yet. We're only deciding what to do about this repair app, not whether AI is useful everywhere.",
-      next: "Let's agree who can see the records, test those rules, and practise putting out a small change we can undo. An experienced engineer will help. The PM and engineering manager will check in next Tuesday.",
+        "No experiment has run. The annual value and lower-hour estimate are assumptions. We haven't shown that users will adopt the workflow or that AI will speed up delivery.",
+      next: "Agree the scope, learning support, reviewer, time, and usage cap. Confirm what other work waits. Then decide together whether to start, and review next Tuesday.",
       leadershipUpdate:
-        "We want to stop the support team typing each request twice. Before we try AI, we need to sort out who can see the records and practise checking and releasing the code. Could we make time for that? We'll check in next Tuesday.",
+        "PROPOSED — NOT YET AGREED\n\nWe're holding off starting until we've agreed time, people, and a tool budget. Could we make room for twelve team hours and $100 in usage, including review and user feedback? The PM and lead will confirm the plan with the team by Friday and review next Tuesday. We have no experiment results yet.",
+      valueAndEffort:
+        "No results yet. The sponsor's annual value estimate still needs checking. We will record total team hours, tool costs, user feedback, learning, and remaining work before making any claim about value or time saved.",
+      conversationLeadershipUpdate:
+        "PROPOSED — NOT YET AGREED\n\nSupport is still entering repairs twice. Could we try a small prototype to learn whether a different tool and review approach helps? We're asking for twelve total team hours and a $100 tools and token cap, with an experienced partner. Please help us agree what other work can wait by Friday. We'll review next Tuesday. The annual benefit estimate still needs checking.",
+      conversationTeamUpdate:
+        "PROPOSED — NOT YET AGREED\n\nWe'd like to try one repair-request workflow using made-up records. What would you want to learn, and what help would make this worthwhile? We're asking for time, an experienced partner, and a tool budget. Nothing has been added to your workload yet. Let's choose the approach together.",
+      teamUpdate:
+        "PROPOSED — NOT YET AGREED\n\nWe haven't started the experiment. First let's agree the task, what you'd like to learn, who will help and review, and which work waits. The proposal is twelve team hours and a $100 tool cap. We'll use made-up records and keep the prototype away from live systems. Please help us improve the plan.",
+      qualityChecks:
+        '[{"id":"workflow","check":"Support can complete the task","expected":"A test user enters a repair once and can see where it went, using made-up records.","status":"NOT CHECKED","observed":"","evidence":"","verifier":"PM and a support user — names to agree"},{"id":"isolation","check":"The prototype stays separate","expected":"No real customer records, live credentials, or live-system connections. The agreed checks pass.","status":"NOT CHECKED","observed":"","evidence":"","verifier":"An experienced reviewer — name to agree"}]',
+      returnRecord:
+        "We haven't had the check-in yet. Next Tuesday we'll see what has been agreed, what is still getting in the way, and whether we're ready to start.",
     },
   },
   "deadline-reset": {

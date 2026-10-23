@@ -1,15 +1,32 @@
 import { describe, it, expect } from "vitest";
 import { aiGuideFor, aiLabFor } from "./field-tool-content/ai-paths";
-import { AI_READINESS_SAMPLE } from "./field-tool-content/ai-readiness";
+import {
+  AI_READINESS_SAMPLE,
+  aiSampleFor,
+} from "./field-tool-content/ai-readiness";
 import {
   buildAITrialPackage,
   buildReadinessBrief,
   buildTrialCard,
+  buildEvidenceRecord,
   buildDecisionBrief,
 } from "../client/src/lib/ai-trial";
 import { readAIFieldToolDraft } from "../client/src/lib/field-tool-drafts";
 
 describe("readiness before AI experiments", () => {
+  it("keeps loaded conversation examples in the selected audience's voice", () => {
+    const pm = aiSampleFor("pm");
+    const dev = aiSampleFor("lead-dev");
+    for (const field of [
+      "businessContext",
+      "sharedVision",
+      "counterpartConcern",
+    ]) {
+      expect(pm[field]).toMatch(/my lead/i);
+      expect(dev[field]).toMatch(/my PM/i);
+      expect(dev[field]).not.toMatch(/my lead/i);
+    }
+  });
   it("offers distinct role language and aligned business/system/team decisions", () => {
     const pm = aiLabFor("pm"),
       dev = aiLabFor("lead-dev");
@@ -76,6 +93,7 @@ describe("readiness before AI experiments", () => {
     for (const build of [
       buildReadinessBrief,
       buildTrialCard,
+      buildEvidenceRecord,
       buildDecisionBrief,
       buildAITrialPackage,
     ]) {
@@ -122,11 +140,33 @@ describe("readiness before AI experiments", () => {
       const pages = aiGuideFor(role);
       expect(pages).toHaveLength(12);
       expect(pages[4].eyebrow).toBe("05 / SHARE WHAT YOU KNOW");
-      expect(pages[5].eyebrow).toBe("06 / CHECK WHO CAN ACCESS THE DATA");
-      expect(pages[6].eyebrow).toBe("07 / HELP THE TEAM PREPARE");
+      expect(pages[5].eyebrow).toBe("06 / SET UP THE EXPERIMENT");
+      expect(pages[6].eyebrow).toBe("07 / HELP THE TEAM LEARN");
       expect(pages[10].callout).toContain(
         "They haven’t measured an AI productivity gain"
       );
+    }
+  });
+  it("carries value and learning into results and decisions without treating estimates as measured results", () => {
+    const values = {
+      ...AI_READINESS_SAMPLE,
+      valueAndEffort:
+        "ESTIMATE: annual benefit still unverified; actual adoption not measured.",
+      story: "PRIVATE_MOTIVE",
+      why: "PRIVATE_WHY",
+    };
+    for (const build of [buildEvidenceRecord, buildDecisionBrief]) {
+      expect(build(values)).toContain(values.valueAndEffort);
+      expect(build(values)).not.toContain("PRIVATE_");
+    }
+    expect(buildDecisionBrief(values)).toContain(
+      "No experiment result is recorded"
+    );
+    expect(buildEvidenceRecord({})).not.toContain("VALUE / TEAM LEARNING");
+    for (const audience of ["pm", "lead-dev"] as const) {
+      expect(
+        aiLabFor(audience).steps[3].fields.some(f => f.id === "valueAndEffort")
+      ).toBe(true);
     }
   });
   it("preserves old trial/evidence/decision draft phases and never shifts a new draft twice", () => {

@@ -92,7 +92,7 @@ export const SALES_PROOF: Record<
     name: "AI Stalemate / PM",
     title: "Next Step Together",
     context:
-      "Explain the repeated work you hope to remove, ask about your lead’s concerns, and agree what needs checking first.",
+      "Share why the work matters, hear your lead’s concerns, and choose a useful way to learn together.",
     sections: [
       {
         title: "CONVERSATION STATUS",
@@ -100,7 +100,7 @@ export const SALES_PROOF: Record<
       },
       {
         title: "WHAT THE OTHER PERSON NEEDS OR IS WORRIED ABOUT",
-        body: "We have not checked who can access which repair records, and nobody has time set aside to review the code.",
+        body: "My lead says the team is already stretched and doesn't want a quick demo to turn into a service nobody has time to review or support. I still need to ask what else worries them.",
       },
       {
         title: "WHAT WE WANT TO DO NEXT",
@@ -108,7 +108,7 @@ export const SALES_PROOF: Record<
       },
       {
         title: "WHO WILL DO WHAT / WHEN WE WILL CHECK AGAIN",
-        body: "The PM checks the claimed benefit with Finance Thursday. The data and security owners agree who may access the records Friday. The engineering manager arranges the practice and review. The PM and lead check progress next Tuesday.",
+        body: "By Friday the PM checks the benefit estimate and asks which work can wait. The lead asks the team what they want to learn, chooses a partner and tools, and confirms the checks. Then we agree the twelve hours and $100 cap. Review next Tuesday if those arrangements are in place.",
       },
     ],
   },
@@ -116,7 +116,7 @@ export const SALES_PROOF: Record<
     name: "AI Stalemate / Lead Developer",
     title: "Next Step Together",
     context:
-      "Help your PM understand the permission checks and review the idea would need, while making room for the problem they want to solve.",
+      "Hear the business context, explain the work and support needed, and help choose a practical experiment.",
     sections: [
       {
         title: "CONVERSATION STATUS",
@@ -124,7 +124,7 @@ export const SALES_PROOF: Record<
       },
       {
         title: "WHAT THE OTHER PERSON NEEDS OR IS WORRIED ABOUT",
-        body: "Support staff copy repair requests twice, and some are missed. My PM wants to save that work and stop customers having to chase us.",
+        body: "The workflow keeps slipping while Support enters repairs twice. My PM wants us to explore different ways to deliver, not just move the date again.",
       },
       {
         title: "WHAT WE WANT TO DO NEXT",
@@ -132,7 +132,7 @@ export const SALES_PROOF: Record<
       },
       {
         title: "WHO WILL DO WHAT / WHEN WE WILL CHECK AGAIN",
-        body: "The PM checks the claimed benefit with Finance Thursday. The data and security owners agree who may access the records Friday. The engineering manager arranges the practice and review. The PM and lead check progress next Tuesday.",
+        body: "By Friday the PM checks the benefit estimate and asks which work can wait. The lead asks the team what they want to learn, chooses a partner and tools, and confirms the checks. Then we agree the twelve hours and $100 cap. Review next Tuesday if those arrangements are in place.",
       },
     ],
   },

@@ -31,3 +31,12 @@ Nic authorized publishing code/assets to `nicrpayne/rebel-leaders-site` on 11 Oc
 PDF sources live in `server/field-tool-content`. Rebuild each base AI PDF with `scripts/build-ai-stalemate-guide.py pm` or `lead-dev`, then append the teaching resource pages once with `scripts/append-teaching-resources.py`. Set `GUIDE_APP_URL` to the intended deployment origin. Checked-in review PDFs use the main preview origin.
 
 When the Team Goes Quiet replaces the unpublished Translator concept. It has its own slug, draft storage and checkout configuration: `FIELD_TOOL_WHEN_THE_TEAM_GOES_QUIET_CHECKOUT_URL`. Before live launch, configure its Lemon Squeezy variant under `when-the-team-goes-quiet` in `LEMONSQUEEZY_VARIANT_MAP`; do not reuse a Translator checkout link. Existing Translator page links redirect to the new product. The original draft files and PDF remain in Git history.
+
+
+## 23 October AI Stalemate review
+
+Both editions now center the willingness to explore useful tools and ways of working, shared customer/business context, craft and other concerns without assigning motives, and each teammate’s learning goals. Experiment plans include all team effort, review/pairing support, tool or token budgets, and work that waits. A worked value-per-team-hour comparison uses explicitly invented estimates and distinguishes capacity from cash savings or proven AI gains. Private review attachments informed the changes; their organizational names, workplace statements, and business figures are not published.
+
+Both 21-page PDFs, online Guides, walkthroughs, loaded Lab examples, shared exports, and product previews are aligned. PM cover uses the existing thoughtful portrait; Lead Developer retains the laughing portrait. The PM desktop crop keeps the full head visible and moves the fade clear of the face. Results begin with value and learning, followed by the optional task-effort comparison.
+
+Validation: TypeScript and production build pass. The 102 targeted product checks passed before final QA; the readiness suite passes all 9 checks after an additional regression check for audience-specific sample voice (103 targeted checks in total). All 42 PDF pages were rendered and visually inspected. Browser checks covered 320px, 390px, 961px, 1347px, and 1440px widths across the affected pages, with no page overflow observed. Existing large-bundle build warning remains. No production merge or real checkout test is included in this review.

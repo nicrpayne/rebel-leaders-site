@@ -47,7 +47,7 @@ const welcome: Record<string, WelcomeCopy> = {
   "ai-stalemate/pm": {
     heading: "Let’s put your AI idea into words.",
     intro:
-      "Bring one thing you think AI could improve. Let’s explain why it matters, understand your lead’s concerns, and prepare for a conversation about what to do next.",
+      "Bring the conversation you’re already having. Share why change matters, hear what your lead is concerned about, and choose something useful to learn together.",
     outcomes: [
       "Describe what you hope AI could help with",
       "Understand your lead’s concerns",
@@ -57,7 +57,7 @@ const welcome: Record<string, WelcomeCopy> = {
   "ai-stalemate/lead-dev": {
     heading: "Let’s get your questions on the table.",
     intro:
-      "Bring the AI idea you’ve been asked to consider. Let’s see what it could help with, spell out what needs checking, and get ready to talk it through with your PM.",
+      "Bring the conversation you’re already having. Hear the business context, explain what the team needs, and help choose a worthwhile experiment with your PM.",
     outcomes: [
       "Understand what your PM hopes to improve",
       "Put your questions and concerns into words",

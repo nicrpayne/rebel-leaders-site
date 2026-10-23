@@ -27,7 +27,7 @@ export default function AIProductPage({ audience }: { audience: Audience }) {
           </Link>
         </div>
       )}
-      <header className="ai-product-hero">
+      <header className={`ai-product-hero ai-product-hero-${audience}`}>
         <img
           src={
             audience === "lead-dev"

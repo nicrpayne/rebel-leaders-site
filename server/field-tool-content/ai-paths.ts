@@ -12,32 +12,35 @@ export function aiGuideFor(audience: Audience) {
     ? "You think AI could help. Your lead has questions."
     : "Your PM wants to try AI. You have questions.";
   pages[0].intro = pm
-    ? "You have an idea for where AI could help, and your lead has questions. Let’s put the opportunity into words and understand those questions, so you can work out a useful next step together."
-    : "You’re being asked to assess an AI idea and may have to build, review, or support what follows. Let’s get clear about the problem, the engineering work, and what would justify going ahead. Your recommendation can be to proceed, prepare, choose another approach, or stop.";
+    ? "You see work waiting, customers chasing, and tools that might help. Your lead sees responsibilities you may not. Let’s share the bigger picture and ask whether you’re willing to explore a better way together."
+    : "Your PM sees possibilities in AI. You will help turn an idea into something the team can build and support. Let’s understand the business pressure, explain your concerns, and help choose a worthwhile next step together.";
   pages[0].sections[0].body = pm
-    ? "Perhaps your support team copies repair requests into two systems, and customers have to call again when one is missed. Tell your lead about that problem. Ask whether an app would help and where AI might make the work easier."
-    : "Ask your PM what they want to make better. Perhaps support staff copy repair requests into two systems and customers have to call again when one is missed. That gives you a specific problem to discuss.";
+    ? "A useful repair-request workflow keeps slipping while support staff copy everything twice. You hear what that costs them in customer conversations your lead may not attend. Bring that context, and own any gaps in scope or decisions that are slowing the team down."
+    : "Ask why the work matters now. A repair-request workflow keeps slipping while support staff copy everything twice. Your PM may have customer or leadership context you haven’t heard. Share what you see slowing delivery too.";
   pages[0].sections[1].body = pm
-    ? "Your lead may need to check that the app can’t expose one customer’s records to another. They may also need someone to review the code. Ask what work your proposal adds and what would make it possible."
-    : "Show your PM the concern: the app must prevent one customer from seeing another’s records, and someone needs time to review the code. Say what you would need to check and who could help.";
+    ? "Ask what your lead finds hardest about the change. Is it extra work, another rushed promise, a tool they don’t trust, or something else? Hear their answer before trying to solve it. You’re inviting them to help shape the approach."
+    : "Be specific about what worries you: review capacity, reliability, maintenance, or what this means for your work. You don’t have to defend every part of today’s process to care about quality. Say what you would be willing to explore.";
   pages[1].callout = pm
-    ? "Try: ‘The team keeps copying these requests by hand. I think we could make that easier. Could we look at whether AI would help us build something useful? I’d like to understand what you’d need to check.’"
-    : "Try: ‘I can see why you want to fix this. I’m worried about who could see the customer records. Can we work through that and make time for someone to check the code before we try it?’";
+    ? "Try: ‘We keep pushing this back, and people are still doing the work by hand. Are you willing to explore some different tools or ways of working with me? I’d like us to choose something useful to learn.’"
+    : "Try: ‘I can see why waiting matters. Could you share what you’ve heard from users? Then let’s choose something worth trying and make room for the team to learn it properly.’";
+  pages[2].callout = pm
+    ? "Try: ‘I’m excited about the possibility, but I don’t need my first idea to win. What would be worth exploring together?’"
+    : "Try: ‘I care about the quality of what we build. I’m willing to explore a different approach. Could we agree what we want to learn and what support the team gets?’";
   pages[3].title = pm
     ? "Before you talk with your lead."
     : "Before you talk with your product manager.";
   pages[3].sections[2].body = pm
-    ? "Describe who would benefit and why it matters to you. Include what your lead might not have heard in your conversations with customers or leadership."
-    : "Describe the checks, review, and maintenance you would take responsibility for. Include what could be useful about the idea as well as what worries you.";
+    ? "AI can be exciting. Be honest about that, then ask whose problem you are solving. Cool toys without a useful problem don’t help anyone. Include the business context your lead hasn’t heard and why the team’s growth matters to you."
+    : "What parts of engineering give you pride? What do you worry about losing, and what would you like to learn? Those questions can sit alongside concrete concerns about the software. You don’t have to speak for everyone on the team.";
   pages[4].intro = pm
-    ? "Work out the experiment with your lead. Bring the problem you want to solve and let their judgment change the plan. Use what you already know before asking the team to run another test."
-    : "Plan the experiment with your product manager. Explain which task is suitable, what needs checking, and how much review time you need. Ask them to help agree what other work will wait.";
+    ? "Work out the experiment with your lead. Bring the user problem, the business context, and room for their ideas. Ask what the team wants to learn. Use what you already know before setting up another test."
+    : "Work out the experiment with your PM. Help choose the task, tool, and review approach. Ask for the business context and agree time, training, and a usage budget. You can propose a different approach if it would teach you more.";
   pages[5].intro = pm
-    ? "Ask about everyone’s work, including review and fixes. Two people working for 30 minutes use 60 person-minutes. A faster first draft is useful only if the finished work is worth the total time spent."
-    : "Count your work and the reviewer’s work, including checks and fixes. Two people working for 30 minutes use 60 person-minutes. Give your PM the full picture of time and quality.";
+    ? "Start with the benefit users and the business might get, then the team effort it would take. These invented estimates show one way to compare options. They are not measured savings or evidence that AI caused an improvement."
+    : "Help your PM estimate the whole team’s effort, including review and fixes. Ask how the expected business value was estimated. These invented numbers compare options; they don’t rank developers or prove an AI productivity gain.";
   pages[7].intro = pm
-    ? "Fictional case: your support team copies repair requests between two systems. You think an AI-assisted app could help. Your lead raises questions about who can see the customer records and how the team will check the code."
-    : "Fictional case: your PM wants to help support staff stop copying repair requests between two systems. You see questions about who can see the customer records and whether the team can check and release the code safely.";
+    ? "Fictional case: support staff keep entering repair requests twice while the replacement workflow slips. You want to explore AI and different ways of working. Your lead wants the team to be able to review and support what it builds."
+    : "Fictional case: your PM wants to explore AI because a replacement repair workflow keeps slipping. You see review and support work that a quick demo won’t settle. You both want to find a useful way forward.";
   pages.splice(4, 0, ...readinessChapters(audience));
   pages.forEach((page, index) => {
     page.eyebrow =
@@ -55,7 +58,7 @@ export function aiLabFor(audience: Audience) {
     ? "Before you talk with your lead."
     : "Before you talk with your product manager.";
   steps[0].intro = pm
-    ? "Let’s get your idea ready to talk through. What do you hope AI could help with, and what would you like to understand from your lead? These notes are just for you."
+    ? "Let’s get your idea ready to talk through. What needs to get better, what could the team learn, and what would you like to understand from your lead? These notes are just for you."
     : "Let’s make room for what looks useful and what gives you pause. What would you want your PM to understand, and what do you need to ask them? These notes are just for you.";
   steps[0].fields = steps[0].fields.filter(f => f.id !== "side");
   const labels: Record<string, string> = pm
@@ -77,7 +80,7 @@ export function aiLabFor(audience: Audience) {
         happened:
           "What conversations have you and your PM already had, and where do things stand?",
         story: "What are you assuming about your PM's motives?",
-        protecting: "What would you have to check, review, or look after?",
+        protecting: "What do you want to protect, improve, or learn?",
         why: "What would make this worth your time?",
         futurePicture:
           "If you and your product manager made this work, what could be better?",
@@ -120,9 +123,16 @@ export function aiLabFor(audience: Audience) {
     ? "If an experiment would help, let’s plan it with your lead. What will you try, how much time will you spend, and what would make it worth doing again?"
     : "If an experiment would help, let’s plan it with your PM. Agree the task, time, and checks together before anyone starts.";
   steps[2].title = pm
-    ? "Did it save time once everything was checked?"
-    : "What did it take to get work you could approve?";
+    ? "What value did it create, and what did it take?"
+    : "What helped, and what did the whole task take?";
   const qualityNotes = steps[2].fields.find(f => f.id === "quality");
+  steps[2].fields.unshift({
+    id: "valueAndEffort",
+    label:
+      "What value did users get, what did the team learn, and what did it cost?",
+    type: "textarea",
+    hint: "Keep estimates separate from measured results. You can compare estimated annual business value with total team hours, including product, design, engineering, and review. Record adoption, tool costs, and ongoing work. The minutes table below helps if your question is about task effort.",
+  });
   if (qualityNotes) {
     qualityNotes.label =
       "What other problems, fixes, or review work should we know about?";

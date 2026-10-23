@@ -412,3 +412,20 @@
     padding-top: 28px;
   }
 }
+
+/* Keep the PM portrait clear of the text fade at desktop widths. */
+@media (min-width: 961px) {
+  .ft-theme .ai-product-hero-pm .ai-teacher {
+    object-position: 20% top;
+  }
+  .ft-theme .ai-product-hero-pm::after {
+    background: linear-gradient(
+      90deg,
+      var(--ft-paper) 0%,
+      #fcfaf6 30%,
+      #fcfaf6f5 44%,
+      #fcfaf699 53%,
+      transparent 64%
+    );
+  }
+}

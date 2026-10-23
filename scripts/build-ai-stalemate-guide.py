@@ -95,7 +95,9 @@ def cover(c):
     c.setFillColor(FOREST);c.setFont("GuideBold",9);c.drawString(M,799,"REBEL LEADERS / FIELD TOOL 01")
     c.setFillColor(INK);c.setFont("GuideSerif",55);c.drawString(M,705,"AI Stalemate")
     photograph=BytesIO()
-    with Image.open(ROOT / "client/public/assets/field-tools/ai-stalemate-hero-v2.webp") as source:source.convert("RGB").save(photograph,"JPEG",quality=92)
+    portrait = "ai-stalemate-library-hero-v1.webp" if AUDIENCE == "pm" else "ai-stalemate-hero-v2.webp"
+    # Use the original photograph without the website's text gradient.
+    with Image.open(ROOT / "client/public/assets/field-tools" / portrait) as source:source.convert("RGB").save(photograph,"JPEG",quality=95)
     photograph.seek(0);c.drawImage(ImageReader(photograph),M,290,width=CW,height=CW*941/1672)
     c.setFillColor(FOREST);c.setFont("GuideSans",10);c.drawString(M,267,f"THE {ROLE} FIELD GUIDE")
     paragraph(c,("Explain the opportunity. Work out the next step with your lead." if AUDIENCE == "pm" else "Explain the concerns. Work out the next step with your PM."),M,243,CW,"cover")

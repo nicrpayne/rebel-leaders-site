@@ -20,24 +20,24 @@ export function aiCompanionFor(audience: "pm" | "lead-dev") {
         {
           title: pm ? "To an invitation" : "Make the work visible",
           body: pm
-            ? "What if the support team could enter a repair request once and trust it had reached the right people? Could we look at how to make that happen, and where AI might help?"
-            : "Who would review the code, check access, handle failures, and maintain it? What would need to wait? An encouraging demo does not answer those questions.",
+            ? "Are you willing to explore some different tools or ways of working with me? I’d like us to get useful work to people sooner and help the team build skills it wants."
+            : "Explain where time goes today: decisions, building, review, fixes, or support. Ask which tools or process changes might help. A useful demo can teach you something without answering every production question.",
         },
         {
           title: pm ? "Picture what changes" : "Say what would convince you",
           body: pm
-            ? "What would people do differently in an ordinary week? What would be easier for customers? What could we learn that another team might use?"
+            ? "What would be easier for users? What does each person want to learn for this job or the next one? What time, tools, token budget, and help would make that possible?"
             : "Name the evidence you would need and what would change your mind. Separate a risk you can investigate from a boundary you cannot approve changing.",
         },
         {
           title: pm ? "Keep it open" : "Offer a way forward",
           body: pm
-            ? "Ask: which part would help you too? What have I missed? What would you change? Let their answers change the idea."
+            ? "Ask: what have I missed? What would you change? Try not to get too attached to your idea. There might be a better one. Let your lead help choose what to explore."
             : "You might recommend a smaller experiment, preparation, another approach, or stopping this use. Explain why and invite the people affected to help shape what happens next.",
         },
       ],
       takeaway:
-        "Treat this as something to explore together. You’ll still need to find out whether AI helps, and keep possible career benefits separate from promises you can make.",
+        "Stay open to a better approach. Make learning part of the purpose and fund it properly. The question is what helps users and the team, not whose first idea wins.",
       step: 0,
     },
     {
@@ -53,11 +53,11 @@ export function aiCompanionFor(audience: "pm" | "lead-dev") {
         },
         {
           title: "2 / What needs protecting?",
-          body: "What worries you about this idea? Can you give me an example? What would you need to check or get help with?",
+          body: "What worries you most about this change? Is it this task, the workload, what happens to the craft, or something else? Ask rather than assume. Take the technical concerns seriously too.",
         },
         {
           title: "3 / What do we know?",
-          body: "What have we seen happen? What are we still guessing? What would make either of us reconsider?",
+          body: "What have we seen here, and what have we only heard about elsewhere? What would change either person’s mind? What does each teammate want to learn?",
         },
         {
           title: "4 / What is useful now?",
@@ -73,27 +73,27 @@ export function aiCompanionFor(audience: "pm" | "lead-dev") {
       eyebrow: "EXAMPLE EXPERIMENT PLAN",
       title: "What will we try, and how much time will we spend?",
       intro:
-        "Fictional proposal: use AI to help write permission tests for one part of the repair app. Check permission, review time, and who will do the work before starting.",
+        "Fictional proposal: explore one repair-request workflow with made-up records. Agree the people, time, tools, and review approach before starting. This is a learning prototype, not a live release.",
       cards: [
         {
           title: "What we expect",
-          body: "Could AI help us write these tests with less work overall, once we count the checking and fixes? They still need to show that people can open the right records and can’t get into anyone else’s. We’ll compare with a similar job done without AI.",
+          body: "Could a different tool and review approach get useful feedback sooner? Ask Support to complete the task. Compare with a similar recent prototype, and note differences in scope, experience, and checks.",
         },
         {
-          title: "Time we are willing to spend",
-          body: "Could we allow four hours across everyone involved, with no more than an hour of review? Once we’ve agreed access and who’ll check the work, we’d have one week to finish. When the time is up, we stop.",
+          title: "Time and money we could invest",
+          body: "Twelve total team hours, including up to three for review, over one week. At an assumed $150/hour plus $100 for tools and tokens, that is $1,900. Agree what other work waits.",
         },
         {
           title: "What is allowed",
-          body: "Use made-up records and approved code in a test environment. Do not connect to live systems or change who can access records. Name who confirms permission and who will check the result.",
+          body: "Use made-up records in an approved, isolated environment. Choose the tool and review help with the lead. No live records, connections, or release. Name who checks the work and who can accept it.",
         },
         {
           title: "What would count as useful",
-          body: "Agree how much time you would need to save for this to be worth doing again. Keep the required checks. Stop if access is not approved, a permission check fails, or the agreed time runs out.",
+          body: "Users can complete the task, the agreed checks pass, and the team can explain what it learned. Stay within the time and usage caps. Decide together whether the learning justifies another step.",
         },
       ],
       takeaway:
-        "Review the plan with the people doing and approving the work. Their agreement covers this experiment only.",
+        "The next chapter connects estimated business value with total team effort. Review this plan with the people doing and approving the work; agreement covers this experiment only.",
       step: 2,
     },
     {
