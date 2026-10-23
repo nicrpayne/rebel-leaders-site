@@ -28,19 +28,21 @@ export default function AIProductPage({ audience }: { audience: Audience }) {
         </div>
       )}
       <header className={`ai-product-hero ai-product-hero-${audience}`}>
-        <img
-          src={
-            audience === "lead-dev"
-              ? "/assets/field-tools/ai-stalemate-hero-v2.webp"
-              : "/assets/field-tools/ai-stalemate-library-hero-v1.webp"
-          }
-          alt={
-            audience === "lead-dev"
-              ? "Nic Payne laughing in his study"
-              : "Nic Payne in his study"
-          }
-          className="ai-teacher"
-        />
+        <div className="ai-hero-photo">
+          <img
+            src={
+              audience === "lead-dev"
+                ? "/assets/field-tools/ai-stalemate-hero-v2.webp"
+                : "/assets/field-tools/ai-stalemate-library-hero-v1.webp"
+            }
+            alt={
+              audience === "lead-dev"
+                ? "Nic Payne laughing in his study"
+                : "Nic Payne in his study"
+            }
+            className="ai-teacher"
+          />
+        </div>
         <div className="ai-hero-copy">
           <p className="ai-eyebrow">AI STALEMATE / {copy.role}</p>
           <h1>

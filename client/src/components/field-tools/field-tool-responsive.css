@@ -355,40 +355,6 @@
     font-size: 14px;
   }
 }
-/* Keep type on a quiet surface at the intermediate desktop widths. */
-@media (min-width: 961px) {
-  .ft-theme .ai-hero-copy {
-    max-width: 560px;
-    width: 52%;
-  }
-  .ft-theme .ai-product-hero::after {
-    background: linear-gradient(
-      90deg,
-      var(--ft-paper) 0%,
-      #fcfaf6 30%,
-      #fcfaf6f5 46%,
-      #fcfaf699 58%,
-      transparent 74%
-    );
-  }
-}
-@media (min-width: 961px) and (max-width: 1100px) {
-  .ft-theme .ai-hero-copy h1 {
-    font-size: 46px;
-  }
-  .ft-theme .ai-hero-copy {
-    width: 51%;
-  }
-  .ft-theme .ai-product-hero::after {
-    background: linear-gradient(
-      90deg,
-      var(--ft-paper) 0%,
-      #fcfaf6f5 44%,
-      #fcfaf6cc 52%,
-      transparent 69%
-    );
-  }
-}
 .ft-theme .ft-lab-help > summary {
   min-height: 44px;
   padding-block: 12px;
@@ -413,19 +379,109 @@
   }
 }
 
-/* Keep the PM portrait clear of the text fade at desktop widths. */
+/* Share one portrait treatment across the catalogue and every product hero.
+   Keep the paper transition to the left of the subject, including when cover
+   crops the source image at intermediate widths. */
+.ft-theme .ai-product-hero {
+  max-width: 1440px;
+  margin-inline: auto;
+}
+.ft-theme .ai-hero-photo {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.ft-theme .ai-product-hero::after {
+  display: none;
+}
+.ft-theme .ai-hero-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
 @media (min-width: 961px) {
-  .ft-theme .ai-product-hero-pm .ai-teacher {
+  .ft-theme .ft-hero-copy {
+    width: 54%;
+  }
+  .ft-theme .ai-hero-copy {
+    max-width: 560px;
+    width: 52%;
+  }
+  .ft-theme .ft-hero .ft-hero-photo img,
+  .ft-theme .ai-hero-photo .ai-teacher {
+    left: 12%;
+    width: 88%;
+    object-fit: cover;
     object-position: 20% top;
   }
-  .ft-theme .ai-product-hero-pm::after {
+  .ft-theme .ft-catalog .ft-hero .ft-hero-photo img {
+    left: 20%;
+    width: 80%;
+    object-fit: cover;
+    object-position: 20% top;
+  }
+  .ft-theme .ft-hero .ft-hero-photo::after,
+  .ft-theme .ai-hero-photo::after {
     background: linear-gradient(
       90deg,
       var(--ft-paper) 0%,
-      #fcfaf6 30%,
+      var(--ft-paper) 39%,
       #fcfaf6f5 44%,
-      #fcfaf699 53%,
-      transparent 64%
+      #fcfaf699 50%,
+      transparent 58%
     );
+  }
+}
+/* The welcome caption should never sit across the portrait on narrow cards. */
+.ft-theme .ft-welcome-portrait::after {
+  background: linear-gradient(90deg, #07170e66, transparent 25%);
+}
+@media (max-width: 1100px) {
+  .ft-theme .ft-welcome-portrait figcaption {
+    top: auto;
+    bottom: 24px;
+    transform: none;
+  }
+}
+@media (min-width: 961px) and (max-width: 1200px) {
+  .ft-theme .ft-hero .ft-hero-photo img,
+  .ft-theme .ai-hero-photo .ai-teacher {
+    object-position: 60% top;
+  }
+}
+@media (min-width: 961px) and (max-width: 1100px) {
+  .ft-theme .ai-hero-copy h1 {
+    font-size: 46px;
+  }
+}
+@media (max-width: 960px) {
+  .ft-theme .ai-hero-photo {
+    position: relative;
+    order: 2;
+    inset: auto;
+    width: 100%;
+    height: clamp(280px, 52vw, 440px);
+  }
+  .ft-theme .ai-hero-photo .ai-teacher {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-position: 75% top;
+  }
+  .ft-theme .ft-hero .ft-hero-photo img {
+    object-position: 75% top;
+  }
+  /* Carry the paper edge onto phones without washing over the face. */
+  .ft-theme .ft-hero .ft-hero-photo::after,
+  .ft-theme .ai-hero-photo::after {
+    background:
+      linear-gradient(
+        180deg,
+        var(--ft-paper),
+        transparent clamp(16px, 3.2vw, 28px)
+      ),
+      linear-gradient(135deg, var(--ft-paper), #fcfaf680 12%, transparent 30%);
   }
 }
