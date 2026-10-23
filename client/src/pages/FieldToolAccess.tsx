@@ -11,7 +11,9 @@ export default function FieldToolAccess({ slug }: { slug: string }) {
             title: "See the conversation take shape",
             detail:
               content.expansion?.welcome ??
-              "Follow a PM and lead through a worked example, from their first concerns to a next step they can agree on.",
+              (content.audience === "lead-dev"
+                ? "Follow a lead preparing their position on a restricted-data app and a proposed change in how the team develops. See what they recommend and what remains unresolved."
+                : "Follow a PM and lead through a worked example, from their first concerns to a next step they can agree on."),
             href: `${base}/walkthrough`,
           },
         ]

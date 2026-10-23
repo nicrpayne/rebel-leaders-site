@@ -32,10 +32,14 @@ export function communicationDraft(
     "openQuestions",
     "[what we agree on and what we still need to work out]"
   );
+  const engineering =
+    audience === "lead-dev"
+      ? `\nMy engineering position: ${text("engineeringPosition", "[your position and the evidence or requirement behind it]")}\nOther options: ${text("alternatives", "[a smaller approach, preparation, or another solution]")}`
+      : "";
   const vision = values.sharedVision?.trim()
     ? `\nWhat we hope will be better: ${values.sharedVision.trim()}`
     : "";
   return recipient === "leadership"
-    ? `Context: ${context}${vision}\nCurrent status: ${status}\nWhat needs attention: ${concern}\nWhat we still need to work out: ${unresolved}\n${phase === "decision" ? "Recorded choice" : "Proposed or agreed next step"}: ${move}\nNext action: ${next}\nDecision or support needed from you: [what we need, who can decide, and when we need an answer]`
-    : `Here is where ${audience === "pm" ? "my lead and I" : "my PM and I"} are on this use of AI.\nWhy it matters: ${context}${vision}\nCurrent status: ${status}\nWhat we need to check: ${concern}\n${phase === "decision" ? "Recorded choice" : "Proposed or agreed next step"}: ${move}\nWhat happens next: ${next}\nWhat changes for the team: [what work, review time, or access changes; say if nothing changes yet]\nQuestions or input we need: ${unresolved}`;
+    ? `Context: ${context}${vision}${engineering}\nCurrent status: ${status}\nWhat needs attention: ${concern}\nWhat we still need to work out: ${unresolved}\n${phase === "decision" ? "Recorded choice" : "Proposed or agreed next step"}: ${move}\nNext action: ${next}\nDecision or support needed from you: [what we need, who can decide, and when we need an answer]`
+    : `Here is where ${audience === "pm" ? "my lead and I" : "my PM and I"} are on this use of AI.\nWhy it matters: ${context}${vision}${engineering}\nCurrent status: ${status}\nWhat we need to check: ${concern}\n${phase === "decision" ? "Recorded choice" : "Proposed or agreed next step"}: ${move}\nWhat happens next: ${next}\nWhat changes for the team: [what work, review time, or access changes; say if nothing changes yet]\nQuestions or input we need: ${unresolved}`;
 }

@@ -1,3 +1,8 @@
+import {
+  AI_DEV_STUDY,
+  AI_DEV_TOOLS,
+  AI_DEV_RESOURCE_REVIEW_DATE,
+} from "./field-tool-content/ai-dev-resources";
 import { aiSampleFor } from "./field-tool-content/ai-readiness";
 import {
   AI_TOOLS,
@@ -192,9 +197,12 @@ export const fieldToolsRouter = router({
         resources:
           input.slug === "ai-stalemate"
             ? {
-                tools: AI_TOOLS,
-                study: AI_STUDY,
-                reviewed: AI_RESOURCE_REVIEW_DATE,
+                tools: input.audience === "lead-dev" ? AI_DEV_TOOLS : AI_TOOLS,
+                study: input.audience === "lead-dev" ? AI_DEV_STUDY : AI_STUDY,
+                reviewed:
+                  input.audience === "lead-dev"
+                    ? AI_DEV_RESOURCE_REVIEW_DATE
+                    : AI_RESOURCE_REVIEW_DATE,
               }
             : null,
         companion:

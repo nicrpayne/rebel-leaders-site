@@ -1,3 +1,4 @@
+import { AI_DEV_SAMPLE } from "./ai-dev-sample.ts";
 import type { Audience } from "./ai-paths";
 import type { FieldDef } from "./labs";
 
@@ -362,31 +363,9 @@ export const AI_READINESS_SAMPLE: Record<string, string> = {
 };
 
 export function aiSampleFor(audience: Audience): Record<string, string> {
+  if (audience === "lead-dev") return structuredClone(AI_DEV_SAMPLE);
   return {
     ...AI_READINESS_SAMPLE,
-    ...(audience === "lead-dev"
-      ? {
-          happened:
-            "My PM keeps bringing up AI while the repair workflow slips. I keep bringing up review and support. We haven't agreed what we'd try or asked the team what help it needs.",
-          protecting:
-            "I want us to build useful software we can understand and support. I also want the team to have a say in how its work changes and a chance to learn.",
-          observed:
-            "Our review queue is backing up and the date has moved twice. My PM has heard more from Support than I have. We haven't measured what a different tool or process would change.",
-          askOther:
-            "What have you heard from users and leadership that I haven't? Could we choose a small experiment together, with proper time and support?",
-          story:
-            "I'm assuming my PM thinks a quick demo means the hard work is done. I haven't asked what they actually expect. I also care about the craft, and this change feels personal sometimes.",
-          counterpartConcern:
-            "My PM says Support is still doing the same work twice and people are losing confidence in our dates. They want us to explore different ways to deliver, not just move the date again.",
-          businessContext:
-            "Fictional example. My PM wants to stop Support entering repair requests twice. The replacement workflow keeps slipping. I want to understand what they've heard from users and leadership, explain where our review and delivery work is getting stuck, and choose something useful to try together.",
-          sharedVision:
-            "Less copying and chasing for Support. A team with time and help to learn, and more confidence in what it can deliver. I'd like my PM and the team to help shape that.",
-          why: "I want to do work I can be proud of and help the team develop skills it wants. That could include a different way of building and reviewing software.",
-          changeMind:
-            "If a tool or review approach helps us deliver useful work with less effort, I'd want to learn it. If it creates more work than it helps, I want us to adjust the plan together.",
-        }
-      : {}),
     conversationLeadershipUpdate:
       "PROPOSED — NOT YET AGREED\n\nSupport is still entering repairs twice. Could we try a small prototype to learn whether a different tool and review approach helps? We're asking for twelve total team hours and a $100 tools and token cap, with an experienced partner. Please help us agree what other work can wait by Friday. We'll review next Tuesday. The annual benefit estimate still needs checking.",
     conversationTeamUpdate:

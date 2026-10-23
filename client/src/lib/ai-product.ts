@@ -1,7 +1,7 @@
 import type { Audience } from "./field-tool-paths";
 
 // One inventory for the product page, start page, and review desk.
-// Cover + chapters + visual companions; the PDF adds three source/teaching pages.
+// Cover + chapters + visual companions; the PDF adds the edition’s source/teaching companion.
 export const AI_GUIDE_PAGE_COUNT = 18;
 export const AI_PRODUCT_INVENTORY = [
   {
@@ -59,8 +59,28 @@ export function aiProductCopy(audience: Audience) {
         headline: "My PM won’t shut up about AI.",
         accent: "",
         promise:
-          "Work through the engineering questions, the ongoing work, and the evidence you need. Help shape a decision you can stand behind—including when to stop.",
+          "Your PM wants the team to build and ship differently. Work through security, access, and what the team can realistically take on—then prepare a recommendation you can discuss.",
         first:
-          "Bring the AI conversation you’re already having. Read the Guide or start with Before You Talk in the Lab. Think about what worries you, what you need to ask your PM, and what might help you both move forward.",
+          "Bring the change your PM is asking for. Use the Guide to think it through, then prepare your position in the Lab. A smaller approach, preparation, specialist advice, or stopping this use can all be useful outcomes.",
       };
+}
+
+export function aiProductInventory(audience: Audience) {
+  return AI_PRODUCT_INVENTORY.map(item =>
+    audience === "lead-dev" && item.title === "Next Step Together"
+      ? {
+          ...item,
+          title: "Conversation Notes",
+          detail:
+            "Explain the request, your engineering position, alternatives, and the next move you recommend.",
+        }
+      : audience === "lead-dev" && item.destination === "lab?step=2"
+        ? {
+            ...item,
+            title: "Optional Spike Plan, Results & Engineering Recommendation",
+            detail:
+              "Investigate a real unknown when useful. Record the evidence and recommend what the team can take on next.",
+          }
+        : item
+  );
 }

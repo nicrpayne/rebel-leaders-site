@@ -18,7 +18,7 @@ export default function ChapterGuide({ slug }: { slug: string }) {
     slug === "ai-stalemate"
       ? content.audience === "pm"
         ? "You think AI could help. Your lead has questions. Start by understanding what matters to each of you."
-        : "Your PM thinks AI could help. Explain your concerns and work out what to do next together."
+        : "Your PM wants the team to build and ship differently. Understand the request, explain the engineering concerns, and prepare your recommendation."
       : content.guide.deck;
   const chapters = useRef<(HTMLElement | null)[]>([]);
   const [activeChapter, setActiveChapter] = useState<number | null>(null);
@@ -213,7 +213,11 @@ export default function ChapterGuide({ slug }: { slug: string }) {
                   </div>
                 ))}
               </div>
-              <TeachingNote slug={slug} chapter={index} />
+              <TeachingNote
+                slug={slug}
+                chapter={index}
+                audience={content.audience}
+              />
               {chapter.sources && (
                 <div className="mt-6 flex flex-col gap-2 font-ui text-xs text-[var(--ft-muted)]">
                   {chapter.sources.map(source => (
@@ -233,7 +237,7 @@ export default function ChapterGuide({ slug }: { slug: string }) {
                 {chapter.callout}
               </div>
               <Link
-                href={`${base}/lab?step=${fieldToolLabStep(slug, index)}`}
+                href={`${base}/lab?step=${fieldToolLabStep(slug, index, content.audience)}`}
                 className="mt-5 inline-block font-ui text-sm underline underline-offset-4 print:hidden"
               >
                 Use this in the Lab →

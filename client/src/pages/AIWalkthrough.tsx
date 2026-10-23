@@ -1,3 +1,4 @@
+import { devWalkthrough } from "@/lib/ai-dev-walkthrough";
 import { useState } from "react";
 import { Link } from "wouter";
 import { useFieldToolContent } from "@/components/field-tools/FieldToolGate";
@@ -17,40 +18,45 @@ export default function AIWalkthrough() {
   const base = fieldToolBase("ai-stalemate", content.audience);
   const [stage, setStage] = useState(0);
   const sample = content.sampleValues ?? {};
-  const scenes = [
-    {
-      title: "The disagreement",
-      move: "The replacement repair workflow keeps slipping while Support copies requests twice. The PM wants to explore different tools and ways of working. The lead worries about review, support, and what the change means for the team. They need to hear what is behind each person’s position.",
-      question: "What matters to each person? What have you heard them say?",
-    },
-    {
-      title: "The next useful move",
-      move: "The PM shares what users and leadership have been saying. The lead explains where work gets stuck. They ask what the team wants to learn and propose time with an experienced partner. They still need to agree the people, budget, and which other work can wait.",
-      question: "Who will check each question, and when will you hear back?",
-      record: buildReadinessBrief(sample),
-    },
-    {
-      title: "An experiment they might try",
-      move: "They propose one workflow prototype with made-up records: twelve total team hours, including review and user feedback, plus a $100 tool and token cap. They would choose the tools together and compare with a similar prototype. This experiment has not been approved or run.",
-      question:
-        "What do we want to find out? How much time will we spend? When would we stop?",
-      record: buildTrialCard(sample),
-    },
-    {
-      title: "After an experiment",
-      move: "Ask users to complete the task. Record what helped, what the team learned, and all the work, including review and fixes. Separate estimated annual value from measured benefits. Use the minutes table if you are comparing task effort. Leave actual results blank until the experiment runs.",
-      question:
-        "What would make us say, “That did not help as much as we expected”?",
-      record: buildEvidenceRecord(sample),
-    },
-    {
-      title: "A decision people can use",
-      move: "This example ends with a proposal awaiting time, people, and budget. They have no experiment result or productivity gain to report. They can ask leadership for a specific investment and tell the team what they hope to learn together. They will return to record the decision.",
-      question:
-        "What do we know today, and what are we still asking someone to decide?",
-      record: buildDecisionBrief(sample),
-    },
-  ];
+  const scenes =
+    content.audience === "lead-dev"
+      ? devWalkthrough(sample)
+      : [
+          {
+            title: "The disagreement",
+            move: "The replacement repair workflow keeps slipping while Support copies requests twice. The PM wants to explore different tools and ways of working. The lead worries about review, support, and what the change means for the team. They need to hear what is behind each person’s position.",
+            question:
+              "What matters to each person? What have you heard them say?",
+          },
+          {
+            title: "The next useful move",
+            move: "The PM shares what users and leadership have been saying. The lead explains where work gets stuck. They ask what the team wants to learn and propose time with an experienced partner. They still need to agree the people, budget, and which other work can wait.",
+            question:
+              "Who will check each question, and when will you hear back?",
+            record: buildReadinessBrief(sample),
+          },
+          {
+            title: "An experiment they might try",
+            move: "They propose one workflow prototype with made-up records: twelve total team hours, including review and user feedback, plus a $100 tool and token cap. They would choose the tools together and compare with a similar prototype. This experiment has not been approved or run.",
+            question:
+              "What do we want to find out? How much time will we spend? When would we stop?",
+            record: buildTrialCard(sample),
+          },
+          {
+            title: "After an experiment",
+            move: "Ask users to complete the task. Record what helped, what the team learned, and all the work, including review and fixes. Separate estimated annual value from measured benefits. Use the minutes table if you are comparing task effort. Leave actual results blank until the experiment runs.",
+            question:
+              "What would make us say, “That did not help as much as we expected”?",
+            record: buildEvidenceRecord(sample),
+          },
+          {
+            title: "A decision people can use",
+            move: "This example ends with a proposal awaiting time, people, and budget. They have no experiment result or productivity gain to report. They can ask leadership for a specific investment and tell the team what they hope to learn together. They will return to record the decision.",
+            question:
+              "What do we know today, and what are we still asking someone to decide?",
+            record: buildDecisionBrief(sample),
+          },
+        ];
   const scene = scenes[stage];
   return (
     <main className="font-ui min-h-screen bg-[var(--ft-paper)] text-[var(--ft-ink)]">
@@ -66,10 +72,9 @@ export default function AIWalkthrough() {
               Play through the conversation.
             </h1>
             <p className="mt-5 max-w-2xl text-sm leading-7 text-[var(--ft-muted)]">
-              A fictional example: support staff are doing the same work twice,
-              a PM wants to fix it, and a lead developer has questions about
-              using AI. Follow their conversation without changing your own
-              draft.
+              {content.audience === "lead-dev"
+                ? "A fictional example: your PM wants the team to build and ship differently. You need to explain the security, access, and team-readiness concerns. Follow the conversation without changing your own draft."
+                : "A fictional example: support staff are doing the same work twice, a PM wants to fix it, and a lead developer has questions about using AI. Follow their conversation without changing your own draft."}
             </p>
             {content.walkthroughUrl && (
               <a

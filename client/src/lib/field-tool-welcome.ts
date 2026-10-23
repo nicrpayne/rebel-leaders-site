@@ -55,13 +55,13 @@ const welcome: Record<string, WelcomeCopy> = {
     ],
   },
   "ai-stalemate/lead-dev": {
-    heading: "Let’s get your questions on the table.",
+    heading: "Let’s get clear on your position.",
     intro:
-      "Bring the conversation you’re already having. Hear the business context, explain what the team needs, and help choose a worthwhile experiment with your PM.",
+      "Bring the request to change how your team builds and ships. Understand what your PM needs, explain the engineering concerns, and prepare a recommendation you can stand behind.",
     outcomes: [
       "Understand what your PM hopes to improve",
-      "Put your questions and concerns into words",
-      "Prepare a next step to discuss with your PM",
+      "Explain the security, access, and team-readiness concerns",
+      "Prepare your recommendation and the next conversation",
     ],
   },
 };

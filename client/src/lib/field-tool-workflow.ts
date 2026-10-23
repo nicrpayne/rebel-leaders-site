@@ -1,3 +1,4 @@
+export const AI_DEV_GUIDE_CHAPTERS = [3, 7, 8, 9, 10];
 /** Zero-based chapters: keep each step beside the thinking its fields use. */
 export const FIELD_TOOL_GUIDE_CHAPTERS: Record<string, number[]> = {
   "ai-stalemate": [3, 4, 7, 8, 9],
@@ -19,8 +20,14 @@ export const FIELD_TOOL_START: Record<string, string> = {
     "Let’s work through the idea, the questions, and a next step you can discuss together.",
 };
 
-export function fieldToolLabStep(slug: string, chapter: number): number {
-  const starts = FIELD_TOOL_GUIDE_CHAPTERS[slug] ?? [0];
+export function fieldToolLabStep(
+  slug: string,
+  chapter: number,
+  audience?: string
+): number {
+  const starts = (slug === "ai-stalemate" && audience === "lead-dev"
+    ? AI_DEV_GUIDE_CHAPTERS
+    : FIELD_TOOL_GUIDE_CHAPTERS[slug]) ?? [0];
   let step = 0;
   starts.forEach((firstChapter, index) => {
     if (chapter >= firstChapter) step = index;

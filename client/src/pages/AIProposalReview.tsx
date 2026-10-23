@@ -1,6 +1,6 @@
 import { Link, Redirect } from "wouter";
 import { trpc } from "@/lib/trpc";
-import { AI_PRODUCT_INVENTORY } from "@/lib/ai-product";
+import { aiProductInventory } from "@/lib/ai-product";
 import "@/components/field-tools/ai-library.css";
 const baseline =
   "https://rebel-leaders-field-tools-preview-production.up.railway.app";
@@ -62,7 +62,7 @@ export default function AIProposalReview() {
                   Open the product page →
                 </Link>
                 <div className="mt-6 grid gap-3 text-sm">
-                  {AI_PRODUCT_INVENTORY.map(item => (
+                  {aiProductInventory(role).map(item => (
                     <Link
                       className="underline"
                       key={item.title}

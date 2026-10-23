@@ -60,23 +60,42 @@ export default function AIResources() {
       </header>
       <section className="mx-auto max-w-6xl px-6 py-12">
         <div className="grid gap-4 md:grid-cols-3">
-          {[
-            {
-              title: "Understand the approach",
-              body: "Start with Simon Willison’s patterns or the Lenny conversation. Which practice would change your next piece of work?",
-              id: "patterns",
-            },
-            {
-              title: "Check who can access the data",
-              body: "Start with OWASP if you need to work out who may see or change particular records. Ask who makes those rules and who checks that the software follows them.",
-              id: "owasp",
-            },
-            {
-              title: "Set a limit on the experiment",
-              body: "Start with Shape Up’s pitch. Decide how much time and money to spend before trying the idea.",
-              id: "shape-up",
-            },
-          ].map(x => (
+          {(content.audience === "lead-dev"
+            ? [
+                {
+                  title: "What can the team own?",
+                  body: "Start with the coding-skills study. Consider what it can and cannot tell you about learning, debugging, and the support your team needs.",
+                  id: "skills",
+                },
+                {
+                  title: "Who can access the data?",
+                  body: "Start with Microsoft’s App Service guidance. Separate sign-in, data permissions, and the work your app still needs.",
+                  id: "app-access",
+                },
+                {
+                  title: "Which task could an agent help with?",
+                  body: "Start with GitHub’s task-selection guidance. Compare a bounded change with the wider workflow being proposed.",
+                  id: "agent-tasks",
+                },
+              ]
+            : [
+                {
+                  title: "Understand the approach",
+                  body: "Start with Simon Willison’s patterns or the Lenny conversation. Which practice would change your next piece of work?",
+                  id: "patterns",
+                },
+                {
+                  title: "Check who can access the data",
+                  body: "Start with OWASP if you need to work out who may see or change particular records. Ask who makes those rules and who checks that the software follows them.",
+                  id: "owasp",
+                },
+                {
+                  title: "Set a limit on the experiment",
+                  body: "Start with Shape Up’s pitch. Decide how much time and money to spend before trying the idea.",
+                  id: "shape-up",
+                },
+              ]
+          ).map(x => (
             <a
               className="ai-library-card"
               key={x.id}
@@ -110,8 +129,9 @@ export default function AIResources() {
         </div>
         {view === "tools" && (
           <p className="ft-action-primary mt-5 max-w-3xl text-sm leading-7 text-[var(--ft-muted)]">
-            These tools do different jobs. Some help write code; others help
-            review or test it.{" "}
+            {content.audience === "lead-dev"
+              ? "These examples answer different questions: a decision inside an app, or assistance with the development workflow. "
+              : "These tools do different jobs. Some help write code; others help review or test it. "}
             {content.audience === "pm"
               ? "Ask your engineering lead what you already use, what each tool would check, what it would miss, and what it would cost."
               : "Start with what your team already uses. Check what each tool would catch, what it would miss, and the work and cost it would add."}
@@ -199,9 +219,11 @@ export default function AIResources() {
             Keep the question close to the work.
           </h2>
           <p className="mt-3 text-sm leading-7">
-            Write down what you learned in Next Step Together or your Experiment
-            Plan. Tools and prices change, so check the current documentation
-            before choosing one.
+            {content.audience === "lead-dev"
+              ? "Bring what you learned into your Conversation Notes or optional spike plan. "
+              : "Write down what you learned in Next Step Together or your Experiment Plan. "}
+            Tools and prices change, so check the current documentation before
+            choosing one.
           </p>
           <Link
             className="ft-button ft-button-gold mt-5"

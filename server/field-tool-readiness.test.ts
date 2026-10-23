@@ -136,7 +136,7 @@ describe("readiness before AI experiments", () => {
     expect(buildAITrialPackage(values)).toContain("RESULTS RECORD");
   });
   it("keeps the Guide aligned with the new readiness and preparation example", () => {
-    for (const role of ["pm", "lead-dev"] as const) {
+    for (const role of ["pm"] as const) {
       const pages = aiGuideFor(role);
       expect(pages).toHaveLength(12);
       expect(pages[4].eyebrow).toBe("05 / SHARE WHAT YOU KNOW");

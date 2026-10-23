@@ -48,7 +48,7 @@ export function fieldToolForPath(
     who:
       audience === "pm"
         ? "For product managers who think AI could help and want to work through the idea with their lead developer."
-        : "For lead developers assessing an AI proposal, the work it would create, and whether the evidence supports going ahead.",
+        : "For lead developers being asked to change how their team builds and ships, while responsible for security, quality, and the people doing the work.",
     sectionEyebrow:
       audience === "pm"
         ? "TALK IT THROUGH WITH YOUR LEAD"
@@ -60,7 +60,7 @@ export function fieldToolForPath(
     sectionCopy:
       audience === "pm"
         ? "Say who you want to help and how. Ask what your lead would need to check. Decide what to do next, then explain what you agreed and what you still need to find out."
-        : "Show your PM where the idea needs checking or extra work. Ask what they hope it will improve. Work out what you could try and what you need to resolve first.",
+        : "Explain your engineering position, understand what your PM needs, and recommend an approach the team can responsibly take on.",
     chips:
       audience === "pm"
         ? [
@@ -69,9 +69,9 @@ export function fieldToolForPath(
             "Explain what you agreed",
           ]
         : [
-            "Explain the extra work",
-            "Plan it together",
-            "Explain the decision",
+            "Explain your position",
+            "Hear what your PM needs",
+            "Recommend the next move",
           ],
     cards:
       audience === "pm"
@@ -91,16 +91,16 @@ export function fieldToolForPath(
           ]
         : [
             {
-              title: "Explain what needs checking",
-              copy: "Name the checks, review time, and maintenance the idea would need. Say what you think could be useful about it too.",
+              title: "Get clear on your position",
+              copy: "Explain the security, access, and team-readiness concerns. Separate what you have seen from what still needs investigating.",
             },
             {
-              title: "Shape it with your PM",
-              copy: "Ask what your PM hopes to improve. Agree the checks and review the work needs, and what other work would have to wait.",
+              title: "Understand the request",
+              copy: "Ask why the change matters now. Separate the app’s requirements from the proposed development workflow and compare other ways to meet the need.",
             },
             {
-              title: "Decide what to do with the result",
-              copy: "Count the checking and fixes as well as writing the code. Help your PM explain what happened, what it tells you, and what you will do next.",
+              title: "Recommend a useful next move",
+              copy: "Use the evidence you have. Propose preparation, specialist help, a smaller change, a spike, or stopping this use. Name who will do what and when you will return.",
             },
           ],
   };

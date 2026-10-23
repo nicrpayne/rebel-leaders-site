@@ -1,3 +1,5 @@
+import { AI_DEV_OUTPUT_BUILDERS, buildDevPackage } from "@/lib/ai-dev-trial";
+import { AI_DEV_GUIDE_CHAPTERS } from "@/lib/field-tool-workflow";
 import { LabTeachingNote } from "@/components/field-tools/TeachingNote";
 import { fieldToolChoiceLabel } from "@/lib/field-tool-choice-labels";
 import {
@@ -115,12 +117,17 @@ function LabSession({ slug }: { slug: string }) {
   const config = useMemo(
     () => ({
       ...content.lab,
-      buildOutput: FIELD_OUTPUT_BUILDERS[slug],
+      buildOutput:
+        slug === "ai-stalemate" && content.audience === "lead-dev"
+          ? buildDevPackage
+          : FIELD_OUTPUT_BUILDERS[slug],
       outputs: content.lab.outputs?.map(item => ({
         ...item,
         build:
           TOOL_ARTIFACT_BUILDERS[item.id] ??
-          AI_OUTPUT_BUILDERS[item.id as keyof typeof AI_OUTPUT_BUILDERS],
+          (content.audience === "lead-dev"
+            ? AI_DEV_OUTPUT_BUILDERS
+            : AI_OUTPUT_BUILDERS)[item.id as keyof typeof AI_OUTPUT_BUILDERS],
       })),
     }),
     [content, slug]
@@ -356,7 +363,7 @@ function LabSession({ slug }: { slug: string }) {
   }
 
   const optionalIds = new Set(
-    slug === "ai-stalemate" && step === 1
+    slug === "ai-stalemate" && step === 1 && content.audience === "pm"
       ? [
           "businessBasis",
           "accessModel",
@@ -394,7 +401,10 @@ function LabSession({ slug }: { slug: string }) {
           />
         </div>
       ));
-  const guideChapter = FIELD_TOOL_GUIDE_CHAPTERS[slug]?.[step] ?? 0;
+  const guideChapter =
+    (slug === "ai-stalemate" && content.audience === "lead-dev"
+      ? AI_DEV_GUIDE_CHAPTERS
+      : FIELD_TOOL_GUIDE_CHAPTERS[slug])?.[step] ?? 0;
 
   return (
     <main
@@ -421,7 +431,9 @@ function LabSession({ slug }: { slug: string }) {
                   : ""}
               </h1>
               <p className="mt-3 max-w-2xl font-ui text-sm leading-6 text-[var(--ft-muted)]">
-                {FIELD_TOOL_START[slug] ??
+                {(slug === "ai-stalemate" && content.audience === "lead-dev"
+                  ? "Prepare your position on how the team is being asked to build and ship. Work out what to recommend to your PM."
+                  : FIELD_TOOL_START[slug]) ??
                   "Let’s work through your situation, one question at a time."}
               </p>
               {storageStatus && (
@@ -512,7 +524,11 @@ function LabSession({ slug }: { slug: string }) {
               >
                 Read this part of the Guide →
               </Link>
-              <LabTeachingNote slug={slug} step={step} />
+              <LabTeachingNote
+                slug={slug}
+                step={step}
+                audience={content.audience}
+              />
               {(slug === "ai-stalemate" || content.expansion) && (
                 <div className="mt-5 flex flex-col gap-3 text-xs">
                   <Link className="underline" href={`${base}/walkthrough`}>
@@ -737,7 +753,9 @@ function LabSession({ slug }: { slug: string }) {
                 >
                   {config.outputs
                     ? slug === "ai-stalemate"
-                      ? "Preview the Decision Brief →"
+                      ? content.audience === "lead-dev"
+                        ? "Preview the Engineering Recommendation →"
+                        : "Preview the Decision Brief →"
                       : `Preview ${config.outputs.at(-1)?.title} →`
                     : "Preview your document →"}
                 </button>
@@ -750,7 +768,9 @@ function LabSession({ slug }: { slug: string }) {
                     {slug !== "ai-stalemate"
                       ? "Ready to see your document? It brings your answers together and leaves out your private notes."
                       : atReadiness
-                        ? "Next Step Together gives you something to talk through. It can show your proposal or what you’ve agreed, including any preparation you need first."
+                        ? content.audience === "lead-dev"
+                          ? "Conversation Notes brings together the request, your position, alternatives, and the next move you recommend. Update it after talking with your PM."
+                          : "Next Step Together gives you something to talk through. It can show your proposal or what you’ve agreed, including any preparation you need first."
                         : "Save a copy of the Experiment Plan once it’s agreed. You can come back to add the results and work out what happens next. Your private notes stay out."}
                   </p>
                   <div className="mt-3 flex flex-wrap gap-3">

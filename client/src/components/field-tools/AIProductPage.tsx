@@ -5,7 +5,7 @@ import { Link } from "wouter";
 import { Check } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { fieldToolBase, type Audience } from "@/lib/field-tool-paths";
-import { aiProductCopy, AI_PRODUCT_INVENTORY } from "@/lib/ai-product";
+import { aiProductCopy, aiProductInventory } from "@/lib/ai-product";
 import FieldToolsNav from "./FieldToolsNav";
 import FieldToolsFooter from "./FieldToolsFooter";
 import RelatedFieldTools from "./RelatedFieldTools";
@@ -65,7 +65,7 @@ export default function AIProductPage({ audience }: { audience: Audience }) {
           <AIKitPreview audience={audience} />
           <h2>What you get</h2>
           <ul className="ai-inventory">
-            {AI_PRODUCT_INVENTORY.map(item => (
+            {aiProductInventory(audience).map(item => (
               <li key={item.title}>
                 <Check size={19} aria-hidden="true" />
                 <div>

@@ -114,25 +114,22 @@ export const SALES_PROOF: Record<
   },
   "ai-stalemate-lead-dev": {
     name: "AI Stalemate / Lead Developer",
-    title: "Next Step Together",
+    title: "Conversation Notes",
     context:
-      "Hear the business context, explain the work and support needed, and help choose a practical experiment.",
+      "Explain the engineering concern, what supports it, and the next move you recommend to your PM.",
     sections: [
+      { title: "CONVERSATION STATUS", body: "PROPOSED — NOT YET AGREED" },
       {
-        title: "CONVERSATION STATUS",
-        body: "PROPOSED — NOT YET AGREED",
+        title: "THE CHANGE BEING REQUESTED",
+        body: "My PM wants us to use agents to build an internal app with restricted data and change how the team develops.",
       },
       {
-        title: "WHAT THE OTHER PERSON NEEDS OR IS WORRIED ABOUT",
-        body: "The workflow keeps slipping while Support enters repairs twice. My PM wants us to explore different ways to deliver, not just move the date again.",
+        title: "MY POSITION",
+        body: "We haven’t agreed the app’s access setup. Recent changes still need close review. I can support exploring a smaller approach with an experienced reviewer, but I don’t recommend a multi-agent workflow for this team yet.",
       },
       {
-        title: "WHAT WE WANT TO DO NEXT",
-        body: "PREPARE FIRST",
-      },
-      {
-        title: "WHO WILL DO WHAT / WHEN WE WILL CHECK AGAIN",
-        body: "By Friday the PM checks the benefit estimate and asks which work can wait. The lead asks the team what they want to learn, chooses a partner and tools, and confirms the checks. Then we agree the twelve hours and $100 cap. Review next Tuesday if those arrangements are in place.",
+        title: "RECOMMENDED NEXT MOVE",
+        body: "The PM brings the data owner and Platform together; I check reviewer capacity and compare a smaller approach. Return Friday. We have not agreed or run a spike.",
       },
     ],
   },

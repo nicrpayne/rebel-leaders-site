@@ -8,12 +8,13 @@ export default function FieldToolsReviewVersions() {
         AI Stalemate updated · 23 October 2026
       </p>
       <h2 className="font-display text-2xl">
-        Next up: read the Lead Developer edition.
+        The Lead Developer edition has its own story now.
       </h2>
       <p className="mt-3 text-sm leading-7 text-[var(--ft-muted)]">
-        Your latest PM notes are now reflected in both editions: the Guides,
-        PDFs, Lab examples, and worked walkthroughs. Each edition is a separate
-        $47 purchase. The links below go straight to the current materials.
+        Review the request to change how the team builds and ships: security,
+        restricted-data access, and what the team can realistically take on. The
+        Guide, PDF, Lab, examples, and walkthrough now follow that conversation.
+        Each edition remains a separate $47 purchase.
       </p>
       <a
         href="/field-tools/ai-stalemate/lead-dev/guide"

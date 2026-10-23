@@ -1,3 +1,4 @@
+import devTeaching from "../../../../shared/ai-dev-teachings.json";
 import teaching from "../../../../shared/field-tool-teachings.json";
 
 export type Teaching = (typeof teaching.notes)[number];
@@ -12,8 +13,12 @@ export const teachingSources = teaching.sources as Record<
     date?: string;
   }
 >;
-export function teachingFor(slug: string, chapter: number) {
-  return teaching.notes.find(
+const notesFor = (slug: string, audience?: string): Teaching[] =>
+  slug === "ai-stalemate" && audience === "lead-dev"
+    ? (devTeaching as Teaching[])
+    : teaching.notes;
+export function teachingFor(slug: string, chapter: number, audience?: string) {
+  return notesFor(slug, audience).find(
     note => note.slug === slug && note.chapter === chapter
   );
 }
@@ -66,11 +71,13 @@ export function TeachingNoteBody({ note }: { note: Teaching }) {
 export default function TeachingNote({
   slug,
   chapter,
+  audience,
 }: {
   slug: string;
   chapter: number;
+  audience?: string;
 }) {
-  const note = teachingFor(slug, chapter);
+  const note = teachingFor(slug, chapter, audience);
   return note ? (
     <aside
       aria-label="The thinking behind this step"
@@ -87,11 +94,13 @@ export default function TeachingNote({
 export function LabTeachingNote({
   slug,
   step,
+  audience,
 }: {
   slug: string;
   step: number;
+  audience?: string;
 }) {
-  const note = teaching.notes.find(
+  const note = notesFor(slug, audience).find(
     note => note.slug === slug && note.labStep === step
   );
   return note ? (

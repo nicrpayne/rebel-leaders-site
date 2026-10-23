@@ -1,3 +1,5 @@
+import { AI_DEV_GUIDE } from "./ai-dev-guide.ts";
+import { aiDevLab } from "./ai-dev-lab.ts";
 import { readinessStep, readinessChapters } from "./ai-readiness.ts";
 import { buildReadinessBrief } from "../../client/src/lib/ai-trial.ts";
 import { AI_STALEMATE_GUIDE_PAGES } from "./ai-guide.ts";
@@ -6,6 +8,7 @@ export type Audience = "pm" | "lead-dev";
 
 // The two paths share evidence standards, but each speaks to one reader.
 export function aiGuideFor(audience: Audience) {
+  if (audience === "lead-dev") return structuredClone(AI_DEV_GUIDE);
   const pages = structuredClone(AI_STALEMATE_GUIDE_PAGES);
   const pm = audience === "pm";
   pages[0].title = pm
@@ -51,6 +54,7 @@ export function aiGuideFor(audience: Audience) {
   return pages;
 }
 export function aiLabFor(audience: Audience) {
+  if (audience === "lead-dev") return aiDevLab();
   const base = FIELD_LABS["ai-stalemate"];
   const steps = structuredClone(base.steps);
   const pm = audience === "pm";

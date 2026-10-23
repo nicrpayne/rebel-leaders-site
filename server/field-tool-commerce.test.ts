@@ -181,8 +181,13 @@ describe("distinct AI Stalemate paths", () => {
   it("keeps shared evidence standards and does not mutate either path", () => {
     const pm = aiLabFor("pm"),
       dev = aiLabFor("lead-dev");
-    expect(pm.steps[1].fields.map(f => f.id)).toEqual(
-      dev.steps[1].fields.map(f => f.id)
+    expect(dev.steps[1].fields.map(f => f.id)).toEqual(
+      expect.arrayContaining([
+        ...pm.steps[1].fields.map(f => f.id),
+        "changeRequested",
+        "engineeringPosition",
+        "alternatives",
+      ])
     );
     expect(aiGuideFor("pm")).toEqual(aiGuideFor("pm"));
     expect(aiGuideFor("pm")[0].intro).not.toBe(aiGuideFor("lead-dev")[0].intro);

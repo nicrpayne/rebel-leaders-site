@@ -39,16 +39,16 @@ export const FIELD_TOOL_KIT_SCENES: Record<string, KitScene> = {
       "M1332 408 L1354 408 L1355 415 Q1355 426 1366 426 L1432 426 Q1443 426 1443 413 L1443 408 L1471 408 Q1493 408 1493 432 L1477 880 Q1476 903 1455 901 L1310 890 Q1286 888 1289 864 L1308 433 Q1308 410 1332 408 Z",
   },
   "ai-stalemate-lead-dev": {
-    coverImage: "ai-stalemate-lead-dev-cover-v3.webp",
+    coverImage: "ai-stalemate-lead-dev-cover-v4.webp",
     coverTransform:
       "matrix3d(0.783806375775,-0.0126869860631,0,6.10493347185e-05,0.0406120058852,0.81034720441,0,-5.43247216522e-05,0,0,1,0,50,140,0,1)",
     mobileErase:
       "M1301.27 420.99 Q1302 401 1322.00 401.20 L1479.00 402.80 Q1499 403 1498.32 422.99 L1482.68 886.01 Q1482 906 1462.05 904.59 L1303.95 893.41 Q1284 892 1284.73 872.01 L1301.27 420.99 Z",
     title: "AI Stalemate Lead Developer",
     scene: "ai-stalemate-lead-dev-kit-v1.webp",
-    desktopImage: "ai-stalemate-lead-dev-lab-preview-v7.webp",
-    mobileImage: "ai-stalemate-lead-dev-mobile-lab-preview-v6.webp",
-    mobileDetailImage: "ai-stalemate-lead-dev-phone-detail-v4.webp",
+    desktopImage: "ai-stalemate-lead-dev-lab-preview-v8.webp",
+    mobileImage: "ai-stalemate-lead-dev-mobile-lab-preview-v7.webp",
+    mobileDetailImage: "ai-stalemate-lead-dev-phone-detail-v5.webp",
     desktopTransform:
       "matrix3d(0.541639466992,-0.014018289042,0,-0.000046815949,-0.075223780459,0.622687092833,0,-0.000022064847,0,0,1,0,584,136,0,1)",
     mobileTransform:

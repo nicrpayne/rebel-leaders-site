@@ -27,7 +27,7 @@ BASE_URL = os.environ.get("GUIDE_APP_URL", "https://rebel-leaders-field-tools-pr
 LAB_URL = f"{BASE_URL}/field-tools/ai-stalemate/{AUDIENCE}/lab"
 CONTENT = json.loads(subprocess.check_output([
     "node", "--experimental-strip-types", "--input-type=module", "-e",
-    f"import {{ aiGuideFor }} from './server/field-tool-content/ai-paths.ts'; import {{ aiCompanionFor }} from './server/field-tool-content/ai-companion.ts'; import {{ AI_STUDY }} from './server/field-tool-content/ai-resources.ts'; console.log(JSON.stringify({{pages:aiGuideFor('{AUDIENCE}'),companion:aiCompanionFor('{AUDIENCE}'),study:AI_STUDY}}));",
+    f"import {{ aiGuideFor }} from './server/field-tool-content/ai-paths.ts'; import {{ aiCompanionFor }} from './server/field-tool-content/ai-companion.ts'; import {{ AI_STUDY }} from './server/field-tool-content/ai-resources.ts'; import {{ AI_DEV_STUDY }} from './server/field-tool-content/ai-dev-resources.ts'; console.log(JSON.stringify({{pages:aiGuideFor('{AUDIENCE}'),companion:aiCompanionFor('{AUDIENCE}'),study:'{AUDIENCE}' === 'lead-dev' ? AI_DEV_STUDY : AI_STUDY}}));",
 ], cwd=ROOT))
 
 PAGES = CONTENT["pages"]
@@ -100,7 +100,7 @@ def cover(c):
     with Image.open(ROOT / "client/public/assets/field-tools" / portrait) as source:source.convert("RGB").save(photograph,"JPEG",quality=95)
     photograph.seek(0);c.drawImage(ImageReader(photograph),M,290,width=CW,height=CW*941/1672)
     c.setFillColor(FOREST);c.setFont("GuideSans",10);c.drawString(M,267,f"THE {ROLE} FIELD GUIDE")
-    paragraph(c,("Explain the opportunity. Work out the next step with your lead." if AUDIENCE == "pm" else "Explain the concerns. Work out the next step with your PM."),M,243,CW,"cover")
+    paragraph(c,("Explain the opportunity. Work out the next step with your lead." if AUDIENCE == "pm" else "Your team is being asked to build differently. Prepare your recommendation."),M,243,CW,"cover")
     c.setStrokeColor(LINE);c.line(M,153,W-M,153)
     c.setFillColor(INK);c.setFont("GuideBold",11);c.drawString(M,128,"Nic Payne")
     c.setFont("GuideSans",9);c.drawString(M,109,f"For you, the {ROLE.lower()}")
@@ -190,7 +190,7 @@ def companion(c, data, number):
     y = top-2*(cardh+gap)-5
     y = paragraph(c, data["takeaway"], M, y, style="intro")-16
     if data["after"] == 11:
-        for resource_id in ["patterns", "shape-up", "owasp"]:
+        for resource_id in (["skills", "app-access", "agent-tasks"] if AUDIENCE == "lead-dev" else ["patterns", "shape-up", "owasp"]):
             resource = next(r for r in CONTENT["study"] if r["id"] == resource_id)
             c.setFillColor(FOREST)
             c.setFont("GuideBold", 8)
@@ -198,7 +198,7 @@ def companion(c, data, number):
             c.linkURL(resource["url"], (M,y-2,W-M,y+10), relative=0)
             y -= 17
         c.setFont("GuideSans", 8)
-        c.drawString(M, y, "OPEN THE TOOLS & STUDY LIBRARY >  |  SOURCES REVIEWED 12 OCT 2026")
+        c.drawString(M, y, "OPEN THE TOOLS & STUDY LIBRARY >  |  SOURCES REVIEWED " + ("23 OCT 2026" if AUDIENCE == "lead-dev" else "12 OCT 2026"))
         c.linkURL(f"{BASE_URL}/field-tools/ai-stalemate/{AUDIENCE}/resources", (M,y-4,W-M,y+10), relative=0)
         y -= 18
     else:
