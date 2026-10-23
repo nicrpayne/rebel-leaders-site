@@ -14,15 +14,15 @@ const products: {
     slug: "ai-stalemate",
     name: "AI Stalemate",
     audience: "pm",
-    edition: "PM path",
+    edition: "Product Manager edition",
     pages: 21,
-    image: "ai-stalemate-pm-hero-v5.webp",
+    image: "ai-stalemate-library-hero-v1.webp",
   },
   {
     slug: "ai-stalemate",
     name: "AI Stalemate",
     audience: "lead-dev",
-    edition: "Lead Developer path",
+    edition: "Lead Developer edition",
     pages: 21,
     image: "ai-stalemate-hero-v2.webp",
   },
@@ -61,14 +61,14 @@ const products: {
 ];
 
 const linkStyle =
-  "flex items-center justify-center border border-[var(--ft-line)] px-3 py-3 text-center font-ui text-xs font-semibold transition-colors hover:border-[var(--ft-accent)] hover:bg-[var(--ft-tint)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--ft-accent)]";
+  "flex min-h-12 items-center justify-center border border-[var(--ft-line)] px-3 py-3 text-center font-ui text-xs font-semibold transition-colors hover:border-[var(--ft-accent)] hover:bg-[var(--ft-tint)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--ft-accent)]";
 
 export default function FieldToolsReview() {
   return (
     <main className="min-h-screen bg-[var(--ft-paper)] font-ui text-[var(--ft-ink)]">
       <header className="bg-[var(--ft-paper)] px-5 py-9 text-[var(--ft-ink)] md:px-10">
         <div className="mx-auto max-w-6xl">
-          <div className="flex items-center justify-between gap-4">
+          <div className="flex flex-wrap items-center justify-between gap-4">
             <p className="text-xs tracking-[.18em] text-[var(--ft-accent)]">
               REBEL LEADERS / REVIEW DESK
             </p>
@@ -76,7 +76,7 @@ export default function FieldToolsReview() {
               href="/field-tools"
               className="text-xs text-[var(--ft-muted)] underline underline-offset-4"
             >
-              Open the store ↗
+              Open the store&nbsp;↗
             </a>
           </div>
           <h1 className="mt-5 font-display text-4xl font-semibold tracking-[-.03em] md:text-5xl">
@@ -93,8 +93,30 @@ export default function FieldToolsReview() {
       <FieldToolsReviewVersions />
 
       <section
+        aria-label="Which page is which"
+        className="mx-auto grid max-w-6xl gap-5 px-5 py-6 text-sm leading-6 text-[var(--ft-muted)] md:grid-cols-3 md:px-8"
+      >
+        <p>
+          <strong className="text-[var(--ft-ink)]">Sales page</strong>
+          <br />
+          Introduces the product before someone buys.
+        </p>
+        <p>
+          <strong className="text-[var(--ft-ink)]">Buyer welcome</strong>
+          <br />
+          The start page after purchase and sign-in, with the Guide, PDF, Lab,
+          and walkthrough. The tool’s “Start” link returns here.
+        </p>
+        <p>
+          <strong className="text-[var(--ft-ink)]">Worked walkthrough</strong>
+          <br />A written example to follow through, separate from your own Lab
+          draft.
+        </p>
+      </section>
+
+      <section
         aria-label="Product review links"
-        className="mx-auto grid max-w-6xl gap-5 px-5 py-8 md:grid-cols-2 md:px-0 lg:grid-cols-3"
+        className="mx-auto grid max-w-6xl gap-5 px-5 pb-8 pt-2 md:grid-cols-2 md:px-8 xl:grid-cols-3"
       >
         {products.map(product => {
           const base = fieldToolBase(product.slug, product.audience);
@@ -122,14 +144,14 @@ export default function FieldToolsReview() {
                   className="h-[78px] w-[66px] shrink-0 object-cover object-right"
                 />
               </div>
-              <div className="mt-5 grid grid-cols-2 gap-2">
+              <div className="mt-5 grid grid-cols-1 gap-2 min-[360px]:grid-cols-2">
                 <a
                   className={linkStyle}
                   href={base}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Landing page ↗
+                  Sales page&nbsp;↗
                 </a>
                 <a
                   className={linkStyle}
@@ -137,7 +159,7 @@ export default function FieldToolsReview() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Start & walkthrough ↗
+                  Buyer welcome&nbsp;↗
                 </a>
                 <a
                   className={linkStyle}
@@ -145,7 +167,7 @@ export default function FieldToolsReview() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Read Guide ↗
+                  Read Guide&nbsp;↗
                 </a>
                 <a
                   className={linkStyle}
@@ -154,25 +176,43 @@ export default function FieldToolsReview() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Download PDF ↓
+                  Download PDF&nbsp;↓
                 </a>
                 <a
-                  className={`${linkStyle} col-span-2 border-[var(--ft-accent)] bg-[var(--ft-tint)] text-[var(--ft-ink)] hover:bg-[var(--ft-tint)]`}
+                  className={linkStyle}
+                  href={`${base}/walkthrough`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Worked walkthrough&nbsp;↗
+                </a>
+                <a
+                  className={`${linkStyle} border-[var(--ft-accent)] bg-[var(--ft-tint)] text-[var(--ft-ink)] hover:bg-[var(--ft-tint)]`}
                   href={`${base}/lab`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Open Lab & build outputs ↗
+                  Open Lab&nbsp;↗
                 </a>
               </div>
               <div className="mt-4 flex flex-wrap justify-between gap-3 text-xs text-[var(--ft-muted)]">
+                {product.slug === "ai-stalemate" && (
+                  <a
+                    href={`${base}/resources`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline underline-offset-4"
+                  >
+                    Study library&nbsp;↗
+                  </a>
+                )}
                 <a
                   href={`${base}/buy`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="underline underline-offset-4"
                 >
-                  Checkout page ↗
+                  Checkout page&nbsp;↗
                 </a>
                 <a
                   href={`/assets/field-tools/${product.image}`}
@@ -180,7 +220,7 @@ export default function FieldToolsReview() {
                   rel="noopener noreferrer"
                   className="underline underline-offset-4"
                 >
-                  Hero image ↗
+                  Hero image&nbsp;↗
                 </a>
               </div>
             </article>
@@ -190,7 +230,7 @@ export default function FieldToolsReview() {
 
       <section
         aria-label="Shared project resources"
-        className="mx-auto max-w-6xl border-t border-[var(--ft-line)] px-5 py-7 md:px-0"
+        className="mx-auto max-w-6xl border-t border-[var(--ft-line)] px-5 py-7 md:px-8"
       >
         <h2 className="font-display text-2xl font-semibold">
           Shared links & notes
@@ -202,7 +242,7 @@ export default function FieldToolsReview() {
             rel="noopener noreferrer"
             className="underline underline-offset-4"
           >
-            Pressure Test ↗
+            Pressure Test&nbsp;↗
           </a>
           <a
             href="https://github.com/nicrpayne/rebel-leaders-site/pull/3"
@@ -210,15 +250,15 @@ export default function FieldToolsReview() {
             rel="noopener noreferrer"
             className="underline underline-offset-4"
           >
-            GitHub changes ↗
+            GitHub changes&nbsp;↗
           </a>
           <a
-            href="https://github.com/nicrpayne/rebel-leaders-site/blob/field-tools-launch/docs/field-tools-v1-review.md"
+            href="https://github.com/nicrpayne/rebel-leaders-site/blob/field-tools-launch/docs/field-tools-launch.md"
             target="_blank"
             rel="noopener noreferrer"
             className="underline underline-offset-4"
           >
-            Product review notes ↗
+            Current launch notes&nbsp;↗
           </a>
           <a
             href="https://github.com/nicrpayne/rebel-leaders-site/blob/field-tools-launch/docs/field-tools-commerce.md"
@@ -226,13 +266,14 @@ export default function FieldToolsReview() {
             rel="noopener noreferrer"
             className="underline underline-offset-4"
           >
-            Purchase & access setup ↗
+            Purchase & access setup&nbsp;↗
           </a>
         </div>
         <p className="mt-5 text-xs leading-6 text-[var(--ft-muted)]">
-          Outputs are generated from your entries inside each Lab. Walkthrough
-          access lives on each Start page. This is the review preview; payment
-          setup is still in progress.
+          Outputs are generated from your entries inside each Lab. The links
+          above open the current pages and PDFs; there is no separate old AI
+          version to compare. This desk is for your review. Customers return to
+          their own Buyer welcome page.
         </p>
       </section>
     </main>
