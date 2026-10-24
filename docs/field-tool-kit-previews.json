@@ -1,0 +1,280 @@
+{
+  "updated": "2026-10-14",
+  "implementation": "FieldToolKitPreview uses actual desktop and mobile Lab captures with per-scene projective transforms, restores the original book and phone housings, and covers obsolete screen content. All six purchase mockups and both AI proposal mockups use this component.",
+  "desktopCapture": {
+    "width": 1347,
+    "height": 850
+  },
+  "mobileCapture": {
+    "width": 390,
+    "height": 1000
+  },
+  "scene": {
+    "width": 1536,
+    "height": 1024
+  },
+  "desktopAdjustment": "Accepted 20px left shift at the lower two corners; upper corners fixed.",
+  "captures": "Responsive edition refresh: v6 desktop screens, v5 mobile screens, and v3 close-ups. Real Lab screens with fictional example answers; optional guidance is collapsed so the work is easy to reach. Both AI audiences show Conversation; the other four products show their first step. Accepted device perspective is preserved.",
+  "geometry": {
+    "ai-stalemate-pm": {
+      "title": "AI Stalemate PM",
+      "sceneVersion": 2,
+      "desktop": [
+        [
+          584,
+          142
+        ],
+        [
+          1401,
+          124
+        ],
+        [
+          1362,
+          703
+        ],
+        [
+          530,
+          674
+        ]
+      ],
+      "erase": "572,128 1415,110 1399,720 539,689",
+      "book": "39,142 530,129 593,870 81,914",
+      "phone": "M1333 395 L1471 395 Q1509 395 1511 432 L1498 873 Q1496 918 1467 920 L1310 905 Q1274 902 1274 867 L1296 434 Q1296 398 1333 395 Z",
+      "mobile": [
+        [
+          1309,
+          407
+        ],
+        [
+          1494,
+          410
+        ],
+        [
+          1476,
+          902
+        ],
+        [
+          1287,
+          890
+        ]
+      ],
+      "mobileSceneClip": "M1332 408 L1354 408 L1355 415 Q1355 426 1366 426 L1432 426 Q1443 426 1443 413 L1443 408 L1471 408 Q1493 408 1493 432 L1477 880 Q1476 903 1455 901 L1310 890 Q1286 888 1289 864 L1308 433 Q1308 410 1332 408 Z"
+    },
+    "ai-stalemate-lead-dev": {
+      "title": "AI Stalemate Lead Developer",
+      "sceneVersion": 1,
+      "desktop": [
+        [
+          584,
+          136
+        ],
+        [
+          1402,
+          125
+        ],
+        [
+          1361,
+          704
+        ],
+        [
+          530,
+          678
+        ]
+      ],
+      "erase": "580,133 1404,122 1399,712 546,685",
+      "book": "38,140 530,127 593,870 81,914",
+      "phone": "M1331 390 L1473 390 Q1511 390 1511 434 L1496 876 Q1493 918 1461 918 L1309 906 Q1276 903 1277 866 L1297 429 Q1298 390 1331 390 Z",
+      "mobile": [
+        [
+          1308,
+          402
+        ],
+        [
+          1497,
+          404
+        ],
+        [
+          1480,
+          904
+        ],
+        [
+          1289,
+          890
+        ]
+      ]
+    },
+    "deadline-reset": {
+      "title": "Deadline Reset",
+      "sceneVersion": 1,
+      "desktop": [
+        [
+          576,
+          138
+        ],
+        [
+          1399,
+          124
+        ],
+        [
+          1372,
+          710
+        ],
+        [
+          527,
+          687
+        ]
+      ],
+      "erase": "573,135 1401,121 1398,716 547,694",
+      "book": "37,145 523,127 578,854 75,883",
+      "phone": "M1330 396 L1470 397 Q1511 397 1511 435 L1493 886 Q1490 925 1457 925 L1306 914 Q1272 911 1274 877 L1295 437 Q1297 397 1330 396 Z",
+      "mobile": [
+        [
+          1308,
+          409
+        ],
+        [
+          1497,
+          411
+        ],
+        [
+          1476,
+          911
+        ],
+        [
+          1286,
+          898
+        ]
+      ]
+    },
+    "priority-whiplash": {
+      "title": "Priority Whiplash",
+      "sceneVersion": 1,
+      "desktop": [
+        [
+          583,
+          135
+        ],
+        [
+          1408,
+          124
+        ],
+        [
+          1378,
+          704
+        ],
+        [
+          526,
+          674
+        ]
+      ],
+      "erase": "580,132 1410,121 1406,709 546,681",
+      "book": "42,142 526,127 584,852 78,894",
+      "phone": "M1335 395 L1470 396 Q1508 395 1508 435 L1495 889 Q1493 928 1459 928 L1311 918 Q1277 915 1279 878 L1297 436 Q1298 396 1335 395 Z",
+      "mobile": [
+        [
+          1310,
+          408
+        ],
+        [
+          1495,
+          409
+        ],
+        [
+          1478,
+          914
+        ],
+        [
+          1292,
+          902
+        ]
+      ]
+    },
+    "mandate-reset": {
+      "title": "Mandate Reset",
+      "sceneVersion": 1,
+      "desktop": [
+        [
+          578,
+          135
+        ],
+        [
+          1402,
+          125
+        ],
+        [
+          1379,
+          723
+        ],
+        [
+          533,
+          710
+        ]
+      ],
+      "erase": "575,132 1405,122 1404,729 551,716",
+      "book": "39,150 530,127 575,894 76,919",
+      "phone": "M1327 397 L1467 397 Q1505 397 1504 437 L1494 889 Q1492 932 1459 932 L1308 924 Q1273 921 1275 884 L1288 440 Q1287 398 1327 397 Z",
+      "mobile": [
+        [
+          1304,
+          410
+        ],
+        [
+          1490,
+          410
+        ],
+        [
+          1479,
+          918
+        ],
+        [
+          1287,
+          909
+        ]
+      ]
+    },
+    "product-project-translator": {
+      "title": "Product / Project Translator",
+      "sceneVersion": 1,
+      "desktop": [
+        [
+          568,
+          134
+        ],
+        [
+          1402,
+          126
+        ],
+        [
+          1376,
+          706
+        ],
+        [
+          537,
+          688
+        ]
+      ],
+      "erase": "565,131 1405,123 1403,712 555,695",
+      "book": "40,183 530,170 568,860 73,895",
+      "phone": "M1336 390 L1472 392 Q1510 392 1510 433 L1494 881 Q1493 921 1455 919 L1311 909 Q1277 906 1279 871 L1297 433 Q1298 392 1336 390 Z",
+      "mobile": [
+        [
+          1309,
+          401
+        ],
+        [
+          1497,
+          404
+        ],
+        [
+          1477,
+          905
+        ],
+        [
+          1292,
+          893
+        ]
+      ]
+    }
+  },
+  "covers": "Current warm editorial PDF covers, using the same Cormorant Garamond and Outfit fonts as the website, fitted to each book face."
+}

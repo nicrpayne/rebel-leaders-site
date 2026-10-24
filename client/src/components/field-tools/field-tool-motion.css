@@ -1,0 +1,56 @@
+/* A little movement, with all essential content immediately usable. */
+.ft-footer-hope {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ft-accent);
+  opacity: 0.7;
+}
+@keyframes ft-welcome-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes ft-scene-fade {
+  from {
+    opacity: 0.4;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .ft-theme .ft-welcome-portrait[data-ready="false"] figcaption {
+    opacity: 0;
+  }
+  .ft-theme .ft-welcome-portrait[data-ready="true"] figcaption {
+    animation: ft-welcome-fade 1100ms ease-out 250ms both;
+  }
+  .ft-theme .ft-scene-enter {
+    animation: ft-scene-fade 240ms ease-out;
+  }
+  .ft-theme .ft-welcome-resource svg,
+  .ft-theme .ft-button svg,
+  .ft-theme .ft-welcome-primary svg {
+    transition: transform 180ms ease-out;
+  }
+  .ft-theme .ft-welcome-resource:hover span svg,
+  .ft-theme .ft-button:hover svg,
+  .ft-theme .ft-welcome-primary:hover svg {
+    transform: translateX(3px);
+  }
+  .ft-theme .ft-study-link,
+  .ft-theme .ft-welcome-resource {
+    transition: color 180ms ease-out;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ft-theme .ft-welcome-portrait figcaption,
+  .ft-theme .ft-scene-enter {
+    opacity: 1;
+    animation: none;
+  }
+}

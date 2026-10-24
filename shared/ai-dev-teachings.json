@@ -1,0 +1,56 @@
+[
+  {
+    "slug": "ai-stalemate",
+    "chapter": 0,
+    "labStep": 0,
+    "title": "Make room for both contributions.",
+    "body": "Your PM may see an opportunity you cannot yet see. You may see a failure mode they have not considered. Let each contribution change the discussion. You can hear the opportunity clearly and still recommend against the proposed approach.",
+    "question": "What does each of us know that the other needs to hear?",
+    "sources": ["stop-chasing-psychological-safety"]
+  },
+  {
+    "slug": "ai-stalemate",
+    "chapter": 3,
+    "labStep": null,
+    "title": "Notice the story you have already written.",
+    "body": "It is easy to hear another AI request and decide your PM only cares about a demo. Your concerns can be valid while that story is incomplete. Ask about their pressure, and explain yours without reducing either person to a role.",
+    "question": "What have I assumed about my PM that I could ask them instead?",
+    "sources": ["chapgpt-schools-me-on-leading-well"]
+  },
+  {
+    "slug": "ai-stalemate",
+    "chapter": 4,
+    "labStep": null,
+    "title": "The work is teaching people something.",
+    "body": "A team learns from what it repeatedly does. If people only accept generated changes, they may miss opportunities to understand and debug them. If a more experienced person takes over every hard part, that has a cost too. Make time for people to work through difficulty with help.",
+    "question": "What will this workflow give people a chance to practice?",
+    "sources": ["when-mattering-isnt-enough"]
+  },
+  {
+    "slug": "ai-stalemate",
+    "chapter": 7,
+    "labStep": 1,
+    "title": "Let their answer affect your recommendation.",
+    "body": "Curiosity is useful when you are prepared to learn something. Bring a clear position and ask where it misses the need. You might keep the same security boundary and still find a better way to meet the request.",
+    "question": "What answer from my PM would change the next move I propose?",
+    "sources": ["the-search-for-unapologetic-impracticality-ab8"]
+  },
+  {
+    "slug": "ai-stalemate",
+    "chapter": 9,
+    "labStep": 3,
+    "title": "Look at what the measure leaves out.",
+    "body": "A faster first draft can hide the hours someone else spends reviewing it. Count that work and notice who is carrying it. Include understanding, maintainability, and people’s ability to recover from mistakes in the discussion of whether the change helped.",
+    "question": "Who does more work under this approach, and have we counted it?",
+    "sources": ["the-search-for-unapologetic-impracticality-a52"]
+  },
+  {
+    "slug": "ai-stalemate",
+    "chapter": 11,
+    "labStep": 4,
+    "title": "Change the conditions for the next request.",
+    "body": "A useful conversation may reveal a missing access owner, a review bottleneck, or no time for learning. Those conditions will shape the next request too. Work with your PM and the people responsible to improve one of them, then return to see what changed.",
+    "question": "What support could we put in place so this does not depend on one person holding everything together?",
+    "sources": ["the-magic-of-mr-greenleaf-a-servant"]
+  }
+]

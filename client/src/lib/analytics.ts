@@ -1,7 +1,7 @@
 import posthog from 'posthog-js';
 
 export function initPostHog() {
-  if (typeof window === 'undefined') return;
+  if (typeof window === 'undefined' || window.location.pathname.startsWith('/field-tools')) return;
   const key = import.meta.env.VITE_POSTHOG_API_KEY;
   if (!key) return;
   posthog.init(key, {
