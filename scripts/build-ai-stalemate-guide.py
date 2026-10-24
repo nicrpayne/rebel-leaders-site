@@ -105,7 +105,7 @@ def cover(c):
         # The PDF holds the quiet, settled state of the signature over the empty wall.
         c.saveState()
         c.setFillColor(colors.HexColor("#dce3d8"));c.setFillAlpha(.60)
-        signature = c.beginText(M+26, 290+(CW*941/1672)*.56)
+        signature = c.beginText(M+44, 290+(CW*941/1672)*.50)
         signature.setFont("GuideSans",8);signature.setCharSpace(1.5)
         signature.textOut("HOPE IS REBELLIOUS.");c.drawText(signature)
         c.restoreState()
