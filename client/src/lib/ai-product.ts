@@ -2,7 +2,10 @@ import type { Audience } from "./field-tool-paths";
 
 // One inventory for the product page, start page, and review desk.
 // Cover + chapters + visual companions; the PDF adds the edition’s source/teaching companion.
-export const AI_GUIDE_PAGE_COUNT = 18;
+export const AI_GUIDE_PAGE_COUNT: Record<Audience, number> = {
+  pm: 18,
+  "lead-dev": 19,
+};
 export const AI_PRODUCT_INVENTORY = [
   {
     title: "Field Guide & discussion guide",

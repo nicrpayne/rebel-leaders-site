@@ -1,5 +1,7 @@
 import devTeaching from "../../../../shared/ai-dev-teachings.json";
 import teaching from "../../../../shared/field-tool-teachings.json";
+import { readingTimeLabel } from "../../../../shared/field-tool-reading-time";
+import GuideReadingTime from "./GuideReadingTime";
 
 export type Teaching = (typeof teaching.notes)[number];
 export const teachingSources = teaching.sources as Record<
@@ -29,6 +31,7 @@ export function TeachingNoteBody({ note }: { note: Teaching }) {
       <h3 className="font-display text-2xl leading-tight text-[var(--ft-ink)]">
         {note.title}
       </h3>
+      <GuideReadingTime>{`${readingTimeLabel(note.title, note.body, note.question, note.quote ?? undefined)} · linked reading varies`}</GuideReadingTime>
       {note.quote && (
         <blockquote className="mt-4 border-l-2 border-[var(--ft-accent)] pl-4 font-display text-xl leading-7 text-[var(--ft-ink)]">
           “{note.quote}”

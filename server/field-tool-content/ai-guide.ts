@@ -84,6 +84,7 @@ export const AI_STALEMATE_GUIDE_PAGES: AIGuidePage[] = [
   },
   {
     eyebrow: "04 / BEFORE YOU TALK",
+    reflectionTime: "allow 5-10 min for your notes",
     title: "Take a moment before you talk.",
     intro:
       "Take five or ten minutes before the conversation. You don’t need a perfect argument. You need to know what matters to you and what you still need to ask.",

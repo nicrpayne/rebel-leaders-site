@@ -14,6 +14,7 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfgen import canvas
 from reportlab.platypus import Paragraph
+from guide_layout import cover_signature, section_reading_label, reading_label, reading_reference
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = os.environ.get("GUIDE_APP_URL", "https://rebel-leaders-field-tools-preview-production.up.railway.app")
@@ -48,18 +49,23 @@ def para(c,text,y,style="body",width=CW,x=M):
 def cover(c,tool,presentation,lab):
     c.setFillColor(CREAM);c.rect(0,0,W,H,fill=1,stroke=0)
     c.setFillColor(FOREST);c.setFont("GuideBold",9);c.drawString(M,799,"REBEL LEADERS / "+tool["eyebrow"])
-    para(c,tool["name"],756,"cover-title",width=CW)
+    title_bottom=para(c,tool["name"],756,"cover-title",width=CW)
+    c.setFillColor(FOREST);c.setFont("GuideSans",10)
+    c.drawString(M,title_bottom-22,"THE PRODUCT OWNER FIELD GUIDE" if tool["slug"] == "when-the-team-goes-quiet" else "THE PRODUCT MANAGER FIELD GUIDE")
     b=BytesIO()
     with Image.open(ROOT / "client/public" / presentation["image"].lstrip("/")) as im:im.convert("RGB").save(b,"JPEG",quality=92)
     b.seek(0);c.drawImage(ImageReader(b),M,290,width=CW,height=CW*941/1672)
-    c.setFillColor(FOREST);c.setFont("GuideBold",11);c.drawString(M,267,"YOUR FIELD GUIDE" if tool["slug"] == "when-the-team-goes-quiet" else "THE PRODUCT LEADER'S FIELD GUIDE")
+    cover_signature(c,M,290,CW,CW*941/1672)
     para(c,presentation["promise"],243,"cover-copy")
     c.setStrokeColor(LINE);c.line(M,153,W-M,153)
     c.setFillColor(INK);c.setFont("GuideBold",11);c.drawString(M,128,"Nic Payne")
     c.setFont("GuideSans",9);c.drawString(M,109,"For the conversations we need to make room for" if tool["slug"] == "when-the-team-goes-quiet" else "For you, the PM carrying this situation")
     c.setFillColor(FOREST);c.setFont("GuideSans",8)
     c.drawString(M,76,"OPEN YOUR LAB >");c.linkURL(lab,(M,60,W-M,90),relative=0)
-    c.setFillColor(MUTED);c.drawString(M,58,"HOPE IS REBELLIOUS.")
+    c.setFillColor(MUTED)
+    c.setFont("GuideSans",7)
+    c.drawString(M,58,"Reading times are approximate. Allow longer for notes and conversations.")
+    c.setFont("GuideSans",8)
     c.drawString(M,39,"WORKING EDITION / REBEL-LEADER.COM");c.showPage()
 
 def chapter(c,page,number,total,tool,lab):
@@ -67,6 +73,7 @@ def chapter(c,page,number,total,tool,lab):
     c.setFillColor(FOREST);c.setFont("GuideBold",10);c.drawString(M,791,page["eyebrow"])
     c.setStrokeColor(GOLD);c.line(W-M-74,795,W-M,795)
     y=para(c,page["title"],756,"title")-18
+    y=reading_reference(c,section_reading_label(page),M,y)
     y=para(c,page["intro"],y,"intro")-26
     for section in page["sections"]:
         y=para(c,section["title"],y,"heading")-5
@@ -105,6 +112,8 @@ def ending(c,number,total,tool):
 
 def walkthrough(c,scenes,offset,number,total,tool,lab):
     y=opening(c,"WORKED WALKTHROUGH / A FICTIONAL CONVERSATION",scenes[0]["title"] if tool["slug"] == "when-the-team-goes-quiet" else "See how it could unfold.")
+    words=[text for scene in scenes for text in [scene['title'],scene['move'],scene['question'],*[line['words'] for line in scene['dialogue']]]]
+    y=reading_reference(c,reading_label(*words),M,y)
     for i,scene in enumerate(scenes,offset+1):
         if tool["slug"] != "when-the-team-goes-quiet":y=para(c,f'{i} / {scene["title"]}',y,"heading")-6
         y=para(c,scene["move"],y)-12
@@ -117,6 +126,7 @@ def walkthrough(c,scenes,offset,number,total,tool,lab):
 
 def resources(c,picks,number,total,tool,lab):
     y=opening(c,"READING & LISTENING / CHOOSE WHAT HELPS","A little more help.")
+    y=reading_reference(c,reading_label(*[text for pick in picks for text in [pick['why'],pick['question'],SOURCES[pick['source']]['title']]])+' · linked reading varies',M,y)
     for pick in picks:
         source=SOURCES[pick["source"]]
         y=linked(c,source["title"],source["url"],y)-5
@@ -137,7 +147,7 @@ def main():
             pages.append(("chapter",page))
             for companion in expansion["companion"]:
                 if companion["after"]==index:
-                    pages.append(("chapter",dict(eyebrow=companion["eyebrow"],title=companion["title"],intro=companion["intro"],sections=companion["cards"],callout=companion["takeaway"],step=companion["step"])))
+                    pages.append(("chapter",dict(eyebrow=companion["eyebrow"],title=companion["title"],intro=companion["intro"],sections=companion["cards"],callout=companion["takeaway"],step=companion["step"],reflectionTime=companion.get("reflectionTime"))))
         # One conversation per page keeps dialogue and the reflection together.
         for index,scene in enumerate(expansion["scenes"]):pages.append(("walkthrough",([scene],index)))
         for index in range(0,len(expansion["resources"]),3):pages.append(("resources",expansion["resources"][index:index+3]))

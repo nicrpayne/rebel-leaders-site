@@ -61,7 +61,7 @@ export const FIELD_TOOLS: FieldTool[] = [
     headline: "They already promised the date.",
     accentLine: "Now you have to work out what's possible.",
     subhead:
-      "Find out what was promised, check what the team can deliver, and give the person responsible a clear choice.",
+      "Prepare to reset a customer promise with Sales, using what Engineering can actually confirm.",
     price: 47,
     chips: ["Check the promise", "Work out the options", "Ask for a decision"],
     sectionEyebrow: "THE DATE IS ONLY PART OF THE PROMISE",
@@ -82,7 +82,7 @@ export const FIELD_TOOLS: FieldTool[] = [
         copy: "Recommend an option. Say what still needs checking, who can approve it, and when the customer needs an update.",
       },
     ],
-    who: "For product managers asked to deliver work by a date someone has already promised.",
+    who: "For the product manager caught between a customer date Sales has promised and work Engineering has not confirmed.",
     nextTools: ["priority-whiplash", "when-the-team-goes-quiet"],
   },
   {
@@ -93,7 +93,7 @@ export const FIELD_TOOLS: FieldTool[] = [
     headline: "The team is already busy.",
     accentLine: "Then another urgent request arrives.",
     subhead:
-      "Find out what is really needed, show what would have to wait, and get a decision everyone can work from.",
+      "Help with the urgent request without quietly asking the team to keep every old promise too.",
     price: 47,
     chips: [
       "List the work already promised",
@@ -118,7 +118,7 @@ export const FIELD_TOOLS: FieldTool[] = [
         copy: "Bring a recommendation and an alternative. Record the answer and tell the people whose plans change.",
       },
     ],
-    who: "For product managers trying to fit another urgent request into a team’s already full week.",
+    who: "For the product manager fielding urgent requests while the team is already committed to customer work.",
     nextTools: ["deadline-reset", "mandate-reset"],
   },
   {
@@ -129,7 +129,7 @@ export const FIELD_TOOLS: FieldTool[] = [
     headline: "You're expected to deliver.",
     accentLine: "But someone else keeps changing the plan.",
     subhead:
-      "Work out who can make the decision you need, then ask for a specific change in how decisions get made.",
+      "Prepare the conversation with your manager about which calls are yours, and who will back them.",
     price: 47,
     chips: [
       "Find out who can decide",
@@ -154,7 +154,7 @@ export const FIELD_TOOLS: FieldTool[] = [
         copy: "Ask for permission to make a specific decision, or agree who will answer, how quickly, and what you do while waiting.",
       },
     ],
-    who: "For product managers held responsible for results when key decisions are outside their control.",
+    who: "For the product manager told to own delivery while senior people can change the plan over their head.",
     nextTools: ["priority-whiplash", "when-the-team-goes-quiet"],
   },
   {
@@ -165,7 +165,7 @@ export const FIELD_TOOLS: FieldTool[] = [
     headline: "The meeting ends.",
     accentLine: "Then you find out what people really think.",
     subhead:
-      "Make room for the conversation you’re missing, and work out what you can change.",
+      "For the PM who hears concerns after the meeting: prepare to listen, own your part, and change what happens next.",
     price: 47,
     chips: [
       "Notice what happens in the room",
@@ -190,7 +190,7 @@ export const FIELD_TOOLS: FieldTool[] = [
         copy: "Choose one thing you can change. Then come back and ask whether it helped.",
       },
     ],
-    who: "For product managers, team leads, and anyone who runs a meeting where the real concerns come out afterward.",
+    who: "For product managers and Product Owners whose planning or review meetings go quiet, then hear the concerns afterward.",
     nextTools: ["mandate-reset", "priority-whiplash"],
   },
 ];
@@ -211,8 +211,7 @@ export const FIELD_TOOL_OFFERS = FIELD_TOOLS.flatMap(tool =>
           audience === "pm"
             ? "You see a possibility for AI."
             : "My PM won’t shut up about AI.",
-        accentLine:
-          audience === "pm" ? "Is it worth pursuing?" : "",
+        accentLine: audience === "pm" ? "Is it worth pursuing?" : "",
         subhead:
           audience === "pm"
             ? "Explain the opportunity, invite your lead to question it, and decide what to explore together."

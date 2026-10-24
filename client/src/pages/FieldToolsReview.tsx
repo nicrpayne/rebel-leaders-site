@@ -1,5 +1,6 @@
 import { fieldToolBase, type Audience } from "@/lib/field-tool-paths";
 import FieldToolsReviewVersions from "@/components/field-tools/FieldToolsReviewVersions";
+import { FIELD_TOOL_KIT_SCENES } from "@/components/field-tools/field-tool-kit-scenes";
 import "@/components/field-tools/field-tools.css";
 
 const products: {
@@ -55,7 +56,7 @@ const products: {
     name: "When the Team Goes Quiet",
     audience: "pm",
     edition: "Field Tool 05",
-    pages: 23,
+    pages: 25,
     image: "when-the-team-goes-quiet-hero-v2.webp",
   },
 ];
@@ -139,9 +140,9 @@ export default function FieldToolsReview() {
                   </p>
                 </div>
                 <img
-                  src={`/assets/field-tools/${product.image}`}
+                  src={`/assets/field-tools/${FIELD_TOOL_KIT_SCENES[product.slug === "ai-stalemate" ? `${product.slug}-${product.audience}` : product.slug].coverImage}`}
                   alt=""
-                  className="h-[78px] w-[66px] shrink-0 object-cover object-right"
+                  className="h-[94px] w-[66px] shrink-0 object-contain"
                 />
               </div>
               <div className="mt-5 grid grid-cols-1 gap-2 min-[360px]:grid-cols-2">

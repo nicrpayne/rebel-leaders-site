@@ -100,7 +100,7 @@ describe("AI proposal: usable communication without invented agreement or result
   it("keeps both role paths, companion page counts, and unique resource identities consistent", () => {
     for (const role of ["pm", "lead-dev"] as const) {
       expect(aiGuideFor(role).length + aiCompanionFor(role).length + 1).toBe(
-        AI_GUIDE_PAGE_COUNT
+        AI_GUIDE_PAGE_COUNT[role]
       );
       expect(aiSampleFor(role).qualityChecks).toBeDefined();
     }

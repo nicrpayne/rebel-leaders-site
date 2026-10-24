@@ -16,6 +16,7 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfgen import canvas
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, KeepTogether
+from guide_layout import reading_label
 
 ROOT=Path(__file__).resolve().parents[1]
 DATA=json.loads((ROOT/'shared/field-tool-teachings.json').read_text())
@@ -40,7 +41,7 @@ def append(path,slug):
  flow=[p('The thinking behind the tool.','title'),p('Holistic Shaping asks what work is doing to people, as well as what people are doing at work. These short notes connect the Guide to Nic’s teaching and a few practical sources. Read what helps with the situation in front of you. Links open the original resources.')]
  flow += [p('Back in the Guide','heading')]
  for n in notes:
-  block=[p(f'CHAPTER {n["chapter"]+1:02d}','label'),p(n['title'],'heading')]
+  block=[p(f'CHAPTER {n["chapter"]+1:02d}','label'),p(n['title'],'heading'),p(reading_label(n['title'],n['body'],n['question'],n.get('quote'))+' · linked reading varies','small')]
   if n.get('quote'):block += [p('“'+n['quote']+'”'),p('Nic Payne · '+DATA['sources'][n['quoteSource']]['title'],'small')]
   block += [p(n['body']),p('Worth asking: '+n['question'])]
   block += [link(DATA['sources'][key]) for key in n['sources']]

@@ -9,13 +9,13 @@ export const FIELD_TOOL_GUIDE_CHAPTERS: Record<string, number[]> = {
 };
 export const FIELD_TOOL_START: Record<string, string> = {
   "deadline-reset":
-    "Let’s work through one deadline and get you ready to talk about what’s possible.",
+    "Let’s check the customer promise with Engineering and prepare what you need to take back to Sales.",
   "priority-whiplash":
-    "Let’s see how the new request fits with the work already promised.",
+    "Let’s work out what this urgent request would put on hold, and who needs to make that choice.",
   "mandate-reset":
-    "Let’s work out who can help with the decision and what you need to ask them.",
+    "Let’s prepare the conversation with your manager about what you can decide and who will back you.",
   "when-the-team-goes-quiet":
-    "Let’s start with one meeting and a conversation you want to have.",
+    "Let’s start with the meeting where you missed a concern, and prepare to hear it properly.",
   "ai-stalemate":
     "Let’s work through the idea, the questions, and a next step you can discuss together.",
 };

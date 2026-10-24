@@ -7,6 +7,8 @@ import { FIELD_TOOL_PRESENTATIONS } from "@/lib/field-tool-presentations";
 import FieldToolsNav from "@/components/field-tools/FieldToolsNav";
 import FieldToolsFooter from "@/components/field-tools/FieldToolsFooter";
 import NotFound from "./NotFound";
+import GuideReadingTime from "@/components/field-tools/GuideReadingTime";
+import { sceneReadingTime } from "../../../shared/field-tool-reading-time";
 import "@/components/field-tools/ai-library.css";
 import "@/components/field-tools/leadership-expansion.css";
 
@@ -97,6 +99,7 @@ export default function LeadershipWalkthrough({ slug }: { slug: string }) {
           >
             {scene.title}
           </h2>
+          <GuideReadingTime>{sceneReadingTime(scene)}</GuideReadingTime>
           <p>{scene.move}</p>
           <div className="ft-dialogue" aria-label="Fictional conversation">
             {scene.dialogue.map((line, index) => (

@@ -157,9 +157,9 @@ export const FIELD_TOOL_PRESENTATIONS: Record<string, Presentation> = {
     lead: "They already promised the date.",
     accent: "Now you have to work out what's possible.",
     promise:
-      "Find out what was promised, check what the team can deliver, and give the person responsible a clear choice.",
+      "Prepare to reset a customer promise with Sales, using what Engineering can actually confirm.",
     session:
-      "Spend about 20–30 minutes making a first draft. Then check it with the people involved. Come back to record what was decided.",
+      "Bring the customer promise. Read the sections you need, then prepare your update in the Lab or your own notes.",
     benefits: [
       "Check the promise",
       "Work out the options",
@@ -220,15 +220,15 @@ export const FIELD_TOOL_PRESENTATIONS: Record<string, Presentation> = {
       owner: "Sales director, who made the customer promise",
       decisionBy: "Wednesday, before the next customer update",
       decisionStatus: "PROPOSAL — awaiting a decision",
-      finalDecision: "We haven't spoken to the sales director about this yet.",
+      finalDecision: "",
       communication:
         "Once we've agreed, the sales director will tell customers what to expect. I'll update the team's plan.",
       privateReaction:
-        "I'm frustrated that we promised this before checking whether it would work.",
+        "I'm annoyed that I'm now the one who has to question the date. I'm tempted to forward the email to Engineering and ask them to rescue it.",
       privateAssumption:
-        "I'm assuming Sales ignored the risks. I need to find out what they actually promised and what customers need from the event.",
+        "I'm assuming Sales knew this wasn't checked. I need to ask whether they used an earlier estimate and what the customer is counting on.",
       checkpointFallback:
-        "If the calendar check fails, I'll ask Sales on Thursday whether we should show a demo at the event instead. We'd need to tell customers by Friday that they won't be able to book yet.",
+        "I'd like Sales to agree a demo fallback on Wednesday. If Thursday's calendar check fails, we'd use that only if agreed and tell customers by Friday that booking isn't live. Otherwise I need a decision that day.",
       unresolvedPlan:
         "If we don't hear back by Wednesday, I'll ask the sales director who can make the call. We'll stick with the work already agreed and check again after Thursday's calendar test. No answer doesn't mean we can change the promise.",
     },
@@ -239,9 +239,9 @@ export const FIELD_TOOL_PRESENTATIONS: Record<string, Presentation> = {
     lead: "The team is already busy.",
     accent: "Then another urgent request arrives.",
     promise:
-      "Find out what is really needed, show what would have to wait, and get a decision everyone can work from.",
+      "Help with the urgent request without quietly asking the team to keep every old promise too.",
     session:
-      "Spend about 20–30 minutes making a first draft. Then check it with the people involved. Come back to record what was decided.",
+      "Bring the new request and the work it would interrupt. Use the Guide as a reference while you prepare the choice.",
     benefits: [
       "List the work already promised",
       "Show what would wait",
@@ -254,7 +254,7 @@ export const FIELD_TOOL_PRESENTATIONS: Record<string, Presentation> = {
       },
       {
         name: "What Would Change",
-        copy: "What would wait, who would be affected, and the alternatives.",
+        copy: "The work that would actually stop, the customer who would wait, and a smaller way to help.",
       },
       {
         name: "Priority Decision Brief",
@@ -290,22 +290,22 @@ export const FIELD_TOOL_PRESENTATIONS: Record<string, Presentation> = {
       requestLoad: "2",
       capacityWindow: "From now until Friday",
       capacityBasis:
-        "Fictional estimates: we've got 10 working days between us before Friday, and all 10 are spoken for. The demo needs another 2. That includes support and checking the work; nobody's working extra hours to make it fit.",
+        "Fictional estimates checked with the lead: 10 person-days available before Friday and 10 already planned. The demo adds 2. The same developer is needed for the demo and report fix. Support and review are included; extra hours aren't.",
       recommendation:
         "I'd make the small demo if we're willing to delay the report fix. If not, let's use the sketches. We don't need to build the whole feature for this meeting.",
       decisionOwner:
         "Product director — they can agree to change what we've promised customers",
       decisionDate: "Wednesday afternoon",
       decisionStatus: "PROPOSAL — awaiting a decision",
-      finalDecision: "The product director hasn’t made the decision yet.",
+      finalDecision: "",
       communication:
         "Once we have an answer, I'll tell the team and the account manager by Thursday morning. The account manager will contact the customer waiting for the report fix.",
       reviewDate:
         "Friday, after the meeting. Did the demo help? Did we tell the other customer about the delay?",
       privateReaction:
-        "It feels like we've forgotten everything we already promised.",
+        "I don't want to be the person who always says no. But I also don't want to tell the team we've squeezed this in and leave them to find the extra time.",
       privateAssumption:
-        "I'm assuming this is just about impressing someone. I haven't asked what the customer actually needs to see.",
+        "I'm assuming Sales just wants something impressive. I need to ask what the customer will decide on Friday and whether anyone has already started the demo.",
       unresolvedPlan:
         "If we haven't heard by Wednesday afternoon, I'll follow up with the product director. Until someone agrees to the change, we'll keep going with the three jobs already planned.",
     },
@@ -316,9 +316,9 @@ export const FIELD_TOOL_PRESENTATIONS: Record<string, Presentation> = {
     lead: "You're expected to deliver.",
     accent: "But someone else keeps changing the plan.",
     promise:
-      "Work out who can make the decision you need, then ask for a specific change in how decisions get made.",
+      "Prepare the conversation with your manager about which calls are yours, and who will back them.",
     session:
-      "Spend about 20–30 minutes making a first draft. Then check it with the people involved. Come back to record what was decided.",
+      "Bring one decision that was blocked or overridden. Use the Guide to prepare a specific request to your manager.",
     benefits: [
       "Find out who can decide",
       "Explain what is getting stuck",
@@ -335,7 +335,7 @@ export const FIELD_TOOL_PRESENTATIONS: Record<string, Presentation> = {
       },
       {
         name: "Decision Request",
-        copy: "The change you are asking for, who can agree it, and what you do while waiting.",
+        copy: "The permission or backing you need from your manager, its limits, and how you will handle the next request.",
       },
     ],
     example:
@@ -346,7 +346,7 @@ export const FIELD_TOOL_PRESENTATIONS: Record<string, Presentation> = {
       blockedDecision:
         "Who gets to say whether a new request goes into this release, and what has to wait if it does?",
       consequence:
-        "Directors keep going straight to developers with more features. I'm still expected to hit the date, but I can't say no or move anything out.",
+        "On Tuesday I deferred the reports request. On Wednesday a director asked a developer to start it anyway. On Friday I was asked why booking had slipped.",
       recommend:
         "I'll bring the options and explain what each would mean for the team and the date.",
       approve:
@@ -365,7 +365,7 @@ export const FIELD_TOOL_PRESENTATIONS: Record<string, Presentation> = {
         "Before deciding, let's ask the developers what the change involves and the account manager what we've promised the customer.",
       gap: "I'm responsible for the date, but I can't stop more work being added. When two requests clash, we don't know who to ask for a quick answer.",
       request:
-        "Could new requests come to you before we add them to the plan? We'd need you to say whether they go in now and, if there's no room, what comes out.",
+        "Could you confirm that new requests need your decision before a developer starts them? I'd bring you the options. If another director gives a different instruction, I need you to settle it and confirm what happens to the date.",
       boundaries:
         "We'd keep the same budget and all the security and release checks. I'm asking to change how we choose the work, not skip those checks.",
       fallback:
@@ -373,15 +373,15 @@ export const FIELD_TOOL_PRESENTATIONS: Record<string, Presentation> = {
       owner: "Product director",
       date: "Before Monday's planning meeting",
       decisionStatus: "PROPOSAL — awaiting a decision",
-      finalDecision: "The product director hasn't agreed to this yet.",
+      finalDecision: "",
       interimAction:
         "I'll collect the requests and ask the team what each would involve. I won't add them to the plan until we have an answer.",
       reviewDate:
         "After the next two requests: did we get an answer in time, and did everyone know which plan to follow?",
       privateReaction:
-        "I feel like I'm being blamed for a date I can't protect.",
+        "I worry that asking for help will sound like I can't do the job. But negotiating a different plan with every director isn't working.",
       privateAssumption:
-        "I'm assuming the directors are ducking the decision. I should ask what they think I'm already allowed to decide.",
+        "I'm assuming my manager knows how often my decisions get changed. I need to show them an example and ask what they expected me to do.",
       unresolvedPlan:
         "If we don't have an answer before Monday's planning meeting, I'll ask the product director when we can talk. We'll keep the last agreed plan in the meantime.",
     },
@@ -392,9 +392,9 @@ export const FIELD_TOOL_PRESENTATIONS: Record<string, Presentation> = {
     lead: "The meeting ends.",
     accent: "Then you find out what people really think.",
     promise:
-      "Make room for the conversation you’re missing, and work out what you can change.",
+      "For the PM who hears concerns after the meeting: prepare to listen, own your part, and change what happens next.",
     session:
-      "Start with five minutes and one meeting. Use the rest when you need it; this isn’t a worksheet to complete before every conversation.",
+      "Choose one meeting. Read what helps, prepare an invitation, and return to the later sections after you have talked.",
     benefits: [
       "Notice what happens in the room",
       "Ask without putting someone on the spot",

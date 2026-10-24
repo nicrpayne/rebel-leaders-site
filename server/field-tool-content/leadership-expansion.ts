@@ -6,6 +6,7 @@ export type ConversationCompanion = {
   intro: string;
   cards: { title: string; body: string }[];
   takeaway: string;
+  reflectionTime?: string;
   sources?: { name: string; url: string }[];
 };
 export type WorkedScene = {
@@ -57,7 +58,7 @@ export const LEADERSHIP_EXPANSIONS: Record<string, LeadershipExpansion> = {
           },
           {
             title: "Hear the answer",
-            body: "You’re worried that another change will damage their trust. Have I understood? Let them correct you before introducing your options.",
+            body: "“You’re worried another change will make us look unreliable. Have I got that?” Then ask what the customer most needs to do at the event. You need an answer that preserves something useful, not a way to avoid disappointing anyone.",
           },
           {
             title: "Bring the team in",
@@ -224,17 +225,22 @@ export const LEADERSHIP_EXPANSIONS: Record<string, LeadershipExpansion> = {
         title: "Ask for the change",
         step: 3,
         record: "deadline-update",
-        move: "The PM recommends focusing on booking, with a demonstration as a fallback if Thursday’s check fails. This is still a proposal. The sales director needs to respond before the customer update.",
+        move: "The PM has checked the smaller option with Engineering. Sales is reluctant to change the customer message. The PM keeps the missing check visible and asks for a decision; the promise has not changed yet.",
         dialogue: [
           {
             speaker: "PM",
             words:
-              "Could reports come later? We’ll know more about booking on Thursday. If it isn’t ready, could we show a demo at the event and explain that?",
+              "Could reports come later? We’ll know more about booking on Thursday. If it isn’t ready, I recommend we show a demo and say clearly that it isn’t live.",
           },
           {
             speaker: "Sales director",
             words:
-              "Who will tell me what the check found, and when will we update customers?",
+              "I’ve already told them they can use it. I don’t want to go back with another excuse.",
+          },
+          {
+            speaker: "PM",
+            words:
+              "I get that. Keeping the message as it is doesn’t make the calendar connection work. What would help you explain the change? We need an answer before the next update.",
           },
         ],
         question: "Have you named both the decision and the next check?",
@@ -546,12 +552,17 @@ export const LEADERSHIP_EXPANSIONS: Record<string, LeadershipExpansion> = {
           {
             speaker: "PM",
             words:
-              "I’d do the clickable demo if we can delay the report fix. Otherwise, let’s use the sketches. Could you let us know by Wednesday afternoon?",
+              "I’d do the clickable demo if we agree the report fix waits. Otherwise, we can use the sketches. Could you decide by Wednesday afternoon?",
           },
           {
             speaker: "Product director",
             words:
-              "What would we tell the customer waiting for the corrected report?",
+              "Can’t we do both? The report customer has already waited long enough.",
+          },
+          {
+            speaker: "PM",
+            words:
+              "I checked with the lead. The same person is needed for both. We can use the sketches without moving the fix. If you want the clickable demo, we need to tell the other customer what changes.",
           },
         ],
         question:
@@ -591,19 +602,23 @@ export const LEADERSHIP_EXPANSIONS: Record<string, LeadershipExpansion> = {
           finalDecision:
             "Fictional Wednesday decision: prepare the small demonstration; postpone the report correction; keep invitation and customer-data work.",
           returnRecord:
-            "Fictional Friday review: the customer used the demonstration to explain which figures they need. The report correction was paused, and the account manager confirmed the affected customer received the revised date. Next time, Sales and the team will check the meeting purpose before promising a demonstration.",
+            "Fictional Friday review: the demonstration helped the customer explain which figures they need. The account manager still asked for the report fix on Thursday; the engineering lead pointed them back to the agreed pause. The PM will check that the customer has the revised date and explain future pauses to the account manager before the team changes work.",
         },
         move: "This example ends with a check, not a victory lap. The group asks whether the demonstration helped, the delayed customer was told, and the team actually stopped the postponed work.",
         dialogue: [
           {
             speaker: "PM",
-            words:
-              "Did Friday help the customer decide anything? And did the report work really wait?",
+            words: "Did Friday help? And did the report work actually wait?",
           },
           {
             speaker: "Engineering lead",
             words:
-              "Yes. We paused it. Let’s ask what the meeting is for earlier next time.",
+              "The customer showed us which figures they need. The account manager still asked for the fix on Thursday, though. I pointed them back to the agreed plan.",
+          },
+          {
+            speaker: "PM",
+            words:
+              "Thanks. I’ll check the customer got the new date. Next time we need to explain the pause to the account manager before the team changes work.",
           },
         ],
         question:
@@ -700,7 +715,7 @@ export const LEADERSHIP_EXPANSIONS: Record<string, LeadershipExpansion> = {
           },
           {
             title: "Invite a workable answer",
-            body: "I want us to give the team a plan it can follow. Could we agree who makes this call and how quickly we can get an answer?",
+            body: "“I can bring a recommendation. If another director tells the team something different, who settles that? Could you explain the arrangement with me?” Ask for the backing needed to make the decision usable.",
           },
         ],
         takeaway:
@@ -816,7 +831,7 @@ export const LEADERSHIP_EXPANSIONS: Record<string, LeadershipExpansion> = {
           },
         ],
         takeaway:
-          "Notice what the arrangement makes possible for people, as well as how quickly decisions happen. Nobody needs to disclose personal health information to discuss the way work is organized.",
+          "Look at whether people can exercise the judgment you asked of them. If an agreement disappears whenever a director objects, bring that example back to the person who promised to support it.",
       },
     ],
     scenes: [
@@ -828,12 +843,17 @@ export const LEADERSHIP_EXPANSIONS: Record<string, LeadershipExpansion> = {
           {
             speaker: "PM",
             words:
-              "I’m asked to protect the release date, but new features are being added directly. Can we look at how those requests get decided?",
+              "I deferred the reports request on Tuesday. A director asked a developer to start it on Wednesday. At Friday’s review I was asked why booking had slipped.",
           },
           {
             speaker: "Product director",
             words:
-              "I thought you were already managing that. Show me where it’s getting stuck.",
+              "You own the release. I need you to manage those conversations.",
+          },
+          {
+            speaker: "PM",
+            words:
+              "I will. When we still disagree, can I hold the agreed plan, and will you back that? If the call stays with you, I need a way to get your answer before the work starts.",
           },
         ],
         question: "Can both people recognize the same sequence of events?",
@@ -999,6 +1019,7 @@ export const LEADERSHIP_EXPANSIONS: Record<string, LeadershipExpansion> = {
         step: 0,
         eyebrow: "OPTIONAL / A LITTLE MORE HELP",
         title: "Prepare without writing a whole script.",
+        reflectionTime: "allow about 5 min to prepare",
         intro:
           "If you only have five minutes, use these three prompts. You can think them through without writing anything down.",
         cards: [
@@ -1055,7 +1076,7 @@ export const LEADERSHIP_EXPANSIONS: Record<string, LeadershipExpansion> = {
         cards: [
           {
             title: "Sprint Planning",
-            body: "The whole Scrum Team plans together. Developers select the work with the Product Owner and decide how to do it. Ask: “What do we need to understand before we commit to this?”",
+            body: "The whole Scrum Team plans together. The Product Owner brings the product context; Developers select work through discussion with the Product Owner and plan how to deliver it. Ask: “What do we need to understand before choosing this work?”",
           },
           {
             title: "Daily Scrum",
@@ -1111,7 +1132,7 @@ export const LEADERSHIP_EXPANSIONS: Record<string, LeadershipExpansion> = {
         cards: [
           {
             title: "Before",
-            body: "Share the question or proposed plan early enough for people to look at it. Ask whose input is missing.",
+            body: "Share the product need, constraints, and open questions before the meeting. Say which decisions can still change. Ask whose knowledge is missing, including people who will support the release.",
           },
           {
             title: "During",

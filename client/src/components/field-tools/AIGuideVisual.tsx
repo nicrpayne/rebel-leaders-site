@@ -3,6 +3,8 @@ import { Link } from "wouter";
 import { useFieldToolContent } from "./FieldToolGate";
 import { fieldToolBase } from "@/lib/field-tool-paths";
 import "./ai-library.css";
+import GuideReadingTime from "./GuideReadingTime";
+import { guideReadingTime } from "../../../../shared/field-tool-reading-time";
 export default function AIGuideVisual({
   index,
   slug = "ai-stalemate",
@@ -27,6 +29,7 @@ export default function AIGuideVisual({
     <aside className="ai-visual">
       <p className="ai-eyebrow">{visual.eyebrow}</p>
       <h3 className="mt-3">{visual.title}</h3>
+      <GuideReadingTime>{guideReadingTime(visual)}</GuideReadingTime>
       <p>{visual.intro}</p>
       <div className="ai-visual-grid">
         {visual.cards.map(card => (
@@ -43,7 +46,12 @@ export default function AIGuideVisual({
         <ol className="mt-5 space-y-3 text-sm">
           {visual.sources.map(source => (
             <li key={source.url}>
-              <a href={source.url} target="_blank" rel="noreferrer" className="underline underline-offset-4">
+              <a
+                href={source.url}
+                target="_blank"
+                rel="noreferrer"
+                className="underline underline-offset-4"
+              >
                 {source.name} ↗
               </a>
             </li>

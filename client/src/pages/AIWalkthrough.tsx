@@ -1,4 +1,6 @@
 import { devWalkthrough } from "@/lib/ai-dev-walkthrough";
+import GuideReadingTime from "@/components/field-tools/GuideReadingTime";
+import { sceneReadingTime } from "../../../shared/field-tool-reading-time";
 import { useState } from "react";
 import { Link } from "wouter";
 import { useFieldToolContent } from "@/components/field-tools/FieldToolGate";
@@ -116,6 +118,7 @@ export default function AIWalkthrough() {
         >
           <p className="ai-eyebrow">{stage + 1} / WHAT CHANGES</p>
           <h2 className="mt-3 font-display text-3xl">{scene.title}</h2>
+          <GuideReadingTime>{sceneReadingTime(scene)}</GuideReadingTime>
           <p>{scene.move}</p>
           <div className="ft-reflection">
             <h3 className="!text-xl">Ask yourself</h3>

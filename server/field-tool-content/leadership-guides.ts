@@ -4,6 +4,7 @@ export type AIGuidePage = {
   intro: string;
   sections: { title: string; body: string }[];
   callout: string;
+  reflectionTime?: string;
   table?: string[][];
   sources?: { name: string; url: string }[];
 };
@@ -14,11 +15,11 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
       eyebrow: "01 / START HERE",
       title: "The date has already been promised. Now what?",
       intro:
-        "A launch date has been promised, and the team is still checking what it can deliver. Let’s start with what customers were told, then work through the options together.",
+        "You find out in a customer email: November 1. Sales has already said yes. Your engineering lead has not. Now you need to explain the gap without blaming Sales, speaking for Engineering, or quietly making the promise yourself.",
       sections: [
         {
-          title: "Start with why the date matters",
-          body: "Is there an event booked? Has a customer planned around it? Ask what would happen if the date changed. You need to understand the promise before proposing a different one.",
+          title: "Find out what the promise is protecting",
+          body: "Before you reply-all, ask the person who gave the date what the customer is counting on. Is there an event, a business change, or a previous delay behind it? You need that context to recommend something they can take back to the customer.",
         },
         {
           title: "Find out what kind of date it is",
@@ -29,8 +30,8 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
           body: "Perhaps customers need online booking by the event, but reports could come later. Perhaps both features matter more than the date. Work through those options with the people building the software.",
         },
         {
-          title: "What you’ll leave with",
-          body: "The Lab helps you write down the facts, compare delivery options, and prepare an update asking for a decision. You can return after the meeting to record the answer.",
+          title: "Prepare the conversation you actually need",
+          body: "Leave with a smaller promise the team has assessed, an alternative if that cannot work, and a clear request to the person who can change the commitment. Use the Guide for help and the Lab or your own notes to prepare; you do not need to complete both.",
         },
       ],
       callout:
@@ -38,29 +39,30 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
     },
     {
       eyebrow: "02 / BEFORE THE CONVERSATION",
-      title: "You can be frustrated and still be curious.",
+      reflectionTime: "allow 5-10 min for your notes",
+      title: "You’re about to be the person with bad news.",
       intro:
-        "A date that looks impossible can feel like a request to work harder. Take a moment to notice your reaction, then think about what you’d like to understand before replying.",
+        "You may want to forward the email to Engineering with “Can we make this happen?” Or tell Sales they should have asked first. Neither gives you a reliable answer to take back to the customer.",
       sections: [
         {
-          title: "What actually happened?",
-          body: "Start with what was said or done. “They asked for Friday” tells us what happened. “They don’t care about the team” is an explanation you may have added. What could you ask to find out what’s behind the request?",
+          title: "Notice what you are about to promise",
+          body: "“I’ll see what we can do” can sound like acceptance. Try: “I’m checking the remaining work with the team. I can come back Thursday with the options; I can’t confirm November 1 yet.” Be clear about what your next update will contain.",
         },
         {
-          title: "Why do you care?",
-          body: "Who would be better off if this worked? Perhaps a customer could stop chasing an answer, or your team could finish something it promised. Say why that matters to you, and ask what matters to the other person too.",
+          title: "Check your story about Sales",
+          body: "You know they gave a date. You may not know what they heard from the customer or which earlier estimate they relied on. Ask: “What led us to promise both features?” You can address how the promise was made after you understand it.",
         },
         {
-          title: "What would better look like?",
-          body: "Imagine the next few weeks going well. What would people be doing differently? Describe that in ordinary words, then ask the other person what they would add or change.",
+          title: "Give Engineering a question it can answer",
+          body: "Ask what remains to make the customer task work, which checks are missing, and what could be ready first. “Can you try harder?” produces pressure. A concrete option gives the lead something to assess.",
         },
         {
-          title: "Keep these notes to yourself",
-          body: "These questions are for your own thinking; you can answer them without typing. If you use the Lab’s private notes, they stay only in the open tab. They aren’t saved or exported, and disappear when you refresh or leave.",
+          title: "Be honest about your own part",
+          body: "Did you describe a rough target as likely, or leave an old date in the roadmap? Say so if you did. Own what you contributed without accepting responsibility for choices you cannot make. Private Lab notes disappear when you refresh or leave; they are not saved or exported.",
         },
       ],
       callout:
-        "An opening you can adapt: “I want us to find a way through this. Can we look at what is happening and work out what to do next?”",
+        "Try: “I understand customers are expecting this. I need us to check what we can actually deliver before I repeat the date.”",
     },
     {
       eyebrow: "03 / CHECK THE PROMISE",
@@ -73,8 +75,8 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
           body: "Name the date, the features or service promised, the people expecting it, and the person who told them. Quote the actual message if you can.",
         },
         {
-          title: "Check what really can’t change",
-          body: "For example, the event venue may be booked, but nobody has agreed which features must be shown. Ask the person responsible for the event or contract to confirm.",
+          title: "Separate the event from the release",
+          body: "An event can be fixed while the release plan is still open. Ask whether the customer expects to use the software that day, see a demonstration, or decide whether to buy. A demo is a different promise; get the customer owner to confirm it would help.",
         },
         {
           title: "List what still needs checking",
@@ -125,8 +127,8 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
           body: "“Online booking by November 1” is different from “booking and reports by November 1.” Make sure everyone is talking about the same promise.",
         },
         {
-          title: "Say what you know",
-          body: "For example, the booking page is built and reviewed. The engineering lead has estimated the work left. Explain what those estimates are based on.",
+          title: "Keep the engineering lead’s conditions attached",
+          body: "If the lead says “booking could fit if Thursday’s check passes,” carry the whole sentence forward. Do not turn it into “Engineering says we can do it.” Name the work already checked and what remains uncertain.",
         },
         {
           title: "Say what you still need to find out",
@@ -142,29 +144,29 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
     },
     {
       eyebrow: "06 / HAVE THE CONVERSATION",
-      title: "Give them something they can decide.",
+      title: "“We can’t go back to the customer again.”",
       intro:
-        "You have looked at the options. Now let’s turn them into a short recommendation you can talk through. Explain your reasoning, and ask what you might have missed.",
+        "The person who made the promise may be worried about losing credibility. Help them explain a change while there is still time to choose. You are asking them to take responsibility for the customer commitment with you.",
       sections: [
         {
-          title: "Open with the customer need",
-          body: "“Customers need to see online booking at the event. I want to keep that useful. Here is what the team has checked and what is still uncertain.”",
+          title: "Start with what you can support",
+          body: "“Booking is what customers most need to see. The team thinks that may fit if reports wait and Thursday’s calendar check passes. I recommend we check that option before confirming the release.”",
         },
         {
-          title: "If the answer is “the date can’t move”",
-          body: "“Understood. Which parts must be ready that day, and which could come later?” Bring the team into checking whether the smaller plan is possible.",
+          title: "“I’ve already told them both will be ready”",
+          body: "“I know. What would be hardest about changing that message? We can explain a smaller release now, or keep a promise we haven’t checked. Can we agree who speaks to them and when?” Hear the concern before deciding the wording.",
         },
         {
-          title: "If the answer is “just add people”",
-          body: "“Which part would another person help with? Who would get them started and check their work?” Ask the team to assess that option.",
+          title: "“Can the team just work this weekend?”",
+          body: "“What do you expect the extra time to solve? The calendar connection still needs checking.” Ask the lead whether the help addresses the actual problem. Include review and recovery time; do not volunteer other people’s evenings.",
         },
         {
-          title: "Ask for a decision and record the response",
-          body: "Name the person who can change the promise and when you need an answer. Record what they actually agree, decline, or ask you to check. Update customers through the person responsible for that relationship.",
+          title: "If they still will not change the promise",
+          body: "Record the unconfirmed work and the decision you requested. Ask your manager to help resolve the commitment before the next customer update. Explain what you can responsibly confirm today; do not hide the uncertainty to make the meeting easier.",
         },
       ],
       callout:
-        "Try: “I recommend focusing on booking for the event and adding reports later. Can we agree that, then confirm the customer message after Thursday's check?”",
+        "Ask for the exact answer: “Can reports come later, and can we agree a demonstration instead if Thursday’s booking check fails?”",
     },
     {
       eyebrow: "07 / EXAMPLE",
@@ -220,49 +222,49 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
     },
     {
       eyebrow: "09 / AFTER THE CONVERSATION",
-      title: "What happened after the conversation?",
+      title: "Make sure the new promise reaches the customer.",
       intro:
-        "Once you have talked, come back and see what changed. What helped, what still needs attention, and who needs to hear from you?",
+        "The meeting can sound settled while Sales, Engineering, and the customer still expect three different things. Your next job is to close that gap.",
       sections: [
         {
-          title: "Follow up",
-          body: "Check that the customer message and the team's plan say the same thing. Return after the promised technical check. If the result changes what you can deliver, tell the people relying on the date.",
+          title: "Read back the decision and its conditions",
+          body: "“Reports can come later. Working booking still depends on Thursday’s check. If it fails, we will show a demonstration.” Ask the person changing the promise to confirm that this is what they agreed.",
         },
         {
-          title: "Try saying it out loud",
-          body: "Read your message aloud. Does it sound like you? If a phrase feels awkward, use the words you’d say in the meeting. Someone you trust can help you spot anything that’s hard to follow.",
+          title: "Check the message that actually goes out",
+          body: "Who will tell the customer, by when, and what will they say is available? Ask to see that wording. “We’re on track” can undo the careful distinction between a demonstration and software customers can use.",
         },
         {
-          title: "Keep the record",
-          body: "Copy, download, or print anything you need to keep. Shared answers save in this browser on this device; they don’t follow you to another device. Private notes aren’t saved. Export before clearing a draft or browser data.",
+          title: "Return even when the check disappoints",
+          body: "If the calendar connection fails, report it at the agreed time. Use the fallback if it was approved; otherwise ask for the next decision. Do not let a smaller feature list turn into another unchecked date.",
         },
         {
-          title: "Check what happened",
-          body: "Was the decision understood? Did someone act? Did the change help the people it was meant to help? If nobody responded, find out who can decide and agree when to ask again. Silence doesn’t mean yes.",
+          title: "Change how the next date gets offered",
+          body: "Ask Sales and the engineering lead to agree who checks scope and delivery assumptions before a customer date is confirmed. Keep the decision update somewhere the people making promises will find it. Export anything you need; Lab drafts stay in this browser, and private notes are not saved.",
         },
       ],
       callout:
-        "You don’t have to fix the whole organization in one conversation. Leave knowing what happens next, who will do it, and when you’ll check back.",
+        "You have made progress when the customer knows what to expect and the team is working toward that same promise.",
     },
   ],
   "priority-whiplash": [
     {
       eyebrow: "01 / START HERE",
-      title: "One more thing. And it is urgent.",
+      title: "“Can we squeeze this in for Friday?”",
       intro:
-        "Another request lands, and the team’s week is already full. Let’s find out what’s needed and look at the work people are waiting for. Then we can see what fits and what might need to wait.",
+        "You have just explained the week’s plan. Now Sales messages you about Friday’s customer meeting, and someone has already asked a developer for a quick demo. You need to help without making the team absorb another invisible commitment.",
       sections: [
         {
-          title: "Find out what is needed",
-          body: "A request to show a customer a new screen could mean a sketch, a clickable demonstration, or working software. Ask before treating those as the same amount of work.",
+          title: "Check what has already started",
+          body: "Ask what Sales needs the customer to decide and whether anyone has begun work. A sketch, a clickable demonstration, and a live feature are different asks. Find out which one is needed before agreeing to “a quick demo.”",
         },
         {
           title: "Check whether it fits",
           body: "List the work already promised and ask the team what the new request would take. Include support, testing, and review. Sometimes it fits. If it doesn’t, something needs to change.",
         },
         {
-          title: "Make a recommendation",
-          body: "Could you do a smaller version? Put something else off? Use work you already have? Describe the choices and explain which you recommend.",
+          title: "Make the cost visible",
+          body: "Show the useful result each option would give the customer and the existing work it would interrupt. Include the time to stop and pick that work up again. Bring a recommendation; a list of competing priorities leaves the difficult choice with the team.",
         },
         {
           title: "Get a clear answer",
@@ -274,29 +276,30 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
     },
     {
       eyebrow: "02 / BEFORE THE CONVERSATION",
-      title: "You can be frustrated and still be curious.",
+      reflectionTime: "allow 5-10 min for your notes",
+      title: "You don’t want to be the PM who always says no.",
       intro:
-        "A new urgent request can feel like nobody remembers the promises you’re already trying to keep. That feeling is worth noticing before you write the reply.",
+        "You also don’t want another Friday where the team stays late and the original customer still asks where their fix is. Prepare to explain the choice without treating the requester as the problem.",
       sections: [
         {
-          title: "What actually happened?",
-          body: "Start with what was said or done. “They asked for Friday” tells us what happened. “They don’t care about the team” is an explanation you may have added. What could you ask to find out what’s behind the request?",
+          title: "Catch the automatic yes",
+          body: "If you say “we’ll try” before checking, people may hear a commitment. Try: “Let me check what a demo would take and what it would move. I’ll come back this afternoon.” Give a time for your answer that you can keep.",
         },
         {
-          title: "Why do you care?",
-          body: "Who would be better off if this worked? Perhaps a customer could stop chasing an answer, or your team could finish something it promised. Say why that matters to you, and ask what matters to the other person too.",
+          title: "Find out why this request matters",
+          body: "A sales opportunity can be real even if it arrived badly. Ask what the customer will decide on Friday and what happens if the team cannot provide a new demo. Do not assume enthusiasm means the full feature is needed.",
         },
         {
-          title: "What would better look like?",
-          body: "Imagine the next few weeks going well. What would people be doing differently? Describe that in ordinary words, then ask the other person what they would add or change.",
+          title: "Notice whose promise you are tempted to hide",
+          body: "It is easier to disappoint a customer who is not in this meeting. Bring their report fix, deadline, and account manager into the choice. Avoid treating quiet stakeholders as spare capacity.",
         },
         {
-          title: "Keep these notes to yourself",
-          body: "These questions are for your own thinking; you can answer them without typing. If you use the Lab’s private notes, they stay only in the open tab. They aren’t saved or exported, and disappear when you refresh or leave.",
+          title: "Check the work, not people’s willingness",
+          body: "Someone may offer to do both to avoid the argument. Ask what they would stop, what review they need, and when they would actually do it. Optional private Lab notes are for your preparation; they disappear when you refresh or leave and are not exported.",
         },
       ],
       callout:
-        "An opening you can adapt: “I want us to find a way through this. Can we look at what is happening and work out what to do next?”",
+        "Try: “I want Friday to be useful. Before I say yes, let’s look at what we’d be asking the team to put down.”",
     },
     {
       eyebrow: "03 / LIST THE WORK",
@@ -309,8 +312,8 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
           body: "A new customer can’t join their account. Another customer is waiting for corrected report figures. Describe the work and who needs it.",
         },
         {
-          title: "Include work that is easy to overlook",
-          body: "Customer support, checking changes, meetings, and maintenance all use time. They don’t disappear because they are missing from the feature list.",
+          title: "Include the interruption itself",
+          body: "Ask what someone would have to stop and what it would take to resume. The developer who can build the demo may also be the only person who can fix the report. Total hours across the team do not make those skills interchangeable.",
         },
         {
           title: "Describe the new request",
@@ -365,8 +368,8 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
           body: "The customer in Friday's meeting can react to the idea. The customer waiting for correct report figures waits longer. Both belong in the conversation.",
         },
         {
-          title: "Find the person who can make the call",
-          body: "Use a real name. Who can approve changing these customer commitments? If that is you, decide within your authority and communicate the change.",
+          title: "Make the call at the right level",
+          body: "If you can reorder this work, decide after hearing the people affected. If it changes a customer commitment outside your authority, take the choice to the product director. Do not ask Engineering to settle a disagreement between business priorities.",
         },
         {
           title: "Say when an answer is needed",
@@ -388,11 +391,11 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
         },
         {
           title: "“It is only a day or two”",
-          body: "“Does that include checking and testing it? Let’s ask the people doing the work before we promise.”",
+          body: "“Who has those two days? The person who can do the demo is fixing the report. Can we use the sketches, or are we agreeing to make that customer wait?” Check the estimate with the team, including review and the cost of restarting work.",
         },
         {
           title: "“Nothing can move”",
-          body: "“Could we make the demonstration smaller, use the existing sketches, or change the date?” If none works, record the unresolved decision rather than silently assuming overtime.",
+          body: "“Then I can offer the sketches for Friday. I can’t also promise a new demo on the current plan.” If the person insists, take the unresolved choice to whoever can change the commitments. Make the conflict visible before it becomes overtime.",
         },
         {
           title: "“This is an emergency”",
@@ -452,33 +455,33 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
         },
       ],
       callout:
-        "Copy, download, or print the brief to take into your usual work tools. The Lab doesn’t send it or change the team's plan.",
+        "Copy, download, or print the brief to take into your usual work tools. The Lab doesn’t send it or change the team's plan. Use Load Examples to see fictional answers for the current step. You’ll be asked before existing answers are replaced.",
     },
     {
       eyebrow: "09 / AFTER THE CONVERSATION",
-      title: "What happened after the conversation?",
+      title: "Did the work actually stop?",
       intro:
-        "Once you have talked, come back and see what changed. What helped, what still needs attention, and who needs to hear from you?",
+        "You agreed to postpone the report fix. Then the account manager messages its developer to ask whether they could “just finish it anyway.” This is where a priority decision either holds or disappears.",
       sections: [
         {
-          title: "Follow up",
-          body: "Check that people followed the agreed choice. Did the postponed work actually wait, or did the team end up doing both? Were the affected customers told? Use what happened to improve the next decision.",
+          title: "Give the team one plan",
+          body: "Confirm what starts, what pauses, and what continues. Ask whether anyone has received a different instruction. If they have, resolve it with the requester and the person who made the call; do not leave the developer to choose whom to disappoint.",
         },
         {
-          title: "Try saying it out loud",
-          body: "Read your message aloud. Does it sound like you? If a phrase feels awkward, use the words you’d say in the meeting. Someone you trust can help you spot anything that’s hard to follow.",
+          title: "Tell the customer who is waiting",
+          body: "Check that the account manager explained the change and that any new date came from the team. Two person-days of displaced effort do not automatically mean a two-day calendar delay.",
         },
         {
-          title: "Keep the record",
-          body: "Copy, download, or print anything you need to keep. Shared answers save in this browser on this device; they don’t follow you to another device. Private notes aren’t saved. Export before clearing a draft or browser data.",
+          title: "Check whether Friday was worth the interruption",
+          body: "What did the customer learn or decide from the demo? Did the report fix really pause, or did someone do both in the evening? Record both the useful result and the work it cost.",
         },
         {
-          title: "Check what happened",
-          body: "Was the decision understood? Did someone act? Did the change help the people it was meant to help? If nobody responded, find out who can decide and agree when to ask again. Silence doesn’t mean yes.",
+          title: "Address the repeat request",
+          body: "If this keeps happening, ask Sales to check the purpose and effort of a demo before promising it. If nobody can make competing priorities stick, use Mandate Reset for that decision problem. Export the brief if you need a shared record; Lab drafts stay in this browser.",
         },
       ],
       callout:
-        "You don’t have to fix the whole organization in one conversation. Leave knowing what happens next, who will do it, and when you’ll check back.",
+        "A useful priority decision gives someone permission to leave work unfinished while they do the work you chose.",
     },
   ],
   "mandate-reset": [
@@ -486,19 +489,19 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
       eyebrow: "01 / START HERE",
       title: "You’re responsible. But can you make the call?",
       intro:
-        "You’re responsible for a release, but you can’t decide what waits when more work is added. Let’s take one of those decisions and work out what you need from the people involved.",
+        "Your manager says “you own the release.” A director asks a developer to add something, your plan changes, and you are still the person explaining the missed date. You need to know which calls are yours and whether your manager will back them.",
       sections: [
         {
-          title: "Choose one decision",
-          body: "Start with a specific problem: who can approve adding another feature to this release? A conversation about that is easier to resolve than a general request for more authority.",
+          title: "Bring the decision you tried to make",
+          body: "Use one recent request you deferred, escalated, or could not resolve. What happened after you gave your answer? This shows whether permission is missing, the arrangement is unclear, or someone is overriding an agreement.",
         },
         {
           title: "Find out how it works today",
           body: "Who brings the options? Who must be consulted? Whose approval is required? Who makes the final call? These may be different people.",
         },
         {
-          title: "Ask for a practical change",
-          body: "You might ask to make that decision within agreed limits. Or ask the person who retains it to respond within a day, with an agreed plan while you wait.",
+          title: "Ask for permission that holds in practice",
+          body: "You might ask to sequence work within an agreed release goal. If the director keeps that call, ask when they will answer and who covers for them. In either case, agree what happens when another director gives the team a different instruction.",
         },
         {
           title: "Check the answer",
@@ -510,29 +513,30 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
     },
     {
       eyebrow: "02 / BEFORE THE CONVERSATION",
-      title: "You can be frustrated and still be curious.",
+      reflectionTime: "allow 5-10 min for your notes",
+      title: "“Shouldn’t I be able to handle this myself?”",
       intro:
-        "It’s frustrating to be responsible for something you can’t decide. Let’s put that problem into words and leave room to hear how the other people see it.",
+        "You may worry that asking for help makes you look less senior. So you negotiate privately, chase every answer, and keep saying the date is yours. Prepare to show where influence stops and a decision needs backing.",
       sections: [
         {
-          title: "What actually happened?",
-          body: "Start with what was said or done. “They asked for Friday” tells us what happened. “They don’t care about the team” is an explanation you may have added. What could you ask to find out what’s behind the request?",
+          title: "Bring two moments, not a character judgment",
+          body: "“On Tuesday I deferred the reports request. On Wednesday a director asked a developer to start it. At Friday’s review I was asked why booking had slipped.” Describe what happened without claiming to know anyone’s motive.",
         },
         {
-          title: "Why do you care?",
-          body: "Who would be better off if this worked? Perhaps a customer could stop chasing an answer, or your team could finish something it promised. Say why that matters to you, and ask what matters to the other person too.",
+          title: "Check whether you used the authority you have",
+          body: "Did you make a clear recommendation? Did you tell people the consequences? Did you seek permission for a decision already assigned to you? Ask your manager what they expected you to do differently.",
         },
         {
-          title: "What would better look like?",
-          body: "Imagine the next few weeks going well. What would people be doing differently? Describe that in ordinary words, then ask the other person what they would add or change.",
+          title: "Say what backing would look like",
+          body: "“If I defer a request within our agreed limits, will you support that call when someone challenges it? If you change it, can we also change the delivery expectation?” A job title alone does not answer those questions.",
         },
         {
-          title: "Keep these notes to yourself",
-          body: "These questions are for your own thinking; you can answer them without typing. If you use the Lab’s private notes, they stay only in the open tab. They aren’t saved or exported, and disappear when you refresh or leave.",
+          title: "Keep the request about the work",
+          body: "You want the team to know which instruction to follow. You do not need to win an argument about who is in charge. Use private notes for the reaction you need to work through; they are not saved or exported and disappear when you refresh or leave.",
         },
       ],
       callout:
-        "An opening you can adapt: “I want us to find a way through this. Can we look at what is happening and work out what to do next?”",
+        "Try: “I want to own this properly. Can we agree which decisions I can make, and what happens when another director wants a different answer?”",
     },
     {
       eyebrow: "03 / WHO CAN DECIDE",
@@ -553,12 +557,18 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
           body: "Name who chooses what goes into the release, and who then builds, tests, communicates, or updates the plan. Also name who is expected to answer for the result.",
         },
         {
-          title: "Check your understanding",
-          body: "Is this written in a policy or agreement? Has the person confirmed it? Record what you have observed and what still needs checking. Someone influential may affect the choice without having formal permission to block it.",
+          title: "Compare the written role with the last decision",
+          body: "Who was supposed to decide? Who actually changed the plan? Bring both to your manager. An influential director may need to be consulted, but that does not automatically make every request an approved instruction to the team.",
         },
       ],
       callout:
         "Use this map to check your understanding with the people named. Any change to who can decide still needs their agreement.",
+      sources: [
+        {
+          name: "Further reading: Bain’s RAPID decision roles",
+          url: "https://www.bain.com/insights/rapid-decision-making/",
+        },
+      ],
     },
     {
       eyebrow: "04 / EXPLAIN THE PROBLEM",
@@ -575,8 +585,8 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
           body: "What waits? Who gets conflicting instructions? Which customer promise is now at risk? Use things you have seen. Label estimates as estimates.",
         },
         {
-          title: "Ask for one change",
-          body: "“Could all new requests go through the product director before they enter the plan?” Name the decision, the person, and any limits.",
+          title: "Ask your manager to own their part",
+          body: "“Could you confirm with the directors that new requests need a release decision before a developer starts them?” Do not agree to enforce a rule your manager will not explain or support. Ask what they will do when that route is bypassed.",
         },
         {
           title: "Keep necessary approvals",
@@ -605,8 +615,8 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
           body: "Connect the date to the work. In the example, the team needs the arrangement confirmed before Monday's planning meeting.",
         },
         {
-          title: "Choose a way to check it",
-          body: "After the next two requests, ask whether someone made the call in time and the team received one clear plan. An agreement nobody uses needs another conversation.",
+          title: "Test it when someone disagrees",
+          body: "Agree to review the next two requests, including one that challenges the plan. Did your decision stand? Did the director answer in time? Did the team get one instruction? A quiet week alone does not show that the arrangement works.",
         },
       ],
       callout:
@@ -624,15 +634,15 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
         },
         {
           title: "“You need to influence people”",
-          body: "“Who should I speak to, and who makes the final call? What should the team do while I’m getting an answer?”",
+          body: "“I will talk through the options. If we still disagree, who makes the call? Last time the team received two instructions. What should they do then?” Ask for the point at which the decision moves to someone with the authority to settle it.",
         },
         {
           title: "“You already own it”",
           body: "“Can I postpone a director's new request to protect the release date? If so, could you confirm that with the directors and the team?”",
         },
         {
-          title: "“We can’t give you that authority”",
-          body: "Ask for a timely decision from the person who keeps it. If no workable arrangement is agreed, record the problem and raise it through the appropriate manager. Stay within the authority you actually have.",
+          title: "“I can’t give you that authority”",
+          body: "“Then I need you to make these calls in time for the team to act. Can we agree a response time, a backup, and what they do while waiting?” If neither authority nor a workable route is available, ask your manager which delivery expectations must change.",
         },
       ],
       callout:
@@ -688,33 +698,33 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
         },
       ],
       callout:
-        "Choose Copy, Download .txt, or Print after reviewing the document. A proposal remains a proposal until the person agrees.",
+        "Choose Copy, Download .txt, or Print after reviewing the document. A proposal remains a proposal until the person agrees. Use Load Examples to see fictional answers for the current step. You’ll be asked before existing answers are replaced.",
     },
     {
       eyebrow: "09 / AFTER THE CONVERSATION",
-      title: "What happened after the conversation?",
+      title: "Will the agreement survive the next director’s request?",
       intro:
-        "Once you have talked, come back and see what changed. What helped, what still needs attention, and who needs to hear from you?",
+        "A supportive one-to-one is a start. The test comes when someone asks the team to do something different. Your manager’s response matters as much as the wording you agreed.",
       sections: [
         {
-          title: "Follow up",
-          body: "Confirm the arrangement with everyone affected. On the next request, check who decided, how long it took, and whether the team knew what to do. If the same problem continues, bring that example back to the person who agreed to help.",
+          title: "Have the person with authority explain it",
+          body: "Ask your manager to confirm the arrangement with the directors and team. Include which decisions are yours, which remain theirs, and how a disagreement gets resolved. You should not have to establish their agreement through private persuasion.",
         },
         {
-          title: "Try saying it out loud",
-          body: "Read your message aloud. Does it sound like you? If a phrase feels awkward, use the words you’d say in the meeting. Someone you trust can help you spot anything that’s hard to follow.",
+          title: "Bring back the first exception",
+          body: "“We agreed new requests would come through you. This one went straight to a developer. Which instruction should they follow?” Check whether this is an intentional exception and what changes as a result.",
         },
         {
-          title: "Keep the record",
-          body: "Copy, download, or print anything you need to keep. Shared answers save in this browser on this device; they don’t follow you to another device. Private notes aren’t saved. Export before clearing a draft or browser data.",
+          title: "If the answer is still “just make it work”",
+          body: "Set out the result you are being asked to deliver, the decisions outside your control, and the support you have requested. Ask your manager to reconcile them. Do not imply that completing this exercise creates authority the organization has not given you.",
         },
         {
-          title: "Check what happened",
-          body: "Was the decision understood? Did someone act? Did the change help the people it was meant to help? If nobody responded, find out who can decide and agree when to ask again. Silence doesn’t mean yes.",
+          title: "Make the arrangement usable without you",
+          body: "Keep a short record where requesters and developers can find it: who decides, within what limits, how to reach them, and what happens while waiting. Review it after two requests. Export your Lab notes if you need a shared copy; drafts stay in this browser.",
         },
       ],
       callout:
-        "You don’t have to fix the whole organization in one conversation. Leave knowing what happens next, who will do it, and when you’ll check back.",
+        "The result you want is a decision the team can rely on, including when someone more senior prefers another answer.",
     },
   ],
   "when-the-team-goes-quiet": [
@@ -722,11 +732,11 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
       eyebrow: "01 / START HERE",
       title: "The meeting was quiet. The conversation afterward wasn’t.",
       intro:
-        "You asked if there were any concerns. Nobody said much. Later, someone tells you what they were worried about. You’re glad to know. You also wish you’d heard it earlier.",
+        "You’re the PM or Product Owner trying to get a release plan agreed. You ask for concerns, hear very little, and move on. Later, an analyst tells you about a problem they tried to raise. You wish they had spoken up. Then you remember cutting the question short.",
       sections: [
         {
-          title: "Start with one moment",
-          body: "Choose a meeting you were part of. What happened just before the room went quiet? You don’t need to explain the whole team’s culture to begin.",
+          title: "Start with the meeting you helped shape",
+          body: "Choose one planning, review, or team meeting you were part of. What did you say just before people went quiet? You may not manage these colleagues, but how you handle their questions still affects what you get to hear.",
         },
         {
           title: "Give yourself five minutes",
@@ -755,8 +765,8 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
           body: "“I asked for concerns and moved on after a few seconds” is something you can check. “Nobody cares” is a conclusion. Keep those separate.",
         },
         {
-          title: "Look at your part",
-          body: "Did you interrupt, answer your own question, or explain why the plan couldn’t change before anyone spoke? Notice what you can own without making the conversation about your guilt.",
+          title: "Look at how you presented the decision",
+          body: "Did you ask for input after telling people the date could not move? Did you explain your solution before asking what they saw? Say which parts are still open to influence. People cannot help shape a decision you present as settled.",
         },
         {
           title: "Ask yourself who was missing",
@@ -808,7 +818,7 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
         },
         {
           title: "Say it back in your own words",
-          body: "“Let me just synthesize this back to you to make sure I understand.” Then give a short account of what you heard. Or use: “Let me check I’ve got this.”",
+          body: "“Let me check I’ve got this. You wanted the report checked before we agreed to Friday.” Keep it short enough for them to correct. Do not turn their answer into a speech about how you meant well.",
         },
         {
           title: "Leave room for a correction",
@@ -829,8 +839,8 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
         "A good conversation matters. What happens in the next meeting will give people something more to go on.",
       sections: [
         {
-          title: "Choose something you control",
-          body: "You might send the plan earlier, stop interrupting, or ask what could go wrong before presenting your own view. Pick something you can actually do.",
+          title: "Choose something in your part of the meeting",
+          body: "As PM, you can explain the user need and the constraints without presenting every delivery choice as settled. Send the proposal early, say what needs a decision, and let the people doing the work explain what they see. Agree meeting changes with whoever facilitates it.",
         },
         {
           title: "Ask whether it would help",
@@ -889,8 +899,8 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
           body: "“Did you have enough information and time to raise a concern? What happened when you did?” More talking on its own doesn’t prove people are being heard.",
         },
         {
-          title: "Notice what changed in the work",
-          body: "Did a question help you catch a problem or improve the plan? Did someone get an answer to a concern that used to go nowhere? Look for those moments.",
+          title: "Notice whether a concern changed a decision",
+          body: "Did the team check the report before confirming Friday? Did the analyst get an answer, even if the release plan stayed the same? Counting how many people spoke will not tell you whether their judgment mattered.",
         },
         {
           title: "Keep adjusting",
@@ -954,15 +964,3 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
     },
   ],
 };
-
-LEADERSHIP_GUIDE_PAGES["mandate-reset"][2].sources = [
-  {
-    name: "Further reading: Bain’s RAPID decision roles",
-    url: "https://www.bain.com/insights/rapid-decision-making/",
-  },
-];
-
-for (const slug of ["priority-whiplash", "mandate-reset"]) {
-  LEADERSHIP_GUIDE_PAGES[slug][7].callout +=
-    " Use Load Examples to see fictional answers for the current step. You’ll be asked before existing answers are replaced.";
-}

@@ -17,6 +17,7 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfgen import canvas
 from reportlab.platypus import Paragraph, Table, TableStyle
+from guide_layout import cover_signature, section_reading_label, reading_reference
 
 ROOT = Path(__file__).resolve().parents[1]
 AUDIENCE = sys.argv[1] if len(sys.argv)>1 else "pm"
@@ -94,23 +95,13 @@ def cover(c):
     c.setFillColor(CREAM);c.rect(0,0,W,H,fill=1,stroke=0)
     c.setFillColor(FOREST);c.setFont("GuideBold",9);c.drawString(M,799,"REBEL LEADERS / FIELD TOOL 01")
     c.setFillColor(INK);c.setFont("GuideSerif",55);c.drawString(M,705,"AI Stalemate")
-    if AUDIENCE == "lead-dev":
-        c.setFillColor(FOREST);c.setFont("GuideSans",10);c.drawString(M,670,f"THE {ROLE} FIELD GUIDE")
+    c.setFillColor(FOREST);c.setFont("GuideSans",10);c.drawString(M,670,f"THE {ROLE} FIELD GUIDE")
     photograph=BytesIO()
     portrait = "ai-stalemate-library-hero-v1.webp" if AUDIENCE == "pm" else "ai-stalemate-hero-v2.webp"
     # Use the original photograph without the website's text gradient.
     with Image.open(ROOT / "client/public/assets/field-tools" / portrait) as source:source.convert("RGB").save(photograph,"JPEG",quality=95)
     photograph.seek(0);c.drawImage(ImageReader(photograph),M,290,width=CW,height=CW*941/1672)
-    if AUDIENCE == "lead-dev":
-        # The PDF holds the quiet, settled state of the signature over the empty wall.
-        c.saveState()
-        c.setFillColor(colors.HexColor("#dce3d8"));c.setFillAlpha(.60)
-        signature = c.beginText(M+44, 290+(CW*941/1672)*.50)
-        signature.setFont("GuideSans",8);signature.setCharSpace(1.5)
-        signature.textOut("HOPE IS REBELLIOUS.");c.drawText(signature)
-        c.restoreState()
-    else:
-        c.setFillColor(FOREST);c.setFont("GuideSans",10);c.drawString(M,267,f"THE {ROLE} FIELD GUIDE")
+    cover_signature(c,M,290,CW,CW*941/1672)
     paragraph(c,("Explain the opportunity. Work out the next step with your lead." if AUDIENCE == "pm" else "Your team is being asked to build differently. Prepare your recommendation."),M,243,CW,"cover")
     c.setStrokeColor(LINE);c.line(M,153,W-M,153)
     c.setFillColor(INK);c.setFont("GuideBold",11);c.drawString(M,128,"Nic Payne")
@@ -118,7 +109,9 @@ def cover(c):
     c.setFillColor(FOREST);c.setFont("GuideSans",8)
     c.linkURL(LAB_URL,(M,25,W-M,76),relative=0);c.drawString(M,76,"OPEN YOUR "+ROLE+" LAB >")
     c.setFillColor(MUTED)
-    if AUDIENCE != "lead-dev":c.drawString(M,58,"HOPE IS REBELLIOUS.")
+    c.setFont("GuideSans",7)
+    c.drawString(M,58,"Reading times are approximate. Allow longer for notes and conversations.")
+    c.setFont("GuideSans",8)
     c.drawString(M,39,"WORKING EDITION / REBEL-LEADER.COM");c.showPage()
 
 def chapter(c, data, number):
@@ -130,6 +123,7 @@ def chapter(c, data, number):
     c.setStrokeColor(GOLD)
     c.line(W - M - 74, 795, W - M, 795)
     y = paragraph(c, data["title"], M, 756, style="title") - 18
+    y = reading_reference(c,section_reading_label(data),M,y)
     y = paragraph(c, data["intro"], M, y, style="intro") - 26
     if data.get("table"):
         table = Table(data["table"], colWidths=[CW * .54, CW * .23, CW * .23], rowHeights=23)
@@ -181,11 +175,12 @@ def companion(c, data, number):
     title = Paragraph(escape(data["title"]), white_title)
     _, th = title.wrap(CW, H)
     title.drawOn(c, M, H-72-th)
+    reading_reference(c,section_reading_label(data),M,H-84-th)
     intro_style = ParagraphStyle("white_intro", parent=styles["body"], textColor=INK, fontSize=9.5, leading=14)
     intro = Paragraph(escape(data["intro"]), intro_style)
     _, ih = intro.wrap(CW, H)
-    intro.drawOn(c, M, H-92-th-ih)
-    assert 92+th+ih <= 195, data["title"]
+    intro.drawOn(c, M, H-106-th-ih)
+    assert 106+th+ih <= 201, data["title"]
     top = H-240
     gap = 14
     cardw = (CW-gap)/2

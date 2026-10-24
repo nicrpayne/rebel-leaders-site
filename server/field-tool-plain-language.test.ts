@@ -49,6 +49,7 @@ describe("plain language without changing saved work", () => {
     });
     expect(sample.p1).toContain("invitation link");
     expect(sample.p3).toContain("inaccurate totals");
-    expect(sample.finalDecision).toContain("hasn’t made the decision");
+    expect(sample.decisionStatus).toBe("PROPOSAL — awaiting a decision");
+    expect(sample.finalDecision).toBe("");
   });
 });

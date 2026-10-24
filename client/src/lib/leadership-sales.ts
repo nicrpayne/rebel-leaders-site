@@ -40,18 +40,18 @@ export const LEADERSHIP_SALES: Record<
       "Bring the new request and your current work list. Open Current Work in the Lab. Find out what the request needs, ask the team what would have to wait, and take that choice to the person who can decide.",
   },
   "mandate-reset": {
-    subtitle: "Ask for the decision you need to do the job.",
-    win: "A clear agreement about who decides and when.",
+    subtitle: "Ask your manager which calls are yours, and who will back them.",
+    win: "A specific request your manager can answer.",
     takeaway:
-      "Leave with a Decision Request that says what is stuck, what needs to change, and what you will do while waiting.",
+      "Leave with a Decision Request: what happened, which call you need to make, and what backing you need when someone overrides it.",
     sampleTitle: "Who gets to add another feature?",
     sample:
-      "REQUEST\nSend new feature requests to the product director before changing the plan. If a request will not fit, decide what waits.\n\nSTATUS\nProposed. This way of working has not been agreed.\n\nNEXT STEP\nAsk for an answer within one working day. Keep the existing plan until a change is approved.",
+      "REQUEST\nCould you confirm that new requests need your decision before a developer starts them? If another director gives a different instruction, I need you to settle it and confirm what happens to the date.\n\nSTATUS\nProposed. This way of working has not been agreed.\n\nNEXT STEP\nAgree who answers within one working day and who covers when they are away. Check whether the next request follows that agreement.",
     question: "What if they cannot give me more authority?",
     answer:
-      "Ask who you should go to, how quickly they will answer, and what you should do while waiting. That may be enough to keep the work moving.",
+      "Ask who will make the call, how quickly they will answer, and who covers when they are away. Also ask what you will be held responsible for while that decision is outside your control.",
     firstMove:
-      "Bring one decision you keep getting stuck on. Open The Problem in the Lab. Write what you are expected to deliver and what you cannot decide. Check who can help before drafting your request.",
+      "Bring one decision you tried to make and what happened next. Open The Problem in the Lab. Use that example to ask your manager which calls are yours and what happens when someone gives the team a different instruction.",
   },
   "when-the-team-goes-quiet": {
     subtitle:

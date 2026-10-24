@@ -14,6 +14,9 @@ const page = (
   intro,
   sections: sections.map(([title, body]) => ({ title, body })),
   callout,
+  ...(eyebrow === "04 / BEFORE YOU TALK"
+    ? { reflectionTime: "allow 5-10 min for your notes" }
+    : {}),
   ...(sources ? { sources } : {}),
 });
 
@@ -336,7 +339,10 @@ export const AI_DEV_COMPANION = [
       title: item.name,
       body: `${item.why} Ask: ${item.devQuestion}`,
     })),
-    sources: AI_DEV_STARTER_READING.map(item => ({ name: item.name, url: item.url })),
+    sources: AI_DEV_STARTER_READING.map(item => ({
+      name: item.name,
+      url: item.url,
+    })),
     takeaway:
       "Try: ‘I haven’t used that workflow yet. Can you show me one real task, including what the person checks and where the tool needs help?’",
     step: 0,

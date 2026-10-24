@@ -8,6 +8,8 @@ import FieldToolsNav from "./FieldToolsNav";
 import { useFieldToolContent } from "./FieldToolGate";
 import { useEffect, useRef, useState } from "react";
 import AIGuideVisual from "./AIGuideVisual";
+import GuideReadingTime from "./GuideReadingTime";
+import { guideReadingTime } from "../../../../shared/field-tool-reading-time";
 
 export default function ChapterGuide({ slug }: { slug: string }) {
   const content = useFieldToolContent();
@@ -109,6 +111,10 @@ export default function ChapterGuide({ slug }: { slug: string }) {
           <p className="mt-6 font-ui text-xs text-[var(--ft-muted)]">
             By Nic Payne
           </p>
+          <p className="mt-3 max-w-2xl font-ui text-xs leading-6 text-[var(--ft-muted)]">
+            Times are approximate and cover the reading here. Allow longer for
+            your own notes and conversations. Use the sections you need.
+          </p>
         </div>
       </header>
       <div className="mx-auto grid max-w-6xl gap-10 px-5 py-14 md:px-10 lg:grid-cols-[.65fr_2fr] lg:py-20">
@@ -148,6 +154,7 @@ export default function ChapterGuide({ slug }: { slug: string }) {
               <h2 className="mt-4 font-display text-4xl font-semibold leading-tight tracking-[-.025em] md:text-5xl">
                 {chapter.title}
               </h2>
+              <GuideReadingTime>{guideReadingTime(chapter)}</GuideReadingTime>
               <p className="mt-5 font-ui text-base leading-8 text-[var(--ft-muted)]">
                 {chapter.intro}
               </p>

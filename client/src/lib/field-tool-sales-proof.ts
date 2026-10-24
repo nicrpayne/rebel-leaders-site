@@ -12,15 +12,15 @@ export const SALES_PROOF: Record<
     name: "Deadline Reset",
     title: "Decision Update",
     context:
-      "Sales has promised online repair bookings and service reports for an event. Check what can be ready and who can change the promise.",
+      "Sales has promised customers a date before Engineering confirmed what can be ready. The PM needs to reset that promise without turning a conditional estimate into another guarantee.",
     sections: [
       {
         title: "RECOMMENDATION / WHAT WOULD CHANGE",
-        body: "Keep the date; deliver less first\nKeep the event, aim for working online booking, and explain that reports will come later. Confirm what we can promise after Thursday's calendar check.\nWork included: Aim to offer online booking on November 1 and add downloadable service reports later. The engineering lead needs to check the calendar connection on Thursday before confirming that plan.\nDate alternative: If both booking and reports must be ready together, ask the engineering lead for a new delivery estimate after Thursday's check. We do not have a reliable replacement date yet.\nCapacity: Keep the current team. Reserve time for checking the calendar connection and testing bookings. Do not assume anyone will work overtime.",
+        body: "Keep the date; deliver less first\nI'd keep the event and focus on booking. Reports can follow. Let's check the calendar connection on Thursday before we tell customers booking will be ready.\nWork included: Could we have booking ready for the event and add reports later? Our engineering lead needs to check the calendar connection on Thursday before we can promise that.\nAlternative date: If customers need both at once, we'll need another date. Let's get Thursday's results before we give them one.\nExtra help: Let's give the team time to check the calendar connection and test bookings. I'm not counting on anyone working evenings to get this done.",
       },
       {
         title: "DECISION NEEDED / WHO CAN MAKE IT / WHEN",
-        body: "Agree to focus on booking for the event, or ask for a new date when booking and reports can both be ready.\nSales director, who made the customer promise — Wednesday, before the next customer update",
+        body: "Can we focus on booking for the event and deliver reports later? If both need to launch together, can we agree to change the date?\nSales director, who made the customer promise — Wednesday, before the next customer update",
       },
       {
         title: "DECISION STATUS",
@@ -32,15 +32,15 @@ export const SALES_PROOF: Record<
     name: "Priority Whiplash",
     title: "Priority Decision Brief",
     context:
-      "The team has ten days of work time between them. Existing work needs all ten; a Friday demonstration needs two more. What would have to wait?",
+      "The PM is asked to squeeze a Friday demo into a full week. The same engineer is needed for that demo and a report fix an existing customer is waiting for. Someone needs to choose what waits.",
     sections: [
       {
-        title: "CAPACITY CHECK",
-        body: "Planning window: The remaining working time from now to Friday\nUsing entered person-days:\nAvailable: 10; existing work: 10; new request: 2.\nBefore changing the plan, work totals: 12; work that does not fit: 2.\nOne person-day is one person working for one day. These estimates do not calculate a finish date. How we estimated them: Fictional estimates: the people involved have 10 days of work time between them before Friday. Existing work needs all 10 days; the simple demonstration needs 2 more. These totals include support and review, with no overtime.",
+        title: "DOES THE WORK FIT",
+        body: "Dates covered: From now until Friday\nWork time, in person-days:\nAvailable: 10; existing work: 10; new request: 2.\nBefore changing the plan, work totals: 12; work that does not fit: 2.\nOne person-day is one person working for one day. These estimates do not calculate a finish date. How we estimated them: Fictional estimates checked with the lead: 10 person-days available before Friday and 10 already planned. The demo adds 2. The same developer is needed for the demo and report fix. Support and review are included; extra hours aren't.",
       },
       {
         title: "RECOMMENDATION / WHAT WOULD WAIT",
-        body: "Narrow the request\nUse a simple clickable demonstration for Friday only if we agree to delay the report correction. It lets the customer react to the idea without asking the team to build the full feature.\nWhat moves: Make a simple clickable demonstration and put off two days of work on the incorrect report totals. Check the new report-fix date with the team before promising it.\nConsequence: The customer waiting for accurate report totals would wait longer. Their account manager needs the revised date and must tell them what is happening.",
+        body: "Narrow the request\nI'd make the small demo if we're willing to delay the report fix. If not, let's use the sketches. We don't need to build the whole feature for this meeting.\nWhat would wait: We could make a clickable demo, but we'd have to put two days of report fixes on hold. I'll check with the team before giving that customer a new date.\nWhat this would mean for people: The customer with the wrong report figures would wait longer. Their account manager needs to explain the delay and agree a new date with them.",
       },
       {
         title: "DECISION STATUS",
@@ -52,15 +52,15 @@ export const SALES_PROOF: Record<
     name: "Mandate Reset",
     title: "Decision Request",
     context:
-      "Several directors ask for more features; the PM cannot turn them down. Ask for one person to decide which requests change the plan.",
+      "The PM is told to own the release, but directors keep changing the work. Prepare a specific request to the manager: which decisions can the PM make, and who will back them when challenged?",
     sections: [
       {
         title: "WHAT I CANNOT DECIDE / WHY IT MATTERS",
-        body: "I am held responsible for the release date, but directors can add work and I cannot say what should wait. We have no agreed way to get a quick decision.\nDifferent directors keep asking developers to add features. I am expected to meet the original date, but cannot postpone those requests.",
+        body: "I'm responsible for the date, but I can't stop more work being added. When two requests clash, we don't know who to ask for a quick answer.\nOn Tuesday I deferred the reports request. On Wednesday a director asked a developer to start it anyway. On Friday I was asked why booking had slipped.",
       },
       {
         title: "WHAT I AM ASKING FOR / LIMITS",
-        body: "Send new requests to the product director before adding them to the team's plan. The director should say whether to add them now and, if they do not fit, what should wait.\nKeep the agreed budget and the required security and software checks. This changes how we choose work; it does not remove those approvals.\nRequired approval: The security reviewer must approve the customer-data checks. The finance manager approves extra spending. The engineering lead confirms that the software is ready to release.",
+        body: "Could you confirm that new requests need your decision before a developer starts them? I'd bring you the options. If another director gives a different instruction, I need you to settle it and confirm what happens to the date.\nWe'd keep the same budget and all the security and release checks. I'm asking to change how we choose the work, not skip those checks.\nRequired approval: Security still needs to approve how we protect customer data. Finance signs off extra spending. Our engineering lead confirms the software is ready to go out.",
       },
       {
         title: "DECISION STATUS",
@@ -75,15 +75,15 @@ export const SALES_PROOF: Record<
       "A data analyst starts to raise a concern about a release. The PM moves the meeting on. Later, the analyst explains that a report Support relies on may miss the new bookings. The PM needs to hear what was missed and look at how they handled the question.",
     sections: [
       {
-        title: "MY NEXT STEP",
+        title: "WHAT I WILL DO NEXT / WHEN",
         body: "Invite the analyst to talk today. Check what needs to happen with the report separately; don’t wait for the next team meeting to deal with that.",
       },
       {
-        title: "A CHANGE I’M PROPOSING",
+        title: "THE CHANGE",
         body: "At the next planning meeting, I’ll hear questions about the plan before I ask whether we’re ready to go ahead. If someone raises a concern, I’ll ask them to finish before I respond.",
       },
       {
-        title: "STATUS",
+        title: "WHERE WE ARE",
         body: "PROPOSAL — not discussed yet",
       },
     ],
@@ -118,7 +118,10 @@ export const SALES_PROOF: Record<
     context:
       "Explain the engineering concern, what supports it, and the next move you recommend to your PM.",
     sections: [
-      { title: "CONVERSATION STATUS", body: "PROPOSED — NOT YET AGREED" },
+      {
+        title: "CONVERSATION STATUS",
+        body: "PROPOSED — NOT YET AGREED",
+      },
       {
         title: "THE CHANGE BEING REQUESTED",
         body: "My PM wants us to use agents to build an internal app with restricted data and change how the team develops.",

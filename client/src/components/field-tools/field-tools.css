@@ -356,3 +356,12 @@
     box-shadow: none !important;
   }
 }
+/* Quiet reading reference; no badge, icon, progress meter, or timer. */
+.ft-reading-time {
+  font-family: var(--font-ui, sans-serif);
+  font-size: 12px !important;
+  font-weight: 400;
+  line-height: 1.5 !important;
+  color: var(--ft-muted);
+  margin: 12px 0 16px !important;
+}
