@@ -95,13 +95,22 @@ def cover(c):
     c.setFillColor(FOREST);c.setFont("GuideBold",9);c.drawString(M,799,"REBEL LEADERS / FIELD TOOL 01")
     c.setFillColor(INK);c.setFont("GuideSerif",55);c.drawString(M,705,"AI Stalemate")
     if AUDIENCE == "lead-dev":
-        c.setFillColor(FOREST);c.setFont("GuideSerif",19);c.drawString(M,670,"Hope is rebellious.")
+        c.setFillColor(FOREST);c.setFont("GuideSans",10);c.drawString(M,670,f"THE {ROLE} FIELD GUIDE")
     photograph=BytesIO()
     portrait = "ai-stalemate-library-hero-v1.webp" if AUDIENCE == "pm" else "ai-stalemate-hero-v2.webp"
     # Use the original photograph without the website's text gradient.
     with Image.open(ROOT / "client/public/assets/field-tools" / portrait) as source:source.convert("RGB").save(photograph,"JPEG",quality=95)
     photograph.seek(0);c.drawImage(ImageReader(photograph),M,290,width=CW,height=CW*941/1672)
-    c.setFillColor(FOREST);c.setFont("GuideSans",10);c.drawString(M,267,f"THE {ROLE} FIELD GUIDE")
+    if AUDIENCE == "lead-dev":
+        # The PDF holds the quiet, settled state of the signature over the empty wall.
+        c.saveState()
+        c.setFillColor(colors.HexColor("#dce3d8"));c.setFillAlpha(.60)
+        signature = c.beginText(M+26, 290+(CW*941/1672)*.56)
+        signature.setFont("GuideSans",8);signature.setCharSpace(1.5)
+        signature.textOut("HOPE IS REBELLIOUS.");c.drawText(signature)
+        c.restoreState()
+    else:
+        c.setFillColor(FOREST);c.setFont("GuideSans",10);c.drawString(M,267,f"THE {ROLE} FIELD GUIDE")
     paragraph(c,("Explain the opportunity. Work out the next step with your lead." if AUDIENCE == "pm" else "Your team is being asked to build differently. Prepare your recommendation."),M,243,CW,"cover")
     c.setStrokeColor(LINE);c.line(M,153,W-M,153)
     c.setFillColor(INK);c.setFont("GuideBold",11);c.drawString(M,128,"Nic Payne")
