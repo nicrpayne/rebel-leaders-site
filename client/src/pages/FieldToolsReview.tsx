@@ -23,7 +23,7 @@ const products: {
     name: "AI Stalemate",
     audience: "lead-dev",
     edition: "Lead Developer edition",
-    pages: 20,
+    pages: 21,
     image: "ai-stalemate-hero-v2.webp",
   },
   {

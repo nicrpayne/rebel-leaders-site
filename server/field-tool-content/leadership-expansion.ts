@@ -6,6 +6,7 @@ export type ConversationCompanion = {
   intro: string;
   cards: { title: string; body: string }[];
   takeaway: string;
+  sources?: { name: string; url: string }[];
 };
 export type WorkedScene = {
   title: string;

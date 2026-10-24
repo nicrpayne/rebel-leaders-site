@@ -18,7 +18,46 @@ const resource = (
   pmQuestion: devQuestion,
 });
 export const AI_DEV_RESOURCE_REVIEW_DATE = "2026-10-23";
+export const AI_DEV_STARTER_READING: AIResource[] = [
+  resource(
+    "ai-start",
+    "1 / What does a coding assistant do?",
+    "Start here",
+    "GitHub introduction",
+    "https://docs.github.com/en/copilot/get-started/about-github-copilot",
+    "Read ‘How Copilot works.’ Compare code suggestions with tasks handed to an agent. The distinction is useful even if your team uses another tool.",
+    "Are we asking for suggestions we apply ourselves, or asking a tool to take actions?"
+  ),
+  resource(
+    "ai-workflows",
+    "2 / What makes it an agent?",
+    "Start here",
+    "Anthropic engineering explainer",
+    "https://www.anthropic.com/research/building-effective-agents",
+    "Read the first two sections: what agents are and when to use them. This older article explains the concepts; tool details have changed.",
+    "Which decisions would the engineer keep, and which would the agent make?"
+  ),
+  resource(
+    "ai-controls",
+    "3 / What can it reach or change?",
+    "Start here",
+    "GitHub responsible-use guidance",
+    "https://docs.github.com/en/copilot/responsible-use/agents",
+    "Read the capabilities, limitations, and controls for the mode you are considering. Local and cloud agents can have different access. Check your chosen tool’s documentation too.",
+    "What code, data, and commands can it access, and where does a person approve the work?"
+  ),
+  resource(
+    "ai-first-task",
+    "4 / Where could we start?",
+    "Start here",
+    "GitHub task-selection guidance",
+    "https://docs.github.com/en/copilot/tutorials/cloud-agent/get-the-best-results",
+    "Read ‘Choosing the right type of tasks.’ Compare a small, clear change with work that needs broad context, sensitive access, or time to learn.",
+    "What could we fully review, and what would we need help understanding?"
+  ),
+];
 export const AI_DEV_STUDY: AIResource[] = [
+  ...AI_DEV_STARTER_READING,
   resource(
     "agent-tasks",
     "Choosing work for a coding agent",

@@ -1,5 +1,6 @@
 import { AI_DEV_COMPANION } from "./ai-dev-guide.ts";
-export function aiCompanionFor(audience: "pm" | "lead-dev") {
+import type { ConversationCompanion } from "./leadership-expansion.ts";
+export function aiCompanionFor(audience: "pm" | "lead-dev"): ConversationCompanion[] {
   if (audience === "lead-dev") return structuredClone(AI_DEV_COMPANION);
   const pm = audience === "pm";
   return [

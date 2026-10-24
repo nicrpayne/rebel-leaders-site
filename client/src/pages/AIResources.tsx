@@ -63,9 +63,9 @@ export default function AIResources() {
           {(content.audience === "lead-dev"
             ? [
                 {
-                  title: "What can the team own?",
-                  body: "Start with the coding-skills study. Consider what it can and cannot tell you about learning, debugging, and the support your team needs.",
-                  id: "skills",
+                  title: "New to AI development tools?",
+                  body: "Start with the four short readings under ‘Start here.’ Learn what the tool does, what it can access, and what you would need to check.",
+                  id: "ai-start",
                 },
                 {
                   title: "Who can access the data?",

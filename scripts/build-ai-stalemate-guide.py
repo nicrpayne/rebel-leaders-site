@@ -94,6 +94,8 @@ def cover(c):
     c.setFillColor(CREAM);c.rect(0,0,W,H,fill=1,stroke=0)
     c.setFillColor(FOREST);c.setFont("GuideBold",9);c.drawString(M,799,"REBEL LEADERS / FIELD TOOL 01")
     c.setFillColor(INK);c.setFont("GuideSerif",55);c.drawString(M,705,"AI Stalemate")
+    if AUDIENCE == "lead-dev":
+        c.setFillColor(FOREST);c.setFont("GuideSerif",19);c.drawString(M,670,"Hope is rebellious.")
     photograph=BytesIO()
     portrait = "ai-stalemate-library-hero-v1.webp" if AUDIENCE == "pm" else "ai-stalemate-hero-v2.webp"
     # Use the original photograph without the website's text gradient.
@@ -106,7 +108,8 @@ def cover(c):
     c.setFont("GuideSans",9);c.drawString(M,109,f"For you, the {ROLE.lower()}")
     c.setFillColor(FOREST);c.setFont("GuideSans",8)
     c.linkURL(LAB_URL,(M,25,W-M,76),relative=0);c.drawString(M,76,"OPEN YOUR "+ROLE+" LAB >")
-    c.setFillColor(MUTED);c.drawString(M,58,"HOPE IS REBELLIOUS.")
+    c.setFillColor(MUTED)
+    if AUDIENCE != "lead-dev":c.drawString(M,58,"HOPE IS REBELLIOUS.")
     c.drawString(M,39,"WORKING EDITION / REBEL-LEADER.COM");c.showPage()
 
 def chapter(c, data, number):
@@ -189,7 +192,14 @@ def companion(c, data, number):
         assert yy >= y-cardh+10, f"Card overflow: {card['title']}"
     y = top-2*(cardh+gap)-5
     y = paragraph(c, data["takeaway"], M, y, style="intro")-16
-    if data["after"] == 11:
+    if data.get("sources"):
+        for source in data["sources"]:
+            c.setFillColor(FOREST)
+            c.setFont("GuideBold", 8)
+            c.drawString(M, y, source["name"]+" >")
+            c.linkURL(source["url"], (M,y-2,W-M,y+10), relative=0)
+            y -= 17
+    elif data["after"] == 11:
         for resource_id in (["skills", "app-access", "agent-tasks"] if AUDIENCE == "lead-dev" else ["patterns", "shape-up", "owasp"]):
             resource = next(r for r in CONTENT["study"] if r["id"] == resource_id)
             c.setFillColor(FOREST)

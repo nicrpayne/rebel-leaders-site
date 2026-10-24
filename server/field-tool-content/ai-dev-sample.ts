@@ -18,7 +18,7 @@ export const AI_DEV_SAMPLE: Record<string, string> = {
   askOther:
     "What did the executive ask for? Is the priority this app, or a change in how all our development works?",
   changeRequested:
-    "Use agents to build an internal app and start changing how the team develops and ships. The app needs a restricted dataset that isn’t connected to our existing Azure setup.",
+    "Use agents to build an internal app and start changing how the team develops and ships. Our infrastructure doesn’t yet have the connection and permissions this dataset needs.",
   businessContext:
     "Fictional example. My PM says people are waiting too long for small internal tools. I want to understand who needs this app, what they do today, and what has already been promised.",
   counterpartConcern:
@@ -30,7 +30,7 @@ export const AI_DEV_SAMPLE: Record<string, string> = {
   alternatives:
     "Check whether an existing approved platform can meet the need. Otherwise, narrow the app and build it with ordinary code. We could separately explore agent assistance on one small sandbox task.",
   accessModel:
-    "The data owner needs to say which users may see or change which records. Platform needs to help us work out the connection, service identity, and how access is granted and removed. Entra sign-in alone won’t settle the data permissions.",
+    "The data owner needs to say which users may see or change which records. Platform needs to help us work out the connection, service identity, and how access is granted and removed. Company sign-in alone won’t settle the data permissions.",
   securityChecks:
     "Have the platform engineer review the design. Test allowed and denied requests at the server, including direct requests for another user’s records. Agree logging, secrets handling, and support ownership before using real data.",
   automationBoundary:

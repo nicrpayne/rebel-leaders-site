@@ -1,4 +1,5 @@
 import type { AIGuidePage } from "./leadership-guides.ts";
+import { AI_DEV_STARTER_READING } from "./ai-dev-resources.ts";
 
 const page = (
   eyebrow: string,
@@ -25,7 +26,7 @@ export const AI_DEV_GUIDE: AIGuidePage[] = [
     [
       [
         "You have reasons for being concerned",
-        "Perhaps the team is still learning how to test, debug, and review its own work. Perhaps the new app needs restricted data that has no access setup in your Azure environment. Faster code generation doesn’t settle either question. Start with what you can explain from the work in front of you.",
+        "Perhaps the team is still learning how to test, debug, and review its own work. Perhaps the new app needs restricted data, but your infrastructure doesn’t yet support the access it needs. Faster code generation doesn’t settle either question. Start with what you can explain from the work in front of you.",
       ],
       [
         "There may be something your PM sees too",
@@ -133,11 +134,11 @@ export const AI_DEV_GUIDE: AIGuidePage[] = [
   page(
     "06 / ACCESS AND INFRASTRUCTURE",
     "Who is allowed to see this data?",
-    "An executive asks for a small app using a restricted dataset. The app, user groups, and data connection are not already set up in Azure. The interface may be quick to build; the access decisions still need owners.",
+    "An executive asks for a small app using a restricted dataset. Your infrastructure doesn’t yet have the app, user groups, or data connection it needs. The interface may be quick to build; the access decisions still need owners.",
     [
       [
         "Sign-in is only part of the answer",
-        "Who may read or change which records? Who approves access and removes it when someone leaves or changes roles? Microsoft’s App Service documentation distinguishes authentication from finer-grained authorization. Having an Entra sign-in does not by itself establish the app’s data permissions.",
+        "Who may read or change which records? Who approves access and removes it when someone leaves or changes roles? Signing in tells the app who someone is; authorization determines what they may do. Your existing company sign-in does not by itself settle who can see this app’s data. Microsoft’s App Service documentation gives one platform-specific example of that distinction.",
       ],
       [
         "Check the system, not just the screen",
@@ -253,7 +254,7 @@ export const AI_DEV_GUIDE: AIGuidePage[] = [
   page(
     "11 / YOUR RECOMMENDATION",
     "What can you responsibly recommend now?",
-    "Your PM needs something they can act on. Explain what you support, what needs to change, and what decision or help you need from someone else.",
+    "Your PM needs something they can act on and take back to leadership. Explain what you support, what needs to change, and what decision or help you need from someone else.",
     [
       [
         "Be precise about the scope",
@@ -266,6 +267,10 @@ export const AI_DEV_GUIDE: AIGuidePage[] = [
       [
         "If you still disagree",
         "Write both positions accurately. Ask the relevant decision owner for a specific call, with the options and consequences. Say what the team will do while waiting and when you will return. Do not treat silence as agreement or let a proposed spike become a delivery promise.",
+      ],
+      [
+        "Help your PM explain it up the chain",
+        "Give them a short update in words you would both use: what you recommend, why, what help or decision is needed, and when you will return. Say what has been agreed and what is still a proposal. ‘Engineering said no’ leaves out the work someone could help unblock.",
       ],
     ],
     "Try: “I recommend preparing first. We need an access owner and review capacity. If we can resolve those, I can support this smaller next step. Until then, I’m not committing the team to ship it.”"
@@ -319,6 +324,21 @@ export const AI_DEV_COMPANION = [
     ],
     takeaway:
       "Listen for context that could change your recommendation. You are not committing to a solution by asking about the problem.",
+    step: 0,
+  },
+  {
+    after: 2,
+    eyebrow: "NEW TO THIS? / A SHORT READING PATH",
+    title: "You don’t have to know all the AI jargon.",
+    intro:
+      "If you haven’t worked with these tools, start here. Read the sections below in order, then bring the questions to someone who knows the proposed setup. You do not need to become an AI specialist before speaking with your PM.",
+    cards: AI_DEV_STARTER_READING.map(item => ({
+      title: item.name,
+      body: `${item.why} Ask: ${item.devQuestion}`,
+    })),
+    sources: AI_DEV_STARTER_READING.map(item => ({ name: item.name, url: item.url })),
+    takeaway:
+      "Try: ‘I haven’t used that workflow yet. Can you show me one real task, including what the person checks and where the tool needs help?’",
     step: 0,
   },
   {

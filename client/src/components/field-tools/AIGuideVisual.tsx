@@ -39,6 +39,17 @@ export default function AIGuideVisual({
       <p className="border-t border-[var(--ft-line)] pt-4 mt-5">
         {visual.takeaway}
       </p>
+      {visual.sources && (
+        <ol className="mt-5 space-y-3 text-sm">
+          {visual.sources.map(source => (
+            <li key={source.url}>
+              <a href={source.url} target="_blank" rel="noreferrer" className="underline underline-offset-4">
+                {source.name} ↗
+              </a>
+            </li>
+          ))}
+        </ol>
+      )}
       <Link
         className="mt-4 inline-block text-xs underline"
         href={`${base}/lab?step=${visual.step}`}
