@@ -14,7 +14,7 @@ Updated 27 October 2026. Launch scope: PM and Lead Developer editions, sold sepa
 - [x] Preserve existing answers, privacy, and proposal/agreement distinctions.
 - [x] Check both editions in the desktop browser, including three-answer output and private-note exclusion.
 - [ ] Recheck these latest changes at phone size. The browser viewport override did not change the measured 1280px testing tab; do not count it as a phone check.
-- [ ] Publish and verify the review preview.
+- [x] Publish and verify the review preview. Railway deployment 163398dd-34c8-49c5-ba81-394de3881e96 succeeded for application commit de0ee28; the deployed purchase/refund links and copy were checked. Live checkout remains disabled.
 
 ## 3. Explain purchases and support — Nic + Codex
 - [x] Nic approved 60 days, full refund, no explanation needed (27 October).
