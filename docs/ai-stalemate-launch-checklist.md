@@ -19,7 +19,7 @@ Updated 27 October 2026. Launch scope: PM and Lead Developer editions, sold sepa
 ## 3. Explain purchases and support — Nic + Codex
 - [x] Nic approved 60 days, full refund, no explanation needed (27 October).
 - [x] Add the agreed policy, support contact, and browser-local draft explanation to the purchase/access experience.
-- [ ] Confirm hello@rebel-leader.com reaches a mailbox Nic monitors. Found in the website's About and Residency contact links; forwarding and delivery are not verified.
+- [x] Confirm hello@rebel-leader.com reaches a mailbox Nic monitors. Squarespace forwards it to nicpaynedev@gmail.com; Nic confirmed a test email arrived on 27 October. Outgoing customer replies and transactional access emails are separate checks.
 - [ ] Verify the transactional email sender separately from the support inbox.
 
 Refund research: Lemon Squeezy lets sellers choose their policy; comparable digital guides offer 30 days (Refactoring.Guru) and 60 days (Refactoring UI), both full refunds. Nic approved: “Try it for 60 days. If it isn’t useful to you, email hello@rebel-leader.com and we’ll refund you in full. No explanation needed.”
@@ -42,7 +42,8 @@ Refund research: Lemon Squeezy lets sellers choose their policy; comparable digi
 - [ ] Verify the other edition stays locked; test returning and signing in from a second device.
 - [ ] Test full/partial refunds, duplicate/delayed webhooks, expired access links, and failed email/retry behavior.
 - [ ] Test gifts end to end or defer gifting for initial launch; do not count mocked tests as delivery verification.
-- [ ] Nic confirms support messages arrive and can be answered.
+- [x] Nic confirms an incoming support test message arrives (27 October).
+- [ ] Confirm Nic can reply to a support message and the sender receives the response.
 
 ## 6. Prepare and release — Codex, then Nic's production approval
 - [ ] Confirm the customer domain, then rebuild both PDFs with final links and remove Working Edition. Keep preview PDFs pointing to working preview routes until release.

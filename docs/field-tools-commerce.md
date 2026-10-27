@@ -2,7 +2,7 @@
 
 ## Buyer experience
 
-Nic approved a 60-day full-refund policy on 27 October 2026, without requiring a reason or proof of use. Customer help is hello@rebel-leader.com, the existing website contact address; inbox routing/delivery still needs confirmation. Public purchase/access/refund details live at `/field-tools/purchase-help` and are linked from purchase pages, sign-in help, and the Field Tools footer.
+Nic approved a 60-day full-refund policy on 27 October 2026, without requiring a reason or proof of use. Customer help is hello@rebel-leader.com, the existing website contact address. Squarespace forwards it to Nic's monitored Gmail inbox; Nic confirmed a test arrived on 27 October. Customer replies and transactional access emails still require separate verification. Public purchase/access/refund details live at `/field-tools/purchase-help` and are linked from purchase pages, sign-in help, and the Field Tools footer.
 
 AI Stalemate has two distinct paths:
 
