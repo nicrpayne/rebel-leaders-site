@@ -59,6 +59,12 @@ export default function FieldToolWelcome({
           <Link href={`${base}/lab`} className="ft-welcome-primary">
             Open my Lab <ArrowRight size={18} aria-hidden="true" />
           </Link>
+          {slug === "ai-stalemate" && (
+            <p className="mt-4 font-ui text-xs leading-6 text-[var(--ft-muted)]">
+              Start with a few sentences. You don’t need to read the whole Guide
+              first.
+            </p>
+          )}
         </div>
         <figure className="ft-welcome-portrait" data-ready={portraitReady}>
           <img
@@ -99,7 +105,11 @@ export default function FieldToolWelcome({
             <Link href={`${base}/guide`} className="ft-welcome-resource">
               <BookOpen size={24} aria-hidden="true" />
               <div>
-                <h3>Read the Field Guide first</h3>
+                <h3>
+                  {slug === "ai-stalemate"
+                    ? "Use the Field Guide when you need it"
+                    : "Read the Field Guide first"}
+                </h3>
                 <p>
                   See an example and get a feel for the questions before you try
                   your own situation.

@@ -362,16 +362,19 @@ function LabSession({ slug }: { slug: string }) {
     setEditNotice("Your answers have been restored.");
   }
 
+  const starterIds =
+    slug === "ai-stalemate" && step < 2
+      ? step === 0
+        ? ["happened", "protecting", "askOther"]
+        : content.audience === "lead-dev"
+          ? ["changeRequested", "engineeringPosition", "prerequisitePlan"]
+          : ["businessContext", "counterpartConcern", "prerequisitePlan"]
+      : null;
   const optionalIds = new Set(
-    slug === "ai-stalemate" && step === 1 && content.audience === "pm"
-      ? [
-          "businessBasis",
-          "accessModel",
-          "securityChecks",
-          "automationBoundary",
-          "teamReadiness",
-          "readinessSupport",
-        ]
+    starterIds
+      ? current.fields
+          .filter(field => !starterIds.includes(field.id))
+          .map(field => field.id)
       : slug === "ai-stalemate" && step === 2
         ? ["betRabbitHoles", "decisionRights", "deploymentPermission"]
         : [
@@ -409,7 +412,7 @@ function LabSession({ slug }: { slug: string }) {
   return (
     <main
       className={
-        "ft-lab min-h-screen bg-[var(--ft-paper)] text-[var(--ft-ink)]" +
+        "ft-lab ph-no-capture min-h-screen bg-[var(--ft-paper)] text-[var(--ft-ink)]" +
         (showOutput ? " ft-lab-print-output" : "")
       }
     >
@@ -436,6 +439,12 @@ function LabSession({ slug }: { slug: string }) {
                   : FIELD_TOOL_START[slug]) ??
                   "Let’s work through your situation, one question at a time."}
               </p>
+              {slug === "ai-stalemate" && (
+                <p className="mt-3 max-w-2xl font-ui text-xs leading-6 text-[var(--ft-muted)]">
+                  Start with the next conversation. You don’t need to finish the
+                  Guide or every Lab step. A few sentences are enough to begin.
+                </p>
+              )}
               {storageStatus && (
                 <p
                   role="status"
@@ -507,6 +516,15 @@ function LabSession({ slug }: { slug: string }) {
             <p className="mt-4 font-ui text-sm leading-6 text-[var(--ft-muted)]">
               {current.intro}
             </p>
+            {slug === "ai-stalemate" && step === 0 && (
+              <button
+                type="button"
+                onClick={() => setStep(1)}
+                className="mt-5 text-left font-ui text-sm text-[var(--ft-accent)] underline underline-offset-4"
+              >
+                Go straight to the conversation →
+              </button>
+            )}
 
             <details className="ft-lab-help mt-5">
               <summary className="cursor-pointer font-ui text-sm text-[var(--ft-accent)]">
@@ -598,9 +616,37 @@ function LabSession({ slug }: { slug: string }) {
               </>
             )}
             <div className="space-y-6">
+              {starterIds && (
+                <>
+                  <p className="font-ui text-xs leading-6 text-[var(--ft-muted)]">
+                    {step === 0
+                      ? "Three questions to begin. Think them through or jot down a few words. These private notes aren’t saved or included in anything you share."
+                      : "Start with these three. You can preview your notes now and add detail if it helps. Your next move stays a proposal until you record agreement below."}
+                  </p>
+                  {renderFields(
+                    current.fields.filter(field =>
+                      starterIds.includes(field.id)
+                    )
+                  )}
+                  {step === 1 && (
+                    <button
+                      type="button"
+                      onClick={() => openOutput("readiness-brief")}
+                      className="ft-action-primary bg-[var(--ft-tint)] px-5 py-3 font-ui text-sm font-semibold text-[var(--ft-ink)]"
+                    >
+                      Preview{" "}
+                      {content.audience === "lead-dev"
+                        ? "Conversation Notes"
+                        : "Next Step Together"}{" "}
+                      →
+                    </button>
+                  )}
+                </>
+              )}
               {renderFields(
                 current.fields.filter(
                   field =>
+                    !starterIds?.includes(field.id) &&
                     !optionalIds.has(field.id) &&
                     !PRIVATE_FIELD_IDS.has(field.id) &&
                     !(
@@ -612,12 +658,11 @@ function LabSession({ slug }: { slug: string }) {
               )}
               {current.fields.some(
                 field =>
-                  PRIVATE_FIELD_IDS.has(field.id) && !optionalIds.has(field.id)
+                  PRIVATE_FIELD_IDS.has(field.id) &&
+                  !optionalIds.has(field.id) &&
+                  !starterIds?.includes(field.id)
               ) && (
-                <details
-                  open={slug === "ai-stalemate"}
-                  className="border-l-2 border-[var(--ft-line)] pl-4"
-                >
+                <details className="border-l-2 border-[var(--ft-line)] pl-4">
                   <summary className="cursor-pointer font-ui text-sm font-semibold">
                     Private reflection · optional, not saved or exported
                   </summary>
@@ -626,7 +671,8 @@ function LabSession({ slug }: { slug: string }) {
                       current.fields.filter(
                         field =>
                           PRIVATE_FIELD_IDS.has(field.id) &&
-                          !optionalIds.has(field.id)
+                          !optionalIds.has(field.id) &&
+                          !starterIds?.includes(field.id)
                       )
                     )}
                   </div>
@@ -641,12 +687,21 @@ function LabSession({ slug }: { slug: string }) {
                     {slug !== "ai-stalemate"
                       ? "Optional help for this situation"
                       : step === 0
-                        ? "Picture six months from now · optional, private"
-                        : step === 2
-                          ? "Experiment permissions · optional"
-                          : "Costs, data access, and help for the team · optional"}
+                        ? "More private reflection · optional, not saved"
+                        : step === 1
+                          ? "Add context, concerns, or what you agreed · optional"
+                          : step === 2
+                            ? "Experiment permissions · optional"
+                            : "Costs, data access, and help for the team · optional"}
                   </summary>
                   <div className="mt-5 space-y-6">
+                    {slug === "ai-stalemate" && step === 1 && (
+                      <p className="font-ui text-xs leading-6 text-[var(--ft-muted)]">
+                        Use the questions that help. Answers you add here are
+                        saved and included in your notes, even when this section
+                        is closed.
+                      </p>
+                    )}
                     {renderFields(
                       current.fields.filter(field => optionalIds.has(field.id))
                     )}
@@ -762,6 +817,7 @@ function LabSession({ slug }: { slug: string }) {
               )}
             </div>
             {config.outputs?.some(item => item.fromStep <= step) &&
+              !atReadiness &&
               (slug !== "ai-stalemate" || step > 0) && (
                 <div className="mt-6 border-t border-[var(--ft-line)] pt-5">
                   <p className="font-ui text-xs leading-6 text-[var(--ft-muted)]">

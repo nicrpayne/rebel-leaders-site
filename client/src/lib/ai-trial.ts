@@ -48,6 +48,15 @@ const answer = (
 export function buildReadinessBrief(v: Values) {
   const optional = [
     ["WHAT WE WANT TO IMPROVE TOGETHER", [v.outcome, v.sharedVision]],
+    ["WHAT WE AGREE ON / WHAT WE STILL NEED TO ASK", [v.openQuestions]],
+    [
+      "WHAT WE WANT TO DO NEXT",
+      [
+        v.readinessDecision
+          ? fieldToolChoiceLabel("readinessDecision", v.readinessDecision)
+          : "",
+      ],
+    ],
     ["WHERE THE ESTIMATE CAME FROM / WHO WILL CHECK IT", [v.businessBasis]],
     [
       "WHAT THIS COULD MAKE POSSIBLE FOR THE TEAM OR COMPANY",
@@ -71,12 +80,6 @@ ${answer(v, "businessContext")}
 
 WHAT THE OTHER PERSON NEEDS OR IS WORRIED ABOUT
 ${answer(v, "counterpartConcern")}
-
-WHAT WE AGREE ON / WHAT WE STILL NEED TO ASK
-${answer(v, "openQuestions")}
-
-WHAT WE WANT TO DO NEXT
-${answer(v, "readinessDecision", "Choose what you want to do next.")}
 
 WHO WILL DO WHAT / WHEN WE WILL CHECK AGAIN
 ${answer(v, "prerequisitePlan")}

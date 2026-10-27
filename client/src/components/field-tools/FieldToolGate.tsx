@@ -77,6 +77,17 @@ export function FieldToolSignIn({
         </Link>
         <Link href={fieldToolBase(slug, audience)}>Back to the product</Link>
       </div>
+      <p className="mt-6 font-ui text-xs leading-6 text-[var(--ft-muted)]">
+        Trouble getting in?{" "}
+        <a className="underline" href="mailto:hello@rebel-leader.com">
+          Email hello@rebel-leader.com
+        </a>
+        .{" "}
+        <Link className="underline" href="/field-tools/purchase-help">
+          Access and refund help
+        </Link>
+        .
+      </p>
     </div>
   );
 }

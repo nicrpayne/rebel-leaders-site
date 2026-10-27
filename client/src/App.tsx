@@ -6,7 +6,8 @@ import { Toaster } from "@/components/ui/sonner";
 import { useClaimAnonymousResult } from "@/_core/hooks/useClaimAnonymousResult";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useLayoutEffect } from "react";
+import { isFieldToolPath, protectFieldToolPrivacy } from "./lib/analytics";
 import { Route, Switch, Redirect, useLocation } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
@@ -46,6 +47,9 @@ const PressureTest = lazy(() => import("./pages/PressureTest"));
 const FieldToolLab = lazy(() => import("./pages/FieldToolLab"));
 const FieldToolGuide = lazy(() => import("./pages/FieldToolGuide"));
 const FieldToolPurchase = lazy(() => import("./pages/FieldToolPurchase"));
+const FieldToolPurchaseHelp = lazy(
+  () => import("./pages/FieldToolPurchaseHelp")
+);
 const FieldToolAccess = lazy(() => import("./pages/FieldToolAccess"));
 const AIResources = lazy(() => import("./pages/AIResources"));
 const LeadershipWalkthrough = lazy(
@@ -66,16 +70,25 @@ function RouteLoading() {
 
 function Router() {
   const [location] = useLocation();
+  useLayoutEffect(() => {
+    protectFieldToolPrivacy(location);
+  }, [location]);
   return (
     <div
       className={
-        location.startsWith("/field-tools") || location === "/assessment"
-          ? "ft-theme"
-          : undefined
+        isFieldToolPath(location)
+          ? "ft-theme ph-no-capture"
+          : location === "/assessment"
+            ? "ft-theme"
+            : undefined
       }
     >
       <Suspense fallback={<RouteLoading />}>
         <Switch>
+          <Route
+            path="/field-tools/purchase-help"
+            component={FieldToolPurchaseHelp}
+          />
           <Route path="/" component={Home} />
           <Route path="/manifesto" component={Manifesto} />
           <Route path="/archives" component={Archives} />

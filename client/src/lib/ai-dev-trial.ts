@@ -21,7 +21,20 @@ const fields = [
   ["prerequisitePlan", "RECOMMENDED NEXT ACTION / OWNER / RETURN DATE"],
 ] as const;
 export function buildDevConversation(v: Values) {
-  return `AI STALEMATE — LEAD DEVELOPER CONVERSATION NOTES\n\nSTATUS: ${fieldToolChoiceLabel("conversationStatus", v.conversationStatus || "PROPOSED — NOT YET AGREED")}\n\n${fields.map(([id, label]) => `${label}\n${v[id]?.trim() || "Add what is relevant before sharing."}`).join("\n\n")}\n\nNEXT MOVE\n${fieldToolChoiceLabel("readinessDecision", v.readinessDecision || "Choose a next move.")}\n\n${[
+  const essential = new Set([
+    "changeRequested",
+    "engineeringPosition",
+    "prerequisitePlan",
+  ]);
+  return `AI STALEMATE — LEAD DEVELOPER CONVERSATION NOTES\n\nSTATUS: ${fieldToolChoiceLabel("conversationStatus", v.conversationStatus || "PROPOSED — NOT YET AGREED")}\n\n${fields
+    .filter(([id]) => essential.has(id) || v[id]?.trim())
+    .map(
+      ([id, label]) =>
+        `${label}\n${v[id]?.trim() || "Add what is relevant before sharing."}`
+    )
+    .join(
+      "\n\n"
+    )}${v.readinessDecision ? `\n\nNEXT MOVE\n${fieldToolChoiceLabel("readinessDecision", v.readinessDecision)}` : ""}\n\n${[
     ["sharedVision", "WHAT WE WANT TO MAKE BETTER"],
     ["businessBasis", "BASIS FOR THE BUSINESS ESTIMATE"],
     ["growthOpportunity", "WHAT THE TEAM WANTS TO LEARN"],

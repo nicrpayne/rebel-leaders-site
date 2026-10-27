@@ -9,6 +9,8 @@ export default function FieldToolsFooter() {
       >
         <Link href="/field-tools">All Field Tools</Link>
         <Link href="/about">About Nic</Link>
+        <Link href="/field-tools/purchase-help">Purchase & refunds</Link>
+        <a href="mailto:hello@rebel-leader.com">Get help</a>
         <a href="https://rebel-leader.com" target="_blank" rel="noreferrer">
           Rebel Leaders →
         </a>

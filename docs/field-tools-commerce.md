@@ -2,6 +2,8 @@
 
 ## Buyer experience
 
+Nic approved a 60-day full-refund policy on 27 October 2026, without requiring a reason or proof of use. Customer help is hello@rebel-leader.com, the existing website contact address; inbox routing/delivery still needs confirmation. Public purchase/access/refund details live at `/field-tools/purchase-help` and are linked from purchase pages, sign-in help, and the Field Tools footer.
+
 AI Stalemate has two distinct paths:
 
 - `/field-tools/ai-stalemate/pm`: PM landing page; append `/buy`, `/access`, `/guide`, or `/lab`.

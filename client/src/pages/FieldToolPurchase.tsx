@@ -8,6 +8,7 @@ import { trpc } from "@/lib/trpc";
 import RelatedFieldTools from "@/components/field-tools/RelatedFieldTools";
 import FieldToolsNav from "@/components/field-tools/FieldToolsNav";
 import FieldToolKitPreview from "@/components/field-tools/FieldToolKitPreview";
+import FieldToolsFooter from "@/components/field-tools/FieldToolsFooter";
 
 export default function FieldToolPurchase({
   slug,
@@ -129,10 +130,33 @@ export default function FieldToolPurchase({
                 Payment through Lemon Squeezy. Any tax is shown before you pay.
               </p>
             )}
+            <div className="mt-6 border-t border-[var(--ft-line)] pt-5 font-ui text-xs leading-6 text-[var(--ft-muted)]">
+              <p className="font-semibold text-[var(--ft-ink)]">
+                60-day full refund. No explanation needed.
+              </p>
+              <p className="mt-2">
+                If it isn’t useful to you, email{" "}
+                <a href="mailto:hello@rebel-leader.com" className="underline">
+                  hello@rebel-leader.com
+                </a>{" "}
+                within 60 days of purchase.
+              </p>
+              <p className="mt-2">
+                Read on any device. Lab drafts stay in the browser where you
+                write them.
+              </p>
+              <Link
+                href="/field-tools/purchase-help"
+                className="mt-3 inline-block underline underline-offset-4"
+              >
+                Purchase, access, and refund details →
+              </Link>
+            </div>
           </aside>
         </div>
       </section>
       <RelatedFieldTools slug={slug} audience={audience} />
+      <FieldToolsFooter />
     </main>
   );
 }
