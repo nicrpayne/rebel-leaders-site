@@ -1,0 +1,167 @@
+{
+  "date": "2026-10-13",
+  "scope": "Five products / six buyer paths; baseline and separate AI proposal review versions",
+  "refundPolicy": "Not set — author decision before paid launch",
+  "decisions": [
+    {
+      "feedback": "Checkout and purchase access are disabled",
+      "decision": "Accept as a launch gate",
+      "action_or_reason": "The deployment is deliberately a review preview. Kept it that way. Existing tests verify anonymous content/PDF denial, webhook checks, and preview being disabled in live mode. A real payment, receipt, email, second-device sign-in, cancellation, failure, duplicate purchase and refund journey still need an end-to-end release check."
+    },
+    {
+      "feedback": "Refund policy",
+      "decision": "Open decision",
+      "action_or_reason": "Nic confirmed no refund policy exists. No terms or guarantee were invented. Decide the policy and publish it before accepting payment."
+    },
+    {
+      "feedback": "Combative Lead Developer and Translator headlines",
+      "decision": "Accept; implemented",
+      "action_or_reason": "Changed to “Your PM sees an AI opportunity. You see what needs to be true.” and “They need a planning answer. You’re still learning the right solution.” These name the tension without assigning bad motives. The reviews disagree here; collaboration inside the product is the stronger basis for the choice."
+    },
+    {
+      "feedback": "Thin sales pages / invisible outputs",
+      "decision": "Accept; implemented",
+      "action_or_reason": "All six buyer paths now show a real Lab screenshot plus a readable excerpt generated from a current output builder and built-in fictional sample. These are examples, not customer testimonials. Mandate Reset also explains decision rights versus required approvals with a concrete situation."
+    },
+    {
+      "feedback": "Promise of a walkthrough video",
+      "decision": "Accept; implemented",
+      "action_or_reason": "Replaced “watch” and “Nic’s walkthrough” on sales pages with a written worked walkthrough and per-step interactive examples. The proposal’s dedicated walkthrough remains. No video was claimed or fabricated."
+    },
+    {
+      "feedback": "FAQ, audience fit, storage and access clarity",
+      "decision": "Accept with correction; implemented",
+      "action_or_reason": "Added buyer questions covering fit, limitations, browser-only shared drafts, tab-only private reflection, purchase-email access, exports and no required AI subscription. Rejected “no accounts” as a blanket claim: access and draft synchronization are different things."
+    },
+    {
+      "feedback": "Testimonials and buyer evidence",
+      "decision": "Partly accept",
+      "action_or_reason": "Fictional output examples supply immediate product proof. Customer quotes and outcome claims need real customer evidence and permission; none were invented."
+    },
+    {
+      "feedback": "Load Examples can replace work",
+      "decision": "Accept; implemented",
+      "action_or_reason": "A visible in-page dialog explains replacement, with Cancel focused by default. One-click Undo restores the previous answers and step until another edit. Example replacement stays scoped to the step; changing the AI next move also invalidates its dependent decision."
+    },
+    {
+      "feedback": "Priority Whiplash 10 / 10 / 2 example",
+      "decision": "Accept; fixed",
+      "action_or_reason": "The sample already contained the numbers, but the loader targeted step 0 instead of step 1 and a regular expression missed existingLoad and requestLoad. The loader now explicitly includes all three inputs in Displacement. Browser verification showed 12 demand / 10 available / 2 to displace."
+    },
+    {
+      "feedback": "First example click sometimes does nothing",
+      "decision": "Not confirmed as a separate defect",
+      "action_or_reason": "The reviewer itself notes possible automation timing. Current browser checks did not reproduce a dead first click. Replacing native confirmation removes the observed automation blocker. AI preparation examples intentionally have no invented experiment evidence."
+    },
+    {
+      "feedback": "Clear local draft lacks confirmation",
+      "decision": "Partly accept; improved",
+      "action_or_reason": "A native confirmation already existed. Replaced it with the same accessible in-page dialog, naming the lost draft and suggesting export first. The cancel path was checked; existing test drafts were not unnecessarily erased."
+    },
+    {
+      "feedback": "Blank visible status versus conservative export default",
+      "decision": "Accept; improved",
+      "action_or_reason": "Proposal and bet-acceptance defaults are now visible valid selections on fresh and migrated drafts. Choosing a blank status restores the conservative visible default. No readiness/next-move default is invented. The current builder already did not silently select PREPARE FIRST."
+    },
+    {
+      "feedback": "Stale output after changing AI path",
+      "decision": "Accept the underlying workflow risk; fixed",
+      "action_or_reason": "Outputs already recomputed from current values, so a blanket caching diagnosis was inaccurate. Editing now closes the output preview. Changing readiness resets the old decision to PAUSE, STOP or an unselected decision as appropriate. Evidence and notes are retained for review. Browser checks verified an old preview disappears and STOP exports correctly."
+    },
+    {
+      "feedback": "Raw output placeholders",
+      "decision": "Accept; improved",
+      "action_or_reason": "Replaced bracketed missing-value markers in active AI and leadership builders with prompts. Added specific prompts for outcomes, owners, dates, commitments and approvals. Missing critical conditions remain visible rather than being hidden to make an incomplete record look finished. User-entered text is not rewritten."
+    },
+    {
+      "feedback": "Output copy bugs",
+      "decision": "Accept; fixed",
+      "action_or_reason": "Capacity text now begins “Planning window,” avoiding “For The…”. The Deadline sample no longer repeats the qualitative-confidence disclaimer. Translator’s decoder now labels its confirmed-need field accurately."
+    },
+    {
+      "feedback": "Conditional judgment prompts",
+      "decision": "Accept in a bounded form; implemented",
+      "action_or_reason": "The output preview asks about a named date without a decision owner, an agreement without a recorded response, and an AI experiment without approval ownership or a stop rule. These prompts flag observable gaps without pretending the software can judge organizational readiness."
+    },
+    {
+      "feedback": "Remove Fictional case prefixes",
+      "decision": "Reject removal of provenance",
+      "action_or_reason": "Examples must stay clearly fictional in public proof and exported sample records. Removing that indication risks passing a teaching example off as real evidence. Ordinary user answers are unaffected."
+    },
+    {
+      "feedback": "AI Stalemate is two identical guides / must be renumbered",
+      "decision": "Reject the blanket claim; improve navigation",
+      "action_or_reason": "This is one product with two buyer paths, so both can remain Field Tool 01. Existing role-specific openings, prompts, shared context and guidance are verified by source and tests. Shared evidence standards are intentional. No measured 90% duplication was supplied. Added counterpart edition links and explicit PM/Lead Developer related-product links."
+    },
+    {
+      "feedback": "Which tool when chooser / overlap",
+      "decision": "Accept; implemented",
+      "action_or_reason": "Added a five-product comparison organized by the blocked decision and resulting output. Deadline, displacement, authority, stakeholder certainty and AI readiness can coexist, but they are distinct starting points. A new quiz or paid bundle is unnecessary for this fix."
+    },
+    {
+      "feedback": "Working Edition looks unfinished",
+      "decision": "Accept on commerce surfaces; implemented",
+      "action_or_reason": "Removed the term from purchase-page headings. No promise of future updates was added. Existing guide/cover edition labels remain an editorial decision; packaging was not regenerated in this pass."
+    },
+    {
+      "feedback": "Price formatting",
+      "decision": "Accept; implemented",
+      "action_or_reason": "Public facts explicitly say $47 USD, and purchase markup now includes a real space before USD as well as visual spacing. Prices and payment settings are unchanged."
+    },
+    {
+      "feedback": "Guide progress cue",
+      "decision": "Already present",
+      "action_or_reason": "The online Guide already tracks and highlights the current chapter with aria-current. Retained it instead of adding a second progress system."
+    },
+    {
+      "feedback": "Loading and step navigation",
+      "decision": "Partly accept; implemented and deferred",
+      "action_or_reason": "Added a branded access/content loading skeleton. Continue and step navigation now focus and scroll to the new heading, verified in the browser. No latency reduction is claimed: route-bundle/data performance needs a separately measured pass."
+    },
+    {
+      "feedback": "Guide boilerplate, voice and wider Rebel Leaders connection",
+      "decision": "Partly accept; no wholesale rewrite",
+      "action_or_reason": "Consistent instructions and closing practice help these short reference guides work independently. Retained their useful specificity and guardrails. Existing footer links provide a wider Rebel Leaders path. A stronger formation/practice passage is a later editorial choice; the review does not justify turning every focused tool into a manifesto."
+    },
+    {
+      "feedback": "Scenario details leak across unrelated guides",
+      "decision": "Not substantiated as stated",
+      "action_or_reason": "The four current non-AI guide sources contain no Entra, $500,000, or “prior roles and age” wording. Their prototype references fit the deadline/demo scenarios. Did not delete relevant context just because it also appears in AI discussions."
+    },
+    {
+      "feedback": "AI examples might identify a real workplace",
+      "decision": "Unverified; retain an author check",
+      "action_or_reason": "Fictional labels are retained. Source inspection cannot establish whether an anecdote was inspired by confidential or identifiable real events. Nic should confirm provenance before publication; no assurance was invented."
+    },
+    {
+      "feedback": "AI page count and audience labels are inconsistent",
+      "decision": "Reject as a reason to force uniformity",
+      "action_or_reason": "Ten-page core guides and thirteen-page AI editions serve different depths. Product Manager and Lead Developer labels communicate distinct audiences. The eighteen-page proposal remains a separate option with optional deeper resources, not required reading imposed on the baseline."
+    },
+    {
+      "feedback": "Adopt expanded proposal resources and discussion guide",
+      "decision": "Accept selectively",
+      "action_or_reason": "Kept the proposal’s discussion guide, walkthrough and resource library intact and optional. Applied the safety, proof and headline improvements to both review versions. Did not merge the eighteen-page proposal into the baseline automatically."
+    },
+    {
+      "feedback": "Cover contrast and visible reference URLs",
+      "decision": "Defer targeted visual pass",
+      "action_or_reason": "The reviews conflict about PDF visual quality. This pass did not alter the approved images or regenerate PDFs. Any cover/readability and printed-URL adjustment should be checked against the actual final rendered edition and synchronized with downloads."
+    },
+    {
+      "feedback": "Add “resources reviewed October 2026”",
+      "decision": "Defer until source verification",
+      "action_or_reason": "A review date should mean each external resource was actually checked for relevance and freshness. No new verification date was added without that work."
+    },
+    {
+      "feedback": "All journeys / PDF identity were fully verified",
+      "decision": "Qualify the evidence",
+      "action_or_reason": "The first review’s coverage claims conflict with its own untested list. Treat the second review’s byte-for-byte PDF result as its reported finding. This pass adds source, regression, build and browser evidence; it does not claim a real payment test, a full screen-reader audit, or native print verification."
+    },
+    {
+      "feedback": "Production must not show the review bypass",
+      "decision": "Accept; existing guard verified",
+      "action_or_reason": "The commerce tests verify preview defaults off and cannot bypass a live store. Deployment configuration and clean-browser production access remain explicit release checks."
+    }
+  ]
+}
