@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { ArrowRight, Copy, Download } from "lucide-react";
+import FirstRelease from "@/components/field-tools/FirstRelease";
 import ShippingAccessRequest from "@/components/field-tools/ShippingAccessRequest";
 import { hasAccessWork } from "@/lib/shipping-access";
 import ShippingActionPlanner from "@/components/field-tools/ShippingActionPlanner";
@@ -40,12 +41,8 @@ export default function ShippingSooner({ audience }: { audience: Audience }) {
       ? "own"
       : "example"
   );
-  const [workspace, setWorkspace] = useState<"access" | "workflow">(() =>
-    hasAccessWork(own.access)
-      ? "access"
-      : own.action.cause || DELIVERY_STAGES.some(({ id }) => own.now[id] !== "")
-        ? "workflow"
-        : "access"
+  const [workspace, setWorkspace] = useState<"slice" | "access" | "workflow">(
+    "slice"
   );
   const [storageFailed, setStorageFailed] = useState(false);
   const [message, setMessage] = useState("");
@@ -122,12 +119,12 @@ export default function ShippingSooner({ audience }: { audience: Audience }) {
             </Link>
           </div>
           <h1>
-            AI could speed up the build. <em>What gets it shipped?</em>
+            What’s the smallest useful thing <em>we could ship?</em>
           </h1>
           <p>
             {audience === "pm"
-              ? "You can see what AI could make possible. Work out what needs to happen around the code, and leave with a next step your lead can use."
-              : "You’re being asked to build and ship differently. Make the work around the code visible, and turn one blocker into a request someone can act on."}
+              ? "AI may help you build faster. Bring one feature and find a smaller release that still helps someone. Leave with a proposal to work through with your developer."
+              : "AI may help you build faster. Bring one feature and find a smaller release that still helps someone. Leave with a proposal to work through with your PM."}
           </p>
         </header>
 
@@ -137,42 +134,50 @@ export default function ShippingSooner({ audience }: { audience: Audience }) {
           aria-label="Choose what to work on"
         >
           <button
-            aria-pressed={workspace === "access"}
-            onClick={() => setWorkspace("access")}
+            aria-pressed={workspace === "slice"}
+            onClick={() => setWorkspace("slice")}
           >
-            <strong>We could build it. Who can use it?</strong>
-            <span>Draft the access request</span>
+            <strong>Find a smaller first release</strong>
+            <span>Keep the useful part. Decide what can wait.</span>
           </button>
           <button
             aria-pressed={workspace === "workflow"}
             onClick={() => setWorkspace("workflow")}
           >
-            <strong>Faster code. Still waiting to ship.</strong>
+            <strong>Work is already getting stuck</strong>
             <span>Look at reviews, decisions, rework, and release</span>
           </button>
         </div>
-        <div
-          className="shipping-mode"
-          role="group"
-          aria-label="Choose your work"
-        >
-          <button
-            aria-pressed={mode === "example"}
-            onClick={() => setMode("example")}
+        {workspace !== "slice" && (
+          <div
+            className="shipping-mode"
+            role="group"
+            aria-label="Choose your work"
           >
-            Try an example
-          </button>
-          <button aria-pressed={mode === "own"} onClick={() => setMode("own")}>
-            Use my own work
-          </button>
-          <span>
-            {mode === "example"
-              ? "An invented situation. Explore the options and make it your own."
-              : "Your work saves in this browser. The example stays separate."}
-          </span>
-        </div>
+            <button
+              aria-pressed={mode === "example"}
+              onClick={() => setMode("example")}
+            >
+              Try an example
+            </button>
+            <button
+              aria-pressed={mode === "own"}
+              onClick={() => setMode("own")}
+            >
+              Use my own work
+            </button>
+            <span>
+              {mode === "example"
+                ? "An invented situation. Explore the options and make it your own."
+                : "Your work saves in this browser. The example stays separate."}
+            </span>
+          </div>
+        )}
 
-        {workspace === "access" ? (
+        <div hidden={workspace !== "slice"}>
+          <FirstRelease key={audience} audience={audience} />
+        </div>
+        {workspace === "slice" ? null : workspace === "access" ? (
           <ShippingAccessRequest
             key={mode}
             draft={draft.access}
@@ -195,6 +200,7 @@ export default function ShippingSooner({ audience }: { audience: Audience }) {
               key={mode}
               name={draft.name}
               onAccessRequest={() => setWorkspace("access")}
+              onFirstRelease={() => setWorkspace("slice")}
               action={draft.action}
               audience={audience}
               example={mode === "example"}
@@ -462,12 +468,25 @@ export default function ShippingSooner({ audience }: { audience: Audience }) {
             </details>
           </>
         )}
+        <details className="shipping-other-tools">
+          <summary>Other tools we’ve tried</summary>
+          <p>
+            The earlier access-request builder is still available, along with
+            its saved drafts.
+          </p>
+          <button
+            className="shipping-text-button"
+            onClick={() => setWorkspace("access")}
+          >
+            Open the access-request builder <ArrowRight size={14} />
+          </button>
+        </details>
         <div className="shipping-product-connection">
           <p>
             <strong>Need to work through the AI conversation first?</strong> The
             Guide helps you understand each other’s position. The Lab helps you
-            put your own conversation notes together. Come here when you have a
-            piece of work to move forward.
+            put your own conversation notes together. Use this companion to turn
+            a feature you’ve discussed into a first release you can agree on.
           </p>
           <div>
             <Link href={`${base}/guide`}>
@@ -516,9 +535,10 @@ export default function ShippingSooner({ audience }: { audience: Audience }) {
           <details className="shipping-research">
             <summary>What informs the suggestions?</summary>
             <p>
-              These are practical experiments we’ve put together from delivery
-              practices and research. Your chosen situation determines the
-              options; this tool doesn’t diagnose your team.
+              The first-release prompts draw on DORA’s guidance on small,
+              independently useful changes. You choose the scope; the tool
+              doesn’t infer what can safely be deferred. The other suggestions
+              are practical experiments informed by delivery research.
             </p>
             <p>
               Atlassian’s 2026 report describes people’s reported experience,
@@ -527,19 +547,21 @@ export default function ShippingSooner({ audience }: { audience: Audience }) {
               particular change will help your team. DORA’s guidance informs the
               smaller batches, feedback, and workflow experiments.
             </p>
-            <p>
-              The access request asks about people, data boundaries, and the
-              actions they need, following Microsoft’s guidance on{" "}
-              <a
-                href="https://learn.microsoft.com/en-us/entra/identity-platform/secure-least-privileged-access"
-                target="_blank"
-                rel="noreferrer"
-              >
-                least-privileged access ↗
-              </a>
-              . It prepares questions for your system owner; it does not approve
-              or configure access.
-            </p>
+            {workspace === "access" && (
+              <p>
+                The access request asks about people, data boundaries, and the
+                actions they need, following Microsoft’s guidance on{" "}
+                <a
+                  href="https://learn.microsoft.com/en-us/entra/identity-platform/secure-least-privileged-access"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  least-privileged access ↗
+                </a>
+                . It prepares questions for your system owner; it does not
+                approve or configure access.
+              </p>
+            )}
             <ul>
               {Object.values(ACTION_SOURCES).map(source => (
                 <li key={source.url}>
@@ -552,7 +574,7 @@ export default function ShippingSooner({ audience }: { audience: Audience }) {
           </details>
           <div className="shipping-bottom">
             <span>
-              Your own request, plan, and numbers save on this browser only.
+              Your own proposals, plans, and numbers save on this browser only.
               Download them to take them elsewhere. Your existing Lab is still
               available.
             </span>

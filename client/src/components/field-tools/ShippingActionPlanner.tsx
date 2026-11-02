@@ -21,6 +21,7 @@ type Props = {
   audience: Audience;
   example: boolean;
   onAccessRequest: () => void;
+  onFirstRelease: () => void;
 };
 
 export default function ShippingActionPlanner({
@@ -31,6 +32,7 @@ export default function ShippingActionPlanner({
   audience,
   example,
   onAccessRequest,
+  onFirstRelease,
 }: Props) {
   const [step, setStep] = useState(1);
   const [stage, setStage] = useState<string>(
@@ -251,15 +253,21 @@ export default function ShippingActionPlanner({
                   <button
                     className="shipping-copy"
                     onClick={() =>
-                      move.id === "access" ? onAccessRequest() : choose(move.id)
+                      move.id === "access"
+                        ? onAccessRequest()
+                        : move.id === "slice"
+                          ? onFirstRelease()
+                          : choose(move.id)
                     }
                   >
                     {move.id === "access"
                       ? "Draft the access request"
-                      : "Try this change"}{" "}
+                      : move.id === "slice"
+                        ? "Shape the first release"
+                        : "Try this change"}{" "}
                     <ArrowRight size={16} />
                   </button>
-                  {move.id === "access" && (
+                  {(move.id === "access" || move.id === "slice") && (
                     <button
                       className="shipping-text-button"
                       onClick={() => choose(move.id)}
