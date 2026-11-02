@@ -25,7 +25,7 @@ Updated 2 November 2026. Launch scope: PM and Lead Developer editions, sold sepa
 - [x] Preserve v1 timing drafts and edited plans when switching suggestions. Keep example and own-work drafts separate.
 - [x] Ground practical suggestions in Atlassian 2026 and DORA, with visible sources and explicit self-report/causality limits.
 - [x] Verify expanded flow on desktop, 390px phone, and 768px tablet: PM/lead guidance, no-number entry, custom plan, draft persistence, preserved earlier calculator inputs, option switching, copy/download, and follow-up. TypeScript, build, and 19 targeted tests pass.
-- [ ] Publish the expanded companion and verify the deployed review links.
+- [x] Publish the expanded companion and verify the deployed review links. Railway deployment `9fbfd1c2-9aab-4598-9100-4c7e755eea05` succeeded for application commit `78fe27e`; the review desk and published suggestion flow were checked. Checkout remains disabled in the preview.
 - [ ] Nic reviews the companion and decides how the Guide, existing interactive Lab, and smaller tools should be packaged. No existing app work is retired.
 
 ## 3. Explain purchases and support — Nic + Codex
