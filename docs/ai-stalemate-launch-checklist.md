@@ -1,6 +1,6 @@
 # AI Stalemate launch checklist
 
-Updated 27 October 2026. Launch scope: PM and Lead Developer editions, sold separately for $47 each. Keep the approved design, portraits, and Guides.
+Updated 1 November 2026. Launch scope: PM and Lead Developer editions, sold separately for $47 each. Keep the approved design, portraits, and Guides.
 
 ## 1. Protect private work — Codex
 - [x] Stop analytics and session replay when entering any Field Tool from another page, including Back/Forward navigation.
@@ -15,6 +15,13 @@ Updated 27 October 2026. Launch scope: PM and Lead Developer editions, sold sepa
 - [x] Check both editions in the desktop browser, including three-answer output and private-note exclusion.
 - [ ] Recheck these latest changes at phone size. The browser viewport override did not change the measured 1280px testing tab; do not count it as a phone check.
 - [x] Publish and verify the review preview. Railway deployment 163398dd-34c8-49c5-ba81-394de3881e96 succeeded for application commit de0ee28; the deployed purchase/refund links and copy were checked. Live checkout remains disabled.
+
+### Shipping sooner companion — 1 November 2026
+- [x] Add an optional, compact comparison tool for both editions at `/shipping-sooner`, linked from the review desk. Preserve all existing Labs, drafts, Guides, and PDFs.
+- [x] Compare non-overlapping elapsed working days for one change. Show coding-only savings separately from changes to waiting, review, rework, and release; allow slower scenarios too.
+- [x] Keep examples separate from browser-local user drafts. Provide copy/text export with assumptions; suppress results when time is unknown or invalid.
+- [x] Check calculation/export/storage tests, TypeScript, and build. Browser checks cover saved drafts, copy output, missing values, desktop, 390px phone, and 768px tablet layouts.
+- [ ] Nic reviews the companion and decides how the Guide, existing interactive Lab, and smaller tools should be packaged. No existing app work is retired.
 
 ## 3. Explain purchases and support — Nic + Codex
 - [x] Nic approved 60 days, full refund, no explanation needed (27 October).

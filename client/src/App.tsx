@@ -45,6 +45,7 @@ const FieldToolsReview = lazy(() => import("./pages/FieldToolsReview"));
 const FieldToolLanding = lazy(() => import("./pages/FieldToolLanding"));
 const PressureTest = lazy(() => import("./pages/PressureTest"));
 const FieldToolLab = lazy(() => import("./pages/FieldToolLab"));
+const ShippingSooner = lazy(() => import("./pages/ShippingSooner"));
 const FieldToolGuide = lazy(() => import("./pages/FieldToolGuide"));
 const FieldToolPurchase = lazy(() => import("./pages/FieldToolPurchase"));
 const FieldToolPurchaseHelp = lazy(
@@ -165,7 +166,9 @@ function Router() {
                 );
               return (
                 <FieldToolGate slug="ai-stalemate" audience={audience}>
-                  {p.view === "lab" ? (
+                  {p.view === "shipping-sooner" ? (
+                    <ShippingSooner key={audience} audience={audience} />
+                  ) : p.view === "lab" ? (
                     <FieldToolLab slug="ai-stalemate" />
                   ) : p.view === "guide" ? (
                     <FieldToolGuide slug="ai-stalemate" />

@@ -51,6 +51,16 @@ Other tools use the existing per-tool checkout variables. The checkout button re
 
 ## Content protection
 
+### Optional Shipping sooner prototype — 1 November 2026
+
+The review desk links to `/field-tools/ai-stalemate/pm/shipping-sooner` and `/field-tools/ai-stalemate/lead-dev/shipping-sooner`. Each uses the existing edition access gate. This comparison sits alongside the existing Labs; all existing routes, drafts, Guides, PDFs, and purchase copy are preserved while Nic evaluates the package.
+
+It compares non-overlapping elapsed working days for one change across coding, review/testing, rework, waiting, and release. The initial illustrative example is 20 days overall with two days of coding: halving coding alone gives 19 days, a 5% reduction. Users can change any stage, including increases. Blank or invalid times do not count as zero. This is scenario arithmetic, not a delivery forecast, throughput model, or evidence of AI savings. Time outside coding is not assumed to be waste.
+
+Each edition's own draft is browser-local under a separate versioned key, independent from its editable example and the existing Lab draft. Inputs are never added to URLs or sent to a service. Copy/text export includes provenance and assumptions. Mobile/tablet layouts and draft persistence were checked in the browser; nine new tests cover calculations, invalid inputs, exports, and storage validation.
+
+### Guides and Labs
+
 Guide chapters and Lab instructions now live under `server/field-tool-content`; client code receives them only after ownership checks. Public samples and short marketing excerpts are intentionally public. The PDFs live under `private/field-tools` and are served only by an ownership-checked API route. The former public PDF URL returns 410.
 
 PDFs are generated from the same role-specific chapter data as the web Guide:

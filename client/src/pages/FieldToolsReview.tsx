@@ -94,6 +94,39 @@ export default function FieldToolsReview() {
       <FieldToolsReviewVersions />
 
       <section
+        className="mx-auto max-w-6xl px-5 py-6 md:px-8"
+        aria-label="Shipping sooner prototype"
+      >
+        <div className="rounded-xl border border-[var(--ft-line)] bg-[var(--ft-tint)] p-6">
+          <p className="text-[10px] font-semibold tracking-[.16em] text-[var(--ft-accent)]">
+            NEW TO TRY / AI STALEMATE COMPANION
+          </p>
+          <h2 className="mt-3 font-display text-3xl">
+            Will this get us shipping sooner?
+          </h2>
+          <p className="mt-3 max-w-3xl text-sm leading-6 text-[var(--ft-muted)]">
+            Compare faster coding with changes to review, rework, and waiting. A
+            compact prototype alongside the existing Lab. Try both while we work
+            out how they fit with the Field Guide.
+          </p>
+          <div className="mt-5 flex flex-wrap gap-3">
+            {(["pm", "lead-dev"] as const).map(audience => (
+              <a
+                key={audience}
+                href={`${fieldToolBase("ai-stalemate", audience)}/shipping-sooner`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-full border border-[var(--ft-accent)] px-5 py-3 text-xs font-semibold text-[var(--ft-accent)] hover:bg-white"
+              >
+                Try it · {audience === "pm" ? "PM" : "Lead Developer"} edition
+                ↗
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section
         aria-label="Which page is which"
         className="mx-auto grid max-w-6xl gap-5 px-5 py-6 text-sm leading-6 text-[var(--ft-muted)] md:grid-cols-3 md:px-8"
       >
