@@ -27,7 +27,7 @@ Updated 2 November 2026. Launch scope: PM and Lead Developer editions, sold sepa
 - [x] Verify expanded flow on desktop, 390px phone, and 768px tablet: PM/lead guidance, no-number entry, custom plan, draft persistence, preserved earlier calculator inputs, option switching, copy/download, and follow-up. TypeScript, build, and 19 targeted tests pass.
 - [x] Publish the expanded companion and verify the deployed review links. Railway deployment `9fbfd1c2-9aab-4598-9100-4c7e755eea05` succeeded for application commit `78fe27e`; the review desk and published suggestion flow were checked. Checkout remains disabled in the preview.
 - [x] Iterate around the AI hook and add a concrete app-access request: scoped groups/records/actions, coding AI versus app AI, existing/missing setup, open questions, and copy/text export. Keep earlier plans, timing drafts, and Labs intact. Verify v1/v2 migration to v3, persistence, example isolation, group undo, export, phone/tablet layouts; TypeScript, build, and 26 targeted tests pass.
-- [ ] Publish and verify this access-request iteration on the review preview.
+- [x] Publish and verify this access-request iteration on the review preview. Railway deployment `d8c580d6-15c0-4ea7-852c-bf80a6320d8c` succeeded for application commit `e174b65`; the published review desk, PM and lead routes, example request, and copied output were checked. Live checkout remains disabled.
 - [ ] Nic reviews the companion and decides how the Guide, existing interactive Lab, and smaller tools should be packaged. No existing app work is retired.
 
 ## 3. Explain purchases and support — Nic + Codex
