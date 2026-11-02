@@ -105,9 +105,9 @@ export default function FieldToolsReview() {
             Will this get us shipping sooner?
           </h2>
           <p className="mt-3 max-w-3xl text-sm leading-6 text-[var(--ft-muted)]">
-            Compare faster coding with changes to review, rework, and waiting. A
-            compact prototype alongside the existing Lab. Try both while we work
-            out how they fit with the Field Guide.
+            Start with one piece of work, find what slowed it down, and choose a
+            practical change to try. Leave with a small plan you can share. The
+            time comparison is optional; the existing Lab is still here too.
           </p>
           <div className="mt-5 flex flex-wrap gap-3">
             {(["pm", "lead-dev"] as const).map(audience => (

@@ -1,3 +1,10 @@
+import {
+  emptyShippingAction,
+  exampleShippingAction,
+  readShippingAction,
+  type ShippingAction,
+} from "./shipping-actions";
+
 export const DELIVERY_STAGES = [
   { id: "coding", label: "Writing code", color: "#315c4b" },
   { id: "review", label: "Review & testing", color: "#77988b" },
@@ -10,6 +17,7 @@ export type DeliveryStage = (typeof DELIVERY_STAGES)[number]["id"];
 export type DeliveryTimes = Record<DeliveryStage, string>;
 export type ShippingDraft = {
   name: string;
+  action: ShippingAction;
   now: DeliveryTimes;
   // null follows the current value until the user changes this part of the scenario.
   scenario: Record<DeliveryStage, string | null>;
@@ -24,11 +32,13 @@ export const unchangedScenario = (): ShippingDraft["scenario"] => ({
 });
 export const emptyShippingDraft = (): ShippingDraft => ({
   name: "",
+  action: emptyShippingAction(),
   now: { coding: "", review: "", rework: "", waiting: "", release: "" },
   scenario: unchangedScenario(),
 });
 export const exampleShippingDraft = (): ShippingDraft => ({
   name: "A small internal app",
+  action: exampleShippingAction(),
   now: { coding: "2", review: "3", rework: "2", waiting: "12", release: "1" },
   scenario: { ...unchangedScenario(), coding: "1" },
 });
@@ -110,7 +120,10 @@ export function readShippingDraft(raw: string | null): ShippingDraft {
   if (!raw) return emptyShippingDraft();
   try {
     const parsed = JSON.parse(raw);
-    if (parsed.version !== 1 || typeof parsed.draft?.name !== "string")
+    if (
+      ![1, 2].includes(parsed.version) ||
+      typeof parsed.draft?.name !== "string"
+    )
       return emptyShippingDraft();
     const draft = parsed.draft;
     for (const { id } of DELIVERY_STAGES) {
@@ -127,6 +140,7 @@ export function readShippingDraft(raw: string | null): ShippingDraft {
     }
     return {
       name: draft.name.slice(0, 180),
+      action: readShippingAction(draft.action),
       now: Object.fromEntries(
         DELIVERY_STAGES.map(({ id }) => [id, draft.now[id]])
       ) as DeliveryTimes,

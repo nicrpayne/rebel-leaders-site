@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { ArrowRight, Copy, Download } from "lucide-react";
+import ShippingActionPlanner from "@/components/field-tools/ShippingActionPlanner";
+import { ACTION_SOURCES } from "@/lib/shipping-actions";
 import FieldToolsNav from "@/components/field-tools/FieldToolsNav";
 import { fieldToolBase, type Audience } from "@/lib/field-tool-paths";
 import {
@@ -29,7 +31,11 @@ export default function ShippingSooner({ audience }: { audience: Audience }) {
   });
   const [example, setExample] = useState(exampleShippingDraft);
   const [mode, setMode] = useState<"example" | "own">(() =>
-    DELIVERY_STAGES.some(({ id }) => own.now[id] !== "") ? "own" : "example"
+    own.name.trim() ||
+    own.action.cause ||
+    DELIVERY_STAGES.some(({ id }) => own.now[id] !== "")
+      ? "own"
+      : "example"
   );
   const [storageFailed, setStorageFailed] = useState(false);
   const [message, setMessage] = useState("");
@@ -43,7 +49,7 @@ export default function ShippingSooner({ audience }: { audience: Audience }) {
     try {
       localStorage.setItem(
         storageKey,
-        JSON.stringify({ version: 1, draft: own })
+        JSON.stringify({ version: 2, draft: own })
       );
       setStorageFailed(false);
     } catch {
@@ -111,15 +117,16 @@ export default function ShippingSooner({ audience }: { audience: Audience }) {
             Will this get us <em>shipping sooner?</em>
           </h1>
           <p>
-            Faster coding changes part of the picture. See what it could change
-            for the whole piece of work.
+            Find one change that could help your team deliver sooner, with less
+            friction and strain. Look at the whole path from starting work to
+            reaching users.
           </p>
         </header>
 
         <div
           className="shipping-mode"
           role="group"
-          aria-label="Choose your numbers"
+          aria-label="Choose your work"
         >
           <button
             aria-pressed={mode === "example"}
@@ -128,268 +135,279 @@ export default function ShippingSooner({ audience }: { audience: Audience }) {
             Try an example
           </button>
           <button aria-pressed={mode === "own"} onClick={() => setMode("own")}>
-            Use my own numbers
+            Use my own work
           </button>
           <span>
             {mode === "example"
-              ? "Invented numbers. Change them and see what happens."
-              : "Your numbers stay in this browser. The example stays separate."}
+              ? "An invented situation. Explore the options and make it your own."
+              : "Your work saves in this browser. The example stays separate."}
           </span>
         </div>
 
-        <div className="shipping-workspace">
-          <section
-            className="shipping-inputs"
-            aria-labelledby="shipping-times-title"
-          >
-            <div className="shipping-section-heading">
-              <span className="shipping-number">01</span>
-              <h2 id="shipping-times-title">Where does the time go?</h2>
-            </div>
-            <p className="shipping-helper">
-              Think of one recent change, from starting work to reaching users.
-              Count elapsed <strong>working days</strong>, including waiting—not
-              everyone’s hours added together.
-            </p>
-            <label className="shipping-name">
-              Piece of work <span>(optional)</span>
-              <input
-                value={draft.name}
-                maxLength={180}
-                placeholder="e.g. The new request form"
-                onChange={e =>
-                  setDraft(previous => ({ ...previous, name: e.target.value }))
-                }
-              />
-            </label>
-            <table className="shipping-times">
-              <caption className="sr-only">
-                Current elapsed time and a possible scenario, in working days
-              </caption>
-              <thead>
-                <tr>
-                  <th scope="col">Part of the work</th>
-                  <th scope="col">Now</th>
-                  <th scope="col">Try this</th>
-                </tr>
-              </thead>
-              <tbody>
-                {DELIVERY_STAGES.map(stage => (
-                  <tr key={stage.id}>
-                    <th scope="row">
-                      <span
-                        className="shipping-dot"
-                        style={{ background: stage.color }}
-                        aria-hidden="true"
-                      />
-                      {stage.label}
-                    </th>
-                    {(["now", "scenario"] as const).map(column => {
-                      const value =
-                        column === "now"
-                          ? draft.now[stage.id]
-                          : scenarioValue(draft, stage.id);
-                      const invalid =
-                        value !== "" && deliveryDays(value) === null;
-                      return (
-                        <td key={column}>
-                          <input
-                            type="number"
-                            min="0"
-                            max="1000000"
-                            step="any"
-                            inputMode="decimal"
-                            aria-label={`${stage.label} — ${column === "now" ? "now" : "scenario"} (working days)`}
-                            aria-invalid={invalid || undefined}
-                            aria-describedby="shipping-input-help"
-                            value={value}
-                            placeholder="—"
-                            onChange={e =>
-                              updateTime(stage.id, column, e.target.value)
-                            }
-                          />
-                        </td>
-                      );
-                    })}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            <p id="shipping-input-help" className="shipping-small">
-              Decimals are fine. Use 0 for none; a blank means unknown. Count
-              each stretch of elapsed time once. Put time waiting for a reviewer
-              or release in the waiting row.
-            </p>
-            <div className="shipping-presets">
-              <button
-                className="shipping-pill"
-                onClick={halveCoding}
-                disabled={deliveryDays(draft.now.coding) === null}
-              >
-                Halve coding only
-              </button>
-              <button
-                className="shipping-text-button"
-                onClick={() =>
-                  setDraft(previous => ({
-                    ...previous,
-                    scenario: unchangedScenario(),
-                  }))
-                }
-              >
-                Reset changes
-              </button>
-            </div>
-            <p className="shipping-small">
-              “Try this” follows “Now” until you edit it. Try less waiting, or
-              more review and fixes. Reset changes makes the two columns match.
-            </p>
-          </section>
-
-          <section
-            className="shipping-results"
-            aria-labelledby="shipping-result-title"
-          >
-            <div className="shipping-section-heading">
-              <span className="shipping-number">02</span>
-              <h2 id="shipping-result-title">What would that change?</h2>
-            </div>
-            {comparison ? (
-              <>
-                <div
-                  className="shipping-outcome"
-                  aria-live="polite"
-                  aria-atomic="true"
-                >
-                  <p className="shipping-eyebrow">
-                    {mode === "example"
-                      ? "IN THIS EXAMPLE"
-                      : "WITH THESE ASSUMPTIONS"}
-                  </p>
-                  <p className="shipping-total">
-                    <span>{displayNumber(comparison.current)}</span>
-                    <ArrowRight aria-label="to" />
-                    <strong>{displayNumber(comparison.scenario)}</strong>
-                    <small>working days</small>
-                  </p>
-                  <p className="shipping-difference">
-                    {comparison.saved === 0 ? (
-                      "No change in total elapsed time."
-                    ) : (
-                      <>
-                        <strong>
-                          {displayNumber(Math.abs(comparison.percent))}%{" "}
-                          {comparison.saved > 0 ? "less" : "more"} elapsed time.
-                        </strong>{" "}
-                        {displayNumber(Math.abs(comparison.saved))}{" "}
-                        {Math.abs(comparison.saved) === 1
-                          ? "working day"
-                          : "working days"}{" "}
-                        {comparison.saved > 0 ? "saved" : "added"}.
-                      </>
-                    )}
-                  </p>
-                </div>
-                <div
-                  className="shipping-bars"
-                  aria-label="Elapsed time comparison"
-                >
-                  {(["now", "scenario"] as const).map(column => (
-                    <div className="shipping-bar-row" key={column}>
-                      <p>
-                        <span>
-                          {column === "now" ? "Now" : "Your scenario"}
-                        </span>
-                        <span>
-                          {displayNumber(
-                            column === "now"
-                              ? comparison.current
-                              : comparison.scenario
-                          )}{" "}
-                          days
-                        </span>
-                      </p>
-                      <div className="shipping-track" aria-hidden="true">
-                        {comparison.rows.map(row => (
-                          <span
-                            key={row.id}
-                            title={`${row.label}: ${displayNumber(row[column])} days`}
-                            style={{
-                              width: `${(row[column] / Math.max(comparison.current, comparison.scenario)) * 100}%`,
-                              background: row.color,
-                            }}
-                          />
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                  <p className="shipping-small">
-                    Same scale. Colors match the input rows.
-                  </p>
-                </div>
-                <div className="shipping-insight">
-                  <h3>The coding part of the picture.</h3>
-                  <p>
-                    Coding is{" "}
-                    <strong>{displayNumber(comparison.codingShare)}%</strong> of
-                    the current elapsed time. Halving it alone would take the
-                    total to{" "}
-                    <strong>
-                      {displayNumber(comparison.codingOnlyTotal)} days
-                    </strong>
-                    —a{" "}
-                    <strong>
-                      {displayNumber(comparison.codingOnlyPercent)}%
-                    </strong>{" "}
-                    reduction, if everything else stayed the same.
-                  </p>
-                  <p>
-                    Time outside coding isn’t automatically waste. Which part
-                    could you actually change?
-                  </p>
-                </div>
-                <div className="shipping-share">
-                  <button className="shipping-copy" onClick={copy}>
-                    <Copy size={16} /> Copy comparison
-                  </button>
-                  <button
-                    className="shipping-text-button"
-                    onClick={download}
-                    aria-label="Download comparison as text"
-                  >
-                    <Download size={17} /> Download
-                  </button>
-                </div>
-                <p role="status" className="shipping-small shipping-status">
-                  {message}
-                </p>
-                <details className="shipping-export">
-                  <summary>Preview what you’ll share</summary>
-                  <pre>{summary}</pre>
-                </details>
-              </>
-            ) : (
-              <div className="shipping-empty" role="status">
-                <h3>Start with the time you know.</h3>
-                <p>
-                  Fill in every row in both columns, using 0 when no time was
-                  spent. “Now” needs a total greater than zero. Check any
-                  highlighted numbers before comparing.
-                </p>
-                <p>
-                  Missing time stays unknown. We won’t turn a blank into a
-                  saving.
-                </p>
+        <ShippingActionPlanner
+          key={mode}
+          name={draft.name}
+          action={draft.action}
+          audience={audience}
+          example={mode === "example"}
+          onNameChange={name => setDraft(previous => ({ ...previous, name }))}
+          onChange={action => setDraft(previous => ({ ...previous, action }))}
+        />
+        <details className="shipping-calculator">
+          <summary>
+            Compare possible time savings{" "}
+            <span>Optional · explore the whole piece of work</span>
+          </summary>
+          <p className="shipping-helper">
+            Have rough timings? Explore what a change might do to the total.
+            These numbers stay separate from your plan; choosing a suggestion
+            won’t invent a saving.
+          </p>
+          <div className="shipping-workspace">
+            <section
+              className="shipping-inputs"
+              aria-labelledby="shipping-times-title"
+            >
+              <div className="shipping-section-heading">
+                <span className="shipping-number">01</span>
+                <h2 id="shipping-times-title">Where does the time go?</h2>
               </div>
-            )}
-          </section>
-        </div>
+              <p className="shipping-helper">
+                Think of one recent change, from starting work to reaching
+                users. Count elapsed <strong>working days</strong>, including
+                waiting—not everyone’s hours added together.
+              </p>
+              <table className="shipping-times">
+                <caption className="sr-only">
+                  Current elapsed time and a possible scenario, in working days
+                </caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Part of the work</th>
+                    <th scope="col">Now</th>
+                    <th scope="col">Try this</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {DELIVERY_STAGES.map(stage => (
+                    <tr key={stage.id}>
+                      <th scope="row">
+                        <span
+                          className="shipping-dot"
+                          style={{ background: stage.color }}
+                          aria-hidden="true"
+                        />
+                        {stage.label}
+                      </th>
+                      {(["now", "scenario"] as const).map(column => {
+                        const value =
+                          column === "now"
+                            ? draft.now[stage.id]
+                            : scenarioValue(draft, stage.id);
+                        const invalid =
+                          value !== "" && deliveryDays(value) === null;
+                        return (
+                          <td key={column}>
+                            <input
+                              type="number"
+                              min="0"
+                              max="1000000"
+                              step="any"
+                              inputMode="decimal"
+                              aria-label={`${stage.label} — ${column === "now" ? "now" : "scenario"} (working days)`}
+                              aria-invalid={invalid || undefined}
+                              aria-describedby="shipping-input-help"
+                              value={value}
+                              placeholder="—"
+                              onChange={e =>
+                                updateTime(stage.id, column, e.target.value)
+                              }
+                            />
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <p id="shipping-input-help" className="shipping-small">
+                Decimals are fine. Use 0 for none; a blank means unknown. Count
+                each stretch of elapsed time once. Put time waiting for a
+                reviewer or release in the waiting row.
+              </p>
+              <div className="shipping-presets">
+                <button
+                  className="shipping-pill"
+                  onClick={halveCoding}
+                  disabled={deliveryDays(draft.now.coding) === null}
+                >
+                  Halve coding only
+                </button>
+                <button
+                  className="shipping-text-button"
+                  onClick={() =>
+                    setDraft(previous => ({
+                      ...previous,
+                      scenario: unchangedScenario(),
+                    }))
+                  }
+                >
+                  Reset changes
+                </button>
+              </div>
+              <p className="shipping-small">
+                “Try this” follows “Now” until you edit it. Try less waiting, or
+                more review and fixes. Reset changes makes the two columns
+                match.
+              </p>
+            </section>
+
+            <section
+              className="shipping-results"
+              aria-labelledby="shipping-result-title"
+            >
+              <div className="shipping-section-heading">
+                <span className="shipping-number">02</span>
+                <h2 id="shipping-result-title">What would that change?</h2>
+              </div>
+              {comparison ? (
+                <>
+                  <div
+                    className="shipping-outcome"
+                    aria-live="polite"
+                    aria-atomic="true"
+                  >
+                    <p className="shipping-eyebrow">
+                      {mode === "example"
+                        ? "IN THIS EXAMPLE"
+                        : "WITH THESE ASSUMPTIONS"}
+                    </p>
+                    <p className="shipping-total">
+                      <span>{displayNumber(comparison.current)}</span>
+                      <ArrowRight aria-label="to" />
+                      <strong>{displayNumber(comparison.scenario)}</strong>
+                      <small>working days</small>
+                    </p>
+                    <p className="shipping-difference">
+                      {comparison.saved === 0 ? (
+                        "No change in total elapsed time."
+                      ) : (
+                        <>
+                          <strong>
+                            {displayNumber(Math.abs(comparison.percent))}%{" "}
+                            {comparison.saved > 0 ? "less" : "more"} elapsed
+                            time.
+                          </strong>{" "}
+                          {displayNumber(Math.abs(comparison.saved))}{" "}
+                          {Math.abs(comparison.saved) === 1
+                            ? "working day"
+                            : "working days"}{" "}
+                          {comparison.saved > 0 ? "saved" : "added"}.
+                        </>
+                      )}
+                    </p>
+                  </div>
+                  <div
+                    className="shipping-bars"
+                    aria-label="Elapsed time comparison"
+                  >
+                    {(["now", "scenario"] as const).map(column => (
+                      <div className="shipping-bar-row" key={column}>
+                        <p>
+                          <span>
+                            {column === "now" ? "Now" : "Your scenario"}
+                          </span>
+                          <span>
+                            {displayNumber(
+                              column === "now"
+                                ? comparison.current
+                                : comparison.scenario
+                            )}{" "}
+                            days
+                          </span>
+                        </p>
+                        <div className="shipping-track" aria-hidden="true">
+                          {comparison.rows.map(row => (
+                            <span
+                              key={row.id}
+                              title={`${row.label}: ${displayNumber(row[column])} days`}
+                              style={{
+                                width: `${(row[column] / Math.max(comparison.current, comparison.scenario)) * 100}%`,
+                                background: row.color,
+                              }}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                    <p className="shipping-small">
+                      Same scale. Colors match the input rows.
+                    </p>
+                  </div>
+                  <div className="shipping-insight">
+                    <h3>The coding part of the picture.</h3>
+                    <p>
+                      Coding is{" "}
+                      <strong>{displayNumber(comparison.codingShare)}%</strong>{" "}
+                      of the current elapsed time. Halving it alone would take
+                      the total to{" "}
+                      <strong>
+                        {displayNumber(comparison.codingOnlyTotal)} days
+                      </strong>
+                      —a{" "}
+                      <strong>
+                        {displayNumber(comparison.codingOnlyPercent)}%
+                      </strong>{" "}
+                      reduction, if everything else stayed the same.
+                    </p>
+                    <p>
+                      Time outside coding isn’t automatically waste. Which part
+                      could you actually change?
+                    </p>
+                  </div>
+                  <div className="shipping-share">
+                    <button className="shipping-copy" onClick={copy}>
+                      <Copy size={16} /> Copy comparison
+                    </button>
+                    <button
+                      className="shipping-text-button"
+                      onClick={download}
+                      aria-label="Download comparison as text"
+                    >
+                      <Download size={17} /> Download
+                    </button>
+                  </div>
+                  <p role="status" className="shipping-small shipping-status">
+                    {message}
+                  </p>
+                  <details className="shipping-export">
+                    <summary>Preview what you’ll share</summary>
+                    <pre>{summary}</pre>
+                  </details>
+                </>
+              ) : (
+                <div className="shipping-empty" role="status">
+                  <h3>Start with the time you know.</h3>
+                  <p>
+                    Fill in every row in both columns, using 0 when no time was
+                    spent. “Now” needs a total greater than zero. Check any
+                    highlighted numbers before comparing.
+                  </p>
+                  <p>
+                    Missing time stays unknown. We won’t turn a blank into a
+                    saving.
+                  </p>
+                </div>
+              )}
+            </section>
+          </div>
+        </details>
 
         <footer className="shipping-notes">
           {storageFailed && (
             <p role="alert">
-              Your browser couldn’t save these numbers. Copy or download the
-              comparison before leaving.
+              Your browser couldn’t save your work. Copy or download your plan
+              and any comparison before leaving.
             </p>
           )}
           <details>
@@ -418,10 +436,34 @@ export default function ShippingSooner({ audience }: { audience: Audience }) {
               </a>
             </p>
           </details>
+          <details className="shipping-research">
+            <summary>What informs the suggestions?</summary>
+            <p>
+              These are practical experiments we’ve put together from delivery
+              practices and research. Your chosen situation determines the
+              options; this tool doesn’t diagnose your team.
+            </p>
+            <p>
+              Atlassian’s 2026 report describes people’s reported experience,
+              including finding information, context switching, and reviewing AI
+              output. It is not a measurement of delivery times or proof that a
+              particular change will help your team. DORA’s guidance informs the
+              smaller batches, feedback, and workflow experiments.
+            </p>
+            <ul>
+              {Object.values(ACTION_SOURCES).map(source => (
+                <li key={source.url}>
+                  <a href={source.url} target="_blank" rel="noreferrer">
+                    {source.title} ↗
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </details>
           <div className="shipping-bottom">
             <span>
-              Your own numbers save on this browser only. Copy them to take them
-              elsewhere.
+              Your own plan and numbers save on this browser only. Download them
+              to take them elsewhere. Your existing Lab is still available.
             </span>
             <Link href={`${base}/guide`}>
               Back to the Field Guide <ArrowRight size={14} />

@@ -1,6 +1,6 @@
 # AI Stalemate launch checklist
 
-Updated 1 November 2026. Launch scope: PM and Lead Developer editions, sold separately for $47 each. Keep the approved design, portraits, and Guides.
+Updated 2 November 2026. Launch scope: PM and Lead Developer editions, sold separately for $47 each. Keep the approved design, portraits, and Guides.
 
 ## 1. Protect private work — Codex
 - [x] Stop analytics and session replay when entering any Field Tool from another page, including Back/Forward navigation.
@@ -16,11 +16,16 @@ Updated 1 November 2026. Launch scope: PM and Lead Developer editions, sold sepa
 - [ ] Recheck these latest changes at phone size. The browser viewport override did not change the measured 1280px testing tab; do not count it as a phone check.
 - [x] Publish and verify the review preview. Railway deployment 163398dd-34c8-49c5-ba81-394de3881e96 succeeded for application commit de0ee28; the deployed purchase/refund links and copy were checked. Live checkout remains disabled.
 
-### Shipping sooner companion — 1 November 2026
+### Shipping sooner companion — 2 November 2026
 - [x] Add an optional, compact comparison tool for both editions at `/shipping-sooner`, linked from the review desk. Preserve all existing Labs, drafts, Guides, and PDFs.
 - [x] Compare non-overlapping elapsed working days for one change. Show coding-only savings separately from changes to waiting, review, rework, and release; allow slower scenarios too.
 - [x] Keep examples separate from browser-local user drafts. Provide copy/text export with assumptions; suppress results when time is unknown or invalid.
 - [x] Check calculation/export/storage tests, TypeScript, and build. Browser checks cover saved drafts, copy output, missing values, desktop, 390px phone, and 768px tablet layouts.
+- [x] Extend the companion with a no-timings-required path: observed friction → relevant experiments → editable proposal with scope, owner, check-in, quality/load checks, and optional follow-up. Keep the comparison optional.
+- [x] Preserve v1 timing drafts and edited plans when switching suggestions. Keep example and own-work drafts separate.
+- [x] Ground practical suggestions in Atlassian 2026 and DORA, with visible sources and explicit self-report/causality limits.
+- [x] Verify expanded flow on desktop, 390px phone, and 768px tablet: PM/lead guidance, no-number entry, custom plan, draft persistence, preserved earlier calculator inputs, option switching, copy/download, and follow-up. TypeScript, build, and 19 targeted tests pass.
+- [ ] Publish the expanded companion and verify the deployed review links.
 - [ ] Nic reviews the companion and decides how the Guide, existing interactive Lab, and smaller tools should be packaged. No existing app work is retired.
 
 ## 3. Explain purchases and support — Nic + Codex
