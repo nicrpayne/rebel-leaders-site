@@ -1,4 +1,10 @@
 import {
+  emptyAccessDraft,
+  exampleAccessDraft,
+  readAccessDraft,
+  type AccessDraft,
+} from "./shipping-access";
+import {
   emptyShippingAction,
   exampleShippingAction,
   readShippingAction,
@@ -18,6 +24,7 @@ export type DeliveryTimes = Record<DeliveryStage, string>;
 export type ShippingDraft = {
   name: string;
   action: ShippingAction;
+  access: AccessDraft;
   now: DeliveryTimes;
   // null follows the current value until the user changes this part of the scenario.
   scenario: Record<DeliveryStage, string | null>;
@@ -33,12 +40,14 @@ export const unchangedScenario = (): ShippingDraft["scenario"] => ({
 export const emptyShippingDraft = (): ShippingDraft => ({
   name: "",
   action: emptyShippingAction(),
+  access: emptyAccessDraft(),
   now: { coding: "", review: "", rework: "", waiting: "", release: "" },
   scenario: unchangedScenario(),
 });
 export const exampleShippingDraft = (): ShippingDraft => ({
   name: "A small internal app",
   action: exampleShippingAction(),
+  access: exampleAccessDraft(),
   now: { coding: "2", review: "3", rework: "2", waiting: "12", release: "1" },
   scenario: { ...unchangedScenario(), coding: "1" },
 });
@@ -121,7 +130,7 @@ export function readShippingDraft(raw: string | null): ShippingDraft {
   try {
     const parsed = JSON.parse(raw);
     if (
-      ![1, 2].includes(parsed.version) ||
+      ![1, 2, 3].includes(parsed.version) ||
       typeof parsed.draft?.name !== "string"
     )
       return emptyShippingDraft();
@@ -141,6 +150,7 @@ export function readShippingDraft(raw: string | null): ShippingDraft {
     return {
       name: draft.name.slice(0, 180),
       action: readShippingAction(draft.action),
+      access: readAccessDraft(draft.access),
       now: Object.fromEntries(
         DELIVERY_STAGES.map(({ id }) => [id, draft.now[id]])
       ) as DeliveryTimes,

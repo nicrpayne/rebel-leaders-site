@@ -54,14 +54,22 @@ describe("Shipping sooner experiments", () => {
     expect(selectShippingMove(action, "unknown-command")).toEqual(action);
   });
   it("preserves existing v1 timing drafts and round-trips the expanded draft", () => {
-    const { action: unused, ...legacy } = exampleShippingDraft();
+    const {
+      action: unused,
+      access: unusedAccess,
+      ...legacy
+    } = exampleShippingDraft();
     legacy.name = "Existing customer draft";
     legacy.now.waiting = "7.5";
     legacy.scenario.review = "";
     const migrated = readShippingDraft(
       JSON.stringify({ version: 1, draft: legacy })
     );
-    expect(migrated).toEqual({ ...legacy, action: emptyShippingAction() });
+    expect(migrated).toEqual({
+      ...legacy,
+      action: emptyShippingAction(),
+      access: emptyShippingDraft().access,
+    });
     migrated.action = selectShippingMove(
       { ...migrated.action, cause: "waiting-access" },
       "access"

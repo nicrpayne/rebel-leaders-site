@@ -102,12 +102,13 @@ export default function FieldToolsReview() {
             NEW TO TRY / AI STALEMATE COMPANION
           </p>
           <h2 className="mt-3 font-display text-3xl">
-            Will this get us shipping sooner?
+            AI could speed up the build. What gets it shipped?
           </h2>
           <p className="mt-3 max-w-3xl text-sm leading-6 text-[var(--ft-muted)]">
-            Start with one piece of work, find what slowed it down, and choose a
-            practical change to try. Leave with a small plan you can share. The
-            time comparison is optional; the existing Lab is still here too.
+            Turn an AI app idea into an access request your system owner can
+            answer. See who needs which records and permissions, and what still
+            needs deciding. You can also explore other delays and compare
+            possible time savings. The existing Lab is still here too.
           </p>
           <div className="mt-5 flex flex-wrap gap-3">
             {(["pm", "lead-dev"] as const).map(audience => (

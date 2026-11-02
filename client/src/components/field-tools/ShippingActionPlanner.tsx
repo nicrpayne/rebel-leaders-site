@@ -20,6 +20,7 @@ type Props = {
   onChange: (action: ShippingAction) => void;
   audience: Audience;
   example: boolean;
+  onAccessRequest: () => void;
 };
 
 export default function ShippingActionPlanner({
@@ -29,6 +30,7 @@ export default function ShippingActionPlanner({
   onChange,
   audience,
   example,
+  onAccessRequest,
 }: Props) {
   const [step, setStep] = useState(1);
   const [stage, setStage] = useState<string>(
@@ -248,10 +250,23 @@ export default function ShippingActionPlanner({
                   </details>
                   <button
                     className="shipping-copy"
-                    onClick={() => choose(move.id)}
+                    onClick={() =>
+                      move.id === "access" ? onAccessRequest() : choose(move.id)
+                    }
                   >
-                    Try this change <ArrowRight size={16} />
+                    {move.id === "access"
+                      ? "Draft the access request"
+                      : "Try this change"}{" "}
+                    <ArrowRight size={16} />
                   </button>
+                  {move.id === "access" && (
+                    <button
+                      className="shipping-text-button"
+                      onClick={() => choose(move.id)}
+                    >
+                      Open the experiment plan
+                    </button>
+                  )}
                 </article>
               ))}
             </div>
