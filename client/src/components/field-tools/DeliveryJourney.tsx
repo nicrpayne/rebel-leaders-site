@@ -6,6 +6,12 @@ import {
   Copy,
   Download,
   RotateCcw,
+  Compass,
+  PencilRuler,
+  Code2,
+  ScanSearch,
+  Send,
+  Users,
   X,
 } from "lucide-react";
 import type { Audience } from "@/lib/field-tool-paths";
@@ -44,6 +50,14 @@ type View =
   | "evidence"
   | "plan"
   | "walked";
+const stageIcons = {
+  decide: Compass,
+  shape: PencilRuler,
+  build: Code2,
+  check: ScanSearch,
+  release: Send,
+  use: Users,
+};
 export default function DeliveryJourney({
   audience,
   onTool,
@@ -333,8 +347,9 @@ export default function DeliveryJourney({
         role="group"
         aria-label="From idea to people using it"
       >
-        {JOURNEY_STAGES.map((s, i) => {
+        {JOURNEY_STAGES.map(s => {
           const status = journeyStageState(draft, s.id);
+          const StageIcon = stageIcons[s.id];
           return (
             <button
               key={s.id}
@@ -343,13 +358,13 @@ export default function DeliveryJourney({
               aria-label={`${s.name}: ${status.label}`}
               onClick={() => selectStage(s.id)}
             >
-              <span className="journey-station">
+              <span className="journey-station" aria-hidden="true">
                 {status.state === "clear" ? (
                   <Check size={19} />
                 ) : status.state === "unknown" ? (
                   <CircleHelp size={19} />
                 ) : (
-                  i + 1
+                  <StageIcon size={22} strokeWidth={1.7} />
                 )}
               </span>
               <strong>{s.name}</strong>
@@ -376,7 +391,7 @@ export default function DeliveryJourney({
       </div>
       <div className="journey-map-caption">
         <span>
-          Idea → in use. Start here; your work may loop back or overlap.
+          Pick a place to open it up. Your work may loop back or overlap.
         </span>
         <span>Marks show what you noticed, not a ranking.</span>
       </div>
@@ -401,7 +416,12 @@ export default function DeliveryJourney({
         See the places you’ve marked ↓
       </a>
       <div className="journey-layout">
-        <div className="journey-detail" ref={detail} id="journey-detail">
+        <div
+          key={`${mode}:${view}:${stageId}:${symptomId}:${caseId}`}
+          className="journey-detail"
+          ref={detail}
+          id="journey-detail"
+        >
           {stage && (
             <div className="journey-crumbs">
               <button onClick={() => selectStage(stage.id)}>

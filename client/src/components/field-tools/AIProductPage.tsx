@@ -2,13 +2,12 @@ import FieldToolSalesProof, {
   FieldToolBuyerQuestions,
 } from "./FieldToolSalesProof";
 import { Link } from "wouter";
-import { Check } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { fieldToolBase, type Audience } from "@/lib/field-tool-paths";
-import { aiProductCopy, aiProductInventory } from "@/lib/ai-product";
+import { aiProductCopy } from "@/lib/ai-product";
 import FieldToolsNav from "./FieldToolsNav";
 import FieldToolsFooter from "./FieldToolsFooter";
-import RelatedFieldTools from "./RelatedFieldTools";
+import AIProductContents from "./AIProductContents";
 import FieldToolBuyActions from "./FieldToolBuyActions";
 import AIKitPreview from "./AIKitPreview";
 import "./ai-library.css";
@@ -55,28 +54,20 @@ export default function AIProductPage({ audience }: { audience: Audience }) {
             giftHref={`${base}/buy?gift=1`}
             tone="dark"
           />
-          <p className="ai-hero-note">Field Guide · Lab · written examples</p>
+          <p className="ai-hero-note">
+            A practical Guide and interactive tools · $47, one time
+          </p>
         </div>
         <div className="ft-photo-caption">
           <span /> Hope is rebellious.
         </div>
       </header>
-      <FieldToolSalesProof slug="ai-stalemate" audience={audience} />
       <section id="purchase" className="ai-purchase-section">
         <div>
-          <AIKitPreview audience={audience} />
-          <h2>What you get</h2>
-          <ul className="ai-inventory">
-            {aiProductInventory(audience).map(item => (
-              <li key={item.title}>
-                <Check size={19} aria-hidden="true" />
-                <div>
-                  <h3>{item.title}</h3>
-                  <p>{item.detail}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
+          <AIProductContents audience={audience} />
+          <div className="ai-kit-included">
+            <AIKitPreview audience={audience} />
+          </div>
         </div>
         <aside className="ai-purchase-card">
           <p className="ai-eyebrow">
@@ -84,6 +75,10 @@ export default function AIProductPage({ audience }: { audience: Audience }) {
           </p>
           <p className="ai-price">
             $47 <small>USD · one time</small>
+          </p>
+          <p>
+            Includes the Guide and both Lab paths. PM and Lead Developer editions
+            are sold separately.
           </p>
           <p>
             Use on phone or computer.
@@ -97,15 +92,42 @@ export default function AIProductPage({ audience }: { audience: Audience }) {
             giftHref={`${base}/buy?gift=1`}
             tone="dark"
           />
+          <p className="ai-refund-note">
+            <strong>60-day full refund. No explanation needed.</strong>
+            <br />
+            <Link href="/field-tools/purchase-help" className="underline">
+              Purchase, access, and refund details
+            </Link>
+          </p>
           <Link href={`${base}/access`} className="ai-small underline">
             {access.data?.preview
               ? "Open the review copy →"
               : "Already have this? Open your tool →"}
           </Link>
+          <Link
+            href={fieldToolBase(
+              "ai-stalemate",
+              audience === "pm" ? "lead-dev" : "pm"
+            )}
+            className="ai-small ai-edition-link underline"
+          >
+            Looking for the {audience === "pm" ? "Lead Developer" : "PM"}{" "}
+            edition? →
+          </Link>
         </aside>
       </section>
+      <details className="ai-product-example">
+        <summary>
+          See a worked example{" "}
+          <span>A fictional conversation and the notes you can make</span>
+        </summary>
+        <FieldToolSalesProof
+          slug="ai-stalemate"
+          audience={audience}
+          showRoleLinks={false}
+        />
+      </details>
       <FieldToolBuyerQuestions />
-      <RelatedFieldTools slug="ai-stalemate" audience={audience} />
       <FieldToolsFooter />
     </main>
   );

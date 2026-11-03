@@ -57,7 +57,7 @@
 }
 .journey-stop {
   position: relative;
-  border: 1px solid transparent;
+  border: 1px solid var(--ft-line);
   padding: 12px 7px;
   border-radius: 12px;
   display: flex;
@@ -65,7 +65,13 @@
   align-items: center;
   gap: 6px;
   min-height: 138px;
-  background: transparent;
+  background: #fffefa;
+  box-shadow: 0 3px 0 #d6dbd0;
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    background 180ms ease,
+    border-color 180ms ease;
   text-align: center;
 }
 .journey-stop:hover {
@@ -87,6 +93,7 @@
 .journey-stop[aria-pressed="true"] {
   background: var(--ft-tint);
   border-color: var(--ft-accent);
+  box-shadow: 0 3px 0 var(--ft-accent);
 }
 .journey-station {
   width: 48px;
@@ -98,6 +105,16 @@
   border: 1px solid var(--ft-line);
   color: var(--ft-accent);
   font-size: 14px;
+  box-shadow: inset 0 1px 3px #243b2f0b;
+  transition:
+    background 180ms ease,
+    color 180ms ease,
+    transform 180ms ease;
+}
+.journey-stop[aria-pressed="true"] .journey-station {
+  background: var(--ft-accent);
+  border-color: var(--ft-accent);
+  color: white;
 }
 .journey-stop-noticed .journey-station {
   background: var(--ft-accent);
@@ -163,6 +180,7 @@
   min-width: 0;
   min-height: 330px;
   scroll-margin-top: 100px;
+  animation: journey-reveal 220ms ease-out both;
 }
 .journey-detail h2,
 .journey-board h2 {
@@ -372,6 +390,7 @@
   position: relative;
   border-top: 1px solid var(--ft-line);
   margin-top: 16px;
+  animation: journey-reveal 220ms ease-out both;
 }
 .journey-finding-open {
   display: flex;
@@ -657,4 +676,95 @@
   line-height: 1.7;
   margin: 12px 0;
   color: var(--ft-muted);
+}
+
+/* A little physical feedback, without turning exploration into a score. */
+.journey-choices button,
+.journey-next-options button,
+.journey-primary,
+.journey-tool-link,
+.journey-inquiry-options label {
+  transition:
+    transform 180ms ease,
+    background 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+.journey-choices button,
+.ft-theme .journey-next-options button {
+  box-shadow: 0 3px 0 #dce0d6;
+}
+.journey-choices svg,
+.journey-next-options svg,
+.journey-primary svg {
+  transition: transform 180ms ease;
+}
+.journey-primary {
+  box-shadow: 0 3px 0 #213f32;
+}
+.journey-finding-active {
+  border-top-color: var(--ft-accent);
+}
+.delivery-journey button:focus-visible,
+.delivery-journey summary:focus-visible,
+.journey-inquiry-options label:has(input:focus-visible) {
+  outline: 2px solid var(--ft-accent);
+  outline-offset: 4px;
+}
+.journey-inquiry-options input:focus-visible {
+  outline-offset: 2px;
+}
+@media (hover: hover) and (pointer: fine) {
+  .journey-stop:hover,
+  .journey-choices button:hover,
+  .journey-next-options button:hover,
+  .journey-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 0 #cad2c4;
+  }
+  .journey-primary:hover {
+    box-shadow: 0 6px 0 #213f32;
+  }
+  .journey-stop:hover .journey-station {
+    transform: rotate(-5deg);
+  }
+  .journey-choices button:hover svg,
+  .journey-next-options button:hover svg,
+  .journey-primary:hover svg {
+    transform: translateX(3px);
+  }
+  .journey-inquiry-options label:hover {
+    background: var(--ft-tint);
+    border-color: var(--ft-accent);
+  }
+  .journey-finding-open:hover strong {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+}
+.journey-stop:active,
+.journey-choices button:active,
+.journey-next-options button:active,
+.journey-primary:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #cad2c4;
+}
+@keyframes journey-reveal {
+  from {
+    opacity: 0.4;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .delivery-journey *,
+  .delivery-journey *::before,
+  .delivery-journey *::after {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
 }

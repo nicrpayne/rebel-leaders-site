@@ -45,6 +45,12 @@ Updated 3 November 2026. Launch scope: PM and Lead Developer editions, sold sepa
 - [x] Verify 39 targeted tests, TypeScript, and production build. Browser checks cover existing simple plans, the decision path, optional notes and text download, reload persistence, and 390px phone layout. No browser console errors observed.
 - [x] Publish and verify on the review preview. Application commit `17b1c23e4c39fb28b17603d7a657877baf70310b`; Railway deployment `ef3827c2-12f3-470e-a0c1-9a891d18beb1` succeeded. Confirmed the deployed conversation wording and closed optional decision help. Screenshot: `/Users/nicholaspayne/Documents/Codex/shipping-sooner-proof/small-decisions-published.png`. Both editions use the shared flow; PM investigation and lead-developer decision/simple-review paths were checked locally. Paid launch checks below remain outstanding.
 
+### Clearer purchase pages and tactile exploration — 3 November 2026
+- [x] Simplify both AI editions' sales and checkout pages around the Guide and two optional Lab paths. Collapse the longer example, keep the edition distinction and 60-day refund visible, and place checkout options before the large kit image on phones.
+- [x] Add stage icons, raised buttons, press/hover feedback, and brief panel reveals to the delivery map. Keep the existing flow, saved drafts, and all earlier tools; honor reduced-motion preferences.
+- [x] Verify 54 targeted tests, TypeScript, and production build. Browser checks cover both editions' purchase copy, desktop and 390px layouts, optional example expansion, keyboard drill-down, existing plans, editing and reload persistence. No browser console errors observed.
+- [ ] Publish and verify this iteration on the review preview. Live checkout remains disabled.
+
 ## 3. Explain purchases and support — Nic + Codex
 - [x] Nic approved 60 days, full refund, no explanation needed (27 October).
 - [x] Add the agreed policy, support contact, and browser-local draft explanation to the purchase/access experience.

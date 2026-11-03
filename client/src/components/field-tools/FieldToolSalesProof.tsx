@@ -30,9 +30,11 @@ export function AIRoleLinks({ audience }: { audience: Audience }) {
 export default function FieldToolSalesProof({
   slug,
   audience = "pm",
+  showRoleLinks = true,
 }: {
   slug: string;
   audience?: Audience;
+  showRoleLinks?: boolean;
 }) {
   const key = slug === "ai-stalemate" ? `${slug}-${audience}` : slug;
   const proof = SALES_PROOF[key];
@@ -44,7 +46,9 @@ export default function FieldToolSalesProof({
   return (
     <section aria-labelledby="sales-proof-title" className="ft-sales-proof">
       <div className="ft-sales-proof-inner">
-        {slug === "ai-stalemate" && <AIRoleLinks audience={audience} />}
+        {slug === "ai-stalemate" && showRoleLinks && (
+          <AIRoleLinks audience={audience} />
+        )}
         <div className="ft-sales-proof-heading">
           <p className="font-ui text-xs tracking-widest text-[var(--ft-muted)]">
             INSIDE THE FIELD TOOL

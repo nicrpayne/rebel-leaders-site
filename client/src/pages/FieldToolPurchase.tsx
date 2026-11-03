@@ -9,6 +9,7 @@ import RelatedFieldTools from "@/components/field-tools/RelatedFieldTools";
 import FieldToolsNav from "@/components/field-tools/FieldToolsNav";
 import FieldToolKitPreview from "@/components/field-tools/FieldToolKitPreview";
 import FieldToolsFooter from "@/components/field-tools/FieldToolsFooter";
+import AIProductContents from "@/components/field-tools/AIProductContents";
 
 export default function FieldToolPurchase({
   slug,
@@ -51,13 +52,24 @@ export default function FieldToolPurchase({
             ? ` / ${audience === "pm" ? "PM" : "Lead Developer"}`
             : ""}
         </h1>
+        {slug === "ai-stalemate" && (
+          <p className="mt-4 max-w-2xl font-ui text-base leading-7 text-[var(--ft-muted)]">
+            Get past the AI argument. Work out what would actually help your
+            team deliver.
+          </p>
+        )}
         <div className="mt-6 grid gap-6 md:grid-cols-[minmax(0,1.4fr)_minmax(280px,.8fr)] md:items-start">
-          <figure className="overflow-hidden rounded-sm">
-            <FieldToolKitPreview slug={slug} audience={audience} />
-          </figure>
+          <div className={slug === "ai-stalemate" ? "order-2 md:order-1" : ""}>
+            {slug === "ai-stalemate" && (
+              <AIProductContents audience={audience} />
+            )}
+            <figure className={`overflow-hidden rounded-sm ${slug === "ai-stalemate" ? "mt-6" : ""}`}>
+              <FieldToolKitPreview slug={slug} audience={audience} />
+            </figure>
+          </div>
           <aside
             aria-label="Purchase options"
-            className="border border-[var(--ft-line)] bg-[var(--ft-tint)] p-6 md:p-8"
+            className={`border border-[var(--ft-line)] bg-[var(--ft-tint)] p-6 md:p-8 ${slug === "ai-stalemate" ? "order-1 md:order-2" : ""}`}
           >
             <p className="font-display text-6xl font-semibold text-[var(--ft-accent)]">
               ${tool.price}{" "}
@@ -65,6 +77,13 @@ export default function FieldToolPurchase({
                 USD · one time
               </span>
             </p>
+            {slug === "ai-stalemate" && (
+              <p className="mt-4 font-ui text-sm leading-6 text-[var(--ft-muted)]">
+                Includes the Guide and both Lab paths for the{" "}
+                {audience === "pm" ? "PM" : "Lead Developer"} edition. Each
+                edition is sold separately.
+              </p>
+            )}
             {isGift && (
               <Link
                 href={`${base}/buy`}
@@ -155,7 +174,9 @@ export default function FieldToolPurchase({
           </aside>
         </div>
       </section>
-      <RelatedFieldTools slug={slug} audience={audience} />
+      {slug !== "ai-stalemate" && (
+        <RelatedFieldTools slug={slug} audience={audience} />
+      )}
       <FieldToolsFooter />
     </main>
   );

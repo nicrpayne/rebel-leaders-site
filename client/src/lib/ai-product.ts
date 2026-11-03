@@ -1,6 +1,6 @@
 import type { Audience } from "./field-tool-paths";
 
-// One inventory for the product page, start page, and review desk.
+// One compact inventory for the sales page, checkout, and review desk.
 // Cover + chapters + visual companions; the PDF adds the edition’s source/teaching companion.
 export const AI_GUIDE_PAGE_COUNT: Record<Audience, number> = {
   pm: 18,
@@ -8,40 +8,22 @@ export const AI_GUIDE_PAGE_COUNT: Record<Audience, number> = {
 };
 export const AI_PRODUCT_INVENTORY = [
   {
-    title: "Field Guide & discussion guide",
+    title: "The Field Guide",
     detail:
-      "A visual, printable guide to the conversation, with questions you can use together.",
+      "Understand the opportunity, the concerns, and what would make a useful next step. Read online or keep the printable PDF.",
     destination: "guide",
   },
   {
-    title: "Your interactive Lab",
+    title: "Prepare your conversation",
     detail:
-      "Prepare on your own, talk it through, and decide what to do next. Start with the questions you need now.",
-    destination: "lab",
+      "Put the opportunity into words, hear your lead’s concerns, and prepare what you want to ask and propose.",
+    destination: "lab/conversation",
   },
   {
-    title: "Next Step Together",
+    title: "Find where work gets stuck",
     detail:
-      "A proposal or agreement, plus updates you can adapt for leadership and your team.",
-    destination: "lab?step=1",
-  },
-  {
-    title: "Experiment Plan, Results Record & Decision Brief",
-    detail:
-      "If you run an experiment, agree the plan, count everyone’s work, and decide what the results tell you.",
-    destination: "lab?step=2",
-  },
-  {
-    title: "Worked walkthrough",
-    detail:
-      "Follow a fictional conversation from the first disagreement to a proposal for what happens next.",
-    destination: "walkthrough",
-  },
-  {
-    title: "Tools & study library",
-    detail:
-      "Choose a reading or tool for the question you have about writing, checking, or releasing code. Each includes a question to discuss with your colleague.",
-    destination: "resources",
+      "Follow one piece of work beyond the coding. Explore what holds it up and leave with a question to check, a conversation to have, or a small change to try.",
+    destination: "lab/delivery",
   },
 ] as const;
 
@@ -52,7 +34,7 @@ export function aiProductCopy(audience: Audience) {
         headline: "You see a possibility for AI.",
         accent: "Let’s find out whether it’s worth pursuing.",
         promise:
-          "Explain what you hope AI could improve, hear your lead’s concerns, and work out what to do next together.",
+          "Get past the AI argument. Explain the opportunity, understand your lead’s concerns, and explore what would actually help your team deliver.",
         first:
           "Bring the AI conversation you’re already having. Read the opening of the Guide or start with Before You Talk in the Lab. Each Lab step links to a chapter that explains its questions.",
       }
@@ -62,7 +44,7 @@ export function aiProductCopy(audience: Audience) {
         headline: "My PM won’t shut up about AI.",
         accent: "",
         promise:
-          "Your PM wants the team to build and ship differently. Work through security, access, and what the team can realistically take on—then prepare a recommendation you can discuss.",
+          "They want the team to ship sooner. You have questions about what that will take. Work through the engineering concerns, explore where delivery gets stuck, and prepare a useful next step.",
         first:
           "Bring the change your PM is asking for. Use the Guide to think it through, then prepare your position in the Lab. A smaller approach, preparation, specialist advice, or stopping this use can all be useful outcomes.",
       };
@@ -70,20 +52,12 @@ export function aiProductCopy(audience: Audience) {
 
 export function aiProductInventory(audience: Audience) {
   return AI_PRODUCT_INVENTORY.map(item =>
-    audience === "lead-dev" && item.title === "Next Step Together"
+    audience === "lead-dev" && item.destination === "lab/conversation"
       ? {
           ...item,
-          title: "Conversation Notes",
           detail:
-            "Explain the request, your engineering position, alternatives, and the next move you recommend.",
+            "Work through security, quality, and what the team can take on. Prepare the questions and recommendation you want to discuss with your PM.",
         }
-      : audience === "lead-dev" && item.destination === "lab?step=2"
-        ? {
-            ...item,
-            title: "Optional Spike Plan, Results & Engineering Recommendation",
-            detail:
-              "Investigate a real unknown when useful. Record the evidence and recommend what the team can take on next.",
-          }
-        : item
+      : item
   );
 }
