@@ -49,7 +49,7 @@ Updated 3 November 2026. Launch scope: PM and Lead Developer editions, sold sepa
 - [x] Simplify both AI editions' sales and checkout pages around the Guide and two optional Lab paths. Collapse the longer example, keep the edition distinction and 60-day refund visible, and place checkout options before the large kit image on phones.
 - [x] Add stage icons, raised buttons, press/hover feedback, and brief panel reveals to the delivery map. Keep the existing flow, saved drafts, and all earlier tools; honor reduced-motion preferences.
 - [x] Verify 54 targeted tests, TypeScript, and production build. Browser checks cover both editions' purchase copy, desktop and 390px layouts, optional example expansion, keyboard drill-down, existing plans, editing and reload persistence. No browser console errors observed.
-- [ ] Publish and verify this iteration on the review preview. Live checkout remains disabled.
+- [x] Publish and verify this iteration on the review preview. Application commit `06358707e10c86f36bf2c0013b11b126f8b8f1c7`; Railway deployment `ecb896f3-134e-41c0-8956-a1f288b7e17f` succeeded. Checked the deployed lead sales page, PM checkout contents/disabled purchase, and delivery map selection. No map console errors observed. Screenshots: `/Users/nicholaspayne/Documents/Codex/shipping-sooner-proof/simpler-ai-offer-published.png` and `/Users/nicholaspayne/Documents/Codex/shipping-sooner-proof/tactile-map-published.png`. Live checkout remains disabled.
 
 ## 3. Explain purchases and support — Nic + Codex
 - [x] Nic approved 60 days, full refund, no explanation needed (27 October).
