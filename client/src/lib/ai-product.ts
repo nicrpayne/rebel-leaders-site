@@ -52,12 +52,18 @@ export function aiProductCopy(audience: Audience) {
 
 export function aiProductInventory(audience: Audience) {
   return AI_PRODUCT_INVENTORY.map(item =>
-    audience === "lead-dev" && item.destination === "lab/conversation"
+    audience === "lead-dev" && item.destination === "guide"
       ? {
           ...item,
           detail:
-            "Work through security, quality, and what the team can take on. Prepare the questions and recommendation you want to discuss with your PM.",
+            "Think through the change your PM is asking for, the engineering concerns, and what your team can take on. Read online or keep the printable PDF.",
         }
-      : item
+      : audience === "lead-dev" && item.destination === "lab/conversation"
+        ? {
+            ...item,
+            detail:
+              "Work through security, quality, and what the team can take on. Prepare the questions and recommendation you want to discuss with your PM.",
+          }
+        : item
   );
 }

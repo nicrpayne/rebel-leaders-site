@@ -89,35 +89,59 @@ export default function FieldToolSalesProof({
   );
 }
 
-export function FieldToolBuyerQuestions() {
+export function FieldToolBuyerQuestions({
+  audience,
+}: {
+  audience?: Audience;
+} = {}) {
+  const edition =
+    audience === "lead-dev" ? "Lead Developer" : "Product Manager";
+  const counterpart =
+    audience === "lead-dev" ? "your PM" : "your lead developer";
   const questions = [
     [
       "Who is this for?",
-      "Product managers and people leading teams who need to talk through a difficult request or decision. AI Stalemate has separate editions for Product Managers and Lead Developers.",
+      audience === "lead-dev"
+        ? "Lead developers and engineering leads whose PM is asking the team to build and ship differently with AI. You need to work through security, user access, and what the team can realistically take on—then bring a useful recommendation to your PM."
+        : audience === "pm"
+          ? "Product managers who see an opportunity for AI and need to work through it with their lead developer. You want to explain why it matters, understand the engineering concerns, and find a useful next step together."
+          : "Product managers and people leading teams who need to talk through a difficult request or decision. AI Stalemate has separate editions for Product Managers and Lead Developers.",
     ],
     [
       "What won’t it do?",
-      "It will not make a plan or decision for you. Use what you know about your situation, check what you are unsure of, and talk with the people who need to decide.",
+      audience === "lead-dev"
+        ? "It won’t assess your codebase or make an engineering decision for you. It helps you clarify what you know, what still needs checking, and what you recommend to your PM."
+        : audience === "pm"
+          ? "It won’t prove the business case or make the decision for you. It helps you explain the opportunity, check your assumptions, and prepare a conversation with your lead developer."
+          : "It will not make a plan or decision for you. Use what you know about your situation, check what you are unsure of, and talk with the people who need to decide.",
     ],
     [
       "Where does my work save?",
-      "Shared answers save in this browser on this device. They do not sync between browsers or devices. Private reflection stays only in the open tab and is neither saved nor exported. Export shared work before clearing browser data or changing devices.",
+      audience
+        ? "Your conversation notes and delivery map save in this browser on this device. They do not sync between browsers or devices. Private reflection in the conversation companion stays only in the open tab and is neither saved nor exported. Download your notes before clearing browser data or changing devices."
+        : "Shared answers save in this browser on this device. They do not sync between browsers or devices. Private reflection stays only in the open tab and is neither saved nor exported. Export shared work before clearing browser data or changing devices.",
     ],
     [
       "How does access work?",
-      "After purchase, use your email—or the email your gift was sent to—to request a sign-in link.",
+      audience
+        ? `After purchase, use your email—or the email your gift was sent to—to request a sign-in link. It opens the ${edition} Guide and both Lab paths. The other edition is sold separately.`
+        : "After purchase, use your email—or the email your gift was sent to—to request a sign-in link.",
     ],
     [
       "Can I give this to someone?",
-      "Yes. Choose Gift this beside Buy. Add their email and an optional note, then pay using your own email. They get access; you get the receipt. You can buy another gift at any time, even if you own the tool. Each person needs a separate checkout. Gift checkout opens when purchases open.",
+      `${audience ? `Yes. Choose Gift this to give someone the ${edition} edition.` : "Yes. Choose Gift this beside Buy."} Add their email and an optional note, then pay using your own email. They get access; you get the receipt. You can buy another gift at any time, even if you own the tool. Each person needs a separate checkout. Gift checkout opens when purchases open.`,
     ],
     [
       "Do I need an AI subscription?",
-      "No. You write the answers. The Lab puts them into documents you can review, copy, download, or print.",
+      audience
+        ? `No. You make the choices and write the notes. The Lab helps you explore delivery problems and prepare a next step to discuss with ${counterpart}. You can copy or download your work.`
+        : "No. You write the answers. The Lab puts them into documents you can review, copy, download, or print.",
     ],
     [
       "Is the walkthrough a video?",
-      "It is a written example you can follow one step at a time. You can load its answers into the Lab to see how it works.",
+      audience
+        ? `The ${edition} examples are written. You can load sample answers into the conversation companion or try the review-delay example in the delivery map.`
+        : "It is a written example you can follow one step at a time. You can load its answers into the Lab to see how it works.",
     ],
   ];
   return (

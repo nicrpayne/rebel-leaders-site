@@ -52,6 +52,7 @@ Updated 3 November 2026. Launch scope: PM and Lead Developer editions, sold sepa
 - [x] Publish and verify this iteration on the review preview. Application commit `06358707e10c86f36bf2c0013b11b126f8b8f1c7`; Railway deployment `ecb896f3-134e-41c0-8956-a1f288b7e17f` succeeded. Checked the deployed lead sales page, PM checkout contents/disabled purchase, and delivery map selection. No map console errors observed. Screenshots: `/Users/nicholaspayne/Documents/Codex/shipping-sooner-proof/simpler-ai-offer-published.png` and `/Users/nicholaspayne/Documents/Codex/shipping-sooner-proof/tactile-map-published.png`. Live checkout remains disabled.
 
 ## 3. Explain purchases and support — Nic + Codex
+- [x] Replace the shared generic AI sales FAQ with edition-specific answers and tighten the Lead Developer Guide description (3 November). Audited the dev hero, contents, kit image selection, worked example, all seven FAQ answers, purchase/gift/access links, and explicit other-edition link. Confirmed the PM audience remains correct. TypeScript, production build, and local browser checks pass.
 - [x] Nic approved 60 days, full refund, no explanation needed (27 October).
 - [x] Add the agreed policy, support contact, and browser-local draft explanation to the purchase/access experience.
 - [x] Confirm hello@rebel-leader.com reaches a mailbox Nic monitors. Squarespace forwards it to nicpaynedev@gmail.com; Nic confirmed a test email arrived on 27 October. Outgoing customer replies and transactional access emails are separate checks.

@@ -127,7 +127,7 @@ export default function AIProductPage({ audience }: { audience: Audience }) {
           showRoleLinks={false}
         />
       </details>
-      <FieldToolBuyerQuestions />
+      <FieldToolBuyerQuestions audience={audience} />
       <FieldToolsFooter />
     </main>
   );
