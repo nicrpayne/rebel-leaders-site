@@ -82,14 +82,18 @@ Refund research: Lemon Squeezy lets sellers choose their policy; comparable digi
 - [x] Create separate Railway services `field-tools-test-db` (`7a73622a-aab4-44cd-80c6-0636d7ea9037`) and `field-tools-checkout-test` (`a1fb2583-430d-4a1d-a27d-d545ff52436d`). Database is private with its own volume; app builds from `field-tools-launch`. No live-site settings were changed.
 - [x] Nic explicitly approved the isolated checkout-test site. Configured https://field-tools-checkout-test-production.up.railway.app with preview bypass disabled, its own database, test-only Lemon Squeezy settings, and the existing Resend sender reference. Deployment `93f51182-5833-4a80-8d85-8048539ebea7` succeeded. Anonymous access to the Guide displays the sign-in gate. No live-site settings changed.
 - [x] Finish each edition's confirmation/receipt URL and test checkout link. Nic entered and saved the signing secret for test webhook `148916`, listening only for `order_created` and `order_refunded`. The first real provider test-mode PM purchase completed; its webhook returned HTTP 200. Nic confirmed purchaser/seller confirmations and the access email arrived. A declined test card showed the expected insufficient-funds message.
-- [ ] Complete buyer-content, second-edition, gift, and refund verification. Do not mark the paid launch ready until the complete journey is observed.
+- [x] Complete buyer content for both editions, gift recipient sign-in, and full/partial refund checks. Remaining robustness/device checks are listed below; production is not enabled.
 - [x] Clarify temporary sign-in versus ongoing purchase access. Add a branded access email with the correct edition, single-use link, separate permanent welcome-page bookmark, return instructions, support, and browser-local draft reminder. Make bookmarking visible on welcome/sign-in pages; include return instructions in gift email. Build and 24 targeted tests pass; local email rendering checked.
 
 ## 5. Prove the whole journey — Codex + Nic
-- [ ] Test each purchase through provider test checkout, receipt, access email, welcome, Guide/PDF, and Lab.
-- [ ] Verify the other edition stays locked; test returning and signing in from a second device.
-- [ ] Test full/partial refunds, duplicate/delayed webhooks, expired access links, and failed email/retry behavior.
-- [ ] Test gifts end to end or defer gifting for initial launch; do not count mocked tests as delivery verification.
+- [x] Test each purchase through provider test checkout, receipt, access email, welcome, Guide/PDF, and Lab. PM test order `4961811` and Lead Developer test order `4961812` completed on 3 November. Both protected PDF downloads match the reviewed 21-page files byte for byte; both conversation and delivery routes opened with buyer access.
+- [x] Verify the other edition stays locked (PM buyer opening the Lead Developer Guide). Confirm returning with a fresh email sign-in link.
+- [ ] Confirm a fresh sign-in on Nic’s separate phone/tablet; receiving the email there alone does not prove product access.
+- [x] Actual PM partial refund ($5): access remains available. Actual full remaining refund: the Lab and protected PDF return to the sign-in gate. Refund webhooks returned HTTP 200.
+- [x] Observe a used/expired sign-in link fail, then successfully request and use a fresh link.
+- [ ] Complete duplicate/delayed-event state verification and provider email-failure/retry verification. The original PM paid event was replayed after refund and returned HTTP 200; automated stale-event protection passes, but a fresh PM identity check is still needed before calling that replay fully verified.
+- [x] Complete a real provider test-mode gift purchase (`4961813`), recipient notification, recipient sign-in and Lab access, then full refund and verified recipient access revocation. The test buyer and recipient use different email aliases.
+- [ ] Finish gift buyer-denial and duplicate-notification checks; apply the branded email treatment to the initial gift notification, which remains plain.
 - [x] Nic confirms an incoming support test message arrives (27 October).
 - [ ] Confirm Nic can reply to a support message and the sender receives the response.
 
@@ -104,4 +108,11 @@ Refund research: Lemon Squeezy lets sellers choose their policy; comparable digi
 - [ ] Invite two or three actual PMs/leads to use it for a current conversation without coaching; note where they stall and what they use.
 - [ ] Check support and order/email delivery after first purchases. Video is optional follow-up work, not a launch requirement.
 
-The 27 October implementation passed 114 targeted tests across 14 suites, TypeScript, and the production build. Both three-answer Lab paths and the refund/help page were checked in the local browser. Provider checkout and email delivery remain unverified. Checklist completion requires actual evidence, not a passing mocked test alone.
+The 27 October implementation passed 114 targeted tests across 14 suites, TypeScript, and the production build. Both three-answer Lab paths and the refund/help page were checked in the local browser. Provider checkout and email delivery were subsequently verified for both AI editions on 3 November as recorded above. Outstanding cases remain unchecked; a passing mocked test alone does not establish delivery.
+
+### Email dark-mode correction — 3 November 2026
+- Nic’s Gmail iPhone screenshot exposed opaque paper backgrounds behind the wordmark and raster heading.
+- Replaced the raster heading with live serif/italic text. Rendered the existing brand wordmark on a transparent PNG in a green readable on light and dark surfaces; added explicit dark styles for supporting clients.
+- Browser proofs cover both 390px light/dark layouts. These are rendering previews, not a claim of Gmail iOS verification. Production build and all three access-email destination tests pass. Application change: `5e27db7`.
+- Gift test order `4961813` completed in Lemon Squeezy test mode. The recipient notification arrived at the recipient alias with the correct PM welcome URL and note; recipient sign-in opened the welcome page and Lab. A full test refund then revoked recipient access on reload.
+- Deployed the dark-mode correction successfully to review (`f2ed730b-a06d-4408-826e-de7cd9f95c59`) and isolated checkout test (`747f79c7-2d38-4a21-b799-26c4593f9645`). Actual updated PM/gift-recipient and Lead Developer access emails arrived in Gmail at 4:05 and 4:07 PM Central; live-text heading and correct edition/bookmark were verified. The latest Lead Developer sign-in link was left unused for Nic. Gmail iPhone visual confirmation is still Nic’s check.
