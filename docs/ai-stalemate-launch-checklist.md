@@ -73,6 +73,16 @@ Refund research: Lemon Squeezy lets sellers choose their policy; comparable digi
 - [ ] Apply commerce/gift migrations and check database health.
 - [ ] Follow the exact settings in field-tools-commerce.md. Keep production checkout disabled until verification passes.
 
+### Final review and test setup — 3 November 2026
+- [x] Re-read both Guides, render all 42 PDF pages, and check the edition-specific offer and FAQ copy. Both PDFs remain 21 pages; the review desk already has the correct counts.
+- [x] Add a brief signpost in each Guide's practical chapter to the delivery map, alongside the conversation companion. Rebuild both PDFs and inspect the changed pages.
+- [x] Run the 150 targeted product/privacy/access/commerce tests. Two HTTP-boundary tests initially hit the local sandbox's port restriction and passed when rerun with permission. These are automated checks, not provider purchase proof.
+- [x] Confirm Lemon Squeezy is signed in and in test mode. Store `496181`; PM product/variant `1478553` / `2305039`; Lead Developer product/variant `1478557` / `2305045`. Both remain $47 drafts, hidden from the storefront.
+- [x] Recheck payout settings: bank connected; tax information is still marked Action Required.
+- [x] Create separate Railway services `field-tools-test-db` (`7a73622a-aab4-44cd-80c6-0636d7ea9037`) and `field-tools-checkout-test` (`a1fb2583-430d-4a1d-a27d-d545ff52436d`). Database is private with its own volume; app builds from `field-tools-launch`. No live-site settings were changed.
+- [ ] Finish test app configuration and public URL. Automatic approval review rejected public domain creation because a new internet-facing service requires explicit authorization. User approval requested for the dedicated test URL with buyer checks, separate database, test-only payments, and the existing Resend sender. No app variables or public domain were applied.
+- [ ] Finish provider confirmation/receipt URLs, signed webhook, and actual test purchases. Do not mark the paid launch ready until the complete journey is observed.
+
 ## 5. Prove the whole journey — Codex + Nic
 - [ ] Test each purchase through provider test checkout, receipt, access email, welcome, Guide/PDF, and Lab.
 - [ ] Verify the other edition stays locked; test returning and signing in from a second device.

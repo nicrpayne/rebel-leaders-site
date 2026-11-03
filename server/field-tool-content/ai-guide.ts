@@ -239,7 +239,7 @@ export const AI_STALEMATE_GUIDE_PAGES: AIGuidePage[] = [
     eyebrow: "09 / USE THE LAB",
     title: "Bring one real conversation.",
     intro:
-      "Ready to try this with your own situation? The Lab helps you work through the questions and prepare something to talk over with your colleague. Start where it helps; you don’t need to fill every box.",
+      "Open the Lab and choose Prepare your conversation to use the steps below. Start where it helps; you don’t need to fill every box or read the whole Guide first.",
     sections: [
       {
         title: "1. Before you talk",
@@ -260,6 +260,10 @@ export const AI_STALEMATE_GUIDE_PAGES: AIGuidePage[] = [
       {
         title: "5. Next step",
         body: "Write the decision and the reason. Name who will do what next and when you’ll check again. Preview the Decision Brief and review it before sharing.",
+      },
+      {
+        title: "Or find where work gets stuck",
+        body: "Choose the Lab’s delivery map to follow one real piece of work from idea to use. Explore where it waited or went back, what might explain that, and what you still need to ask. Leave with a question to check, a conversation to have, or a small change to propose. Either Lab path can stand alone.",
       },
     ],
     callout:

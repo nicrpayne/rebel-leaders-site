@@ -12,7 +12,7 @@ Buy pages keep the product image, purchase/gift controls, and related tools. Ful
 
 ## Expanded AI editions
 
-Each PDF contains 21 pages: cover, 12 chapters, five companion pages, and three source/teaching pages. The online Guide, five-stage Lab, worked walkthrough, and library are included in the same edition. The two audiences have distinct preparation questions, framing, and guidance, with common experiment/evidence standards for working together. No outcome of adopting AI is presumed.
+Each PDF contains 21 pages, including its visual companions and source/teaching notes. The online Guide, two-path Lab, worked walkthrough, and library are included in the same edition. The Lab offers conversation preparation and a delivery map; either can be used independently. The two audiences have distinct preparation questions, framing, and guidance, with common experiment/evidence standards for working together. No outcome of adopting AI is presumed.
 
 The Lab supports a useful next conversation, preparation, specialist input, an experiment, existing evidence, or stopping. Six effort stages record person-minutes for both methods. Blank means unknown; zero means none occurred. Incomplete totals cannot produce a saving claim. Quality and comparability remain separate judgments. Shared exports exclude private preparation. Drafts stay in the current browser; signing in elsewhere does not sync them.
 

@@ -281,7 +281,7 @@ export const AI_DEV_GUIDE: AIGuidePage[] = [
   page(
     "12 / PUT IT TO WORK",
     "Take a clear position into the conversation.",
-    "Use the parts you need now. You can prepare for a useful conversation without filling out an experiment plan or writing an essay.",
+    "Open the Lab and choose Prepare your conversation for the steps below. Use the parts you need now; you don’t need an experiment plan or a finished Guide to start.",
     [
       [
         "Before you talk",
@@ -294,6 +294,10 @@ export const AI_DEV_GUIDE: AIGuidePage[] = [
       [
         "A spike and a return, when useful",
         "Use the optional plan and results record if there is a question worth testing. Otherwise go straight to the recommendation. Come back after the next action: what changed, what did you learn about the work and each other, and what would help the team next time?",
+      ],
+      [
+        "Or find where work gets stuck",
+        "Choose the Lab’s delivery map to follow one real change from idea to use. Explore where it waited or came back for more work, what might explain that, and what has already been tried. Leave with a question to check, a conversation to have, or a small change to propose. You can use this path on its own or bring what you find into the AI conversation.",
       ],
     ],
     "The aim is a conversation where your expertise helps shape the decision and your PM’s context helps shape your recommendation."
