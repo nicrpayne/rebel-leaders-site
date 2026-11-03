@@ -43,7 +43,7 @@ Updated 3 November 2026. Launch scope: PM and Lead Developer editions, sold sepa
 - [x] Limit deeper decision-role help to a closed, optional disclosure for conversation/decision plans. One notes box; no role matrix, mandatory fields, or assigned authority. Ordinary review and investigation paths keep their existing fields.
 - [x] Preserve old saved plans and new optional notes through reloads. Include notes in exports only when entered. Keep Agile, Scrum, and Bain sources in the existing research disclosure.
 - [x] Verify 39 targeted tests, TypeScript, and production build. Browser checks cover existing simple plans, the decision path, optional notes and text download, reload persistence, and 390px phone layout. No browser console errors observed.
-- [ ] Publish and verify on the review preview.
+- [x] Publish and verify on the review preview. Application commit `17b1c23e4c39fb28b17603d7a657877baf70310b`; Railway deployment `ef3827c2-12f3-470e-a0c1-9a891d18beb1` succeeded. Confirmed the deployed conversation wording and closed optional decision help. Screenshot: `/Users/nicholaspayne/Documents/Codex/shipping-sooner-proof/small-decisions-published.png`. Both editions use the shared flow; PM investigation and lead-developer decision/simple-review paths were checked locally. Paid launch checks below remain outstanding.
 
 ## 3. Explain purchases and support — Nic + Codex
 - [x] Nic approved 60 days, full refund, no explanation needed (27 October).
