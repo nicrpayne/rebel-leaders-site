@@ -1,6 +1,6 @@
 # AI Stalemate launch checklist
 
-Updated 2 November 2026. Launch scope: PM and Lead Developer editions, sold separately for $47 each. Keep the approved design, portraits, and Guides.
+Updated 3 November 2026. Launch scope: PM and Lead Developer editions, sold separately for $47 each. Keep the approved design, portraits, and Guides.
 
 ## 1. Protect private work — Codex
 - [x] Stop analytics and session replay when entering any Field Tool from another page, including Back/Forward navigation.
@@ -37,6 +37,13 @@ Updated 2 November 2026. Launch scope: PM and Lead Developer editions, sold sepa
 - [x] Add contextual inquiry before advice: one observed example, possible constraint, previous attempt and outcome, decision authority, and missing perspectives. Offer a question to investigate, a conversation to prepare, or a small change to propose.
 - [x] Validate with 68 targeted tests, TypeScript, production build, and browser checks of both hubs, older Guide step links, preserved saved plans, question/discussion paths, exports, reload persistence, phone (390px), and tablet (768px).
 - [x] Publish and verify this integrated Lab iteration on the review preview. Application commit `a1bb39078a71b1972a3d2b6059905eeaba3992b7`; Railway deployment `39727952-9db0-46c9-847e-ffc70d5a3716` succeeded. Both hubs, canonical paths, the PM Guide step redirect, review-page links, example inquiry/discussion draft, copy feedback, and downloaded notes were checked on the published site. No browser console errors observed. Screenshot: `/Users/nicholaspayne/Documents/Codex/shipping-sooner-proof/ai-stalemate-lab-published.png`. Paid launch checks below remain outstanding.
+
+### Keep decisions proportionate — 3 November 2026
+- [x] Weave smallest useful steps, user value, learning, and decisions that can wait into existing delivery prompts. Do not add a stage or require a decision before useful work can continue.
+- [x] Limit deeper decision-role help to a closed, optional disclosure for conversation/decision plans. One notes box; no role matrix, mandatory fields, or assigned authority. Ordinary review and investigation paths keep their existing fields.
+- [x] Preserve old saved plans and new optional notes through reloads. Include notes in exports only when entered. Keep Agile, Scrum, and Bain sources in the existing research disclosure.
+- [x] Verify 39 targeted tests, TypeScript, and production build. Browser checks cover existing simple plans, the decision path, optional notes and text download, reload persistence, and 390px phone layout. No browser console errors observed.
+- [ ] Publish and verify on the review preview.
 
 ## 3. Explain purchases and support — Nic + Codex
 - [x] Nic approved 60 days, full refund, no explanation needed (27 October).

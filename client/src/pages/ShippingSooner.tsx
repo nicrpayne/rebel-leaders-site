@@ -605,6 +605,12 @@ export default function ShippingSooner({ audience }: { audience: Audience }) {
                 approve or configure access.
               </p>
             )}
+            <p>
+              Agile and Scrum principles inform the focus on useful small steps,
+              sustainable work, and adapting as you learn. The optional help for
+              complicated decisions draws on Bain’s RAPID decision roles. These
+              are prompts you can use as needed, not a process to adopt.
+            </p>
             <ul>
               {Object.values(ACTION_SOURCES).map(source => (
                 <li key={source.url}>

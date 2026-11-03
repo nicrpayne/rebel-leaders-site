@@ -696,8 +696,8 @@ export default function DeliveryJourney({
                 {finding.plan.kind === "check"
                   ? "You can make progress by answering one useful question."
                   : finding.plan.kind === "discuss"
-                    ? "Bring your understanding to the people who can help you move it forward."
-                    : "A proposal to agree with the people involved before trying it."}
+                    ? "Bring one question to the people involved. What needs deciding now, and what can move ahead already?"
+                    : "Start small: one useful change to agree with the people involved, then learn from what happens."}
               </p>
               <div className="journey-plan-fields">
                 {planInput("first", template.first, template.firstHint, true)}
@@ -740,6 +740,28 @@ export default function DeliveryJourney({
                     "e.g. Friday 13 November, after three changes"
                   )}
                 </div>
+                {(finding.plan.kind === "discuss" ||
+                  (finding.plan.kind === "try" &&
+                    match.cause.tool === "decision") ||
+                  finding.plan.decisionNotes.trim()) && (
+                  <details>
+                    <summary>
+                      A complicated decision? <span>Optional</span>
+                    </summary>
+                    <p>
+                      If several people need to be involved, separate who brings
+                      the recommendation, whose input helps, who must sign off,
+                      who makes the call, and who carries it out. Use only what
+                      this decision needs.
+                    </p>
+                    {planInput(
+                      "decisionNotes",
+                      "What needs untangling?",
+                      "Who is needed for which part? What can move ahead already, and what would make it time to revisit the rest?",
+                      true
+                    )}
+                  </details>
+                )}
                 <details>
                   <summary>
                     When you come back{" "}
@@ -747,8 +769,8 @@ export default function DeliveryJourney({
                   </summary>
                   {planInput(
                     "result",
-                    "What happened? What else might explain it?",
-                    "Look at the useful result, the delay, and the effect on people and quality.",
+                    "What happened, and what did you learn?",
+                    "Did it help the people using the work? Look at the delay, team workload, quality, and what else might explain the result.",
                     true
                   )}
                   <label>

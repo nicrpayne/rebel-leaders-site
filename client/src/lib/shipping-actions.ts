@@ -1,6 +1,18 @@
 // Our practical experiments, informed by the sources linked in the UI.
 // Matching a selected cause offers options; it does not diagnose a team.
 export const ACTION_SOURCES = {
+  agile: {
+    title: "Agile Manifesto · Principles",
+    url: "https://agilemanifesto.org/principles.html",
+  },
+  scrum: {
+    title: "The Scrum Guide · Learning and adaptation",
+    url: "https://scrumguides.org/scrum-guide.html",
+  },
+  decisions: {
+    title: "Bain · Decision roles",
+    url: "https://media.bain.com/Images/BAIN_BRIEF_Decision_Insights_The_five_steps_to_better_decisions.pdf",
+  },
   journey: {
     title: "DORA · Value stream mapping for software delivery",
     url: "https://dora.dev/guides/value-stream-management/",

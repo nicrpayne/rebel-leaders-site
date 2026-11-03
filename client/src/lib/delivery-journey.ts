@@ -25,10 +25,12 @@ export const JOURNEY_TEMPLATES: Record<
 > = {
   decision: {
     title: "A decision request",
-    first: "What decision do we need?",
+    first: "What, if anything, needs deciding now?",
     second: "What do we recommend, and what is the trade-off?",
-    firstHint: "The specific choice that is holding up this piece of work.",
-    secondHint: "A recommendation the decision owner can respond to.",
+    firstHint:
+      "The smallest choice needed for the next useful step. The bigger decision may be able to wait.",
+    secondHint:
+      "Who will this help? Say what can move ahead, what can wait, and when you would revisit it.",
   },
   review: {
     title: "A review agreement",
@@ -56,7 +58,8 @@ export const JOURNEY_TEMPLATES: Record<
     title: "A small bet",
     first: "What will we try differently?",
     second: "What will we make room for or leave alone?",
-    firstHint: "A change the people involved can actually try.",
+    firstHint:
+      "One small change the people involved can try, and who it should help.",
     secondHint: "Name the trade-off so this does not become extra work.",
   },
   slice: {
@@ -87,6 +90,7 @@ export type JourneyPlan = {
   measure: string;
   protect: string;
   result: string;
+  decisionNotes: string;
   decision: "unreviewed" | "keep" | "adjust" | "stop";
 };
 export type JourneyFinding = {
@@ -125,6 +129,7 @@ export const emptyJourneyPlan = (): JourneyPlan => ({
   measure: "",
   protect: "",
   result: "",
+  decisionNotes: "",
   decision: "unreviewed",
 });
 export const emptyJourneyDraft = (): JourneyDraft => ({
@@ -196,7 +201,8 @@ export function journeyPlanTemplate(finding: JourneyFinding) {
       title: "A conversation to move this forward",
       first: "What do we need to agree or understand together?",
       second: "What example, previous attempt, and trade-off will we bring?",
-      firstHint: "One question or decision for the people involved.",
+      firstHint:
+        "One question, or the smallest decision needed now. You may be able to take a useful step before settling everything.",
       secondHint:
         "Give them enough context to respond. Include what you cannot change alone.",
     };
@@ -238,7 +244,7 @@ export function prepareJourneyPlan(
       measure: check
         ? "Did we answer the question? What is still uncertain, and does the answer change our next step?"
         : discuss
-          ? "Did we reach a decision or identify what is needed to make it? Record disagreements and any commitments explicitly."
+          ? "What can move ahead? What is still open, and what new information or date would prompt another look? Record any commitments explicitly."
           : match.cause.watch,
       protect:
         "Keep essential checks. Make room inside normal working hours; agree what will wait.",
@@ -312,6 +318,7 @@ export function readJourneyDraft(raw: string | null): JourneyDraft {
         "measure",
         "protect",
         "result",
+        "decisionNotes",
       ] as const)
         plan[k] = str(p[k]);
       plan.kind = p.kind === "check" || p.kind === "discuss" ? p.kind : "try";
@@ -477,6 +484,10 @@ export function journeySummary(d: JourneyDraft, example: boolean): string {
       `What happened: ${given(p.result, "not reviewed yet")}`,
       `Next decision: ${p.decision === "unreviewed" ? "Not made yet" : p.decision}`
     );
+    if (p.decisionNotes.trim())
+      lines.push(
+        `Decision notes (to agree together): ${p.decisionNotes.trim()}`
+      );
   }
   lines.push(
     "",

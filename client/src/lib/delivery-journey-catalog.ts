@@ -46,7 +46,7 @@ export const JOURNEY_STAGES: JourneyStage[] = [
     name: "Decide",
     question: "What happened between the request and a decision?",
     evidence:
-      "Find the request, the decision date, and who could make that decision. Was it deliberately parked, or waiting without a next step?",
+      "Look at the request and what happened next. Did this decision actually block the next useful step, or could part of the work move ahead while you learned more?",
     symptoms: [
       {
         label: "It sat waiting for a decision.",
@@ -56,13 +56,13 @@ export const JOURNEY_STAGES: JourneyStage[] = [
             label: "Nobody knew who could say yes.",
             title: "Make the next decision possible.",
             check:
-              "Is the decision owner genuinely unclear, or are they waiting for information?",
+              "What, if anything, needed deciding before the next useful step? Was the person who could decide unclear, or waiting for information?",
             action:
-              "For the next request, name the decision, the person able to make it, and the information they need. Agree when to revisit it.",
+              "Name the smallest decision needed now and who can make it. If the larger choice can wait, agree what can move ahead and what information or date would trigger another look.",
             people:
-              "PM identifies the decision owner; lead dev supplies the technical unknowns.",
+              "The people involved clarify who can make this choice; the team brings the user need and technical unknowns.",
             watch:
-              "Watch request-to-decision time and whether the decision has to be reopened.",
+              "Watch whether useful work moves forward. Revisit the choice when new information matters, rather than treating a changed decision as a failure.",
             id: "decide-1-1",
             tool: "decision",
           },
@@ -70,9 +70,9 @@ export const JOURNEY_STAGES: JourneyStage[] = [
             label: "We kept being asked for more evidence.",
             title: "Agree what is enough to decide.",
             check:
-              "Ask which unanswered question would actually change the decision.",
+              "Which unanswered question would change the next step? Does it need answering now, or only before a later commitment?",
             action:
-              "Choose one question and the smallest useful way to answer it. Agree what result would let you proceed, change course, or stop.",
+              "Choose one question and the smallest useful way to answer it. Agree what can proceed already and what result would let you continue, change course, or stop.",
             people:
               "PM and decision owner set the question; the team proposes a proportionate check.",
             watch:
@@ -112,7 +112,7 @@ export const JOURNEY_STAGES: JourneyStage[] = [
             people:
               "PM convenes the decision; lead dev makes dependencies and consequences visible.",
             watch:
-              "Watch whether the same priority decision is reopened before the agreed review date.",
+              "Watch whether the agreed user outcome moves forward. If the priority changes again, check whether new information or an unresolved disagreement prompted it.",
             id: "decide-2-2",
             tool: "decision",
           },

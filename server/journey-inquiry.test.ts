@@ -97,6 +97,8 @@ describe("inquiry before action", () => {
     );
     expect(d.findings[0].inquiry).toEqual(emptyJourneyInquiry());
     expect(d.findings[0].plan.kind).toBe("try");
+    expect(d.findings[0].plan.decisionNotes).toBe("");
+    expect(journeySummary(d, false)).not.toContain("Decision notes");
     expect(prepareJourneyPlan(d.findings[0], "check")).toEqual(d.findings[0]);
     expect(journeySummary(d, false)).toContain(
       "Our original reviewer agreement"
@@ -141,7 +143,7 @@ describe("inquiry before action", () => {
                 influence: "authorized",
                 detail: 42,
               },
-              plan: { kind: "approved" },
+              plan: { kind: "approved", decisionNotes: { approved: true } },
             },
           ],
         },
@@ -149,6 +151,7 @@ describe("inquiry before action", () => {
     );
     expect(d.findings[0].inquiry).toEqual(emptyJourneyInquiry());
     expect(d.findings[0].plan.kind).toBe("try");
+    expect(d.findings[0].plan.decisionNotes).toBe("");
     for (const c of JOURNEY_STAGES.flatMap(s =>
       s.symptoms.flatMap(s => s.cases)
     )) {
@@ -160,5 +163,24 @@ describe("inquiry before action", () => {
         expect(o.action.length).toBeGreaterThan(20);
       });
     }
+  });
+  it("preserves optional decision notes across reloads and exports only notes someone entered", () => {
+    const d = addJourneyFinding(emptyJourneyDraft(), "decide-1-1");
+    d.findings[0] = prepareJourneyPlan(d.findings[0], "discuss");
+    expect(journeySummary(d, false)).not.toContain("Decision notes");
+    const notes =
+      "Jo brings the options; Alex can decide the pilot. Ask security which sign-off is required. We can check the user task now and revisit rollout after the pilot.";
+    d.findings[0].plan.decisionNotes = notes;
+    const restored = readJourneyDraft(JSON.stringify({ version: 1, draft: d }));
+    expect(restored).toEqual(d);
+    expect(prepareJourneyPlan(restored.findings[0], "try")).toEqual(
+      d.findings[0]
+    );
+    expect(journeySummary(restored, false)).toContain(
+      "Decision notes (to agree together): " + notes
+    );
+    expect(restored.findings[0].plan.decision).toBe("unreviewed");
+    restored.findings[0].plan.decisionNotes = "  ";
+    expect(journeySummary(restored, false)).not.toContain("Decision notes");
   });
 });
