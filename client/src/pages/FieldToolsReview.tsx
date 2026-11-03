@@ -102,13 +102,13 @@ export default function FieldToolsReview() {
             NEW TO TRY / AI STALEMATE COMPANION
           </p>
           <h2 className="mt-3 font-display text-3xl">
-            What’s the smallest useful thing we could ship?
+            Code is moving faster. What’s still holding up delivery?
           </h2>
           <p className="mt-3 max-w-3xl text-sm leading-6 text-[var(--ft-muted)]">
-            Bring one feature. Explore a smaller useful release, decide what can
-            wait, and leave with a proposal to discuss together. Try the
-            reporting dashboard example, or use your own work. The earlier tools
-            and Lab remain available.
+            Follow one feature from idea to use. Explore where it waited, looped
+            back, or got interrupted, then prepare a specific change to try.
+            Start with the review-delay example or follow your own work. The
+            earlier tools and Lab remain available.
           </p>
           <div className="mt-5 flex flex-wrap gap-3">
             {(["pm", "lead-dev"] as const).map(audience => (

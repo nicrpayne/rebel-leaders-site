@@ -1,6 +1,10 @@
 // Our practical experiments, informed by the sources linked in the UI.
 // Matching a selected cause offers options; it does not diagnose a team.
 export const ACTION_SOURCES = {
+  journey: {
+    title: "DORA · Value stream mapping for software delivery",
+    url: "https://dora.dev/guides/value-stream-management/",
+  },
   devex: {
     title: "Atlassian · Developer Experience 2026",
     url: "https://www.atlassian.com/teams/software-development/state-of-developer-experience-2026",

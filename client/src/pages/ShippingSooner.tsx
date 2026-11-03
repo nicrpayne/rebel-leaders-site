@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
 import { ArrowRight, Copy, Download } from "lucide-react";
 import FirstRelease from "@/components/field-tools/FirstRelease";
+import DeliveryJourney from "@/components/field-tools/DeliveryJourney";
 import ShippingAccessRequest from "@/components/field-tools/ShippingAccessRequest";
 import { hasAccessWork } from "@/lib/shipping-access";
 import ShippingActionPlanner from "@/components/field-tools/ShippingActionPlanner";
@@ -41,9 +42,14 @@ export default function ShippingSooner({ audience }: { audience: Audience }) {
       ? "own"
       : "example"
   );
-  const [workspace, setWorkspace] = useState<"slice" | "access" | "workflow">(
-    "slice"
-  );
+  const [workspace, setWorkspace] = useState<
+    "journey" | "slice" | "access" | "workflow"
+  >("journey");
+  const pageHeading = useRef<HTMLHeadingElement>(null);
+  function openWorkspace(next: typeof workspace) {
+    setWorkspace(next);
+    requestAnimationFrame(() => pageHeading.current?.focus());
+  }
   const [storageFailed, setStorageFailed] = useState(false);
   const [message, setMessage] = useState("");
   const draft = mode === "example" ? example : own;
@@ -118,37 +124,43 @@ export default function ShippingSooner({ audience }: { audience: Audience }) {
               Review desk <ArrowRight size={14} />
             </Link>
           </div>
-          <h1>
-            What’s the smallest useful thing <em>we could ship?</em>
+          <h1 ref={pageHeading} tabIndex={-1}>
+            {workspace === "journey" ? (
+              <>
+                Code is moving faster.
+                <br />
+                <em>What’s still holding up delivery?</em>
+              </>
+            ) : workspace === "slice" ? (
+              <>
+                What’s the smallest useful thing <em>we could ship?</em>
+              </>
+            ) : workspace === "access" ? (
+              <>
+                Make the access question <em>clear enough to answer.</em>
+              </>
+            ) : (
+              <>
+                See the whole piece <em>of work.</em>
+              </>
+            )}
           </h1>
           <p>
-            {audience === "pm"
-              ? "AI may help you build faster. Bring one feature and find a smaller release that still helps someone. Leave with a proposal to work through with your developer."
-              : "AI may help you build faster. Bring one feature and find a smaller release that still helps someone. Leave with a proposal to work through with your PM."}
+            {workspace === "journey"
+              ? `If AI helps you build faster, what else could help the work reach people sooner? Follow one recent feature with your ${audience === "pm" ? "developer" : "PM"}. Find a place it stalled, then choose something useful to try together.`
+              : "Use this tool to work on a specific part of the journey. Your delivery map and other drafts stay available."}
           </p>
         </header>
 
-        <div
-          className="shipping-tool-choice"
-          role="group"
-          aria-label="Choose what to work on"
-        >
+        {workspace !== "journey" && (
           <button
-            aria-pressed={workspace === "slice"}
-            onClick={() => setWorkspace("slice")}
+            className="shipping-text-button journey-back"
+            onClick={() => openWorkspace("journey")}
           >
-            <strong>Find a smaller first release</strong>
-            <span>Keep the useful part. Decide what can wait.</span>
+            ← Back to my delivery map
           </button>
-          <button
-            aria-pressed={workspace === "workflow"}
-            onClick={() => setWorkspace("workflow")}
-          >
-            <strong>Work is already getting stuck</strong>
-            <span>Look at reviews, decisions, rework, and release</span>
-          </button>
-        </div>
-        {workspace !== "slice" && (
+        )}
+        {(workspace === "workflow" || workspace === "access") && (
           <div
             className="shipping-mode"
             role="group"
@@ -174,17 +186,25 @@ export default function ShippingSooner({ audience }: { audience: Audience }) {
           </div>
         )}
 
+        <div hidden={workspace !== "journey"}>
+          <DeliveryJourney
+            key={audience}
+            audience={audience}
+            onTool={openWorkspace}
+          />
+        </div>
         <div hidden={workspace !== "slice"}>
           <FirstRelease key={audience} audience={audience} />
         </div>
-        {workspace === "slice" ? null : workspace === "access" ? (
+        {workspace === "slice" || workspace === "journey" ? null : workspace ===
+          "access" ? (
           <ShippingAccessRequest
             key={mode}
             draft={draft.access}
             example={mode === "example"}
             audience={audience}
             onChange={access => setDraft(previous => ({ ...previous, access }))}
-            onOtherWork={() => setWorkspace("workflow")}
+            onOtherWork={() => openWorkspace("workflow")}
           />
         ) : (
           <>
@@ -199,8 +219,8 @@ export default function ShippingSooner({ audience }: { audience: Audience }) {
             <ShippingActionPlanner
               key={mode}
               name={draft.name}
-              onAccessRequest={() => setWorkspace("access")}
-              onFirstRelease={() => setWorkspace("slice")}
+              onAccessRequest={() => openWorkspace("access")}
+              onFirstRelease={() => openWorkspace("slice")}
               action={draft.action}
               audience={audience}
               example={mode === "example"}
@@ -469,24 +489,40 @@ export default function ShippingSooner({ audience }: { audience: Audience }) {
           </>
         )}
         <details className="shipping-other-tools">
-          <summary>Other tools we’ve tried</summary>
+          <summary>Open a specific tool</summary>
           <p>
-            The earlier access-request builder is still available, along with
-            its saved drafts.
+            Work on a smaller release, prepare an experiment, compare timings,
+            or clarify an access dependency. Each tool keeps its own drafts.
           </p>
-          <button
-            className="shipping-text-button"
-            onClick={() => setWorkspace("access")}
-          >
-            Open the access-request builder <ArrowRight size={14} />
-          </button>
+          <div className="shipping-companion-links">
+            <button
+              className="shipping-text-button"
+              onClick={() => openWorkspace("slice")}
+            >
+              Shape a smaller first release <ArrowRight size={14} />
+            </button>
+            <button
+              className="shipping-text-button"
+              onClick={() => openWorkspace("workflow")}
+            >
+              Open the earlier experiment planner and time comparison{" "}
+              <ArrowRight size={14} />
+            </button>
+            <button
+              className="shipping-text-button"
+              onClick={() => openWorkspace("access")}
+            >
+              Open the access-request builder <ArrowRight size={14} />
+            </button>
+          </div>
         </details>
         <div className="shipping-product-connection">
           <p>
             <strong>Need to work through the AI conversation first?</strong> The
             Guide helps you understand each other’s position. The Lab helps you
-            put your own conversation notes together. Use this companion to turn
-            a feature you’ve discussed into a first release you can agree on.
+            put your own conversation notes together. This companion helps you
+            find what else holds up delivery and prepare a change to try
+            together.
           </p>
           <div>
             <Link href={`${base}/guide`}>
@@ -535,10 +571,10 @@ export default function ShippingSooner({ audience }: { audience: Audience }) {
           <details className="shipping-research">
             <summary>What informs the suggestions?</summary>
             <p>
-              The first-release prompts draw on DORA’s guidance on small,
-              independently useful changes. You choose the scope; the tool
-              doesn’t infer what can safely be deferred. The other suggestions
-              are practical experiments informed by delivery research.
+              The journey draws on DORA’s guidance on seeing the whole flow of
+              work, including waiting, handoffs, and rework. The situations and
+              small bets are our practical prompts, not a validated diagnostic
+              or a score. Your selections identify possibilities to check.
             </p>
             <p>
               Atlassian’s 2026 report describes people’s reported experience,
