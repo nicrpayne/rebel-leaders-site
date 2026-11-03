@@ -93,7 +93,7 @@ export function giftNotification(
   const accessUrl = new URL(`/field-tools/${path}/access`, appUrl).toString();
   const greeting = gift.recipientName ? `Hi ${gift.recipientName},` : "Hello,";
   const intro = `${gift.senderName} bought you ${name}, a Field Guide and interactive Lab from Rebel Leaders.`;
-  const instructions = `It's yours to use. Open your gift and enter ${gift.recipientEmail} to receive your own secure sign-in link. You don't need to pay or enter card details.`;
+  const instructions = `It's yours to use. Open your gift and enter ${gift.recipientEmail} to receive your own secure sign-in link. Bookmark the welcome page so you can return later. Each sign-in link expires after 15 minutes; your purchase access doesn't expire with it. You can request a fresh link whenever you need one. You don't need to pay or enter card details.`;
   const privacy =
     "Your Lab answers are yours. The person who bought this gift cannot see them unless you choose to share them.";
   return {

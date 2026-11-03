@@ -19,6 +19,7 @@ import {
   fieldToolGifts,
 } from "../drizzle/schema";
 import { FIELD_TOOL_CHECKOUT_KEYS } from "./field-tool-checkout";
+import { fieldToolAccessEmail } from "./field-tool-email";
 
 import {
   giftTokenHash,
@@ -249,7 +250,12 @@ export async function requestBuyerLink(
       "Rebel Leaders <hello@rebel-leader.com>",
     to: email,
     subject: "Open your Rebel Leaders Field Tool",
-    html: `<div style="font-family:Arial;max-width:560px;line-height:1.7"><h1>Your Field Tool is ready.</h1><p>Use this secure link to sign in. It expires in 15 minutes.</p><p><a href="${url.toString().replace(/&/g, "&amp;")}">Open your Field Tool</a></p><p>Keep this sign-in link private. If you did not request it, you can ignore this email.</p></div>`,
+    ...fieldToolAccessEmail({
+      slug,
+      audience,
+      appUrl: process.env.APP_URL,
+      signInUrl: url.toString(),
+    }),
   });
   if (result.error) {
     await db

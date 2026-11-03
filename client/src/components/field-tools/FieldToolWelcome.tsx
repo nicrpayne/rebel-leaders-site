@@ -4,6 +4,7 @@ import {
   ArrowRight,
   ArrowDownToLine,
   BookOpen,
+  Bookmark,
   Check,
   Play,
   Gift,
@@ -83,6 +84,25 @@ export default function FieldToolWelcome({
       </section>
 
       <div className="ft-welcome-inner">
+        <aside
+          className="my-8 flex items-start gap-3 border-y border-[var(--ft-line)] py-5 font-ui text-sm leading-7 text-[var(--ft-muted)]"
+          aria-label="Returning to your tool"
+        >
+          <Bookmark
+            size={19}
+            className="mt-1 shrink-0 text-[var(--ft-ink)]"
+            aria-hidden="true"
+          />
+          <p>
+            <strong className="text-[var(--ft-ink)]">
+              Bookmark this welcome page.
+            </strong>{" "}
+            It’s your way back to the Guide and Lab. If you’re signed out, use
+            your purchase or gift email for a fresh sign-in link. The email link
+            expires after 15 minutes; your purchase access doesn’t expire with
+            it.
+          </p>
+        </aside>
         <section
           className="ft-welcome-outcomes"
           aria-labelledby="outcomes-title"
@@ -185,9 +205,10 @@ export default function FieldToolWelcome({
           <details>
             <summary>How do I come back?</summary>
             <p>
-              Bookmark this page. If you need to sign in again, use the email
-              you bought with—or the email your gift was sent to. We’ll send you
-              a fresh sign-in link.
+              Save this welcome page in your browser’s bookmarks or favorites.
+              You can open it on any device. If you need to sign in again, use
+              the email you bought with—or the email your gift was sent to.
+              We’ll send you a fresh sign-in link. You don’t need to buy again.
             </p>
           </details>
           <details>

@@ -13,7 +13,7 @@ Updated 3 November 2026. Launch scope: PM and Lead Developer editions, sold sepa
 - [x] Produce useful notes from the three conversation answers without filling the export with blank optional sections.
 - [x] Preserve existing answers, privacy, and proposal/agreement distinctions.
 - [x] Check both editions in the desktop browser, including three-answer output and private-note exclusion.
-- [ ] Recheck these latest changes at phone size. The browser viewport override did not change the measured 1280px testing tab; do not count it as a phone check.
+- [x] Recheck current PM hub, conversation, and delivery map at a measured 390px viewport with no horizontal overflow (3 November). Lead Developer phone layout was checked in the preceding purchase-page review.
 - [x] Publish and verify the review preview. Railway deployment 163398dd-34c8-49c5-ba81-394de3881e96 succeeded for application commit de0ee28; the deployed purchase/refund links and copy were checked. Live checkout remains disabled.
 
 ### Shipping sooner companion — 2 November 2026
@@ -56,7 +56,7 @@ Updated 3 November 2026. Launch scope: PM and Lead Developer editions, sold sepa
 - [x] Nic approved 60 days, full refund, no explanation needed (27 October).
 - [x] Add the agreed policy, support contact, and browser-local draft explanation to the purchase/access experience.
 - [x] Confirm hello@rebel-leader.com reaches a mailbox Nic monitors. Squarespace forwards it to nicpaynedev@gmail.com; Nic confirmed a test email arrived on 27 October. Outgoing customer replies and transactional access emails are separate checks.
-- [ ] Verify the transactional email sender separately from the support inbox.
+- [x] Verify the transactional email sender separately from the support inbox. The test PM access email arrived from hello@rebel-leader.com on 3 November, observed in Gmail and confirmed by Nic.
 
 Refund research: Lemon Squeezy lets sellers choose their policy; comparable digital guides offer 30 days (Refactoring.Guru) and 60 days (Refactoring UI), both full refunds. Nic approved: “Try it for 60 days. If it isn’t useful to you, email hello@rebel-leader.com and we’ll refund you in full. No explanation needed.”
 
@@ -67,21 +67,23 @@ Refund research: Lemon Squeezy lets sellers choose their policy; comparable digi
 ## 4. Connect checkout in test mode — Nic + Codex
 - [x] Confirm Lemon Squeezy store activation and bank connection. Activation email and signed-in dashboard checked 27 October.
 - [ ] Nic completes the outstanding tax information at https://app.lemonsqueezy.com/settings/payouts/tax-details. The dashboard still reports action required; payouts are not yet cleared.
-- [x] Create separate PM and Lead Developer $47 one-time test drafts, hidden from the storefront. PM product: 1478553. Lead Developer product: 1478557. Neither is published; no live products created.
-- [ ] Finish test product images, confirmation/receipt/access URLs, publish in test mode, and record variant IDs and checkout URLs. Draft tax category is Digital Goods or Services; confirm the appropriate category for the Guide/Lab package before live release.
-- [ ] Configure a separate test database/service, Resend sender, webhook secret, store/mode and variant map. Never paste secrets into this checklist or commit them.
-- [ ] Apply commerce/gift migrations and check database health.
+- [x] Create separate PM and Lead Developer $47 one-time test drafts, hidden from the storefront. PM product: 1478553. Lead Developer product: 1478557. Both were subsequently published in test mode on 3 November; no live products created.
+- [x] Finish test product images, confirmation/receipt/access URLs, publish in test mode, and record variant IDs and checkout URLs. Draft tax category is Digital Goods or Services; confirm the appropriate category for the Guide/Lab package before live release.
+- [x] Configure a separate test database/service, Resend sender, webhook secret, store/mode and variant map. Never paste secrets into this checklist or commit them.
+- [x] Apply commerce/gift migrations; the actual PM test purchase webhook was accepted and an access email was delivered. Startup still logs an unrelated legacy `walls.is_featured` alteration warning; investigate separately before production release.
 - [ ] Follow the exact settings in field-tools-commerce.md. Keep production checkout disabled until verification passes.
 
 ### Final review and test setup — 3 November 2026
 - [x] Re-read both Guides, render all 42 PDF pages, and check the edition-specific offer and FAQ copy. Both PDFs remain 21 pages; the review desk already has the correct counts.
 - [x] Add a brief signpost in each Guide's practical chapter to the delivery map, alongside the conversation companion. Rebuild both PDFs and inspect the changed pages.
 - [x] Run the 150 targeted product/privacy/access/commerce tests. Two HTTP-boundary tests initially hit the local sandbox's port restriction and passed when rerun with permission. These are automated checks, not provider purchase proof.
-- [x] Confirm Lemon Squeezy is signed in and in test mode. Store `496181`; PM product/variant `1478553` / `2305039`; Lead Developer product/variant `1478557` / `2305045`. Both remain $47 drafts, hidden from the storefront.
+- [x] Confirm Lemon Squeezy is signed in and in test mode. Store `496181`; PM product/variant `1478553` / `2305039`; Lead Developer product/variant `1478557` / `2305045`. Both are $47 test-mode products, hidden from the storefront.
 - [x] Recheck payout settings: bank connected; tax information is still marked Action Required.
 - [x] Create separate Railway services `field-tools-test-db` (`7a73622a-aab4-44cd-80c6-0636d7ea9037`) and `field-tools-checkout-test` (`a1fb2583-430d-4a1d-a27d-d545ff52436d`). Database is private with its own volume; app builds from `field-tools-launch`. No live-site settings were changed.
-- [ ] Finish test app configuration and public URL. Automatic approval review rejected public domain creation because a new internet-facing service requires explicit authorization. User approval requested for the dedicated test URL with buyer checks, separate database, test-only payments, and the existing Resend sender. No app variables or public domain were applied.
-- [ ] Finish provider confirmation/receipt URLs, signed webhook, and actual test purchases. Do not mark the paid launch ready until the complete journey is observed.
+- [x] Nic explicitly approved the isolated checkout-test site. Configured https://field-tools-checkout-test-production.up.railway.app with preview bypass disabled, its own database, test-only Lemon Squeezy settings, and the existing Resend sender reference. Deployment `93f51182-5833-4a80-8d85-8048539ebea7` succeeded. Anonymous access to the Guide displays the sign-in gate. No live-site settings changed.
+- [x] Finish each edition's confirmation/receipt URL and test checkout link. Nic entered and saved the signing secret for test webhook `148916`, listening only for `order_created` and `order_refunded`. The first real provider test-mode PM purchase completed; its webhook returned HTTP 200. Nic confirmed purchaser/seller confirmations and the access email arrived. A declined test card showed the expected insufficient-funds message.
+- [ ] Complete buyer-content, second-edition, gift, and refund verification. Do not mark the paid launch ready until the complete journey is observed.
+- [x] Clarify temporary sign-in versus ongoing purchase access. Add a branded access email with the correct edition, single-use link, separate permanent welcome-page bookmark, return instructions, support, and browser-local draft reminder. Make bookmarking visible on welcome/sign-in pages; include return instructions in gift email. Build and 24 targeted tests pass; local email rendering checked.
 
 ## 5. Prove the whole journey — Codex + Nic
 - [ ] Test each purchase through provider test checkout, receipt, access email, welcome, Guide/PDF, and Lab.

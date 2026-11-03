@@ -59,6 +59,18 @@ export function FieldToolSignIn({
           {request.isPending ? "Sending…" : "Email my access link"}
         </button>
       </form>
+      <p className="mt-5 font-ui text-xs leading-6 text-[var(--ft-muted)]">
+        Your sign-in link works once and expires in 15 minutes. Your purchase
+        access doesn’t expire with it. Bookmark{" "}
+        <Link
+          className="underline"
+          href={`${fieldToolBase(slug, audience)}/access`}
+        >
+          your welcome page
+        </Link>{" "}
+        and request a fresh link whenever you need one. You won’t need to buy
+        again.
+      </p>
       {request.isSuccess && (
         <p role="status" className="mt-5 text-sm leading-7">
           If this email has access to this tool, an access link is on its way.
