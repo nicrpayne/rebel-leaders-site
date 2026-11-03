@@ -83,7 +83,7 @@ describe("delivery journey", () => {
   });
   it("round trips personal evidence and several saved plans, including an unfinished result", () => {
     const d = exampleJourneyDraft();
-    d.findings = d.findings.map(prepareJourneyPlan);
+    d.findings = d.findings.map(f => prepareJourneyPlan(f));
     d.findings[0].evidence = "checked";
     d.findings[0].plan.owner = "Alex and Jo";
     d.findings[0].plan.reviewOn = "2026-11-13";

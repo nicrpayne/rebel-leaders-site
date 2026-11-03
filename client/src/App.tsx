@@ -8,7 +8,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
 import { lazy, Suspense, useLayoutEffect } from "react";
 import { isFieldToolPath, protectFieldToolPrivacy } from "./lib/analytics";
-import { Route, Switch, Redirect, useLocation } from "wouter";
+import { Route, Switch, Redirect, useLocation, useSearch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { GameProvider } from "./contexts/GameContext";
@@ -45,6 +45,7 @@ const FieldToolsReview = lazy(() => import("./pages/FieldToolsReview"));
 const FieldToolLanding = lazy(() => import("./pages/FieldToolLanding"));
 const PressureTest = lazy(() => import("./pages/PressureTest"));
 const FieldToolLab = lazy(() => import("./pages/FieldToolLab"));
+const AiStalemateLab = lazy(() => import("./pages/AiStalemateLab"));
 const ShippingSooner = lazy(() => import("./pages/ShippingSooner"));
 const FieldToolGuide = lazy(() => import("./pages/FieldToolGuide"));
 const FieldToolPurchase = lazy(() => import("./pages/FieldToolPurchase"));
@@ -71,6 +72,7 @@ function RouteLoading() {
 
 function Router() {
   const [location] = useLocation();
+  const search = useSearch();
   useLayoutEffect(() => {
     protectFieldToolPrivacy(location);
   }, [location]);
@@ -155,6 +157,24 @@ function Router() {
               </FieldToolGate>
             )}
           </Route>
+          <Route path="/field-tools/ai-stalemate/:audience/lab/:tool">
+            {(p: { audience: string; tool: string }) => {
+              if (
+                (p.audience !== "pm" && p.audience !== "lead-dev") ||
+                (p.tool !== "conversation" && p.tool !== "delivery")
+              )
+                return <NotFound />;
+              return (
+                <FieldToolGate slug="ai-stalemate" audience={p.audience}>
+                  {p.tool === "delivery" ? (
+                    <ShippingSooner key={p.audience} audience={p.audience} />
+                  ) : (
+                    <FieldToolLab slug="ai-stalemate" />
+                  )}
+                </FieldToolGate>
+              );
+            }}
+          </Route>
           <Route path="/field-tools/ai-stalemate/:audience/:view">
             {(p: { audience: string; view: string }) => {
               if (p.audience !== "pm" && p.audience !== "lead-dev")
@@ -169,7 +189,13 @@ function Router() {
                   {p.view === "shipping-sooner" ? (
                     <ShippingSooner key={audience} audience={audience} />
                   ) : p.view === "lab" ? (
-                    <FieldToolLab slug="ai-stalemate" />
+                    new URLSearchParams(search).has("step") ? (
+                      <Redirect
+                        to={`/field-tools/ai-stalemate/${audience}/lab/conversation?${new URLSearchParams({ step: new URLSearchParams(search).get("step") || "0" })}`}
+                      />
+                    ) : (
+                      <AiStalemateLab audience={audience} />
+                    )
                   ) : p.view === "guide" ? (
                     <FieldToolGuide slug="ai-stalemate" />
                   ) : p.view === "resources" ? (

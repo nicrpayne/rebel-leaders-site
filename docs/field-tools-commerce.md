@@ -99,6 +99,18 @@ Each edition saves own work under `rebel-delivery-journey-v1-{audience}` with a 
 
 The prompts adapt DORA's value-stream mapping guidance into plain-language starting points; they are not a validated diagnostic questionnaire. The sources remain visible in the product. https://dora.dev/guides/value-stream-management/
 
+### Integrated AI Stalemate Lab and deeper inquiry — 2 November 2026
+
+Both editions now enter a Lab hub at `/field-tools/ai-stalemate/{audience}/lab`. The Guide remains a separate reading path. The Lab offers the existing interactive conversation companion at `/lab/conversation` and the delivery journey at `/lab/delivery`. Neither requires finishing the other. Welcome pages and the review desk point to the hub. Existing `/shipping-sooner` links remain valid. Older Guide/PDF `/lab?step=N` links redirect to the conversation route with the same step; that route consumes the query once and resumes its saved step on refresh. Both paths retain the same edition ownership gate and analytics suppression.
+
+The delivery hook is “We’re all busy. Why does everything still take so long?” After selecting a possible explanation, users can record a recent example, narrow the constraint, say what has already been tried and what happened, identify who can agree a change, and note whose perspective is missing. Review and rework have additional distinctions such as competing commitments, dependence on one specialist, another team's priorities, missing context, and conflicting standards. Other stages offer capacity, coordination, and disagreement prompts alongside their existing circumstances. These are curated possibilities, not inferred causes or a complete organizational assessment.
+
+The next step can be finding one thing out, preparing a conversation, or proposing a small change. Unknown history or influence suggests further inquiry; previous attempts or shared authority suggest a conversation. Users can choose any path. Each produces an editable draft with scope, people, follow-up, and copy/text export. Previous attempts stay visible instead of disappearing behind another recommendation. Saved plans are never silently regenerated when the inquiry changes.
+
+The existing v1 delivery storage envelope now accepts optional inquiry fields and a plan kind. Legacy drafts gain empty/unknown inquiry values and retain existing plans as change proposals; no history, ownership, or agreement is manufactured. Own/example and PM/lead-developer drafts remain separate. Existing conversation, calculator, access, and smaller-release work is retained. No PDF rebuild or commerce configuration is part of this iteration.
+
+Validation: 68 targeted tests across inquiry, journey, older tools, analytics, privacy, edition access, and sessions; TypeScript and production build passed. Browser checks covered both hubs, canonical navigation and old step links, legacy plan retention, new question/discussion drafts, export preview, reload persistence, and 390px/768px layouts. Provider checkout and transactional email remain separate outstanding launch checks.
+
 ### Guides and Labs
 
 Guide chapters and Lab instructions now live under `server/field-tool-content`; client code receives them only after ownership checks. Public samples and short marketing excerpts are intentionally public. The PDFs live under `private/field-tools` and are served only by an ownership-checked API route. The former public PDF URL returns 410.

@@ -11,13 +11,15 @@ import {
 import type { Audience } from "@/lib/field-tool-paths";
 import {
   JOURNEY_STAGES,
-  JOURNEY_TEMPLATES,
   addJourneyFinding,
   emptyJourneyDraft,
   exampleJourneyDraft,
   journeyCase,
   journeyStageState,
   journeySummary,
+  journeyPlanTemplate,
+  journeyWorkingQuestion,
+  journeySuggestedAction,
   prepareJourneyPlan,
   readJourneyDraft,
   type JourneyDraft,
@@ -26,12 +28,19 @@ import {
   type JourneyStageId,
 } from "@/lib/delivery-journey";
 import "./delivery-journey.css";
+import JourneyInquiryForm from "./JourneyInquiryForm";
+import {
+  suggestedNextKind,
+  NEXT_STEP_NAMES,
+  type NextStepKind,
+} from "@/lib/journey-inquiry";
 
 type View =
   | "map"
   | "symptoms"
   | "causes"
   | "action"
+  | "investigate"
   | "evidence"
   | "plan"
   | "walked";
@@ -71,7 +80,7 @@ export default function DeliveryJourney({
   const symptom = stage?.symptoms.find(s => s.id === symptomId);
   const match = caseId ? journeyCase(caseId) : undefined;
   const finding = draft.findings.find(f => f.caseId === caseId);
-  const template = match ? JOURNEY_TEMPLATES[match.cause.tool] : undefined;
+  const template = finding ? journeyPlanTemplate(finding) : undefined;
   const summary = journeySummary(draft, mode === "example");
   const loops = draft.findings.filter(
     f => journeyCase(f.caseId)?.cause.returnsTo
@@ -108,7 +117,7 @@ export default function DeliveryJourney({
     reveal(
       draft.findings.find(f => f.caseId === id)?.plan.prepared
         ? "plan"
-        : "action"
+        : "investigate"
     );
   }
   function switchMode(next: "own" | "example") {
@@ -118,7 +127,7 @@ export default function DeliveryJourney({
     setStageId(next === "example" ? "check" : null);
     setSymptomId(next === "example" ? "check-1" : null);
     setCaseId(next === "example" ? "check-1-1" : null);
-    reveal(next === "example" ? "action" : "map");
+    reveal(next === "example" ? "investigate" : "map");
   }
   function editFinding(change: (f: JourneyFinding) => JourneyFinding) {
     if (caseId)
@@ -130,7 +139,7 @@ export default function DeliveryJourney({
   function planField(key: keyof JourneyPlan, value: string) {
     editFinding(f => ({ ...f, plan: { ...f.plan, [key]: value } }));
   }
-  function keep(prepare: boolean) {
+  function keep(prepare: boolean, kind: NextStepKind = "try") {
     if (!caseId) return;
     setDraft(d => {
       const next = addJourneyFinding(d, caseId);
@@ -138,7 +147,7 @@ export default function DeliveryJourney({
         ? {
             ...next,
             findings: next.findings.map(f =>
-              f.caseId === caseId ? prepareJourneyPlan(f) : f
+              f.caseId === caseId ? prepareJourneyPlan(f, kind) : f
             ),
           }
         : next;
@@ -191,7 +200,10 @@ export default function DeliveryJourney({
       findings: d.findings.filter(f => f.caseId !== id),
       focus: d.focus === id ? null : d.focus,
     }));
-    if (caseId === id) reveal("action");
+    if (caseId === id) {
+      setCaseId(null);
+      reveal("symptoms");
+    }
   }
   function undo() {
     if (!removed) return;
@@ -492,7 +504,8 @@ export default function DeliveryJourney({
                     key={c.id}
                     onClick={() => {
                       setCaseId(c.id);
-                      reveal("action");
+                      setDraft(d => addJourneyFinding(d, c.id));
+                      reveal("investigate");
                     }}
                   >
                     <span>{c.label}</span>
@@ -550,97 +563,127 @@ export default function DeliveryJourney({
               </div>
             </>
           )}
-          {view === "action" && match && (
+          {view === "investigate" && match && finding && (
             <>
-              <p className="journey-eyebrow">A POSSIBILITY TO CHECK</p>
+              <p className="journey-eyebrow">UNDERSTAND WHAT KEEPS IT STUCK</p>
               <h2 ref={heading} tabIndex={-1}>
-                {match.cause.title}
+                What happens when you try to move this?
+              </h2>
+              <p>
+                {match.cause.label} Start with what you have seen. Leave
+                anything you don't know open.
+              </p>
+              <JourneyInquiryForm finding={finding} onChange={editFinding} />
+              <div className="journey-actions">
+                <button
+                  className="journey-primary"
+                  onClick={() => reveal("action")}
+                >
+                  Choose a useful next step <ArrowRight size={16} />
+                </button>
+              </div>
+              <p className="journey-quiet">
+                Your notes stay on the map. You can leave with a question to
+                investigate.
+              </p>
+            </>
+          )}
+          {view === "action" && match && finding && (
+            <>
+              <p className="journey-eyebrow">CHOOSE WHAT WOULD HELP NEXT</p>
+              <h2 ref={heading} tabIndex={-1}>
+                What would move this forward?
               </h2>
               <p className="journey-check">
-                <strong>Check first:</strong> {match.cause.check}
+                <strong>A question worth checking:</strong>{" "}
+                {journeyWorkingQuestion(finding)}
               </p>
-              <div className="journey-suggestion">
-                <p className="journey-eyebrow">SOMETHING YOU COULD TRY</p>
-                <p>{match.cause.action}</p>
-              </div>
-              <div className="journey-who">
-                <div>
-                  <p className="journey-eyebrow">WHO NEEDS TO AGREE</p>
-                  <p>{match.cause.people}</p>
-                </div>
-                <div>
-                  <p className="journey-eyebrow">SEE WHETHER IT HELPS</p>
-                  <p>{match.cause.watch}</p>
-                </div>
-              </div>
-              {finding && (
-                <div className="journey-observation">
-                  <label>
-                    What happened on your piece of work?
-                    <textarea
-                      maxLength={3000}
-                      placeholder="One concrete example, including what you don’t know."
-                      value={finding.observation}
-                      onChange={e =>
-                        editFinding(f => ({
-                          ...f,
-                          observation: e.target.value,
-                        }))
-                      }
-                    />
-                  </label>
-                  <label>
-                    How sure are you about this explanation?
-                    <select
-                      value={finding.evidence}
-                      onChange={e =>
-                        editFinding(f => ({
-                          ...f,
-                          evidence: e.target
-                            .value as JourneyFinding["evidence"],
-                        }))
-                      }
-                    >
-                      <option value="hunch">A hunch to check</option>
-                      <option value="checked">
-                        Checked against a real example
-                      </option>
-                    </select>
-                  </label>
-                  <p className="journey-quiet">
-                    Your assessment. One example may not show what usually
-                    happens.
+              {finding.inquiry.tried === "yes" && (
+                <div className="journey-prior-attempt">
+                  <p className="journey-eyebrow">
+                    KEEP THE PREVIOUS ATTEMPT IN VIEW
+                  </p>
+                  <p>
+                    {finding.inquiry.attempt ||
+                      "You said something has already been tried. Record it before repeating the advice."}
+                  </p>
+                  <p>
+                    {finding.inquiry.obstacle ||
+                      "What helped, and what got in the way? That is still worth checking."}
                   </p>
                 </div>
               )}
-              <div className="journey-actions">
-                <button className="journey-primary" onClick={() => keep(true)}>
-                  {finding?.plan.prepared
-                    ? "Continue the draft"
-                    : `Prepare ${match.cause.tool === "review" ? "a review agreement" : match.cause.tool === "decision" ? "a decision request" : "a small bet"}`}{" "}
-                  <ArrowRight size={16} />
-                </button>
-                {!finding && (
-                  <button className="journey-link" onClick={() => keep(false)}>
-                    Keep this on my map
+              <p className="journey-quiet">
+                Based on the choices you made. Check the explanation with
+                someone involved.
+              </p>
+              {finding.plan.prepared ? (
+                <div className="journey-actions">
+                  <button
+                    className="journey-primary"
+                    onClick={() => reveal("plan")}
+                  >
+                    Continue your saved next step <ArrowRight size={16} />
                   </button>
-                )}
-              </div>
+                  <p className="journey-quiet">
+                    Your earlier draft is kept as you revise your understanding.
+                    Edit it to reflect what you now know.
+                  </p>
+                </div>
+              ) : (
+                <div className="journey-next-options">
+                  {(["check", "discuss", "try"] as NextStepKind[]).map(kind => (
+                    <button key={kind} onClick={() => keep(true, kind)}>
+                      {suggestedNextKind(
+                        finding.inquiry,
+                        finding.observation
+                      ) === kind && (
+                        <span className="journey-eyebrow">
+                          A USEFUL STARTING POINT
+                        </span>
+                      )}
+                      <strong>
+                        {NEXT_STEP_NAMES[kind]} <ArrowRight size={16} />
+                      </strong>
+                      <span>
+                        {kind === "check"
+                          ? "Prepare one question, and identify who or what could help answer it."
+                          : kind === "discuss"
+                            ? "Bring the example, previous attempts, and a decision or trade-off to the people involved."
+                            : finding.inquiry.influence === "team"
+                              ? "Draft a bounded change to agree with the team, including what must not get worse."
+                              : "Draft a possible change to take to the people who can agree it. Permission and capacity still need discussing."}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              )}
+              <details className="journey-possibility">
+                <summary>One possibility to consider together</summary>
+                <p>{journeySuggestedAction(finding)}</p>
+                <p>
+                  <strong>Who may need to be involved:</strong>{" "}
+                  {match.cause.people} Check who holds those responsibilities in
+                  your organisation.
+                </p>
+                <p>
+                  <strong>If you try a change:</strong> {match.cause.watch}
+                </p>
+              </details>
+              <button
+                className="journey-link"
+                onClick={() => reveal("investigate")}
+              >
+                Back to what happened and what you've tried
+              </button>
               {match.cause.tool === "slice" && (
                 <button
                   className="journey-tool-link"
-                  onClick={() => {
-                    keep(false);
-                    onTool("slice");
-                  }}
+                  onClick={() => onTool("slice")}
                 >
                   Open the smaller-release tool <ArrowRight size={16} />
                 </button>
               )}
-              <p className="journey-quiet">
-                A suggestion based on your selection. Confirm the situation
-                together before treating it as the cause.
-              </p>
             </>
           )}
           {view === "plan" && match && finding && template && (
@@ -649,7 +692,13 @@ export default function DeliveryJourney({
               <h2 ref={heading} tabIndex={-1}>
                 {template.title}
               </h2>
-              <p>{match.cause.title}</p>
+              <p>
+                {finding.plan.kind === "check"
+                  ? "You can make progress by answering one useful question."
+                  : finding.plan.kind === "discuss"
+                    ? "Bring your understanding to the people who can help you move it forward."
+                    : "A proposal to agree with the people involved before trying it."}
+              </p>
               <div className="journey-plan-fields">
                 {planInput("first", template.first, template.firstHint, true)}
                 {planInput(
@@ -660,10 +709,10 @@ export default function DeliveryJourney({
                 )}
                 <details>
                   <summary>
-                    The suggested change and what to watch{" "}
+                    The proposed next step and what to watch{" "}
                     <span>Edit to fit your work</span>
                   </summary>
-                  {planInput("change", "Change to try", "", true)}
+                  {planInput("change", "Proposed next step", "", true)}
                   {planInput(
                     "measure",
                     "How will we tell whether it helped?",
@@ -674,7 +723,9 @@ export default function DeliveryJourney({
                 </details>
                 {planInput(
                   "scope",
-                  "Try it on",
+                  finding.plan.kind === "try"
+                    ? "Try it on"
+                    : "Which piece of work will you look at?",
                   "One piece of work, or a small set of similar changes."
                 )}
                 <div className="journey-plan-pair">
@@ -707,9 +758,21 @@ export default function DeliveryJourney({
                       onChange={e => planField("decision", e.target.value)}
                     >
                       <option value="unreviewed">Not decided yet</option>
-                      <option value="keep">Keep trying this</option>
-                      <option value="adjust">Adjust and try again</option>
-                      <option value="stop">Stop this change</option>
+                      <option value="keep">
+                        {finding.plan.kind === "try"
+                          ? "Keep trying this"
+                          : "Follow up on this"}
+                      </option>
+                      <option value="adjust">
+                        {finding.plan.kind === "try"
+                          ? "Adjust and try again"
+                          : "Adjust the next step"}
+                      </option>
+                      <option value="stop">
+                        {finding.plan.kind === "try"
+                          ? "Stop this change"
+                          : "Stop pursuing this step"}
+                      </option>
                     </select>
                   </label>
                 </details>
@@ -723,7 +786,7 @@ export default function DeliveryJourney({
                 </button>
               </div>
               <button className="journey-link" onClick={() => reveal("action")}>
-                Back to the explanation and evidence
+                Back to choosing a next step
               </button>
               {match.cause.tool === "slice" && (
                 <button
@@ -747,7 +810,8 @@ export default function DeliveryJourney({
           <p className="journey-eyebrow">YOUR MAP</p>
           <h2>What you’re noticing.</h2>
           <p className="journey-quiet">
-            Choose one place to work on. You can keep the others here.
+            Keep the possibilities here. Start with one that matters for this
+            work and that you can learn more about.
           </p>
           {!draft.findings.length && (
             <p className="journey-empty">
@@ -777,7 +841,7 @@ export default function DeliveryJourney({
                       ? draft.focus === f.caseId
                         ? "Chosen next step · draft saved"
                         : "Draft saved"
-                      : "Explore this possibility"}
+                      : "Narrow this down"}
                   </span>
                 </button>
                 <button

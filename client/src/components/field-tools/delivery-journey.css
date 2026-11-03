@@ -544,3 +544,117 @@
     scroll-behavior: auto;
   }
 }
+
+.journey-inquiry {
+  display: grid;
+  gap: 24px;
+  margin: 24px 0;
+}
+.journey-field-hint {
+  display: block;
+  color: var(--ft-muted);
+  font-size: 12px;
+  font-weight: 400;
+  margin-top: 5px;
+}
+.journey-inquiry legend {
+  font-size: 15px;
+  font-weight: 500;
+}
+.journey-inquiry-options {
+  display: grid;
+  gap: 9px;
+  margin-top: 16px;
+}
+.journey-inquiry-options label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid var(--ft-line);
+  border-radius: 9px;
+  cursor: pointer;
+  min-height: 52px;
+}
+.journey-inquiry-options input {
+  width: 18px;
+  height: 18px;
+  min-height: 18px;
+  flex: 0 0 18px;
+  margin: 0;
+  accent-color: var(--ft-accent);
+}
+.journey-option-selected {
+  background: var(--ft-tint);
+  border-color: var(--ft-accent) !important;
+}
+.journey-prior-attempt {
+  display: grid;
+  gap: 14px;
+  padding: 18px;
+  background: #f4eedf;
+  border-radius: 9px;
+  font-size: 14px;
+  line-height: 1.7;
+}
+.journey-inquiry details {
+  border-top: 1px solid var(--ft-line);
+  padding-top: 16px;
+}
+.journey-inquiry summary,
+.journey-possibility summary {
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--ft-accent);
+  min-height: 44px;
+}
+.journey-inquiry summary span {
+  display: block;
+  color: var(--ft-muted);
+  font-size: 12px;
+  margin-top: 5px;
+}
+.journey-inquiry details label {
+  margin-top: 18px;
+}
+.journey-next-options {
+  display: grid;
+  gap: 12px;
+  margin: 24px 0;
+}
+.ft-theme .journey-next-options button {
+  display: grid;
+  gap: 8px;
+  text-align: left;
+  padding: 19px;
+  border: 1px solid var(--ft-line);
+  border-radius: 10px;
+  background: var(--ft-paper);
+}
+.journey-next-options button:hover {
+  border-color: var(--ft-accent);
+  background: var(--ft-tint);
+}
+.journey-next-options strong {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 16px;
+  font-weight: 500;
+}
+.journey-next-options button > span:last-child {
+  color: var(--ft-muted);
+  font-size: 13px;
+  line-height: 1.65;
+}
+.journey-possibility {
+  padding: 18px 0;
+  border-block: 1px solid var(--ft-line);
+  margin: 20px 0;
+}
+.journey-possibility p {
+  font-size: 14px;
+  line-height: 1.7;
+  margin: 12px 0;
+  color: var(--ft-muted);
+}

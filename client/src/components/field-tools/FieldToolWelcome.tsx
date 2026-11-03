@@ -61,7 +61,8 @@ export default function FieldToolWelcome({
           </Link>
           {slug === "ai-stalemate" && (
             <p className="mt-4 font-ui text-xs leading-6 text-[var(--ft-muted)]">
-              Start with a few sentences. You don’t need to read the whole Guide
+              Choose conversation preparation or explore where delivery gets
+              stuck. You can use either Lab path without reading the whole Guide
               first.
             </p>
           )}

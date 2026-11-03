@@ -32,7 +32,11 @@ Updated 2 November 2026. Launch scope: PM and Lead Developer editions, sold sepa
 - [x] Publish and verify the smaller-first-release iteration on the review preview. Railway deployment `81d49f80-b856-47ef-9508-77ffeeaeedd5` succeeded for application commit `cca5e8a`; the review desk, PM and lead developer routes, editable example scope, and copied proposal were checked. Live checkout remains disabled.
 - [x] Verify the delivery-journey iteration: 42 targeted tests, TypeScript, production build, and browser checks at desktop, tablet (768px), and phone (390px). Confirmed multiple hypotheses and return loops, unknown/custom questions, contextual action drafts, copy/download with follow-up, reload persistence, separate PM/lead-dev and example/own drafts, preserved tool handoffs, and the no-obvious-problem path.
 - [x] Publish and verify the delivery journey on the review preview. Application commit `ce9233b231d1ae505a168b58cf88a0d561c63711`; Railway deployment `81faef2f-1888-4e02-a0a1-ff132c1839f3` succeeded. Both edition routes, the review desk, example drill-down, and copy output were checked on the deployed site; no browser console errors observed. Screenshot: `/Users/nicholaspayne/Documents/Codex/shipping-sooner-proof/delivery-journey-published.png`.
-- [ ] Nic reviews the companion and decides how the Guide, existing interactive Lab, and smaller tools should be packaged. No existing app work is retired.
+- [x] Nic approved the packaging: Guide plus one Lab containing the interactive conversation companion and delivery map. No existing app work is retired.
+- [x] Build both edition Lab hubs, canonical conversation/delivery routes, and compatible redirects for existing Guide/PDF step links. Keep the shipping-sooner alias and all earlier draft keys.
+- [x] Add contextual inquiry before advice: one observed example, possible constraint, previous attempt and outcome, decision authority, and missing perspectives. Offer a question to investigate, a conversation to prepare, or a small change to propose.
+- [x] Validate with 68 targeted tests, TypeScript, production build, and browser checks of both hubs, older Guide step links, preserved saved plans, question/discussion paths, exports, reload persistence, phone (390px), and tablet (768px).
+- [ ] Publish and verify this integrated Lab iteration on the review preview. Paid launch checks below remain outstanding.
 
 ## 3. Explain purchases and support — Nic + Codex
 - [x] Nic approved 60 days, full refund, no explanation needed (27 October).

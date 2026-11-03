@@ -12,16 +12,14 @@ export default function FieldToolsNav({
   const [location] = useLocation();
   const myTool = fieldToolAccessPath(location);
   const inTool =
-    /(?:\/access|\/guide|\/lab|\/walkthrough|\/resources|\/shipping-sooner)$/.test(
+    /(?:\/access|\/guide|\/lab(?:\/(?:conversation|delivery))?|\/walkthrough|\/resources|\/shipping-sooner)$/.test(
       location
     ) && myTool !== "/field-tools";
   const links = inTool
     ? [
         [myTool, "Start"],
         [myTool.replace(/\/access$/, "/guide"), "Field Guide"],
-        location.endsWith("/shipping-sooner")
-          ? [location, "Shipping sooner"]
-          : [myTool.replace(/\/access$/, "/lab"), "Lab"],
+        [myTool.replace(/\/access$/, "/lab"), "Lab"],
       ]
     : [
         ["/field-tools", "Field Tools"],

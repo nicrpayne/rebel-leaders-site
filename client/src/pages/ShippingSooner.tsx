@@ -114,12 +114,14 @@ export default function ShippingSooner({ audience }: { audience: Audience }) {
   }
 
   return (
-    <main className="shipping-sooner">
+    <main className="shipping-sooner ph-no-capture">
       <FieldToolsNav />
       <div className="shipping-shell">
         <header className="shipping-heading">
           <div className="shipping-topline">
-            <p className="shipping-eyebrow">AI STALEMATE / SHIPPING SOONER</p>
+            <p className="shipping-eyebrow">
+              AI STALEMATE / LAB / FOLLOW THE WORK
+            </p>
             <Link href="/field-tools/review">
               Review desk <ArrowRight size={14} />
             </Link>
@@ -127,9 +129,9 @@ export default function ShippingSooner({ audience }: { audience: Audience }) {
           <h1 ref={pageHeading} tabIndex={-1}>
             {workspace === "journey" ? (
               <>
-                Code is moving faster.
+                We’re all busy.
                 <br />
-                <em>What’s still holding up delivery?</em>
+                <em>Why does everything still take so long?</em>
               </>
             ) : workspace === "slice" ? (
               <>
@@ -147,11 +149,17 @@ export default function ShippingSooner({ audience }: { audience: Audience }) {
           </h1>
           <p>
             {workspace === "journey"
-              ? `If AI helps you build faster, what else could help the work reach people sooner? Follow one recent feature with your ${audience === "pm" ? "developer" : "PM"}. Find a place it stalled, then choose something useful to try together.`
+              ? `AI might help you write code faster. Follow one piece of work with your ${audience === "pm" ? "developer" : "PM"}. Explore what keeps it stuck, what’s already been tried, and what would help you move it forward.`
               : "Use this tool to work on a specific part of the journey. Your delivery map and other drafts stay available."}
           </p>
         </header>
 
+        <Link
+          className="shipping-text-button journey-back"
+          href={`${base}/lab`}
+        >
+          ← All Lab tools
+        </Link>
         {workspace !== "journey" && (
           <button
             className="shipping-text-button journey-back"
@@ -519,17 +527,16 @@ export default function ShippingSooner({ audience }: { audience: Audience }) {
         <div className="shipping-product-connection">
           <p>
             <strong>Need to work through the AI conversation first?</strong> The
-            Guide helps you understand each other’s position. The Lab helps you
-            put your own conversation notes together. This companion helps you
-            find what else holds up delivery and prepare a change to try
-            together.
+            Guide helps you understand each other’s position. The conversation
+            companion helps you prepare your own notes. This delivery map helps
+            you narrow down what is happening and prepare a useful next step.
           </p>
           <div>
             <Link href={`${base}/guide`}>
               Read the Guide <ArrowRight size={14} />
             </Link>
-            <Link href={`${base}/lab`}>
-              Open the conversation Lab <ArrowRight size={14} />
+            <Link href={`${base}/lab/conversation`}>
+              Open conversation companion <ArrowRight size={14} />
             </Link>
           </div>
         </div>

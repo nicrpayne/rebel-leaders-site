@@ -102,19 +102,18 @@ export default function FieldToolsReview() {
             NEW TO TRY / AI STALEMATE COMPANION
           </p>
           <h2 className="mt-3 font-display text-3xl">
-            Code is moving faster. What’s still holding up delivery?
+            We’re all busy. Why does everything still take so long?
           </h2>
           <p className="mt-3 max-w-3xl text-sm leading-6 text-[var(--ft-muted)]">
-            Follow one feature from idea to use. Explore where it waited, looped
-            back, or got interrupted, then prepare a specific change to try.
-            Start with the review-delay example or follow your own work. The
-            earlier tools and Lab remain available.
+            One Lab, two ways in: prepare your AI conversation, or follow work
+            from idea to use. The delivery map now explores previous attempts
+            and who can influence the situation before you choose a next step.
           </p>
           <div className="mt-5 flex flex-wrap gap-3">
             {(["pm", "lead-dev"] as const).map(audience => (
               <a
                 key={audience}
-                href={`${fieldToolBase("ai-stalemate", audience)}/shipping-sooner`}
+                href={`${fieldToolBase("ai-stalemate", audience)}/lab`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="rounded-full border border-[var(--ft-accent)] px-5 py-3 text-xs font-semibold text-[var(--ft-accent)] hover:bg-white"

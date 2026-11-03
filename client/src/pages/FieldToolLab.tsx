@@ -424,14 +424,20 @@ function LabSession({ slug }: { slug: string }) {
             <div>
               <p className="font-ui text-[10px] tracking-[0.22em] text-[var(--ft-muted)]">
                 {tool.eyebrow} / LAB
+                {slug === "ai-stalemate" ? " / CONVERSATION COMPANION" : ""}
               </p>
+              {slug === "ai-stalemate" && (
+                <Link
+                  href={`${base}/lab`}
+                  className="mt-4 inline-block text-sm text-[var(--ft-accent)] underline underline-offset-4"
+                >
+                  ← All Lab tools
+                </Link>
+              )}
               <h1 className="mt-4 font-display text-4xl font-semibold tracking-[-0.04em] md:text-5xl">
-                {tool.name}
                 {slug === "ai-stalemate"
-                  ? content.audience === "pm"
-                    ? " / PM"
-                    : " / Lead Developer"
-                  : ""}
+                  ? "Prepare your conversation"
+                  : tool.name}
               </h1>
               <p className="mt-3 max-w-2xl font-ui text-sm leading-6 text-[var(--ft-muted)]">
                 {(slug === "ai-stalemate" && content.audience === "lead-dev"

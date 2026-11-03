@@ -1,4 +1,11 @@
 import {
+  emptyJourneyInquiry,
+  inquiryOption,
+  INFLUENCE_LABELS,
+  type JourneyInquiry,
+  type NextStepKind,
+} from "./journey-inquiry";
+import {
   JOURNEY_STAGES,
   type JourneyStageId,
   type JourneyTool,
@@ -69,6 +76,7 @@ export const JOURNEY_TEMPLATES: Record<
   },
 };
 export type JourneyPlan = {
+  kind: NextStepKind;
   prepared: boolean;
   first: string;
   second: string;
@@ -84,6 +92,7 @@ export type JourneyPlan = {
 export type JourneyFinding = {
   caseId: string;
   observation: string;
+  inquiry: JourneyInquiry;
   evidence: "hunch" | "checked";
   plan: JourneyPlan;
 };
@@ -105,6 +114,7 @@ export function journeyCase(id: string) {
   return undefined;
 }
 export const emptyJourneyPlan = (): JourneyPlan => ({
+  kind: "try",
   prepared: false,
   first: "",
   second: "",
@@ -143,22 +153,93 @@ export function addJourneyFinding(
           {
             caseId,
             observation: "",
+            inquiry: emptyJourneyInquiry(),
             evidence: "hunch",
             plan: emptyJourneyPlan(),
           },
         ],
   };
 }
-export function prepareJourneyPlan(finding: JourneyFinding): JourneyFinding {
+export function journeyWorkingQuestion(finding: JourneyFinding) {
+  const m = journeyCase(finding.caseId)!;
+  const q =
+    inquiryOption(finding.caseId, finding.inquiry.context)?.question ||
+    m.cause.check;
+  return finding.inquiry.tried === "yes"
+    ? `${q} What would have to be different from the previous attempt for another step to be useful?`
+    : q;
+}
+export function journeySuggestedAction(finding: JourneyFinding) {
+  const m = journeyCase(finding.caseId)!;
+  const action =
+    inquiryOption(finding.caseId, finding.inquiry.context)?.action ||
+    m.cause.action;
+  if (
+    finding.inquiry.influence === "outside" ||
+    finding.inquiry.influence === "shared"
+  )
+    return `First discuss this with the people who can agree the change. A proposal to consider: ${action}`;
+  return action;
+}
+export function journeyPlanTemplate(finding: JourneyFinding) {
+  if (finding.plan.kind === "check")
+    return {
+      title: "One question to investigate",
+      first: "What do we need to find out?",
+      second: "Who or what could help us check it?",
+      firstHint: "A question that could change what you do next.",
+      secondHint:
+        "A person, recent piece of work, or record to look at together.",
+    };
+  if (finding.plan.kind === "discuss")
+    return {
+      title: "A conversation to move this forward",
+      first: "What do we need to agree or understand together?",
+      second: "What example, previous attempt, and trade-off will we bring?",
+      firstHint: "One question or decision for the people involved.",
+      secondHint:
+        "Give them enough context to respond. Include what you cannot change alone.",
+    };
+  return JOURNEY_TEMPLATES[journeyCase(finding.caseId)!.cause.tool];
+}
+export function prepareJourneyPlan(
+  finding: JourneyFinding,
+  kind: NextStepKind = "try"
+): JourneyFinding {
   const match = journeyCase(finding.caseId);
   if (!match || finding.plan.prepared) return finding;
+  const check = kind === "check",
+    discuss = kind === "discuss";
   return {
     ...finding,
     plan: {
       ...finding.plan,
+      kind,
       prepared: true,
-      change: match.cause.action,
-      measure: match.cause.watch,
+      first: check || discuss ? journeyWorkingQuestion(finding) : "",
+      second: check
+        ? finding.inquiry.otherView
+        : discuss
+          ? [
+              finding.observation && `What we saw: ${finding.observation}`,
+              finding.inquiry.tried === "yes" &&
+                finding.inquiry.attempt &&
+                `What we tried: ${finding.inquiry.attempt}`,
+              finding.inquiry.tried === "yes" &&
+                finding.inquiry.obstacle &&
+                `What happened: ${finding.inquiry.obstacle}`,
+            ]
+              .filter(Boolean)
+              .join("\n\n")
+          : "",
+      change: check
+        ? "Look at one recent example with someone involved. Record what supports or challenges the explanation."
+        : journeySuggestedAction(finding),
+      measure: check
+        ? "Did we answer the question? What is still uncertain, and does the answer change our next step?"
+        : discuss
+          ? "Did we reach a decision or identify what is needed to make it? Record disagreements and any commitments explicitly."
+          : match.cause.watch,
       protect:
         "Keep essential checks. Make room inside normal working hours; agree what will wait.",
     },
@@ -175,6 +256,15 @@ export function exampleJourneyDraft(): JourneyDraft {
   d = addJourneyFinding(d, "check-2-1");
   d.findings[1].observation =
     "At review, we discovered we had different ideas about when the reminder should be sent. We went back to agree the behaviour.";
+  d.findings[0].inquiry = {
+    ...emptyJourneyInquiry(),
+    context: "commitments",
+    tried: "yes",
+    attempt: "We asked everyone to pick up reviews sooner.",
+    obstacle: "Everyone still had the same delivery commitments.",
+    influence: "shared",
+    otherView: "Ask the reviewer and the person setting delivery commitments.",
+  };
   d.focus = "check-1-1";
   return d;
 }
@@ -224,11 +314,32 @@ export function readJourneyDraft(raw: string | null): JourneyDraft {
         "result",
       ] as const)
         plan[k] = str(p[k]);
+      plan.kind = p.kind === "check" || p.kind === "discuss" ? p.kind : "try";
       plan.prepared = p.prepared === true;
       plan.decision = ["keep", "adjust", "stop"].includes(String(p.decision))
         ? (p.decision as JourneyPlan["decision"])
         : "unreviewed";
+      const source = object(f.inquiry),
+        inquiry = emptyJourneyInquiry();
+      for (const k of ["detail", "attempt", "obstacle", "otherView"] as const)
+        inquiry[k] = str(source[k]);
+      inquiry.context =
+        source.context === "unsure" ||
+        source.context === "other" ||
+        inquiryOption(caseId, str(source.context))
+          ? str(source.context, 80)
+          : "";
+      inquiry.tried =
+        source.tried === "yes" || source.tried === "not-yet"
+          ? source.tried
+          : "unknown";
+      inquiry.influence = ["team", "shared", "outside"].includes(
+        String(source.influence)
+      )
+        ? (source.influence as JourneyInquiry["influence"])
+        : "unknown";
       findings.push({
+        inquiry,
         caseId,
         observation: str(f.observation),
         evidence: f.evidence === "checked" ? "checked" : "hunch",
@@ -303,7 +414,17 @@ export function journeySummary(d: JourneyDraft, example: boolean): string {
       `Possible explanation: ${m.cause.label}`,
       `Evidence: ${f.evidence === "checked" ? "Checked against a real example (author’s assessment; not proof of causation)." : "A hunch to check."}`,
       `What we noticed: ${given(f.observation, "observation to add")}`,
-      `Check: ${m.cause.check}`
+      `Question worth checking: ${journeyWorkingQuestion(f)}`,
+      `What makes this hard to change: ${inquiryOption(f.caseId, f.inquiry.context)?.label || (f.inquiry.context === "other" ? "Another situation" : "Still to find out")}`,
+      `More context: ${given(f.inquiry.detail, "context to add if useful")}`,
+      `Previous attempts: ${f.inquiry.tried === "yes" ? given(f.inquiry.attempt, "describe what was tried") : f.inquiry.tried === "not-yet" ? "Nothing tried yet" : "Not sure yet"}`,
+      ...(f.inquiry.tried === "yes"
+        ? [
+            `What happened / what got in the way: ${given(f.inquiry.obstacle, "check what happened")}`,
+          ]
+        : []),
+      `Influence: ${INFLUENCE_LABELS[f.inquiry.influence]}`,
+      `Another perspective to seek: ${given(f.inquiry.otherView, "person or question to identify")}`
     );
     if (m.cause.returnsTo)
       lines.push(
@@ -340,15 +461,15 @@ export function journeySummary(d: JourneyDraft, example: boolean): string {
   for (const f of d.findings.filter(f => f.plan.prepared)) {
     const m = journeyCase(f.caseId)!,
       p = f.plan,
-      t = JOURNEY_TEMPLATES[m.cause.tool];
+      t = journeyPlanTemplate(f);
     lines.push(
       "",
       `${d.focus === f.caseId ? "CHOSEN NEXT STEP" : "SAVED DRAFT"} — ${t.title}`,
-      m.cause.title,
+      p.kind === "try" ? m.cause.title : `About: ${m.cause.label}`,
       `${t.first}: ${given(p.first, "agree together")}`,
       `${t.second}: ${given(p.second, "agree together")}`,
-      `Change to try: ${given(p.change, "change to agree")}`,
-      `Try it on: ${given(p.scope, "one piece of work or small sample")}`,
+      `Proposed next step: ${given(p.change, "next step to agree")}`,
+      `${p.kind === "try" ? "Try it on" : "Piece of work to look at"}: ${given(p.scope, "one piece of work or small sample")}`,
       `Owner / people agreeing: ${given(p.owner, "owner to agree")}`,
       `Review on: ${given(p.reviewOn, "date to agree")}`,
       `Watch: ${given(p.measure, "what to observe")}`,
