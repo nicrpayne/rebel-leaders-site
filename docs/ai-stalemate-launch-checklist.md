@@ -36,7 +36,7 @@ Updated 2 November 2026. Launch scope: PM and Lead Developer editions, sold sepa
 - [x] Build both edition Lab hubs, canonical conversation/delivery routes, and compatible redirects for existing Guide/PDF step links. Keep the shipping-sooner alias and all earlier draft keys.
 - [x] Add contextual inquiry before advice: one observed example, possible constraint, previous attempt and outcome, decision authority, and missing perspectives. Offer a question to investigate, a conversation to prepare, or a small change to propose.
 - [x] Validate with 68 targeted tests, TypeScript, production build, and browser checks of both hubs, older Guide step links, preserved saved plans, question/discussion paths, exports, reload persistence, phone (390px), and tablet (768px).
-- [ ] Publish and verify this integrated Lab iteration on the review preview. Paid launch checks below remain outstanding.
+- [x] Publish and verify this integrated Lab iteration on the review preview. Application commit `a1bb39078a71b1972a3d2b6059905eeaba3992b7`; Railway deployment `39727952-9db0-46c9-847e-ffc70d5a3716` succeeded. Both hubs, canonical paths, the PM Guide step redirect, review-page links, example inquiry/discussion draft, copy feedback, and downloaded notes were checked on the published site. No browser console errors observed. Screenshot: `/Users/nicholaspayne/Documents/Codex/shipping-sooner-proof/ai-stalemate-lab-published.png`. Paid launch checks below remain outstanding.
 
 ## 3. Explain purchases and support — Nic + Codex
 - [x] Nic approved 60 days, full refund, no explanation needed (27 October).
