@@ -20,28 +20,24 @@ export default function FieldToolsFooter() {
           <span className="sr-only"> (Substack, opens in a new tab)</span>
         </a>
       </nav>
-      <div className="mx-auto mt-7 max-w-6xl">
+      <div className="mx-auto mt-7 flex max-w-6xl justify-end">
         <a
           className="ft-footer-signature"
-          href="https://rebel-leader.com/manifesto"
+          href="https://rebel-leader.com/workbench/gravitas"
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="Hope is rebellious. Explore Gravitas (opens in a new tab)"
+          title="Explore Gravitas"
         >
+          <span className="ft-footer-hope">Hope is rebellious.</span>
           <span className="ft-footer-sprite" aria-hidden="true">
             <img
-              src="/assets/legacy/manus/gEUSBozlhzsCUQVp.png"
-              width="27"
-              height="88"
+              src="/assets/field-tools/nic-victory-transparent.png"
+              width="2051"
+              height="2051"
               alt=""
               loading="lazy"
             />
-          </span>
-          <span>
-            <span className="ft-footer-hope block">Hope is rebellious.</span>
-            <span className="ft-footer-manifesto">
-              Read the Rebel Manifesto ↗
-              <span className="sr-only"> (opens in a new tab)</span>
-            </span>
           </span>
         </a>
       </div>

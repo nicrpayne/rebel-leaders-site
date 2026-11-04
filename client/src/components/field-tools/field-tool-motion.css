@@ -3,7 +3,7 @@
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  padding: 4px 8px 4px 0;
+  padding: 4px 0 4px 8px;
   border-radius: 4px;
   color: var(--ft-accent);
   text-decoration: none;
@@ -16,15 +16,18 @@
 
 .ft-footer-sprite {
   display: flex;
-  width: 44px;
+  width: 56px;
+  height: 128px;
   flex-shrink: 0;
   justify-content: center;
+  overflow: hidden;
 }
 
 .ft-footer-sprite img {
-  width: 27px;
-  height: 88px;
-  image-rendering: pixelated;
+  width: 128px;
+  max-width: none;
+  height: 128px;
+  flex-shrink: 0;
   transition:
     transform 220ms ease,
     filter 220ms ease;
@@ -34,20 +37,6 @@
 .ft-footer-signature:focus-visible .ft-footer-sprite img {
   transform: translateY(-3px);
   filter: drop-shadow(0 0 5px rgb(49 92 75 / 18%));
-}
-
-.ft-footer-manifesto {
-  display: block;
-  margin-top: 8px;
-  font-size: 12px;
-  text-decoration: underline;
-  text-decoration-color: var(--ft-line);
-  text-underline-offset: 4px;
-}
-
-.ft-footer-signature:hover .ft-footer-manifesto,
-.ft-footer-signature:focus-visible .ft-footer-manifesto {
-  text-decoration-color: currentColor;
 }
 
 @media (prefers-reduced-motion: reduce) {
