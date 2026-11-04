@@ -14,6 +14,7 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import { GameProvider } from "./contexts/GameContext";
 import GameHud from "./components/GameHud";
 import Home from "./pages/Home";
+import { useFieldToolPageMetadata } from "./components/field-tools/useFieldToolPageMetadata";
 
 const Manifesto = lazy(() => import("./pages/Manifesto"));
 const Archives = lazy(() => import("./pages/Archives"));
@@ -73,6 +74,7 @@ function RouteLoading() {
 function Router() {
   const [location] = useLocation();
   const search = useSearch();
+  useFieldToolPageMetadata(location);
   useLayoutEffect(() => {
     protectFieldToolPrivacy(location);
   }, [location]);

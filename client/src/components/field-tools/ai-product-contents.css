@@ -1,6 +1,20 @@
 .ai-product-contents {
   font-family: var(--font-ui, sans-serif);
 }
+.ai-hero-example-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-top: 8px;
+  color: var(--ft-accent);
+  font-size: 14px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.ai-hero-example-link:focus-visible {
+  outline: 2px solid var(--ft-accent);
+  outline-offset: 4px;
+}
 .ai-product-contents h2 {
   font-family: var(--font-display, Georgia);
   font-size: clamp(28px, 3vw, 36px);

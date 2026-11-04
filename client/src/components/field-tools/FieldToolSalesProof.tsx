@@ -99,6 +99,14 @@ export function FieldToolBuyerQuestions({
   const counterpart =
     audience === "lead-dev" ? "your PM" : "your lead developer";
   const questions = [
+    ...(audience
+      ? [
+          [
+            "Do we both need to buy an edition?",
+            `No. Choose the ${edition} edition for your role. You can use it on your own and share your questions and exported notes with ${counterpart}. They don’t need to buy anything to join the conversation. Each purchase gives one person access to their own Guide and interactive tools.`,
+          ],
+        ]
+      : []),
     [
       "Who is this for?",
       audience === "lead-dev"

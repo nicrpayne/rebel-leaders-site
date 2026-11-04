@@ -2,6 +2,7 @@ import { ArrowRight } from "lucide-react";
 import { Link } from "wouter";
 import AIStalemateEditions from "./field-tools/AIStalemateEditions";
 import { fieldToolsHref } from "@shared/field-tool-domains";
+import { FIELD_TOOLS_PUBLIC_COPY } from "@shared/field-tool-public-copy";
 
 export default function FieldToolsHomeSection() {
   return (
@@ -15,13 +16,12 @@ export default function FieldToolsHomeSection() {
           <div>
             <p className="ft-collection-eyebrow">REBEL LEADERS / FIELD TOOLS</p>
             <h2 id="field-tools-heading">
-              Something at work
+              {FIELD_TOOLS_PUBLIC_COPY.headline}
               <br />
-              <em>keeps getting stuck?</em>
+              <em>{FIELD_TOOLS_PUBLIC_COPY.accent}</em>
             </h2>
             <p className="ft-collection-lead">
-              Practical guides and interactive tools for the conversations you
-              keep putting off—and the work that keeps getting held up.
+              {FIELD_TOOLS_PUBLIC_COPY.description}
             </p>
           </div>
           <Link
@@ -33,8 +33,8 @@ export default function FieldToolsHomeSection() {
         </div>
         <AIStalemateEditions />
         <p className="ft-collection-note">
-          Start with AI Stalemate. Two perspectives on the same stuck
-          conversation. Choose the edition for your role.
+          AI Stalemate has an edition for each side of the conversation. Choose
+          the one for your role. You don’t need both.
         </p>
       </div>
     </section>

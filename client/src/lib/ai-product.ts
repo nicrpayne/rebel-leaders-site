@@ -1,4 +1,5 @@
 import type { Audience } from "./field-tool-paths";
+import { AI_STALEMATE_PUBLIC_COPY } from "@shared/field-tool-public-copy";
 
 // One compact inventory for the sales page, checkout, and review desk.
 // Cover + chapters + visual companions; the PDF adds the edition’s source/teaching companion.
@@ -31,20 +32,16 @@ export function aiProductCopy(audience: Audience) {
   return audience === "pm"
     ? {
         role: "FOR PRODUCT MANAGERS",
-        headline: "You see a possibility for AI.",
-        accent: "Let’s find out whether it’s worth pursuing.",
-        promise:
-          "Get past the AI argument. Explain the opportunity, understand your lead’s concerns, and explore what would actually help your team deliver.",
+        ...AI_STALEMATE_PUBLIC_COPY.pm,
+        accent: "",
         first:
           "Bring the AI conversation you’re already having. Read the opening of the Guide or start with Before You Talk in the Lab. Each Lab step links to a chapter that explains its questions.",
       }
     : {
         role: "FOR LEAD DEVELOPERS",
         // The playful headline is intentionally paired with Nic's laughing portrait.
-        headline: "My PM won’t shut up about AI.",
+        ...AI_STALEMATE_PUBLIC_COPY["lead-dev"],
         accent: "",
-        promise:
-          "They want the team to ship sooner. You have questions about what that will take. Work through the engineering concerns, explore where delivery gets stuck, and prepare a useful next step.",
         first:
           "Bring the change your PM is asking for. Use the Guide to think it through, then prepare your position in the Lab. A smaller approach, preparation, specialist advice, or stopping this use can all be useful outcomes.",
       };

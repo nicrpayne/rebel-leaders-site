@@ -10,9 +10,12 @@ import FieldToolsFooter from "./FieldToolsFooter";
 import AIProductContents from "./AIProductContents";
 import FieldToolBuyActions from "./FieldToolBuyActions";
 import AIKitPreview from "./AIKitPreview";
+import DeliveryExample from "./DeliveryExample";
+import { useSalesPageAnchor } from "./useSalesPageAnchor";
 import "./ai-library.css";
 
 export default function AIProductPage({ audience }: { audience: Audience }) {
+  useSalesPageAnchor();
   const base = fieldToolBase("ai-stalemate", audience);
   const copy = aiProductCopy(audience);
   const access = trpc.fieldTools.access.useQuery();
@@ -57,6 +60,9 @@ export default function AIProductPage({ audience }: { audience: Audience }) {
           <p className="ai-hero-note">
             A practical Guide and interactive tools · $47, one time
           </p>
+          <a className="ai-hero-example-link" href="#delivery-example">
+            See how the delivery tool works →
+          </a>
         </div>
         <div className="ft-photo-caption">
           <span /> Hope is rebellious.
@@ -77,8 +83,14 @@ export default function AIProductPage({ audience }: { audience: Audience }) {
             $47 <small>USD · one time</small>
           </p>
           <p>
-            Includes the Guide and both Lab paths. PM and Lead Developer editions
-            are sold separately.
+            Your {audience === "pm" ? "PM" : "Lead Developer"} Guide,
+            conversation companion, and delivery map. You don’t need both
+            editions.
+          </p>
+          <p>
+            Start on your own, then take your notes into the conversation. Your{" "}
+            {audience === "pm" ? "lead developer" : "PM"} doesn’t need to buy a
+            copy to talk it through with you.
           </p>
           <p>
             Use on phone or computer.
@@ -116,9 +128,10 @@ export default function AIProductPage({ audience }: { audience: Audience }) {
           </Link>
         </aside>
       </section>
+      <DeliveryExample />
       <details className="ai-product-example">
         <summary>
-          See a worked example{" "}
+          See the conversation companion in action{" "}
           <span>A fictional conversation and the notes you can make</span>
         </summary>
         <FieldToolSalesProof

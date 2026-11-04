@@ -112,6 +112,26 @@ Refund research: Lemon Squeezy lets sellers choose their policy; comparable digi
 - [x] Add a tools-host-only root redirect and preserve every existing reviewer product URL. Set the reviewer service's canonical `APP_URL` to the tools subdomain, with the original reviewer origin explicitly allowed for returning sign-in emails so existing browser-local drafts remain reachable.
 - [x] Check desktop, 390px phone and 768px tablet layouts. TypeScript and production build pass; domain, edition access, session and commerce checks pass, including canonical/legacy email destinations and rejecting untrusted request hosts.
 
+### Catalogue critique and public product proof — 3 November 2026
+
+Nic authorised implementation after reviewing the critique. Keep Field Tools as the parent catalogue, with AI Stalemate as the available product and separate role editions. The edition pages continue to carry the full offer, worked conversation, FAQs, gift option, access details, and refund promise.
+
+| Critique | Decision and change |
+| --- | --- |
+| Portraits are too similar; the product is invisible | Keep the deliberately different, approved portraits. Put role labels above them and show the actual Guide/Lab kit in the catalogue hero. |
+| PM headline lacks the developer headline's voice | Use “Every time I bring up AI, we hit a wall.” Keep the developer headline. Both descriptions turn toward a useful conversation without assuming either person's assessment is correct. |
+| Hero only helps returning customers | Add “Find your edition” and “See a quick example.” Returning access stays in navigation. |
+| Parent headline is generic | Use “Everyone’s busy. The work’s still stuck.” Avoid claiming that every delay is a missing conversation or that the work itself is never the problem. |
+| No evidence before the edition page | Show the product immediately and add a three-part, explicitly fictional delivery example on the catalogue and both sales pages. Keep real testimonials for actual reviewer feedback with permission. Do not invent a completion-time promise. |
+| Buyer may assume both $47 editions are needed | State “You don’t need both,” explain how one person starts and shares notes, and answer the question explicitly in both edition FAQs. A purchase still provides one person's access. |
+| Generic/empty share previews | Add distinct initial-HTML titles, descriptions, canonical URLs, and 1200 × 630 share artwork for the catalogue and each edition. Keep query strings and private routes out of metadata. |
+| Catalogue suggests a larger available shelf | Label AI Stalemate “Available now.” Keep unfinished products off the public shelf rather than advertising locked future products. |
+| Guide overshadows interactive tools | Put conversation preparation and delivery exploration first in the contents; keep the Guide as support to read as needed. |
+| Single-person start is unexplained | Make starting alone and taking questions/notes back to a colleague explicit on the catalogue, purchase panel, and FAQs. |
+| Main-site and tools-site design differ | Preserve the warm product design, shared brand, main-site links, Substack teaching link, and the approved right-side victory sprite linking to Gravitas. Keep the main-site bridge on the review branch; do not merge main or list products on Workbench. |
+
+Local verification covers the three example states, keyboard operation, phone/tablet layouts, role-specific FAQs, navigation metadata cleanup, initial server HTML, and private-query exclusion. The 30 targeted metadata/domain/analytics/edition tests pass, with the HTTP edition suite run outside the port-restricted sandbox. Promotional scripts, posts, and follow-up ideas are catalogued in [field-tools-content-catalogue.md](field-tools-content-catalogue.md). Public launch checks remain separate.
+
 ## 7. Small first release — Nic
 - [ ] Invite two or three actual PMs/leads to use it for a current conversation without coaching; note where they stall and what they use.
 - [ ] Check support and order/email delivery after first purchases. Video is optional follow-up work, not a launch requirement.

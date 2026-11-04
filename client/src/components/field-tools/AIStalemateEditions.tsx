@@ -18,8 +18,14 @@ export default function AIStalemateEditions() {
               `/field-tools/ai-stalemate/${audience}`
             )}
             className="ft-edition"
-            aria-label={`Explore AI Stalemate — ${role} edition`}
+            aria-label={`See what’s inside AI Stalemate — ${role} edition`}
           >
+            <p className="ft-edition-role">
+              For{" "}
+              {role === "Product Manager"
+                ? "Product Managers"
+                : "Lead Developers"}
+            </p>
             <div className="ft-edition-photo">
               <img
                 src={
@@ -43,13 +49,11 @@ export default function AIStalemateEditions() {
               </p>
             </div>
             <div className="ft-edition-copy">
-              <p className="ft-collection-eyebrow">AI STALEMATE / {role}</p>
               <h3>{copy.headline}</h3>
               <p className="ft-edition-description">{copy.promise}</p>
               <div className="ft-edition-action">
                 <span>
-                  Explore this edition{" "}
-                  <ArrowRight size={18} aria-hidden="true" />
+                  See what’s inside <ArrowRight size={18} aria-hidden="true" />
                 </span>
                 <span>
                   $47 <small>USD</small>
