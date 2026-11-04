@@ -27,13 +27,19 @@ export default function FieldToolsNav({
           myTool === "/field-tools" ? "/field-tools/sign-in" : myTool,
           "Open your tool",
         ],
-        ["/about", "About Nic"],
+        ["https://rebel-leader.com", "Rebel Leaders ↗"],
       ];
-  const items = links.map(([href, label]) => (
-    <Link key={label} href={href}>
-      {label}
-    </Link>
-  ));
+  const items = links.map(([href, label]) =>
+    href.startsWith("https://") ? (
+      <a key={label} href={href}>
+        {label}
+      </a>
+    ) : (
+      <Link key={label} href={href}>
+        {label}
+      </Link>
+    )
+  );
   return (
     <header className="ft-nav absolute inset-x-0 top-0 z-40 border-b border-[var(--ft-line)]">
       <div className="ft-nav-inner">

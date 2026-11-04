@@ -143,7 +143,8 @@ export const fieldToolsRouter = router({
           input.email,
           input.slug,
           ctx.req.ip ?? ctx.req.socket.remoteAddress ?? "unknown",
-          input.audience
+          input.audience,
+          ctx.req.hostname
         );
       } catch (e) {
         throw new TRPCError({

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link, useLocation } from "wouter";
 import RebelLogo from "./RebelLogo";
+import { fieldToolsHref } from "@shared/field-tool-domains";
 
 const navItems = [
   { label: "The Map", href: "/manifesto" },
@@ -52,11 +53,15 @@ export default function Navigation() {
           </Link>
 
           {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-8">
-            {navItems.map((item) => (
+          <div className="hidden xl:flex items-center gap-6">
+            {navItems.map(item => (
               <Link
                 key={item.label}
-                href={item.href}
+                href={
+                  item.href === "/field-tools"
+                    ? fieldToolsHref(window.location.hostname)
+                    : item.href
+                }
                 className={`font-pixel text-[8px] transition-colors relative group ${
                   location === item.href
                     ? "text-gold"
@@ -82,7 +87,7 @@ export default function Navigation() {
           {/* Mobile Hamburger */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden text-parchment hover:text-gold transition-colors font-pixel text-[8px]"
+            className="xl:hidden text-parchment hover:text-gold transition-colors font-pixel text-[8px]"
             aria-label="Toggle menu"
           >
             {mobileOpen ? "[X]" : "[=]"}
@@ -120,7 +125,11 @@ export default function Navigation() {
                 transition={{ delay: i * 0.08 + 0.1 }}
               >
                 <Link
-                  href={item.href}
+                  href={
+                    item.href === "/field-tools"
+                      ? fieldToolsHref(window.location.hostname)
+                      : item.href
+                  }
                   className={`font-pixel text-sm transition-colors ${
                     location === item.href
                       ? "text-gold"
@@ -134,7 +143,9 @@ export default function Navigation() {
 
             {/* Secondary links in mobile */}
             <div className="mt-6 pt-6 border-t border-wood/20 flex flex-col items-center gap-4">
-              <p className="font-pixel text-[7px] text-parchment-dim/40 tracking-wider">SIDE QUESTS</p>
+              <p className="font-pixel text-[7px] text-parchment-dim/40 tracking-wider">
+                SIDE QUESTS
+              </p>
               {[
                 { label: "Start Here", href: "/start" },
                 { label: "The Game", href: "/game" },
@@ -142,7 +153,7 @@ export default function Navigation() {
                 { label: "Workbench", href: "/workbench" },
                 { label: "Community", href: "/community" },
                 { label: "The Manuscript", href: "/book" },
-              ].map((item) => (
+              ].map(item => (
                 <Link
                   key={item.label}
                   href={item.href}

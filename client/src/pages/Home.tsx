@@ -20,6 +20,7 @@ import Footer from "@/components/Footer";
 import SubstackSignup from "@/components/SubstackSignup";
 import { usePageTracker } from "@/hooks/usePageTracker";
 import EasterEgg from "@/components/EasterEgg";
+import FieldToolsHomeSection from "@/components/FieldToolsHomeSection";
 
 /* ─── CDN Image URLs ─── */
 const RPG_OFFICE = "/assets/legacy/manus/zlNQJQinSxaqyYjB.png";
@@ -132,7 +133,7 @@ export default function Home() {
               className="mt-8"
             >
               <button
-                onClick={() => document.querySelector("#diagnosis")?.scrollIntoView({ behavior: "smooth" })}
+                onClick={() => document.querySelector("#field-tools")?.scrollIntoView({ behavior: "smooth" })}
                 className="font-pixel text-[10px] text-gold/60 hover:text-gold transition-colors tracking-widest"
               >
                 <motion.span
@@ -146,6 +147,8 @@ export default function Home() {
           )}
         </div>
       </section>
+
+      <FieldToolsHomeSection />
 
       <PixelDivider />
 

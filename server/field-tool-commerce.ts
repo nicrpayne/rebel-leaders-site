@@ -20,6 +20,7 @@ import {
 } from "../drizzle/schema";
 import { FIELD_TOOL_CHECKOUT_KEYS } from "./field-tool-checkout";
 import { fieldToolAccessEmail } from "./field-tool-email";
+import { fieldToolAccessOrigin } from "../shared/field-tool-domains";
 
 import {
   giftTokenHash,
@@ -221,7 +222,8 @@ export async function requestBuyerLink(
   email: string,
   slug: string,
   ip: string,
-  audience: "pm" | "lead-dev" = "pm"
+  audience: "pm" | "lead-dev" = "pm",
+  requestHostname?: string
 ) {
   if (
     !allowAttempt("ip:" + ip, Date.now(), 30) ||
@@ -240,7 +242,12 @@ export async function requestBuyerLink(
     slug: slug === "ai-stalemate" ? slug + "/" + audience : slug,
     expiresAt: new Date(Date.now() + 15 * 60 * 1000),
   });
-  const url = new URL("/field-tools/sign-in", process.env.APP_URL);
+  const appUrl = fieldToolAccessOrigin(
+    process.env.APP_URL,
+    requestHostname,
+    process.env.FIELD_TOOL_LEGACY_ORIGINS
+  );
+  const url = new URL("/field-tools/sign-in", appUrl);
   url.searchParams.set("slug", slug);
   url.searchParams.set("audience", audience);
   url.hash = "token=" + token;
@@ -253,7 +260,7 @@ export async function requestBuyerLink(
     ...fieldToolAccessEmail({
       slug,
       audience,
-      appUrl: process.env.APP_URL,
+      appUrl,
       signInUrl: url.toString(),
     }),
   });

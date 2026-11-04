@@ -98,11 +98,19 @@ Refund research: Lemon Squeezy lets sellers choose their policy; comparable digi
 - [ ] Confirm Nic can reply to a support message and the sender receives the response.
 
 ## 6. Prepare and release — Codex, then Nic's production approval
-- [ ] Confirm the customer domain, then rebuild both PDFs with final links and remove Working Edition. Keep preview PDFs pointing to working preview routes until release.
+- [x] Confirm `tools.rebel-leader.com` as the customer domain. Cloudflare CNAME and ownership TXT were added; Railway verified ownership and issued a valid HTTPS certificate on 3 November. It points to the protected reviewer service and existing reviewer database.
+- [ ] At public release, rebuild both PDFs with final `https://tools.rebel-leader.com` links and remove Working Edition. Keep preview PDFs pointing to working preview routes until release. Replace the private reviewer receipt/confirmation URLs when creating the public products.
 - [ ] Check final public purchase/refund/support copy and production access controls.
 - [ ] Close or protect the open content-review preview as part of release, while preserving Nic's review access until then.
 - [ ] Run build and relevant checks, review the release diff, and obtain Nic's final production go-ahead before merging main/enabling live checkout.
 - [ ] Verify the deployed landing pages, checkout links, receipt destinations and protected content.
+
+### Website connection prepared — 3 November 2026
+- [x] Add a Field Tools introduction to the homepage and route the main-site navigation/cards to the new tools subdomain. These main-website changes remain on the review branch until release; `main` is not merged.
+- [x] Focus the collection on the PM and Lead Developer editions, using their approved copy and portraits. Keep the other products accessible through the existing review desk. Include returning-buyer and main-website links.
+- [x] Keep Workbench unchanged, as Nic requested.
+- [x] Add a tools-host-only root redirect and preserve every existing reviewer product URL. Set the reviewer service's canonical `APP_URL` to the tools subdomain, with the original reviewer origin explicitly allowed for returning sign-in emails so existing browser-local drafts remain reachable.
+- [x] Check desktop, 390px phone and 768px tablet layouts. TypeScript and production build pass; domain, edition access, session and commerce checks pass, including canonical/legacy email destinations and rejecting untrusted request hosts.
 
 ## 7. Small first release — Nic
 - [ ] Invite two or three actual PMs/leads to use it for a current conversation without coaching; note where they stall and what they use.
@@ -116,3 +124,15 @@ The 27 October implementation passed 114 targeted tests across 14 suites, TypeSc
 - Browser proofs cover both 390px light/dark layouts. These are rendering previews, not a claim of Gmail iOS verification. Production build and all three access-email destination tests pass. Application change: `5e27db7`.
 - Gift test order `4961813` completed in Lemon Squeezy test mode. The recipient notification arrived at the recipient alias with the correct PM welcome URL and note; recipient sign-in opened the welcome page and Lab. A full test refund then revoked recipient access on reload.
 - Deployed the dark-mode correction successfully to review (`f2ed730b-a06d-4408-826e-de7cd9f95c59`) and isolated checkout test (`747f79c7-2d38-4a21-b799-26c4593f9645`). Actual updated PM/gift-recipient and Lead Developer access emails arrived in Gmail at 4:05 and 4:07 PM Central; live-text heading and correct edition/bookmark were verified. The latest Lead Developer sign-in link was left unused for Nic. Gmail iPhone visual confirmation is still Nic’s check.
+
+### Private reviewer checkout — 3 November 2026
+- Nic approved the corrected email appearance and explicitly authorized a separate live-mode, $0 reviewer flow. This is not approval for public launch or a merge to main.
+- Reviewer site: https://field-tools-reviewers-production.up.railway.app. Railway service `field-tools-reviewers` (`78356102-39f9-4c97-8b22-86e8410d3df6`) uses its own private MySQL service `field-tools-reviewer-db` (`63096099-285e-416b-aebe-fb8930f08ec5`), with preview bypass disabled. The existing preview, checkout-test site, and main production service are unchanged.
+- Deployed application commit `6af3b5b000bbe55dd162734d94ce5a55771a1d3a`; latest reviewer deployment `73a8441e-19fa-43c4-9dcd-43da8091375b` succeeded.
+- Created two hidden live-mode products at $47: Lead Developer product/variant `1499367` / `2335055`; PM product/variant `1499373` / `2335067`. Confirmation and receipt buttons point to the matching reviewer welcome page.
+- Each edition has an active, edition-specific 100%-off reviewer code. Nic subsequently approved increasing both existing codes to 10 total redemptions so the same invitations can be shared with more reviewers. Both limits were saved and verified after reloading Lemon Squeezy; neither reviewer code had been redeemed at that check. Codes are kept out of the repository. A separate two-use QA discount was consumed by verification.
+- Nic saved live webhook `148942` for `order_created` and `order_refunded`. Lemon Squeezy requires its signing secret to be at most 40 characters; the reviewer service was updated to match. No secrets are recorded here.
+- Completed actual live-mode $0 orders: Lead Developer order ID `9940830`, PM order ID `9940881`. Both webhook payloads explicitly report `test_mode: false`, total `0`, and HTTP 200 delivery. No card or charge was required.
+- Verified the Lead Developer receipt and branded access email in Gmail, redeemed the sign-in link, and opened its protected Guide. PM stayed locked before its purchase, then unlocked its welcome page, Lab, Guide, and PDF after its own order. Both editions were bought by the same QA identity; this does not replace the separate-device check above.
+- Gmail grouped the new Lead Developer receipt under an older test thread title. The actual new message subject is “Your AI Stalemate — Lead Developer Edition receipt,” without a Test Mode prefix.
+- The reviewer flow is ready for the two friends. Final-domain PDF links, payout tax information, remaining robustness checks, and public-release authorization remain separate launch work.

@@ -124,6 +124,26 @@ describe("separately purchased AI editions", () => {
     expect(insert).not.toHaveBeenCalled();
     expect(mocks.send).not.toHaveBeenCalled();
   });
+  it.each(["tools.rebel-leader.com", "field-tools-reviewers-production.up.railway.app"])(
+    "emails the sign-in and bookmark links for the trusted requesting host %s",
+    async hostname => {
+      const insert = buyer(["ai-stalemate/lead-dev"]);
+      insert.mockReturnValue({ values: vi.fn().mockResolvedValue(undefined) });
+      mocks.send.mockResolvedValue({ data: { id: "test" }, error: null });
+      vi.stubEnv("RESEND_API_KEY", "test-key");
+      vi.stubEnv("APP_URL", "https://tools.rebel-leader.com");
+      vi.stubEnv("FIELD_TOOL_LEGACY_ORIGINS", "https://field-tools-reviewers-production.up.railway.app");
+      const client = fieldToolsRouter.createCaller({
+        req: { ...req, hostname } as any,
+        res: { setHeader: vi.fn() } as any,
+        user: null,
+      });
+      await client.requestAccess({ email: "migration@example.com", slug: "ai-stalemate", audience: "lead-dev" });
+      const message = mocks.send.mock.calls[0][0];
+      expect(message.text).toContain(`https://${hostname}/field-tools/sign-in?slug=ai-stalemate&audience=lead-dev#token=`);
+      expect(message.text).toContain(`https://${hostname}/field-tools/ai-stalemate/lead-dev/access`);
+    }
+  );
   it("uses the paid variant rather than a custom audience to choose access", () => {
     const payment = {
       meta: {

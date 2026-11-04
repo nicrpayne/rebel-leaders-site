@@ -8,7 +8,7 @@ export default function FieldToolsFooter() {
         className="mx-auto flex max-w-6xl flex-wrap gap-6"
       >
         <Link href="/field-tools">All Field Tools</Link>
-        <Link href="/about">About Nic</Link>
+        <a href="https://rebel-leader.com/about">About Nic</a>
         <Link href="/field-tools/purchase-help">Purchase & refunds</Link>
         <a href="mailto:hello@rebel-leader.com">Get help</a>
         <a href="https://rebel-leader.com" target="_blank" rel="noreferrer">
