@@ -76,8 +76,14 @@ export default function FieldTools() {
               attention to the work, the people, and what your everyday choices
               are shaping.
             </p>
-            <a className="ft-collection-link" href="https://rebel-leader.com">
+            <a
+              className="ft-collection-link"
+              href="https://rebel-leader.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Explore Rebel Leaders <ArrowRight size={18} aria-hidden="true" />
+              <span className="sr-only"> (opens in a new tab)</span>
             </a>
           </div>
         </div>

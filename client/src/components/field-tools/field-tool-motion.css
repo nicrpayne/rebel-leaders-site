@@ -1,4 +1,66 @@
 /* A little movement, with all essential content immediately usable. */
+.ft-footer-signature {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 8px 4px 0;
+  border-radius: 4px;
+  color: var(--ft-accent);
+  text-decoration: none;
+}
+
+.ft-footer-signature:focus-visible {
+  outline: 2px solid var(--ft-accent);
+  outline-offset: 5px;
+}
+
+.ft-footer-sprite {
+  display: flex;
+  width: 44px;
+  flex-shrink: 0;
+  justify-content: center;
+}
+
+.ft-footer-sprite img {
+  width: 27px;
+  height: 88px;
+  image-rendering: pixelated;
+  transition:
+    transform 220ms ease,
+    filter 220ms ease;
+}
+
+.ft-footer-signature:hover .ft-footer-sprite img,
+.ft-footer-signature:focus-visible .ft-footer-sprite img {
+  transform: translateY(-3px);
+  filter: drop-shadow(0 0 5px rgb(49 92 75 / 18%));
+}
+
+.ft-footer-manifesto {
+  display: block;
+  margin-top: 8px;
+  font-size: 12px;
+  text-decoration: underline;
+  text-decoration-color: var(--ft-line);
+  text-underline-offset: 4px;
+}
+
+.ft-footer-signature:hover .ft-footer-manifesto,
+.ft-footer-signature:focus-visible .ft-footer-manifesto {
+  text-decoration-color: currentColor;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ft-footer-sprite img {
+    transition: none;
+  }
+
+  .ft-footer-signature:hover .ft-footer-sprite img,
+  .ft-footer-signature:focus-visible .ft-footer-sprite img {
+    transform: none;
+  }
+}
+
 .ft-footer-hope {
   font-size: 10px;
   letter-spacing: 0.2em;
