@@ -42,14 +42,9 @@ export default function AIStalemateEditions() {
                 height={941}
                 loading="lazy"
               />
-              <p>
-                Hope is
-                <br />
-                rebellious.
-              </p>
+              <h3>{copy.headline}</h3>
             </div>
             <div className="ft-edition-copy">
-              <h3>{copy.headline}</h3>
               <p className="ft-edition-description">{copy.promise}</p>
               <div className="ft-edition-action">
                 <span>
