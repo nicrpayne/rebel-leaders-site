@@ -8,9 +8,9 @@ export const FIELD_TOOLS_PUBLIC_COPY = {
 
 export const AI_STALEMATE_PUBLIC_COPY = {
   pm: {
-    headline: "Every time I bring up AI, we hit a wall.",
+    headline: "My lead dev thinks AI is a toy.",
     promise:
-      "You can see where AI might help. Your lead has questions about what it would take. Get specific about the opportunity, the engineering concerns, and what’s worth trying next.",
+      "You can see where AI might help. Your lead sees what it would take to build, secure, and support it. Work out what’s worth trying—and what needs to be in place first.",
   },
   "lead-dev": {
     headline: "My PM won’t shut up about AI.",

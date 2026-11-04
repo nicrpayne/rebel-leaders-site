@@ -7,6 +7,7 @@ import AIKitPreview from "@/components/field-tools/AIKitPreview";
 import DeliveryExample from "@/components/field-tools/DeliveryExample";
 import { FIELD_TOOLS_PUBLIC_COPY } from "@shared/field-tool-public-copy";
 import { useSalesPageAnchor } from "@/components/field-tools/useSalesPageAnchor";
+import { UPCOMING_FIELD_TOOLS } from "@/lib/field-tools";
 
 export default function FieldTools() {
   useSalesPageAnchor();
@@ -51,11 +52,7 @@ export default function FieldTools() {
             <p className="ft-collection-eyebrow">AVAILABLE NOW</p>
             <h2 id="collection-editions">AI Stalemate</h2>
           </div>
-          <p>
-            Choose the edition for your role.
-            <br />
-            You don’t need both.
-          </p>
+          <p>Choose the edition for your role.</p>
         </div>
         <p className="ft-collection-product-intro">
           Prepare the AI conversation. Then look beyond the coding to find
@@ -78,6 +75,26 @@ export default function FieldTools() {
         </div>
       </section>
       <DeliveryExample />
+      <section
+        className="ft-collection-width ft-collection-upcoming"
+        aria-labelledby="upcoming-tools-heading"
+      >
+        <div className="ft-collection-section-heading">
+          <div>
+            <p className="ft-collection-eyebrow">IN DEVELOPMENT</p>
+            <h2 id="upcoming-tools-heading">Other moments work gets stuck.</h2>
+          </div>
+          <p>More Field Tools we’re working on. Not available yet.</p>
+        </div>
+        <ul className="ft-upcoming-list">
+          {UPCOMING_FIELD_TOOLS.map(tool => (
+            <li key={tool.slug}>
+              <h3>{tool.name}</h3>
+              <p>{tool.headline} {tool.accentLine}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
       <aside className="ft-collection-about">
         <div className="ft-collection-width">
           <div>

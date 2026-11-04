@@ -25,7 +25,7 @@ export function fieldToolPageMetadata(requestPath: string) {
         ? {
             title: "AI Stalemate for Product Managers — Rebel Leaders",
             description: `${AI_STALEMATE_PUBLIC_COPY.pm.headline} Prepare the AI conversation and explore what’s holding delivery up. A Guide and interactive tools for Product Managers.`,
-            image: "ai-stalemate-pm-share-v1.png",
+            image: "ai-stalemate-pm-share-v2.png",
             imageAlt: `AI Stalemate for Product Managers. ${AI_STALEMATE_PUBLIC_COPY.pm.headline} Nic Payne in his study.`,
           }
         : path === "/field-tools/ai-stalemate/lead-dev"

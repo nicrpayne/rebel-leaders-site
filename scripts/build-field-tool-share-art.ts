@@ -33,7 +33,7 @@ const pages = [
     photo: "",
   },
   {
-    file: "ai-stalemate-pm-share-v1",
+    file: "ai-stalemate-pm-share-v2",
     role: "AI STALEMATE / PRODUCT MANAGERS",
     headline: escape(AI_STALEMATE_PUBLIC_COPY.pm.headline),
     detail: "Prepare the AI conversation.<br>Find what’s holding delivery up.",

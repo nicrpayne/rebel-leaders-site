@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "wouter";
-import { FIELD_TOOL_OFFERS } from "@/lib/field-tools";
+import { AVAILABLE_FIELD_TOOL_OFFERS } from "@/lib/field-tools";
 import { trpc } from "@/lib/trpc";
 import FieldToolsNav from "@/components/field-tools/FieldToolsNav";
 import { FieldToolSignIn as SignInForm } from "@/components/field-tools/FieldToolGate";
@@ -51,7 +51,7 @@ export default function FieldToolSignIn() {
             Which tool would you like to open?
           </h1>
           <div className="mt-8 grid gap-3">
-            {FIELD_TOOL_OFFERS.map(tool => (
+            {AVAILABLE_FIELD_TOOL_OFFERS.map(tool => (
               <Link
                 key={tool.slug}
                 href={`/field-tools/${tool.slug}/access`}

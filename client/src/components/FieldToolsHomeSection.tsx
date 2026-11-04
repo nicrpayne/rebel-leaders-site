@@ -34,7 +34,7 @@ export default function FieldToolsHomeSection() {
         <AIStalemateEditions />
         <p className="ft-collection-note">
           AI Stalemate has an edition for each side of the conversation. Choose
-          the one for your role. You don’t need both.
+          the one for your role, then bring your notes into the conversation.
         </p>
       </div>
     </section>

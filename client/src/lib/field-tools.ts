@@ -1,3 +1,5 @@
+import { AI_STALEMATE_PUBLIC_COPY } from "@shared/field-tool-public-copy";
+
 export type FieldTool = {
   slug: string;
   number: string;
@@ -199,6 +201,12 @@ export function getFieldTool(slug: string) {
   return FIELD_TOOLS.find(tool => tool.slug === slug);
 }
 
+// Public availability is separate from the full review desk and existing routes.
+const AVAILABLE_FIELD_TOOL_SLUGS = new Set(["ai-stalemate"]);
+export const UPCOMING_FIELD_TOOLS = FIELD_TOOLS.filter(
+  tool => !AVAILABLE_FIELD_TOOL_SLUGS.has(tool.slug)
+);
+
 // The two AI editions are separate purchases within the same situation family.
 export const FIELD_TOOL_OFFERS = FIELD_TOOLS.flatMap(tool =>
   tool.slug === "ai-stalemate"
@@ -207,15 +215,13 @@ export const FIELD_TOOL_OFFERS = FIELD_TOOLS.flatMap(tool =>
         slug: `${tool.slug}/${audience}`,
         name: `AI Stalemate / ${audience === "pm" ? "Product Manager" : "Lead Developer"}`,
         eyebrow: `FIELD TOOL 01 / ${audience === "pm" ? "PRODUCT MANAGERS" : "LEAD DEVELOPERS"}`,
-        headline:
-          audience === "pm"
-            ? "You see a possibility for AI."
-            : "My PM won’t shut up about AI.",
-        accentLine: audience === "pm" ? "Is it worth pursuing?" : "",
-        subhead:
-          audience === "pm"
-            ? "Explain the opportunity, invite your lead to question it, and decide what to explore together."
-            : "Assess the engineering work, the risks, and the evidence you need to make a sound decision.",
+        headline: AI_STALEMATE_PUBLIC_COPY[audience].headline,
+        accentLine: "",
+        subhead: AI_STALEMATE_PUBLIC_COPY[audience].promise,
       }))
     : [tool]
+);
+
+export const AVAILABLE_FIELD_TOOL_OFFERS = FIELD_TOOL_OFFERS.filter(tool =>
+  AVAILABLE_FIELD_TOOL_SLUGS.has(tool.slug.split("/")[0])
 );

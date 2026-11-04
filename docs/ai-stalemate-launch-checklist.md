@@ -132,6 +132,16 @@ Nic authorised implementation after reviewing the critique. Keep Field Tools as 
 
 Local verification covers the three example states, keyboard operation, phone/tablet layouts, role-specific FAQs, navigation metadata cleanup, initial server HTML, and private-query exclusion. The 30 targeted metadata/domain/analytics/edition tests pass, with the HTTP edition suite run outside the port-restricted sandbox. Promotional scripts, posts, and follow-up ideas are catalogued in [field-tools-content-catalogue.md](field-tools-content-catalogue.md). Public launch checks remain separate.
 
+### Follow-up critique — 4 November 2026
+
+Nic approved these refinements to the decisions above:
+
+- Pair “My lead dev thinks AI is a toy” with “My PM won’t shut up about AI.” The PM description turns toward the work required to build, secure, and support the idea. Shared copy keeps cards, sales pages, and link metadata consistent; the PM share image is now v2.
+- Show the four other product families in a restrained “In development” section after the public example. There are no locks, purchase links, prices, or promised release dates. The sign-in chooser lists only the two available AI editions; the full review desk and existing product routes remain intact.
+- Remove “You don’t need both” from the catalogue, purchase panels, and main-site bridge. Keep the warmer colleague explanation and explicit edition FAQ.
+- Resolve the legacy OAuth URL only when an unauthenticated redirect is actually requested. Passive user-state checks no longer call it or generate the missing-portal warning. Buyer email authentication and its access checks remain unchanged.
+- Local verification: TypeScript and production build pass; all 29 targeted metadata, edition-access, domain, and email tests pass. Checked the catalogue and both sales pages at desktop, phone, and tablet widths. No OAuth warnings on the updated local catalogue. Updated FT02/FT03 promo scripts and the end card in the content catalogue. Post-deployment returning-buyer verification is still to be recorded.
+
 ## 7. Small first release — Nic
 - [ ] Invite two or three actual PMs/leads to use it for a current conversation without coaching; note where they stall and what they use.
 - [ ] Check support and order/email delivery after first purchases. Video is optional follow-up work, not a launch requirement.

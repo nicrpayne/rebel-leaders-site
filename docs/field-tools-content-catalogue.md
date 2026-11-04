@@ -12,7 +12,7 @@ The public sales pages are available for private reviewer invitations. Use purch
 | ---- | ------------------------------------------------------- | ------------------------- | ---------------------------- | ------------------------------- | ----------------------------------------------------------------------- |
 | FT01 | The code was ready Tuesday                              | PMs and engineering leads | 30 second demonstration      | Script ready to rehearse        | Show why faster coding does not settle the delivery question            |
 | FT02 | My PM won’t shut up about AI                            | Lead developers           | 30 second comic role switch  | Script ready to rehearse        | Recognition, then respect for both sides                                |
-| FT03 | Every time I bring up AI, we hit a wall                 | Product managers          | 30 second direct address     | Script ready to rehearse        | Make the PM feel understood and show a practical next move              |
+| FT03 | My lead dev thinks AI is a toy                         | Product managers          | 30 second direct address     | Script ready to rehearse        | Make the PM feel understood and show a practical next move              |
 | FT04 | Follow one piece of work                                | Both roles                | 90 second screen walkthrough | Shot list ready                 | Show the complete package without making it feel like coursework        |
 | FT05 | Please review faster                                    | Both roles                | LinkedIn text post           | Draft ready                     | Demonstrate a better question                                           |
 | FT06 | You can start on your own                               | Both roles                | LinkedIn text post or short  | Draft ready                     | Remove the need to get a colleague onboard before starting              |
@@ -45,7 +45,7 @@ PM Nic: “Could we use AI to ship this sooner?”
 
 Lead Nic, to camera: “My PM won’t shut up about AI.”
 
-PM Nic, to camera: “Every time I bring up AI, we hit a wall.”
+PM Nic, to camera: “My lead dev thinks AI is a toy.”
 
 Cut to Nic in the middle: “Meanwhile, the code’s been waiting for review since Tuesday.”
 
@@ -53,7 +53,7 @@ Pause.
 
 “There’s a conversation to have. And some work to look at. AI Stalemate helps you do both. Start with your edition. Bring the questions and notes back to each other.”
 
-**End card:** “AI Stalemate · Choose your edition · You don’t need both.”
+**End card:** “AI Stalemate · Choose your edition · Bring your notes to the conversation.”
 
 **Destination:** Use the [Lead Developer page](https://tools.rebel-leader.com/field-tools/ai-stalemate/lead-dev) when the post opens with the developer line; use the catalogue for the balanced two-role version.
 
@@ -61,7 +61,9 @@ Pause.
 
 **Estimated length:** 30 seconds. **Visual:** direct address with the PM edition on screen for the final third.
 
-“Every time you bring up AI, you hit a wall.
+“My lead dev thinks AI is a toy.
+
+Ever caught yourself thinking that?
 
 You can see an opportunity. Your lead has questions about security, the team, and who’s going to support the thing after the demo.
 
@@ -77,7 +79,7 @@ AI Stalemate helps you put the opportunity into words, work through those concer
 
 | Time          | Show                                                         | Say                                                                                                                                                                                                        |
 | ------------- | ------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0–12 seconds  | Edition sales page and its headline                          | “Start with the edition for your role. You don’t need your colleague to buy the other one.”                                                                                                                |
+| 0–12 seconds  | Edition sales page and its headline                          | “Start with the edition for your role. Bring your questions and notes into the conversation.”                                                                                                                |
 | 12–24 seconds | Welcome page, then the Lab’s two choices                     | “Bring one situation you’re actually in. If the AI conversation keeps going in circles, start here. If work keeps getting stuck, start with the delivery map.”                                             |
 | 24–40 seconds | Conversation companion, one relevant question and its output | “Write down the opportunity or concern, what you still need to check, and what you want to discuss. The Guide is there when you want help thinking it through.”                                            |
 | 40–65 seconds | Delivery map, Check, review-delay example                    | “Here the code was waiting for review. Asking for faster reviews hadn’t helped. Was anyone available to review it? What work were they already committed to? Had we agreed the behaviour before building?” |
@@ -168,7 +170,7 @@ After a reviewer tries a real situation, ask what question or action they left w
 - [PM edition](https://tools.rebel-leader.com/field-tools/ai-stalemate/pm)
 - [Lead Developer edition](https://tools.rebel-leader.com/field-tools/ai-stalemate/lead-dev)
 - Public three-part example: `client/src/components/field-tools/DeliveryExample.tsx`. Its source situation comes from the product’s fictional review-delay example in `client/src/lib/delivery-journey.ts`.
-- Share artwork: `client/public/assets/field-tools/field-tools-share-v1.png`, `ai-stalemate-pm-share-v1.png`, and `ai-stalemate-lead-dev-share-v1.png`. These are link-preview assets, not final exports for every social platform.
+- Share artwork: `client/public/assets/field-tools/field-tools-share-v1.png`, `ai-stalemate-pm-share-v2.png`, and `ai-stalemate-lead-dev-share-v1.png`. These are link-preview assets, not final exports for every social platform.
 - Rebuild share-art canvases with `node --import tsx scripts/build-field-tool-share-art.ts dist/public/share-art`, serve locally, and capture each 1200 × 630 canvas as the matching PNG. Check text and portrait crops before publishing.
 
 Append new ideas with the next FT number and update their status here when recorded, reviewed, or published. Keep the scripts above as the current versions; put alternate takes under the same entry rather than duplicating the queue.

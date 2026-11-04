@@ -84,8 +84,7 @@ export default function AIProductPage({ audience }: { audience: Audience }) {
           </p>
           <p>
             Your {audience === "pm" ? "PM" : "Lead Developer"} Guide,
-            conversation companion, and delivery map. You don’t need both
-            editions.
+            conversation companion, and delivery map.
           </p>
           <p>
             Start on your own, then take your notes into the conversation. Your{" "}
