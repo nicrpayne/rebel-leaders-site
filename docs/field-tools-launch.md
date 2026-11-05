@@ -11,6 +11,14 @@
 - Added cleanup for both rejected and thrown email-provider failures, allowing a fresh link on retry. 68 focused commerce, entitlement, gift, privacy, domain, email and preview-boundary checks pass; TypeScript and the production build pass.
 - Deployment and actual-provider follow-up results are recorded separately below. Tax completion, separate-device confirmation and the support reply check remain Nic’s checks. Public launch/merge approval is still separate.
 
+### Deployed and verified — 5 November
+
+Application commit `e67836e` is deployed to the customer/reviewer, isolated checkout-test and private-preview services. Both customer welcome pages and canonical PDF downloads were verified; downloaded files match the reviewed PDFs byte for byte. The merged production build and 16 additional Quiet/expansion checks passed after preserving concurrent work.
+
+The isolated email-failure exercise showed a useful retry message, then successfully delivered and redeemed a fresh access link after restoring the normal sender. Customer email configuration was unchanged. Actual test gift #4961814 (API order 9955352) verified recipient delivery/access, buyer exclusion, no duplicate gift email on paid-event replay, full-refund revocation, and continued denial after replaying the original paid payload. All three replay/refund deliveries returned 200. The actual receipt includes the new welcome note and opens the correct test edition. No real money was charged.
+
+Anonymous preview page/API requests now return 401; Nic's private review login returns 200. The retired proposal domain returns 404. Private review credentials and screenshots are outside Git in `/Users/nicholaspayne/Documents/Codex/ai-stalemate-release-proof`. See the dated launch-checklist entry for exact test evidence and the remaining owner/device/release checks.
+
 ## 4 November 2026 — email and public analytics setup
 
 This dated section records the current email/analytics work; the older launch and review notes below are historical, not a claim that all launch checks are complete.
@@ -48,7 +56,7 @@ The Lab supports a useful next conversation, preparation, specialist input, an e
 
 ## Checkout and access
 
-See `field-tools-commerce.md` for exact service setup, receipt routes, gifts, access links, refunds, and validation limits. Two AI variant mappings and checkout URLs are required. New purchases unlock their own edition only; historical purchases sold with both retain both. The review preview intentionally exposes content with a banner and cannot accept payment.
+See `field-tools-commerce.md` for exact service setup, receipt routes, gifts, access links, refunds, and validation limits. Two AI variant mappings and checkout URLs are required. New purchases unlock their own edition only; historical purchases sold with both retain both. The review preview requires Nic's private review login, then exposes draft content with a banner and cannot accept payment. Customer/reviewer and checkout-test sites enforce purchase access.
 
 Use Lemon Squeezy test mode and test cards to verify the complete purchase/delivery/refund journey. Database, payment-provider, and email-provider mocks do not establish that actual delivery works. Published purchase/refund terms, final walkthrough links, and account configuration remain launch tasks.
 

@@ -91,10 +91,10 @@ Refund research: Lemon Squeezy lets sellers choose their policy; comparable digi
 - [ ] Confirm a fresh sign-in on Nic’s separate phone/tablet; receiving the email there alone does not prove product access.
 - [x] Actual PM partial refund ($5): access remains available. Actual full remaining refund: the Lab and protected PDF return to the sign-in gate. Refund webhooks returned HTTP 200.
 - [x] Observe a used/expired sign-in link fail, then successfully request and use a fresh link.
-- [ ] Complete duplicate/delayed-event state verification and provider email-failure/retry verification. The original PM paid event was replayed after refund and returned HTTP 200; automated stale-event protection passes, but a fresh PM identity check is still needed before calling that replay fully verified.
+- [x] Verify duplicate/delayed payment events and actual email-provider failure/retry. On 5 November the isolated test sender was temporarily set to an invalid domain: the request showed a useful retry message. Restoring the normal sender delivered a fresh link that successfully signed the existing Dev buyer in. Gift order #4961814 was replayed while paid and again after its full refund; each delivery returned HTTP 200. The authenticated recipient remained denied after the stale paid event. See the dated evidence below.
 - [x] Complete a real provider test-mode gift purchase (`4961813`), recipient notification, recipient sign-in and Lab access, then full refund and verified recipient access revocation. The test buyer and recipient use different email aliases.
 - [x] Apply the approved branded email treatment and warm voice to initial gift notifications as well as access emails.
-- [ ] Finish actual-provider gift buyer-denial and duplicate-notification checks (automated coverage passes).
+- [x] Finish actual-provider gift buyer-denial and duplicate-notification checks. For test gift #4961814, the existing Dev buyer remained denied PM content, while the separate gift recipient signed in and opened the PM welcome page and Lab. Replaying the paid event did not send a second gift notification; the mailbox still contained one gift message after both replays.
 - [x] Nic confirms an incoming support test message arrives (27 October).
 - [ ] Confirm Nic can reply to a support message and the sender receives the response.
 
@@ -102,9 +102,19 @@ Refund research: Lemon Squeezy lets sellers choose their policy; comparable digi
 - [x] Confirm `tools.rebel-leader.com` as the customer domain. Cloudflare CNAME and ownership TXT were added; Railway verified ownership and issued a valid HTTPS certificate on 3 November. It points to the protected reviewer service and existing reviewer database.
 - [x] Rebuild both AI PDFs with final `https://tools.rebel-leader.com` links and remove Working Edition. Update both hidden live products’ receipt/confirmation URLs to their canonical welcome pages (4–5 November).
 - [ ] Check final public purchase/refund/support copy and production access controls.
-- [ ] Close or protect the open content-review preview as part of release, while preserving Nic's review access until then.
+- [x] Protect the content-review preview while preserving Nic's private review access. Verified anonymous page/API requests return 401 and Nic's private review credentials return 200. The obsolete proposal domain returns 404. Credentials are stored outside Git, in Nic's local release-proof folder.
 - [ ] Run build and relevant checks, review the release diff, and obtain Nic's final production go-ahead before merging main/enabling live checkout.
 - [ ] Verify the deployed landing pages, checkout links, receipt destinations and protected content.
+
+### Buyer welcome and provider checks — 5 November 2026
+
+- Deployed application commit `e67836e041deed73b7a5b401d4fc47d5444da239` to the customer/reviewer, checkout-test, and private-preview services. The current test deployment after restoring the email sender is `802644cb-888a-4dab-befe-274e4ada2808`. The normal customer sender was never changed. Concurrent Quiet-product work was preserved when rebasing; the merged production build and 16 additional Quiet/expansion checks passed.
+- Both customer welcome pages on tools.rebel-leader.com show the new role-specific copy, spaced Open my Lab/Read the Guide actions, two starting points, and permanent bookmark instructions. Both protected PDF downloads match the reviewed canonical-domain PDFs by SHA-256. Both remain 21 pages with subtle reading estimates.
+- The actual provider test gift is order number `4961814`, API order ID `9955352`, identifier `b2ef1532-75a2-48d3-b0f4-8de5de4a8e7b`. It cost no real money and is now fully refunded. The buyer alias already had a separate active Lead Developer purchase; the recipient alias was distinct.
+- Actual confirmation, Lemon Squeezy receipt, gift notification and requested access email were inspected. The receipt includes Nic's welcome/support/refund note and its button resolves to the test PM welcome page. Test-mode receipts are routed to the store owner's mailbox by the provider. Live hidden-product confirmation/receipt settings were separately saved and reloaded with tools.rebel-leader.com URLs.
+- Original gift payment delivered at 14:56:52 UTC. Duplicate paid replay at 15:15:09 returned 200 with no duplicate gift. Full refund at 15:19:13 returned 200 and revoked the signed-in recipient's Lab. Replaying the original paid payload (old timestamp, status paid, refunded false) at 15:21:38 returned 200; reloading the same recipient session still showed the access gate. Only the original gift notification remained in Gmail.
+- Provider email-failure recovery and private-preview protection passed as described above. Screenshots and PDF renders are in `/Users/nicholaspayne/Documents/Codex/ai-stalemate-release-proof`; private preview credentials are in `private-review-access.txt` there, never in Git.
+- Still needed from Nic: tax-form completion, an actual phone/tablet sign-in, a support reply received by its sender, and the final content review/launch decision. These checks do not claim a public launch or authorize merging main.
 
 ### Website connection prepared — 3 November 2026
 - [x] Add a Field Tools introduction to the homepage and route the main-site navigation/cards to the new tools subdomain. These main-website changes remain on the review branch until release; `main` is not merged.
