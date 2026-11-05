@@ -37,7 +37,7 @@ export default function LeadershipWalkthrough({ slug }: { slug: string }) {
   return (
     <main className="font-ui min-h-screen bg-[var(--ft-paper)] text-[var(--ft-ink)]">
       <FieldToolsNav />
-      <section className="ft-walkthrough mx-auto max-w-5xl px-6 pb-16 pt-28">
+      <section className="ft-walkthrough mx-auto max-w-5xl px-6 pb-16 pt-10">
         <Link href={`${base}/access`} className="text-sm underline">
           ← Your Field Tool
         </Link>

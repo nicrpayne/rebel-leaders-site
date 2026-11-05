@@ -1,0 +1,118 @@
+/* Range's shared tool identity. The header stays in document flow so long
+   tool names and larger text never cover the working surface below it. */
+.ft-nav {
+  color: #244a3b;
+  background: #fcfaf6;
+  font-family: var(--font-ui);
+  border-bottom: 1px solid var(--ft-line);
+}
+.ft-theme .ft-nav {
+  background: var(--ft-paper);
+  backdrop-filter: none;
+}
+.ft-header-top,
+.ft-header-tabs {
+  max-width: 1400px;
+  margin-inline: auto;
+  padding-inline: 5%;
+}
+.ft-header-top {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  padding-block: 28px;
+}
+.ft-nav .ft-header-brand {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  min-width: 0;
+  text-decoration: none;
+  color: #244a3b;
+}
+.ft-header-mark {
+  flex: none;
+  width: 64px;
+}
+.ft-nav .ft-header-mark svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  color: #244a3b;
+}
+.ft-header-wordmark {
+  font: 600 12px/1.5 var(--font-ui);
+  letter-spacing: 0.13em;
+}
+.ft-header-wordmark small {
+  display: block;
+  margin-top: 5px;
+  color: #696b61;
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.ft-header-tabs {
+  display: flex;
+  gap: 37px;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scrollbar-width: thin;
+}
+.ft-nav .ft-header-tabs a {
+  flex: none;
+  min-height: 55px;
+  padding-block: 13px 19px;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  color: #696b61;
+  font-size: 14px;
+  line-height: 21px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.ft-nav .ft-header-tabs a[aria-current="page"] {
+  color: #244a3b;
+  border-bottom-color: #244a3b;
+}
+.ft-nav .ft-header-tabs a:hover {
+  color: #244a3b;
+  text-decoration: none;
+  border-bottom-color: #aab8aa;
+}
+.ft-nav a:focus-visible {
+  outline: 2px solid #244a3b;
+  outline-offset: -3px;
+}
+@media (max-width: 760px) {
+  .ft-header-top,
+  .ft-header-tabs {
+    padding-inline: 20px;
+  }
+  .ft-header-top {
+    padding-block: 19px;
+  }
+  .ft-nav .ft-header-brand {
+    gap: 10px;
+  }
+  .ft-header-mark {
+    width: 48px;
+  }
+  .ft-header-wordmark {
+    font-size: 10px;
+  }
+  .ft-header-wordmark small {
+    font-size: 8px;
+    letter-spacing: 0.07em;
+  }
+  .ft-header-tabs {
+    gap: 24px;
+  }
+  .ft-nav .ft-header-tabs a {
+    min-height: 48px;
+    padding-bottom: 15px;
+    font-size: 12px;
+    line-height: 18px;
+  }
+}

@@ -3,7 +3,7 @@
   background: var(--ft-paper);
   color: var(--ft-ink);
   font-family: var(--font-ui);
-  padding: 128px 28px 80px;
+  padding: 54px 28px 80px;
 }
 .ai-lab-hub-inner {
   max-width: 1160px;
@@ -147,7 +147,7 @@
 }
 @media (max-width: 700px) {
   .ai-lab-hub {
-    padding: 108px 20px 70px;
+    padding: 34px 20px 70px;
   }
   .ai-lab-paths {
     grid-template-columns: 1fr;

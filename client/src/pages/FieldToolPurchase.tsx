@@ -38,7 +38,7 @@ export default function FieldToolPurchase({
   return (
     <main className="ft-purchase relative min-h-screen bg-[var(--ft-paper)] text-[var(--ft-ink)]">
       <FieldToolsNav />
-      <section className="mx-auto max-w-6xl px-5 pb-12 pt-24 md:px-10 md:pt-28">
+      <section className="mx-auto max-w-6xl px-5 pb-12 pt-8 md:px-10 md:pt-10">
         <Link
           href={base}
           className="inline-flex items-center gap-2 font-ui text-xs text-[var(--ft-muted)]"

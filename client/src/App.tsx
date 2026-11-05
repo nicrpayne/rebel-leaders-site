@@ -1,6 +1,7 @@
 import "./components/field-tools/field-tool-theme.css";
 import "./components/field-tools/field-tool-responsive.css";
 import "./components/field-tools/field-tool-motion.css";
+import "./components/field-tools/field-tool-header.css";
 import FieldToolGate from "./components/field-tools/FieldToolGate";
 import { Toaster } from "@/components/ui/sonner";
 import { useClaimAnonymousResult } from "@/_core/hooks/useClaimAnonymousResult";

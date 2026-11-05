@@ -407,7 +407,7 @@ export default function PressureTest() {
     <main className="min-h-screen bg-[#07130f] text-[#f3f4ee]">
       <FieldToolsNav />
 
-      <section className="relative min-h-screen overflow-hidden px-5 pb-16 pt-28 md:px-8">
+      <section className="relative min-h-screen overflow-hidden px-5 pb-16 pt-10 md:px-8">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_75%_22%,rgba(111,151,121,.18),transparent_32%),linear-gradient(125deg,#07130f,#0a1b14_62%,#09130f)]" />
         <div className="relative mx-auto max-w-5xl">
           {!finished ? (

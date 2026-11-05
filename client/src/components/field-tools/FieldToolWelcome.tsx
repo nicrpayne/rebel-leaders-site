@@ -47,7 +47,7 @@ export default function FieldToolWelcome({
   const pdf = `/api/field-tools/${slug}/pdf?audience=${content.audience}`;
   return (
     <main className="ft-welcome">
-      <FieldToolsNav tone="light" />
+      <FieldToolsNav />
       <section className="ft-welcome-hero" aria-labelledby="welcome-title">
         <div className="ft-welcome-copy">
           <p className="ft-welcome-eyebrow">

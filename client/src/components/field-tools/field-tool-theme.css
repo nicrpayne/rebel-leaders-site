@@ -205,7 +205,7 @@
 .ft-theme .ft-welcome-hero {
   gap: 32px;
   max-width: 1320px;
-  padding: 114px 40px 32px;
+  padding: 40px 40px 32px;
   min-height: 610px;
 }
 .ft-theme .ft-welcome-copy {
@@ -224,7 +224,7 @@
 /* Labs: a quiet header, clear step markers and one work surface. */
 .ft-theme .ft-lab-header {
   background: var(--ft-paper);
-  padding-top: 120px;
+  padding-top: 46px;
   padding-bottom: 0;
 }
 .ft-theme .ft-lab-header h1 {
@@ -312,12 +312,12 @@
 .ft-theme .ft-guide > header p:first-child {
   color: var(--ft-accent);
 }
-.ft-theme .ft-guide nav a {
+.ft-theme .ft-guide nav[aria-label="Guide chapters"] a {
   border-left-width: 1px;
   border-radius: 0 8px 8px 0;
   box-shadow: none;
 }
-.ft-theme .ft-guide nav a[aria-current] {
+.ft-theme .ft-guide nav[aria-label="Guide chapters"] a[aria-current] {
   color: var(--ft-accent);
   border-color: var(--ft-accent);
   background: var(--ft-tint);
@@ -393,7 +393,7 @@
   box-shadow: none;
 }
 .ft-theme .ai-product-hero {
-  margin-top: 74px;
+  margin-top: 0;
   background: var(--ft-paper);
   color: var(--ft-ink);
 }
@@ -455,7 +455,7 @@
 }
 @media (max-width: 760px) {
   .ft-theme .ft-welcome-hero {
-    padding: 100px 22px 0;
+    padding: 26px 22px 0;
     gap: 24px;
     min-height: 0;
   }
@@ -469,7 +469,7 @@
     width: auto;
   }
   .ft-theme .ft-lab-header {
-    padding-top: 104px;
+    padding-top: 30px;
   }
   .ft-theme .ft-step-nav button {
     padding: 16px 0;

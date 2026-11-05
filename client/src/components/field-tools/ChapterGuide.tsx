@@ -83,7 +83,7 @@ export default function ChapterGuide({ slug }: { slug: string }) {
       <div className="print:hidden">
         <FieldToolsNav />
       </div>
-      <header className="bg-[var(--ft-paper)] px-5 pb-14 pt-32 text-[var(--ft-ink)] md:px-10 md:pb-20">
+      <header className="bg-[var(--ft-paper)] px-5 pb-14 pt-14 text-[var(--ft-ink)] md:px-10 md:pb-20">
         <div className="mx-auto max-w-6xl">
           <p className="font-ui text-[11px] tracking-[.2em] text-[var(--ft-accent)]">
             REBEL LEADERS / {tool.eyebrow} / THE FIELD GUIDE

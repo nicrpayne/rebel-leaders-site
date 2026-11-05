@@ -1218,7 +1218,7 @@ export default function FieldToolResources({
   return (
     <main className="min-h-screen bg-[var(--ft-paper)] text-[var(--ft-ink)]">
       <FieldToolsNav />
-      <header className="bg-[var(--ft-paper)] px-5 pb-12 pt-32 text-[var(--ft-ink)] md:px-10 md:pb-16">
+      <header className="bg-[var(--ft-paper)] px-5 pb-12 pt-14 text-[var(--ft-ink)] md:px-10 md:pb-16">
         <div className="mx-auto max-w-5xl">
           <p className="font-ui text-[11px] tracking-[.2em] text-[var(--ft-accent)]">
             REBEL LEADERS / HOLISTIC SHAPING

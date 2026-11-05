@@ -1,16 +1,13 @@
 import { Link, useLocation } from "wouter";
-import { Menu } from "lucide-react";
 import "./field-tools.css";
 import RebelLogo from "@/components/RebelLogo";
 import { fieldToolAccessPath } from "@/lib/field-tool-paths";
+import { getFieldTool } from "@/lib/field-tools";
 
-export default function FieldToolsNav({
-  tone = "dark",
-}: {
-  tone?: "dark" | "light";
-}) {
+export default function FieldToolsNav() {
   const [location] = useLocation();
   const myTool = fieldToolAccessPath(location);
+  const tool = getFieldTool(location.split("/")[2]);
   const inTool =
     /(?:\/access|\/guide|\/lab(?:\/(?:conversation|delivery))?|\/walkthrough|\/resources|\/shipping-sooner)$/.test(
       location
@@ -29,44 +26,40 @@ export default function FieldToolsNav({
         ],
         ["https://rebel-leader.com", "Rebel Leaders ↗"],
       ];
-  const items = links.map(([href, label]) =>
-    href.startsWith("https://") ? (
+  const items = links.map(([href, label]) => {
+    const active =
+      location === href ||
+      (href.endsWith("/lab") &&
+        (location.startsWith(`${href}/`) ||
+          location === href.replace(/\/lab$/, "/shipping-sooner")));
+    return href.startsWith("https://") ? (
       <a key={label} href={href}>
         {label}
       </a>
     ) : (
-      <Link key={label} href={href}>
+      <Link key={label} href={href} aria-current={active ? "page" : undefined}>
         {label}
       </Link>
-    )
-  );
+    );
+  });
   return (
-    <header className="ft-nav absolute inset-x-0 top-0 z-40 border-b border-[var(--ft-line)]">
-      <div className="ft-nav-inner">
-        <Link href="/field-tools" className="ft-nav-brand">
-          <RebelLogo size={28} className="text-[var(--ft-accent)]" />
-          <span className="font-display">Rebel Leaders</span>
+    <header className="ft-nav relative z-40 print:hidden">
+      <div className="ft-header-top">
+        <Link href="/field-tools" className="ft-header-brand">
+          <span className="ft-header-mark" aria-hidden="true">
+            <RebelLogo size={64} />
+          </span>
+          <span className="ft-header-wordmark">
+            REBEL LEADERS
+            <small>
+              FIELD TOOLS{tool ? ` / ${tool.name}` : " / THE COLLECTION"}
+            </small>
+          </span>
         </Link>
-        <nav aria-label="Field Tools" className="ft-nav-desktop">
-          {items}
-        </nav>
-        <details
-          key={location}
-          className="ft-nav-mobile"
-          onKeyDown={event => {
-            if (event.key === "Escape") {
-              event.currentTarget.open = false;
-              event.currentTarget.querySelector("summary")?.focus();
-            }
-          }}
-        >
-          <summary aria-label="Navigation menu">
-            <Menu size={21} aria-hidden="true" />
-            <span>Menu</span>
-          </summary>
-          <nav aria-label="Field Tools mobile">{items}</nav>
-        </details>
       </div>
+      <nav aria-label="Field Tools" className="ft-header-tabs">
+        {items}
+      </nav>
     </header>
   );
 }

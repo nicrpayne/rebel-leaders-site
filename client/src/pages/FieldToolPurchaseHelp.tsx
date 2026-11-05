@@ -6,7 +6,7 @@ export default function FieldToolPurchaseHelp() {
   return (
     <main className="min-h-screen bg-[var(--ft-paper)] text-[var(--ft-ink)]">
       <FieldToolsNav />
-      <article className="mx-auto max-w-3xl px-5 pb-20 pt-28 md:px-10">
+      <article className="mx-auto max-w-3xl px-5 pb-20 pt-10 md:px-10">
         <p className="font-ui text-xs tracking-[.18em] text-[var(--ft-muted)]">
           REBEL LEADERS / FIELD TOOLS
         </p>

@@ -139,42 +139,44 @@ export default function FieldToolGate({
       </ContentContext.Provider>
     );
   return (
-    <main className="min-h-screen bg-[var(--ft-paper)] px-5 pb-20 pt-32">
+    <>
       <FieldToolsNav />
-      {access.isPending || (allowed && content.isPending) ? (
-        <div
-          role="status"
-          aria-live="polite"
-          className="mx-auto max-w-4xl border border-[var(--ft-line)] bg-[var(--ft-tint)] p-8 text-[var(--ft-ink)]"
-        >
-          <p className="font-display text-3xl">Opening your Field Tool…</p>
-          <p className="mt-3 font-ui text-sm text-[var(--ft-muted)]">
-            Checking access and loading your Guide and Lab.
-          </p>
+      <main className="min-h-screen bg-[var(--ft-paper)] px-5 pb-20 pt-14">
+        {access.isPending || (allowed && content.isPending) ? (
           <div
-            aria-hidden="true"
-            className="mt-8 grid gap-5 md:grid-cols-[1fr_2fr]"
+            role="status"
+            aria-live="polite"
+            className="mx-auto max-w-4xl border border-[var(--ft-line)] bg-[var(--ft-tint)] p-8 text-[var(--ft-ink)]"
           >
-            <div className="h-28 bg-white/5" />
-            <div className="h-56 bg-white/10" />
+            <p className="font-display text-3xl">Opening your Field Tool…</p>
+            <p className="mt-3 font-ui text-sm text-[var(--ft-muted)]">
+              Checking access and loading your Guide and Lab.
+            </p>
+            <div
+              aria-hidden="true"
+              className="mt-8 grid gap-5 md:grid-cols-[1fr_2fr]"
+            >
+              <div className="h-28 bg-white/5" />
+              <div className="h-56 bg-white/10" />
+            </div>
           </div>
-        </div>
-      ) : access.error || content.error ? (
-        <div className="mx-auto max-w-xl text-[var(--ft-ink)]">
-          <p role="alert">We couldn’t open your tool. Please try again.</p>
-          <button
-            className="ft-button mt-5"
-            onClick={() => {
-              access.refetch();
-              content.refetch();
-            }}
-          >
-            Try again
-          </button>
-        </div>
-      ) : (
-        <FieldToolSignIn slug={slug} audience={audience} />
-      )}
-    </main>
+        ) : access.error || content.error ? (
+          <div className="mx-auto max-w-xl text-[var(--ft-ink)]">
+            <p role="alert">We couldn’t open your tool. Please try again.</p>
+            <button
+              className="ft-button mt-5"
+              onClick={() => {
+                access.refetch();
+                content.refetch();
+              }}
+            >
+              Try again
+            </button>
+          </div>
+        ) : (
+          <FieldToolSignIn slug={slug} audience={audience} />
+        )}
+      </main>
+    </>
   );
 }

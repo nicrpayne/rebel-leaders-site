@@ -25,44 +25,9 @@
 .ft-theme:has(.ft-review-notice) {
   padding-bottom: calc(48px + env(safe-area-inset-bottom));
 }
-.ft-theme .ft-nav-inner {
-  height: 74px;
-  max-width: 1440px;
-  margin: auto;
-  padding: 0 clamp(20px, 3vw, 40px);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-}
-.ft-theme .ft-nav-brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-shrink: 0;
-}
-.ft-theme .ft-nav-brand span {
-  font-size: 28px;
-  font-weight: 500;
-  letter-spacing: -0.02em;
-}
-.ft-theme .ft-nav-desktop {
-  display: flex;
-  align-items: center;
-  gap: clamp(20px, 3vw, 36px);
-  font-size: 14px;
-}
-.ft-theme .ft-nav-desktop a {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-}
-.ft-theme .ft-nav-mobile {
-  display: none;
-}
 /* The photograph now belongs to the hero, not the entire hero + facts bar. */
 .ft-theme .ft-hero {
-  padding-top: 74px;
+  padding-top: 0;
 }
 .ft-theme .ft-hero-inner {
   padding-top: 0;
@@ -215,7 +180,7 @@
 @media (max-width: 760px) {
   .ft-theme .ft-welcome-hero {
     grid-template-columns: minmax(0, 1fr);
-    padding: 100px 22px 0;
+    padding: 26px 22px 0;
   }
   .ft-theme .ft-welcome-copy {
     padding: 0;
@@ -251,51 +216,6 @@
   }
 }
 @media (max-width: 600px) {
-  .ft-theme .ft-nav-inner {
-    gap: 12px;
-    padding-inline: 20px;
-  }
-  .ft-theme .ft-nav-brand span {
-    font-size: 25px;
-  }
-  .ft-theme .ft-nav-brand svg {
-    width: 24px;
-  }
-  .ft-theme .ft-nav-desktop {
-    display: none;
-  }
-  .ft-theme .ft-nav-mobile {
-    display: block;
-  }
-  .ft-theme .ft-nav-mobile summary {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    min-height: 44px;
-    cursor: pointer;
-    list-style: none;
-    font-size: 13px;
-    color: var(--ft-accent);
-  }
-  .ft-theme .ft-nav-mobile summary::-webkit-details-marker {
-    display: none;
-  }
-  .ft-theme .ft-nav-mobile nav {
-    position: absolute;
-    top: 73px;
-    inset-inline: 0;
-    padding: 12px 20px 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    background: var(--ft-paper);
-    border-bottom: 1px solid var(--ft-line);
-  }
-  .ft-theme .ft-nav-mobile nav a {
-    padding: 12px 4px;
-    min-height: 46px;
-    font-size: 16px;
-  }
   .ft-theme .ft-headline {
     font-size: clamp(38px, 9vw, 50px);
     line-height: 1.06;
@@ -336,15 +256,6 @@
   }
 }
 @media (max-width: 380px) {
-  .ft-theme .ft-nav-inner {
-    padding-inline: 16px;
-  }
-  .ft-theme .ft-nav-brand {
-    gap: 6px;
-  }
-  .ft-theme .ft-nav-brand span {
-    font-size: 23px;
-  }
   .ft-theme .ft-actions > *,
   .ft-theme .ft-buy-actions > * {
     width: 100%;

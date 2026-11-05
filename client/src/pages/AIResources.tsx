@@ -38,7 +38,7 @@ export default function AIResources() {
   return (
     <main className="font-ui min-h-screen bg-[var(--ft-paper)] text-[var(--ft-ink)]">
       <FieldToolsNav />
-      <header className="bg-[var(--ft-paper)] px-6 pb-12 pt-28 text-[var(--ft-ink)]">
+      <header className="bg-[var(--ft-paper)] px-6 pb-12 pt-10 text-[var(--ft-ink)]">
         <div className="mx-auto max-w-6xl">
           <Link href={`${base}/access`} className="text-xs underline">
             ← Your Field Tool

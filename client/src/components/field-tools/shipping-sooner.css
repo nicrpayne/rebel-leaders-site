@@ -3,7 +3,7 @@
   background: var(--ft-paper);
   color: var(--ft-ink);
   font-family: var(--font-ui);
-  padding: 112px 28px 64px;
+  padding: 38px 28px 64px;
 }
 .shipping-shell {
   max-width: 1170px;
@@ -390,7 +390,7 @@
 }
 @media (max-width: 800px) {
   .shipping-sooner {
-    padding: 105px 20px 70px;
+    padding: 31px 20px 70px;
   }
   .shipping-workspace {
     grid-template-columns: 1fr;
