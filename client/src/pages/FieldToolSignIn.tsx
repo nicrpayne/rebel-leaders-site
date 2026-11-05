@@ -22,9 +22,10 @@ export default function FieldToolSignIn() {
       <FieldToolsNav />
       {token ? (
         <div className="mx-auto max-w-xl border border-[var(--ft-line)] bg-[var(--ft-tint)] p-8">
-          <h1 className="font-display text-4xl">Welcome back.</h1>
+          <h1 className="font-display text-4xl">You’re in the right place.</h1>
           <p className="mt-4 leading-7">
-            Confirm below to open your Field Tool on this device.
+            Your Guide and Lab are ready. Open your Field Tool below, then start
+            with what would help you today.
           </p>
           <button
             disabled={redeem.isPending}

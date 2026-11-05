@@ -8,6 +8,7 @@ import {
 } from "../shared/field-tool-gifts";
 import { fieldToolEntitlement } from "../shared/field-tool-entitlements";
 import { getDb } from "./db";
+import { fieldToolGiftEmail } from "./field-tool-email";
 
 export const giftTokenHash = (token: string) =>
   createHash("sha256").update(token).digest("hex");
@@ -67,49 +68,23 @@ const names: Record<string, string> = {
   "mandate-reset": "Mandate Reset",
   "when-the-team-goes-quiet": "When the Team Goes Quiet",
 };
-const escapeHtml = (value: string) =>
-  value.replace(
-    /[&<>"']/g,
-    char =>
-      ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#39;",
-      })[char]!
-  );
-
 export function giftNotification(
   gift: typeof fieldToolGifts.$inferSelect,
   appUrl: string
 ) {
   const name = names[gift.slug];
   if (!name) throw new Error("Unknown gift product.");
-  const path =
-    gift.slug === "ai-stalemate"
-      ? `${gift.slug}/${gift.audience === "lead-dev" ? "lead-dev" : "pm"}`
-      : gift.slug;
-  const accessUrl = new URL(`/field-tools/${path}/access`, appUrl).toString();
-  const greeting = gift.recipientName ? `Hi ${gift.recipientName},` : "Hello,";
-  const intro = `${gift.senderName} bought you ${name}, a Field Guide and interactive Lab from Rebel Leaders.`;
-  const instructions = `It's yours to use. Open your gift and enter ${gift.recipientEmail} to receive your own secure sign-in link. Bookmark the welcome page so you can return later. Each sign-in link expires after 15 minutes; your purchase access doesn't expire with it. You can request a fresh link whenever you need one. You don't need to pay or enter card details.`;
-  const privacy =
-    "Your Lab answers are yours. The person who bought this gift cannot see them unless you choose to share them.";
+  if (gift.audience !== "pm" && gift.audience !== "lead-dev")
+    throw new Error("Unknown gift edition.");
   return {
     to: gift.recipientEmail,
     subject: `A Field Tool for you: ${name}`,
-    text: [
-      greeting,
-      intro,
-      gift.message ? `A note from ${gift.senderName}:\n${gift.message}` : "",
-      instructions,
-      accessUrl,
-      privacy,
-    ]
-      .filter(Boolean)
-      .join("\n\n"),
-    html: `<div style="font-family:Arial;max-width:560px;line-height:1.7"><p>${escapeHtml(greeting)}</p><h1>A Field Tool for you.</h1><p>${escapeHtml(intro)}</p>${gift.message ? `<p>A note from ${escapeHtml(gift.senderName)}:</p><blockquote style="white-space:pre-wrap">${escapeHtml(gift.message)}</blockquote>` : ""}<p>${escapeHtml(instructions)}</p><p><a href="${escapeHtml(accessUrl)}">Open your gift</a></p><p>${escapeHtml(privacy)}</p></div>`,
+    ...fieldToolGiftEmail({
+      slug: gift.slug,
+      audience: gift.audience,
+      appUrl,
+      gift,
+    }),
   };
 }
 
@@ -140,6 +115,7 @@ export async function notifyGiftRecipient(orderId: string) {
         from:
           process.env.FIELD_TOOL_EMAIL_FROM ??
           "Rebel Leaders <hello@rebel-leader.com>",
+        replyTo: "hello@rebel-leader.com",
         ...giftNotification(gift, process.env.APP_URL),
       },
       {

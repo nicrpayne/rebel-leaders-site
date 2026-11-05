@@ -84,8 +84,7 @@ export default function AiStalemateLab({ audience }: { audience: Audience }) {
         </section>
         <p className="ai-lab-saving">
           Your drafts save in this browser. Copy or download what you want to
-          discuss or take to another device. Your earlier Lab work and delivery
-          tools are still available in their respective paths.
+          discuss or take to another device.
         </p>
         <Link className="ai-lab-home" href={`${base}/access`}>
           Back to your welcome page

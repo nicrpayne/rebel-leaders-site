@@ -1,5 +1,6 @@
 import "dotenv/config";
 import { registerFieldToolCommerce } from "../field-tool-commerce";
+import { fieldToolPreviewGate } from "../field-tool-preview-gate";
 import express from "express";
 import { createServer } from "http";
 import net from "net";
@@ -208,6 +209,7 @@ async function startServer() {
   await runMigrations();
   const app = express();
   app.set("trust proxy", 1);
+  app.use(fieldToolPreviewGate());
   app.get("/", (req, res, next) => {
     const destination = fieldToolsRootRedirect(req.hostname, req.originalUrl);
     if (destination) return res.redirect(302, destination);

@@ -1,6 +1,6 @@
 # AI Stalemate launch checklist
 
-Updated 3 November 2026. Launch scope: PM and Lead Developer editions, sold separately for $47 each. Keep the approved design, portraits, and Guides.
+Updated 5 November 2026. See dated notes for the latest status; older entries are historical. Launch scope: PM and Lead Developer editions, sold separately for $47 each. Keep the approved design, portraits, and Guides.
 
 ## 1. Protect private work — Codex
 - [x] Stop analytics and session replay when entering any Field Tool from another page, including Back/Forward navigation.
@@ -93,13 +93,14 @@ Refund research: Lemon Squeezy lets sellers choose their policy; comparable digi
 - [x] Observe a used/expired sign-in link fail, then successfully request and use a fresh link.
 - [ ] Complete duplicate/delayed-event state verification and provider email-failure/retry verification. The original PM paid event was replayed after refund and returned HTTP 200; automated stale-event protection passes, but a fresh PM identity check is still needed before calling that replay fully verified.
 - [x] Complete a real provider test-mode gift purchase (`4961813`), recipient notification, recipient sign-in and Lab access, then full refund and verified recipient access revocation. The test buyer and recipient use different email aliases.
-- [ ] Finish gift buyer-denial and duplicate-notification checks; apply the branded email treatment to the initial gift notification, which remains plain.
+- [x] Apply the approved branded email treatment and warm voice to initial gift notifications as well as access emails.
+- [ ] Finish actual-provider gift buyer-denial and duplicate-notification checks (automated coverage passes).
 - [x] Nic confirms an incoming support test message arrives (27 October).
 - [ ] Confirm Nic can reply to a support message and the sender receives the response.
 
 ## 6. Prepare and release — Codex, then Nic's production approval
 - [x] Confirm `tools.rebel-leader.com` as the customer domain. Cloudflare CNAME and ownership TXT were added; Railway verified ownership and issued a valid HTTPS certificate on 3 November. It points to the protected reviewer service and existing reviewer database.
-- [ ] At public release, rebuild both PDFs with final `https://tools.rebel-leader.com` links and remove Working Edition. Keep preview PDFs pointing to working preview routes until release. Replace the private reviewer receipt/confirmation URLs when creating the public products.
+- [x] Rebuild both AI PDFs with final `https://tools.rebel-leader.com` links and remove Working Edition. Update both hidden live products’ receipt/confirmation URLs to their canonical welcome pages (4–5 November).
 - [ ] Check final public purchase/refund/support copy and production access controls.
 - [ ] Close or protect the open content-review preview as part of release, while preserving Nic's review access until then.
 - [ ] Run build and relevant checks, review the release diff, and obtain Nic's final production go-ahead before merging main/enabling live checkout.

@@ -45,23 +45,23 @@ const welcome: Record<string, WelcomeCopy> = {
     ],
   },
   "ai-stalemate/pm": {
-    heading: "Let’s put your AI idea into words.",
+    heading: "Let’s get your AI conversation moving.",
     intro:
-      "Bring the conversation you’re already having. Share why change matters, hear what your lead is concerned about, and choose something useful to learn together.",
+      "You see a way AI could help. Your lead sees work or risks that need attention. Prepare that conversation, or follow one piece of work to see what else is slowing delivery.",
     outcomes: [
-      "Describe what you hope AI could help with",
-      "Understand your lead’s concerns",
-      "Prepare a next step to discuss with your lead",
+      "Explain the improvement you’re hoping for and hear your lead’s concerns",
+      "Look beyond coding to find where work gets stuck",
+      "Take a clearer question or next step back to your lead",
     ],
   },
   "ai-stalemate/lead-dev": {
-    heading: "Let’s get clear on your position.",
+    heading: "Let’s work through what’s being asked.",
     intro:
-      "Bring the request to change how your team builds and ships. Understand what your PM needs, explain the engineering concerns, and prepare a recommendation you can stand behind.",
+      "Your PM wants the team to build and ship differently. Put the engineering concerns into words, or follow one piece of work to see where time is being lost. Start with what would help you today.",
     outcomes: [
-      "Understand what your PM hopes to improve",
-      "Explain the security, access, and team-readiness concerns",
-      "Prepare your recommendation and the next conversation",
+      "Explain what security, access, and team readiness mean for this request",
+      "Find what else is holding delivery up, even if coding gets faster",
+      "Prepare a question or recommendation to discuss with your PM",
     ],
   },
 };

@@ -95,6 +95,33 @@
   background: #366046;
   transform: translateY(-2px);
 }
+.ft-welcome-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px 28px;
+  margin-top: 32px;
+}
+.ft-welcome-actions .ft-welcome-primary {
+  margin-top: 0;
+}
+.ft-welcome-guide-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  color: var(--ft-accent);
+  font-size: 15px;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+.ft-welcome .ft-welcome-start-note {
+  margin: 18px 0 0;
+  max-width: 540px;
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--ft-muted);
+}
 .ft-welcome a:focus-visible,
 .ft-welcome button:focus-visible,
 .ft-welcome summary:focus-visible {

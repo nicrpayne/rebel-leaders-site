@@ -251,20 +251,23 @@ export async function requestBuyerLink(
   url.searchParams.set("slug", slug);
   url.searchParams.set("audience", audience);
   url.hash = "token=" + token;
-  const result = await new Resend(process.env.RESEND_API_KEY).emails.send({
-    from:
-      process.env.FIELD_TOOL_EMAIL_FROM ??
-      "Rebel Leaders <hello@rebel-leader.com>",
-    to: email,
-    subject: "Open your Rebel Leaders Field Tool",
-    ...fieldToolAccessEmail({
-      slug,
-      audience,
-      appUrl,
-      signInUrl: url.toString(),
-    }),
-  });
-  if (result.error) {
+  try {
+    const result = await new Resend(process.env.RESEND_API_KEY).emails.send({
+      from:
+        process.env.FIELD_TOOL_EMAIL_FROM ??
+        "Rebel Leaders <hello@rebel-leader.com>",
+      to: email,
+      replyTo: "hello@rebel-leader.com",
+      subject: "Open your Rebel Leaders Field Tool",
+      ...fieldToolAccessEmail({
+        slug,
+        audience,
+        appUrl,
+        signInUrl: url.toString(),
+      }),
+    });
+    if (result.error) throw new Error("Email provider rejected delivery");
+  } catch {
     await db
       .delete(fieldToolAccessTokens)
       .where(eq(fieldToolAccessTokens.tokenHash, hashToken(token)));

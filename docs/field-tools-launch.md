@@ -1,5 +1,35 @@
 # Field Tools preview and launch
 
+## 4–5 November 2026 — buyer welcome and release preparation
+
+- Welcome pages now describe both Lab paths, retain Nic’s smiling “Glad you’re here” portrait, and offer Open my Lab plus Read the Guide with more space around the actions.
+- Sign-in, access emails, gift notifications, purchase confirmations and receipt notes use the same warm, personal voice. Both Resend messages explicitly direct replies to hello@rebel-leader.com. The email layout keeps the transparent wordmark and live heading that Nic approved.
+- Saved and reloaded the live hidden PM (1499373) and Lead Developer (1499367) confirmation/receipt settings in Lemon Squeezy. Both buttons point to their edition’s canonical tools.rebel-leader.com welcome page. Prices and storefront visibility were not changed.
+- Rebuilt both 21-page AI PDFs with canonical customer links and removed the Working Edition cover label. All 42 pages were rendered and visually checked. Existing section reading estimates (1–2 minutes; 5–10 minutes for preparation notes) remain in place.
+- Added a server-side private-preview gate, before content/API/static routes, with no-store and noindex responses. A private credential is stored outside Git; only its hash is configured in Railway. Buyer sites retain their existing purchase-based access.
+- Removed the public domain from the obsolete October proposal service; its code, branch and service are preserved.
+- Added cleanup for both rejected and thrown email-provider failures, allowing a fresh link on retry. 68 focused commerce, entitlement, gift, privacy, domain, email and preview-boundary checks pass; TypeScript and the production build pass.
+- Deployment and actual-provider follow-up results are recorded separately below. Tax completion, separate-device confirmation and the support reply check remain Nic’s checks. Public launch/merge approval is still separate.
+
+## 4 November 2026 — email and public analytics setup
+
+This dated section records the current email/analytics work; the older launch and review notes below are historical, not a claim that all launch checks are complete.
+
+- Public analytics dashboard: https://us.posthog.com/project/380901/dashboard/2305716 (requires Nic's PostHog account).
+- Newsletter subscribers: https://leaderrebellion.substack.com/publish/subscribers. Substack remains the single newsletter list.
+- Main-site signup placements: Home, The Map/Manifesto, Start Here, and the shared footer. They use the same official Substack embed, opened on request. Field Tools welcome pages also offer an optional signup; purchase and gift emails are not automatically enrolled or passed into the embed.
+- The main site's About page and shared footer link to Field Tools. Workbench listings were not added.
+- Email confirmation is required. One authorized test signup was submitted, confirmed by email, appeared as a Free subscriber, and received the new welcome email. The test alias remains subscribed. No broadcast was sent.
+- Welcome subject: “Welcome to Rebel Leaders. Glad you're here.” It introduces essays, videos, occasional Field Tools notes, the Culture Problem article, and the Field Tools catalogue. Purchase access emails remain separate.
+
+The dashboard contains public page loads, edition interest, selected button clicks, broad referral sources, viewport-size categories, and approximate active seconds per page load. Reading time is visible/active time with an idle cutoff, not exact attention. Clicks are not purchases; Lemon Squeezy is the sales source of truth. Substack is the confirmed-subscriber source of truth. These new Field Tools events start on 4 November; historical traffic is not backfilled. Blocking software and privacy preferences can reduce recorded traffic.
+
+The Field Tools SDK is restricted to the catalogue, AI edition sales pages, and purchase pages on tools.rebel-leader.com. Private Guides, Labs, sign-in and access pages are excluded, as are preview/test hosts. It uses cookieless capture, no person profiles, no session replay or automatic field capture, canonical URLs without query strings, and an explicit property allowlist. Do Not Track and Global Privacy Control are honored. PostHog receives the raw browser user agent transiently for its cookieless hash; it is not retained as a raw event property. PostHog may derive anonymous hash/session metadata server-side.
+
+Verification: live browser navigation generated `field_tools_page_viewed`, `field_tools_action` (example, edition, Buy), and `field_tools_engagement`. QA mode (`?analytics_test=1`) stays active across same-document navigation, and all six dashboard insights exclude `is_test=true`; the exclusion was confirmed against ingested test visits. The latest deployed Field Tools commit is d7916e3 (Railway deployment 392aed86-9a7d-4209-aabe-4cce590a1f32, SUCCESS). Main-site signup/link changes are ce2ebcd. TypeScript, production build, and targeted analytics checks passed; the final hashing fix passed TypeScript and all seven public analytics tests, followed by the successful Railway build.
+
+Check the dashboard weekly once real visits accumulate: which edition gets interest, which example steps people use, whether Buy clicks follow, and whether mobile visitors engage differently. Avoid interpreting tiny sample sizes as a verdict on the offer. For changes, compare one meaningful revision at a time.
+
 The main review preview contains six separately purchasable $47 Field Tools across five situations. AI Stalemate / Product Manager and AI Stalemate / Lead Developer are separate expanded editions. Deadline Reset, Priority Whiplash, Mandate Reset, and When the Team Goes Quiet complete the catalog.
 
 ## Review routes
@@ -28,7 +58,7 @@ See `field-tools-editions-responsive.md` for the current responsive matrix, PDF 
 
 Nic authorized publishing code/assets to `nicrpayne/rebel-leaders-site` on 11 October 2026. Keep these changes on `field-tools-launch` and PR #3. The expanded proposal has now been selected and incorporated into the main review preview. Do not merge to production `main` until Nic approves.
 
-PDF sources live in `server/field-tool-content`. Rebuild each base AI PDF with `scripts/build-ai-stalemate-guide.py pm` or `lead-dev`, then append the teaching resource pages once with `scripts/append-teaching-resources.py`. Set `GUIDE_APP_URL` to the intended deployment origin. Checked-in review PDFs use the main preview origin.
+PDF sources live in `server/field-tool-content`. Rebuild each base AI PDF with `scripts/build-ai-stalemate-guide.py pm` or `lead-dev`, then append the teaching resource pages once with `scripts/append-teaching-resources.py`. Set `GUIDE_APP_URL` to the intended deployment origin. The checked-in AI Stalemate PDFs now use https://tools.rebel-leader.com (4 November); other unfinished products remain review drafts.
 
 When the Team Goes Quiet replaces the unpublished Translator concept. It has its own slug, draft storage and checkout configuration: `FIELD_TOOL_WHEN_THE_TEAM_GOES_QUIET_CHECKOUT_URL`. Before live launch, configure its Lemon Squeezy variant under `when-the-team-goes-quiet` in `LEMONSQUEEZY_VARIANT_MAP`; do not reuse a Translator checkout link. Existing Translator page links redirect to the new product. The original draft files and PDF remain in Git history.
 

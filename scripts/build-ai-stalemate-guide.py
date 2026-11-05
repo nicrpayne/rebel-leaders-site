@@ -24,7 +24,7 @@ AUDIENCE = sys.argv[1] if len(sys.argv)>1 else "pm"
 assert AUDIENCE in ("pm", "lead-dev")
 ROLE = "PRODUCT MANAGER" if AUDIENCE == "pm" else "LEAD DEVELOPER"
 DEST = ROOT / f"private/field-tools/ai-stalemate-{AUDIENCE}-field-guide.pdf"
-BASE_URL = os.environ.get("GUIDE_APP_URL", "https://rebel-leaders-field-tools-preview-production.up.railway.app")
+BASE_URL = os.environ.get("GUIDE_APP_URL", "https://tools.rebel-leader.com")
 LAB_URL = f"{BASE_URL}/field-tools/ai-stalemate/{AUDIENCE}/lab"
 CONTENT = json.loads(subprocess.check_output([
     "node", "--experimental-strip-types", "--input-type=module", "-e",
@@ -112,7 +112,7 @@ def cover(c):
     c.setFont("GuideSans",7)
     c.drawString(M,58,"Reading times are approximate. Allow longer for notes and conversations.")
     c.setFont("GuideSans",8)
-    c.drawString(M,39,"WORKING EDITION / REBEL-LEADER.COM");c.showPage()
+    c.drawString(M,39,"REBEL LEADERS / REBEL-LEADER.COM");c.showPage()
 
 def chapter(c, data, number):
     c.setFillColor(CREAM)

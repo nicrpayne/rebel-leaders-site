@@ -313,11 +313,12 @@ describe("gift delivery", () => {
       "https://example.com"
     );
     expect(mail.html).not.toContain("<script>");
-    expect(mail.html).not.toContain("<img");
+    expect(mail.html).not.toContain('<img src=x onerror="bad">');
+    expect(mail.html).toContain("&lt;img src=x onerror=&quot;bad&quot;&gt;");
     expect(mail.html).toContain("&lt;script&gt;");
     expect(mail.text).toContain("/field-tools/ai-stalemate/lead-dev/access");
     expect(mail.html).not.toContain("token=");
     expect(mail.html).not.toContain(payment.email);
-    expect(mail.text).toContain("don't need to pay");
+    expect(mail.text).toContain("don’t need to pay");
   });
 });

@@ -124,7 +124,51 @@ describe("separately purchased AI editions", () => {
     expect(insert).not.toHaveBeenCalled();
     expect(mocks.send).not.toHaveBeenCalled();
   });
-  it.each(["tools.rebel-leader.com", "field-tools-reviewers-production.up.railway.app"])(
+  it.each(["rejected", "thrown"])(
+    "cleans up a %s email delivery and allows a new link on retry",
+    async failure => {
+      const insert = buyer(["ai-stalemate/lead-dev"]);
+      insert.mockReturnValue({ values: vi.fn().mockResolvedValue(undefined) });
+      const db = await mocks.getDb();
+      const removeToken = vi.fn().mockResolvedValue(undefined);
+      db.delete = vi.fn().mockReturnValue({ where: removeToken });
+      vi.stubEnv("RESEND_API_KEY", "test-key");
+      vi.stubEnv("APP_URL", "https://tools.example.com");
+      if (failure === "rejected")
+        mocks.send.mockResolvedValueOnce({
+          error: { message: "provider unavailable" },
+        });
+      else mocks.send.mockRejectedValueOnce(new Error("network unavailable"));
+      await expect(
+        requestBuyerLink(
+          `${failure}@example.com`,
+          "ai-stalemate",
+          `retry-${failure}`,
+          "lead-dev"
+        )
+      ).rejects.toThrow("Please try again");
+      expect(removeToken).toHaveBeenCalledOnce();
+      mocks.send.mockResolvedValueOnce({
+        data: { id: "delivered" },
+        error: null,
+      });
+      await requestBuyerLink(
+        `${failure}@example.com`,
+        "ai-stalemate",
+        `retry-${failure}`,
+        "lead-dev"
+      );
+      expect(mocks.send).toHaveBeenCalledTimes(2);
+      expect(mocks.send.mock.calls[1][0].replyTo).toBe(
+        "hello@rebel-leader.com"
+      );
+      expect(removeToken).toHaveBeenCalledOnce();
+    }
+  );
+  it.each([
+    "tools.rebel-leader.com",
+    "field-tools-reviewers-production.up.railway.app",
+  ])(
     "emails the sign-in and bookmark links for the trusted requesting host %s",
     async hostname => {
       const insert = buyer(["ai-stalemate/lead-dev"]);
@@ -132,16 +176,27 @@ describe("separately purchased AI editions", () => {
       mocks.send.mockResolvedValue({ data: { id: "test" }, error: null });
       vi.stubEnv("RESEND_API_KEY", "test-key");
       vi.stubEnv("APP_URL", "https://tools.rebel-leader.com");
-      vi.stubEnv("FIELD_TOOL_LEGACY_ORIGINS", "https://field-tools-reviewers-production.up.railway.app");
+      vi.stubEnv(
+        "FIELD_TOOL_LEGACY_ORIGINS",
+        "https://field-tools-reviewers-production.up.railway.app"
+      );
       const client = fieldToolsRouter.createCaller({
         req: { ...req, hostname } as any,
         res: { setHeader: vi.fn() } as any,
         user: null,
       });
-      await client.requestAccess({ email: "migration@example.com", slug: "ai-stalemate", audience: "lead-dev" });
+      await client.requestAccess({
+        email: "migration@example.com",
+        slug: "ai-stalemate",
+        audience: "lead-dev",
+      });
       const message = mocks.send.mock.calls[0][0];
-      expect(message.text).toContain(`https://${hostname}/field-tools/sign-in?slug=ai-stalemate&audience=lead-dev#token=`);
-      expect(message.text).toContain(`https://${hostname}/field-tools/ai-stalemate/lead-dev/access`);
+      expect(message.text).toContain(
+        `https://${hostname}/field-tools/sign-in?slug=ai-stalemate&audience=lead-dev#token=`
+      );
+      expect(message.text).toContain(
+        `https://${hostname}/field-tools/ai-stalemate/lead-dev/access`
+      );
     }
   );
   it("uses the paid variant rather than a custom audience to choose access", () => {

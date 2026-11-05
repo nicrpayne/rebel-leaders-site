@@ -2,7 +2,7 @@
 
 Call once after rebuilding the source PDF. It never edits the source teaching data.
 """
-import json, os
+import json, os, sys
 from pathlib import Path
 from io import BytesIO
 from xml.sax.saxutils import escape
@@ -20,7 +20,7 @@ from guide_layout import reading_label
 
 ROOT=Path(__file__).resolve().parents[1]
 DATA=json.loads((ROOT/'shared/field-tool-teachings.json').read_text())
-BASE=os.environ.get('GUIDE_APP_URL','https://rebel-leaders-field-tools-preview-production.up.railway.app')
+BASE=os.environ.get('GUIDE_APP_URL','https://tools.rebel-leader.com')
 FONT=Path(os.environ.get('GUIDE_FONT_DIR',str(ROOT/'scripts/fonts')))
 for name,file in [('ReadSans','GuideSans.ttf'),('ReadBold','GuideBold.ttf'),('ReadSerif','GuideSerif.ttf')]:
  pdfmetrics.registerFont(TTFont(name,str(FONT/file)))
@@ -64,7 +64,9 @@ def append(path,slug):
  with path.open('wb') as output:writer.write(output)
  print(path.name,total,'pages',len(notes),'teaching notes')
 if __name__=='__main__':
- for path in sorted((ROOT/'private/field-tools').glob('*-field-guide.pdf')):
+ # Pass specific freshly rebuilt files to avoid appending to unrelated Guides.
+ paths=[Path(p) for p in sys.argv[1:]] if len(sys.argv)>1 else sorted((ROOT/'private/field-tools').glob('*-field-guide.pdf'))
+ for path in paths:
   slug=path.name.removesuffix('-field-guide.pdf')
   if slug.startswith('ai-stalemate-'):slug='ai-stalemate'
   if any(n['slug']==slug for n in DATA['notes']):append(path,slug)

@@ -58,14 +58,21 @@ export default function FieldToolWelcome({
           </p>
           <h1 id="welcome-title">{copy.heading}</h1>
           <p className="ft-welcome-intro">{copy.intro}</p>
-          <Link href={`${base}/lab`} className="ft-welcome-primary">
-            Open my Lab <ArrowRight size={18} aria-hidden="true" />
-          </Link>
+          <div className="ft-welcome-actions">
+            <Link href={`${base}/lab`} className="ft-welcome-primary">
+              Open my Lab <ArrowRight size={18} aria-hidden="true" />
+            </Link>
+            {slug === "ai-stalemate" && (
+              <Link href={`${base}/guide`} className="ft-welcome-guide-link">
+                Read the Guide <ArrowRight size={16} aria-hidden="true" />
+              </Link>
+            )}
+          </div>
           {slug === "ai-stalemate" && (
-            <p className="mt-4 font-ui text-xs leading-6 text-[var(--ft-muted)]">
-              Choose conversation preparation or explore where delivery gets
-              stuck. You can use either Lab path without reading the whole Guide
-              first.
+            <p className="ft-welcome-start-note">
+              The Lab has two starting points: prepare a conversation or explore
+              where work gets stuck. You can use either without reading the
+              whole Guide first.
             </p>
           )}
         </div>
@@ -191,11 +198,17 @@ export default function FieldToolWelcome({
           </div>
         </section>
 
-        <aside className="my-10 max-w-2xl rounded-2xl border border-[var(--ft-line)] bg-[var(--ft-tint)] p-6 md:p-8" aria-label="Optional newsletter">
-          <h2 className="mb-3 font-display text-3xl text-[var(--ft-ink)]">Stay in the conversation.</h2>
+        <aside
+          className="my-10 max-w-2xl rounded-2xl border border-[var(--ft-line)] bg-[var(--ft-tint)] p-6 md:p-8"
+          aria-label="Optional newsletter"
+        >
+          <h2 className="mb-3 font-display text-3xl text-[var(--ft-ink)]">
+            Stay in the conversation.
+          </h2>
           <p className="mb-5 font-ui text-sm leading-7 text-[var(--ft-muted)]">
-            I write about the work, the people doing it, and who we become along the way.
-            If you’d like those notes, join me on Substack. This is separate from your purchase.
+            I write about the work, the people doing it, and who we become along
+            the way. If you’d like those notes, join me on Substack. This is
+            separate from your purchase.
           </p>
           <SubstackSignup variant="field-tool" />
         </aside>

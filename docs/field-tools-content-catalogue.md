@@ -174,3 +174,17 @@ After a reviewer tries a real situation, ask what question or action they left w
 - Rebuild share-art canvases with `node --import tsx scripts/build-field-tool-share-art.ts dist/public/share-art`, serve locally, and capture each 1200 × 630 canvas as the matching PNG. Check text and portrait crops before publishing.
 
 Append new ideas with the next FT number and update their status here when recorded, reviewed, or published. Keep the scripts above as the current versions; put alternate takes under the same entry rather than duplicating the queue.
+
+## Next workflow: one source, several useful pieces (4 November 2026)
+
+Nic wants a repeatable way to turn a video or article into Substack Notes, emails, social posts, and shorts. This is a proposed workflow to pilot, not an enabled automation or publishing schedule. Keep Substack as the single newsletter list.
+
+Each source gets one permanent folder and an ID, with `01-source`, `02-transcript-and-brief`, `03-drafts`, `04-approved`, and `05-published` inside. Keep originals unchanged. A small tracker records source version, audience, central point, draft status, destination, published URL/date, and results. Moving or renaming files alone should not trigger duplicate generation or publication.
+
+Start with one article or video and generate only the formats it supports: perhaps three distinct Notes, one email, one LinkedIn post, and two or three short-video candidates. Video candidates need exact source timestamps, an opening, enough context to stand alone, captions, and an ending. An article can yield a new script to record, but it cannot supply nonexistent video footage. If the original article is already being emailed through Substack, do not create a redundant second email by default.
+
+Before drafting, extract the intended audience, the central claim, supporting examples, necessary qualifications, and a useful next step. Preserve Nic's conversational language. Notes can pose a question, tell a small story, or make an observation; they should not all be teasers. Shorts should carry a complete thought, not just an isolated provocative line. Keep source references so claims and edits can be checked.
+
+Pilot with human approval and manual publishing. Review what Nic rewrites, then refine the voice rules before scaling. Later, a hosted workflow could watch an intake folder, transcribe, create the brief and drafts, and update the tracker. Use content IDs/version checks and explicit statuses to avoid duplicates; handle failures visibly. Verify each destination's current supported publishing integration before enabling it. Do not assume Substack Notes or email publishing has a supported public API.
+
+Possible building blocks to evaluate after the pilot: Google Drive folders plus n8n for orchestration, and Descript for transcript-based clip selection/editing. No new paid subscriptions or accounts have been created. Reference capabilities: https://github.com/n8n-io/n8n/blob/master/packages/nodes-base/nodes/Google/Drive/GoogleDriveTrigger.node.ts and https://www.descript.com/clips.
