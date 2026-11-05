@@ -17,7 +17,7 @@ export const AI_PRODUCT_INVENTORY = [
   {
     title: "Prepare your conversation",
     detail:
-      "Put the opportunity into words, hear your lead’s concerns, and prepare what you want to ask and propose.",
+      "Clarify your thoughts, put the opportunity into words, listen to your team’s concerns, and prepare what you want to ask and propose.",
     destination: "lab/conversation",
   },
   {
