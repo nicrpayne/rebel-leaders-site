@@ -60,7 +60,6 @@ export default function DeliveryExample() {
           <span>
             <MessageSquare size={18} aria-hidden="true" /> #product-team
           </span>
-          <span className="ft-example-chat-fiction">Fictional exchange</span>
         </div>
         <p className="ft-example-chat-day">Thursday morning</p>
         <ol className="ft-example-messages">
