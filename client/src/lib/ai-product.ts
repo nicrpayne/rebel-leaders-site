@@ -23,7 +23,7 @@ export const AI_PRODUCT_INVENTORY = [
   {
     title: "Find where work gets stuck",
     detail:
-      "Follow one piece of work beyond the coding. Explore what holds it up and leave with a question to check, a conversation to have, or a small change to try.",
+      "Follow one piece of work beyond the coding. Explore what holds it up and leave with a conversation to have, or a small change to try.",
     destination: "lab/delivery",
   },
 ] as const;
