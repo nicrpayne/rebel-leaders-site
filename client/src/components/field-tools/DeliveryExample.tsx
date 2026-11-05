@@ -54,92 +54,36 @@ export default function DeliveryExample() {
         <img
           className="ft-example-phone"
           src="/assets/field-tools/ai-stalemate-slack-phone.jpg"
-          alt="Maya and Alex discuss a delayed renewal reminder in a Slack channel on a phone. The full conversation is available below."
+          alt="A team Slack conversation on a phone."
           width={1254}
           height={1254}
           loading="lazy"
           decoding="async"
         />
-        <details className="ft-example-transcript">
-          <summary>Read the conversation</summary>
-          <p className="ft-example-chat-day">
-            #product-team · Thursday morning
-          </p>
-          <ol className="ft-example-messages">
+        <div className="sr-only">
+          <p>#product-team · Thursday morning</p>
+          <ol>
             <li>
-              <span className="ft-example-avatar" aria-hidden="true">
-                M
-              </span>
-              <div>
-                <p className="ft-example-message-byline">
-                  <strong>Maya</strong>
-                  <span>PM</span>
-                  <span>9:14 AM</span>
-                </p>
-                <p>
-                  Support asked about the renewal reminder again. Are we close?
-                </p>
-              </div>
+              Maya, PM, 9:14 AM: Support asked about the renewal reminder again.
+              Are we close?
             </li>
             <li>
-              <span
-                className="ft-example-avatar ft-example-avatar-dev"
-                aria-hidden="true"
-              >
-                A
-              </span>
-              <div>
-                <p className="ft-example-message-byline">
-                  <strong>Alex</strong>
-                  <span>Developer</span>
-                  <span>9:16 AM</span>
-                </p>
-                <p>
-                  The code’s been ready since Tuesday. Still waiting on a
-                  review.
-                </p>
-              </div>
+              Alex, Developer, 9:16 AM: The code’s been ready since Tuesday.
+              Still waiting on a review.
             </li>
-            <li>
-              <span className="ft-example-avatar" aria-hidden="true">
-                M
-              </span>
-              <div>
-                <p className="ft-example-message-byline">
-                  <strong>Maya</strong>
-                  <span>PM</span>
-                  <span>9:17 AM</span>
-                </p>
-                <p>Can we just get reviews done faster?</p>
-              </div>
-            </li>
-            <li>
-              <span
-                className="ft-example-avatar ft-example-avatar-dev"
-                aria-hidden="true"
-              >
-                A
-              </span>
-              <div>
-                <p className="ft-example-message-byline">
-                  <strong>Alex</strong>
-                  <span>Developer</span>
-                  <span>9:18 AM</span>
-                </p>
-                <p>...</p>
-              </div>
-            </li>
+            <li>Maya, PM, 9:17 AM: Can we just get reviews done faster?</li>
+            <li>Alex, Developer, 9:18 AM: ...</li>
           </ol>
-        </details>
+        </div>
       </div>
       <div className="ft-example-intro">
         <p className="ft-collection-eyebrow">A short example · fictional</p>
         <h2 id="delivery-example-title">
-          Can we just get reviews done faster?
+          “Can we just get reviews done faster?”
         </h2>
         <p>
-          Follow one piece of work. Look at what happened, ask what kept it
-          stuck, then prepare something you can discuss.
+          Follow one piece of work. Look at what happened, ask the right
+          questions, then get clear on next steps.
         </p>
       </div>
       <div className="ft-example-preview">

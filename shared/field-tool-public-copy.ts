@@ -15,6 +15,6 @@ export const AI_STALEMATE_PUBLIC_COPY = {
   "lead-dev": {
     headline: "My PM won’t shut up about AI.",
     promise:
-      "They want the team to ship sooner. You have questions about what that will take. Work through the engineering concerns, find what’s holding delivery up, and prepare a recommendation for your PM.",
+      "Everyone wants the team to ship sooner. You know there’s more to it than faster coding. Work through the engineering concerns, find what’s holding delivery up, and prepare clear next steps to discuss with your PM.",
   },
 };

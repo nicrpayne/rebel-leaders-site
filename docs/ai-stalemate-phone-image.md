@@ -2,7 +2,7 @@
 
 The shared delivery example on the Field Tools collection and both AI Stalemate sales pages now uses a generated photograph of the upper portion of a phone displaying a Slack-style channel conversation. The original heading, “Can we just get reviews done faster?”, is restored. The existing three-step walkthrough copy is unchanged.
 
-The exchange retains Maya's question, Alex's explanation, Maya's request for faster reviews, and Alex's final `...`. One visible fictional label remains. An expandable HTML transcript makes the text available at normal reading sizes, including on mobile. The shorter contents introduction was already present: “Bring one real situation. Start with what’s helpful today.”
+The exchange retains Maya's question, Alex's explanation, Maya's request for faster reviews, and Alex's final `...`. One visible fictional label remains. The four-message HTML transcript remains available to screen readers. Following Nic’s visual review, the visible “Read the conversation” control is removed and quotation marks surround the example heading. The shorter contents introduction was already present: “Bring one real situation. Start with what’s helpful today.”
 
 - Generation: built-in image generation tool.
 - Original: `assets/source-originals/ai-stalemate-slack-phone.png` (1254 × 1254).
@@ -12,7 +12,7 @@ The exchange retains Maya's question, Alex's explanation, Maya's request for fas
 
 ## Validation
 
-TypeScript and the production build pass. Local browser checks cover the PM page at desktop and phone widths, the Lead Developer phone page, the readable four-message transcript, the restored heading, and the existing What to try control. Deployment verification is recorded after publication. The broader checkout, email, gifting, newsletter, and owner acceptance checklist is not re-certified by this image change.
+The initial image release (`b2b2029`) passed TypeScript, the production build, and 18 focused tests. Browser checks covered widths from 320 to 1440 pixels, both editions, the collection, the four-message transcript, the restored heading, and the existing What to try control. Railway deployment `0f35869b-9483-42b9-bfd3-5194a218368b` succeeded; all three live placements were verified. Local proof screenshots and verification data are in `work/phone-example/`. The broader checkout, email, gifting, newsletter, and owner acceptance checklist is not re-certified by this image change.
 
 ## Generation prompt
 
@@ -32,3 +32,9 @@ Alex  9:18 AM
 ...
 Use consistent muted mauve M avatar for Maya and blue A avatar for Alex. The final message is three literal dots. It should be fully visible above the photograph's lower edge. Leave realistic modest spacing, do not spread these short messages down an entire full-height phone. No external titles, captions, fictional label, watermark, additional copy, message composer, or bottom navigation visible; these are below the crop. Screen crisp and rectilinear, real photographic device, quiet understated commercial editorial quality.
 
+
+## Follow-up copy
+
+The Lead Developer promise now reads: “Everyone wants the team to ship sooner. You know there’s more to it than faster coding. Work through the engineering concerns, find what’s holding delivery up, and prepare clear next steps to discuss with your PM.” This acknowledges work beyond coding and frames next steps as preparation for a shared discussion.
+
+Nic also replaced the shared example introduction with: “Follow one piece of work. Look at what happened, ask the right questions, then get clear on next steps.” The three-step interactive walkthrough remains unchanged.
