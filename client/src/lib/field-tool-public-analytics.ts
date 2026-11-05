@@ -63,6 +63,9 @@ export function sanitizePublicEvent(
     token: raw.token,
     distinct_id: "$posthog_cookieless",
     $cookieless_mode: true,
+    // Required for PostHog's daily cookieless hash. Its ingestion pipeline
+    // removes the raw user agent after hashing; omitting it drops the event.
+    $raw_user_agent: raw.$raw_user_agent,
     $process_person_profile: false,
     $current_url: ORIGIN + page.path,
     $host: HOST,

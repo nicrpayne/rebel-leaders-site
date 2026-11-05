@@ -109,6 +109,7 @@ describe("Public Field Tools analytics", () => {
       properties: {
         action: "buy",
         token: "phc_test",
+        $raw_user_agent: "Mozilla/5.0 test browser",
         distinct_id: "person@example.com",
         email: "DO_NOT_SEND",
         answer: "DO_NOT_SEND",
@@ -123,6 +124,7 @@ describe("Public Field Tools analytics", () => {
     expect(sanitized.properties).toMatchObject({
       distinct_id: "$posthog_cookieless",
       $cookieless_mode: true,
+      $raw_user_agent: "Mozilla/5.0 test browser",
       action: "buy",
       $current_url: "https://tools.rebel-leader.com/field-tools",
     });
