@@ -83,8 +83,9 @@ export default function AIProductPage({ audience }: { audience: Audience }) {
             $47 <small>USD · one time</small>
           </p>
           <p>
-            Your {audience === "pm" ? "PM" : "Lead Developer"} Guide,
-            conversation companion, and delivery map.
+            Your {audience === "pm" ? "PM" : "Lead Developer"} Guide and two
+            interactive tools: prepare your conversation and find where work gets
+            stuck.
           </p>
           <p>
             Start on your own, then take your notes into the conversation. Your{" "}
@@ -103,28 +104,31 @@ export default function AIProductPage({ audience }: { audience: Audience }) {
             giftHref={`${base}/buy?gift=1`}
             tone="dark"
           />
-          <p className="ai-refund-note">
-            <strong>60-day full refund. No explanation needed.</strong>
-            <br />
-            <Link href="/field-tools/purchase-help" className="underline">
-              Purchase, access, and refund details
-            </Link>
-          </p>
-          <Link href={`${base}/access`} className="ai-small underline">
-            {access.data?.preview
-              ? "Open the review copy →"
-              : "Already have this? Open your tool →"}
-          </Link>
-          <Link
-            href={fieldToolBase(
-              "ai-stalemate",
-              audience === "pm" ? "lead-dev" : "pm"
-            )}
-            className="ai-small ai-edition-link underline"
-          >
-            Looking for the {audience === "pm" ? "Lead Developer" : "PM"}{" "}
-            edition? →
-          </Link>
+          <div className="ai-purchase-help">
+            <p className="ai-refund-note">
+              <strong>60-day full refund. No explanation needed.</strong>
+              <Link href="/field-tools/purchase-help" className="underline">
+                Purchase, access, and refund details
+              </Link>
+            </p>
+            <div className="ai-purchase-links">
+              <Link href={`${base}/access`} className="ai-small underline">
+                {access.data?.preview
+                  ? "Open the review copy →"
+                  : "Already have this? Open your tool →"}
+              </Link>
+              <Link
+                href={fieldToolBase(
+                  "ai-stalemate",
+                  audience === "pm" ? "lead-dev" : "pm"
+                )}
+                className="ai-small underline"
+              >
+                Looking for the {audience === "pm" ? "Lead Developer" : "PM"}{" "}
+                edition? →
+              </Link>
+            </div>
+          </div>
         </aside>
       </section>
       <DeliveryExample />

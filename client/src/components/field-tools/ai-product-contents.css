@@ -96,14 +96,37 @@
 .ai-product .ai-kit-included {
   margin-top: 32px;
 }
-.ai-product .ai-purchase-card .ai-refund-note {
-  border-top: 1px solid var(--ft-line);
-  margin-top: 20px;
-  padding-top: 18px;
+.ai-product .ai-kit-included > figure {
+  margin-bottom: 0;
 }
-.ai-product .ai-purchase-card .ai-edition-link {
-  display: inline-block;
-  margin-top: 8px;
+.ai-product .ai-purchase-help {
+  display: grid;
+  gap: 24px;
+  border-top: 1px solid var(--ft-line);
+  margin-top: 28px;
+  padding-top: 24px;
+}
+.ai-product .ai-purchase-help .ai-refund-note {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.8;
+  color: #536659;
+}
+.ai-product .ai-purchase-links {
+  display: grid;
+  gap: 12px;
+}
+.ai-product .ai-purchase-links .ai-small {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  margin: 0;
+  padding-block: 8px;
+}
+.ai-product .ai-purchase-help a {
+  text-underline-offset: 4px;
 }
 @media (max-width: 600px) {
   .ai-product-example {
