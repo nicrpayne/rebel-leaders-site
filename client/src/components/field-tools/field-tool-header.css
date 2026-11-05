@@ -1,5 +1,5 @@
-/* Range's shared tool identity. The header stays in document flow so long
-   tool names and larger text never cover the working surface below it. */
+/* Range's shared tool identity. Scale the whole brand lockup together so
+   it leads the navigation. Keep it in flow for long names and larger text. */
 .ft-nav {
   color: #244a3b;
   background: #fcfaf6;
@@ -25,14 +25,14 @@
 .ft-nav .ft-header-brand {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 22.5px;
   min-width: 0;
   text-decoration: none;
   color: #244a3b;
 }
 .ft-header-mark {
   flex: none;
-  width: 64px;
+  width: 96px;
 }
 .ft-nav .ft-header-mark svg {
   display: block;
@@ -41,14 +41,14 @@
   color: #244a3b;
 }
 .ft-header-wordmark {
-  font: 600 12px/1.5 var(--font-ui);
+  font: 600 18px/1.5 var(--font-ui);
   letter-spacing: 0.13em;
 }
 .ft-header-wordmark small {
   display: block;
-  margin-top: 5px;
+  margin-top: 7.5px;
   color: #696b61;
-  font-size: 9px;
+  font-size: 13.5px;
   font-weight: 400;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -94,16 +94,16 @@
     padding-block: 19px;
   }
   .ft-nav .ft-header-brand {
-    gap: 10px;
+    gap: 15px;
   }
   .ft-header-mark {
-    width: 48px;
+    width: 72px;
   }
   .ft-header-wordmark {
-    font-size: 10px;
+    font-size: 15px;
   }
   .ft-header-wordmark small {
-    font-size: 8px;
+    font-size: 12px;
     letter-spacing: 0.07em;
   }
   .ft-header-tabs {
