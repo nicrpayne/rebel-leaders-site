@@ -3,6 +3,7 @@ import {
   ArrowRight,
   Code2,
   Compass,
+  MessageSquare,
   PencilRuler,
   ScanSearch,
   Send,
@@ -50,11 +51,70 @@ export default function DeliveryExample() {
       className="ft-delivery-example"
       aria-labelledby="delivery-example-title"
     >
+      <div
+        className="ft-example-chat"
+        role="group"
+        aria-label="Fictional team chat, Thursday morning"
+      >
+        <div className="ft-example-chat-header">
+          <span>
+            <MessageSquare size={18} aria-hidden="true" /> #product-team
+          </span>
+          <span className="ft-example-chat-fiction">Fictional exchange</span>
+        </div>
+        <p className="ft-example-chat-day">Thursday morning</p>
+        <ol className="ft-example-messages">
+          <li>
+            <span className="ft-example-avatar" aria-hidden="true">
+              M
+            </span>
+            <div>
+              <p className="ft-example-message-byline">
+                <strong>Maya</strong>
+                <span>PM</span>
+                <span>9:14 AM</span>
+              </p>
+              <p>
+                Support asked about the renewal reminder again. Are we close?
+              </p>
+            </div>
+          </li>
+          <li>
+            <span
+              className="ft-example-avatar ft-example-avatar-dev"
+              aria-hidden="true"
+            >
+              A
+            </span>
+            <div>
+              <p className="ft-example-message-byline">
+                <strong>Alex</strong>
+                <span>Developer</span>
+                <span>9:16 AM</span>
+              </p>
+              <p>
+                The code’s been ready since Tuesday. Still waiting on a review.
+              </p>
+            </div>
+          </li>
+          <li>
+            <span className="ft-example-avatar" aria-hidden="true">
+              M
+            </span>
+            <div>
+              <p className="ft-example-message-byline">
+                <strong>Maya</strong>
+                <span>PM</span>
+                <span>9:17 AM</span>
+              </p>
+              <p>Can we just get reviews done faster?</p>
+            </div>
+          </li>
+        </ol>
+      </div>
       <div className="ft-example-intro">
         <p className="ft-collection-eyebrow">A short example · fictional</p>
-        <h2 id="delivery-example-title">
-          “Can we just get reviews done faster?”
-        </h2>
+        <h2 id="delivery-example-title">Let’s follow that piece of work.</h2>
         <p>
           Follow one piece of work. Look at what happened, ask what kept it
           stuck, then prepare something you can discuss.
@@ -106,12 +166,20 @@ export default function DeliveryExample() {
         <div className="ft-example-bottom">
           <span>From the delivery map · included in either edition</span>
           {active < steps.length - 1 ? (
-            <button type="button" data-ft-action={`example_${active + 2}`} onClick={() => setActive(active + 1)}>
+            <button
+              type="button"
+              data-ft-action={`example_${active + 2}`}
+              onClick={() => setActive(active + 1)}
+            >
               {steps[active + 1].label}{" "}
               <ArrowRight size={17} aria-hidden="true" />
             </button>
           ) : (
-            <button type="button" data-ft-action="example_1" onClick={() => setActive(0)}>
+            <button
+              type="button"
+              data-ft-action="example_1"
+              onClick={() => setActive(0)}
+            >
               Back to the start
             </button>
           )}
