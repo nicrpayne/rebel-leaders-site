@@ -40,6 +40,9 @@ export default function Footer() {
                 {item.label.toUpperCase()}
               </Link>
             ))}
+            <a href="https://tools.rebel-leader.com/field-tools" className="font-pixel text-[7px] text-parchment-dim/40 hover:text-gold transition-colors">
+              FIELD TOOLS
+            </a>
           </div>
 
           {/* Secondary links */}
