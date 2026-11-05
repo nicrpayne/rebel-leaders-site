@@ -161,6 +161,25 @@ export default function About() {
 
       <PixelDivider />
 
+      <section className="py-12 md:py-16" aria-labelledby="field-tools-title">
+        <div className="container">
+          <div className="quest-card max-w-2xl mx-auto md:ml-[10%] p-6 md:p-8">
+            <p className="font-pixel text-[8px] tracking-wider text-gold/60 mb-4">PUT IT TO WORK</p>
+            <h2 id="field-tools-title" className="font-display text-3xl text-parchment mb-4">Field Tools</h2>
+            <p className="font-display text-base leading-relaxed text-parchment-dim/80 mb-4">
+              Practical guides and interactive tools for the difficult moments of leading people.
+              Understand what’s happening, prepare for the conversation, and find a useful next step.
+            </p>
+            <p className="font-display text-sm leading-relaxed text-parchment-dim/60 mb-6">
+              Start with AI Stalemate, with separate editions for product managers and lead developers.
+            </p>
+            <a href="https://tools.rebel-leader.com/field-tools" className="font-ui text-gold underline underline-offset-4">
+              Explore the Field Tools →
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* The Influences */}
       <section className="py-12 md:py-20">
         <div className="container">

@@ -92,6 +92,20 @@ export default function FieldToolPurchaseHelp() {
               refresh or leave. Review your exported notes before sharing them.
             </p>
           </section>
+          <section id="privacy">
+            <h2 className="font-display text-3xl">Email and page analytics</h2>
+            <p className="mt-4">
+              Purchase and access emails help you use your tool. The optional newsletter is hosted
+              on Substack; buying a tool does not subscribe you. You can unsubscribe from the newsletter anytime.
+            </p>
+            <p className="mt-3">
+              On our public Field Tools sales pages, we use PostHog without analytics cookies to count
+              page visits, selected links, and approximate active time. We respect Do Not Track and
+              Global Privacy Control. We do not record sessions or collect your email, form entries,
+              sign-in links, or Lab answers through these analytics. The Guide, welcome page, sign-in,
+              and Lab are excluded. Newsletter signup is measured as a click, not a confirmed subscription.
+            </p>
+          </section>
           <Link
             href="/field-tools"
             className="inline-block text-[var(--ft-accent)] underline underline-offset-4"

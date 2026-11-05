@@ -10,7 +10,11 @@ export default function FieldToolsFooter() {
         <Link href="/field-tools">All Field Tools</Link>
         <a href="https://rebel-leader.com/about">About Nic</a>
         <Link href="/field-tools/purchase-help">Purchase & refunds</Link>
-        <a href="mailto:hello@rebel-leader.com">Get help</a>
+        <Link href="/field-tools/purchase-help#privacy">Privacy & email</Link>
+        <a href="mailto:hello@rebel-leader.com" data-ft-action="get_help">Get help</a>
+        <a href="https://leaderrebellion.substack.com/subscribe?simple=true" target="_blank" rel="noopener noreferrer" data-ft-action="newsletter_open">
+          Get Nic’s notes ↗<span className="sr-only"> (Substack, opens in a new tab)</span>
+        </a>
         <a
           href="https://leaderrebellion.substack.com/p/you-have-a-culture-problem"
           target="_blank"

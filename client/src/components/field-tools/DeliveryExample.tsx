@@ -84,6 +84,7 @@ export default function DeliveryExample() {
             <button
               type="button"
               key={item.label}
+              data-ft-action={`example_${index + 1}`}
               aria-pressed={active === index}
               aria-controls="delivery-example-panel"
               onClick={() => setActive(index)}
@@ -105,12 +106,12 @@ export default function DeliveryExample() {
         <div className="ft-example-bottom">
           <span>From the delivery map · included in either edition</span>
           {active < steps.length - 1 ? (
-            <button type="button" onClick={() => setActive(active + 1)}>
+            <button type="button" data-ft-action={`example_${active + 2}`} onClick={() => setActive(active + 1)}>
               {steps[active + 1].label}{" "}
               <ArrowRight size={17} aria-hidden="true" />
             </button>
           ) : (
-            <button type="button" onClick={() => setActive(0)}>
+            <button type="button" data-ft-action="example_1" onClick={() => setActive(0)}>
               Back to the start
             </button>
           )}

@@ -14,6 +14,7 @@ import { trpc } from "@/lib/trpc";
 import { fieldToolBase, fieldToolForPath } from "@/lib/field-tool-paths";
 import { fieldToolWelcome } from "@/lib/field-tool-welcome";
 import { useFieldToolContent } from "./FieldToolGate";
+import SubstackSignup from "@/components/SubstackSignup";
 import FieldToolsNav from "./FieldToolsNav";
 import FieldToolsFooter from "./FieldToolsFooter";
 import "./field-tool-welcome.css";
@@ -189,6 +190,15 @@ export default function FieldToolWelcome({
             )}
           </div>
         </section>
+
+        <aside className="my-10 max-w-2xl rounded-2xl border border-[var(--ft-line)] bg-[var(--ft-tint)] p-6 md:p-8" aria-label="Optional newsletter">
+          <h2 className="mb-3 font-display text-3xl text-[var(--ft-ink)]">Stay in the conversation.</h2>
+          <p className="mb-5 font-ui text-sm leading-7 text-[var(--ft-muted)]">
+            I write about the work, the people doing it, and who we become along the way.
+            If you’d like those notes, join me on Substack. This is separate from your purchase.
+          </p>
+          <SubstackSignup variant="field-tool" />
+        </aside>
 
         <section className="ft-welcome-help" aria-labelledby="help-title">
           <h2 id="help-title">Using your tool</h2>

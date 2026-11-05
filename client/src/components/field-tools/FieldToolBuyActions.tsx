@@ -28,15 +28,15 @@ export default function FieldToolBuyActions({
           {buyContent}
         </button>
       ) : buyHref.startsWith("#") || /^https?:\/\//.test(buyHref) ? (
-        <a href={buyHref} className="ft-button ft-button-gold">
+        <a data-ft-action={/^https?:/.test(buyHref) ? "checkout" : "buy"} href={buyHref} className="ft-button ft-button-gold">
           {buyContent}
         </a>
       ) : (
-        <Link href={buyHref} className="ft-button ft-button-gold">
+        <Link data-ft-action="buy" href={buyHref} className="ft-button ft-button-gold">
           {buyContent}
         </Link>
       )}
-      <Link href={giftHref} className="ft-button ft-buy-gift">
+      <Link data-ft-action="gift" href={giftHref} className="ft-button ft-buy-gift">
         <Gift size={16} aria-hidden="true" /> Gift this
       </Link>
     </div>

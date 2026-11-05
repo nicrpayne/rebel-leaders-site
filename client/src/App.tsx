@@ -7,6 +7,7 @@ import { useClaimAnonymousResult } from "@/_core/hooks/useClaimAnonymousResult";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
 import { lazy, Suspense, useLayoutEffect } from "react";
+import { startPublicFieldToolAnalytics } from "./lib/field-tool-public-analytics";
 import { isFieldToolPath, protectFieldToolPrivacy } from "./lib/analytics";
 import { Route, Switch, Redirect, useLocation, useSearch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
@@ -77,6 +78,7 @@ function Router() {
   useFieldToolPageMetadata(location);
   useLayoutEffect(() => {
     protectFieldToolPrivacy(location);
+    return startPublicFieldToolAnalytics();
   }, [location]);
   return (
     <div

@@ -18,6 +18,7 @@ export default function AIStalemateEditions() {
               `/field-tools/ai-stalemate/${audience}`
             )}
             className="ft-edition"
+            data-ft-action={`edition_${audience}`}
             aria-label={`See what’s inside AI Stalemate — ${role} edition`}
           >
             <p className="ft-edition-role">
