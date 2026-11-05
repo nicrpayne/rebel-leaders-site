@@ -120,6 +120,7 @@ export function referralCategory(referrer: string) {
 
 let sdk: PostHog | undefined;
 let privateDocument = false;
+let testDocument = false;
 function allowed() {
   const { hostname, pathname } = window.location;
   // No restart after entering any private Field Tool within this document.
@@ -162,8 +163,9 @@ export function startPublicFieldToolAnalytics() {
   }
   const path = window.location.pathname;
   // This flag is safe to expose; no other query value is captured.
-  const isTest =
+  testDocument ||=
     new URLSearchParams(window.location.search).get("analytics_test") === "1";
+  const isTest = testDocument;
   const capture = (event: string, properties: Record<string, unknown> = {}) => {
     if (allowed() && window.location.pathname === path)
       sdk?.capture(event, { ...properties, is_test: isTest });
