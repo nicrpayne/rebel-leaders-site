@@ -25,8 +25,7 @@ export default function AIProductContents({
         Find a way forward.
       </h2>
       <p className="ai-contents-intro">
-        Bring one real situation. Start with the part you need today—you don’t
-        have to read the whole Guide or use every tool.
+        Bring one real situation. Start with what’s helpful today.
       </p>
       <ul>
         {aiProductInventory(audience)
