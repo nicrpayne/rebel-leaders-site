@@ -98,7 +98,12 @@ export function sanitizePublicEvent(
       Math.max(0, Math.round(Number(raw.scroll_percent) || 0))
     );
   }
-  return { ...event, properties };
+  return {
+    event: event.event,
+    uuid: event.uuid,
+    timestamp: event.timestamp,
+    properties,
+  };
 }
 
 export function referralCategory(referrer: string) {

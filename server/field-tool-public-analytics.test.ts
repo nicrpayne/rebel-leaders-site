@@ -104,6 +104,8 @@ describe("Public Field Tools analytics", () => {
     });
     const sanitized = config.before_send({
       event: "field_tools_action",
+      $set: { email: "DO_NOT_SEND" },
+      $set_once: { $initial_referrer: "DO_NOT_SEND" },
       properties: {
         action: "buy",
         token: "phc_test",
