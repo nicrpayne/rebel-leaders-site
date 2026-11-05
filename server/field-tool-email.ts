@@ -48,6 +48,7 @@ function renderFieldToolEmail({
   if (!name) throw new Error("Unknown Field Tool.");
   const welcomeUrl = new URL(`/field-tools/${path}/access`, appUrl).toString();
   const safeWelcome = escapeHtml(welcomeUrl);
+  const collectionLabel = `FIELD TOOLS / ${name.split(" · ")[0].toUpperCase()}`;
   const artUrl = (file: string) =>
     escapeHtml(new URL(`/assets/field-tools/email/${file}`, appUrl).toString());
   const intro = gift
@@ -62,6 +63,7 @@ function renderFieldToolEmail({
     "Your Lab answers are yours. The person who bought this gift cannot see them unless you choose to share them.";
   const text = [
     "REBEL LEADERS",
+    collectionLabel,
     name,
     gift ? "A Field Tool for you." : "Your Field Tool is ready.",
     intro,
@@ -81,14 +83,20 @@ function renderFieldToolEmail({
     .filter(Boolean)
     .join("\n\n");
   // Keep headings live so inbox colour changes cannot leave image-shaped panels.
-  // The transparent wordmark stays legible on light and forced-dark surfaces.
+  // Live brand lettering and a transparent horizon match the tool header.
+  // The mid-tone icon remains visible when inboxes recolour everything else.
   // Explicit dark colours serve clients that support the preference query.
-  const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta name="supported-color-schemes" content="light dark"><title>Your Rebel Leaders Field Tool</title><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&amp;family=Outfit:wght@400;500&amp;display=swap" rel="stylesheet"><style>:root{color-scheme:light dark;supported-color-schemes:light dark}@media only screen and (max-width:480px){.mail-padding{padding-left:24px!important;padding-right:24px!important}.mail-outer{padding:12px 0!important}.mail-heading{font-size:38px!important}}@media(prefers-color-scheme:dark){.mail-bg{background:#1e211e!important}.mail-card{background:#252923!important;color:#f4f1e9!important}.mail-border{border-color:#454c42!important}.mail-muted{color:#c5c8bf!important}.mail-green{color:#aec8b9!important}.mail-heading{color:#f4f1e9!important}.mail-note{background:#30392f!important;color:#f4f1e9!important}.mail-button{background:#aec8b9!important;border-color:#aec8b9!important;color:#172c23!important}}</style></head>
+  const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta name="supported-color-schemes" content="light dark"><title>Your Rebel Leaders Field Tool</title><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&amp;family=Outfit:wght@400;500;600&amp;display=swap" rel="stylesheet"><style>:root{color-scheme:light dark;supported-color-schemes:light dark}@media only screen and (max-width:480px){.mail-padding{padding-left:24px!important;padding-right:24px!important}.mail-outer{padding:12px 0!important}.mail-heading{font-size:38px!important}.mail-brand-icon{width:48px!important;height:auto!important}.mail-brand-gap{padding-right:12px!important}}@media(prefers-color-scheme:dark){.mail-bg{background:#1e211e!important}.mail-card{background:#252923!important;color:#f4f1e9!important}.mail-border{border-color:#454c42!important}.mail-muted{color:#c5c8bf!important}.mail-green{color:#aec8b9!important}.mail-heading{color:#f4f1e9!important}.mail-note{background:#30392f!important;color:#f4f1e9!important}.mail-button{background:#aec8b9!important;border-color:#aec8b9!important;color:#172c23!important}}</style></head>
 <body class="mail-bg" style="margin:0;padding:0;background:#f1f0eb;color:#34322e;font-family:'Outfit',Arial,Helvetica,sans-serif">
 <div style="display:none;max-height:0;overflow:hidden">Your Guide and Lab, plus a link to bookmark for next time.</div>
 <table role="presentation" width="100%" cellspacing="0" cellpadding="0" class="mail-bg" style="background:#f1f0eb"><tr><td align="center" class="mail-outer" style="padding:28px 16px">
 <table role="presentation" width="100%" cellspacing="0" cellpadding="0" class="mail-card mail-border" style="max-width:640px;background:#fcfaf6;border:1px solid #ded8ce">
-<tr><td class="mail-padding mail-border" style="padding:28px 36px;border-bottom:1px solid #ded8ce"><img src="${artUrl("wordmark-transparent-v2.png")}" alt="Rebel Leaders" width="260" height="42" style="display:block;max-width:100%;height:auto;border:0;color:#315c4b;font:normal 28px Georgia,serif"></td></tr>
+<tr><td class="mail-padding mail-border" style="padding:28px 36px;border-bottom:1px solid #ded8ce">
+<table role="presentation" cellspacing="0" cellpadding="0"><tr>
+<td class="mail-brand-gap" valign="middle" style="padding-right:16px"><img class="mail-brand-icon" src="${artUrl("horizon-transparent-v1.png")}" alt="" width="64" height="38" style="display:block;width:64px;height:auto;border:0"></td>
+<td valign="middle" style="font-family:'Outfit',Arial,Helvetica,sans-serif"><p class="mail-green" style="margin:0;color:#315c4b;font-size:13px;font-weight:600;line-height:1.5;letter-spacing:1.7px">REBEL LEADERS</p><p class="mail-muted" style="margin:5px 0 0;color:#696b61;font-size:9px;font-weight:400;line-height:1.6;letter-spacing:1.1px">${escapeHtml(collectionLabel)}</p></td>
+</tr></table>
+</td></tr>
 <tr><td class="mail-padding" style="padding:38px 36px 32px">
 <p class="mail-green" style="margin:0 0 24px;color:#315c4b;font-size:11px;font-weight:500;line-height:1.7;letter-spacing:1.7px;text-transform:uppercase">${escapeHtml(name)}</p>
 <h1 class="mail-heading" style="margin:0 0 24px;color:#34322e;font-family:'Cormorant Garamond',Georgia,'Times New Roman',serif;font-size:44px;font-weight:400;line-height:1.12">${gift ? "A Field Tool" : "Your Field Tool"}<br><em class="mail-green" style="color:#315c4b;font-weight:400">${gift ? "for you." : "is ready."}</em></h1>
