@@ -8,12 +8,18 @@ import { guideReadingTime } from "../../../../shared/field-tool-reading-time";
 export default function AIGuideVisual({
   index,
   slug = "ai-stalemate",
+  visualIndex,
 }: {
   index: number;
   slug?: string;
+  visualIndex?: number;
 }) {
   const content = useFieldToolContent();
-  const visual = content.companion?.find(v => v.after === index);
+  const visuals = content.companion?.filter(v => v.after === index) ?? [];
+  if (visualIndex === undefined && slug === "when-the-team-goes-quiet") {
+    return <>{visuals.map((visual, position) => <AIGuideVisual key={visual.title} index={index} slug={slug} visualIndex={position} />)}</>;
+  }
+  const visual = visuals[visualIndex ?? 0];
   if (!visual) return null;
   const resources =
     content.expansion?.resources.filter(item => {
@@ -22,10 +28,10 @@ export default function AIGuideVisual({
           ? content.companion?.at(-1)
           : (content.companion?.find(part => part.step === item.step) ??
             content.companion?.[0]);
-      return destination?.after === index;
+      return destination?.after === index && (visualIndex === undefined || visualIndex === 0);
     }) ?? [];
   const base = fieldToolBase(slug, content.audience);
-  return (
+  const body = (
     <aside className="ai-visual">
       <p className="ai-eyebrow">{visual.eyebrow}</p>
       <h3 className="mt-3">{visual.title}</h3>
@@ -104,4 +110,10 @@ export default function AIGuideVisual({
         )}
     </aside>
   );
+  return slug === "when-the-team-goes-quiet" ? (
+    <details className="mt-7 border-y border-[var(--ft-line)] py-5">
+      <summary className="cursor-pointer font-ui text-sm font-semibold text-[var(--ft-accent)]">{visual.title} <span className="font-normal">· optional</span></summary>
+      {body}
+    </details>
+  ) : body;
 }

@@ -1015,6 +1015,37 @@ export const LEADERSHIP_EXPANSIONS: Record<string, LeadershipExpansion> = {
       "A fictional example: a data analyst tries to raise a question about a report. The PM moves on. Later, they discover the report may miss the new online bookings. Here’s how the conversation could go.",
     companion: [
       {
+        after: 2, step: 1,
+        eyebrow: "OPTIONAL / IN THE ROOM",
+        title: "Choose a response that fits this moment.",
+        intro: "You can prepare your opening without doing an assessment. If you keep reaching for the same response, these lenses may help you try something different.",
+        cards: [
+          { title: "A repertoire of responses", body: "Goleman's six styles offer different behaviours: direction, connection, participation, coaching, pace, and urgent instruction. After a dismissal, acknowledge your part. If you invite input, leave a real choice open." },
+          { title: "Make the response believable", body: "Participation needs influence. Coaching needs time and support. A short push needs capacity and an end. Choose the condition that will give your words substance." },
+          { title: "Translate your thinking", body: "Paterson's wavelength explores preferences around risk, change, variables, reasoning, ambiguity, and opportunity. If you leap to possibilities, explain the steps. If you need detail, ask which questions are still open." },
+          { title: "Keep the lenses distinct", body: "Thinking preference does not prescribe a leadership style or establish a colleague's motives. Clarifying your direction is also different from Holistic Shaping's Vision, which emerges between people." },
+        ],
+        takeaway: "In Invite, open the optional response helper only if you need it. Use a starter in your opening, then make it your own. The deeper reflection is not saved or exported.",
+        sources: [
+          {name: "Leadership Styles - Lauren Adelle Coaching",url:"https://drive.google.com/file/d/17Qy5mKdn8uVQ-9sCzxyHj_jr-URe0_Hy/view"},
+          {name: "Thinking Wavelength - The Paterson Center",url:"https://drive.google.com/file/d/1n6iEx72rHwvkLJX4-fL6PjGoB1A677TP/view"},
+        ],
+      },
+      {
+        after: 4, step: 2,
+        eyebrow: "OPTIONAL / HOLISTIC IMPACT DEPTH",
+        title: "Look beneath the meeting.",
+        intro: "Take one repeated practice, such as asking for approval before people have seen the plan. Notice what it makes possible or difficult. Start with one question.",
+        cards: [
+          { title: "The 5 Keys", body: "Spiritual: meaning and conscience. Emotional: room to be honest about feeling. Leading: agency and responsibility. Technical: craft and learning. Physical: pace and recovery. These are channels of formation, not ratings of people." },
+          { title: "Identity, Relationship, Vision", body: "What does the practice teach people about their voice and judgment? What happens between them when they disagree? What future could they imagine together if the arrangement changed?" },
+          { title: "Culture returns", body: "Repeated experience can make quick agreement and private disagreement normal. Culture grows from Identity, Relationship, and Vision, then pulls on them in return. It is not a fourth equal lever to adjust." },
+          { title: "Change a practice and return", body: "Send the proposal early, mark what is open, and let a concern change the commitment. Ask what happened afterward. This is the continuing attention a LaaS engagement can support, without requiring a complete framework exercise." },
+        ],
+        takeaway: "In Listen, open the optional conditions reflection. Carry only the practical change you choose into your saved note. Your hypotheses about people stay private.",
+        sources: [{name:"Holistic Impact Depth - Field Tools",url:"https://tools.rebel-leader.com/field-tools/resources/holistic-impact-depth"}],
+      },
+      {
         after: 1,
         step: 0,
         eyebrow: "OPTIONAL / A LITTLE MORE HELP",

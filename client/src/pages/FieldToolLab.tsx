@@ -34,6 +34,7 @@ import LeadershipCommunicationPanel from "@/components/field-tools/LeadershipCom
 import AICommunicationPanel from "@/components/field-tools/AICommunicationPanel";
 import AIQualityChecks from "@/components/field-tools/AIQualityChecks";
 import LeadershipWorkSurface from "@/components/field-tools/LeadershipWorkSurface";
+import QuietInRoom from "@/components/field-tools/QuietInRoom";
 import { getFieldTool } from "@/lib/field-tools";
 
 import {
@@ -445,7 +446,7 @@ function LabSession({ slug }: { slug: string }) {
                   : FIELD_TOOL_START[slug]) ??
                   "Let’s work through your situation, one question at a time."}
               </p>
-              {slug === "ai-stalemate" && (
+              {(slug === "ai-stalemate" || slug === "when-the-team-goes-quiet") && (
                 <p className="mt-3 max-w-2xl font-ui text-xs leading-6 text-[var(--ft-muted)]">
                   Start with the next conversation. You don’t need to finish the
                   Guide or every Lab step. A few sentences are enough to begin.
@@ -715,6 +716,10 @@ function LabSession({ slug }: { slug: string }) {
                 </details>
               )}
             </div>
+
+            {slug === "when-the-team-goes-quiet" && (
+              <QuietInRoom key={step} step={step} values={values} onChange={editValue} />
+            )}
 
             {slug === "ai-stalemate" && step === 3 && (
               <AIQualityChecks

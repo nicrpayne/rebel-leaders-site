@@ -18,7 +18,7 @@ from guide_layout import cover_signature, section_reading_label, reading_label, 
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = os.environ.get("GUIDE_APP_URL", "https://rebel-leaders-field-tools-preview-production.up.railway.app")
-DATA = json.loads(subprocess.check_output(["node", "--experimental-strip-types", "--input-type=module", "-e", "import { LEADERSHIP_GUIDE_PAGES as pages } from './server/field-tool-content/leadership-guides.ts'; import { FIELD_TOOLS as tools } from './client/src/lib/field-tools.ts'; import { FIELD_TOOL_PRESENTATIONS as presentations } from './client/src/lib/field-tool-presentations.ts'; import { LEADERSHIP_EXPANSIONS as expansions } from './server/field-tool-content/leadership-expansion.ts'; console.log(JSON.stringify({pages,tools,presentations,expansions}));"],cwd=ROOT))
+DATA = json.loads(subprocess.check_output(["node", "--import", "tsx", "--input-type=module", "-e", "import { LEADERSHIP_GUIDE_PAGES as pages } from './server/field-tool-content/leadership-guides.ts'; import { FIELD_TOOLS as tools } from './client/src/lib/field-tools.ts'; import { FIELD_TOOL_PRESENTATIONS as presentations } from './client/src/lib/field-tool-presentations.ts'; import { LEADERSHIP_EXPANSIONS as expansions } from './server/field-tool-content/leadership-expansion.ts'; console.log(JSON.stringify({pages,tools,presentations,expansions}));"],cwd=ROOT))
 for name,file in [("GuideSerif","GuideSerif.ttf"),("GuideSans","GuideSans.ttf"),("GuideBold","GuideBold.ttf")]:
     pdfmetrics.registerFont(TTFont(name,str(Path(os.environ.get("GUIDE_FONT_DIR", str(ROOT / "scripts/fonts"))) / file)))
 W,H=A4
@@ -147,7 +147,7 @@ def main():
             pages.append(("chapter",page))
             for companion in expansion["companion"]:
                 if companion["after"]==index:
-                    pages.append(("chapter",dict(eyebrow=companion["eyebrow"],title=companion["title"],intro=companion["intro"],sections=companion["cards"],callout=companion["takeaway"],step=companion["step"],reflectionTime=companion.get("reflectionTime"))))
+                    pages.append(("chapter",dict(eyebrow=companion["eyebrow"],title=companion["title"],intro=companion["intro"],sections=companion["cards"],callout=companion["takeaway"],step=companion["step"],reflectionTime=companion.get("reflectionTime"),sources=companion.get("sources",[]))))
         # One conversation per page keeps dialogue and the reflection together.
         for index,scene in enumerate(expansion["scenes"]):pages.append(("walkthrough",([scene],index)))
         for index in range(0,len(expansion["resources"]),3):pages.append(("resources",expansion["resources"][index:index+3]))

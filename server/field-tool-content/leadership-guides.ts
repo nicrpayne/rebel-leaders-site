@@ -744,7 +744,7 @@ export const LEADERSHIP_GUIDE_PAGES: Record<string, AIGuidePage[]> = {
         },
         {
           title: "Use the bits you need",
-          body: "Prepare in the Lab or on paper. Read the worked conversation if you want to see it unfold. The Scrum section is optional. You won’t need this much preparation for every conversation; these habits get more familiar with practice.",
+          body: "Prepare in the Lab or on paper. Read the worked conversation if you want to see it unfold. The response, wavelength, HID, and Scrum sections are optional. You won’t need this much preparation for every conversation; these habits get more familiar with practice.",
         },
         {
           title: "What this helps you do",

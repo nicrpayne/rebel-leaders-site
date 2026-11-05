@@ -17,7 +17,7 @@ import teachings from "../shared/field-tool-teachings.json";
 describe("expanded leadership products", () => {
   for (const [slug, expansion] of Object.entries(LEADERSHIP_EXPANSIONS)) {
     it(`${slug}: each companion and resource leads to an existing chapter, Lab step and source`, () => {
-      expect(expansion.companion).toHaveLength(5);
+      expect(expansion.companion).toHaveLength(slug === "when-the-team-goes-quiet" ? 7 : 5);
       expect(expansion.scenes).toHaveLength(5);
       for (const companion of expansion.companion) {
         expect(LEADERSHIP_GUIDE_PAGES[slug][companion.after]).toBeDefined();

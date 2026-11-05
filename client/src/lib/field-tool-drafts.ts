@@ -1,7 +1,9 @@
+import { QUIET_PRIVATE_IDS } from "./quiet-reflections";
 export type FieldToolDraft = { values: Record<string, string>; step: number };
 
 // Reflection is ephemeral. Only deliberately shared work belongs in a saved draft.
 export const PRIVATE_FIELD_IDS = new Set([
+  ...QUIET_PRIVATE_IDS,
   "side",
   "happened",
   "story",
