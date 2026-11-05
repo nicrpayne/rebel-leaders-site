@@ -1,6 +1,14 @@
 import { ownsFieldTool } from "../../../../shared/field-tool-entitlements";
 import { fieldToolBase, type Audience } from "@/lib/field-tool-paths";
-import { createContext, useContext, useState, type ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
+import { MailCheck } from "lucide-react";
 import { Link } from "wouter";
 import { trpc } from "@/lib/trpc";
 import FieldToolsNav from "./FieldToolsNav";
@@ -22,49 +30,166 @@ export function FieldToolSignIn({
   audience?: Audience;
 }) {
   const [email, setEmail] = useState("");
+  const [sentTo, setSentTo] = useState<string | null>(null);
+  const [sendCount, setSendCount] = useState(0);
+  const [resendAt, setResendAt] = useState(0);
+  const [secondsLeft, setSecondsLeft] = useState(0);
+  const confirmationHeading = useRef<HTMLHeadingElement>(null);
+  const emailInput = useRef<HTMLInputElement>(null);
   const request = trpc.fieldTools.requestAccess.useMutation();
+
+  useEffect(() => {
+    if (!resendAt) return;
+    const update = () => {
+      const remaining = Math.max(0, Math.ceil((resendAt - Date.now()) / 1000));
+      setSecondsLeft(remaining);
+      if (!remaining) setResendAt(0);
+    };
+    update();
+    const timer = window.setInterval(update, 1000);
+    return () => window.clearInterval(timer);
+  }, [resendAt]);
+
+  useEffect(() => {
+    if (sentTo) confirmationHeading.current?.focus();
+    else if (sendCount) emailInput.current?.focus();
+  }, [sentTo, sendCount]);
+
+  function sendLink(address: string) {
+    if (request.isPending) return;
+    const submittedEmail = address.trim().toLowerCase();
+    request.mutate(
+      { email: submittedEmail, slug, audience },
+      {
+        onSuccess: () => {
+          setSendCount(sentTo === submittedEmail ? sendCount + 1 : 1);
+          setSentTo(submittedEmail);
+          setSecondsLeft(30);
+          setResendAt(Date.now() + 30_000);
+        },
+      }
+    );
+  }
+
   return (
-    <div className="mx-auto max-w-xl border border-[var(--ft-line)] bg-[var(--ft-tint)] p-7 text-[var(--ft-ink)]">
+    <div className="mx-auto max-w-xl rounded-2xl border border-[var(--ft-line)] bg-[var(--ft-tint)] p-7 text-[var(--ft-ink)] sm:p-10">
       <p className="mb-4 font-ui text-xs uppercase tracking-widest text-[var(--ft-accent)]">
         {slug === "ai-stalemate"
           ? `AI Stalemate · ${audience === "pm" ? "Product Manager" : "Lead Developer"}`
           : "Rebel Leaders Field Tools"}
       </p>
-      <h1 className="font-display text-4xl">Glad you’re here.</h1>
-      <p className="mt-4 font-ui text-sm leading-7 text-[var(--ft-muted)]">
-        Let’s get you into your Guide and Lab. Use the email you entered at
-        checkout, or the email your gift was sent to. We’ll send you a secure
-        sign-in link—no password to remember.
-      </p>
-      <p className="mt-3 font-ui text-xs leading-6 text-[var(--ft-muted)]">
-        Bought this as a gift? We email the recipient after payment. They use
-        their own email here.
-      </p>
-      <form
-        className="mt-6"
-        onSubmit={e => {
-          e.preventDefault();
-          request.mutate({ email, slug, audience });
-        }}
-      >
-        <label className="block font-ui text-sm">
-          Your email
-          <input
-            type="email"
-            autoComplete="email"
-            required
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            className="mt-2 w-full bg-[var(--ft-white)] p-4 text-[var(--ft-ink)]"
-          />
-        </label>
-        <button
-          disabled={request.isPending}
-          className="ft-button ft-button-gold mt-5"
+      {sentTo ? (
+        <>
+          <div className="mt-7 flex h-14 w-14 items-center justify-center rounded-full border border-[var(--ft-line)] bg-[var(--ft-paper)] text-[var(--ft-accent)]">
+            <MailCheck size={26} aria-hidden="true" />
+          </div>
+          <div role="status" aria-live="polite" aria-atomic="true">
+            <h1
+              ref={confirmationHeading}
+              tabIndex={-1}
+              className="mt-6 font-display text-4xl outline-none"
+            >
+              {sendCount > 1 ? "Check your inbox again." : "Check your inbox."}
+            </h1>
+            <p className="mt-4 font-ui text-sm leading-7 text-[var(--ft-muted)]">
+              {sendCount > 1
+                ? "We’ve requested another sign-in link for:"
+                : "You’ve requested a sign-in link for:"}
+            </p>
+            <p className="mt-1 break-words font-ui text-base font-semibold text-[var(--ft-ink)]">
+              {sentTo}
+            </p>
+            <p className="mt-4 font-ui text-sm leading-7 text-[var(--ft-muted)]">
+              If this email has access to this edition, your link is on its way.
+              Open it to get into your Guide and Lab.
+            </p>
+          </div>
+          <p className="mt-5 font-ui text-sm leading-7 text-[var(--ft-muted)]">
+            Give it a minute, and check Spam or Promotions too. Look for an
+            email from{" "}
+            <span className="break-words">hello@rebel-leader.com</span>.
+          </p>
+          <div className="mt-7 flex flex-col items-start gap-4">
+            <button
+              type="button"
+              disabled={request.isPending || secondsLeft > 0}
+              onClick={() => sendLink(sentTo)}
+              className="ft-button ft-button-gold disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {request.isPending
+                ? "Sending again…"
+                : secondsLeft > 0
+                  ? `Resend available in ${secondsLeft}s`
+                  : "Resend access link"}
+            </button>
+            <button
+              type="button"
+              disabled={request.isPending}
+              onClick={() => {
+                setSentTo(null);
+                request.reset();
+              }}
+              className="font-ui text-sm text-[var(--ft-accent)] underline underline-offset-4 disabled:opacity-60"
+            >
+              Use a different email
+            </button>
+          </div>
+          <p className="mt-5 font-ui text-xs leading-6 text-[var(--ft-muted)]">
+            Just purchased? Payment confirmation can take a moment. If nothing
+            arrives, check that you used your checkout or gift email, then
+            resend.
+          </p>
+        </>
+      ) : (
+        <>
+          <h1 className="font-display text-4xl">Glad you’re here.</h1>
+          <p className="mt-4 font-ui text-sm leading-7 text-[var(--ft-muted)]">
+            Let’s get you into your Guide and Lab. Use the email you entered at
+            checkout, or the email your gift was sent to. We’ll send you a
+            secure sign-in link—no password to remember.
+          </p>
+          <p className="mt-3 font-ui text-xs leading-6 text-[var(--ft-muted)]">
+            Bought this as a gift? We email the recipient after payment. They
+            use their own email here.
+          </p>
+          <form
+            className="mt-6"
+            onSubmit={e => {
+              e.preventDefault();
+              sendLink(email);
+            }}
+          >
+            <label className="block font-ui text-sm">
+              Your email
+              <input
+                ref={emailInput}
+                type="email"
+                name="email"
+                autoComplete="email"
+                disabled={request.isPending}
+                required
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                className="mt-2 w-full bg-[var(--ft-white)] p-4 text-[var(--ft-ink)]"
+              />
+            </label>
+            <button
+              disabled={request.isPending}
+              className="ft-button ft-button-gold mt-5"
+            >
+              {request.isPending ? "Sending…" : "Email my access link"}
+            </button>
+          </form>
+        </>
+      )}
+      {request.error && (
+        <p
+          role="alert"
+          className="mt-5 rounded-lg border border-[var(--ft-line)] bg-[var(--ft-paper)] p-4 font-ui text-sm leading-6"
         >
-          {request.isPending ? "Sending…" : "Email my access link"}
-        </button>
-      </form>
+          {request.error.message}
+        </p>
+      )}
       <p className="mt-5 font-ui text-xs leading-6 text-[var(--ft-muted)]">
         Your sign-in link works once and expires in 15 minutes. Your purchase
         access doesn’t expire with it. Bookmark{" "}
@@ -77,22 +202,12 @@ export function FieldToolSignIn({
         and request a fresh link whenever you need one. You won’t need to buy
         again.
       </p>
-      {request.isSuccess && (
-        <p role="status" className="mt-5 text-sm leading-7">
-          If this email has access to this tool, an access link is on its way.
-          If the purchase was just made, allow a moment for payment confirmation
-          and try again.
-        </p>
-      )}
-      {request.error && (
-        <p role="alert" className="mt-5 text-sm">
-          {request.error.message}
-        </p>
-      )}
-      <div className="mt-6 flex gap-5 text-sm underline">
-        <Link href={`${fieldToolBase(slug, audience)}/buy`}>
-          Get this Field Tool
-        </Link>
+      <div className="mt-6 flex flex-wrap gap-5 font-ui text-sm underline">
+        {!sentTo && (
+          <Link href={`${fieldToolBase(slug, audience)}/buy`}>
+            Get this Field Tool
+          </Link>
+        )}
         <Link href={fieldToolBase(slug, audience)}>Back to the product</Link>
       </div>
       <p className="mt-6 font-ui text-xs leading-6 text-[var(--ft-muted)]">
