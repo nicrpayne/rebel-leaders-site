@@ -133,7 +133,18 @@ function allowed() {
 
 /** Explicit public events only. Never called with answers, email, or DOM text. */
 export function startPublicFieldToolAnalytics() {
-  if (!allowed() || !import.meta.env.VITE_POSTHOG_API_KEY) return () => {};
+  // Keep explicitly marked browser QA out of customer reports, including SPA
+  // navigation, and let it pass the SDK's automated-browser filter.
+  testDocument ||=
+    new URLSearchParams(window.location.search).get("analytics_test") === "1";
+  if (!allowed() || !import.meta.env.VITE_POSTHOG_API_KEY) {
+    if (testDocument)
+      console.info("Field Tools analytics QA", {
+        allowed: allowed(),
+        configured: Boolean(import.meta.env.VITE_POSTHOG_API_KEY),
+      });
+    return () => {};
+  }
   if (!sdk) {
     sdk = posthog.init(
       import.meta.env.VITE_POSTHOG_API_KEY,
@@ -141,6 +152,7 @@ export function startPublicFieldToolAnalytics() {
         api_host:
           import.meta.env.VITE_POSTHOG_HOST || "https://us.i.posthog.com",
         cookieless_mode: "always",
+        opt_out_useragent_filter: testDocument,
         person_profiles: "never",
         autocapture: false,
         capture_pageview: false,
@@ -163,8 +175,6 @@ export function startPublicFieldToolAnalytics() {
   }
   const path = window.location.pathname;
   // This flag is safe to expose; no other query value is captured.
-  testDocument ||=
-    new URLSearchParams(window.location.search).get("analytics_test") === "1";
   const isTest = testDocument;
   const capture = (event: string, properties: Record<string, unknown> = {}) => {
     if (allowed() && window.location.pathname === path)
