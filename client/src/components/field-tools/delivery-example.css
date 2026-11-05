@@ -7,32 +7,36 @@
   scroll-margin-top: 92px;
   color: var(--ft-ink);
 }
-.ft-example-chat {
-  max-width: 820px;
+.ft-example-conversation {
+  max-width: 640px;
   margin: 0 auto 48px;
-  border: 1px solid var(--ft-line);
+}
+.ft-example-phone {
+  display: block;
+  width: 100%;
+  height: auto;
   border-radius: 12px;
-  background: var(--ft-white);
-  box-shadow: 0 8px 30px #19302506;
-  overflow: hidden;
 }
-.ft-example-chat-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 12px;
-  padding: 18px 26px;
-  border-bottom: 1px solid var(--ft-line);
-  background: var(--ft-tint);
+.ft-example-transcript {
+  margin-top: 10px;
+}
+.ft-example-transcript summary {
+  width: fit-content;
+  min-height: 44px;
+  padding: 12px 0;
   color: var(--ft-accent);
-}
-.ft-example-chat-header > span:first-child {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
   font-size: 14px;
-  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.ft-example-transcript summary:focus-visible {
+  outline: 2px solid var(--ft-accent);
+  outline-offset: 3px;
+}
+.ft-example-transcript[open] {
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--ft-line);
 }
 .ft-example-chat-day {
   margin: 22px 26px 0;
@@ -199,11 +203,8 @@
   text-underline-offset: 4px;
 }
 @media (max-width: 700px) {
-  .ft-example-chat {
+  .ft-example-conversation {
     margin-bottom: 32px;
-  }
-  .ft-example-chat-header {
-    padding: 16px 18px;
   }
   .ft-example-chat-day {
     margin: 18px 18px 0;

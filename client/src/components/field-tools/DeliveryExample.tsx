@@ -3,7 +3,6 @@ import {
   ArrowRight,
   Code2,
   Compass,
-  MessageSquare,
   PencilRuler,
   ScanSearch,
   Send,
@@ -51,69 +50,93 @@ export default function DeliveryExample() {
       className="ft-delivery-example"
       aria-labelledby="delivery-example-title"
     >
-      <div
-        className="ft-example-chat"
-        role="group"
-        aria-label="Fictional team chat, Thursday morning"
-      >
-        <div className="ft-example-chat-header">
-          <span>
-            <MessageSquare size={18} aria-hidden="true" /> #product-team
-          </span>
-        </div>
-        <p className="ft-example-chat-day">Thursday morning</p>
-        <ol className="ft-example-messages">
-          <li>
-            <span className="ft-example-avatar" aria-hidden="true">
-              M
-            </span>
-            <div>
-              <p className="ft-example-message-byline">
-                <strong>Maya</strong>
-                <span>PM</span>
-                <span>9:14 AM</span>
-              </p>
-              <p>
-                Support asked about the renewal reminder again. Are we close?
-              </p>
-            </div>
-          </li>
-          <li>
-            <span
-              className="ft-example-avatar ft-example-avatar-dev"
-              aria-hidden="true"
-            >
-              A
-            </span>
-            <div>
-              <p className="ft-example-message-byline">
-                <strong>Alex</strong>
-                <span>Developer</span>
-                <span>9:16 AM</span>
-              </p>
-              <p>
-                The code’s been ready since Tuesday. Still waiting on a review.
-              </p>
-            </div>
-          </li>
-          <li>
-            <span className="ft-example-avatar" aria-hidden="true">
-              M
-            </span>
-            <div>
-              <p className="ft-example-message-byline">
-                <strong>Maya</strong>
-                <span>PM</span>
-                <span>9:17 AM</span>
-              </p>
-              <p>Can we just get reviews done faster?</p>
-            </div>
-          </li>
-        </ol>
+      <div className="ft-example-conversation">
+        <img
+          className="ft-example-phone"
+          src="/assets/field-tools/ai-stalemate-slack-phone.jpg"
+          alt="Maya and Alex discuss a delayed renewal reminder in a Slack channel on a phone. The full conversation is available below."
+          width={1254}
+          height={1254}
+          loading="lazy"
+          decoding="async"
+        />
+        <details className="ft-example-transcript">
+          <summary>Read the conversation</summary>
+          <p className="ft-example-chat-day">
+            #product-team · Thursday morning
+          </p>
+          <ol className="ft-example-messages">
+            <li>
+              <span className="ft-example-avatar" aria-hidden="true">
+                M
+              </span>
+              <div>
+                <p className="ft-example-message-byline">
+                  <strong>Maya</strong>
+                  <span>PM</span>
+                  <span>9:14 AM</span>
+                </p>
+                <p>
+                  Support asked about the renewal reminder again. Are we close?
+                </p>
+              </div>
+            </li>
+            <li>
+              <span
+                className="ft-example-avatar ft-example-avatar-dev"
+                aria-hidden="true"
+              >
+                A
+              </span>
+              <div>
+                <p className="ft-example-message-byline">
+                  <strong>Alex</strong>
+                  <span>Developer</span>
+                  <span>9:16 AM</span>
+                </p>
+                <p>
+                  The code’s been ready since Tuesday. Still waiting on a
+                  review.
+                </p>
+              </div>
+            </li>
+            <li>
+              <span className="ft-example-avatar" aria-hidden="true">
+                M
+              </span>
+              <div>
+                <p className="ft-example-message-byline">
+                  <strong>Maya</strong>
+                  <span>PM</span>
+                  <span>9:17 AM</span>
+                </p>
+                <p>Can we just get reviews done faster?</p>
+              </div>
+            </li>
+            <li>
+              <span
+                className="ft-example-avatar ft-example-avatar-dev"
+                aria-hidden="true"
+              >
+                A
+              </span>
+              <div>
+                <p className="ft-example-message-byline">
+                  <strong>Alex</strong>
+                  <span>Developer</span>
+                  <span>9:18 AM</span>
+                </p>
+                <p>...</p>
+              </div>
+            </li>
+          </ol>
+        </details>
       </div>
       <div className="ft-example-intro">
         <p className="ft-collection-eyebrow">A short example · fictional</p>
-        <h2 id="delivery-example-title">Let’s follow that piece of work.</h2>
+        <h2 id="delivery-example-title">
+          Can we just get reviews done faster?
+        </h2>
         <p>
           Follow one piece of work. Look at what happened, ask what kept it
           stuck, then prepare something you can discuss.
