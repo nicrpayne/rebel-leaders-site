@@ -111,9 +111,10 @@ export default function ChapterGuide({ slug }: { slug: string }) {
           <p className="mt-6 font-ui text-xs text-[var(--ft-muted)]">
             By Nic Payne
           </p>
-          <p className="mt-3 max-w-2xl font-ui text-xs leading-6 text-[var(--ft-muted)]">
+          <p className="mt-3 max-w-3xl font-ui text-xs leading-6 text-[var(--ft-muted)]">
             Times are approximate and cover the reading here. Allow longer for
-            your own notes and conversations. Use the sections you need.
+            your own notes and conversations.{" "}
+            <span className="inline-block">Use the sections you need.</span>
           </p>
         </div>
       </header>
