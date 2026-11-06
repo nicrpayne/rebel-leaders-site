@@ -7,10 +7,8 @@ import superjson from "superjson";
 import App from "./App";
 import { getLoginUrl } from "./const";
 import { SessionProvider } from "./contexts/SessionContext";
-import { initPostHog } from "./lib/analytics";
 import "./index.css";
 
-initPostHog();
 
 const preloadRetryParam = "__asset_retry";
 const currentUrl = new URL(window.location.href);

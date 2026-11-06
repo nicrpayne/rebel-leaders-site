@@ -16,6 +16,7 @@
 
 import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import { useLocation } from "wouter";
+import { trackEvent } from "@/lib/analytics";
 import MirrorShell from "@/components/workbench/MirrorShell";
 import DesktopOnly from "@/components/workbench/DesktopOnly";
 import {
@@ -960,6 +961,7 @@ export default function MirrorFlow() {
       result.adaptive_question_used = adaptiveQuestionUsed;
 
       setMirrorResult(result);
+      trackEvent("mirror_completed");
       setPhase("scoring");
 
       localStorage.setItem("mirrorResult", JSON.stringify(result));
@@ -1131,7 +1133,10 @@ export default function MirrorFlow() {
               }}
             >
               <button
-                onClick={() => setPhase("core_questions")}
+                onClick={() => {
+                  trackEvent("mirror_started");
+                  setPhase("core_questions");
+                }}
                 className="px-10 py-4 border transition-all duration-500"
                 style={{
                   fontFamily: "'Cormorant Garamond', serif",

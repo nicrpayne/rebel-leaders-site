@@ -24,7 +24,10 @@ export default function Privacy() {
         </p>
         <h2 className="mt-10 font-display text-3xl font-semibold text-parchment">Site analytics and browser settings</h2>
         <p className="mt-4 font-ui text-base leading-7 text-parchment-dim">
-          On the main site, we use PostHog to count page visits and selected actions, such as starting a Gravitas scan. It receives browser and device details, the name of the page, and some tool results. When you sign in, we use an account ID to connect those events. We keep session replay off and exclude what you type from analytics. The main site’s analytics can run even when Do Not Track is on.
+          On the main site, we count visits to public pages, which links visitors follow, and when a tool is opened, started, or completed. We estimate active time on each page while its tab is visible and focused. We pause the count after one minute without activity. A browser can tell us that someone is using the page without sending the keys they press or the words they type.
+        </p>
+        <p className="mt-4 font-ui text-base leading-7 text-parchment-dim">
+          PostHog uses the connection’s IP address and browser information to estimate daily visitors without analytics cookies. We send page names and broad screen sizes. We keep account IDs, email addresses, assessment scores, and written answers out of these measurements. Session replay is off. We skip analytics when your browser sends Do Not Track or Global Privacy Control.
         </p>
         <p className="mt-4 font-ui text-base leading-7 text-parchment-dim">
           Field Tools uses PostHog only on selected public sales pages. We count visits, selected clicks, scrolling, and time on the page without analytics cookies. We skip these measurements when your browser sends Do Not Track or Global Privacy Control. We exclude Guides, Labs, and sign-in pages from these measurements and from session replay.

@@ -10,7 +10,7 @@ import PixelDivider from "@/components/PixelDivider";
 import DialogueBox from "@/components/DialogueBox";
 import { usePageTracker } from "@/hooks/usePageTracker";
 import { useGame } from "@/contexts/GameContext";
-import { events } from "@/lib/analytics";
+import { trackEvent } from "@/lib/analytics";
 // Original Workbench desk art is awaiting recovery. Keep the branded gradient
 // rather than requesting an unavailable temporary-host image.
 const HERO_IMG: string | null = null;
@@ -440,7 +440,7 @@ function PluginCard({ plugin, hasGravitasSignal, hasSubmittedToWall }: {
 
   const cardContent = (
     <div
-      onClick={!isActive && !isWall ? () => events.workbenchLockedClicked(plugin.id) : undefined}
+      onClick={!isActive && !isWall ? () => trackEvent("workbench_locked_plugin_clicked") : undefined}
       className={`group relative bg-card border transition-all duration-500 flex flex-col h-full ${
         mirrorRevealed || wallRevealed
           ? "border-gold/50 cursor-pointer hover:-translate-y-1 hover:shadow-[0_0_40px_-8px_rgba(197,160,89,0.35)] hover:border-gold"

@@ -9,7 +9,7 @@ import { calculateScore } from "@/lib/workbench/scoring";
 import { cn } from "@/lib/utils";
 import DesktopOnly from "@/components/workbench/DesktopOnly";
 import { trpcVanilla } from "@/lib/trpc-vanilla";
-import { events } from "@/lib/analytics";
+import { trackEvent } from "@/lib/analytics";
 
 type ScanMode = "SCAN" | "DEEP_SCAN";
 
@@ -322,7 +322,7 @@ export default function GravityCheck() {
         force: results.force,
         fullPayload: { ...results, answers: newAnswers },
       }).catch(() => { /* localStorage is the fallback — swallow silently */ });
-      events.gravitasCompleted(results.archetype, results.leak);
+      trackEvent("gravitas_completed");
       setLocation("/workbench/results");
     } else {
       setCurrentQuestionIndex((prev) => prev + 1);
@@ -355,7 +355,7 @@ export default function GravityCheck() {
           </a>
         }
       >
-        <ModeSelect onSelect={(mode) => { events.gravitasStarted(mode); setScanMode(mode); }} />
+        <ModeSelect onSelect={(mode) => { trackEvent("gravitas_started"); setScanMode(mode); }} />
       </GravitasShell>
       </>
     );

@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'wouter';
 import { trpc } from '@/lib/trpc';
 import { useSession } from '@/contexts/SessionContext';
-import { identifyUser } from '@/lib/analytics';
 
 export default function AuthVerify() {
   const [, setLocation] = useLocation();
@@ -40,7 +39,6 @@ export default function AuthVerify() {
           localStorage.removeItem('gravitas_pending_save');
           localStorage.removeItem('mirrorResult');
           localStorage.removeItem('pending_save_codex');
-          identifyUser(data.user.id);
           const redirectTo = localStorage.getItem("auth_redirect_after_verify") ?? "/workbench/results";
           localStorage.removeItem("auth_redirect_after_verify");
           setTimeout(() => setLocation(redirectTo), 3000);

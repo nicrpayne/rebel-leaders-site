@@ -12,7 +12,6 @@ import { useLocation, Link } from "wouter";
 import { AnimatePresence, motion } from "framer-motion";
 import AchievementsPanel from "./AchievementsPanel";
 import { trpc } from "@/lib/trpc";
-import { resetUser } from "@/lib/analytics";
 import { CODEX_ENTRIES } from "@/lib/workbench/codex-data";
 
 /* ─── Time Formatter ─── */
@@ -326,7 +325,7 @@ export default function GameHud() {
                       {currentUser.email}
                     </span>
                     <button
-                      onClick={() => logoutMutation.mutate(undefined, { onSuccess: () => { resetUser(); window.location.reload(); } })}
+                      onClick={() => logoutMutation.mutate(undefined, { onSuccess: () => window.location.reload() })}
                       className="font-pixel text-[7px] text-parchment-dim/30 hover:text-gold/60 tracking-wider transition-colors shrink-0"
                     >
                       SIGN OUT

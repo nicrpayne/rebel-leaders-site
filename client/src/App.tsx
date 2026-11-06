@@ -2,8 +2,9 @@ import { Toaster } from "@/components/ui/sonner";
 import { useClaimAnonymousResult } from "@/_core/hooks/useClaimAnonymousResult";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
-import { lazy, Suspense } from "react";
-import { Route, Switch, Redirect } from "wouter";
+import { lazy, Suspense, useLayoutEffect } from "react";
+import { Route, Switch, Redirect, useLocation } from "wouter";
+import { observePage } from "./lib/analytics";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { GameProvider } from "./contexts/GameContext";
@@ -45,6 +46,8 @@ function RouteLoading() {
 }
 
 function Router() {
+  const [location] = useLocation();
+  useLayoutEffect(() => observePage(location), [location]);
   return (
     <Suspense fallback={<RouteLoading />}>
       <Switch>
