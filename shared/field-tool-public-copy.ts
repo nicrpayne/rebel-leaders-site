@@ -3,11 +3,17 @@ export const FIELD_TOOLS_PUBLIC_COPY = {
   headline: "Everyone’s busy.",
   accent: "The work’s still stuck.",
   description:
-    "Practical guides and interactive tools to work out what’s holding things up—and prepare the conversation or change that could move it forward.",
+    "Field Guides and interactive Labs to work out what’s holding things up—and prepare the conversation or change that could move it forward.",
 };
 
-export const AI_APP_UPDATES =
-  "All future software updates and upgrades to both apps are included.";
+export function fieldToolKitLabel(slug: string) {
+  return slug === "ai-stalemate" ? "Field Guide and interactive Labs" : "Field Guide and interactive Lab";
+}
+
+export const AI_LABS = "two interactive Labs, the Conversation Companion and the Delivery Map";
+
+export const AI_LAB_UPDATES =
+  "All future software updates and upgrades to both Labs are included.";
 
 export const LAB_UPDATES =
   "Your purchase includes all future software updates and upgrades to this Lab.";

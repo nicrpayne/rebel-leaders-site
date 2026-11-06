@@ -1,3 +1,4 @@
+import { fieldToolKitLabel } from "@shared/field-tool-public-copy";
 import { useState, type FormEvent } from "react";
 import { ArrowRight, Gift } from "lucide-react";
 import { trpc } from "@/lib/trpc";
@@ -70,7 +71,7 @@ export default function FieldToolGiftForm({
           <Gift size={20} aria-hidden="true" /> Give them {name}.
         </h2>
         <p className="mt-3 leading-6 text-[var(--ft-muted)]">
-          They get their own Field Guide and Lab. To give another gift, come
+          They get their own {fieldToolKitLabel(slug)}. To give another gift, come
           back and choose “Gift this” again.
         </p>
       </div>

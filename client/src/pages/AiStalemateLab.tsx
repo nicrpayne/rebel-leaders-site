@@ -15,21 +15,20 @@ export default function AiStalemateLab({ audience }: { audience: Audience }) {
           <header>
             <p className="ai-lab-eyebrow">
               AI STALEMATE / {audience === "pm" ? "PM" : "LEAD DEVELOPER"}{" "}
-              EDITION / LAB
+              EDITION / LABS
             </p>
             <h1>
               What would help you <em>move forward?</em>
             </h1>
             <p>
-              Get ready for the AI conversation, or explore why delivery still
-              feels hard. Start with the situation you're in. You can use either
-              path on its own.
+              Choose a Lab for the situation you’re in. Use the Conversation Companion
+              to prepare for a discussion or the Delivery Map to follow a piece of work.
             </p>
           </header>
-          <section className="ai-lab-paths" aria-label="Choose a Lab path">
+          <section className="ai-lab-paths" aria-label="Choose a Lab">
             <article>
               <MessageCircle size={25} aria-hidden="true" />
-              <p className="ai-lab-eyebrow">YOUR INTERACTIVE GUIDE COMPANION</p>
+              <p className="ai-lab-eyebrow">CONVERSATION COMPANION</p>
               <h2>Prepare your conversation</h2>
               <p>
                 {audience === "pm"
@@ -51,7 +50,7 @@ export default function AiStalemateLab({ audience }: { audience: Audience }) {
             </article>
             <article className="ai-lab-delivery-card">
               <Route size={25} aria-hidden="true" />
-              <p className="ai-lab-eyebrow">FOLLOW THE WORK</p>
+              <p className="ai-lab-eyebrow">DELIVERY MAP</p>
               <h2>Find where work gets stuck</h2>
               <p className="ai-lab-frustration">
                 “We're all busy. Why does everything still take so long?”
@@ -75,7 +74,7 @@ export default function AiStalemateLab({ audience }: { audience: Audience }) {
               <h2>Your Field Guide is here when you need it.</h2>
               <p>
                 Read the perspective and worked examples, then bring your own
-                situation to either Lab path. You don't have to finish the Guide
+                situation to either Lab. You don't have to finish the Guide
                 before starting.
               </p>
             </div>

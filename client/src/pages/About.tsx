@@ -167,7 +167,7 @@ export default function About() {
             <p className="font-pixel text-[8px] tracking-wider text-gold/60 mb-4">PUT IT TO WORK</p>
             <h2 id="field-tools-title" className="font-display text-3xl text-parchment mb-4">Field Tools</h2>
             <p className="font-display text-base leading-relaxed text-parchment-dim/80 mb-4">
-              Practical guides and interactive tools for the difficult moments of leading people.
+              Field Guides and interactive Labs for the difficult moments of leading people.
               Understand what’s happening, prepare for the conversation, and find a useful next step.
             </p>
             <p className="font-display text-sm leading-relaxed text-parchment-dim/60 mb-6">

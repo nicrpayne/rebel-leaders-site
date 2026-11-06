@@ -17,7 +17,7 @@ export default function FieldToolsNav() {
     ? [
         [myTool, "Start"],
         [myTool.replace(/\/access$/, "/guide"), "Field Guide"],
-        [myTool.replace(/\/access$/, "/lab"), "Lab"],
+        [myTool.replace(/\/access$/, "/lab"), tool?.slug === "ai-stalemate" ? "Labs" : "Lab"],
       ]
     : [
         ["/field-tools", "Field Tools"],

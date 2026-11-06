@@ -45,6 +45,22 @@
   max-width: 1600px;
   margin-inline: auto;
 }
+.ft-welcome-bookmark {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 18px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  background: var(--ft-tint);
+  color: var(--ft-ink);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.ft-welcome-bookmark svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
 .ft-welcome-copy {
   align-self: center;
   padding: 64px clamp(32px, 5vw, 80px) 72px;

@@ -1,5 +1,6 @@
+import { fieldToolKitLabel } from "@shared/field-tool-public-copy";
 import FieldToolLink from "@/components/field-tools/FieldToolLink";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AVAILABLE_FIELD_TOOL_OFFERS } from "@/lib/field-tools";
 import { trpc } from "@/lib/trpc";
 import FieldToolsNav from "@/components/field-tools/FieldToolsNav";
@@ -11,43 +12,55 @@ export default function FieldToolSignIn() {
   const [token] = useState(() =>
     new URLSearchParams(window.location.hash.slice(1)).get("token")
   );
+  const attempted = useRef(false);
   const redeem = trpc.fieldTools.redeemAccess.useMutation({
     onSuccess: r => {
-      window.history.replaceState({}, "", "/field-tools/sign-in");
-      window.location.assign(`/field-tools/${r.slug}/access`);
+      if (!r.needsConfirmation) window.location.replace(`/field-tools/${r.slug}/access`);
     },
   });
+  const { mutate } = redeem;
+  useEffect(() => {
+    // Wait for the buyer to open the tab before spending a single-use link.
+    function openWhenVisible() {
+      if (!token || document.visibilityState !== "visible" || attempted.current) return;
+      attempted.current = true;
+      mutate({ token, automatic: true });
+    }
+    openWhenVisible();
+    document.addEventListener("visibilitychange", openWhenVisible);
+    return () => document.removeEventListener("visibilitychange", openWhenVisible);
+  }, [mutate, token]);
+
   return (
     <>
       <FieldToolsNav />
       <main className="min-h-screen bg-[var(--ft-paper)] px-5 pb-20 pt-14 text-[var(--ft-ink)]">
         {token ? (
           <div className="mx-auto max-w-xl border border-[var(--ft-line)] bg-[var(--ft-tint)] p-8">
-            <h1 className="font-display text-4xl">
-              You’re in the right place.
-            </h1>
-            <p className="mt-4 leading-7">
-              Your Guide and Lab are ready. Open your Field Tool below, then
-              start with what would help you today.
-            </p>
-            <button
-              disabled={redeem.isPending}
-              className="ft-button ft-button-gold mt-6"
-              onClick={() => redeem.mutate({ token })}
-            >
-              {redeem.isPending ? "Opening…" : "Open my Field Tool"}
-            </button>
-            {redeem.error && (
-              <p role="alert" className="mt-5">
-                {redeem.error.message}
-              </p>
+            {redeem.error ? (
+              <>
+                <h1 className="font-display text-4xl">Let’s get you a fresh link.</h1>
+                <p role="alert" className="mt-4 leading-7">{redeem.error.message}</p>
+                <FieldToolLink
+                  href={`/field-tools/${slug}${slug === "ai-stalemate" ? "/" + audience : ""}/access`}
+                  className="ft-button ft-button-gold mt-6"
+                >
+                  Go to my welcome page
+                </FieldToolLink>
+              </>
+            ) : redeem.data?.needsConfirmation ? (
+              <>
+                <h1 className="font-display text-4xl">Sign in on this browser.</h1>
+                <p className="mt-4 leading-7">
+                  Open your welcome page to get to your {fieldToolKitLabel(slug)}.
+                </p>
+                <button disabled={redeem.isPending} className="ft-button ft-button-gold mt-6" onClick={() => mutate({ token })}>
+                  Sign in
+                </button>
+              </>
+            ) : (
+              <p role="status" className="font-display text-3xl">Opening your welcome page…</p>
             )}
-            <FieldToolLink
-              href={`/field-tools/${slug}${slug === "ai-stalemate" ? "/" + audience : ""}/access`}
-              className="mt-6 block underline"
-            >
-              Request a fresh access link
-            </FieldToolLink>
           </div>
         ) : !params.get("slug") ? (
           <section className="mx-auto max-w-2xl">

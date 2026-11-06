@@ -1,4 +1,4 @@
-import { AI_APP_UPDATES } from "@shared/field-tool-public-copy";
+import { AI_LABS, AI_LAB_UPDATES } from "@shared/field-tool-public-copy";
 import FieldToolLink from "@/components/field-tools/FieldToolLink";
 import FieldToolSalesProof, {
   FieldToolBuyerQuestions,
@@ -59,7 +59,7 @@ export default function AIProductPage({ audience }: { audience: Audience }) {
             tone="dark"
           />
           <p className="ai-hero-note">
-            A practical Guide and interactive tools · $47, one time
+            A Field Guide and two interactive Labs · $47, one time
           </p>
           <FieldToolLink className="ai-hero-example-link" href="#delivery-example">
             See how the Delivery Map works →
@@ -85,7 +85,7 @@ export default function AIProductPage({ audience }: { audience: Audience }) {
           </p>
           <p>
             Your {audience === "pm" ? "Product Manager" : "Lead Developer"} Field
-            Guide, the Conversation Companion, and the Delivery Map. {AI_APP_UPDATES}
+            Guide and {AI_LABS}. {AI_LAB_UPDATES}
           </p>
           <p>
             Start on your own, then take your notes into the conversation. Your{" "}

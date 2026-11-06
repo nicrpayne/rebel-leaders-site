@@ -167,7 +167,7 @@ export const AI_STALEMATE_GUIDE_PAGES: AIGuidePage[] = [
       },
       {
         title: "Then check what actually happened",
-        body: "Did users use it? Did it help? Count checking, fixes, and later support as well as drafting. Record elapsed delivery time separately. The Lab’s minutes table can help compare one task; it cannot establish the product’s annual value.",
+        body: "Did users use it? Did it help? Count checking, fixes, and later support as well as drafting. Record elapsed delivery time separately. The Conversation Companion’s minutes table can help compare one task; it cannot establish the product’s annual value.",
       },
     ],
     callout:
@@ -236,10 +236,10 @@ export const AI_STALEMATE_GUIDE_PAGES: AIGuidePage[] = [
       "PAUSE until the people and budget are agreed. The next move is specific and reviewable. They haven’t measured an AI productivity gain.",
   },
   {
-    eyebrow: "09 / USE THE LAB",
+    eyebrow: "09 / USE THE LABS",
     title: "Bring one real conversation.",
     intro:
-      "Open the Lab and choose Prepare your conversation to use the steps below. Start where it helps; you don’t need to fill every box or read the whole Guide first.",
+      "Your Field Guide comes with two interactive Labs. Open the Conversation Companion for the steps below. Start where it helps; you don’t need to fill every box or read the whole Guide first.",
     sections: [
       {
         title: "1. Before you talk",
@@ -263,7 +263,7 @@ export const AI_STALEMATE_GUIDE_PAGES: AIGuidePage[] = [
       },
       {
         title: "Or find where work gets stuck",
-        body: "Choose the Lab’s Delivery Map to follow one real piece of work from idea to use. Explore where it waited or went back, what might explain that, and what you still need to ask. Leave with a question to check, a conversation to have, or a small change to propose. Either Lab path can stand alone.",
+        body: "Open the Delivery Map to follow one real piece of work from idea to use. Explore where it waited or went back, what might explain that, and what you still need to ask. Leave with a question to check, a conversation to have, or a small change to propose. You can use either Lab on its own.",
       },
     ],
     callout:

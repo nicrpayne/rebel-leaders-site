@@ -107,7 +107,7 @@ def cover(c):
     c.setFillColor(INK);c.setFont("GuideBold",11);c.drawString(M,128,"Nic Payne")
     c.setFont("GuideSans",9);c.drawString(M,109,f"For you, the {ROLE.lower()}")
     c.setFillColor(FOREST);c.setFont("GuideSans",8)
-    c.linkURL(LAB_URL,(M,25,W-M,76),relative=0);c.drawString(M,76,"OPEN YOUR "+ROLE+" LAB >")
+    c.linkURL(LAB_URL,(M,25,W-M,76),relative=0);c.drawString(M,76,"OPEN YOUR INTERACTIVE LABS >")
     c.setFillColor(MUTED)
     c.setFont("GuideSans",7)
     c.drawString(M,58,"Reading times are approximate. Allow longer for notes and conversations.")
@@ -218,7 +218,7 @@ def companion(c, data, number):
     else:
         c.setFillColor(FOREST)
         c.setFont("GuideBold", 8)
-        c.drawString(M, y, "USE THESE QUESTIONS IN YOUR LAB >")
+        c.drawString(M, y, "USE THESE QUESTIONS IN THE CONVERSATION COMPANION >")
         c.linkURL(LAB_URL+f"?step={data['step']}", (M,y-4,W-M,y+10), relative=0)
         y -= 18
     assert y >= 65, f"Companion overlaps footer: {data['title']}"

@@ -103,7 +103,7 @@ export function FieldToolBuyerQuestions({
       ? [
           [
             "Do we both need to buy an edition?",
-            `No. Choose the ${edition} edition for your role. You can use it on your own and share your questions and exported notes with ${counterpart}. They don’t need to buy anything to join the conversation. Each purchase gives one person access to their own Guide and interactive tools.`,
+            `No. Choose the ${edition} edition for your role. You can use it on your own and share your questions and exported notes with ${counterpart}. They don’t need to buy anything to join the conversation. Each purchase gives one person access to their own Field Guide and interactive Labs.`,
           ],
         ]
       : []),
@@ -132,7 +132,7 @@ export function FieldToolBuyerQuestions({
     [
       "How does access work?",
       audience
-        ? `After purchase, use your email—or the email your gift was sent to—to request a sign-in link. It opens the ${edition} Guide and both Lab paths. The other edition is sold separately.`
+        ? `After purchase, use your email—or the email your gift was sent to—to request a sign-in link. It opens the ${edition} Field Guide and both Labs. The other edition is sold separately.`
         : "After purchase, use your email—or the email your gift was sent to—to request a sign-in link.",
     ],
     [
@@ -142,7 +142,7 @@ export function FieldToolBuyerQuestions({
     [
       "Do I need an AI subscription?",
       audience
-        ? `No. You make the choices and write the notes. The Lab helps you explore delivery problems and prepare a next step to discuss with ${counterpart}. You can copy or download your work.`
+        ? `No. You make the choices and write the notes. The Labs help you explore delivery problems and prepare a next step to discuss with ${counterpart}. You can copy or download your work.`
         : "No. You write the answers. The Lab puts them into documents you can review, copy, download, or print.",
     ],
     [

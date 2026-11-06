@@ -1,4 +1,4 @@
-import { AI_APP_UPDATES, LAB_UPDATES } from "@shared/field-tool-public-copy";
+import { AI_LAB_UPDATES, LAB_UPDATES } from "@shared/field-tool-public-copy";
 import FieldToolLink from "@/components/field-tools/FieldToolLink";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -59,9 +59,14 @@ export default function FieldToolWelcome({
           </p>
           <h1 id="welcome-title">{copy.heading}</h1>
           <p className="ft-welcome-intro">{copy.intro}</p>
+          <aside className="ft-welcome-bookmark" aria-label="Returning to your tool">
+            <Bookmark size={19} aria-hidden="true" />
+            <p><strong>Bookmark this welcome page.</strong> You can also return here
+              from your receipt or gift email.</p>
+          </aside>
           <div className="ft-welcome-actions">
             <FieldToolLink href={`${base}/lab`} className="ft-welcome-primary">
-              Open my Lab <ArrowRight size={18} aria-hidden="true" />
+              Open my {slug === "ai-stalemate" ? "Labs" : "Lab"} <ArrowRight size={18} aria-hidden="true" />
             </FieldToolLink>
             {slug === "ai-stalemate" && (
               <FieldToolLink href={`${base}/guide`} className="ft-welcome-guide-link">
@@ -71,9 +76,8 @@ export default function FieldToolWelcome({
           </div>
           {slug === "ai-stalemate" && (
             <p className="ft-welcome-start-note">
-              Use the Conversation Companion to prepare for a conversation or the
-              Delivery Map to find where work gets stuck. Start with whichever
-              helps today. {AI_APP_UPDATES}
+              Choose the Lab that helps today. Use the Conversation Companion to
+              prepare for a conversation or the Delivery Map to find where work gets stuck. {AI_LAB_UPDATES}
             </p>
           )}
         </div>
@@ -93,25 +97,6 @@ export default function FieldToolWelcome({
       </section>
 
       <div className="ft-welcome-inner">
-        <aside
-          className="my-8 flex items-start gap-3 border-y border-[var(--ft-line)] py-5 font-ui text-sm leading-7 text-[var(--ft-muted)]"
-          aria-label="Returning to your tool"
-        >
-          <Bookmark
-            size={19}
-            className="mt-1 shrink-0 text-[var(--ft-ink)]"
-            aria-hidden="true"
-          />
-          <p>
-            <strong className="text-[var(--ft-ink)]">
-              Bookmark this welcome page.
-            </strong>{" "}
-            It’s your way back to the Guide and Lab. If you’re signed out, use
-            your purchase or gift email for a fresh sign-in link. The email link
-            expires after 15 minutes; your purchase access doesn’t expire with
-            it.
-          </p>
-        </aside>
         <section
           className="ft-welcome-outcomes"
           aria-labelledby="outcomes-title"
@@ -238,7 +223,7 @@ export default function FieldToolWelcome({
           <details>
             <summary>Can I share what I make?</summary>
             <p>
-              Yes. The Lab helps you turn your answers into documents you can
+              Yes. You can turn your answers into documents you can
               copy, download, or print. Read them over, make them your own, then
               share them with the people you want to talk to. Your private
               reflection stays out of those documents.

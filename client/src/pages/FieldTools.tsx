@@ -5,7 +5,7 @@ import FieldToolsFooter from "@/components/field-tools/FieldToolsFooter";
 import AIStalemateEditions from "@/components/field-tools/AIStalemateEditions";
 import AIKitPreview from "@/components/field-tools/AIKitPreview";
 import DeliveryExample from "@/components/field-tools/DeliveryExample";
-import { AI_APP_UPDATES, FIELD_TOOLS_PUBLIC_COPY } from "@shared/field-tool-public-copy";
+import { AI_LABS, AI_LAB_UPDATES, FIELD_TOOLS_PUBLIC_COPY } from "@shared/field-tool-public-copy";
 import { useSalesPageAnchor } from "@/components/field-tools/useSalesPageAnchor";
 import { UPCOMING_FIELD_TOOLS } from "@/lib/field-tools";
 
@@ -37,7 +37,7 @@ export default function FieldTools() {
         <div className="ft-collection-preview">
           <AIKitPreview audience="pm" />
           <p>
-            Inside AI Stalemate: the Guide and interactive tools.
+            Each AI Stalemate edition includes a Field Guide and interactive Labs.
             <br />
             Start with the part you need today.
           </p>
@@ -66,8 +66,7 @@ export default function FieldTools() {
             through with you.
           </p>
           <p>
-            $47 USD per edition, one time. Each edition includes the Conversation
-            Companion and the Delivery Map. {AI_APP_UPDATES}
+            $47 USD per edition, one time. Includes {AI_LABS}. {AI_LAB_UPDATES}
             <br />
             <FieldToolLink href="/field-tools/purchase-help">
               60-day full refund. No explanation needed.

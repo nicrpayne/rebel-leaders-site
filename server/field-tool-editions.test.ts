@@ -7,6 +7,8 @@ import {
   hasFieldTool,
   registerFieldToolCommerce,
   requestBuyerLink,
+  hashToken,
+  LINK_REQUEST_COOKIE,
   parseLemonOrder,
 } from "./field-tool-commerce";
 import { fieldToolsRouter } from "./field-tools";
@@ -169,7 +171,7 @@ describe("separately purchased AI editions", () => {
     "tools.rebel-leader.com",
     "field-tools-reviewers-production.up.railway.app",
   ])(
-    "emails the sign-in and bookmark links for the trusted requesting host %s",
+    "pairs the emailed sign-in link with the requesting browser on %s",
     async hostname => {
       const insert = buyer(["ai-stalemate/lead-dev"]);
       insert.mockReturnValue({ values: vi.fn().mockResolvedValue(undefined) });
@@ -180,9 +182,10 @@ describe("separately purchased AI editions", () => {
         "FIELD_TOOL_LEGACY_ORIGINS",
         "https://field-tools-reviewers-production.up.railway.app"
       );
+      const cookie = vi.fn();
       const client = fieldToolsRouter.createCaller({
         req: { ...req, hostname } as any,
-        res: { setHeader: vi.fn() } as any,
+        res: { setHeader: vi.fn(), cookie } as any,
         user: null,
       });
       await client.requestAccess({
@@ -194,11 +197,27 @@ describe("separately purchased AI editions", () => {
       expect(message.text).toContain(
         `https://${hostname}/field-tools/sign-in?slug=ai-stalemate&audience=lead-dev#token=`
       );
-      expect(message.text).toContain(
-        `https://${hostname}/field-tools/ai-stalemate/lead-dev/access`
-      );
+      const token = message.text.match(/#token=([a-f0-9]{64})/)[1];
+      expect(cookie).toHaveBeenCalledWith(LINK_REQUEST_COOKIE, hashToken(token), expect.objectContaining({ httpOnly: true, maxAge: 900000 }));
     }
   );
+  it("only auto-redeems in the browser that requested this exact link", async () => {
+    const token = "c".repeat(64);
+    const transaction = vi.fn().mockResolvedValue({ session: "signed-in", slug: "ai-stalemate/pm" });
+    mocks.getDb.mockResolvedValue({ transaction });
+    const client = (marker: string) => fieldToolsRouter.createCaller({
+      req: { ...req, headers: { cookie: `${LINK_REQUEST_COOKIE}=${marker}` } },
+      res: { cookie: vi.fn() } as any,
+      user: null,
+    });
+    for (const other of ["", hashToken("a different link")]) {
+      await expect(client(other).redeemAccess({ token, automatic: true })).resolves.toEqual({ needsConfirmation: true });
+    }
+    expect(transaction).not.toHaveBeenCalled();
+    await expect(client(hashToken(token)).redeemAccess({ token, automatic: true })).resolves.toMatchObject({ slug: "ai-stalemate/pm" });
+    await expect(client("").redeemAccess({ token })).resolves.toMatchObject({ slug: "ai-stalemate/pm" });
+    expect(transaction).toHaveBeenCalledTimes(2);
+  });
   it("uses the paid variant rather than a custom audience to choose access", () => {
     const payment = {
       meta: {

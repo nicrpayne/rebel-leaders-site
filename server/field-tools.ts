@@ -25,6 +25,8 @@ import {
   purchasedSlugs,
   hasFieldTool,
   requestBuyerLink,
+  LINK_REQUEST_COOKIE,
+  linkRequestedHere,
   redeemBuyerLink,
   buyerCookie,
   BUYER_COOKIE,
@@ -139,13 +141,17 @@ export const fieldToolsRouter = router({
       if (!Object.hasOwn(FIELD_LABS, input.slug))
         throw new TRPCError({ code: "NOT_FOUND" });
       try {
-        await requestBuyerLink(
+        const requestHash = await requestBuyerLink(
           input.email,
           input.slug,
           ctx.req.ip ?? ctx.req.socket.remoteAddress ?? "unknown",
           input.audience,
           ctx.req.hostname
         );
+        ctx.res.cookie(LINK_REQUEST_COOKIE, requestHash, {
+          ...buyerCookie,
+          maxAge: 15 * 60 * 1000,
+        });
       } catch (e) {
         throw new TRPCError({
           code: "BAD_REQUEST",
@@ -155,12 +161,18 @@ export const fieldToolsRouter = router({
       return { success: true };
     }),
   redeemAccess: publicProcedure
-    .input(z.object({ token: z.string().regex(/^[a-f0-9]{64}$/) }))
+    .input(z.object({
+      token: z.string().regex(/^[a-f0-9]{64}$/),
+      automatic: z.boolean().optional(),
+    }))
     .mutation(async ({ input, ctx }) => {
       try {
+        // A mail scanner or another browser cannot consume a link on page load.
+        if (input.automatic && !linkRequestedHere(ctx.req, input.token))
+          return { needsConfirmation: true } as const;
         const result = await redeemBuyerLink(input.token);
         ctx.res.cookie(BUYER_COOKIE, result.session, buyerCookie);
-        return { slug: result.slug };
+        return { needsConfirmation: false, slug: result.slug } as const;
       } catch (e) {
         throw new TRPCError({
           code: "UNAUTHORIZED",

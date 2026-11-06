@@ -24,14 +24,14 @@ export function fieldToolPageMetadata(requestPath: string) {
       : path === "/field-tools/ai-stalemate/pm"
         ? {
             title: "AI Stalemate for Product Managers — Rebel Leaders",
-            description: `${AI_STALEMATE_PUBLIC_COPY.pm.headline} Prepare the AI conversation and explore what’s holding delivery up. A Guide and interactive tools for Product Managers.`,
+            description: `${AI_STALEMATE_PUBLIC_COPY.pm.headline} Prepare the AI conversation and explore what’s holding delivery up. A Field Guide and two interactive Labs for Product Managers.`,
             image: "ai-stalemate-pm-share-v2.png",
             imageAlt: `AI Stalemate for Product Managers. ${AI_STALEMATE_PUBLIC_COPY.pm.headline} Nic Payne in his study.`,
           }
         : path === "/field-tools/ai-stalemate/lead-dev"
           ? {
               title: "AI Stalemate for Lead Developers — Rebel Leaders",
-              description: `${AI_STALEMATE_PUBLIC_COPY["lead-dev"].headline} Work through the engineering concerns and find what’s holding delivery up. A Guide and interactive tools for Lead Developers.`,
+              description: `${AI_STALEMATE_PUBLIC_COPY["lead-dev"].headline} Work through the engineering concerns and find what’s holding delivery up. A Field Guide and two interactive Labs for Lead Developers.`,
               image: "ai-stalemate-lead-dev-share-v1.png",
               imageAlt: `AI Stalemate for Lead Developers. ${AI_STALEMATE_PUBLIC_COPY["lead-dev"].headline} Nic Payne laughing in his study.`,
             }

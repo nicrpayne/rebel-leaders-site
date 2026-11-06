@@ -424,15 +424,14 @@ function LabSession({ slug }: { slug: string }) {
           <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
             <div>
               <p className="font-ui text-[10px] tracking-[0.22em] text-[var(--ft-muted)]">
-                {tool.eyebrow} / LAB
-                {slug === "ai-stalemate" ? " / CONVERSATION COMPANION" : ""}
+                {tool.eyebrow} / {slug === "ai-stalemate" ? "LABS / CONVERSATION COMPANION" : "LAB"}
               </p>
               {slug === "ai-stalemate" && (
                 <FieldToolLink
                   href={`${base}/lab`}
                   className="mt-4 inline-block text-sm text-[var(--ft-accent)] underline underline-offset-4"
                 >
-                  ← All Lab tools
+                  ← Back to Labs
                 </FieldToolLink>
               )}
               <h1 className="mt-4 font-display text-4xl font-semibold tracking-[-0.04em] md:text-5xl">

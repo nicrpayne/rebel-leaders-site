@@ -43,12 +43,12 @@ export default function FieldToolPurchaseHelp() {
             <h2 className="font-display text-3xl">What you’re buying</h2>
             <p className="mt-4">
               Each Field Tool is a one-time purchase of its Field Guide (online
-              and PDF) and interactive Lab. All future software updates and
-              upgrades to that Lab are included.
+              and PDF) and its interactive software. All future software updates and
+              upgrades to the Labs in your purchase are included.
             </p>
             <p className="mt-3">
-              In AI Stalemate, that covers the Conversation Companion and the
-              Delivery Map for your edition. The Product Manager and Lead Developer
+              Each AI Stalemate edition includes two interactive Labs, the
+              Conversation Companion and the Delivery Map. The Product Manager and Lead Developer
               editions are each $47 USD and sold separately. Any tax is shown at checkout.
             </p>
             <p className="mt-3">
@@ -64,7 +64,7 @@ export default function FieldToolPurchaseHelp() {
               Follow the link in your purchase receipt and use your checkout
               email to request a sign-in link. Gift recipients use the email the
               gift was sent to. You can sign in on another device to read the
-              Guide or use the Lab.
+              Guide or pick up your Lab work.
             </p>
             <p className="mt-3">
               If you can’t find your receipt or access email, check your spam

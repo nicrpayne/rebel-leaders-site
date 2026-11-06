@@ -3,7 +3,7 @@ import { fieldToolAccessEmail } from "./field-tool-email";
 
 describe("buyer email destinations", () => {
   it.each(["pm", "lead-dev"] as const)(
-    "keeps the %s bookmark separate from the single-use credential",
+    "offers one %s sign-in link and tells buyers where to bookmark",
     audience => {
       const welcome = `https://tools.example.com/field-tools/ai-stalemate/${audience}/access`;
       const mail = fieldToolAccessEmail({
@@ -16,8 +16,9 @@ describe("buyer email destinations", () => {
       expect(
         hrefs.filter(href => href.includes("one-use-secret"))
       ).toHaveLength(1);
-      expect(hrefs).toContain(welcome);
-      expect(mail.text).toContain(`Bookmark your welcome page: ${welcome}`);
+      expect(hrefs).not.toContain(welcome);
+      expect(mail.text).toContain("bookmark the welcome page with Nic’s photo");
+      expect(mail.text.match(/15 minutes/g)).toHaveLength(1);
       expect(
         hrefs.some(href =>
           href.includes(
@@ -35,7 +36,7 @@ describe("buyer email destinations", () => {
       signInUrl: "https://tools.example.com/field-tools/sign-in#token=test",
     });
     expect(mail.text).toContain("AI Stalemate · Lead Developer");
-    expect(mail.text).toContain("/ai-stalemate/lead-dev/access");
+    expect(mail.text).toContain("Your Field Guide and interactive Labs are ready.");
     expect(mail.text).not.toContain("/lead-dev/pm/");
   });
 });

@@ -1,6 +1,7 @@
+import { fieldToolKitLabel } from "@shared/field-tool-public-copy";
 import FieldToolLink from "@/components/field-tools/FieldToolLink";
 import { ownsFieldTool } from "../../../../shared/field-tool-entitlements";
-import { fieldToolBase, type Audience } from "@/lib/field-tool-paths";
+import type { Audience } from "@/lib/field-tool-paths";
 import {
   createContext,
   useContext,
@@ -101,7 +102,7 @@ export function FieldToolSignIn({
             </p>
             <p className="mt-4 font-ui text-sm leading-7 text-[var(--ft-muted)]">
               If this email has access to this edition, your link is on its way.
-              Open it to get into your Guide and Lab.
+              Open it to get into your {fieldToolKitLabel(slug)}.
             </p>
           </div>
           <p className="mt-5 font-ui text-sm leading-7 text-[var(--ft-muted)]">
@@ -144,7 +145,7 @@ export function FieldToolSignIn({
         <>
           <h1 className="font-display text-4xl">Glad you’re here.</h1>
           <p className="mt-4 font-ui text-sm leading-7 text-[var(--ft-muted)]">
-            Let’s get you into your Guide and Lab. Use the email you entered at
+            Let’s get you into your {fieldToolKitLabel(slug)}. Use the email you entered at
             checkout, or the email your gift was sent to. We’ll send you a
             secure sign-in link—no password to remember.
           </p>
@@ -191,25 +192,8 @@ export function FieldToolSignIn({
         </p>
       )}
       <p className="mt-5 font-ui text-xs leading-6 text-[var(--ft-muted)]">
-        Your sign-in link works once and expires in 15 minutes. Your purchase
-        access doesn’t expire with it. Bookmark{" "}
-        <FieldToolLink
-          className="underline"
-          href={`${fieldToolBase(slug, audience)}/access`}
-        >
-          your welcome page
-        </FieldToolLink>{" "}
-        and request a fresh link whenever you need one. You won’t need to buy
-        again.
+        Your sign-in link works once and expires in 15 minutes. You can request another anytime.
       </p>
-      <div className="mt-6 flex flex-wrap gap-5 font-ui text-sm underline">
-        {!sentTo && (
-          <FieldToolLink href={`${fieldToolBase(slug, audience)}/buy`}>
-            Get this Field Tool
-          </FieldToolLink>
-        )}
-        <FieldToolLink href={fieldToolBase(slug, audience)}>Back to the product</FieldToolLink>
-      </div>
       <p className="mt-6 font-ui text-xs leading-6 text-[var(--ft-muted)]">
         Trouble getting in?{" "}
         <FieldToolLink className="underline" href="mailto:hello@rebel-leader.com">
@@ -265,7 +249,7 @@ export default function FieldToolGate({
           >
             <p className="font-display text-3xl">Opening your Field Tool…</p>
             <p className="mt-3 font-ui text-sm text-[var(--ft-muted)]">
-              Checking access and loading your Guide and Lab.
+              Checking access and loading your {fieldToolKitLabel(slug)}.
             </p>
             <div
               aria-hidden="true"

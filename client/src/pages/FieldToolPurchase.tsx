@@ -1,4 +1,4 @@
-import { AI_APP_UPDATES, LAB_UPDATES } from "@shared/field-tool-public-copy";
+import { AI_LABS, AI_LAB_UPDATES, LAB_UPDATES } from "@shared/field-tool-public-copy";
 import FieldToolLink from "@/components/field-tools/FieldToolLink";
 import { fieldToolForPath } from "@/lib/field-tool-paths";
 import { fieldToolBase, type Audience } from "@/lib/field-tool-paths";
@@ -83,8 +83,7 @@ export default function FieldToolPurchase({
               {slug === "ai-stalemate" ? (
                 <>
                   Includes the {audience === "pm" ? "Product Manager" : "Lead Developer"}{" "}
-                  Field Guide (online and PDF), the Conversation Companion, and
-                  the Delivery Map. {AI_APP_UPDATES} Each edition is sold separately.
+                  Field Guide (online and PDF) and {AI_LABS}. {AI_LAB_UPDATES} Each edition is sold separately.
                 </>
               ) : (
                 <>Includes the Field Guide (online and PDF) and interactive Lab. {LAB_UPDATES}</>

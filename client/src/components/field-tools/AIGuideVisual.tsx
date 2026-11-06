@@ -67,7 +67,7 @@ export default function AIGuideVisual({
         className="mt-4 inline-block text-xs underline"
         href={`${base}/lab?step=${visual.step}`}
       >
-        Use these questions in the Lab →
+        Use these questions in the Conversation Companion →
       </FieldToolLink>
       {resources.length > 0 && (
         <details className="mt-6 border-t border-[var(--ft-line)] pt-4">

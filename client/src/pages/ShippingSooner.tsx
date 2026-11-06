@@ -121,7 +121,7 @@ export default function ShippingSooner({ audience }: { audience: Audience }) {
           <header className="shipping-heading">
             <div className="shipping-topline">
               <p className="shipping-eyebrow">
-                AI STALEMATE / LAB / FOLLOW THE WORK
+                AI STALEMATE / LABS / DELIVERY MAP
               </p>
               <FieldToolLink href="/field-tools/review">
                 Review desk <ArrowRight size={14} />
@@ -159,7 +159,7 @@ export default function ShippingSooner({ audience }: { audience: Audience }) {
             className="shipping-text-button journey-back"
             href={`${base}/lab`}
           >
-            ← All Lab tools
+            ← Back to Labs
           </FieldToolLink>
           {workspace !== "journey" && (
             <button
@@ -640,8 +640,7 @@ export default function ShippingSooner({ audience }: { audience: Audience }) {
             <div className="shipping-bottom">
               <span>
                 Your own proposals, plans, and numbers save on this browser
-                only. Download them to take them elsewhere. Your existing Lab is
-                still available.
+                only. Download them to take them elsewhere.
               </span>
               <FieldToolLink href={`${base}/guide`}>
                 Back to the Field Guide <ArrowRight size={14} />

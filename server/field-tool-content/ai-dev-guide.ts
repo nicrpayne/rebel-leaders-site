@@ -91,7 +91,7 @@ export const AI_DEV_GUIDE: AIGuidePage[] = [
   page(
     "04 / BEFORE YOU TALK",
     "Get clear on your own position.",
-    "You do not need a polished argument. You need a clear account of what concerns you, what supports it, and what you would recommend. The first Lab step is private preparation.",
+    "You do not need a polished argument. You need a clear account of what concerns you, what supports it, and what you would recommend. The first step in the Conversation Companion is private preparation.",
     [
       [
         "Separate what you know from what you expect",
@@ -212,7 +212,7 @@ export const AI_DEV_GUIDE: AIGuidePage[] = [
         "PM: “I can help with those people. I still want to understand whether we’re missing a faster option.” Lead: “Fair. Let’s compare an existing approved tool too. We haven’t agreed the spike yet. Can we come back Friday with the options and who is available?”",
       ],
     ],
-    "Afterward, write what was actually agreed, what is still your recommendation, and what you still see differently. The Lab’s Conversation Notes can help."
+    "Afterward, write what was actually agreed, what is still your recommendation, and what you still see differently. The Conversation Companion’s notes can help."
   ),
   page(
     "09 / OPTIONAL SPIKE",
@@ -281,7 +281,7 @@ export const AI_DEV_GUIDE: AIGuidePage[] = [
   page(
     "12 / PUT IT TO WORK",
     "Take a clear position into the conversation.",
-    "Open the Lab and choose Prepare your conversation for the steps below. Use the parts you need now; you don’t need an experiment plan or a finished Guide to start.",
+    "Your Field Guide comes with two interactive Labs. Open the Conversation Companion for the steps below. Use the parts you need now; you don’t need an experiment plan or a finished Guide to start.",
     [
       [
         "Before you talk",
@@ -297,7 +297,7 @@ export const AI_DEV_GUIDE: AIGuidePage[] = [
       ],
       [
         "Or find where work gets stuck",
-        "Choose the Lab’s Delivery Map to follow one real change from idea to use. Explore where it waited or came back for more work, what might explain that, and what has already been tried. Leave with a question to check, a conversation to have, or a small change to propose. You can use this path on its own or bring what you find into the AI conversation.",
+        "Open the Delivery Map to follow one real change from idea to use. Explore where it waited or came back for more work, what might explain that, and what has already been tried. Leave with a question to check, a conversation to have, or a small change to propose. You can use this path on its own or bring what you find into the AI conversation.",
       ],
     ],
     "The aim is a conversation where your expertise helps shape the decision and your PM’s context helps shape your recommendation."

@@ -106,7 +106,7 @@ export default function FieldToolsReview() {
             We’re all busy. Why does everything still take so long?
           </h2>
           <p className="mt-3 max-w-3xl text-sm leading-6 text-[var(--ft-muted)]">
-            One Lab, two ways in: prepare your AI conversation, or follow work
+            Two interactive Labs help you prepare your AI conversation or follow work
             from idea to use. The Delivery Map now explores previous attempts
             and who can influence the situation before you choose a next step.
           </p>
@@ -137,7 +137,7 @@ export default function FieldToolsReview() {
         <p>
           <strong className="text-[var(--ft-ink)]">Buyer welcome</strong>
           <br />
-          The start page after purchase and sign-in, with the Guide, PDF, Lab,
+          The start page after purchase and sign-in, with the Guide, PDF, interactive software,
           and walkthrough. The tool’s “Start” link returns here.
         </p>
         <p>
@@ -219,7 +219,7 @@ export default function FieldToolsReview() {
                   href={`${base}/lab`}
                   rel="noopener noreferrer"
                 >
-                  Open Lab
+                  Open {product.slug === "ai-stalemate" ? "Labs" : "Lab"}
                 </FieldToolLink>
               </div>
               <div className="mt-4 flex flex-wrap justify-between gap-3 text-xs text-[var(--ft-muted)]">

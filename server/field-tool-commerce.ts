@@ -233,10 +233,12 @@ export async function requestBuyerLink(
   const db = await getDb();
   if (!db || !process.env.RESEND_API_KEY || !process.env.APP_URL)
     throw new Error("Email access is temporarily unavailable.");
-  if (!ownsFieldTool(await purchasedSlugs(email), slug, audience)) return;
   const token = randomBytes(32).toString("hex");
+  const requestHash = hashToken(token);
+  // Every successful request sets the same kind of marker, including unknown emails.
+  if (!ownsFieldTool(await purchasedSlugs(email), slug, audience)) return requestHash;
   await db.insert(fieldToolAccessTokens).values({
-    tokenHash: hashToken(token),
+    tokenHash: requestHash,
     email,
     kind: "link",
     slug: slug === "ai-stalemate" ? slug + "/" + audience : slug,
@@ -273,7 +275,15 @@ export async function requestBuyerLink(
       .where(eq(fieldToolAccessTokens.tokenHash, hashToken(token)));
     throw new Error("We could not send the access email. Please try again.");
   }
+  return requestHash;
 }
+
+export const LINK_REQUEST_COOKIE = "ft_link_request";
+
+export function linkRequestedHere(req: Pick<Request, "headers">, token: string) {
+  return parse(req.headers.cookie ?? "")[LINK_REQUEST_COOKIE] === hashToken(token);
+}
+
 export async function redeemBuyerLink(token: string) {
   const db = await getDb();
   if (!db) throw new Error("Access is temporarily unavailable.");

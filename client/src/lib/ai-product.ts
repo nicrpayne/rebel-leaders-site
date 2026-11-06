@@ -38,7 +38,7 @@ export function aiProductCopy(audience: Audience) {
         ...AI_STALEMATE_PUBLIC_COPY.pm,
         accent: "",
         first:
-          "Bring the AI conversation you’re already having. Read the opening of the Guide or start with Before You Talk in the Lab. Each Lab step links to a chapter that explains its questions.",
+          "Bring the AI conversation you’re already having. Read the opening of the Guide or start with Before You Talk in the Conversation Companion. Each Lab step links to a chapter that explains its questions.",
       }
     : {
         role: "FOR LEAD DEVELOPERS",
@@ -46,7 +46,7 @@ export function aiProductCopy(audience: Audience) {
         ...AI_STALEMATE_PUBLIC_COPY["lead-dev"],
         accent: "",
         first:
-          "Bring the change your PM is asking for. Use the Guide to think it through, then prepare your position in the Lab. A smaller approach, preparation, specialist advice, or stopping this use can all be useful outcomes.",
+          "Bring the change your PM is asking for. Use the Guide to think it through, then prepare your position in the Conversation Companion. A smaller approach, preparation, specialist advice, or stopping this use can all be useful outcomes.",
       };
 }
 

@@ -105,7 +105,7 @@ export default function ChapterGuide({ slug }: { slug: string }) {
               Download PDF ↓
             </FieldToolLink>
             <FieldToolLink href={`${base}/lab`} className="ft-button ft-button-outline">
-              Open the Lab →
+              Open {slug === "ai-stalemate" ? "the Labs" : "the Lab"} →
             </FieldToolLink>
           </div>
           <p className="mt-6 font-ui text-xs text-[var(--ft-muted)]">
@@ -246,7 +246,7 @@ export default function ChapterGuide({ slug }: { slug: string }) {
                 href={`${base}/lab?step=${fieldToolLabStep(slug, index, content.audience)}`}
                 className="mt-5 inline-block font-ui text-sm underline underline-offset-4 print:hidden"
               >
-                Use this in the Lab →
+                Use this in the {slug === "ai-stalemate" ? "Conversation Companion" : "Lab"} →
               </FieldToolLink>
               <AIGuideVisual index={index} slug={slug} />
             </section>
@@ -256,7 +256,7 @@ export default function ChapterGuide({ slug }: { slug: string }) {
               href={`${base}/lab`}
               className="ft-action-primary ft-button bg-[var(--ft-tint)] text-[var(--ft-ink)]"
             >
-              Open the Lab →
+              Open {slug === "ai-stalemate" ? "the Labs" : "the Lab"} →
             </FieldToolLink>
             <FieldToolLink
               href={`${base}/access`}
