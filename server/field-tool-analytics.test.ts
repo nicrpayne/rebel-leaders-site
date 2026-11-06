@@ -22,6 +22,15 @@ afterEach(() => {
 });
 
 describe("Field Tool analytics privacy", () => {
+  it("keeps the main-site SDK off the customer host even outside the catalogue", async () => {
+    vi.stubGlobal("window", { location: { hostname: "tools.rebel-leader.com", pathname: "/about" } });
+    const analytics = await import("../client/src/lib/analytics");
+    analytics.initPostHog();
+    analytics.identifyUser(1, "private@example.com");
+    expect(sdk.init).not.toHaveBeenCalled();
+    expect(sdk.identify).not.toHaveBeenCalled();
+  });
+
   it("never initializes analytics on a direct Field Tool visit", async () => {
     window.location.pathname = "/field-tools/ai-stalemate/pm/lab";
     const analytics = await import("../client/src/lib/analytics");

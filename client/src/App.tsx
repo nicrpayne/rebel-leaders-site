@@ -55,6 +55,7 @@ const FieldToolPurchase = lazy(() => import("./pages/FieldToolPurchase"));
 const FieldToolPurchaseHelp = lazy(
   () => import("./pages/FieldToolPurchaseHelp")
 );
+const FieldToolTerms = lazy(() => import("./pages/FieldToolTerms"));
 const FieldToolAccess = lazy(() => import("./pages/FieldToolAccess"));
 const AIResources = lazy(() => import("./pages/AIResources"));
 const LeadershipWalkthrough = lazy(
@@ -93,6 +94,7 @@ function Router() {
     >
       <Suspense fallback={<RouteLoading />}>
         <Switch>
+          <Route path="/field-tools/terms" component={FieldToolTerms} />
           <Route
             path="/field-tools/purchase-help"
             component={FieldToolPurchaseHelp}

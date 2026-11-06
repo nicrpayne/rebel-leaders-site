@@ -57,6 +57,11 @@ export default function FieldToolPurchaseHelp() {
               shared editing, or a guarantee that another person will agree with
               your recommendation.
             </p>
+            <p className="mt-3">
+              <FieldToolLink href="/field-tools/terms" className="underline underline-offset-4">
+                Field Tools terms
+              </FieldToolLink>
+            </p>
           </section>
           <section id="access">
             <h2 className="font-display text-3xl">Getting back to your tool</h2>

@@ -1,4 +1,5 @@
 import posthog from "posthog-js";
+import { FIELD_TOOLS_HOST } from "@shared/field-tool-domains";
 
 let initialized = false;
 let privateVisit = false;
@@ -31,6 +32,8 @@ function mayCapture() {
 
 export function initPostHog() {
   if (typeof window === "undefined") return;
+  // This host has its own cookieless analytics on selected public sales pages.
+  if (window.location.hostname === FIELD_TOOLS_HOST) return;
   protectFieldToolPrivacy(window.location.pathname);
   if (privateVisit || initialized) return;
   const key = import.meta.env.VITE_POSTHOG_API_KEY;
