@@ -24,7 +24,10 @@ export const AI_STALEMATE_GUIDE_PAGES: AIGuidePage[] = [
       },
       {
         title: "What could you work out together?",
-        body: "You might agree to try something small. You might need permission, advice, or more information first. You might decide this use isn’t worth pursuing. All of those can be useful answers.",
+        body: [
+          "You might agree to try something small. You might need permission, advice, or more information first. You might decide this use isn’t worth pursuing. All of those can be useful answers.",
+          "Like software, the way you work together is never quite done. Some things will click right away. Others will take a few tries or fall flat. Bring what you learn back to the next conversation.",
+        ].join("\n\n"),
       },
     ],
     callout:

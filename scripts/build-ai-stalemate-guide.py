@@ -145,13 +145,15 @@ def chapter(c, data, number):
         _, height = table.wrap(CW, H)
         table.drawOn(c, M, y - height)
         y -= height + 22
+    # The expanded opening chapter uses closer section spacing to fit on one page.
+    section_gap = 9 if AUDIENCE == "pm" and data is PAGES[0] else 17
     for section in data["sections"]:
         y = paragraph(c, section["title"], M, y, style="heading") - 5
         for index, body in enumerate(section["body"].split("\n\n")):
             if index:
                 y -= 7
             y = paragraph(c, body, M, y, style="body")
-        y -= 17
+        y -= section_gap
     if data.get("sources"):
         for source in data["sources"]:
             c.setFillColor(MUTED)
