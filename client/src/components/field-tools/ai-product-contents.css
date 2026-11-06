@@ -27,16 +27,27 @@
   line-height: 1.7;
   max-width: 54ch;
 }
-.ai-product-contents ul {
+.ai-product-contents > ul {
   display: grid;
   margin-top: 28px;
 }
-.ai-product-contents li {
+.ai-product-contents > ul > li {
   display: flex;
   align-items: start;
   gap: 18px;
   border-top: 1px solid var(--ft-line);
   padding: 22px 0;
+}
+.ai-contents-tools {
+  display: grid;
+  gap: 6px;
+  margin-top: 8px;
+}
+.ai-contents-tools li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
 }
 .ai-contents-icon {
   flex: 0 0 42px;

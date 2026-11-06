@@ -4,6 +4,8 @@ import { ArrowRight, Copy, Download } from "lucide-react";
 import FirstRelease from "@/components/field-tools/FirstRelease";
 import DeliveryJourney from "@/components/field-tools/DeliveryJourney";
 import ShippingAccessRequest from "@/components/field-tools/ShippingAccessRequest";
+import AILabIcon from "@/components/field-tools/AILabIcon";
+import { DELIVERY_TOOLS } from "@/lib/ai-lab-tools";
 import { hasAccessWork } from "@/lib/shipping-access";
 import ShippingActionPlanner from "@/components/field-tools/ShippingActionPlanner";
 import { ACTION_SOURCES } from "@/lib/shipping-actions";
@@ -45,6 +47,7 @@ export default function ShippingSooner({ audience }: { audience: Audience }) {
   const [workspace, setWorkspace] = useState<
     "journey" | "slice" | "access" | "workflow"
   >("journey");
+  const activeTool = DELIVERY_TOOLS.find(tool => tool.workspace === workspace);
   const pageHeading = useRef<HTMLHeadingElement>(null);
   function openWorkspace(next: typeof workspace) {
     setWorkspace(next);
@@ -120,8 +123,9 @@ export default function ShippingSooner({ audience }: { audience: Audience }) {
         <div className="shipping-shell">
           <header className="shipping-heading">
             <div className="shipping-topline">
-              <p className="shipping-eyebrow">
-                AI STALEMATE / LABS / DELIVERY MAP
+              <p className="shipping-eyebrow flex items-center gap-2">
+                <AILabIcon name={activeTool?.icon ?? "delivery-map"} />
+                <span>AI STALEMATE / LABS / {activeTool?.name.toUpperCase() ?? "DELIVERY MAP"}</span>
               </p>
               <FieldToolLink href="/field-tools/review">
                 Review desk <ArrowRight size={14} />
@@ -511,32 +515,26 @@ export default function ShippingSooner({ audience }: { audience: Audience }) {
             </>
           )}
           <details className="shipping-other-tools">
-            <summary>Open a specific tool</summary>
-            <p>
-              Work on a smaller release, prepare an experiment, compare timings,
-              or clarify an access dependency. Each tool keeps its own drafts.
-            </p>
-            <div className="shipping-companion-links">
-              <button
-                className="shipping-text-button"
-                onClick={() => openWorkspace("slice")}
-              >
-                Shape a smaller first release <ArrowRight size={14} />
-              </button>
-              <button
-                className="shipping-text-button"
-                onClick={() => openWorkspace("workflow")}
-              >
-                Open the earlier experiment planner and time comparison{" "}
-                <ArrowRight size={14} />
-              </button>
-              <button
-                className="shipping-text-button"
-                onClick={() => openWorkspace("access")}
-              >
-                Open the access-request builder <ArrowRight size={14} />
-              </button>
-            </div>
+            <summary>Explore three tools in the Delivery Map</summary>
+            <ul className="shipping-companion-links">
+              {DELIVERY_TOOLS.map(tool => (
+                <li key={tool.workspace}>
+                  <AILabIcon name={tool.icon} size={44} />
+                  <div>
+                    <button
+                      type="button"
+                      className="shipping-text-button"
+                      aria-describedby={`tool-example-${tool.workspace}`}
+                      onClick={() => openWorkspace(tool.workspace)}
+                    >
+                      {tool.link}
+                    </button>
+                    <p id={`tool-example-${tool.workspace}`}>{tool.example}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+            <p>Each tool keeps its own draft in this browser.</p>
           </details>
           <div className="shipping-product-connection">
             <p>

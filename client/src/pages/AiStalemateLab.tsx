@@ -1,5 +1,7 @@
 import FieldToolLink from "@/components/field-tools/FieldToolLink";
-import { ArrowRight, BookOpen, MessageCircle, Route } from "lucide-react";
+import { ArrowRight, BookOpen } from "lucide-react";
+import AILabIcon from "@/components/field-tools/AILabIcon";
+import { DELIVERY_TOOL_SUMMARY } from "@/lib/ai-lab-tools";
 import FieldToolsNav from "@/components/field-tools/FieldToolsNav";
 import { fieldToolBase, type Audience } from "@/lib/field-tool-paths";
 import "@/components/field-tools/ai-stalemate-lab.css";
@@ -27,7 +29,7 @@ export default function AiStalemateLab({ audience }: { audience: Audience }) {
           </header>
           <section className="ai-lab-paths" aria-label="Choose a Lab">
             <article>
-              <MessageCircle size={25} aria-hidden="true" />
+              <AILabIcon name="conversation-companion" size={48} />
               <p className="ai-lab-eyebrow">CONVERSATION COMPANION</p>
               <h2>Prepare your conversation</h2>
               <p>
@@ -49,7 +51,7 @@ export default function AiStalemateLab({ audience }: { audience: Audience }) {
               </FieldToolLink>
             </article>
             <article className="ai-lab-delivery-card">
-              <Route size={25} aria-hidden="true" />
+              <AILabIcon name="delivery-map" size={48} />
               <p className="ai-lab-eyebrow">DELIVERY MAP</p>
               <h2>Find where work gets stuck</h2>
               <p className="ai-lab-frustration">
@@ -59,6 +61,7 @@ export default function AiStalemateLab({ audience }: { audience: Audience }) {
                 Follow one piece of work from idea to use. Explore what keeps it
                 stuck, what's already been tried, and who can help you move it.
               </p>
+              <p>{DELIVERY_TOOL_SUMMARY}</p>
               <p className="ai-lab-takeaway">
                 <strong>Leave with</strong> a question to investigate, a
                 conversation to arrange, or a small change to try.

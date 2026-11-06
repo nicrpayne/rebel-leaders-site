@@ -1,13 +1,9 @@
-import { BookOpen, MessageCircle, Route } from "lucide-react";
+import { BookOpen } from "lucide-react";
 import type { Audience } from "@/lib/field-tool-paths";
 import { aiProductInventory } from "@/lib/ai-product";
+import { DELIVERY_TOOLS } from "@/lib/ai-lab-tools";
+import AILabIcon from "./AILabIcon";
 import "./ai-product-contents.css";
-
-const icons = {
-  guide: BookOpen,
-  "lab/conversation": MessageCircle,
-  "lab/delivery": Route,
-};
 
 export default function AIProductContents({
   audience,
@@ -34,23 +30,38 @@ export default function AIProductContents({
               Number(a.destination === "guide") -
               Number(b.destination === "guide")
           )
-          .map(item => {
-            const Icon = icons[item.destination];
-            return (
-              <li key={item.destination}>
-                <span className="ai-contents-icon">
-                  <Icon size={21} aria-hidden="true" />
-                </span>
-                <div>
-                  <p className="ai-contents-label">
-                    {item.label}
-                  </p>
-                  <h3>{item.title}</h3>
-                  <p>{item.detail}</p>
-                </div>
-              </li>
-            );
-          })}
+          .map(item => (
+            <li key={item.destination}>
+              <span className="ai-contents-icon">
+                {item.destination === "guide" ? (
+                  <BookOpen size={21} aria-hidden="true" />
+                ) : (
+                  <AILabIcon
+                    name={item.destination === "lab/delivery" ? "delivery-map" : "conversation-companion"}
+                    size={32}
+                  />
+                )}
+              </span>
+              <div>
+                <p className="ai-contents-label">{item.label}</p>
+                <h3>{item.title}</h3>
+                <p>{item.detail}</p>
+                {item.destination === "lab/delivery" && (
+                  <>
+                    <p className="mt-3">Three tools inside the Delivery Map</p>
+                    <ul className="ai-contents-tools">
+                      {DELIVERY_TOOLS.map(tool => (
+                        <li key={tool.workspace}>
+                          <AILabIcon name={tool.icon} size={24} />
+                          {tool.link}
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                )}
+              </div>
+            </li>
+          ))}
       </ul>
       <p className="ai-contents-note">
         Worked examples and editable notes are included. Copy or download what

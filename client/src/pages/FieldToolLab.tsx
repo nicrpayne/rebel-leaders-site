@@ -1,4 +1,5 @@
 import FieldToolLink from "@/components/field-tools/FieldToolLink";
+import AILabIcon from "@/components/field-tools/AILabIcon";
 import { AI_DEV_OUTPUT_BUILDERS, buildDevPackage } from "@/lib/ai-dev-trial";
 import { AI_DEV_GUIDE_CHAPTERS } from "@/lib/field-tool-workflow";
 import { LabTeachingNote } from "@/components/field-tools/TeachingNote";
@@ -423,7 +424,8 @@ function LabSession({ slug }: { slug: string }) {
         <div className="mx-auto max-w-6xl">
           <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
             <div>
-              <p className="font-ui text-[10px] tracking-[0.22em] text-[var(--ft-muted)]">
+              <p className="flex items-center gap-2 font-ui text-[10px] tracking-[0.22em] text-[var(--ft-muted)]">
+                {slug === "ai-stalemate" && <AILabIcon name="conversation-companion" />}
                 {tool.eyebrow} / {slug === "ai-stalemate" ? "LABS / CONVERSATION COMPANION" : "LAB"}
               </p>
               {slug === "ai-stalemate" && (

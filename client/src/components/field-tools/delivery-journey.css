@@ -6,14 +6,24 @@
   min-height: 44px;
 }
 .shipping-companion-links {
-  display: flex;
-  flex-direction: column;
+  display: grid;
   gap: 12px;
+  margin-block: 6px 16px;
+  max-width: 72ch;
+}
+.shipping-companion-links li {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
   align-items: start;
+  gap: 14px;
 }
 .shipping-companion-links button {
   min-height: 44px;
   text-align: left;
+}
+.shipping-other-tools .shipping-companion-links p {
+  margin: 0;
+  color: var(--ft-muted);
 }
 .delivery-journey button {
   cursor: pointer;
