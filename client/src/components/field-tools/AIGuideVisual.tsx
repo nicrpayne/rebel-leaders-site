@@ -1,5 +1,5 @@
+import FieldToolLink from "@/components/field-tools/FieldToolLink";
 import { teachingSources } from "./TeachingNote";
-import { Link } from "wouter";
 import { useFieldToolContent } from "./FieldToolGate";
 import { fieldToolBase } from "@/lib/field-tool-paths";
 import "./ai-library.css";
@@ -52,24 +52,23 @@ export default function AIGuideVisual({
         <ol className="mt-5 space-y-3 text-sm">
           {visual.sources.map(source => (
             <li key={source.url}>
-              <a
+              <FieldToolLink
                 href={source.url}
-                target="_blank"
                 rel="noreferrer"
                 className="underline underline-offset-4"
               >
-                {source.name} ↗
-              </a>
+                {source.name}
+              </FieldToolLink>
             </li>
           ))}
         </ol>
       )}
-      <Link
+      <FieldToolLink
         className="mt-4 inline-block text-xs underline"
         href={`${base}/lab?step=${visual.step}`}
       >
         Use these questions in the Lab →
-      </Link>
+      </FieldToolLink>
       {resources.length > 0 && (
         <details className="mt-6 border-t border-[var(--ft-line)] pt-4">
           <summary className="cursor-pointer text-sm font-semibold">
@@ -80,14 +79,13 @@ export default function AIGuideVisual({
               const source = teachingSources[item.source];
               return (
                 <li key={item.source}>
-                  <a
+                  <FieldToolLink
                     href={source.url}
-                    target="_blank"
                     rel="noreferrer"
                     className="text-sm underline underline-offset-4"
                   >
-                    {source.title} ↗
-                  </a>
+                    {source.title}
+                  </FieldToolLink>
                   <p className="!mt-1 !text-xs">
                     {source.author} · {source.kind}
                   </p>
@@ -101,12 +99,12 @@ export default function AIGuideVisual({
       )}
       {slug === "ai-stalemate" &&
         index === content.companion?.at(-1)?.after && (
-          <Link
+          <FieldToolLink
             className="ml-5 inline-block text-xs underline"
             href={`${base}/resources`}
           >
             Choose a study resource →
-          </Link>
+          </FieldToolLink>
         )}
     </aside>
   );

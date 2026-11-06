@@ -1,4 +1,4 @@
-import { Link } from "wouter";
+import FieldToolLink from "@/components/field-tools/FieldToolLink";
 import { ArrowRight, BookOpen, MessageCircle, Route } from "lucide-react";
 import FieldToolsNav from "@/components/field-tools/FieldToolsNav";
 import { fieldToolBase, type Audience } from "@/lib/field-tool-paths";
@@ -45,9 +45,9 @@ export default function AiStalemateLab({ audience }: { audience: Audience }) {
                 <strong>Leave with</strong> conversation notes and a proposed
                 next step to agree together.
               </p>
-              <Link href={`${base}/lab/conversation`}>
-                Open conversation companion <ArrowRight size={17} />
-              </Link>
+              <FieldToolLink href={`${base}/lab/conversation`}>
+                Open the Conversation Companion <ArrowRight size={17} />
+              </FieldToolLink>
             </article>
             <article className="ai-lab-delivery-card">
               <Route size={25} aria-hidden="true" />
@@ -64,9 +64,9 @@ export default function AiStalemateLab({ audience }: { audience: Audience }) {
                 <strong>Leave with</strong> a question to investigate, a
                 conversation to arrange, or a small change to try.
               </p>
-              <Link href={`${base}/lab/delivery`}>
-                Explore the delivery map <ArrowRight size={17} />
-              </Link>
+              <FieldToolLink href={`${base}/lab/delivery`}>
+                Explore the Delivery Map <ArrowRight size={17} />
+              </FieldToolLink>
             </article>
           </section>
           <section className="ai-lab-guide" aria-label="Your Field Guide">
@@ -79,17 +79,17 @@ export default function AiStalemateLab({ audience }: { audience: Audience }) {
                 before starting.
               </p>
             </div>
-            <Link href={`${base}/guide`}>
+            <FieldToolLink href={`${base}/guide`}>
               Read the Guide <ArrowRight size={16} />
-            </Link>
+            </FieldToolLink>
           </section>
           <p className="ai-lab-saving">
             Your drafts save in this browser. Copy or download what you want to
             discuss or take to another device.
           </p>
-          <Link className="ai-lab-home" href={`${base}/access`}>
+          <FieldToolLink className="ai-lab-home" href={`${base}/access`}>
             Back to your welcome page
-          </Link>
+          </FieldToolLink>
         </div>
       </main>
     </>

@@ -1,5 +1,5 @@
+import FieldToolLink from "@/components/field-tools/FieldToolLink";
 import { useEffect, useRef, useState } from "react";
-import { Link } from "wouter";
 import { ArrowRight, Copy, Download } from "lucide-react";
 import FirstRelease from "@/components/field-tools/FirstRelease";
 import DeliveryJourney from "@/components/field-tools/DeliveryJourney";
@@ -123,9 +123,9 @@ export default function ShippingSooner({ audience }: { audience: Audience }) {
               <p className="shipping-eyebrow">
                 AI STALEMATE / LAB / FOLLOW THE WORK
               </p>
-              <Link href="/field-tools/review">
+              <FieldToolLink href="/field-tools/review">
                 Review desk <ArrowRight size={14} />
-              </Link>
+              </FieldToolLink>
             </div>
             <h1 ref={pageHeading} tabIndex={-1}>
               {workspace === "journey" ? (
@@ -155,12 +155,12 @@ export default function ShippingSooner({ audience }: { audience: Audience }) {
             </p>
           </header>
 
-          <Link
+          <FieldToolLink
             className="shipping-text-button journey-back"
             href={`${base}/lab`}
           >
             ← All Lab tools
-          </Link>
+          </FieldToolLink>
           {workspace !== "journey" && (
             <button
               className="shipping-text-button journey-back"
@@ -542,17 +542,17 @@ export default function ShippingSooner({ audience }: { audience: Audience }) {
             <p>
               <strong>Need to work through the AI conversation first?</strong>{" "}
               The Guide helps you understand each other’s position. The
-              conversation companion helps you prepare your own notes. This
-              delivery map helps you narrow down what is happening and prepare a
+              Conversation Companion helps you prepare your own notes. This
+              Delivery Map helps you narrow down what is happening and prepare a
               useful next step.
             </p>
             <div>
-              <Link href={`${base}/guide`}>
+              <FieldToolLink href={`${base}/guide`}>
                 Read the Guide <ArrowRight size={14} />
-              </Link>
-              <Link href={`${base}/lab/conversation`}>
-                Open conversation companion <ArrowRight size={14} />
-              </Link>
+              </FieldToolLink>
+              <FieldToolLink href={`${base}/lab/conversation`}>
+                Open the Conversation Companion <ArrowRight size={14} />
+              </FieldToolLink>
             </div>
           </div>
           <footer className="shipping-notes">
@@ -581,13 +581,12 @@ export default function ShippingSooner({ audience }: { audience: Audience }) {
                 <p>
                   Unknown times need checking against actual work. There’s no
                   automatic judgment about which stage should be faster.{" "}
-                  <a
+                  <FieldToolLink
                     href="https://dora.dev/capabilities/work-visibility-in-value-stream/"
-                    target="_blank"
                     rel="noreferrer"
                   >
-                    DORA’s guide to seeing the whole delivery process ↗
-                  </a>
+                    DORA’s guide to seeing the whole delivery process
+                  </FieldToolLink>
                 </p>
               </details>
             )}
@@ -611,13 +610,12 @@ export default function ShippingSooner({ audience }: { audience: Audience }) {
                 <p>
                   The access request asks about people, data boundaries, and the
                   actions they need, following Microsoft’s guidance on{" "}
-                  <a
+                  <FieldToolLink
                     href="https://learn.microsoft.com/en-us/entra/identity-platform/secure-least-privileged-access"
-                    target="_blank"
                     rel="noreferrer"
                   >
-                    least-privileged access ↗
-                  </a>
+                    least-privileged access
+                  </FieldToolLink>
                   . It prepares questions for your system owner; it does not
                   approve or configure access.
                 </p>
@@ -632,9 +630,9 @@ export default function ShippingSooner({ audience }: { audience: Audience }) {
               <ul>
                 {Object.values(ACTION_SOURCES).map(source => (
                   <li key={source.url}>
-                    <a href={source.url} target="_blank" rel="noreferrer">
-                      {source.title} ↗
-                    </a>
+                    <FieldToolLink href={source.url} rel="noreferrer">
+                      {source.title}
+                    </FieldToolLink>
                   </li>
                 ))}
               </ul>
@@ -645,9 +643,9 @@ export default function ShippingSooner({ audience }: { audience: Audience }) {
                 only. Download them to take them elsewhere. Your existing Lab is
                 still available.
               </span>
-              <Link href={`${base}/guide`}>
+              <FieldToolLink href={`${base}/guide`}>
                 Back to the Field Guide <ArrowRight size={14} />
-              </Link>
+              </FieldToolLink>
             </div>
           </footer>
         </div>

@@ -1,9 +1,9 @@
+import FieldToolLink from "@/components/field-tools/FieldToolLink";
 import TeachingNote from "./TeachingNote";
 import { fieldToolLabStep } from "@/lib/field-tool-workflow";
 import FieldToolsFooter from "./FieldToolsFooter";
 import { getFieldTool } from "@/lib/field-tools";
 import { fieldToolBase } from "@/lib/field-tool-paths";
-import { Link } from "wouter";
 import FieldToolsNav from "./FieldToolsNav";
 import { useFieldToolContent } from "./FieldToolGate";
 import { useEffect, useRef, useState } from "react";
@@ -97,16 +97,16 @@ export default function ChapterGuide({ slug }: { slug: string }) {
             </p>
           )}
           <div className="mt-8 flex flex-wrap gap-4 print:hidden">
-            <a
+            <FieldToolLink
               href={`/api/field-tools/${slug}/pdf?audience=${content.audience}`}
               download
               className="ft-button ft-button-gold"
             >
               Download PDF ↓
-            </a>
-            <Link href={`${base}/lab`} className="ft-button ft-button-outline">
+            </FieldToolLink>
+            <FieldToolLink href={`${base}/lab`} className="ft-button ft-button-outline">
               Open the Lab →
-            </Link>
+            </FieldToolLink>
           </div>
           <p className="mt-6 font-ui text-xs text-[var(--ft-muted)]">
             By Nic Payne
@@ -127,14 +127,14 @@ export default function ChapterGuide({ slug }: { slug: string }) {
               INSIDE THE GUIDE
             </p>
             {AI_STALEMATE_GUIDE_PAGES.map((chapter, index) => (
-              <a
+              <FieldToolLink
                 key={chapter.eyebrow}
                 href={`#guide-${index}`}
                 aria-current={activeChapter === index ? "location" : undefined}
                 className={`block rounded-r-sm border-l-2 px-4 py-1 font-ui text-sm leading-6 transition-[background-color,border-color,box-shadow,color] duration-200 motion-reduce:transition-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--ft-accent)] ${activeChapter === index ? "border-[var(--ft-accent)] bg-[var(--ft-white)] text-[var(--ft-ink)] shadow-none" : "border-[var(--ft-line)] text-[var(--ft-muted)] hover:border-[var(--ft-accent)] hover:text-[var(--ft-ink)]"}`}
               >
                 {chapter.eyebrow}
-              </a>
+              </FieldToolLink>
             ))}
           </nav>
         </aside>
@@ -228,43 +228,42 @@ export default function ChapterGuide({ slug }: { slug: string }) {
               {chapter.sources && (
                 <div className="mt-6 flex flex-col gap-2 font-ui text-xs text-[var(--ft-muted)]">
                   {chapter.sources.map(source => (
-                    <a
+                    <FieldToolLink
                       key={source.url}
                       href={source.url}
-                      target="_blank"
                       rel="noreferrer"
                       className="underline underline-offset-4"
                     >
-                      {source.name} ↗
-                    </a>
+                      {source.name}
+                    </FieldToolLink>
                   ))}
                 </div>
               )}
               <div className="ft-guide-callout mt-8 border-l-[3px] border-[var(--ft-accent)] bg-[var(--ft-tint)] px-6 py-5 font-ui text-sm leading-7 text-[var(--ft-ink)]">
                 {chapter.callout}
               </div>
-              <Link
+              <FieldToolLink
                 href={`${base}/lab?step=${fieldToolLabStep(slug, index, content.audience)}`}
                 className="mt-5 inline-block font-ui text-sm underline underline-offset-4 print:hidden"
               >
                 Use this in the Lab →
-              </Link>
+              </FieldToolLink>
               <AIGuideVisual index={index} slug={slug} />
             </section>
           ))}
           <div className="flex flex-wrap gap-4 print:hidden">
-            <Link
+            <FieldToolLink
               href={`${base}/lab`}
               className="ft-action-primary ft-button bg-[var(--ft-tint)] text-[var(--ft-ink)]"
             >
               Open the Lab →
-            </Link>
-            <Link
+            </FieldToolLink>
+            <FieldToolLink
               href={`${base}/access`}
               className="ft-button border-[var(--ft-line)]"
             >
               Your Field Tool →
-            </Link>
+            </FieldToolLink>
           </div>
         </article>
       </div>

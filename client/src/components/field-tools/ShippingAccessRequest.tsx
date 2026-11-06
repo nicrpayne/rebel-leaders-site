@@ -1,3 +1,4 @@
+import FieldToolLink from "@/components/field-tools/FieldToolLink";
 import { useEffect, useState } from "react";
 import { Copy, Download, Plus, ArrowRight } from "lucide-react";
 import type { Audience } from "@/lib/field-tool-paths";
@@ -317,12 +318,12 @@ export default function ShippingAccessRequest({
                 : "YOUR REQUEST · UPDATES AS YOU GO"}
             </p>
             <h3>A request someone can act on.</h3>
-            <a
+            <FieldToolLink
               href="#access-request-details"
               className="shipping-access-edit-link"
             >
               Edit the details below ↓
-            </a>
+            </FieldToolLink>
             <p>
               Copy it into your ticket or message. The open questions travel
               with it.

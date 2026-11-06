@@ -1,4 +1,5 @@
-import { Link, Redirect } from "wouter";
+import FieldToolLink from "@/components/field-tools/FieldToolLink";
+import { Redirect } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { aiProductInventory } from "@/lib/ai-product";
 import "@/components/field-tools/ai-library.css";
@@ -15,25 +16,23 @@ export default function AIProposalReview() {
           aria-label="Review navigation"
           className="mb-7 flex flex-wrap gap-5 text-sm"
         >
-          <a href={`${baseline}/field-tools/review`} className="underline">
+          <FieldToolLink href={`${baseline}/field-tools/review`} className="underline">
             ← Main review desk
-          </a>
-          <a
+          </FieldToolLink>
+          <FieldToolLink
             href="https://github.com/nicrpayne/rebel-leaders-site/pull/4"
-            target="_blank"
             rel="noreferrer"
             className="underline"
           >
-            Review the GitHub proposal ↗
-          </a>
-          <a
+            Review the GitHub proposal
+          </FieldToolLink>
+          <FieldToolLink
             href="https://github.com/nicrpayne/rebel-leaders-site/blob/ai-stalemate-library-proposal/docs/landing-pages-recovery-handoff.md"
-            target="_blank"
             rel="noreferrer"
             className="underline"
           >
-            What is done & what remains ↗
-          </a>
+            What is done & what remains
+          </FieldToolLink>
         </nav>
         <p className="ai-eyebrow">NIC’S REVIEW DESK / SEPARATE BRANCH</p>
         <h1 className="mt-4 font-display text-5xl">
@@ -58,44 +57,43 @@ export default function AIProposalReview() {
                     ? "You see a possibility for AI."
                     : "My PM won’t shut up about AI."}
                 </h2>
-                <Link href={base} className="ft-button ft-button-gold mt-5">
+                <FieldToolLink href={base} className="ft-button ft-button-gold mt-5">
                   Open the product page →
-                </Link>
+                </FieldToolLink>
                 <div className="mt-6 grid gap-3 text-sm">
                   {aiProductInventory(role).map(item => (
-                    <Link
+                    <FieldToolLink
                       className="underline"
                       key={item.title}
                       href={`${base}/${item.destination}`}
                     >
                       {item.title} →
-                    </Link>
+                    </FieldToolLink>
                   ))}
-                  <a
+                  <FieldToolLink
                     className="underline"
                     href={`/api/field-tools/ai-stalemate/pdf?audience=${role}`}
+                    download
                   >
                     Download the expanded PDF ↓
-                  </a>
-                  <Link className="underline" href={`${base}/access`}>
+                  </FieldToolLink>
+                  <FieldToolLink className="underline" href={`${base}/access`}>
                     Buyer start page →
-                  </Link>
-                  <a
+                  </FieldToolLink>
+                  <FieldToolLink
                     className="text-xs underline"
                     href={`${baseline}${base}`}
-                    target="_blank"
                     rel="noreferrer"
                   >
-                    Compare the current page ↗
-                  </a>
-                  <a
+                    Compare the current page
+                  </FieldToolLink>
+                  <FieldToolLink
                     className="text-xs underline"
                     href={`${baseline}${base}/guide`}
-                    target="_blank"
                     rel="noreferrer"
                   >
-                    Compare the current Guide ↗
-                  </a>
+                    Compare the current Guide
+                  </FieldToolLink>
                 </div>
               </section>
             );

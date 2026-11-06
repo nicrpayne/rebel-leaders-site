@@ -43,9 +43,7 @@ export default function AIProductContents({
                 </span>
                 <div>
                   <p className="ai-contents-label">
-                    {item.destination === "guide"
-                      ? "READ AS NEEDED"
-                      : "INTERACTIVE TOOL"}
+                    {item.label}
                   </p>
                   <h3>{item.title}</h3>
                   <p>{item.detail}</p>

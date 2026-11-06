@@ -1,5 +1,5 @@
+import FieldToolLink from "@/components/field-tools/FieldToolLink";
 import { useState } from "react";
-import { Link } from "wouter";
 import { AVAILABLE_FIELD_TOOL_OFFERS } from "@/lib/field-tools";
 import { trpc } from "@/lib/trpc";
 import FieldToolsNav from "@/components/field-tools/FieldToolsNav";
@@ -42,12 +42,12 @@ export default function FieldToolSignIn() {
                 {redeem.error.message}
               </p>
             )}
-            <Link
+            <FieldToolLink
               href={`/field-tools/${slug}${slug === "ai-stalemate" ? "/" + audience : ""}/access`}
               className="mt-6 block underline"
             >
               Request a fresh access link
-            </Link>
+            </FieldToolLink>
           </div>
         ) : !params.get("slug") ? (
           <section className="mx-auto max-w-2xl">
@@ -56,14 +56,14 @@ export default function FieldToolSignIn() {
             </h1>
             <div className="mt-8 grid gap-3">
               {AVAILABLE_FIELD_TOOL_OFFERS.map(tool => (
-                <Link
+                <FieldToolLink
                   key={tool.slug}
                   href={`/field-tools/${tool.slug}/access`}
                   className="flex min-h-14 items-center justify-between gap-4 border-b border-[var(--ft-line)] py-4 font-ui text-base"
                 >
                   <span>{tool.name}</span>
                   <span aria-hidden="true">→</span>
-                </Link>
+                </FieldToolLink>
               ))}
             </div>
           </section>

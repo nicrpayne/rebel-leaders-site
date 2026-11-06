@@ -1,4 +1,4 @@
-import { Link } from "wouter";
+import FieldToolLink from "@/components/field-tools/FieldToolLink";
 import { fieldToolForPath, type Audience } from "@/lib/field-tool-paths";
 import CompactFieldToolLanding from "@/components/field-tools/CompactFieldToolLanding";
 import AIProductPage from "@/components/field-tools/AIProductPage";
@@ -16,9 +16,9 @@ export default function FieldToolLanding({
           <h1 className="font-display text-5xl">
             That tool isn't on the bench yet.
           </h1>
-          <Link href="/field-tools" className="mt-8 inline-block underline">
+          <FieldToolLink href="/field-tools" className="mt-8 inline-block underline">
             Browse Field Tools →
-          </Link>
+          </FieldToolLink>
         </div>
       </main>
     );

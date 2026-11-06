@@ -1,5 +1,5 @@
+import FieldToolLink from "@/components/field-tools/FieldToolLink";
 import type { ReactNode } from "react";
-import { Link } from "wouter";
 import { ArrowRight, Check } from "lucide-react";
 import FieldToolBuyActions from "./FieldToolBuyActions";
 import FieldToolsNav from "./FieldToolsNav";
@@ -62,27 +62,19 @@ export default function FieldToolHero({
                   <ArrowRight size={17} aria-hidden="true" />
                 </button>
               ) : (
-                <Link href={primary.href} className="ft-button ft-button-gold">
+                <FieldToolLink href={primary.href} className="ft-button ft-button-gold">
                   {primary.label}
                   <ArrowRight size={17} aria-hidden="true" />
-                </Link>
+                </FieldToolLink>
               )}
-              {secondary &&
-                (secondary.href.startsWith("#") ? (
-                  <a
-                    href={secondary.href}
-                    className="ft-button ft-button-outline"
-                  >
-                    {secondary.label}
-                  </a>
-                ) : (
-                  <Link
-                    href={secondary.href}
-                    className="ft-button ft-button-outline"
-                  >
-                    {secondary.label}
-                  </Link>
-                ))}
+              {secondary && (
+                <FieldToolLink
+                  href={secondary.href}
+                  className="ft-button ft-button-outline"
+                >
+                  {secondary.label}
+                </FieldToolLink>
+              )}
             </div>
           )}
           <p className="ft-founder-note">By Nic Payne · Rebel Leaders</p>

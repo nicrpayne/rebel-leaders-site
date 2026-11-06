@@ -263,7 +263,7 @@ export const AI_STALEMATE_GUIDE_PAGES: AIGuidePage[] = [
       },
       {
         title: "Or find where work gets stuck",
-        body: "Choose the Lab’s delivery map to follow one real piece of work from idea to use. Explore where it waited or went back, what might explain that, and what you still need to ask. Leave with a question to check, a conversation to have, or a small change to propose. Either Lab path can stand alone.",
+        body: "Choose the Lab’s Delivery Map to follow one real piece of work from idea to use. Explore where it waited or went back, what might explain that, and what you still need to ask. Leave with a question to check, a conversation to have, or a small change to propose. Either Lab path can stand alone.",
       },
     ],
     callout:

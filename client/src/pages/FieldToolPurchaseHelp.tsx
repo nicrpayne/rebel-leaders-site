@@ -1,4 +1,4 @@
-import { Link } from "wouter";
+import FieldToolLink from "@/components/field-tools/FieldToolLink";
 import FieldToolsNav from "@/components/field-tools/FieldToolsNav";
 import FieldToolsFooter from "@/components/field-tools/FieldToolsFooter";
 
@@ -18,12 +18,12 @@ export default function FieldToolPurchaseHelp() {
             <h2 className="font-display text-3xl">Try it for 60 days.</h2>
             <p className="mt-4">
               If it isn’t useful to you, email{" "}
-              <a
+              <FieldToolLink
                 className="underline underline-offset-4"
                 href="mailto:hello@rebel-leader.com"
               >
                 hello@rebel-leader.com
-              </a>{" "}
+              </FieldToolLink>{" "}
               within 60 days of purchase and we’ll refund you in full. No
               explanation needed.
             </p>
@@ -42,11 +42,14 @@ export default function FieldToolPurchaseHelp() {
           <section>
             <h2 className="font-display text-3xl">What you’re buying</h2>
             <p className="mt-4">
-              Each Field Tool is a one-time purchase of its Guide, downloadable
-              PDF, and interactive Lab. There is no subscription. AI Stalemate’s
-              PM and Lead Developer editions are separate $47 USD purchases;
-              buying one does not unlock the other. Any tax is shown at
-              checkout.
+              Each Field Tool is a one-time purchase of its Field Guide (online
+              and PDF) and interactive Lab. All future software updates and
+              upgrades to that Lab are included.
+            </p>
+            <p className="mt-3">
+              In AI Stalemate, that covers the Conversation Companion and the
+              Delivery Map for your edition. The Product Manager and Lead Developer
+              editions are each $47 USD and sold separately. Any tax is shown at checkout.
             </p>
             <p className="mt-3">
               Use the tool yourself and share the notes or plans you create with
@@ -66,12 +69,12 @@ export default function FieldToolPurchaseHelp() {
             <p className="mt-3">
               If you can’t find your receipt or access email, check your spam
               folder, then contact{" "}
-              <a
+              <FieldToolLink
                 className="underline underline-offset-4"
                 href="mailto:hello@rebel-leader.com"
               >
                 hello@rebel-leader.com
-              </a>
+              </FieldToolLink>
               . Include your purchase email or order number. Please don’t send
               payment-card details or private workplace notes.
             </p>
@@ -106,12 +109,12 @@ export default function FieldToolPurchaseHelp() {
               and Lab are excluded. Newsletter signup is measured as a click, not a confirmed subscription.
             </p>
           </section>
-          <Link
+          <FieldToolLink
             href="/field-tools"
             className="inline-block text-[var(--ft-accent)] underline underline-offset-4"
           >
             Back to the Field Tools →
-          </Link>
+          </FieldToolLink>
         </div>
       </article>
       <FieldToolsFooter />

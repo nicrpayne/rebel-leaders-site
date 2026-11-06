@@ -1,5 +1,5 @@
+import FieldToolLink from "@/components/field-tools/FieldToolLink";
 import { useState } from "react";
-import { Link } from "wouter";
 import { Fingerprint, UsersRound, Telescope, Orbit } from "lucide-react";
 import FieldToolsNav from "@/components/field-tools/FieldToolsNav";
 import FieldToolsFooter from "@/components/field-tools/FieldToolsFooter";
@@ -353,9 +353,9 @@ function SourceCard({
         {source.author} · {source.kind}
       </p>
       <h3 className="mt-3 font-display text-2xl leading-tight">
-        <a className={linkStyle} href={url} target="_blank" rel="noreferrer">
-          {source.title} ↗
-        </a>
+        <FieldToolLink className={linkStyle} href={url} rel="noreferrer">
+          {source.title}
+        </FieldToolLink>
       </h3>
       <p className="mt-3 font-ui text-sm leading-7 text-[var(--ft-muted)]">
         {source.summary}
@@ -381,19 +381,19 @@ function ProductLinks({
   const base = fieldToolBase(product.slug);
   return (
     <div className="mt-5 flex flex-wrap gap-x-6 gap-y-3 font-ui text-sm leading-6">
-      <Link href={base} className={linkStyle}>
+      <FieldToolLink href={base} className={linkStyle}>
         Explore {product.name} →
-      </Link>
-      <a href={`${base}/guide#guide-${chapter}`} className={linkStyle}>
+      </FieldToolLink>
+      <FieldToolLink href={`${base}/guide#guide-${chapter}`} className={linkStyle}>
         Open the relevant Guide chapter →
-      </a>
+      </FieldToolLink>
       {product.slug === "ai-stalemate" && (
-        <a
+        <FieldToolLink
           href={`/field-tools/ai-stalemate/lead-dev/guide#guide-${chapter}`}
           className={linkStyle}
         >
           Lead developer Guide →
-        </a>
+        </FieldToolLink>
       )}
     </div>
   );
@@ -654,9 +654,8 @@ function HidContent() {
         </p>
       </section>
       <figure className="my-9 border border-[var(--ft-line)] bg-white p-3 sm:p-6">
-        <a
+        <FieldToolLink
           href="/assets/field-tools/hid-tree.png"
-          target="_blank"
           rel="noreferrer"
           aria-label="Open Nic’s original Holistic Impact Depth tree at full size"
         >
@@ -666,18 +665,18 @@ function HidContent() {
             loading="lazy"
             className="mx-auto max-h-[760px] w-full object-contain"
           />
-        </a>
+        </FieldToolLink>
         <figcaption className="mt-5 font-ui text-sm leading-7 text-[var(--ft-muted)]">
           Nic’s original working diagram. The accompanying page names 1:1s,
           peer-to-peer coaching, strategy discovery and performance reviews. The
           examples below explore how their design matters.{" "}
-          <a
+          <FieldToolLink
             href="/assets/field-tools/holistic-impact-depth-source.pdf"
             download
             className={linkStyle}
           >
             Download both original pages (PDF) ↓
-          </a>
+          </FieldToolLink>
         </figcaption>
       </figure>
       <section aria-labelledby="hid-elements">
@@ -961,12 +960,12 @@ function OrbitalContent() {
           but need to look more closely at the meeting, review or working
           arrangement that keeps shaping people.
         </p>
-        <Link
+        <FieldToolLink
           className={`mt-5 inline-block font-ui text-sm ${linkStyle}`}
           href="/field-tools/resources/holistic-impact-depth"
         >
           Explore Holistic Impact Depth →
-        </Link>
+        </FieldToolLink>
       </section>
       <SourceSection noteId="note-c-199735328" />
     </>
@@ -994,12 +993,12 @@ function SourceSection({ noteId }: { noteId: string }) {
         <SourceCard id="culture-vulture" />
         <SourceCard id={noteId} />
       </div>
-      <Link
+      <FieldToolLink
         className={`mt-6 inline-block font-ui text-sm ${linkStyle}`}
         href="/field-tools/resources"
       >
         All teaching, reading and listening →
-      </Link>
+      </FieldToolLink>
     </section>
   );
 }
@@ -1020,14 +1019,13 @@ function LibraryContent() {
         </p>
         <cite className="mt-4 block font-ui text-sm not-italic text-[var(--ft-muted)]">
           Nic Payne ·{" "}
-          <a
+          <FieldToolLink
             href={teachingSources["the-lie-weve-normalized-leadership"].url}
-            target="_blank"
             rel="noreferrer"
             className={linkStyle}
           >
-            The Lie We’ve Normalized ↗
-          </a>
+            The Lie We’ve Normalized
+          </FieldToolLink>
         </cite>
       </blockquote>
       <nav
@@ -1043,13 +1041,13 @@ function LibraryContent() {
           ["explore", "More from Nic"],
           ["others", "Other voices"],
         ].map(([id, label]) => (
-          <a
+          <FieldToolLink
             key={id}
             href={`#library-${id}`}
             className={`${linkStyle} rounded border border-[var(--ft-line)] px-3 py-2`}
           >
             {label}
-          </a>
+          </FieldToolLink>
         ))}
       </nav>
       <section aria-labelledby="library-frameworks">
@@ -1237,41 +1235,41 @@ export default function FieldToolResources({
             aria-label="Resource pages"
             className="mt-7 flex flex-wrap gap-x-6 gap-y-3 font-ui text-sm text-[var(--ft-muted)]"
           >
-            <Link href="/field-tools" className={linkStyle}>
+            <FieldToolLink href="/field-tools" className={linkStyle}>
               Field Tools
-            </Link>
-            <Link
+            </FieldToolLink>
+            <FieldToolLink
               href="/field-tools/resources"
               aria-current={!resource ? "page" : undefined}
               className={linkStyle}
             >
               All resources
-            </Link>
-            <Link
+            </FieldToolLink>
+            <FieldToolLink
               href="/field-tools/resources/holistic-impact-depth"
               aria-current={hid ? "page" : undefined}
               className={linkStyle}
             >
               HID
-            </Link>
-            <Link
+            </FieldToolLink>
+            <FieldToolLink
               href="/field-tools/resources/cultural-orbital-mechanics"
               aria-current={orbital ? "page" : undefined}
               className={linkStyle}
             >
               Cultural Orbital Mechanics
-            </Link>
+            </FieldToolLink>
           </nav>
         </div>
       </header>
       <div className="mx-auto max-w-5xl px-5 py-12 md:px-10 md:py-16">
         {unknown ? (
-          <Link
+          <FieldToolLink
             href="/field-tools/resources"
             className={`font-ui ${linkStyle}`}
           >
             Browse the resource library →
-          </Link>
+          </FieldToolLink>
         ) : hid ? (
           <HidContent />
         ) : orbital ? (

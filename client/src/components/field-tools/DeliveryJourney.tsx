@@ -1,3 +1,4 @@
+import FieldToolLink from "@/components/field-tools/FieldToolLink";
 import { useEffect, useRef, useState } from "react";
 import {
   ArrowRight,
@@ -412,9 +413,9 @@ export default function DeliveryJourney({
           })}
         </div>
       )}
-      <a className="journey-mobile-jump" href="#journey-noticed">
+      <FieldToolLink className="journey-mobile-jump" href="#journey-noticed">
         See the places you’ve marked ↓
-      </a>
+      </FieldToolLink>
       <div className="journey-layout">
         <div
           key={`${mode}:${view}:${stageId}:${symptomId}:${caseId}`}
@@ -935,9 +936,9 @@ export default function DeliveryJourney({
               ? "Saved in this browser. Download to take it to another device."
               : "Example only. Switch to Follow my work for your own map."}
           </p>
-          <a className="journey-mobile-jump" href="#journey-detail">
+          <FieldToolLink className="journey-mobile-jump" href="#journey-detail">
             Back to exploring ↑
-          </a>
+          </FieldToolLink>
         </aside>
       </div>
     </section>

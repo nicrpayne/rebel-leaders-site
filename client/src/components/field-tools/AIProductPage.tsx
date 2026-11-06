@@ -1,7 +1,8 @@
+import { AI_APP_UPDATES } from "@shared/field-tool-public-copy";
+import FieldToolLink from "@/components/field-tools/FieldToolLink";
 import FieldToolSalesProof, {
   FieldToolBuyerQuestions,
 } from "./FieldToolSalesProof";
-import { Link } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { fieldToolBase, type Audience } from "@/lib/field-tool-paths";
 import { aiProductCopy } from "@/lib/ai-product";
@@ -24,9 +25,9 @@ export default function AIProductPage({ audience }: { audience: Audience }) {
       <FieldToolsNav />
       {access.data?.proposal && (
         <div className="ai-review-ribbon">
-          <Link href="/field-tools/proposal">
+          <FieldToolLink href="/field-tools/proposal">
             Separate proposal · review desk →
-          </Link>
+          </FieldToolLink>
         </div>
       )}
       <header className={`ai-product-hero ai-product-hero-${audience}`}>
@@ -60,9 +61,9 @@ export default function AIProductPage({ audience }: { audience: Audience }) {
           <p className="ai-hero-note">
             A practical Guide and interactive tools · $47, one time
           </p>
-          <a className="ai-hero-example-link" href="#delivery-example">
-            See how the delivery tool works →
-          </a>
+          <FieldToolLink className="ai-hero-example-link" href="#delivery-example">
+            See how the Delivery Map works →
+          </FieldToolLink>
         </div>
         <div className="ft-photo-caption">
           <span /> Hope is rebellious.
@@ -83,9 +84,8 @@ export default function AIProductPage({ audience }: { audience: Audience }) {
             $47 <small>USD · one time</small>
           </p>
           <p>
-            Your {audience === "pm" ? "PM" : "Lead Developer"} Guide and two
-            interactive tools: prepare your conversation and find where work gets
-            stuck.
+            Your {audience === "pm" ? "Product Manager" : "Lead Developer"} Field
+            Guide, the Conversation Companion, and the Delivery Map. {AI_APP_UPDATES}
           </p>
           <p>
             Start on your own, then take your notes into the conversation. Your{" "}
@@ -107,17 +107,17 @@ export default function AIProductPage({ audience }: { audience: Audience }) {
           <div className="ai-purchase-help">
             <p className="ai-refund-note">
               <strong>60-day full refund. No explanation needed.</strong>
-              <Link href="/field-tools/purchase-help" className="underline">
+              <FieldToolLink href="/field-tools/purchase-help" className="underline">
                 Purchase, access, and refund details
-              </Link>
+              </FieldToolLink>
             </p>
             <div className="ai-purchase-links">
-              <Link href={`${base}/access`} className="ai-small underline">
+              <FieldToolLink href={`${base}/access`} className="ai-small underline">
                 {access.data?.preview
                   ? "Open the review copy →"
                   : "Already have this? Open your tool →"}
-              </Link>
-              <Link
+              </FieldToolLink>
+              <FieldToolLink
                 href={fieldToolBase(
                   "ai-stalemate",
                   audience === "pm" ? "lead-dev" : "pm"
@@ -126,7 +126,7 @@ export default function AIProductPage({ audience }: { audience: Audience }) {
               >
                 Looking for the {audience === "pm" ? "Lead Developer" : "PM"}{" "}
                 edition? →
-              </Link>
+              </FieldToolLink>
             </div>
           </div>
         </aside>
@@ -134,7 +134,7 @@ export default function AIProductPage({ audience }: { audience: Audience }) {
       <DeliveryExample />
       <details className="ai-product-example">
         <summary>
-          See the conversation companion in action{" "}
+          See the Conversation Companion in action{" "}
           <span>A fictional conversation and the notes you can make</span>
         </summary>
         <FieldToolSalesProof

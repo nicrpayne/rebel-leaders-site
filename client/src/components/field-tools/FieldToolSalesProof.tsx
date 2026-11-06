@@ -1,4 +1,4 @@
-import { Link } from "wouter";
+import FieldToolLink from "@/components/field-tools/FieldToolLink";
 import { fieldToolBase, type Audience } from "@/lib/field-tool-paths";
 import { SALES_PROOF } from "@/lib/field-tool-sales-proof";
 import FieldToolScreenPreview from "./FieldToolScreenPreview";
@@ -13,7 +13,7 @@ export function AIRoleLinks({ audience }: { audience: Audience }) {
         {audience === "pm" ? "Product Manager" : "Lead Developer"} edition ·
         $47. Each edition is sold separately.
       </p>
-      <Link
+      <FieldToolLink
         className="font-semibold underline underline-offset-4"
         href={fieldToolBase(
           "ai-stalemate",
@@ -22,7 +22,7 @@ export function AIRoleLinks({ audience }: { audience: Audience }) {
       >
         See the {audience === "pm" ? "Lead Developer" : "Product Manager"}{" "}
         edition →
-      </Link>
+      </FieldToolLink>
     </nav>
   );
 }
@@ -126,7 +126,7 @@ export function FieldToolBuyerQuestions({
     [
       "Where does my work save?",
       audience
-        ? "Your conversation notes and delivery map save in this browser on this device. They do not sync between browsers or devices. Private reflection in the conversation companion stays only in the open tab and is neither saved nor exported. Download your notes before clearing browser data or changing devices."
+        ? "Your conversation notes and delivery map save in this browser on this device. They do not sync between browsers or devices. Private reflection in the Conversation Companion stays only in the open tab and is neither saved nor exported. Download your notes before clearing browser data or changing devices."
         : "Shared answers save in this browser on this device. They do not sync between browsers or devices. Private reflection stays only in the open tab and is neither saved nor exported. Export shared work before clearing browser data or changing devices.",
     ],
     [
@@ -148,7 +148,7 @@ export function FieldToolBuyerQuestions({
     [
       "Is the walkthrough a video?",
       audience
-        ? `The ${edition} examples are written. You can load sample answers into the conversation companion or try the review-delay example in the delivery map.`
+        ? `The ${edition} examples are written. You can load sample answers into the Conversation Companion or try the review-delay example in the Delivery Map.`
         : "It is a written example you can follow one step at a time. You can load its answers into the Lab to see how it works.",
     ],
   ];

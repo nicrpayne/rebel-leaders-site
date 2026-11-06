@@ -9,18 +9,21 @@ export const AI_GUIDE_PAGE_COUNT: Record<Audience, number> = {
 };
 export const AI_PRODUCT_INVENTORY = [
   {
+    label: "Read as needed",
     title: "The Field Guide",
     detail:
       "Understand the opportunity, the concerns, and what would make a useful next step. Read online or keep the printable PDF.",
     destination: "guide",
   },
   {
+    label: "Conversation Companion",
     title: "Prepare your conversation",
     detail:
       "Clarify your thoughts, put the opportunity into words, listen to your team’s concerns, and prepare what you want to ask and propose.",
     destination: "lab/conversation",
   },
   {
+    label: "Delivery Map",
     title: "Find where work gets stuck",
     detail:
       "Follow one piece of work beyond the coding. Explore what holds it up and leave with a conversation to have, or a small change to try.",

@@ -1,4 +1,4 @@
-import { Link } from "wouter";
+import FieldToolLink from "@/components/field-tools/FieldToolLink";
 import { ArrowRight } from "lucide-react";
 import { FIELD_TOOL_OFFERS } from "@/lib/field-tools";
 import { type Audience } from "@/lib/field-tool-paths";
@@ -25,7 +25,7 @@ export default function RelatedFieldTools({
         <div className="mt-5 grid grid-cols-2 gap-x-5 gap-y-6 md:grid-cols-3 lg:grid-cols-5">
           {related.map(tool => (
             <div key={tool.slug}>
-              <Link
+              <FieldToolLink
                 href={"/field-tools/" + tool.slug}
                 className="group block cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ft-accent)]"
               >
@@ -58,7 +58,7 @@ export default function RelatedFieldTools({
                     className="shrink-0 transition-transform group-hover:translate-x-1"
                   />
                 </div>
-              </Link>
+              </FieldToolLink>
             </div>
           ))}
         </div>

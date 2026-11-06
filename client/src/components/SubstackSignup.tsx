@@ -73,7 +73,7 @@ export default function SubstackSignup({
               : "mt-2 inline-block font-ui text-xs underline text-gold/80"
           }
         >
-          Open the signup on Substack ↗
+          Open the signup on Substack{fieldTool ? "" : " ↗"}
           <span className="sr-only"> (opens in a new tab)</span>
         </a>
       )}

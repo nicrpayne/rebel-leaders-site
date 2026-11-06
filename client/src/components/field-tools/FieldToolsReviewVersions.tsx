@@ -1,3 +1,4 @@
+import FieldToolLink from "@/components/field-tools/FieldToolLink";
 export default function FieldToolsReviewVersions() {
   return (
     <section
@@ -17,14 +18,13 @@ export default function FieldToolsReviewVersions() {
         pressures through the Guide, Lab, and examples. Each product remains a
         separate $47 purchase.
       </p>
-      <a
+      <FieldToolLink
         href="/field-tools/deadline-reset/guide"
-        target="_blank"
         rel="noopener noreferrer"
         className="mt-3 inline-flex min-h-11 items-center font-ui text-sm font-semibold text-[var(--ft-accent)] underline underline-offset-4"
       >
-        Start with the revised Deadline Reset Guide ↗
-      </a>
+        Start with the revised Deadline Reset Guide
+      </FieldToolLink>
       <p className="mt-3 text-xs leading-6 text-[var(--ft-muted)]">
         Checkout remains disabled here. Test-mode purchases, delivery, and
         refund testing are still required before launch.

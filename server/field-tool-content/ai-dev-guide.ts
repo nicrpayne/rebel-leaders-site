@@ -297,7 +297,7 @@ export const AI_DEV_GUIDE: AIGuidePage[] = [
       ],
       [
         "Or find where work gets stuck",
-        "Choose the Lab’s delivery map to follow one real change from idea to use. Explore where it waited or came back for more work, what might explain that, and what has already been tried. Leave with a question to check, a conversation to have, or a small change to propose. You can use this path on its own or bring what you find into the AI conversation.",
+        "Choose the Lab’s Delivery Map to follow one real change from idea to use. Explore where it waited or came back for more work, what might explain that, and what has already been tried. Leave with a question to check, a conversation to have, or a small change to propose. You can use this path on its own or bring what you find into the AI conversation.",
       ],
     ],
     "The aim is a conversation where your expertise helps shape the decision and your PM’s context helps shape your recommendation."

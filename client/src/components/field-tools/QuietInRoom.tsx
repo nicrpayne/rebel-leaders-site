@@ -1,5 +1,5 @@
+import FieldToolLink from "@/components/field-tools/FieldToolLink";
 import { useState } from "react";
-import { Link } from "wouter";
 import { QUIET_RESPONSES, QUIET_WAVELENGTH, QUIET_HEALTH } from "@/lib/quiet-reflections";
 
 type Props = { step: number; values: Record<string, string>; onChange: (id: string, value: string) => void };
@@ -31,7 +31,7 @@ export default function QuietInRoom({ step, values, onChange }: Props) {
         <details className="mt-6 border-t border-[var(--ft-line)] pt-4"><summary className="cursor-pointer text-sm">Do you need to translate how you think? · Paterson’s wavelength</summary><p className="mt-4 text-xs leading-6">Compare your preference with what this situation asks. These adapted reflection prompts do not assign a type, rate ability, or tell you someone else’s wavelength. Higher is not better. Leave anything unanswered.</p>
           {QUIET_WAVELENGTH.map(([id, label, low, high]) => <fieldset key={id} className="mt-5 border-t border-[var(--ft-line)] pt-4"><legend className="text-sm font-semibold">{label}</legend><p className="text-xs leading-6 text-[var(--ft-muted)]">1 · {low}<br />10 · {high}</p><div className="mt-2 grid grid-cols-2 gap-3">{[["Preferred", "My preference"], ["Needed", "This situation asks"]].map(([kind, title]) => <label key={kind} className="text-xs">{title}<select className={input} value={values[`quietLens${kind}_${id}`] ?? ""} onChange={e => onChange(`quietLens${kind}_${id}`, e.target.value)}><option value="">Unanswered</option>{Array.from({length:10}, (_, i) => <option key={i} value={String(i+1)}>{i+1}</option>)}</select></label>)}</div></fieldset>)}
           {note("quietLensBridge", "What would help you meet this situation?", "Explain the steps, name the open questions, give people time, or ask for support. Wavelength does not determine your leadership response.")}
-          <a href="https://drive.google.com/file/d/1n6iEx72rHwvkLJX4-fL6PjGoB1A677TP/view" target="_blank" rel="noreferrer" className="mt-4 inline-block text-xs underline">Source: The Paterson Center, Thinking Wavelength ↗</a>
+          <FieldToolLink href="https://drive.google.com/file/d/1n6iEx72rHwvkLJX4-fL6PjGoB1A677TP/view" rel="noreferrer" className="mt-4 inline-block text-xs underline">Source: The Paterson Center, Thinking Wavelength</FieldToolLink>
         </details>
       </> : <>
         <h3 className="mt-4 font-display text-2xl">One practice. One place to begin.</h3><p className="mt-2 text-sm leading-7">HID connects an activity to the whole person and what repeated experience forms. Pick one channel to explore; you do not need to complete a matrix.</p>
@@ -44,7 +44,7 @@ export default function QuietInRoom({ step, values, onChange }: Props) {
           {note("quietLensFormation", "What might people learn from this practice?", "Treat this as a question to explore, not a diagnosis.")}{note("quietLensCulture", "What becomes normal, and pulls people back into it?")}
         </details><p className="mt-5 text-sm leading-7">If this suggests a useful change, put it in <strong>What could you do differently?</strong> above. Only that deliberate proposal enters your saved note.</p>
       </>}
-      <Link className="mt-5 inline-block text-xs underline underline-offset-4" href={`/field-tools/when-the-team-goes-quiet/guide#guide-${step===1?2:4}`}>Read the optional connections in the Guide →</Link>
+      <FieldToolLink className="mt-5 inline-block text-xs underline underline-offset-4" href={`/field-tools/when-the-team-goes-quiet/guide#guide-${step===1?2:4}`}>Read the optional connections in the Guide →</FieldToolLink>
     </div>
   </details>;
 }

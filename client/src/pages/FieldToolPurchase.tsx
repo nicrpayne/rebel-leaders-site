@@ -1,6 +1,8 @@
+import { AI_APP_UPDATES, LAB_UPDATES } from "@shared/field-tool-public-copy";
+import FieldToolLink from "@/components/field-tools/FieldToolLink";
 import { fieldToolForPath } from "@/lib/field-tool-paths";
 import { fieldToolBase, type Audience } from "@/lib/field-tool-paths";
-import { Link, useSearch } from "wouter";
+import { useSearch } from "wouter";
 import FieldToolBuyActions from "@/components/field-tools/FieldToolBuyActions";
 import FieldToolGiftForm from "@/components/field-tools/FieldToolGiftForm";
 import { ArrowLeft } from "lucide-react";
@@ -30,22 +32,22 @@ export default function FieldToolPurchase({
     return (
       <main className="min-h-screen bg-[var(--ft-paper)] p-10 text-[var(--ft-ink)]">
         <h1 className="font-display text-4xl">Field Tool not found.</h1>
-        <Link href="/field-tools" className="mt-5 inline-block underline">
+        <FieldToolLink href="/field-tools" className="mt-5 inline-block underline">
           Browse the tools
-        </Link>
+        </FieldToolLink>
       </main>
     );
   return (
     <main className="ft-purchase relative min-h-screen bg-[var(--ft-paper)] text-[var(--ft-ink)]">
       <FieldToolsNav />
       <section className="mx-auto max-w-6xl px-5 pb-12 pt-8 md:px-10 md:pt-10">
-        <Link
+        <FieldToolLink
           href={base}
           className="inline-flex items-center gap-2 font-ui text-xs text-[var(--ft-muted)]"
         >
           <ArrowLeft size={14} aria-hidden="true" />
           Back to product
-        </Link>
+        </FieldToolLink>
         <h1 className="mt-6 font-display text-4xl font-semibold leading-tight md:text-5xl">
           {tool.name}
           {slug === "ai-stalemate"
@@ -77,20 +79,24 @@ export default function FieldToolPurchase({
                 USD · one time
               </span>
             </p>
-            {slug === "ai-stalemate" && (
-              <p className="mt-4 font-ui text-sm leading-6 text-[var(--ft-muted)]">
-                Includes the Guide and both Lab paths for the{" "}
-                {audience === "pm" ? "PM" : "Lead Developer"} edition. Each
-                edition is sold separately.
-              </p>
-            )}
+            <p className="mt-4 font-ui text-sm leading-6 text-[var(--ft-muted)]">
+              {slug === "ai-stalemate" ? (
+                <>
+                  Includes the {audience === "pm" ? "Product Manager" : "Lead Developer"}{" "}
+                  Field Guide (online and PDF), the Conversation Companion, and
+                  the Delivery Map. {AI_APP_UPDATES} Each edition is sold separately.
+                </>
+              ) : (
+                <>Includes the Field Guide (online and PDF) and interactive Lab. {LAB_UPDATES}</>
+              )}
+            </p>
             {isGift && (
-              <Link
+              <FieldToolLink
                 href={`${base}/buy`}
                 className="mt-6 inline-block font-ui text-sm underline underline-offset-4"
               >
                 ← Buy for myself
-              </Link>
+              </FieldToolLink>
             )}
             {isGift && (
               <FieldToolGiftForm
@@ -155,21 +161,21 @@ export default function FieldToolPurchase({
               </p>
               <p className="mt-2">
                 If it isn’t useful to you, email{" "}
-                <a href="mailto:hello@rebel-leader.com" className="underline">
+                <FieldToolLink href="mailto:hello@rebel-leader.com" className="underline">
                   hello@rebel-leader.com
-                </a>{" "}
+                </FieldToolLink>{" "}
                 within 60 days of purchase.
               </p>
               <p className="mt-2">
                 Read on any device. Lab drafts stay in the browser where you
                 write them.
               </p>
-              <Link
+              <FieldToolLink
                 href="/field-tools/purchase-help"
                 className="mt-3 inline-block underline underline-offset-4"
               >
                 Purchase, access, and refund details →
-              </Link>
+              </FieldToolLink>
             </div>
           </aside>
         </div>

@@ -1,7 +1,8 @@
+import { LAB_UPDATES } from "@shared/field-tool-public-copy";
+import FieldToolLink from "@/components/field-tools/FieldToolLink";
 import FieldToolSalesProof, {
   FieldToolBuyerQuestions,
 } from "./FieldToolSalesProof";
-import { Link } from "wouter";
 import { Check, Compass, MessageSquare, Users } from "lucide-react";
 import FieldToolBuyActions from "./FieldToolBuyActions";
 import FieldToolHero from "./FieldToolHero";
@@ -38,7 +39,7 @@ export default function CompactFieldToolLanding({
       engineering ? "Your Lead Developer Lab" : `Your ${tool.name} Lab`,
       engineering
         ? "Talk through the risks and decide with your PM what to do next."
-        : "Work through the questions, then review and share your answers.",
+        : `Work through the questions, then review and share your answers. ${LAB_UPDATES}`,
     ],
     [
       engineering ? "Next Step Together" : primaryArtifact.name,
@@ -158,12 +159,12 @@ export default function CompactFieldToolLanding({
             />
             <p className="mt-5 font-ui text-xs text-[var(--ft-muted)]">
               Already purchased?{" "}
-              <Link
+              <FieldToolLink
                 href={`${base}/access`}
                 className="underline underline-offset-4"
               >
                 Open your tool →
-              </Link>
+              </FieldToolLink>
             </p>
           </div>
         </div>
@@ -173,7 +174,7 @@ export default function CompactFieldToolLanding({
       <footer className="border-t border-[var(--ft-line)] px-5 py-7 font-ui text-xs text-[var(--ft-muted)] md:px-10">
         <div className="mx-auto flex max-w-6xl flex-wrap justify-between gap-4">
           <span>Nic Payne · Rebel Leaders</span>
-          <Link href="/field-tools">All Field Tools →</Link>
+          <FieldToolLink href="/field-tools">All Field Tools →</FieldToolLink>
         </div>
       </footer>
     </main>

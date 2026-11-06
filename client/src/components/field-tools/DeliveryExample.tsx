@@ -130,7 +130,7 @@ export default function DeliveryExample() {
           <p className="ft-example-note">{step.note}</p>
         </div>
         <div className="ft-example-bottom">
-          <span>From the delivery map · included in either edition</span>
+          <span>From the Delivery Map · included in either edition</span>
           {active < steps.length - 1 ? (
             <button
               type="button"

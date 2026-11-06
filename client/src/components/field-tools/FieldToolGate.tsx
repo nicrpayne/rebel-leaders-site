@@ -1,3 +1,4 @@
+import FieldToolLink from "@/components/field-tools/FieldToolLink";
 import { ownsFieldTool } from "../../../../shared/field-tool-entitlements";
 import { fieldToolBase, type Audience } from "@/lib/field-tool-paths";
 import {
@@ -9,7 +10,6 @@ import {
   type ReactNode,
 } from "react";
 import { MailCheck } from "lucide-react";
-import { Link } from "wouter";
 import { trpc } from "@/lib/trpc";
 import FieldToolsNav from "./FieldToolsNav";
 import type { inferRouterOutputs } from "@trpc/server";
@@ -193,32 +193,32 @@ export function FieldToolSignIn({
       <p className="mt-5 font-ui text-xs leading-6 text-[var(--ft-muted)]">
         Your sign-in link works once and expires in 15 minutes. Your purchase
         access doesn’t expire with it. Bookmark{" "}
-        <Link
+        <FieldToolLink
           className="underline"
           href={`${fieldToolBase(slug, audience)}/access`}
         >
           your welcome page
-        </Link>{" "}
+        </FieldToolLink>{" "}
         and request a fresh link whenever you need one. You won’t need to buy
         again.
       </p>
       <div className="mt-6 flex flex-wrap gap-5 font-ui text-sm underline">
         {!sentTo && (
-          <Link href={`${fieldToolBase(slug, audience)}/buy`}>
+          <FieldToolLink href={`${fieldToolBase(slug, audience)}/buy`}>
             Get this Field Tool
-          </Link>
+          </FieldToolLink>
         )}
-        <Link href={fieldToolBase(slug, audience)}>Back to the product</Link>
+        <FieldToolLink href={fieldToolBase(slug, audience)}>Back to the product</FieldToolLink>
       </div>
       <p className="mt-6 font-ui text-xs leading-6 text-[var(--ft-muted)]">
         Trouble getting in?{" "}
-        <a className="underline" href="mailto:hello@rebel-leader.com">
+        <FieldToolLink className="underline" href="mailto:hello@rebel-leader.com">
           Email hello@rebel-leader.com
-        </a>
+        </FieldToolLink>
         .{" "}
-        <Link className="underline" href="/field-tools/purchase-help">
+        <FieldToolLink className="underline" href="/field-tools/purchase-help">
           Access and refund help
-        </Link>
+        </FieldToolLink>
         .
       </p>
     </div>

@@ -1,4 +1,4 @@
-import { Link } from "wouter";
+import FieldToolLink from "@/components/field-tools/FieldToolLink";
 const choices = [
   [
     "deadline-reset",
@@ -57,19 +57,19 @@ export default function FieldToolChooser() {
                   You and your colleague disagree about using AI.
                 </td>
                 <td className="py-5 pr-5">
-                  <Link
+                  <FieldToolLink
                     className="underline"
                     href="/field-tools/ai-stalemate/pm"
                   >
                     AI Stalemate / PM
-                  </Link>
+                  </FieldToolLink>
                   <br />
-                  <Link
+                  <FieldToolLink
                     className="underline"
                     href="/field-tools/ai-stalemate/lead-dev"
                   >
                     AI Stalemate / Lead Developer
-                  </Link>
+                  </FieldToolLink>
                 </td>
                 <td className="py-5">Next Step Together</td>
               </tr>
@@ -77,12 +77,12 @@ export default function FieldToolChooser() {
                 <tr key={slug} className="border-b border-[var(--ft-line)]">
                   <td className="py-5 pr-5">{pressure}</td>
                   <td className="py-5 pr-5">
-                    <Link
+                    <FieldToolLink
                       className="underline underline-offset-4"
                       href={`/field-tools/${slug}`}
                     >
                       {title}
-                    </Link>
+                    </FieldToolLink>
                   </td>
                   <td className="py-5">{output}</td>
                 </tr>

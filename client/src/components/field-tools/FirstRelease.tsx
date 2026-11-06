@@ -1,3 +1,4 @@
+import FieldToolLink from "@/components/field-tools/FieldToolLink";
 import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Copy, Download, Plus } from "lucide-react";
 import type { Audience } from "@/lib/field-tool-paths";
@@ -159,9 +160,9 @@ export default function FirstRelease({ audience }: { audience: Audience }) {
           leaving.
         </p>
       )}
-      <a className="first-release-mobile-jump" href="#first-release-proposal">
+      <FieldToolLink className="first-release-mobile-jump" href="#first-release-proposal">
         See your proposal ↓
-      </a>
+      </FieldToolLink>
       <div className="first-release-grid">
         <div className="first-release-editor" id="first-release-choices">
           <nav className="shipping-steps" aria-label="First-release steps">
@@ -442,12 +443,12 @@ export default function FirstRelease({ audience }: { audience: Audience }) {
                 : "YOUR FIRST-RELEASE PROPOSAL"}
             </p>
             <h2>A smaller thing worth shipping.</h2>
-            <a
+            <FieldToolLink
               className="first-release-mobile-jump"
               href="#first-release-choices"
             >
               Back to your choices ↑
-            </a>
+            </FieldToolLink>
             <div className="shipping-share">
               <button className="shipping-copy" onClick={copy}>
                 <Copy size={16} /> Copy proposal

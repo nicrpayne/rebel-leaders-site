@@ -1,11 +1,11 @@
-import { Link } from "wouter";
+import FieldToolLink from "@/components/field-tools/FieldToolLink";
 import { ArrowRight } from "lucide-react";
 import FieldToolsNav from "@/components/field-tools/FieldToolsNav";
 import FieldToolsFooter from "@/components/field-tools/FieldToolsFooter";
 import AIStalemateEditions from "@/components/field-tools/AIStalemateEditions";
 import AIKitPreview from "@/components/field-tools/AIKitPreview";
 import DeliveryExample from "@/components/field-tools/DeliveryExample";
-import { FIELD_TOOLS_PUBLIC_COPY } from "@shared/field-tool-public-copy";
+import { AI_APP_UPDATES, FIELD_TOOLS_PUBLIC_COPY } from "@shared/field-tool-public-copy";
 import { useSalesPageAnchor } from "@/components/field-tools/useSalesPageAnchor";
 import { UPCOMING_FIELD_TOOLS } from "@/lib/field-tools";
 
@@ -26,12 +26,12 @@ export default function FieldTools() {
             {FIELD_TOOLS_PUBLIC_COPY.description}
           </p>
           <div className="ft-collection-actions">
-            <a href="#collection-editions" className="ft-collection-primary">
+            <FieldToolLink href="#collection-editions" className="ft-collection-primary">
               Find your edition <ArrowRight size={17} aria-hidden="true" />
-            </a>
-            <a href="#delivery-example" className="ft-collection-link">
+            </FieldToolLink>
+            <FieldToolLink href="#delivery-example" className="ft-collection-link">
               See a quick example
-            </a>
+            </FieldToolLink>
           </div>
         </div>
         <div className="ft-collection-preview">
@@ -66,11 +66,12 @@ export default function FieldTools() {
             through with you.
           </p>
           <p>
-            $47 USD per edition, one time.
+            $47 USD per edition, one time. Each edition includes the Conversation
+            Companion and the Delivery Map. {AI_APP_UPDATES}
             <br />
-            <Link href="/field-tools/purchase-help">
+            <FieldToolLink href="/field-tools/purchase-help">
               60-day full refund. No explanation needed.
-            </Link>
+            </FieldToolLink>
           </p>
         </div>
       </section>
@@ -113,15 +114,14 @@ export default function FieldTools() {
               attention to the work, the people, and what your everyday choices
               are shaping.
             </p>
-            <a
+            <FieldToolLink
               className="ft-collection-link"
               href="https://rebel-leader.com"
-              target="_blank"
               rel="noopener noreferrer"
             >
               Explore Rebel Leaders <ArrowRight size={18} aria-hidden="true" />
               <span className="sr-only"> (opens in a new tab)</span>
-            </a>
+            </FieldToolLink>
           </div>
         </div>
       </aside>

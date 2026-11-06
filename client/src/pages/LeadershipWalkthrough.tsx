@@ -1,5 +1,5 @@
+import FieldToolLink from "@/components/field-tools/FieldToolLink";
 import { useRef, useState } from "react";
-import { Link } from "wouter";
 import { useFieldToolContent } from "@/components/field-tools/FieldToolGate";
 import { fieldToolBase, fieldToolForPath } from "@/lib/field-tool-paths";
 import { LEADERSHIP_OUTPUT_BUILDERS } from "@/lib/leadership-output";
@@ -38,9 +38,9 @@ export default function LeadershipWalkthrough({ slug }: { slug: string }) {
     <main className="font-ui min-h-screen bg-[var(--ft-paper)] text-[var(--ft-ink)]">
       <FieldToolsNav />
       <section className="ft-walkthrough mx-auto max-w-5xl px-6 pb-16 pt-10">
-        <Link href={`${base}/access`} className="text-sm underline">
+        <FieldToolLink href={`${base}/access`} className="text-sm underline">
           ← Your Field Tool
-        </Link>
+        </FieldToolLink>
         <div className="ft-walkthrough-intro">
           <div>
             <p className="ai-eyebrow">{tool.name} / WORKED WALKTHROUGH</p>
@@ -51,14 +51,13 @@ export default function LeadershipWalkthrough({ slug }: { slug: string }) {
               {expansion.intro} Your own Lab draft stays as you left it.
             </p>
             {content.walkthroughUrl && (
-              <a
+              <FieldToolLink
                 className="ft-button ft-button-gold mt-5"
                 href={content.walkthroughUrl}
-                target="_blank"
                 rel="noreferrer"
               >
-                Watch Nic’s walkthrough ↗
-              </a>
+                Watch Nic’s walkthrough
+              </FieldToolLink>
             )}
           </div>
           <img
@@ -143,16 +142,16 @@ export default function LeadershipWalkthrough({ slug }: { slug: string }) {
               Next part →
             </button>
           ) : (
-            <Link href={`${base}/lab`} className="ft-button ft-button-gold">
+            <FieldToolLink href={`${base}/lab`} className="ft-button ft-button-gold">
               Work my own situation →
-            </Link>
+            </FieldToolLink>
           )}
-          <Link
+          <FieldToolLink
             className="text-sm underline underline-offset-4"
             href={`${base}/lab?step=${scene.step}`}
           >
             Open this part of my Lab →
-          </Link>
+          </FieldToolLink>
         </div>
       </section>
       <FieldToolsFooter />

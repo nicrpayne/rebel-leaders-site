@@ -76,10 +76,10 @@
   color: #244a3b;
   border-bottom-color: #244a3b;
 }
-.ft-nav .ft-header-tabs a:hover {
+.ft-nav .ft-header-tabs a:hover:not([aria-current="page"]) {
   color: #244a3b;
-  text-decoration: none;
-  border-bottom-color: #aab8aa;
+  text-decoration: underline;
+  text-underline-offset: 5px;
 }
 .ft-nav a:focus-visible {
   outline: 2px solid #244a3b;

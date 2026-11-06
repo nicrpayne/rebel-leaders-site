@@ -1,5 +1,5 @@
+import FieldToolLink from "@/components/field-tools/FieldToolLink";
 import { ArrowRight } from "lucide-react";
-import { Link } from "wouter";
 import { aiProductCopy } from "@/lib/ai-product";
 import { fieldToolsHref } from "@shared/field-tool-domains";
 import "./field-tools-collection.css";
@@ -11,7 +11,7 @@ export default function AIStalemateEditions() {
         const copy = aiProductCopy(audience);
         const role = audience === "pm" ? "Product Manager" : "Lead Developer";
         return (
-          <Link
+          <FieldToolLink
             key={audience}
             href={fieldToolsHref(
               window.location.hostname,
@@ -56,7 +56,7 @@ export default function AIStalemateEditions() {
                 </span>
               </div>
             </div>
-          </Link>
+          </FieldToolLink>
         );
       })}
     </div>

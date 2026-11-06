@@ -1,4 +1,5 @@
-import { Link, useLocation } from "wouter";
+import FieldToolLink from "@/components/field-tools/FieldToolLink";
+import { useLocation } from "wouter";
 import "./field-tools.css";
 import RebelLogo from "@/components/RebelLogo";
 import { fieldToolAccessPath } from "@/lib/field-tool-paths";
@@ -24,7 +25,7 @@ export default function FieldToolsNav() {
           myTool === "/field-tools" ? "/field-tools/sign-in" : myTool,
           "Open your tool",
         ],
-        ["https://rebel-leader.com", "Rebel Leaders ↗"],
+        ["https://rebel-leader.com", "Rebel Leaders"],
       ];
   const items = links.map(([href, label]) => {
     const active =
@@ -32,20 +33,16 @@ export default function FieldToolsNav() {
       (href.endsWith("/lab") &&
         (location.startsWith(`${href}/`) ||
           location === href.replace(/\/lab$/, "/shipping-sooner")));
-    return href.startsWith("https://") ? (
-      <a key={label} href={href}>
+    return (
+      <FieldToolLink key={label} href={href} aria-current={active ? "page" : undefined}>
         {label}
-      </a>
-    ) : (
-      <Link key={label} href={href} aria-current={active ? "page" : undefined}>
-        {label}
-      </Link>
+      </FieldToolLink>
     );
   });
   return (
     <header className="ft-nav relative z-40 print:hidden">
       <div className="ft-header-top">
-        <Link href="/field-tools" className="ft-header-brand">
+        <FieldToolLink href="/field-tools" className="ft-header-brand">
           <span className="ft-header-mark" aria-hidden="true">
             <RebelLogo size={64} />
           </span>
@@ -55,7 +52,7 @@ export default function FieldToolsNav() {
               FIELD TOOLS{tool ? ` / ${tool.name}` : " / THE COLLECTION"}
             </small>
           </span>
-        </Link>
+        </FieldToolLink>
       </div>
       <nav aria-label="Field Tools" className="ft-header-tabs">
         {items}

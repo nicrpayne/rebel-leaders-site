@@ -88,10 +88,6 @@
 .ft-theme .ft-nav nav {
   color: var(--ft-muted);
 }
-.ft-theme .ft-nav nav a:hover {
-  text-decoration: underline;
-  text-underline-offset: 5px;
-}
 .ft-theme .ft-review-notice,
 .ft-theme .ai-review-ribbon {
   color: var(--ft-accent);

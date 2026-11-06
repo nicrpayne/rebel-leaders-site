@@ -1,3 +1,4 @@
+import FieldToolLink from "@/components/field-tools/FieldToolLink";
 import { AI_DEV_OUTPUT_BUILDERS, buildDevPackage } from "@/lib/ai-dev-trial";
 import { AI_DEV_GUIDE_CHAPTERS } from "@/lib/field-tool-workflow";
 import { LabTeachingNote } from "@/components/field-tools/TeachingNote";
@@ -26,7 +27,6 @@ import FieldToolsFooter from "@/components/field-tools/FieldToolsFooter";
 import { fieldToolForPath } from "@/lib/field-tool-paths";
 import { fieldToolBase, fieldToolPresentation } from "@/lib/field-tool-paths";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Link } from "wouter";
 import FieldToolsNav from "@/components/field-tools/FieldToolsNav";
 import FieldToolArtifact from "@/components/field-tools/FieldToolArtifact";
 import AIEffortComparison from "@/components/field-tools/AIEffortComparison";
@@ -428,12 +428,12 @@ function LabSession({ slug }: { slug: string }) {
                 {slug === "ai-stalemate" ? " / CONVERSATION COMPANION" : ""}
               </p>
               {slug === "ai-stalemate" && (
-                <Link
+                <FieldToolLink
                   href={`${base}/lab`}
                   className="mt-4 inline-block text-sm text-[var(--ft-accent)] underline underline-offset-4"
                 >
                   ← All Lab tools
-                </Link>
+                </FieldToolLink>
               )}
               <h1 className="mt-4 font-display text-4xl font-semibold tracking-[-0.04em] md:text-5xl">
                 {slug === "ai-stalemate"
@@ -543,12 +543,12 @@ function LabSession({ slug }: { slug: string }) {
                 and disappear when you refresh or leave. Other answers save in
                 this browser on this device.
               </div>
-              <Link
+              <FieldToolLink
                 href={`${base}/guide#guide-${guideChapter}`}
                 className="mt-5 inline-block font-ui text-sm underline underline-offset-4"
               >
                 Read this part of the Guide →
-              </Link>
+              </FieldToolLink>
               <LabTeachingNote
                 slug={slug}
                 step={step}
@@ -556,13 +556,13 @@ function LabSession({ slug }: { slug: string }) {
               />
               {(slug === "ai-stalemate" || content.expansion) && (
                 <div className="mt-5 flex flex-col gap-3 text-xs">
-                  <Link className="underline" href={`${base}/walkthrough`}>
+                  <FieldToolLink className="underline" href={`${base}/walkthrough`}>
                     Play through a worked example →
-                  </Link>
+                  </FieldToolLink>
                   {slug === "ai-stalemate" && (
-                    <Link className="underline" href={`${base}/resources`}>
+                    <FieldToolLink className="underline" href={`${base}/resources`}>
                       Find a tool or study resource →
-                    </Link>
+                    </FieldToolLink>
                   )}
                 </div>
               )}
@@ -945,10 +945,10 @@ function LabSession({ slug }: { slug: string }) {
 
       <footer className="px-5 py-8 md:px-8">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 font-ui text-xs text-[var(--ft-muted)]">
-          <Link href={base}>← Back to {tool.name}</Link>
+          <FieldToolLink href={base}>← Back to {tool.name}</FieldToolLink>
           <div className="flex gap-4">
-            <Link href={base + "/guide"}>Field Guide</Link>
-            <Link href="/field-tools">All Field Tools →</Link>
+            <FieldToolLink href={base + "/guide"}>Field Guide</FieldToolLink>
+            <FieldToolLink href="/field-tools">All Field Tools →</FieldToolLink>
           </div>
         </div>
       </footer>

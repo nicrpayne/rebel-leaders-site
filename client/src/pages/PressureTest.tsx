@@ -1,5 +1,5 @@
+import FieldToolLink from "@/components/field-tools/FieldToolLink";
 import { useMemo, useState } from "react";
-import { Link } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { useSession } from "@/contexts/SessionContext";
 import FieldToolsNav from "@/components/field-tools/FieldToolsNav";
@@ -552,12 +552,12 @@ export default function PressureTest() {
                   <p className="mt-2 font-ui text-sm leading-6 text-[#c6d3c8]">
                     {tool?.subhead}
                   </p>
-                  <Link
+                  <FieldToolLink
                     href={"/field-tools/" + result.toolSlug}
                     className="mt-6 inline-block bg-[#b9d5ad] px-5 py-3 font-ui text-sm font-semibold text-[#07130f]"
                   >
                     See the Field Tool →
-                  </Link>
+                  </FieldToolLink>
                 </article>
               </div>
 
@@ -569,12 +569,12 @@ export default function PressureTest() {
                 >
                   Retake the test
                 </button>
-                <Link
+                <FieldToolLink
                   href="/field-tools"
                   className="px-5 py-3 font-ui text-sm text-[#b9d5ad]"
                 >
                   Browse all Field Tools →
-                </Link>
+                </FieldToolLink>
               </div>
 
               <p className="mt-10 max-w-2xl font-ui text-xs leading-5 text-[#72857a]">

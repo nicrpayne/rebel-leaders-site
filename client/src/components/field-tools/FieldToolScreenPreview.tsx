@@ -1,3 +1,4 @@
+import FieldToolLink from "@/components/field-tools/FieldToolLink";
 import { Maximize2 } from "lucide-react";
 import { FIELD_TOOL_KIT_SCENES } from "./field-tool-kit-scenes";
 import "./field-tool-screen-preview.css";
@@ -16,9 +17,8 @@ export default function FieldToolScreenPreview({
   const src = `/assets/field-tools/${phone ? (scene.mobileDetailImage ?? scene.mobileImage) : scene.desktopImage}`;
   return (
     <figure className={`ft-screen-preview ft-screen-preview--${device}`}>
-      <a
+      <FieldToolLink
         href={src}
-        target="_blank"
         rel="noreferrer"
         className="ft-screen-link"
         aria-label={`Enlarge ${scene.title} Lab ${phone ? "phone" : "computer"} preview (opens in a new tab)`}
@@ -39,7 +39,7 @@ export default function FieldToolScreenPreview({
           </span>
         </div>
         {!phone && <div className="ft-screen-base" aria-hidden="true" />}
-      </a>
+      </FieldToolLink>
     </figure>
   );
 }

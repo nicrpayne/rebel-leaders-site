@@ -1,5 +1,6 @@
+import { AI_APP_UPDATES, LAB_UPDATES } from "@shared/field-tool-public-copy";
+import FieldToolLink from "@/components/field-tools/FieldToolLink";
 import { useEffect, useRef, useState } from "react";
-import { Link } from "wouter";
 import {
   ArrowRight,
   ArrowDownToLine,
@@ -41,7 +42,7 @@ export default function FieldToolWelcome({
   if (!tool || !copy)
     return (
       <main className="p-10">
-        Field Tool not found. <Link href="/field-tools">Browse the tools</Link>
+        Field Tool not found. <FieldToolLink href="/field-tools">Browse the tools</FieldToolLink>
       </main>
     );
   const pdf = `/api/field-tools/${slug}/pdf?audience=${content.audience}`;
@@ -59,20 +60,20 @@ export default function FieldToolWelcome({
           <h1 id="welcome-title">{copy.heading}</h1>
           <p className="ft-welcome-intro">{copy.intro}</p>
           <div className="ft-welcome-actions">
-            <Link href={`${base}/lab`} className="ft-welcome-primary">
+            <FieldToolLink href={`${base}/lab`} className="ft-welcome-primary">
               Open my Lab <ArrowRight size={18} aria-hidden="true" />
-            </Link>
+            </FieldToolLink>
             {slug === "ai-stalemate" && (
-              <Link href={`${base}/guide`} className="ft-welcome-guide-link">
+              <FieldToolLink href={`${base}/guide`} className="ft-welcome-guide-link">
                 Read the Guide <ArrowRight size={16} aria-hidden="true" />
-              </Link>
+              </FieldToolLink>
             )}
           </div>
           {slug === "ai-stalemate" && (
             <p className="ft-welcome-start-note">
-              The Lab has two starting points: prepare a conversation or explore
-              where work gets stuck. You can use either without reading the
-              whole Guide first.
+              Use the Conversation Companion to prepare for a conversation or the
+              Delivery Map to find where work gets stuck. Start with whichever
+              helps today. {AI_APP_UPDATES}
             </p>
           )}
         </div>
@@ -129,9 +130,10 @@ export default function FieldToolWelcome({
         <section className="ft-welcome-kit" aria-labelledby="kit-title">
           <div className="ft-welcome-section-heading">
             <h2 id="kit-title">Your Guide and resources</h2>
+            {slug !== "ai-stalemate" && <p>{LAB_UPDATES}</p>}
           </div>
           <div className="ft-welcome-kit-grid">
-            <Link href={`${base}/guide`} className="ft-welcome-resource">
+            <FieldToolLink href={`${base}/guide`} className="ft-welcome-resource">
               <BookOpen size={24} aria-hidden="true" />
               <div>
                 <h3>
@@ -147,8 +149,8 @@ export default function FieldToolWelcome({
                   Open the Guide <ArrowRight size={16} aria-hidden="true" />
                 </span>
               </div>
-            </Link>
-            <a href={pdf} className="ft-welcome-resource">
+            </FieldToolLink>
+            <FieldToolLink href={pdf} download className="ft-welcome-resource">
               <ArrowDownToLine size={24} aria-hidden="true" />
               <div>
                 <h3>Keep a copy</h3>
@@ -160,9 +162,9 @@ export default function FieldToolWelcome({
                   Download the PDF <ArrowRight size={16} aria-hidden="true" />
                 </span>
               </div>
-            </a>
+            </FieldToolLink>
             {extras.map(item => (
-              <Link
+              <FieldToolLink
                 key={item.href}
                 href={item.href}
                 className="ft-welcome-resource"
@@ -175,12 +177,11 @@ export default function FieldToolWelcome({
                     Take a look <ArrowRight size={16} aria-hidden="true" />
                   </span>
                 </div>
-              </Link>
+              </FieldToolLink>
             ))}
             {content.walkthroughUrl && (
-              <a
+              <FieldToolLink
                 href={content.walkthroughUrl}
-                target="_blank"
                 rel="noreferrer"
                 className="ft-welcome-resource"
               >
@@ -191,9 +192,9 @@ export default function FieldToolWelcome({
                     See how the questions come together before you try your own
                     situation.
                   </p>
-                  <span>Watch the walkthrough ↗</span>
+                  <span>Watch the walkthrough</span>
                 </div>
-              </a>
+              </FieldToolLink>
             )}
           </div>
         </section>
@@ -249,20 +250,19 @@ export default function FieldToolWelcome({
               These tools draw on my Holistic Shaping work—how work shapes who
               we become, and what we can do about it.
             </p>
-            <a
+            <FieldToolLink
               href="https://rebel-leader.com"
-              target="_blank"
               rel="noreferrer"
               className="mt-4 inline-block underline underline-offset-4"
             >
               Explore Rebel Leaders →
-            </a>
+            </FieldToolLink>
           </details>
         </section>
         <div className="ft-welcome-bottom">
-          <Link href={`${base}/buy?gift=1`}>
+          <FieldToolLink href={`${base}/buy?gift=1`}>
             <Gift size={17} aria-hidden="true" /> Gift this
-          </Link>
+          </FieldToolLink>
           <button onClick={() => signOut.mutate()} disabled={signOut.isPending}>
             <LogOut size={15} aria-hidden="true" />
             {signOut.isPending ? "Signing out…" : "Sign out"}

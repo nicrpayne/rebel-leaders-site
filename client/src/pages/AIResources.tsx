@@ -1,5 +1,5 @@
+import FieldToolLink from "@/components/field-tools/FieldToolLink";
 import { useEffect, useState } from "react";
-import { Link } from "wouter";
 import { useFieldToolContent } from "@/components/field-tools/FieldToolGate";
 import { fieldToolBase } from "@/lib/field-tool-paths";
 import FieldToolsNav from "@/components/field-tools/FieldToolsNav";
@@ -40,9 +40,9 @@ export default function AIResources() {
       <FieldToolsNav />
       <header className="bg-[var(--ft-paper)] px-6 pb-12 pt-10 text-[var(--ft-ink)]">
         <div className="mx-auto max-w-6xl">
-          <Link href={`${base}/access`} className="text-xs underline">
+          <FieldToolLink href={`${base}/access`} className="text-xs underline">
             ← Your Field Tool
-          </Link>
+          </FieldToolLink>
           <p className="ai-eyebrow mt-8">
             AI STALEMATE / {content.audience === "pm" ? "PM" : "LEAD DEVELOPER"}{" "}
             LIBRARY
@@ -96,7 +96,7 @@ export default function AIResources() {
                 },
               ]
           ).map(x => (
-            <a
+            <FieldToolLink
               className="ai-library-card"
               key={x.id}
               href={`#resource-${x.id}`}
@@ -109,7 +109,7 @@ export default function AIResources() {
             >
               <h2 className="font-display text-2xl">{x.title}</h2>
               <p className="mt-3">{x.body}</p>
-            </a>
+            </FieldToolLink>
           ))}
         </div>
         <div className="mt-10 flex flex-wrap gap-3" aria-label="Library view">
@@ -188,23 +188,21 @@ export default function AIResources() {
                   {content.audience === "pm" ? r.pmQuestion : r.devQuestion}
                 </p>
               </div>
-              <a
+              <FieldToolLink
                 className="mt-5 inline-block text-sm underline underline-offset-4"
                 href={r.url}
-                target="_blank"
                 rel="noreferrer"
               >
-                Open the source ↗
-              </a>
+                Open the source
+              </FieldToolLink>
               {r.secondaryUrl && (
-                <a
+                <FieldToolLink
                   className="ml-4 text-xs underline"
                   href={r.secondaryUrl}
-                  target="_blank"
                   rel="noreferrer"
                 >
-                  Read the earlier study ↗
-                </a>
+                  Read the earlier study
+                </FieldToolLink>
               )}
             </article>
           ))}
@@ -225,31 +223,29 @@ export default function AIResources() {
             Tools and prices change, so check the current documentation before
             choosing one.
           </p>
-          <Link
+          <FieldToolLink
             className="ft-button ft-button-gold mt-5"
             href={`${base}/lab?step=1`}
           >
             Bring it back to the conversation →
-          </Link>
+          </FieldToolLink>
           <p className="mt-8 text-xs leading-7">
             More from Nic:{" "}
-            <a
+            <FieldToolLink
               className="underline"
               href="https://substack.com/@leaderrebellion"
-              target="_blank"
               rel="noreferrer"
             >
-              Rebel Leaders writing ↗
-            </a>{" "}
+              Rebel Leaders writing
+            </FieldToolLink>{" "}
             ·{" "}
-            <a
+            <FieldToolLink
               className="underline"
               href="https://www.youtube.com/@LeaderRebellion"
-              target="_blank"
               rel="noreferrer"
             >
-              Rebel Leaders videos ↗
-            </a>
+              Rebel Leaders videos
+            </FieldToolLink>
           </p>
         </aside>
       </section>

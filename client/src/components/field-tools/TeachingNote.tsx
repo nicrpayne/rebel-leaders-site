@@ -1,3 +1,4 @@
+import FieldToolLink from "@/components/field-tools/FieldToolLink";
 import devTeaching from "../../../../shared/ai-dev-teachings.json";
 import teaching from "../../../../shared/field-tool-teachings.json";
 import { readingTimeLabel } from "../../../../shared/field-tool-reading-time";
@@ -52,14 +53,13 @@ export function TeachingNoteBody({ note }: { note: Teaching }) {
           const s = teachingSources[id];
           return (
             <li key={id} className="font-ui text-xs leading-6">
-              <a
+              <FieldToolLink
                 href={s.url}
-                target="_blank"
                 rel="noreferrer"
                 className="underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4"
               >
-                {s.title} ↗
-              </a>
+                {s.title}
+              </FieldToolLink>
               <span className="block text-[var(--ft-muted)]">
                 {s.author} · {s.kind}
               </span>

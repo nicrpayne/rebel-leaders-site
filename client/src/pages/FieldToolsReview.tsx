@@ -1,3 +1,4 @@
+import FieldToolLink from "@/components/field-tools/FieldToolLink";
 import { fieldToolBase, type Audience } from "@/lib/field-tool-paths";
 import FieldToolsReviewVersions from "@/components/field-tools/FieldToolsReviewVersions";
 import { FIELD_TOOL_KIT_SCENES } from "@/components/field-tools/field-tool-kit-scenes";
@@ -73,12 +74,12 @@ export default function FieldToolsReview() {
             <p className="text-xs tracking-[.18em] text-[var(--ft-accent)]">
               REBEL LEADERS / REVIEW DESK
             </p>
-            <a
+            <FieldToolLink
               href="/field-tools"
               className="text-xs text-[var(--ft-muted)] underline underline-offset-4"
             >
-              Open the store&nbsp;↗
-            </a>
+              Open the store
+            </FieldToolLink>
           </div>
           <h1 className="mt-5 font-display text-4xl font-semibold tracking-[-.03em] md:text-5xl">
             All your Field Tools. One place.
@@ -106,21 +107,19 @@ export default function FieldToolsReview() {
           </h2>
           <p className="mt-3 max-w-3xl text-sm leading-6 text-[var(--ft-muted)]">
             One Lab, two ways in: prepare your AI conversation, or follow work
-            from idea to use. The delivery map now explores previous attempts
+            from idea to use. The Delivery Map now explores previous attempts
             and who can influence the situation before you choose a next step.
           </p>
           <div className="mt-5 flex flex-wrap gap-3">
             {(["pm", "lead-dev"] as const).map(audience => (
-              <a
+              <FieldToolLink
                 key={audience}
                 href={`${fieldToolBase("ai-stalemate", audience)}/lab`}
-                target="_blank"
                 rel="noopener noreferrer"
                 className="rounded-full border border-[var(--ft-accent)] px-5 py-3 text-xs font-semibold text-[var(--ft-accent)] hover:bg-white"
               >
                 Try it · {audience === "pm" ? "PM" : "Lead Developer"} edition
-                ↗
-              </a>
+              </FieldToolLink>
             ))}
           </div>
         </div>
@@ -179,83 +178,74 @@ export default function FieldToolsReview() {
                 />
               </div>
               <div className="mt-5 grid grid-cols-1 gap-2 min-[360px]:grid-cols-2">
-                <a
+                <FieldToolLink
                   className={linkStyle}
                   href={base}
-                  target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Sales page&nbsp;↗
-                </a>
-                <a
+                  Sales page
+                </FieldToolLink>
+                <FieldToolLink
                   className={linkStyle}
                   href={`${base}/access`}
-                  target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Buyer welcome&nbsp;↗
-                </a>
-                <a
+                  Buyer welcome
+                </FieldToolLink>
+                <FieldToolLink
                   className={linkStyle}
                   href={`${base}/guide`}
-                  target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Read Guide&nbsp;↗
-                </a>
-                <a
+                  Read Guide
+                </FieldToolLink>
+                <FieldToolLink
                   className={linkStyle}
                   href={`/api/field-tools/${product.slug}/pdf?audience=${product.audience}`}
                   download
-                  target="_blank"
                   rel="noopener noreferrer"
                 >
                   Download PDF&nbsp;↓
-                </a>
-                <a
+                </FieldToolLink>
+                <FieldToolLink
                   className={linkStyle}
                   href={`${base}/walkthrough`}
-                  target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Worked walkthrough&nbsp;↗
-                </a>
-                <a
+                  Worked walkthrough
+                </FieldToolLink>
+                <FieldToolLink
                   className={`${linkStyle} border-[var(--ft-accent)] bg-[var(--ft-tint)] text-[var(--ft-ink)] hover:bg-[var(--ft-tint)]`}
                   href={`${base}/lab`}
-                  target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Open Lab&nbsp;↗
-                </a>
+                  Open Lab
+                </FieldToolLink>
               </div>
               <div className="mt-4 flex flex-wrap justify-between gap-3 text-xs text-[var(--ft-muted)]">
                 {product.slug === "ai-stalemate" && (
-                  <a
+                  <FieldToolLink
                     href={`${base}/resources`}
-                    target="_blank"
                     rel="noopener noreferrer"
                     className="underline underline-offset-4"
                   >
-                    Study library&nbsp;↗
-                  </a>
+                    Study library
+                  </FieldToolLink>
                 )}
-                <a
+                <FieldToolLink
                   href={`${base}/buy`}
-                  target="_blank"
                   rel="noopener noreferrer"
                   className="underline underline-offset-4"
                 >
-                  Checkout page&nbsp;↗
-                </a>
-                <a
+                  Checkout page
+                </FieldToolLink>
+                <FieldToolLink
                   href={`/assets/field-tools/${product.image}`}
-                  target="_blank"
                   rel="noopener noreferrer"
                   className="underline underline-offset-4"
                 >
-                  Hero image&nbsp;↗
-                </a>
+                  Hero image
+                </FieldToolLink>
               </div>
             </article>
           );
@@ -270,38 +260,34 @@ export default function FieldToolsReview() {
           Shared links & notes
         </h2>
         <div className="mt-4 flex flex-wrap gap-x-6 gap-y-3 text-sm">
-          <a
+          <FieldToolLink
             href="/assessment"
-            target="_blank"
             rel="noopener noreferrer"
             className="underline underline-offset-4"
           >
-            Pressure Test&nbsp;↗
-          </a>
-          <a
+            Pressure Test
+          </FieldToolLink>
+          <FieldToolLink
             href="https://github.com/nicrpayne/rebel-leaders-site/pull/3"
-            target="_blank"
             rel="noopener noreferrer"
             className="underline underline-offset-4"
           >
-            GitHub changes&nbsp;↗
-          </a>
-          <a
+            GitHub changes
+          </FieldToolLink>
+          <FieldToolLink
             href="https://github.com/nicrpayne/rebel-leaders-site/blob/field-tools-launch/docs/field-tools-launch.md"
-            target="_blank"
             rel="noopener noreferrer"
             className="underline underline-offset-4"
           >
-            Current launch notes&nbsp;↗
-          </a>
-          <a
+            Current launch notes
+          </FieldToolLink>
+          <FieldToolLink
             href="https://github.com/nicrpayne/rebel-leaders-site/blob/field-tools-launch/docs/field-tools-commerce.md"
-            target="_blank"
             rel="noopener noreferrer"
             className="underline underline-offset-4"
           >
-            Purchase & access setup&nbsp;↗
-          </a>
+            Purchase & access setup
+          </FieldToolLink>
         </div>
         <p className="mt-5 text-xs leading-6 text-[var(--ft-muted)]">
           Outputs are generated from your entries inside each Lab. The links

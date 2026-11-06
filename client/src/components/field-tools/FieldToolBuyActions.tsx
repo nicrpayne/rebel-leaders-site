@@ -1,4 +1,4 @@
-import { Link } from "wouter";
+import FieldToolLink from "@/components/field-tools/FieldToolLink";
 import { ArrowRight, Gift } from "lucide-react";
 import "./field-tool-buy-actions.css";
 
@@ -27,18 +27,14 @@ export default function FieldToolBuyActions({
         <button type="button" className="ft-button ft-button-gold" disabled>
           {buyContent}
         </button>
-      ) : buyHref.startsWith("#") || /^https?:\/\//.test(buyHref) ? (
-        <a data-ft-action={/^https?:/.test(buyHref) ? "checkout" : "buy"} href={buyHref} className="ft-button ft-button-gold">
-          {buyContent}
-        </a>
       ) : (
-        <Link data-ft-action="buy" href={buyHref} className="ft-button ft-button-gold">
+        <FieldToolLink data-ft-action={/^https?:/.test(buyHref) ? "checkout" : "buy"} href={buyHref} className="ft-button ft-button-gold">
           {buyContent}
-        </Link>
+        </FieldToolLink>
       )}
-      <Link data-ft-action="gift" href={giftHref} className="ft-button ft-buy-gift">
+      <FieldToolLink data-ft-action="gift" href={giftHref} className="ft-button ft-buy-gift">
         <Gift size={16} aria-hidden="true" /> Gift this
-      </Link>
+      </FieldToolLink>
     </div>
   );
 }
