@@ -215,9 +215,11 @@ export default function ChapterGuide({ slug }: { slug: string }) {
                     <h3 className="font-ui text-base font-semibold">
                       {section.title}
                     </h3>
-                    <p className="mt-2 font-ui text-sm leading-7 text-[var(--ft-muted)]">
-                      {section.body}
-                    </p>
+                    {section.body.split("\n\n").map((paragraph, i) => (
+                      <p key={i} className="mt-2 font-ui text-sm leading-7 text-[var(--ft-muted)]">
+                        {paragraph}
+                      </p>
+                    ))}
                   </div>
                 ))}
               </div>

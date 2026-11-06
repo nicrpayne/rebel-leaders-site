@@ -16,7 +16,11 @@ export const AI_STALEMATE_GUIDE_PAGES: AIGuidePage[] = [
       },
       {
         title: "What have you assumed about each other?",
-        body: "“They asked whether we could try another tool” describes what happened. “They don’t care about quality” adds a motive. So does “My lead just hates change.” Ask what is behind the request or hesitation.",
+        body: [
+          "Maybe you’ve had one too many conversations about AI that left one or both of you frustrated. “They asked whether we could try another tool” describes what happened. “They don’t care about quality” adds a motive. So does “My lead just hates change.” Ask what’s on their mind this time.",
+          "You want teammates who care enough to speak up. “Strong opinions, loosely held” starts with you. Try saying, “Here’s why I think this could help. What do you see that might change my mind?” You can leave with different views and a better question than either of you came in with.",
+          "AI will keep changing the work. Picture the next PM hearing a junior developer say, “I think we got this wrong,” and watching the team pull up chairs to see what they found. You and your lead can build that kind of team. What could you help people learn here that they’ll carry into their next roles?",
+        ].join("\n\n"),
       },
       {
         title: "What could you work out together?",

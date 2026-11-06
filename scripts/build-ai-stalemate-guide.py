@@ -147,7 +147,11 @@ def chapter(c, data, number):
         y -= height + 22
     for section in data["sections"]:
         y = paragraph(c, section["title"], M, y, style="heading") - 5
-        y = paragraph(c, section["body"], M, y, style="body") - 17
+        for index, body in enumerate(section["body"].split("\n\n")):
+            if index:
+                y -= 7
+            y = paragraph(c, body, M, y, style="body")
+        y -= 17
     if data.get("sources"):
         for source in data["sources"]:
             c.setFillColor(MUTED)
