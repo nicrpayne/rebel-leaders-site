@@ -1,0 +1,38 @@
+.field-tool-photo-kit {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+}
+
+.field-tool-photo-kit-background {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.field-tool-photo-kit-plane {
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 1536px;
+  height: 1024px;
+  transform-origin: 0 0;
+  pointer-events: none;
+}
+
+.field-tool-photo-kit-layer {
+  position: absolute;
+  inset: 0;
+  width: 1536px;
+  height: 1024px;
+}
+
+.field-tool-photo-kit-display {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1347px;
+  height: 850px;
+  max-width: none;
+  transform-origin: 0 0;
+}

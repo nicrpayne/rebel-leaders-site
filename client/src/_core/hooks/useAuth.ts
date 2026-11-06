@@ -9,7 +9,7 @@ type UseAuthOptions = {
 };
 
 export function useAuth(options?: UseAuthOptions) {
-  const { redirectOnUnauthenticated = false, redirectPath = getLoginUrl() } =
+  const { redirectOnUnauthenticated = false, redirectPath } =
     options ?? {};
   const utils = trpc.useUtils();
 
@@ -69,9 +69,12 @@ export function useAuth(options?: UseAuthOptions) {
     if (meQuery.isLoading || logoutMutation.isPending) return;
     if (state.user) return;
     if (typeof window === "undefined") return;
-    if (window.location.pathname === redirectPath) return;
+    // Field Tools uses email access, and non-redirecting consumers only need
+    // the user state. Resolve an OAuth URL only when a redirect is needed.
+    const loginPath = redirectPath ?? getLoginUrl();
+    if (window.location.pathname === loginPath) return;
 
-    window.location.href = redirectPath
+    window.location.href = loginPath;
   }, [
     redirectOnUnauthenticated,
     redirectPath,

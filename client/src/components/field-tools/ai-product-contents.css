@@ -1,0 +1,142 @@
+.ai-product-contents {
+  font-family: var(--font-ui, sans-serif);
+}
+.ai-hero-example-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-top: 8px;
+  color: var(--ft-accent);
+  font-size: 14px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.ai-hero-example-link:focus-visible {
+  outline: 2px solid var(--ft-accent);
+  outline-offset: 4px;
+}
+.ai-product-contents h2 {
+  font-family: var(--font-display, Georgia);
+  font-size: clamp(28px, 3vw, 36px);
+  line-height: 1.2;
+}
+.ai-product-contents .ai-contents-intro {
+  margin-top: 16px;
+  color: var(--ft-muted);
+  font-size: 15px;
+  line-height: 1.7;
+  max-width: 54ch;
+}
+.ai-product-contents ul {
+  display: grid;
+  margin-top: 28px;
+}
+.ai-product-contents li {
+  display: flex;
+  align-items: start;
+  gap: 18px;
+  border-top: 1px solid var(--ft-line);
+  padding: 22px 0;
+}
+.ai-contents-icon {
+  flex: 0 0 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  background: var(--ft-tint);
+  color: var(--ft-accent);
+  border: 1px solid var(--ft-line);
+  border-radius: 50%;
+}
+.ai-product-contents h3 {
+  font-size: 17px;
+  font-weight: 600;
+  margin: 4px 0 6px;
+}
+.ai-product-contents li p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--ft-muted);
+}
+.ai-product-contents li .ai-contents-label {
+  color: var(--ft-accent);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+}
+.ai-product-contents .ai-contents-note {
+  font-size: 12px;
+  color: var(--ft-muted);
+  line-height: 1.7;
+  border-top: 1px solid var(--ft-line);
+  padding-top: 16px;
+}
+.ai-product-example {
+  max-width: 1132px;
+  margin: 0 auto 48px;
+  border-block: 1px solid var(--ft-line);
+}
+.ai-product-example > summary {
+  padding: 24px;
+  cursor: pointer;
+  font-size: 16px;
+  color: var(--ft-accent);
+}
+.ai-product-example > summary span {
+  color: var(--ft-muted);
+  font-size: 13px;
+  margin-left: 10px;
+}
+.ai-product-example .ft-sales-proof {
+  padding-top: 12px;
+}
+.ai-product-example .ft-sales-proof-inner {
+  padding: 0 24px;
+}
+.ai-product .ai-kit-included {
+  margin-top: 32px;
+}
+.ai-product .ai-kit-included > figure {
+  margin-bottom: 0;
+}
+.ai-product .ai-purchase-help {
+  display: grid;
+  gap: 24px;
+  border-top: 1px solid var(--ft-line);
+  margin-top: 28px;
+  padding-top: 24px;
+}
+.ai-product .ai-purchase-help .ai-refund-note {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.8;
+  color: #536659;
+}
+.ai-product .ai-purchase-links {
+  display: grid;
+  gap: 12px;
+}
+.ai-product .ai-purchase-links .ai-small {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  margin: 0;
+  padding-block: 8px;
+}
+.ai-product .ai-purchase-help a {
+  text-underline-offset: 4px;
+}
+@media (max-width: 600px) {
+  .ai-product-example {
+    margin-inline: 20px;
+  }
+  .ai-product-example > summary {
+    padding: 20px 0;
+  }
+  .ai-product-example > summary span {
+    display: block;
+    margin: 6px 0 0;
+  }
+}

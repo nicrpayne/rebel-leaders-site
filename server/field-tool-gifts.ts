@@ -1,0 +1,131 @@
+import { createHash, randomBytes } from "node:crypto";
+import { eq } from "drizzle-orm";
+import { Resend } from "resend";
+import { fieldToolGifts, fieldToolOrders } from "../drizzle/schema";
+import {
+  giftDetailsSchema,
+  type GiftDetails,
+} from "../shared/field-tool-gifts";
+import { fieldToolEntitlement } from "../shared/field-tool-entitlements";
+import { getDb } from "./db";
+import { fieldToolGiftEmail } from "./field-tool-email";
+
+export const giftTokenHash = (token: string) =>
+  createHash("sha256").update(token).digest("hex");
+
+export function giftCheckoutUrl(checkoutUrl: string, token: string) {
+  const url = new URL(checkoutUrl);
+  if (
+    url.protocol !== "https:" ||
+    !url.hostname.endsWith(".lemonsqueezy.com") ||
+    !/^[a-f0-9]{64}$/.test(token)
+  )
+    throw new Error("Gift checkout is unavailable.");
+  url.searchParams.set("checkout[custom][field_tool_gift]", token);
+  return url.toString();
+}
+
+export async function createGiftCheckout(
+  input: {
+    slug: string;
+    audience: "pm" | "lead-dev";
+    gift: GiftDetails;
+  },
+  checkoutUrl: string
+) {
+  const db = await getDb();
+  if (!db) throw new Error("Gift checkout is unavailable.");
+  const token = randomBytes(32).toString("hex");
+  const url = giftCheckoutUrl(checkoutUrl, token);
+  await db.insert(fieldToolGifts).values({
+    tokenHash: giftTokenHash(token),
+    slug: fieldToolEntitlement(input.slug, input.audience),
+    audience: input.audience,
+    ...giftDetailsSchema.parse(input.gift),
+  });
+  return { checkoutUrl: url };
+}
+
+export function validateGiftOrder(
+  gift: typeof fieldToolGifts.$inferSelect | undefined,
+  order: { orderId: string; slug: string }
+) {
+  if (
+    !gift ||
+    gift.slug !== order.slug ||
+    (gift.orderId && gift.orderId !== order.orderId)
+  )
+    throw new Error("Gift does not match this order.");
+  return gift;
+}
+
+const names: Record<string, string> = {
+  "ai-stalemate": "AI Stalemate",
+  "ai-stalemate/pm": "AI Stalemate / Product Manager",
+  "ai-stalemate/lead-dev": "AI Stalemate / Lead Developer",
+  "deadline-reset": "Deadline Reset",
+  "priority-whiplash": "Priority Whiplash",
+  "mandate-reset": "Mandate Reset",
+  "when-the-team-goes-quiet": "When the Team Goes Quiet",
+};
+export function giftNotification(
+  gift: typeof fieldToolGifts.$inferSelect,
+  appUrl: string
+) {
+  const name = names[gift.slug];
+  if (!name) throw new Error("Unknown gift product.");
+  if (gift.audience !== "pm" && gift.audience !== "lead-dev")
+    throw new Error("Unknown gift edition.");
+  return {
+    to: gift.recipientEmail,
+    subject: `A Field Tool for you: ${name}`,
+    ...fieldToolGiftEmail({
+      slug: gift.slug,
+      audience: gift.audience,
+      appUrl,
+      gift,
+    }),
+  };
+}
+
+// The paid entitlement is committed before email delivery. Provider retries can
+// retry a failed email without changing ownership or restoring refunded access.
+export async function notifyGiftRecipient(orderId: string) {
+  const db = await getDb();
+  if (!db) throw new Error("Database unavailable");
+  await db.transaction(async tx => {
+    const [gift] = await tx
+      .select()
+      .from(fieldToolGifts)
+      .where(eq(fieldToolGifts.orderId, orderId))
+      .limit(1)
+      .for("update");
+    if (!gift || gift.notifiedAt) return;
+    const [order] = await tx
+      .select()
+      .from(fieldToolOrders)
+      .where(eq(fieldToolOrders.orderId, orderId))
+      .limit(1)
+      .for("update");
+    if (!order || order.status !== "active") return;
+    if (!process.env.RESEND_API_KEY || !process.env.APP_URL)
+      throw new Error("Gift email is unavailable");
+    const result = await new Resend(process.env.RESEND_API_KEY).emails.send(
+      {
+        from:
+          process.env.FIELD_TOOL_EMAIL_FROM ??
+          "Rebel Leaders <hello@rebel-leader.com>",
+        replyTo: "hello@rebel-leader.com",
+        ...giftNotification(gift, process.env.APP_URL),
+      },
+      {
+        idempotencyKey: `field-tool-gift/${process.env.LEMONSQUEEZY_MODE}/${orderId}`,
+      }
+    );
+    if (result.error) throw new Error("Gift email needs retry");
+    await tx
+      .update(fieldToolGifts)
+      .set({ notifiedAt: new Date() })
+      .where(eq(fieldToolGifts.tokenHash, gift.tokenHash));
+  });
+}

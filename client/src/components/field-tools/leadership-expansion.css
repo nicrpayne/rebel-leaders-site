@@ -1,0 +1,27 @@
+.ft-dialogue {
+  margin: 28px 0;
+  padding-left: 22px;
+  border-left: 2px solid var(--ft-line);
+  display: grid;
+  gap: 24px;
+}
+.ft-dialogue .ft-dialogue-speaker {
+  margin: 0 0 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ft-accent);
+}
+.ft-dialogue blockquote {
+  max-width: 65ch;
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2.2vw, 27px);
+  line-height: 1.4;
+}
+.ft-example-record {
+  margin-top: 24px;
+}
+@media (max-width: 600px) {
+  .ft-dialogue {
+    padding-left: 16px;
+  }
+}

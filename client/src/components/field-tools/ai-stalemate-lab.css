@@ -1,0 +1,166 @@
+.ai-lab-hub {
+  min-height: 100vh;
+  background: var(--ft-paper);
+  color: var(--ft-ink);
+  font-family: var(--font-ui);
+  padding: 54px 28px 80px;
+}
+.ai-lab-hub-inner {
+  max-width: 1160px;
+  margin: auto;
+}
+.ai-lab-eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  font-weight: 600;
+  color: var(--ft-accent);
+}
+.ai-lab-hub-inner > header {
+  max-width: 820px;
+  margin-bottom: 36px;
+}
+.ai-lab-hub h1 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(38px, 5vw, 62px);
+  line-height: 1.08;
+  margin: 18px 0;
+  letter-spacing: -0.035em;
+}
+.ai-lab-hub h1 em {
+  color: var(--ft-accent);
+}
+.ai-lab-hub-inner > header > p:last-child {
+  color: var(--ft-muted);
+  font-size: 16px;
+  line-height: 1.8;
+}
+.ai-lab-paths {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+.ai-lab-paths article {
+  border: 1px solid var(--ft-line);
+  border-radius: 14px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  background: white;
+}
+.ai-lab-paths article.ai-lab-delivery-card {
+  background: var(--ft-tint);
+}
+.ai-lab-paths svg {
+  color: var(--ft-accent);
+  flex-shrink: 0;
+}
+.ai-lab-paths .ai-lab-eyebrow {
+  margin: 20px 0 12px;
+}
+.ai-lab-paths h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 34px;
+  line-height: 1.15;
+  margin: 0 0 15px;
+}
+.ai-lab-paths p:not(.ai-lab-eyebrow) {
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--ft-muted);
+  margin-bottom: 16px;
+}
+.ai-lab-paths .ai-lab-frustration {
+  color: var(--ft-ink) !important;
+  font-weight: 500;
+}
+.ai-lab-takeaway {
+  border-top: 1px solid var(--ft-line);
+  padding-top: 16px;
+  margin-top: auto;
+}
+.ai-lab-paths a {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--ft-accent);
+  color: white;
+  border-radius: 30px;
+  padding: 14px 20px;
+  font-size: 13px;
+  min-height: 48px;
+}
+.ai-lab-paths a svg {
+  color: inherit;
+}
+.ai-lab-guide {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  border-block: 1px solid var(--ft-line);
+  margin: 36px 0 20px;
+  padding: 26px 0;
+}
+.ai-lab-guide > svg {
+  flex-shrink: 0;
+  color: var(--ft-accent);
+}
+.ai-lab-guide h2 {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+.ai-lab-guide p {
+  font-size: 14px;
+  color: var(--ft-muted);
+  line-height: 1.7;
+  max-width: 680px;
+}
+.ai-lab-guide a {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  color: var(--ft-accent);
+  font-size: 14px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  min-height: 44px;
+}
+.ai-lab-saving {
+  font-size: 12px;
+  line-height: 1.8;
+  color: var(--ft-muted);
+  max-width: 800px;
+}
+.ai-lab-home {
+  display: inline-block;
+  margin-top: 18px;
+  padding: 10px 0;
+  font-size: 13px;
+  color: var(--ft-accent);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+@media (max-width: 700px) {
+  .ai-lab-hub {
+    padding: 34px 20px 70px;
+  }
+  .ai-lab-paths {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .ai-lab-paths article {
+    padding: 26px;
+  }
+  .ai-lab-guide {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .ai-lab-guide > div {
+    flex: 1 1 240px;
+  }
+}

@@ -1,0 +1,44 @@
+.ft-buy-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  width: 100%;
+  max-width: 360px;
+}
+.ft-buy-actions .ft-button {
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: 13px 10px;
+  gap: 8px;
+  white-space: nowrap;
+}
+.ft-buy-actions .ft-button svg {
+  flex-shrink: 0;
+}
+.ft-buy-actions .ft-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+.ft-buy-actions .ft-buy-gift {
+  color: #244934;
+  background: transparent;
+  border-color: #788b70;
+}
+.ft-buy-actions .ft-buy-gift:hover {
+  background: #e9eddf;
+}
+.ft-buy-actions--dark .ft-buy-gift {
+  color: #f3efe4;
+  border-color: #95a889;
+}
+.ft-buy-actions--dark .ft-buy-gift:hover {
+  background: #203c2a;
+}
+.ai-purchase-card .ft-buy-actions {
+  margin: 24px 0 16px;
+}
+.ai-purchase-card .ft-buy-actions .ft-button {
+  margin: 0;
+}

@@ -179,3 +179,35 @@ export const wallEntries = mysqlTable("wall_entries", {
   displayOrder: int("display_order").default(0),
   createdAt: timestamp("created_at").defaultNow(),
 });
+
+// Paid Field Tool delivery: independent from legacy Workbench authentication.
+export const fieldToolOrders = mysqlTable("field_tool_orders", {
+  orderId: varchar("order_id", {length:64}).primaryKey(),
+  email: varchar("email", {length:320}).notNull(),
+  slug: varchar("slug", {length:64}).notNull(),
+  status: varchar("status", {length:16}).notNull(),
+  providerUpdatedAt: timestamp("provider_updated_at", {fsp:3}).notNull(),
+});
+export const fieldToolAccessTokens = mysqlTable("field_tool_access_tokens", {
+  tokenHash: varchar("token_hash", {length:64}).primaryKey(),
+  email: varchar("email", {length:320}).notNull(),
+  slug: varchar("slug", {length:64}).notNull(),
+  kind: varchar("kind", {length:16}).notNull(),
+  expiresAt: timestamp("expires_at").notNull(),
+  usedAt: timestamp("used_at"),
+});
+
+// Recipient details stay on our server. Checkout carries only a random gift reference.
+export const fieldToolGifts = mysqlTable("field_tool_gifts", {
+  tokenHash: varchar("token_hash", { length: 64 }).primaryKey(),
+  slug: varchar("slug", { length: 64 }).notNull(),
+  audience: varchar("audience", { length: 16 }).notNull(),
+  senderName: varchar("sender_name", { length: 100 }).notNull(),
+  recipientName: varchar("recipient_name", { length: 100 }).notNull(),
+  recipientEmail: varchar("recipient_email", { length: 320 }).notNull(),
+  message: text("message").notNull(),
+  orderId: varchar("order_id", { length: 64 }).unique(),
+  buyerEmail: varchar("buyer_email", { length: 320 }),
+  notifiedAt: timestamp("notified_at"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});

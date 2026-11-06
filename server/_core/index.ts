@@ -1,4 +1,6 @@
 import "dotenv/config";
+import { registerFieldToolCommerce } from "../field-tool-commerce";
+import { fieldToolPreviewGate } from "../field-tool-preview-gate";
 import express from "express";
 import { createServer } from "http";
 import net from "net";
@@ -10,6 +12,7 @@ import { serveStatic, setupVite } from "./vite";
 import { getDb } from "../db";
 import { migrate } from "drizzle-orm/mysql2/migrator";
 import { sql } from "drizzle-orm";
+import { fieldToolsRootRedirect } from "../../shared/field-tool-domains";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -43,7 +46,10 @@ async function runMigrations() {
     await migrate(db, { migrationsFolder: "./drizzle" });
     console.log("[Migrations] Up to date");
   } catch (error: any) {
-    console.error("[Migrations] Drizzle migrate error:", error?.message ?? error);
+    console.error(
+      "[Migrations] Drizzle migrate error:",
+      error?.message ?? error
+    );
   }
 
   // Belt-and-suspenders: directly ensure any columns that may have been
@@ -202,7 +208,15 @@ async function runMigrations() {
 async function startServer() {
   await runMigrations();
   const app = express();
+  app.set("trust proxy", 1);
+  app.use(fieldToolPreviewGate());
+  app.get("/", (req, res, next) => {
+    const destination = fieldToolsRootRedirect(req.hostname, req.originalUrl);
+    if (destination) return res.redirect(302, destination);
+    next();
+  });
   const server = createServer(app);
+  registerFieldToolCommerce(app);
   // Configure body parser with larger size limit for file uploads
   app.use(express.json({ limit: "50mb" }));
   app.use(express.urlencoded({ limit: "50mb", extended: true }));

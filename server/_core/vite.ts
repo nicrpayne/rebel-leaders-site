@@ -5,6 +5,7 @@ import { nanoid } from "nanoid";
 import path from "path";
 import { createServer as createViteServer } from "vite";
 import viteConfig from "../../vite.config";
+import { withFieldToolMetadata } from "../field-tool-page-metadata";
 
 export async function setupVite(app: Express, server: Server) {
   const serverOptions = {
@@ -38,7 +39,10 @@ export async function setupVite(app: Express, server: Server) {
         `src="/src/main.tsx"`,
         `src="/src/main.tsx?v=${nanoid()}"`
       );
-      const page = await vite.transformIndexHtml(url, template);
+      const page = await vite.transformIndexHtml(
+        url,
+        withFieldToolMetadata(template, url)
+      );
       res.status(200).set({ "Content-Type": "text/html" }).end(page);
     } catch (e) {
       vite.ssrFixStacktrace(e as Error);
@@ -58,20 +62,32 @@ export function serveStatic(app: Express) {
     );
   }
 
-  app.use(express.static(distPath, {
-    setHeaders(res, filePath) {
-      const isVersionedBuildAsset = /[\\/]assets[\\/].+-[A-Za-z0-9_-]{8,}\.(?:js|css)$/.test(filePath);
-      if (isVersionedBuildAsset) {
-        res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
-      } else if (path.basename(filePath) === "index.html") {
-        res.setHeader("Cache-Control", "no-cache");
-      }
-    },
-  }));
+  app.use(
+    express.static(distPath, {
+      index: false,
+      setHeaders(res, filePath) {
+        const isVersionedBuildAsset =
+          /[\\/]assets[\\/].+-[A-Za-z0-9_-]{8,}\.(?:js|css)$/.test(filePath);
+        if (isVersionedBuildAsset) {
+          res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+        } else if (path.basename(filePath) === "index.html") {
+          res.setHeader("Cache-Control", "no-cache");
+        }
+      },
+    })
+  );
 
   // fall through to index.html if the file doesn't exist
-  app.get("*", (_req, res) => {
-    res.setHeader("Cache-Control", "no-cache");
-    res.sendFile(path.resolve(distPath, "index.html"));
+  app.get("*", async (req, res, next) => {
+    try {
+      const template = await fs.promises.readFile(
+        path.resolve(distPath, "index.html"),
+        "utf-8"
+      );
+      res.setHeader("Cache-Control", "no-cache");
+      res.type("html").send(withFieldToolMetadata(template, req.originalUrl));
+    } catch (error) {
+      next(error);
+    }
   });
 }
