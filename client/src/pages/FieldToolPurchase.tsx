@@ -55,7 +55,7 @@ export default function FieldToolPurchase({
         {slug === "ai-stalemate" && (
           <p className="mt-4 max-w-2xl font-ui text-base leading-7 text-[var(--ft-muted)]">
             Get past the AI argument. Work out what would actually help your
-            team deliver.
+            team deliver{audience === "lead-dev" && " and, more importantly, grow"}.
           </p>
         )}
         <div className="mt-6 grid gap-6 md:grid-cols-[minmax(0,1.4fr)_minmax(280px,.8fr)] md:items-start">
