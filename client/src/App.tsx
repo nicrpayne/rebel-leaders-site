@@ -15,6 +15,7 @@ const Archives = lazy(() => import("./pages/Archives"));
 const Shelf = lazy(() => import("./pages/Shelf"));
 const Residency = lazy(() => import("./pages/Residency"));
 const About = lazy(() => import("./pages/About"));
+const Privacy = lazy(() => import("./pages/Privacy"));
 const StartHere = lazy(() => import("./pages/StartHere"));
 const Game = lazy(() => import("./pages/Game"));
 const Book = lazy(() => import("./pages/Book"));
@@ -53,6 +54,7 @@ function Router() {
         <Route path="/shelf" component={Shelf} />
         <Route path="/residency" component={Residency} />
         <Route path="/about" component={About} />
+        <Route path="/privacy" component={Privacy} />
         <Route path="/start" component={StartHere} />
         <Route path="/game" component={Game} />
         <Route path="/book" component={Book} />

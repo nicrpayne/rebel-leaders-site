@@ -90,6 +90,9 @@ export default function Footer() {
           <p className="font-pixel text-[6px] text-parchment-dim/25 tracking-wider">
             &copy; {new Date().getFullYear()} REBEL LEADERS
           </p>
+          <Link href="/privacy" className="mt-3 inline-block font-ui text-sm text-parchment-dim underline underline-offset-4 hover:text-gold">
+            Privacy policy
+          </Link>
           <p className="font-pixel text-[6px] text-parchment-dim/15 mt-2 tracking-wider">
             SAVE POINT REACHED. PROGRESS SAVED.
           </p>

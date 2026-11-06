@@ -40,9 +40,7 @@ export default function AuthVerify() {
           localStorage.removeItem('gravitas_pending_save');
           localStorage.removeItem('mirrorResult');
           localStorage.removeItem('pending_save_codex');
-          if (data.user.email) {
-            identifyUser(data.user.id, data.user.email);
-          }
+          identifyUser(data.user.id);
           const redirectTo = localStorage.getItem("auth_redirect_after_verify") ?? "/workbench/results";
           localStorage.removeItem("auth_redirect_after_verify");
           setTimeout(() => setLocation(redirectTo), 3000);
